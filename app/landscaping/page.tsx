@@ -261,9 +261,9 @@ export default function LandscapingChat() {
 
       {/* Main Chat Section - Full Screen */}
       <main className="relative z-40 h-screen pt-14 sm:pt-16 lg:pt-20">
-        <div className="h-full flex flex-col">
+        <div className="h-full flex flex-col p-2 sm:p-4 lg:p-6">
           {/* Chat Messages Container - Full Height */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full mx-2 sm:mx-4 lg:mx-6 my-2 sm:my-4 lg:my-6 flex flex-col">
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Messages Area - Takes remaining space */}
               <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
