@@ -570,11 +570,11 @@ export default function LandingPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto border-gray-400 text-gray-700 hover:bg-gray-100 bg-white/80 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 hover:border-gray-500 text-center max-w-md mx-auto"
+                className="w-full sm:w-auto border-gray-400 text-gray-700 hover:bg-gray-100 bg-white/80 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 hover:border-gray-500 max-w-sm sm:max-w-md mx-auto flex items-center justify-center"
                 onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <span className="block sm:inline">Get Notified When Your Trade Launches</span>
-                <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
+                <span className="text-center leading-tight">Get Notified When Your Trade Launches</span>
+                <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
               </Button>
             </div>
           </div>
