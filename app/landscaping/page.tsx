@@ -211,27 +211,31 @@ export default function LandscapingChat() {
 
       {/* Header */}
       <header className="sticky top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            <div className="flex items-center space-x-4">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+            <div className="flex items-center">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => (window.location.href = "/")}
-                className="text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300"
+                className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
               >
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                Back to Home
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline">Back to Home</span>
+                <span className="xs:hidden">Back</span>
               </Button>
             </div>
 
-            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => (window.location.href = "/")}>
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Leaf className="w-6 h-6 text-white" />
+            <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => (window.location.href = "/")}>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold text-white">Landscaping AI Sidekick</h1>
-                <p className="text-sm text-gray-300">Your expert business growth partner</p>
+              <div className="hidden sm:block">
+                <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white">Landscaping AI Sidekick</h1>
+                <p className="text-xs sm:text-sm text-gray-300">Your expert business growth partner</p>
+              </div>
+              <div className="sm:hidden">
+                <h1 className="text-sm font-bold text-white">AI Sidekick</h1>
               </div>
             </div>
 
@@ -246,37 +250,37 @@ export default function LandscapingChat() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+      <main className="relative z-10 min-h-screen">
+        <div className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8 py-2 sm:py-4 lg:py-6 h-full">
           {/* Chat Messages Container */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-            <CardContent className="p-0">
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] flex flex-col">
+            <CardContent className="p-0 flex flex-col h-full">
               {/* Messages Area */}
-              <div className="h-96 sm:h-[32rem] lg:h-[40rem] overflow-y-auto p-6 space-y-6">
+              <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6 min-h-0">
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex items-start space-x-4 ${
+                    className={`flex items-start space-x-2 sm:space-x-4 ${
                       message.role === "user" ? "flex-row-reverse space-x-reverse" : ""
                     }`}
                   >
                     {/* Avatar */}
                     <div
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${
+                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0 ${
                         message.role === "user"
                           ? "bg-gradient-to-br from-blue-500 to-indigo-600"
                           : "bg-gradient-to-br from-emerald-400 to-teal-500"
                       }`}
                     >
                       {message.role === "user" ? (
-                        <User className="w-5 h-5 text-white" />
+                        <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       ) : (
-                        <Bot className="w-5 h-5 text-white" />
+                        <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       )}
                     </div>
 
                     {/* Message Content */}
-                    <div className={`flex-1 max-w-3xl ${message.role === "user" ? "text-right" : ""}`}>
+                    <div className={`flex-1 min-w-0 ${message.role === "user" ? "text-right" : ""}`}>
                       <div
                         className={`inline-block p-4 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl ${
                           message.role === "user"
@@ -368,9 +372,9 @@ export default function LandscapingChat() {
 
               {/* Suggested Questions (only show when no user messages) */}
               {messages.length === 1 && (
-                <div className="px-6 pb-4 border-t border-white/10">
-                  <p className="text-gray-300 text-sm mb-3 pt-4">Try asking me about:</p>
-                  <div className="flex flex-wrap gap-2">
+                <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 border-t border-white/10 flex-shrink-0">
+                  <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3 pt-3 sm:pt-4">Try asking me about:</p>
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {/* Upload Button */}
                     <label className="inline-flex items-center space-x-2 text-xs bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/30 rounded-full px-4 py-3 text-emerald-300 hover:text-emerald-200 transition-all duration-300 hover:scale-105 cursor-pointer">
                       <Upload className="w-4 h-4" />
@@ -459,8 +463,8 @@ export default function LandscapingChat() {
               )}
 
               {/* Input Area */}
-              <div className="p-6 border-t border-white/10">
-                <form onSubmit={handleSubmit} className="flex space-x-4">
+              <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10 flex-shrink-0">
+                <form onSubmit={handleSubmit} className="flex space-x-2 sm:space-x-4">
                   <div className="flex-1 relative">
                     <Input
                       value={input}
@@ -472,19 +476,19 @@ export default function LandscapingChat() {
                           ? "Ask me anything about growing your landscaping business..."
                           : placeholderText
                       }
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-12 py-4 sm:py-6 text-base sm:text-lg backdrop-blur-sm"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation"
                       disabled={isLoading}
                     />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      <Sparkles className="w-5 h-5 text-gray-400" />
+                    <div className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2">
+                      <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                     </div>
                   </div>
                   <Button
                     type="submit"
                     disabled={!input.trim() || isLoading}
-                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 px-6 sm:px-8 py-4 sm:py-6"
+                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 px-3 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-6 touch-manipulation"
                   >
-                    <Send className="w-5 h-5" />
+                    <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                 </form>
 

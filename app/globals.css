@@ -10,6 +10,33 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Mobile optimization utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Custom breakpoint for extra small screens */
+  @media (min-width: 475px) {
+    .xs\:inline {
+      display: inline;
+    }
+    .xs\:hidden {
+      display: none;
+    }
+  }
+  
+  /* Ensure full height on mobile */
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Fix viewport height on mobile browsers */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
 }
 
 @layer base {
