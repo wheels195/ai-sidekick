@@ -3,7 +3,13 @@
     "allow": [
       "Bash(npm run build:*)",
       "Bash(npm run dev:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(npm install:*)",
+      "Bash(git push:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote set-url:*)"
     ],
     "deny": []
   }

@@ -3,6 +3,9 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
 import {
   ArrowLeft,
   Send,
@@ -282,7 +285,29 @@ export default function LandscapingChat() {
                             : "bg-white/10 backdrop-blur-xl text-gray-100 border border-white/20 rounded-bl-md hover:bg-white/15"
                         }`}
                       >
-                        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                        {message.role === "assistant" ? (
+                          <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              rehypePlugins={[rehypeHighlight]}
+                              components={{
+                                h1: ({children}) => <h1 className="text-lg font-bold text-emerald-300 mb-2">{children}</h1>,
+                                h2: ({children}) => <h2 className="text-base font-bold text-emerald-300 mb-2">{children}</h2>,
+                                h3: ({children}) => <h3 className="text-sm font-semibold text-emerald-400 mb-1">{children}</h3>,
+                                ul: ({children}) => <ul className="list-disc list-inside space-y-1 mb-2">{children}</ul>,
+                                ol: ({children}) => <ol className="list-decimal list-inside space-y-1 mb-2">{children}</ol>,
+                                li: ({children}) => <li className="text-gray-200">{children}</li>,
+                                p: ({children}) => <p className="mb-2 last:mb-0 text-gray-200">{children}</p>,
+                                strong: ({children}) => <strong className="font-semibold text-white">{children}</strong>,
+                                code: ({children}) => <code className="bg-gray-700 px-1 py-0.5 rounded text-emerald-300 text-xs">{children}</code>,
+                              }}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
+                          </div>
+                        ) : (
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                        )}
                       </div>
                       <p className="text-xs text-gray-400 mt-2">
                         {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
@@ -294,20 +319,23 @@ export default function LandscapingChat() {
                 {/* Loading Indicator */}
                 {isLoading && (
                   <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
                       <Bot className="w-5 h-5 text-white" />
                     </div>
                     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl rounded-bl-md p-4 shadow-lg">
-                      <div className="flex space-x-2">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                        <div
-                          className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.1s" }}
-                        ></div>
-                        <div
-                          className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.2s" }}
-                        ></div>
+                      <div className="flex items-center space-x-3">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+                          <div
+                            className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
+                            style={{ animationDelay: "0.1s" }}
+                          ></div>
+                          <div
+                            className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
+                            style={{ animationDelay: "0.2s" }}
+                          ></div>
+                        </div>
+                        <span className="text-sm text-emerald-300 font-medium">AI is thinking...</span>
                       </div>
                     </div>
                   </div>
