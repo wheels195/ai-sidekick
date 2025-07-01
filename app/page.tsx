@@ -165,7 +165,7 @@ export default function LandingPage() {
       {/* How It Works Section */}
       <section
         id="features"
-        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-r from-gray-900/50 via-slate-900/50 to-gray-900/50"
+        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
