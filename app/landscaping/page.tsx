@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react"
-
+import React from "react"
 import { useState, useRef, useEffect } from "react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
@@ -253,7 +252,7 @@ export default function LandscapingChat() {
           <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
             <CardContent className="p-0">
               {/* Messages Area */}
-              <div className="h-64 sm:h-80 lg:h-96 overflow-y-auto p-6 space-y-6">
+              <div className="h-96 sm:h-[32rem] lg:h-[40rem] overflow-y-auto p-6 space-y-6">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -291,15 +290,38 @@ export default function LandscapingChat() {
                               remarkPlugins={[remarkGfm]}
                               rehypePlugins={[rehypeHighlight]}
                               components={{
-                                h1: ({children}) => <h1 className="text-lg font-bold text-emerald-300 mb-2">{children}</h1>,
-                                h2: ({children}) => <h2 className="text-base font-bold text-emerald-300 mb-2">{children}</h2>,
-                                h3: ({children}) => <h3 className="text-sm font-semibold text-emerald-400 mb-1">{children}</h3>,
-                                ul: ({children}) => <ul className="list-disc list-inside space-y-1 mb-2">{children}</ul>,
-                                ol: ({children}) => <ol className="list-decimal list-inside space-y-1 mb-2">{children}</ol>,
-                                li: ({children}) => <li className="text-gray-200">{children}</li>,
-                                p: ({children}) => <p className="mb-2 last:mb-0 text-gray-200">{children}</p>,
+                                h1: ({children}) => <h1 className="text-xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2">{children}</h1>,
+                                h2: ({children}) => <h2 className="text-lg font-bold text-emerald-300 mb-3 mt-5 first:mt-0">{children}</h2>,
+                                h3: ({children}) => <h3 className="text-base font-semibold text-emerald-400 mb-2 mt-4 first:mt-0">{children}</h3>,
+                                ul: ({children}) => <ul className="list-none space-y-2 mb-4 ml-0">{children}</ul>,
+                                ol: ({children, start}) => (
+                                  <ol className="list-none space-y-2 mb-4 ml-0" style={{'--start': start || 1}}>
+                                    {React.Children.map(children, (child, index) => 
+                                      React.cloneElement(child as React.ReactElement, { 
+                                        'data-number': (start || 1) + index 
+                                      })
+                                    )}
+                                  </ol>
+                                ),
+                                li: ({children, 'data-number': dataNumber}) => {
+                                  return dataNumber ? (
+                                    <li className="flex items-start text-gray-200">
+                                      <span className="text-emerald-400 font-semibold min-w-[1.5rem] mr-3 mt-0.5">
+                                        {dataNumber}.
+                                      </span>
+                                      <span className="flex-1">{children}</span>
+                                    </li>
+                                  ) : (
+                                    <li className="flex items-start text-gray-200">
+                                      <span className="text-emerald-400 mr-3 mt-1 text-lg">•</span>
+                                      <span className="flex-1">{children}</span>
+                                    </li>
+                                  );
+                                },
+                                p: ({children}) => <p className="mb-3 last:mb-0 text-gray-200 leading-relaxed">{children}</p>,
                                 strong: ({children}) => <strong className="font-semibold text-white">{children}</strong>,
-                                code: ({children}) => <code className="bg-gray-700 px-1 py-0.5 rounded text-emerald-300 text-xs">{children}</code>,
+                                code: ({children}) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono">{children}</code>,
+                                blockquote: ({children}) => <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300">{children}</blockquote>,
                               }}
                             >
                               {message.content}
