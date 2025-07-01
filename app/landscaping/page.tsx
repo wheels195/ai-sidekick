@@ -259,14 +259,14 @@ export default function LandscapingChat() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="relative z-10">
-        <div className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8 py-2 sm:py-4 lg:py-6">
-          {/* Chat Messages Container */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-            <CardContent className="p-0">
-              {/* Messages Area */}
-              <div className="h-[70vh] sm:h-[75vh] lg:h-96 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
+      {/* Main Chat Section - Full Screen */}
+      <main className="relative z-10 h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)]">
+        <div className="h-full flex flex-col">
+          {/* Chat Messages Container - Full Height */}
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full mx-2 sm:mx-4 lg:mx-6 my-2 sm:my-4 lg:my-6 flex flex-col">
+            <CardContent className="p-0 flex flex-col h-full">
+              {/* Messages Area - Takes remaining space */}
+              <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -473,7 +473,7 @@ export default function LandscapingChat() {
                       }}
                       placeholder={
                         isInputFocused || input.length > 0 || messages.length > 1
-                          ? "Ask me anything about growing your landscaping business... (Press Enter to send, Shift+Enter for new line)"
+                          ? "Ask me anything about growing your landscaping business..."
                           : placeholderText
                       }
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[3rem] max-h-[150px] overflow-y-auto"
@@ -499,9 +499,14 @@ export default function LandscapingChat() {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </main>
 
+      {/* Additional Content Below Chat */}
+      <div className="relative z-10 bg-gradient-to-br from-black via-gray-950 to-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-4 sm:gap-6">
             {[
               { icon: MessageSquare, label: "Expert Advice", value: "24/7" },
               { icon: TrendingUp, label: "Local SEO", value: "Optimized" },
@@ -679,7 +684,7 @@ export default function LandscapingChat() {
             </CardContent>
           </Card>
         </div>
-      </main>
+      </div>
     </div>
   )
 }
