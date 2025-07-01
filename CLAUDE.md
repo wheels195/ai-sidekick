@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AI Sidekick is a Next.js 15 application that provides specialized AI assistants for local trade businesses. The app uses modern React with TypeScript, Tailwind CSS, and Radix UI components.
 
-**Current Status:** Frontend MVP complete (v0 generated), OpenAI integration implemented and functional
+**Current Status:** 🚀 **PRODUCTION DEPLOYED** - Full application live on Vercel with mobile optimization, black theme, and enhanced chat experience
 
 ## Development Commands
 
@@ -50,16 +50,24 @@ npm run lint
 ```
 
 ### Key Features Implemented
-1. **Landing Page** - Modern gradient design with responsive layout
-2. **Chat Interface** - Located at `/landscaping` route with OpenAI integration
-3. **OpenAI API Integration** - Real-time AI responses with specialized landscaping prompts
-4. **Component Library** - Full shadcn/ui implementation
-5. **Responsive Design** - Mobile-first approach with Tailwind breakpoints
+1. **Landing Page** - Modern black theme design with responsive layout and emerald accents
+2. **Chat Interface** - Full-screen chat experience at `/landscaping` route with:
+   - Auto-expanding textarea that prevents horizontal scrolling
+   - Mobile-optimized touch interactions
+   - Full viewport height utilization for better readability
+   - Tips and FAQ content positioned below chat for easy access
+3. **OpenAI API Integration** - Enhanced AI responses with specialized landscaping prompts focused on digital marketing and local SEO
+4. **Component Library** - Full shadcn/ui implementation with custom black theme styling
+5. **Mobile Optimization** - Comprehensive mobile-first approach with:
+   - Fixed scrolling issues on mobile browsers
+   - Touch-friendly interface elements
+   - Proper viewport handling for various screen sizes
+   - Performance optimizations for mobile devices
 
 ## Backend Integration Status
 
 ### Completed
-- **`/api/chat`** - OpenAI GPT-4o-mini integration with specialized landscaping system prompts
+- **`/api/chat`** - OpenAI GPT-4o-mini integration with enhanced landscaping system prompts focused on digital marketing, local SEO, and content creation
 - **Supabase Integration** - Database schema, authentication, and conversation storage
 - **Two-Layer Learning System** - Individual user learning and global pattern recognition
 - **Authentication APIs** - Sign up, sign in, sign out, and profile management
@@ -91,17 +99,17 @@ npm run lint
 
 ### Environment Variables
 ```
-# Required (Implemented)
-OPENAI_API_KEY=your_openai_api_key_here
+# Production Environment (Configured in Vercel)
+OPENAI_API_KEY=configured_in_vercel
 
-# Optional (Configured)
+# Supabase Integration (Configured)
+NEXT_PUBLIC_SUPABASE_URL=https://tgrwtbtyfznebqrwenji.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=configured_in_vercel
+SUPABASE_SERVICE_ROLE_KEY=configured_in_vercel
+
+# File Upload Settings (Configured)
 NEXT_PUBLIC_MAX_FILE_SIZE=10485760
 NEXT_PUBLIC_ALLOWED_FILE_TYPES=image/*,.pdf,.doc,.docx,.txt
-
-# Future (Supabase Integration)
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
 ```
 
 ## Development Guidelines
@@ -109,9 +117,11 @@ SUPABASE_SERVICE_ROLE_KEY=
 ### Styling Conventions
 - Use Tailwind CSS classes exclusively
 - **Typography**: Inter font loaded via Next.js fonts and configured as default sans-serif
-- Follow existing gradient patterns (`from-blue-500 via-indigo-500 to-purple-500`)
+- **Color Scheme**: Black theme with emerald/teal accents (`from-emerald-500 to-teal-500`)
+- **Background**: Solid black (`bg-black`) for main sections with gradient overlays for visual interest
 - Maintain consistent spacing and responsive breakpoints
-- Use backdrop-blur effects for glass morphism
+- Use backdrop-blur effects for glass morphism with reduced opacity on black backgrounds
+- **Mobile Considerations**: Touch-friendly sizing, proper viewport handling, performance optimization
 
 ### Component Patterns
 - All UI components follow shadcn/ui conventions
@@ -126,11 +136,16 @@ SUPABASE_SERVICE_ROLE_KEY=
 
 ## Important Notes
 
+- **Production Ready:** ✅ Fully deployed and operational at https://ai-sidekick-alpha.vercel.app
+- **Mobile Optimized:** ✅ Comprehensive mobile experience with touch-friendly interactions
 - **No Generic Business Logic:** All AI responses must be trade-specific
+- **Enhanced AI Prompts:** Focused on digital marketing, local SEO, and content creation strategies
+- **Full-Screen Chat:** Chat interface uses full viewport height for optimal user experience
 - **File Processing:** Image analysis and document processing capabilities planned
 - **Learning System:** Two-layer learning (global + individual user)
 - **Security:** No sensitive data in client-side code
 - **Accessibility:** Radix UI ensures WCAG compliance
+- **Theme:** Consistent black background with emerald accent colors
 
 ## Trade-Specific Features
 
@@ -146,6 +161,41 @@ SUPABASE_SERVICE_ROLE_KEY=
 - Each with industry-specific knowledge bases
 - Pro plan provides access to all trades
 
+## Deployment & Production
+
+### Current Deployment
+- **Platform**: Vercel (https://ai-sidekick-alpha.vercel.app)
+- **Status**: ✅ Live and fully functional
+- **Build Configuration**: Next.js 15 with React 19 compatibility using `--legacy-peer-deps`
+- **Environment**: All variables configured in Vercel dashboard
+- **Performance**: Optimized for mobile and desktop with fast response times
+
+### Vercel Configuration
+```json
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install --legacy-peer-deps",
+  "devCommand": "npm run dev"
+}
+```
+
+### Development Commands
+```bash
+# Development server (with dependency compatibility)
+npm run dev
+
+# Build for production with React 19 compatibility
+npm run build
+
+# Lint code
+npm run lint
+
+# Install dependencies (required for React 19 compatibility)
+npm install --legacy-peer-deps
+```
+
 ## Testing Strategy
 
 No test framework currently implemented. When adding tests:
@@ -153,3 +203,4 @@ No test framework currently implemented. When adding tests:
 - Consider Playwright for E2E testing
 - Test both frontend components and API endpoints
 - Verify file upload/processing workflows
+- Test mobile responsiveness and touch interactions
