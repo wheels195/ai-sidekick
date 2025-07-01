@@ -358,97 +358,6 @@ export default function LandscapingChat() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Suggested Questions (only show when no user messages) */}
-              {messages.length === 1 && (
-                <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 border-t border-white/10">
-                  <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3 pt-3 sm:pt-4">Try asking me about:</p>
-                  <div className="flex flex-wrap gap-1 sm:gap-2">
-                    {/* Upload Button */}
-                    <label className="inline-flex items-center space-x-2 text-xs bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/30 rounded-full px-4 py-3 text-emerald-300 hover:text-emerald-200 transition-all duration-300 hover:scale-105 cursor-pointer">
-                      <Upload className="w-4 h-4" />
-                      <span>Upload Document or Image</span>
-                      <input
-                        type="file"
-                        accept="image/*,.pdf,.doc,.docx,.txt"
-                        className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0]
-                          if (file) {
-                            // Handle file upload here
-                            console.log("File selected:", file.name)
-                            // You can add file processing logic here
-                          }
-                        }}
-                      />
-                    </label>
-
-                    {/* Example upload scenarios */}
-                    <div className="w-full mt-4">
-                      <p className="text-gray-400 text-xs mb-3">Upload examples:</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <ImageIcon className="w-4 h-4 text-blue-400" />
-                            <span className="text-xs font-medium text-white">Landscape Design Ideas</span>
-                          </div>
-                          <p className="text-xs text-gray-300">
-                            Upload photos of yards, design inspiration, or current landscapes for improvement
-                            suggestions
-                          </p>
-                        </div>
-
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <FileText className="w-4 h-4 text-green-400" />
-                            <span className="text-xs font-medium text-white">Pricing Analysis</span>
-                          </div>
-                          <p className="text-xs text-gray-300">
-                            Upload your current price list or competitor pricing for market analysis and recommendations
-                          </p>
-                        </div>
-
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <ImageIcon className="w-4 h-4 text-purple-400" />
-                            <span className="text-xs font-medium text-white">Problem Diagnosis</span>
-                          </div>
-                          <p className="text-xs text-gray-300">
-                            Upload photos of plant diseases, pest damage, or lawn issues for identification and
-                            treatment advice
-                          </p>
-                        </div>
-
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <FileText className="w-4 h-4 text-orange-400" />
-                            <span className="text-xs font-medium text-white">Contract Review</span>
-                          </div>
-                          <p className="text-xs text-gray-300">
-                            Upload contracts, proposals, or service agreements for improvement suggestions and best
-                            practices
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Original suggested questions */}
-                    <div className="w-full mt-4">
-                      <p className="text-gray-400 text-xs mb-3">Or try asking:</p>
-                      <div className="flex flex-wrap gap-2">
-                        {suggestedQuestions.map((question, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setInput(question)}
-                            className="text-xs bg-white/5 hover:bg-white/10 border border-white/20 rounded-full px-3 py-2 text-gray-300 hover:text-white transition-all duration-300 hover:scale-105"
-                          >
-                            {question}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Input Area */}
               <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10">
@@ -505,6 +414,100 @@ export default function LandscapingChat() {
       {/* Additional Content Below Chat */}
       <div className="relative z-10 bg-gradient-to-br from-black via-gray-950 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
+          
+          {/* Upload & Suggestions Section */}
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+            <CardContent className="p-6 sm:p-8">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-xl flex items-center justify-center">
+                  <Upload className="w-5 h-5 text-emerald-400" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-white">Get Started</h3>
+              </div>
+
+              {/* Upload Button */}
+              <div className="mb-6">
+                <label className="inline-flex items-center space-x-3 text-sm bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/30 rounded-lg px-6 py-4 text-emerald-300 hover:text-emerald-200 transition-all duration-300 hover:scale-105 cursor-pointer">
+                  <Upload className="w-5 h-5" />
+                  <span>Upload Document or Image</span>
+                  <input
+                    type="file"
+                    accept="image/*,.pdf,.doc,.docx,.txt"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) {
+                        console.log("File selected:", file.name)
+                      }
+                    }}
+                  />
+                </label>
+              </div>
+
+              {/* Upload Examples */}
+              <div className="mb-6">
+                <p className="text-gray-400 text-sm mb-4">Upload examples:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <ImageIcon className="w-4 h-4 text-blue-400" />
+                      <span className="text-sm font-medium text-white">Landscape Design Ideas</span>
+                    </div>
+                    <p className="text-sm text-gray-300">
+                      Upload photos of yards, design inspiration, or current landscapes for improvement suggestions
+                    </p>
+                  </div>
+
+                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <FileText className="w-4 h-4 text-green-400" />
+                      <span className="text-sm font-medium text-white">Pricing Analysis</span>
+                    </div>
+                    <p className="text-sm text-gray-300">
+                      Upload your current price list or competitor pricing for market analysis and recommendations
+                    </p>
+                  </div>
+
+                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <ImageIcon className="w-4 h-4 text-purple-400" />
+                      <span className="text-sm font-medium text-white">Problem Diagnosis</span>
+                    </div>
+                    <p className="text-sm text-gray-300">
+                      Upload photos of plant diseases, pest damage, or lawn issues for identification and treatment advice
+                    </p>
+                  </div>
+
+                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <FileText className="w-4 h-4 text-orange-400" />
+                      <span className="text-sm font-medium text-white">Contract Review</span>
+                    </div>
+                    <p className="text-sm text-gray-300">
+                      Upload contracts, proposals, or service agreements for improvement suggestions and best practices
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Suggested Questions */}
+              <div>
+                <p className="text-gray-400 text-sm mb-4">Or try asking:</p>
+                <div className="flex flex-wrap gap-3">
+                  {suggestedQuestions.map((question, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setInput(question)}
+                      className="text-sm bg-white/5 hover:bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-gray-300 hover:text-white transition-all duration-300 hover:scale-105"
+                    >
+                      {question}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Quick Stats */}
           <div className="grid grid-cols-3 gap-4 sm:gap-6">
             {[
