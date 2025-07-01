@@ -250,13 +250,13 @@ export default function LandscapingChat() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 min-h-screen">
-        <div className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8 py-2 sm:py-4 lg:py-6 h-full">
+      <main className="relative z-10">
+        <div className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8 py-2 sm:py-4 lg:py-6">
           {/* Chat Messages Container */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] flex flex-col">
-            <CardContent className="p-0 flex flex-col h-full">
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+            <CardContent className="p-0">
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6 min-h-0">
+              <div className="h-[70vh] sm:h-[75vh] lg:h-96 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -372,7 +372,7 @@ export default function LandscapingChat() {
 
               {/* Suggested Questions (only show when no user messages) */}
               {messages.length === 1 && (
-                <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 border-t border-white/10 flex-shrink-0">
+                <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 border-t border-white/10">
                   <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3 pt-3 sm:pt-4">Try asking me about:</p>
                   <div className="flex flex-wrap gap-1 sm:gap-2">
                     {/* Upload Button */}
@@ -463,7 +463,7 @@ export default function LandscapingChat() {
               )}
 
               {/* Input Area */}
-              <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10 flex-shrink-0">
+              <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10">
                 <form onSubmit={handleSubmit} className="flex space-x-2 sm:space-x-4">
                   <div className="flex-1 relative">
                     <Input

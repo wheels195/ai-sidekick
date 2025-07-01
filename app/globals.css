@@ -28,14 +28,12 @@ body {
   
   /* Ensure full height on mobile */
   html, body {
-    height: 100%;
     overflow-x: hidden;
   }
   
   /* Fix viewport height on mobile browsers */
   .min-h-screen {
     min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
   }
 }
 
