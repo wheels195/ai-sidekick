@@ -18,7 +18,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.2),transparent_70%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(16,185,129,0.2),transparent_50%)]"></div>
@@ -359,9 +359,9 @@ export default function LandingPage() {
           </div>
 
           {/* Coming Soon */}
-          <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 px-8 sm:px-12 lg:px-16 rounded-3xl mx-4 sm:mx-8 border border-white/10">
+          <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 py-20 px-8 sm:px-12 lg:px-16 rounded-3xl mx-4 sm:mx-8">
             <div className="text-center mb-16">
-              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-slate-600/20 to-blue-600/20 backdrop-blur-xl border border-slate-600/30 rounded-full px-6 py-3 text-slate-200 font-semibold">
+              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-slate-600/20 to-blue-600/20 backdrop-blur-xl border border-slate-600/30 rounded-full px-6 py-3 text-slate-700 font-semibold">
                 <Sparkles className="w-5 h-5" />
                 <span>Coming Soon</span>
               </span>
@@ -371,7 +371,7 @@ export default function LandingPage() {
               {/* Electricians */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div className="lg:pr-8">
-                  <h3 className="text-3xl font-bold text-white mb-6">Electricians AI Sidekick</h3>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Electricians AI Sidekick</h3>
                   <div className="space-y-3">
                     {[
                       "Smart Pricing",
@@ -383,7 +383,7 @@ export default function LandingPage() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <CheckCircle className="w-5 h-5 text-yellow-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-200 font-medium">{item}</span>
+                        <span className="text-lg text-gray-700 font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -398,7 +398,7 @@ export default function LandingPage() {
                   <CardContent className="p-8 text-center">
                     <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">⚡</div>
                     <h4 className="text-2xl font-semibold text-gray-900 mb-4">Electricians</h4>
-                    <p className="text-gray-200 mb-6">
+                    <p className="text-gray-700 mb-6">
                       Wiring, safety codes, and electrical business growth strategies
                     </p>
                     <div className="flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-4 py-2">
@@ -415,7 +415,7 @@ export default function LandingPage() {
                   <CardContent className="p-8 text-center">
                     <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🔧</div>
                     <h4 className="text-2xl font-semibold text-gray-900 mb-4">Plumbers</h4>
-                    <p className="text-gray-200 mb-6">Pipe work, emergency services, and customer retention</p>
+                    <p className="text-gray-700 mb-6">Pipe work, emergency services, and customer retention</p>
                     <div className="flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-4 py-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                       <span className="text-blue-700 text-sm font-medium">In Development</span>
@@ -423,7 +423,7 @@ export default function LandingPage() {
                   </CardContent>
                 </Card>
                 <div className="lg:pl-8 lg:order-2">
-                  <h3 className="text-3xl font-bold text-white mb-6">Plumbers AI Sidekick</h3>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Plumbers AI Sidekick</h3>
                   <div className="space-y-3">
                     {[
                       "Emergency Calls",
@@ -435,7 +435,7 @@ export default function LandingPage() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-200 font-medium">{item}</span>
+                        <span className="text-lg text-gray-700 font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -451,7 +451,7 @@ export default function LandingPage() {
               {/* HVAC */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div className="lg:pr-8">
-                  <h3 className="text-3xl font-bold text-white mb-6">HVAC AI Sidekick</h3>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-6">HVAC AI Sidekick</h3>
                   <div className="space-y-3">
                     {[
                       "Energy Efficiency",
@@ -463,7 +463,7 @@ export default function LandingPage() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <CheckCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-200 font-medium">{item}</span>
+                        <span className="text-lg text-gray-700 font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -478,7 +478,7 @@ export default function LandingPage() {
                   <CardContent className="p-8 text-center">
                     <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🏠</div>
                     <h4 className="text-2xl font-semibold text-gray-900 mb-4">HVAC</h4>
-                    <p className="text-gray-200 mb-6">Climate systems, seasonal maintenance, and energy efficiency</p>
+                    <p className="text-gray-700 mb-6">Climate systems, seasonal maintenance, and energy efficiency</p>
                     <div className="flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-4 py-2">
                       <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                       <span className="text-red-700 text-sm font-medium">In Development</span>
@@ -493,7 +493,7 @@ export default function LandingPage() {
                   <CardContent className="p-8 text-center">
                     <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🏗️</div>
                     <h4 className="text-2xl font-semibold text-gray-900 mb-4">Roofers</h4>
-                    <p className="text-gray-200 mb-6">Materials, weather patterns, and insurance claims</p>
+                    <p className="text-gray-700 mb-6">Materials, weather patterns, and insurance claims</p>
                     <div className="flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-4 py-2">
                       <div className="w-2 h-2 bg-stone-500 rounded-full animate-pulse"></div>
                       <span className="text-stone-700 text-sm font-medium">In Development</span>
@@ -501,7 +501,7 @@ export default function LandingPage() {
                   </CardContent>
                 </Card>
                 <div className="lg:pl-8 lg:order-2">
-                  <h3 className="text-3xl font-bold text-white mb-6">Roofers AI Sidekick</h3>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Roofers AI Sidekick</h3>
                   <div className="space-y-3">
                     {[
                       "Insurance Claims",
@@ -513,7 +513,7 @@ export default function LandingPage() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <CheckCircle className="w-5 h-5 text-stone-600 flex-shrink-0" />
-                        <span className="text-lg text-gray-200 font-medium">{item}</span>
+                        <span className="text-lg text-gray-700 font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -529,7 +529,7 @@ export default function LandingPage() {
               {/* Pest Control */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div className="lg:pr-8">
-                  <h3 className="text-3xl font-bold text-white mb-6">Pest Control AI Sidekick</h3>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Pest Control AI Sidekick</h3>
                   <div className="space-y-3">
                     {[
                       "Monthly Contracts",
@@ -541,7 +541,7 @@ export default function LandingPage() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-200 font-medium">{item}</span>
+                        <span className="text-lg text-gray-700 font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -556,7 +556,7 @@ export default function LandingPage() {
                   <CardContent className="p-8 text-center">
                     <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🐛</div>
                     <h4 className="text-2xl font-semibold text-gray-900 mb-4">Pest Control</h4>
-                    <p className="text-gray-200 mb-6">Treatment methods, seasonal pests, and prevention</p>
+                    <p className="text-gray-700 mb-6">Treatment methods, seasonal pests, and prevention</p>
                     <div className="flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-4 py-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-green-700 text-sm font-medium">In Development</span>
@@ -570,7 +570,7 @@ export default function LandingPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-lg px-8 py-4 hover:border-white/50"
+                className="border-gray-400 text-gray-700 hover:bg-gray-100 bg-white/80 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-lg px-8 py-4 hover:border-gray-500"
                 onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Get Notified When Your Trade Launches

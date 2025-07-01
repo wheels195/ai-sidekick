@@ -297,31 +297,9 @@ export default function LandscapingChat() {
                                 h1: ({children}) => <h1 className="text-xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2">{children}</h1>,
                                 h2: ({children}) => <h2 className="text-lg font-bold text-emerald-300 mb-3 mt-5 first:mt-0">{children}</h2>,
                                 h3: ({children}) => <h3 className="text-base font-semibold text-emerald-400 mb-2 mt-4 first:mt-0">{children}</h3>,
-                                ul: ({children}) => <ul className="list-none space-y-2 mb-4 ml-0">{children}</ul>,
-                                ol: ({children, start}) => (
-                                  <ol className="list-none space-y-2 mb-4 ml-0" style={{'--start': start || 1}}>
-                                    {React.Children.map(children, (child, index) => 
-                                      React.cloneElement(child as React.ReactElement, { 
-                                        'data-number': (start || 1) + index 
-                                      })
-                                    )}
-                                  </ol>
-                                ),
-                                li: ({children, 'data-number': dataNumber}) => {
-                                  return dataNumber ? (
-                                    <li className="flex items-start text-gray-200">
-                                      <span className="text-emerald-400 font-semibold min-w-[1.5rem] mr-3 mt-0.5">
-                                        {dataNumber}.
-                                      </span>
-                                      <span className="flex-1">{children}</span>
-                                    </li>
-                                  ) : (
-                                    <li className="flex items-start text-gray-200">
-                                      <span className="text-emerald-400 mr-3 mt-1 text-lg">•</span>
-                                      <span className="flex-1">{children}</span>
-                                    </li>
-                                  );
-                                },
+                                ul: ({children}) => <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ul>,
+                                ol: ({children}) => <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ol>,
+                                li: ({children}) => <li className="text-gray-200 leading-relaxed">{children}</li>,
                                 p: ({children}) => <p className="mb-3 last:mb-0 text-gray-200 leading-relaxed">{children}</p>,
                                 strong: ({children}) => <strong className="font-semibold text-white">{children}</strong>,
                                 code: ({children}) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono">{children}</code>,
