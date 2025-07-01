@@ -260,10 +260,10 @@ export default function LandscapingChat() {
       </header>
 
       {/* Main Chat Section - Full Screen */}
-      <main className="relative z-40 h-screen pt-14 sm:pt-16 lg:pt-20">
-        <div className="h-full flex flex-col p-2 sm:p-4 lg:p-6">
+      <main className="relative z-40 h-[100dvh] pt-14 sm:pt-16 lg:pt-20 touch-manipulation">
+        <div className="h-full flex flex-col p-1 sm:p-4 lg:p-6">
           {/* Chat Messages Container - Full Height */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col">
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col touch-manipulation">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Messages Area - Takes remaining space */}
               <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
@@ -360,7 +360,7 @@ export default function LandscapingChat() {
 
 
               {/* Input Area */}
-              <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10">
+              <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10 flex-shrink-0">
                 <form onSubmit={handleSubmit} className="flex space-x-2 sm:space-x-4">
                   <div className="flex-1 relative">
                     <Textarea
@@ -385,7 +385,7 @@ export default function LandscapingChat() {
                           ? "Ask me anything about growing your landscaping business..."
                           : placeholderText
                       }
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[3rem] max-h-[150px] overflow-y-auto"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-base sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[3rem] max-h-[150px] overflow-y-auto w-full"
                       rows={1}
                       disabled={isLoading}
                     />
