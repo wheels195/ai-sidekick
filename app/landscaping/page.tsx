@@ -20,6 +20,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 
 interface Message {
@@ -115,6 +116,15 @@ export default function LandscapingChat() {
       inline: "nearest",
     })
   }
+
+  // Auto-resize textarea when input changes
+  useEffect(() => {
+    const textarea = document.querySelector('textarea') as HTMLTextAreaElement
+    if (textarea) {
+      textarea.style.height = 'auto'
+      textarea.style.height = Math.min(textarea.scrollHeight, 150) + 'px'
+    }
+  }, [input])
 
   useEffect(() => {
     // Scroll to top when page loads
@@ -444,17 +454,30 @@ export default function LandscapingChat() {
               <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10">
                 <form onSubmit={handleSubmit} className="flex space-x-2 sm:space-x-4">
                   <div className="flex-1 relative">
-                    <Input
+                    <Textarea
                       value={input}
-                      onChange={(e) => setInput(e.target.value)}
+                      onChange={(e) => {
+                        setInput(e.target.value)
+                        // Auto-resize textarea
+                        const target = e.target as HTMLTextAreaElement
+                        target.style.height = 'auto'
+                        target.style.height = Math.min(target.scrollHeight, 150) + 'px'
+                      }}
                       onFocus={() => setIsInputFocused(true)}
                       onBlur={() => setIsInputFocused(false)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault()
+                          handleSubmit(e as any)
+                        }
+                      }}
                       placeholder={
                         isInputFocused || input.length > 0 || messages.length > 1
-                          ? "Ask me anything about growing your landscaping business..."
+                          ? "Ask me anything about growing your landscaping business... (Press Enter to send, Shift+Enter for new line)"
                           : placeholderText
                       }
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[3rem] max-h-[150px] overflow-y-auto"
+                      rows={1}
                       disabled={isLoading}
                     />
                     <div className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2">
