@@ -358,224 +358,286 @@ export default function LandingPage() {
             </Card>
           </div>
 
-          {/* Coming Soon */}
-          <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 py-20 px-8 sm:px-12 lg:px-16 rounded-3xl mx-4 sm:mx-8">
-            <div className="text-center mb-16">
-              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-slate-600/20 to-blue-600/20 backdrop-blur-xl border border-slate-600/30 rounded-full px-6 py-3 text-slate-700 font-semibold">
-                <Sparkles className="w-5 h-5" />
-                <span>Coming Soon</span>
-              </span>
-            </div>
+          {/* Coming Soon - AI Sidekicks */}
+          <div className="bg-gradient-to-br from-black via-gray-950 to-black py-16 sm:py-24 lg:py-32 relative">
+            {/* Background Elements */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)] pointer-events-none"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.1),transparent_50%)] pointer-events-none"></div>
 
-            <div className="space-y-16">
-              {/* Electricians */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <div className="lg:pr-8">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Electricians AI Sidekick</h3>
-                  <div className="space-y-3">
-                    {[
-                      "Smart Pricing",
-                      "Code Compliance",
-                      "Safety Protocols",
-                      "Smart Home Upsells",
-                      "Local SEO",
-                      "Emergency Contracts",
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-yellow-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-700 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Button
-                    className="mt-6 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white"
-                    onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    Get Notified
-                  </Button>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="text-center mb-16">
+                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-6 py-3 mb-8 hover:scale-105 transition-all duration-300">
+                  <Sparkles className="w-5 h-5 text-emerald-400" />
+                  <span className="text-emerald-300 font-medium">Coming Soon</span>
                 </div>
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-yellow-400/20 via-orange-400/20 to-amber-400/20 border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/20 transition-all duration-500 hover:scale-105 group">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">⚡</div>
-                    <h4 className="text-2xl font-semibold text-gray-900 mb-4">Electricians</h4>
-                    <p className="text-gray-700 mb-6">
-                      Wiring, safety codes, and electrical business growth strategies
-                    </p>
-                    <div className="flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-4 py-2">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                      <span className="text-yellow-700 text-sm font-medium">In Development</span>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                  <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
+                    More AI Sidekicks
+                  </span>
+                </h2>
+                <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+                  Specialized AI assistants for every trade, each trained with industry-specific expertise
+                </p>
+              </div>
+
+              {/* Trade Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
+                {/* Electricians AI Sidekick */}
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="p-6 sm:p-8 relative z-10">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <span className="text-2xl">⚡</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Electricians AI</h3>
+                      <p className="text-gray-300 text-sm">Wiring, codes & safety expertise</p>
                     </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Smart home upsells",
+                        "Code compliance",
+                        "Emergency pricing",
+                        "Safety protocols"
+                      ].map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckCircle className="w-4 h-4 text-yellow-400 flex-shrink-0" />
+                          <span className="text-gray-200 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-4 py-2 mb-6">
+                      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                      <span className="text-yellow-300 text-xs font-medium">In Development</span>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-2"
+                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Get Notified
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Plumbers AI Sidekick */}
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="p-6 sm:p-8 relative z-10">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <span className="text-2xl">🔧</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Plumbers AI</h3>
+                      <p className="text-gray-300 text-sm">Emergency services & pipe systems</p>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Emergency call pricing",
+                        "Water heater sales",
+                        "Pipe upgrade quotes",
+                        "Maintenance contracts"
+                      ].map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                          <span className="text-gray-200 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-4 py-2 mb-6">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                      <span className="text-blue-300 text-xs font-medium">In Development</span>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-2"
+                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Get Notified
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* HVAC AI Sidekick */}
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="p-6 sm:p-8 relative z-10">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <span className="text-2xl">🏠</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">HVAC AI</h3>
+                      <p className="text-gray-300 text-sm">Climate systems & energy efficiency</p>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Energy efficiency upgrades",
+                        "Seasonal maintenance",
+                        "Smart system installs",
+                        "Air quality solutions"
+                      ].map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                          <span className="text-gray-200 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-4 py-2 mb-6">
+                      <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                      <span className="text-red-300 text-xs font-medium">In Development</span>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 text-sm py-2"
+                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Get Notified
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Roofers AI Sidekick */}
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-stone-500/10 to-gray-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="p-6 sm:p-8 relative z-10">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-stone-400 to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <span className="text-2xl">🏗️</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Roofers AI</h3>
+                      <p className="text-gray-300 text-sm">Materials, weather & insurance</p>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Insurance claim guidance",
+                        "Storm damage assessment",
+                        "Material recommendations",
+                        "Preventive maintenance"
+                      ].map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckCircle className="w-4 h-4 text-stone-400 flex-shrink-0" />
+                          <span className="text-gray-200 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-4 py-2 mb-6">
+                      <div className="w-2 h-2 bg-stone-400 rounded-full animate-pulse"></div>
+                      <span className="text-stone-300 text-xs font-medium">In Development</span>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white shadow-xl hover:shadow-stone-500/25 transition-all duration-300 text-sm py-2"
+                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Get Notified
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Pest Control AI Sidekick */}
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="p-6 sm:p-8 relative z-10">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <span className="text-2xl">🐛</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Pest Control AI</h3>
+                      <p className="text-gray-300 text-sm">Treatment methods & prevention</p>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Monthly service contracts",
+                        "Seasonal pest patterns",
+                        "Treatment recommendations",
+                        "Prevention education"
+                      ].map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                          <span className="text-gray-200 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-4 py-2 mb-6">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-green-300 text-xs font-medium">In Development</span>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 text-sm py-2"
+                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Get Notified
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* General Contractors AI Sidekick */}
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden md:col-span-2 lg:col-span-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="p-6 sm:p-8 relative z-10">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <span className="text-2xl">🔨</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Contractors AI</h3>
+                      <p className="text-gray-300 text-sm">Project management & bidding</p>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Accurate bid estimates",
+                        "Project scheduling",
+                        "Subcontractor management",
+                        "Material sourcing"
+                      ].map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                          <span className="text-gray-200 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-2 bg-purple-500/20 rounded-full px-4 py-2 mb-6">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                      <span className="text-purple-300 text-xs font-medium">In Development</span>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 text-sm py-2"
+                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Get Notified
+                    </Button>
                   </CardContent>
                 </Card>
               </div>
 
-              {/* Plumbers */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-blue-400/20 via-cyan-400/20 to-teal-400/20 border-blue-500/30 shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 hover:scale-105 group lg:order-1">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🔧</div>
-                    <h4 className="text-2xl font-semibold text-gray-900 mb-4">Plumbers</h4>
-                    <p className="text-gray-700 mb-6">Pipe work, emergency services, and customer retention</p>
-                    <div className="flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-4 py-2">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                      <span className="text-blue-700 text-sm font-medium">In Development</span>
-                    </div>
-                  </CardContent>
-                </Card>
-                <div className="lg:pl-8 lg:order-2">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Plumbers AI Sidekick</h3>
-                  <div className="space-y-3">
-                    {[
-                      "Emergency Calls",
-                      "Water Heater Sales",
-                      "Pipe Upgrades",
-                      "Maintenance Plans",
-                      "Local Reputation",
-                      "Diagnostic Skills",
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-700 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Button
-                    className="mt-6 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white"
-                    onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    Get Notified
-                  </Button>
-                </div>
+              {/* Call to Action */}
+              <div className="text-center">
+                <p className="text-gray-300 mb-6 text-sm sm:text-base">
+                  Be the first to know when your trade's AI sidekick launches
+                </p>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
+                  onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                >
+                  Get Early Access to All Trades
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+                </Button>
               </div>
-
-              {/* HVAC */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <div className="lg:pr-8">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">HVAC AI Sidekick</h3>
-                  <div className="space-y-3">
-                    {[
-                      "Energy Efficiency",
-                      "Premium Pricing",
-                      "Seasonal Demand",
-                      "Maintenance Contracts",
-                      "Smart Technology",
-                      "Indoor Air Quality",
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-700 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Button
-                    className="mt-6 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white"
-                    onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    Get Notified
-                  </Button>
-                </div>
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-red-400/20 via-orange-400/20 to-pink-400/20 border-red-500/30 shadow-2xl hover:shadow-red-500/20 transition-all duration-500 hover:scale-105 group">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🏠</div>
-                    <h4 className="text-2xl font-semibold text-gray-900 mb-4">HVAC</h4>
-                    <p className="text-gray-700 mb-6">Climate systems, seasonal maintenance, and energy efficiency</p>
-                    <div className="flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-4 py-2">
-                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="text-red-700 text-sm font-medium">In Development</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Roofers */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-stone-400/20 via-gray-400/20 to-slate-400/20 border-stone-500/30 shadow-2xl hover:shadow-stone-500/20 transition-all duration-500 hover:scale-105 group lg:order-1">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🏗️</div>
-                    <h4 className="text-2xl font-semibold text-gray-900 mb-4">Roofers</h4>
-                    <p className="text-gray-700 mb-6">Materials, weather patterns, and insurance claims</p>
-                    <div className="flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-4 py-2">
-                      <div className="w-2 h-2 bg-stone-500 rounded-full animate-pulse"></div>
-                      <span className="text-stone-700 text-sm font-medium">In Development</span>
-                    </div>
-                  </CardContent>
-                </Card>
-                <div className="lg:pl-8 lg:order-2">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Roofers AI Sidekick</h3>
-                  <div className="space-y-3">
-                    {[
-                      "Insurance Claims",
-                      "Storm Damage",
-                      "Gutter Systems",
-                      "Ventilation Upgrades",
-                      "Preventive Plans",
-                      "Local Expert Status",
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-stone-600 flex-shrink-0" />
-                        <span className="text-lg text-gray-700 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Button
-                    className="mt-6 bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white"
-                    onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    Get Notified
-                  </Button>
-                </div>
-              </div>
-
-              {/* Pest Control */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <div className="lg:pr-8">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">Pest Control AI Sidekick</h3>
-                  <div className="space-y-3">
-                    {[
-                      "Monthly Contracts",
-                      "Prevention Education",
-                      "Seasonal Patterns",
-                      "Proactive Treatments",
-                      "Bed Bug Solutions",
-                      "Termite Expertise",
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-lg text-gray-700 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Button
-                    className="mt-6 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white"
-                    onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    Get Notified
-                  </Button>
-                </div>
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-green-400/20 via-emerald-400/20 to-teal-400/20 border-green-500/30 shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 group">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-6 group-hover:scale-110 transition-all duration-300">🐛</div>
-                    <h4 className="text-2xl font-semibold text-gray-900 mb-4">Pest Control</h4>
-                    <p className="text-gray-700 mb-6">Treatment methods, seasonal pests, and prevention</p>
-                    <div className="flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-4 py-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-green-700 text-sm font-medium">In Development</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            <div className="text-center mt-16 px-4">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto border-gray-400 text-gray-700 hover:bg-gray-100 bg-white/80 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 hover:border-gray-500 max-w-sm sm:max-w-md mx-auto flex items-center justify-center"
-                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <span className="text-center leading-tight">Get Notified When Your Trade Launches</span>
-                <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-              </Button>
             </div>
           </div>
         </div>
