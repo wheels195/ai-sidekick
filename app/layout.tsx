@@ -6,7 +6,7 @@ import 'highlight.js/styles/github-dark.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'AI Sidekick - Landscaping Business Growth Assistant',
+  title: 'AI Sidekick | Local Business Growth Agent',
   description: 'Specialized AI assistant for landscaping businesses. Get expert advice on marketing, SEO, operations, and growth strategies.',
   generator: 'v0.dev',
 }
