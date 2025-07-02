@@ -112,7 +112,7 @@ export default function LandingPage() {
                 className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 hover:border-white/50 text-center"
                 onClick={() => window.location.href = '/signup'}
               >
-                Get Early Access to All Trades
+                Create Your Account
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
               </Button>
             </div>
@@ -668,7 +668,7 @@ export default function LandingPage() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {[
                     "7-day full access trial",
-                    "Try any available AI sidekick",
+                    "Full access to your trade's AI sidekick",
                     "Unlimited questions & conversations",
                     "All features included",
                     "No credit card required",
@@ -703,7 +703,7 @@ export default function LandingPage() {
 
                 <ul className="space-y-3 mb-8 flex-1">
                   {[
-                    "Access to available AI sidekick",
+                    "Full access to your trade's AI sidekick",
                     "Unlimited questions & conversations",
                     "Local SEO guidance",
                     "Content generation tools",
@@ -730,25 +730,25 @@ export default function LandingPage() {
             <Card className="backdrop-blur-2xl bg-gray-800/60 border-purple-500/40 shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 hover:bg-gray-800/80 relative">
               <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
-                  Most Popular
+                  For General Contractors
                 </span>
               </div>
               <CardContent className="p-8 h-full flex flex-col">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Pro Plan</h3>
+                  <h3 className="text-2xl font-bold text-white mb-4">Multi-Trade Plan</h3>
                   <div className="text-4xl font-bold text-white mb-4">
-                    $29<span className="text-lg font-normal text-gray-300">/month</span>
+                    $39<span className="text-lg font-normal text-gray-300">/month</span>
                   </div>
-                  <p className="text-gray-200">For serious business growth</p>
+                  <p className="text-gray-200">For contractors who need multiple trades</p>
                 </div>
 
                 <ul className="space-y-3 mb-8 flex-1">
                   {[
-                    "Access to ALL AI sidekicks (as they launch)",
+                    "Access to ALL trade AI sidekicks",
+                    "Perfect for general contractors",
                     "Priority support & faster responses",
-                    "Advanced business strategies",
-                    "Custom industry insights",
-                    "Early access to new features",
+                    "Advanced cross-trade strategies",
+                    "Early access to new trade launches",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start group">
                       <CheckCircle className="w-6 h-6 text-purple-400 mr-4 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
@@ -762,7 +762,7 @@ export default function LandingPage() {
                     className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
                     onClick={() => window.location.href = '/signup'}
                   >
-                    Start Free Trial
+                    Get Multi-Trade Access
                   </Button>
                 </div>
               </CardContent>
