@@ -100,19 +100,20 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 backdrop-blur-sm border border-white/20 text-center"
-                onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
+                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 backdrop-blur-sm border border-white/20 text-center"
+                onClick={() => window.location.href = '/landscaping'}
               >
-                <span className="block sm:inline">Explore Our AI Sidekicks</span>
-                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
+                <span className="block sm:inline">Try Landscaping AI Free</span>
+                <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 hover:border-white/50 text-center"
-                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => window.location.href = '/signup'}
               >
-                Watch Demo
+                Get Early Access to All Trades
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
               </Button>
             </div>
           </div>
