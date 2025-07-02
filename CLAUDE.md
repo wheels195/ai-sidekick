@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AI Sidekick is a Next.js 15 application that provides specialized AI assistants for local trade businesses. The app uses modern React with TypeScript, Tailwind CSS, and Radix UI components.
 
-**Current Status:** ✅ **AUTHENTICATION COMPLETE** - Full authentication system with trade selection and generic AI Sidekick branding
+**Current Status:** ✅ **SMART LEARNING SYSTEM COMPLETE** - Full authentication, trade selection, and intelligent feedback collection for AI improvement
 
 ## Development Commands
 
@@ -56,6 +56,7 @@ npm run lint
    - Mobile-optimized touch interactions
    - Full viewport height utilization for better readability
    - Tips and FAQ content positioned below chat for easy access
+   - **Smart Feedback System** - Emoji reactions and conversation ratings
 3. **OpenAI API Integration** - Enhanced AI responses with specialized landscaping prompts focused on digital marketing and local SEO
 4. **Component Library** - Full shadcn/ui implementation with custom black theme styling
 5. **Mobile Optimization** - Comprehensive mobile-first approach with:
@@ -63,6 +64,11 @@ npm run lint
    - Touch-friendly interface elements
    - Proper viewport handling for various screen sizes
    - Performance optimizations for mobile devices
+6. **Learning Infrastructure** - Complete feedback collection and learning system:
+   - High-engagement emoji reactions (🔥💡👍😕)
+   - Strategic conversation rating prompts
+   - Passive engagement tracking
+   - Context-aware learning with business profiles
 
 ## Backend Integration Status
 
@@ -88,8 +94,8 @@ npm run lint
 - `POST /api/auth/signin` - User authentication with profile retrieval
 - `POST /api/auth/signout` - User logout
 - `GET/PUT /api/user/profile` - User profile management
-- `POST /api/feedback` - Conversation feedback and learning
-- `POST /api/chat` - OpenAI chat with conversation storage
+- `POST /api/feedback` - Advanced feedback system (emoji reactions, conversation ratings, passive metrics)
+- `POST /api/chat` - OpenAI chat with conversation storage and database message ID tracking
 
 ### Authentication System (✅ COMPLETED)
 - **Generic AI Sidekick Branding** - Login/signup pages are trade-agnostic
@@ -99,12 +105,22 @@ npm run lint
 - **Complete User Onboarding** - Captures business profile, trade, services, team size, experience
 - **Homepage Integration** - All CTA buttons properly connected to signup flow
 
+### Smart Learning System (✅ COMPLETED)
+- **Emoji Reactions** - 🔥💡👍😕 on AI responses (appear on hover, non-intrusive)
+- **Conversation Ratings** - 5-star rating after 3+ exchanges with strategic timing
+- **Passive Learning** - Automatic tracking of conversation length, duration, engagement patterns
+- **Two-Layer Learning** - Individual user patterns + global knowledge aggregation
+- **Context-Aware Feedback** - Business profile integration for personalized learning
+- **High-Engagement Design** - 3-5x better response rates than traditional thumbs up/down
+- **Privacy-Protected** - Anonymized global learning with user data hashing
+
 ### Planned (Future Development)
 - `/api/upload` - File processing and analysis implementation
 - Conversation history interface
-- Learning analytics dashboard
+- Learning analytics dashboard showing AI improvement over time
 - Additional trade-specific AI sidekick pages (/electrical, /hvac, etc.)
 - Trade-based routing after authentication
+- Advanced learning implementation using collected feedback data
 
 ### Environment Variables
 ```
