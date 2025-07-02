@@ -659,29 +659,29 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Free Trial - Own Row */}
-          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1 mb-6">
-            <div className="flex flex-col gap-4">
-              <PricingCard
-                title="Free Trial"
-                price="$0 / 7 days"
-                description="Test drive our AI sidekicks"
-                buttonVariant="outline"
-                buttonText="Start Free Trial"
-                features={[
-                  "7-day full access trial",
-                  "Full access to your trade's AI sidekick",
-                  "Unlimited questions & conversations",
-                  "All features included",
-                  "No credit card required",
-                ]}
-                onClick={() => window.location.href = '/signup'}
-              />
-            </div>
-          </div>
-
-          {/* Paid Plans - Three Columns */}
           <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1">
+            {/* Free Trial - Centered Above */}
+            <div className="flex justify-center mb-4">
+              <div className="w-full max-w-sm">
+                <PricingCard
+                  title="Free Trial"
+                  price="$0 / 7 days"
+                  description="Test drive our AI sidekicks"
+                  buttonVariant="outline"
+                  buttonText="Start Free Trial"
+                  features={[
+                    "7-day full access trial",
+                    "Full access to your trade's AI sidekick",
+                    "Unlimited questions & conversations",
+                    "All features included",
+                    "No credit card required",
+                  ]}
+                  onClick={() => window.location.href = '/signup'}
+                />
+              </div>
+            </div>
+
+            {/* Three Paid Plans Row */}
             <div className="flex flex-col gap-4 md:flex-row">
               <PricingCard
                 title="Starter Plan"
