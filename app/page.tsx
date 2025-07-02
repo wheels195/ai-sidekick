@@ -63,7 +63,7 @@ export default function LandingPage() {
 
             <Button
               className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20 text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:px-6 py-2 whitespace-nowrap"
-              onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => window.location.href = '/signup'}
             >
               <span className="hidden sm:inline">Get Early Access</span>
               <span className="sm:hidden">Get Access</span>
@@ -416,7 +416,7 @@ export default function LandingPage() {
 
                     <Button
                       className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-2"
-                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                      onClick={() => window.location.href = '/signup'}
                     >
                       Get Notified
                     </Button>
@@ -456,7 +456,7 @@ export default function LandingPage() {
 
                     <Button
                       className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-2"
-                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                      onClick={() => window.location.href = '/signup'}
                     >
                       Get Notified
                     </Button>
@@ -496,7 +496,7 @@ export default function LandingPage() {
 
                     <Button
                       className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 text-sm py-2"
-                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                      onClick={() => window.location.href = '/signup'}
                     >
                       Get Notified
                     </Button>
@@ -536,7 +536,7 @@ export default function LandingPage() {
 
                     <Button
                       className="w-full bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white shadow-xl hover:shadow-stone-500/25 transition-all duration-300 text-sm py-2"
-                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                      onClick={() => window.location.href = '/signup'}
                     >
                       Get Notified
                     </Button>
@@ -576,7 +576,7 @@ export default function LandingPage() {
 
                     <Button
                       className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 text-sm py-2"
-                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                      onClick={() => window.location.href = '/signup'}
                     >
                       Get Notified
                     </Button>
@@ -632,7 +632,7 @@ export default function LandingPage() {
                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
-                  onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => window.location.href = '/signup'}
                 >
                   Get Early Access to All Trades
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -682,7 +682,7 @@ export default function LandingPage() {
                 <div className="mt-auto">
                   <Button
                     className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
-                    onClick={() => alert("Free trial signup coming soon! Get notified when we launch.")}
+                    onClick={() => window.location.href = '/signup'}
                   >
                     Start Free Trial
                   </Button>
@@ -718,7 +718,7 @@ export default function LandingPage() {
                 <div className="mt-auto">
                   <Button
                     className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
-                    onClick={() => alert("Free trial signup coming soon! Get notified when we launch.")}
+                    onClick={() => window.location.href = '/signup'}
                   >
                     Start Free Trial
                   </Button>
@@ -759,7 +759,7 @@ export default function LandingPage() {
                 <div className="mt-auto">
                   <Button
                     className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
-                    onClick={() => alert("Free trial signup coming soon! Get notified when we launch.")}
+                    onClick={() => window.location.href = '/signup'}
                   >
                     Start Free Trial
                   </Button>
