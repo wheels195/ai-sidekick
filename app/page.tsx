@@ -654,18 +654,19 @@ export default function LandingPage() {
           </h2>
           <p className="text-xl text-gray-200 mb-16">No tokens. No fluff. Just results for your business.</p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-6 items-stretch max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6 items-stretch max-w-6xl mx-auto">
+            {/* Free Trial Card - Now First */}
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-green-500/30 shadow-2xl hover:shadow-green-500/10 transition-all duration-500 hover:scale-105">
-              <CardContent className="p-8 h-full flex flex-col">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Free Trial</h3>
-                  <div className="text-4xl font-bold text-white mb-4">
-                    $0<span className="text-lg font-normal text-gray-300">/7 days</span>
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="text-left mb-6">
+                  <h3 className="text-lg font-bold text-white mb-3">Free Trial</h3>
+                  <div className="text-3xl font-bold text-white mb-3">
+                    $0<span className="text-sm font-normal text-gray-300">/7 days</span>
                   </div>
-                  <p className="text-gray-200">Test drive our AI sidekicks</p>
+                  <p className="text-gray-200 text-sm">Test drive our AI sidekicks</p>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-1">
+                <ul className="space-y-2 mb-6 flex-1">
                   {[
                     "7-day full access trial",
                     "Full access to your trade's AI sidekick",
@@ -674,15 +675,15 @@ export default function LandingPage() {
                     "No credit card required",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-sm text-left">{feature}</span>
+                      <CheckCircle className="w-4 h-4 text-green-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
+                      <span className="text-gray-200 text-xs text-left">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="mt-auto">
                   <Button
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
                     onClick={() => window.location.href = '/signup'}
                   >
                     Start Free Trial
@@ -691,17 +692,18 @@ export default function LandingPage() {
               </CardContent>
             </Card>
 
+            {/* Starter Plan Card */}
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl hover:shadow-xl hover:bg-gray-800/60 transition-all duration-500 hover:scale-105">
-              <CardContent className="p-8 h-full flex flex-col">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Starter Plan</h3>
-                  <div className="text-4xl font-bold text-white mb-4">
-                    $10<span className="text-lg font-normal text-gray-300">/month</span>
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="text-left mb-6">
+                  <h3 className="text-lg font-bold text-white mb-3">Starter Plan</h3>
+                  <div className="text-3xl font-bold text-white mb-3">
+                    $10<span className="text-sm font-normal text-gray-300">/month</span>
                   </div>
-                  <p className="text-gray-200">Perfect for getting started</p>
+                  <p className="text-gray-200 text-sm">Perfect for getting started</p>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-1">
+                <ul className="space-y-2 mb-6 flex-1">
                   {[
                     "Full access to your trade's AI sidekick",
                     "Unlimited questions & conversations",
@@ -710,15 +712,15 @@ export default function LandingPage() {
                     "Email support",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-6 h-6 text-emerald-400 mr-4 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-sm text-left">{feature}</span>
+                      <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
+                      <span className="text-gray-200 text-xs text-left">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="mt-auto">
                   <Button
-                    className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
+                    className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
                     onClick={() => window.location.href = '/signup'}
                   >
                     Start Free Trial
@@ -727,22 +729,65 @@ export default function LandingPage() {
               </CardContent>
             </Card>
 
-            <Card className="backdrop-blur-2xl bg-gray-800/60 border-purple-500/40 shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 hover:bg-gray-800/80 relative">
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
-                  For General Contractors
+            {/* Advanced Plan Card */}
+            <Card className="backdrop-blur-2xl bg-gray-800/60 border-yellow-500/40 shadow-2xl hover:shadow-yellow-500/20 transition-all duration-500 hover:scale-105 hover:bg-gray-800/80 relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                  Most Advanced AI
                 </span>
               </div>
-              <CardContent className="p-8 h-full flex flex-col">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Multi-Trade Plan</h3>
-                  <div className="text-4xl font-bold text-white mb-4">
-                    $39<span className="text-lg font-normal text-gray-300">/month</span>
+              <CardContent className="p-6 h-full flex flex-col pt-8">
+                <div className="text-left mb-6">
+                  <h3 className="text-lg font-bold text-white mb-3">Advanced Plan</h3>
+                  <div className="text-3xl font-bold text-white mb-3">
+                    $59<span className="text-sm font-normal text-gray-300">/month</span>
                   </div>
-                  <p className="text-gray-200">For contractors who need multiple trades</p>
+                  <p className="text-gray-200 text-sm">GPT-4o powered with web search</p>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-1">
+                <ul className="space-y-2 mb-6 flex-1">
+                  {[
+                    "Everything in Pro Plan",
+                    "Powered by GPT-4o (most advanced AI)",
+                    "Real-time web search & research",
+                    "Latest industry trends & insights",
+                    "Advanced competitive analysis",
+                  ].map((feature, index) => (
+                    <li key={index} className="flex items-start group">
+                      <CheckCircle className="w-4 h-4 text-yellow-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
+                      <span className="text-gray-200 text-xs text-left">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto">
+                  <Button
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
+                    onClick={() => window.location.href = '/signup'}
+                  >
+                    Start Free Trial
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Multi-Trade Plan Card */}
+            <Card className="backdrop-blur-2xl bg-gray-800/60 border-slate-500/40 shadow-2xl hover:shadow-slate-500/20 transition-all duration-500 hover:scale-105 hover:bg-gray-800/80 relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-gray-500 to-slate-700 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                  General Contractors
+                </span>
+              </div>
+              <CardContent className="p-6 h-full flex flex-col pt-8">
+                <div className="text-left mb-6">
+                  <h3 className="text-lg font-bold text-white mb-3">Multi-Trade</h3>
+                  <div className="text-3xl font-bold text-white mb-3">
+                    $49<span className="text-sm font-normal text-gray-300">/month</span>
+                  </div>
+                  <p className="text-gray-200 text-sm">Access to all trade AI sidekicks</p>
+                </div>
+
+                <ul className="space-y-2 mb-6 flex-1">
                   {[
                     "Access to ALL trade AI sidekicks",
                     "Perfect for general contractors",
@@ -751,15 +796,15 @@ export default function LandingPage() {
                     "Early access to new trade launches",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-6 h-6 text-purple-400 mr-4 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-sm text-left">{feature}</span>
+                      <CheckCircle className="w-4 h-4 text-slate-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
+                      <span className="text-gray-200 text-xs text-left">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="mt-auto">
                   <Button
-                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base py-3 px-4"
+                    className="w-full bg-gradient-to-r from-gray-500 to-slate-700 hover:from-gray-400 hover:to-slate-600 text-white shadow-xl hover:shadow-slate-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
                     onClick={() => window.location.href = '/signup'}
                   >
                     Get Multi-Trade Access
