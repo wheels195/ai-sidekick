@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AI Sidekick is a Next.js 15 application that provides specialized AI assistants for local trade businesses. The app uses modern React with TypeScript, Tailwind CSS, and Radix UI components.
 
-**Current Status:** 🚀 **PRODUCTION DEPLOYED** - Full application live on Vercel with mobile optimization, black theme, and enhanced chat experience
+**Current Status:** ✅ **AUTHENTICATION COMPLETE** - Full authentication system with trade selection and generic AI Sidekick branding
 
 ## Development Commands
 
@@ -75,7 +75,7 @@ npm run lint
 - **Privacy Protection** - Row Level Security and anonymized global learning
 
 ### Database Schema (Implemented)
-- `user_profiles` - Business context and preferences
+- `user_profiles` - Business context including trade selection, services, team size, and challenges
 - `user_conversations` - Chat history with context and metadata
 - `uploaded_files` - File storage and analysis results (structure ready)
 - `global_conversations` - Anonymized learning system data
@@ -84,18 +84,27 @@ npm run lint
 - `user_sessions` - Session tracking and engagement metrics
 
 ### API Endpoints (Completed)
-- `POST /api/auth/signup` - User registration with business profile
-- `POST /api/auth/signin` - User authentication  
+- `POST /api/auth/signup` - User registration with complete business profile including trade selection
+- `POST /api/auth/signin` - User authentication with profile retrieval
 - `POST /api/auth/signout` - User logout
 - `GET/PUT /api/user/profile` - User profile management
 - `POST /api/feedback` - Conversation feedback and learning
+- `POST /api/chat` - OpenAI chat with conversation storage
+
+### Authentication System (✅ COMPLETED)
+- **Generic AI Sidekick Branding** - Login/signup pages are trade-agnostic
+- **Trade Selection** - 7 trades available: Landscaping, Electrical, HVAC, Plumbing, Roofing, Pest Control, General Contractor
+- **Dynamic Services Selection** - Services dropdown updates based on selected trade
+- **Custom Services** - "Other" option with text input for unlisted services
+- **Complete User Onboarding** - Captures business profile, trade, services, team size, experience
+- **Homepage Integration** - All CTA buttons properly connected to signup flow
 
 ### Planned (Future Development)
 - `/api/upload` - File processing and analysis implementation
-- Authentication UI components
-- User onboarding flow with business profile setup
 - Conversation history interface
 - Learning analytics dashboard
+- Additional trade-specific AI sidekick pages (/electrical, /hvac, etc.)
+- Trade-based routing after authentication
 
 ### Environment Variables
 ```
@@ -150,16 +159,23 @@ NEXT_PUBLIC_ALLOWED_FILE_TYPES=image/*,.pdf,.doc,.docx,.txt
 ## Trade-Specific Features
 
 ### Landscaping (Available)
+- Full chat interface at `/landscaping`
 - Local SEO guidance
 - Seasonal business planning
 - Upselling strategies
 - Content generation
 - Customer retention
 
+### Trade Selection System (✅ IMPLEMENTED)
+- **7 Trades Available for Selection**: Landscaping, Electrical, HVAC, Plumbing, Roofing, Pest Control, General Contractor
+- **Trade-Specific Services**: Each trade has curated service options
+- **User Profile Storage**: Trade and services stored in Supabase for future routing
+- **Future Expansion Ready**: Infrastructure in place for additional trade pages
+
 ### Coming Soon
-- Electricians, HVAC, Plumbers, Roofers, Pest Control
-- Each with industry-specific knowledge bases
-- Pro plan provides access to all trades
+- Individual AI sidekick pages for each trade (/electrical, /hvac, /plumbing, etc.)
+- Trade-specific knowledge bases and prompts
+- Pro plan access to all trades
 
 ## Deployment & Production
 
