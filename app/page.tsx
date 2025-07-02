@@ -12,6 +12,7 @@ import {
   Users,
   Target,
 } from "lucide-react"
+import { PricingCard } from "@/components/ui/pricing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -645,173 +646,94 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-black">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-              Simple, Honest Pricing
-            </span>
-          </h2>
-          <p className="text-xl text-gray-200 mb-16">No tokens. No fluff. Just results for your business.</p>
+      <section id="pricing" className="py-16 md:py-32 bg-black">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mx-auto flex max-w-3xl flex-col text-left md:text-center">
+            <h2 className="mb-3 text-3xl font-semibold md:mb-4 lg:mb-6 lg:text-4xl">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                Simple, Honest Pricing
+              </span>
+            </h2>
+            <p className="text-muted-foreground lg:text-lg mb-6 md:mb-8 lg:mb-12 text-xl text-gray-200">
+              No tokens. No fluff. Just results for your business.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6 items-stretch max-w-6xl mx-auto">
-            {/* Free Trial Card - Now First */}
-            <Card className="backdrop-blur-2xl bg-gray-800/40 border-green-500/30 shadow-2xl hover:shadow-green-500/10 transition-all duration-500 hover:scale-105">
-              <CardContent className="p-6 h-full flex flex-col">
-                <div className="text-left mb-6">
-                  <h3 className="text-lg font-bold text-white mb-3">Free Trial</h3>
-                  <div className="text-3xl font-bold text-white mb-3">
-                    $0<span className="text-sm font-normal text-gray-300">/7 days</span>
-                  </div>
-                  <p className="text-gray-200 text-sm">Test drive our AI sidekicks</p>
-                </div>
+          {/* Free Trial - Own Row */}
+          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1 mb-6">
+            <div className="flex flex-col gap-4">
+              <PricingCard
+                title="Free Trial"
+                price="$0 / 7 days"
+                description="Test drive our AI sidekicks"
+                buttonVariant="outline"
+                buttonText="Start Free Trial"
+                features={[
+                  "7-day full access trial",
+                  "Full access to your trade's AI sidekick",
+                  "Unlimited questions & conversations",
+                  "All features included",
+                  "No credit card required",
+                ]}
+                onClick={() => window.location.href = '/signup'}
+              />
+            </div>
+          </div>
 
-                <ul className="space-y-2 mb-6 flex-1">
-                  {[
-                    "7-day full access trial",
-                    "Full access to your trade's AI sidekick",
-                    "Unlimited questions & conversations",
-                    "All features included",
-                    "No credit card required",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-xs text-left">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+          {/* Paid Plans - Three Columns */}
+          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1">
+            <div className="flex flex-col gap-4 md:flex-row">
+              <PricingCard
+                title="Starter Plan"
+                price="$10 / mo"
+                description="Perfect for getting started"
+                buttonVariant="default"
+                buttonText="Start Free Trial"
+                features={[
+                  "Full access to your trade's AI sidekick",
+                  "Unlimited questions & conversations",
+                  "Local SEO guidance",
+                  "Content generation tools",
+                  "Email support",
+                ]}
+                onClick={() => window.location.href = '/signup'}
+              />
 
-                <div className="mt-auto">
-                  <Button
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
-                    onClick={() => window.location.href = '/signup'}
-                  >
-                    Start Free Trial
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              <PricingCard
+                title="Advanced Plan"
+                price="$59 / mo"
+                description="GPT-4o powered with web search"
+                buttonVariant="default"
+                highlight
+                badge="Most Advanced AI"
+                buttonText="Start Free Trial"
+                features={[
+                  "Everything in Starter Plan",
+                  "Powered by GPT-4o (most advanced AI)",
+                  "Real-time web search & research",
+                  "Latest industry trends & insights",
+                  "Advanced competitive analysis",
+                ]}
+                onClick={() => window.location.href = '/signup'}
+              />
 
-            {/* Starter Plan Card */}
-            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl hover:shadow-xl hover:bg-gray-800/60 transition-all duration-500 hover:scale-105">
-              <CardContent className="p-6 h-full flex flex-col">
-                <div className="text-left mb-6">
-                  <h3 className="text-lg font-bold text-white mb-3">Starter Plan</h3>
-                  <div className="text-3xl font-bold text-white mb-3">
-                    $10<span className="text-sm font-normal text-gray-300">/month</span>
-                  </div>
-                  <p className="text-gray-200 text-sm">Perfect for getting started</p>
-                </div>
-
-                <ul className="space-y-2 mb-6 flex-1">
-                  {[
-                    "Full access to your trade's AI sidekick",
-                    "Unlimited questions & conversations",
-                    "Local SEO guidance",
-                    "Content generation tools",
-                    "Email support",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-xs text-left">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto">
-                  <Button
-                    className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
-                    onClick={() => window.location.href = '/signup'}
-                  >
-                    Start Free Trial
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Advanced Plan Card */}
-            <Card className="backdrop-blur-2xl bg-gray-800/60 border-yellow-500/40 shadow-2xl hover:shadow-yellow-500/20 transition-all duration-500 hover:scale-105 hover:bg-gray-800/80 relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                  Most Advanced AI
-                </span>
-              </div>
-              <CardContent className="p-6 h-full flex flex-col pt-8">
-                <div className="text-left mb-6">
-                  <h3 className="text-lg font-bold text-white mb-3">Advanced Plan</h3>
-                  <div className="text-3xl font-bold text-white mb-3">
-                    $59<span className="text-sm font-normal text-gray-300">/month</span>
-                  </div>
-                  <p className="text-gray-200 text-sm">GPT-4o powered with web search</p>
-                </div>
-
-                <ul className="space-y-2 mb-6 flex-1">
-                  {[
-                    "Everything in Pro Plan",
-                    "Powered by GPT-4o (most advanced AI)",
-                    "Real-time web search & research",
-                    "Latest industry trends & insights",
-                    "Advanced competitive analysis",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-4 h-4 text-yellow-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-xs text-left">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto">
-                  <Button
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
-                    onClick={() => window.location.href = '/signup'}
-                  >
-                    Start Free Trial
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Multi-Trade Plan Card */}
-            <Card className="backdrop-blur-2xl bg-gray-800/60 border-slate-500/40 shadow-2xl hover:shadow-slate-500/20 transition-all duration-500 hover:scale-105 hover:bg-gray-800/80 relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-gray-500 to-slate-700 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                  General Contractors
-                </span>
-              </div>
-              <CardContent className="p-6 h-full flex flex-col pt-8">
-                <div className="text-left mb-6">
-                  <h3 className="text-lg font-bold text-white mb-3">Multi-Trade</h3>
-                  <div className="text-3xl font-bold text-white mb-3">
-                    $49<span className="text-sm font-normal text-gray-300">/month</span>
-                  </div>
-                  <p className="text-gray-200 text-sm">Access to all trade AI sidekicks</p>
-                </div>
-
-                <ul className="space-y-2 mb-6 flex-1">
-                  {[
-                    "Access to ALL trade AI sidekicks",
-                    "Perfect for general contractors",
-                    "Priority support & faster responses",
-                    "Advanced cross-trade strategies",
-                    "Early access to new trade launches",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start group">
-                      <CheckCircle className="w-4 h-4 text-slate-400 mr-2 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-all duration-300" />
-                      <span className="text-gray-200 text-xs text-left">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto">
-                  <Button
-                    className="w-full bg-gradient-to-r from-gray-500 to-slate-700 hover:from-gray-400 hover:to-slate-600 text-white shadow-xl hover:shadow-slate-500/25 transition-all duration-300 hover:scale-105 text-xs py-2 px-3"
-                    onClick={() => window.location.href = '/signup'}
-                  >
-                    Get Multi-Trade Access
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              <PricingCard
+                title="Multi-Trade"
+                price="$49 / mo"
+                description="Access to all trade AI sidekicks"
+                buttonVariant="default"
+                badge="General Contractors"
+                buttonText="Get Multi-Trade Access"
+                features={[
+                  "Access to ALL trade AI sidekicks",
+                  "Perfect for general contractors",
+                  "Priority support & faster responses",
+                  "Advanced cross-trade strategies",
+                  "Early access to new trade launches",
+                ]}
+                onClick={() => window.location.href = '/signup'}
+              />
+            </div>
           </div>
         </div>
       </section>
