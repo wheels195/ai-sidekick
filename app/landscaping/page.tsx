@@ -68,16 +68,17 @@ export default function LandscapingChat() {
   const [isTyping, setIsTyping] = useState(true)
   const [isInputFocused, setIsInputFocused] = useState(false)
 
+  // Mobile-friendly shorter suggestions for better UX
   const placeholderSuggestions = [
-    "Ask me anything about growing your landscaping business...",
+    "Ask me anything about growing your business...",
     "How can I get more local customers?",
-    "What should I charge for lawn maintenance?",
-    "Help me write a blog post about spring cleanup",
-    "How do I rank higher on Google Maps?",
-    "What services should I offer in winter?",
+    "What should I charge for maintenance?",
+    "Help me with spring cleanup content",
+    "How do I rank higher on Google?",
+    "What winter services should I offer?",
     "How can I get more 5-star reviews?",
-    "Help me create a quote for tree trimming",
-    "What's the best way to upsell customers?",
+    "Help me create a quote template",
+    "What's the best way to upsell?",
     "How do I compete with larger companies?",
   ]
 
@@ -136,12 +137,23 @@ export default function LandscapingChat() {
     })
   }
 
-  // Auto-resize textarea when input changes
+  // Auto-resize textarea when input changes - smooth and responsive
   useEffect(() => {
     const textarea = document.querySelector('textarea') as HTMLTextAreaElement
-    if (textarea) {
+    if (textarea && input) {
+      const maxHeight = window.innerWidth < 640 ? 120 : 150
       textarea.style.height = 'auto'
-      textarea.style.height = Math.min(textarea.scrollHeight, 150) + 'px'
+      const newHeight = Math.min(textarea.scrollHeight, maxHeight)
+      textarea.style.height = newHeight + 'px'
+      
+      // Manage overflow dynamically
+      if (textarea.scrollHeight > maxHeight) {
+        textarea.style.overflowY = 'auto'
+        textarea.classList.add('scrollbar-thin', 'scrollbar-track-transparent', 'scrollbar-thumb-emerald-500/20')
+      } else {
+        textarea.style.overflowY = 'hidden'
+        textarea.classList.remove('scrollbar-thin', 'scrollbar-track-transparent', 'scrollbar-thumb-emerald-500/20')
+      }
     }
   }, [input])
 
@@ -342,12 +354,18 @@ export default function LandscapingChat() {
 
       {/* Main Chat Section - Full Screen */}
       <main className="relative z-40 h-[100dvh] pt-14 sm:pt-16 lg:pt-20 touch-manipulation">
-        <div className="h-full flex flex-col p-1 sm:p-4 lg:p-6">
+        <div className="h-full flex flex-col px-2 py-1 sm:px-4 sm:py-2 lg:px-6 lg:py-3">
           {/* Chat Messages Container - Full Height */}
           <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col touch-manipulation">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Messages Area - Takes remaining space */}
-              <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
+              <div 
+                className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6"
+                style={{
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: 'rgba(16, 185, 129, 0.2) transparent'
+                }}
+              >
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -497,17 +515,26 @@ export default function LandscapingChat() {
               )}
 
               {/* Input Area */}
-              <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10 flex-shrink-0">
-                <form onSubmit={handleSubmit} className="flex space-x-2 sm:space-x-4">
+              <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0">
+                <form onSubmit={handleSubmit} className="flex items-end space-x-3 sm:space-x-4">
                   <div className="flex-1 relative">
                     <Textarea
                       value={input}
                       onChange={(e) => {
                         setInput(e.target.value)
-                        // Auto-resize textarea
+                        // Smooth auto-resize textarea
                         const target = e.target as HTMLTextAreaElement
+                        const maxHeight = window.innerWidth < 640 ? 120 : 150 // Responsive max height
                         target.style.height = 'auto'
-                        target.style.height = Math.min(target.scrollHeight, 150) + 'px'
+                        const newHeight = Math.min(target.scrollHeight, maxHeight)
+                        target.style.height = newHeight + 'px'
+                        
+                        // Only show scrollbar if content exceeds max height
+                        if (target.scrollHeight > maxHeight) {
+                          target.style.overflowY = 'auto'
+                        } else {
+                          target.style.overflowY = 'hidden'
+                        }
                       }}
                       onFocus={() => setIsInputFocused(true)}
                       onBlur={() => setIsInputFocused(false)}
@@ -519,27 +546,27 @@ export default function LandscapingChat() {
                       }}
                       placeholder={
                         isInputFocused || input.length > 0 || messages.length > 1
-                          ? "Ask me anything about growing your landscaping business..."
+                          ? "Ask me anything about growing your business..."
                           : placeholderText
                       }
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-6 text-base sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[3rem] max-h-[150px] overflow-y-auto w-full"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-5 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[2.75rem] sm:min-h-[3rem] lg:min-h-[3.5rem] max-h-[120px] sm:max-h-[150px] overflow-hidden hover:overflow-y-auto focus:overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 w-full leading-relaxed"
                       rows={1}
                       disabled={isLoading}
                     />
-                    <div className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2">
-                      <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+                    <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <Sparkles className="w-4 h-4 text-gray-500" />
                     </div>
                   </div>
                   <Button
                     type="submit"
                     disabled={!input.trim() || isLoading}
-                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 px-3 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-6 touch-manipulation"
+                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 px-3 sm:px-4 lg:px-5 py-3 sm:py-4 lg:py-5 touch-manipulation flex-shrink-0 h-[2.75rem] sm:h-[3rem] lg:h-[3.5rem] flex items-center justify-center"
                   >
-                    <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <Send className="w-4 h-4 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                   </Button>
                 </form>
 
-                <p className="text-xs text-gray-400 mt-3 text-center">
+                <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
                   Powered by specialized AI trained for landscaping businesses
                 </p>
               </div>
