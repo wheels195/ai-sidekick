@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Sparkles, ArrowLeft, Eye, EyeOff, LogIn, Leaf } from "lucide-react"
+import { Sparkles, ArrowLeft, Eye, EyeOff, LogIn } from "lucide-react"
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -58,7 +58,8 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (response.ok) {
-        // Success - redirect to landscaping chat
+        // Success - redirect to appropriate trade page based on user profile
+        // For now, default to landscaping since it's the only one available
         window.location.href = '/landscaping'
       } else {
         setErrors({ submit: data.error || 'Failed to sign in' })
@@ -96,12 +97,12 @@ export default function LoginPage() {
             </div>
 
             <div className="flex items-center space-x-3 cursor-pointer" onClick={() => (window.location.href = "/")}>
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Leaf className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h1 className="text-lg font-bold text-white">AI Sidekick</h1>
-                <p className="text-xs text-gray-300">Landscaping Business Growth</p>
+                <p className="text-xs text-gray-300">Specialized AI for Local Trades</p>
               </div>
             </div>
 
@@ -114,9 +115,9 @@ export default function LoginPage() {
       <main className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-6 py-3 mb-6 hover:scale-105 transition-all duration-300">
-              <Sparkles className="w-5 h-5 text-emerald-400" />
-              <span className="text-emerald-300 font-medium">Welcome Back</span>
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-6 hover:scale-105 transition-all duration-300">
+              <Sparkles className="w-5 h-5 text-blue-400" />
+              <span className="text-blue-300 font-medium">Welcome Back</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
@@ -124,7 +125,7 @@ export default function LoginPage() {
               </span>
             </h1>
             <p className="text-lg text-gray-300">
-              Continue your landscaping business growth journey
+              Continue your business growth journey
             </p>
           </div>
 
@@ -141,7 +142,7 @@ export default function LoginPage() {
                     placeholder="Email address"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                     disabled={isLoading}
                   />
                   {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
@@ -154,7 +155,7 @@ export default function LoginPage() {
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10"
+                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
                     disabled={isLoading}
                   />
                   <button
@@ -177,7 +178,7 @@ export default function LoginPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 py-3"
+                    className="w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 py-3"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center space-x-2">
@@ -199,7 +200,7 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => window.location.href = '/signup'}
-                      className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300"
+                      className="text-blue-400 hover:text-blue-300 transition-colors duration-300"
                     >
                       Create one here
                     </button>

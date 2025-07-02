@@ -4,8 +4,9 @@ import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Sparkles, ArrowLeft, Eye, EyeOff, CheckCircle, Leaf } from "lucide-react"
+import { Sparkles, ArrowLeft, Eye, EyeOff, CheckCircle } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -14,7 +15,9 @@ export default function SignupPage() {
     confirmPassword: '',
     businessName: '',
     location: '',
-    services: '',
+    trade: '',
+    services: [] as string[],
+    customService: '',
     teamSize: '',
     targetCustomers: '',
     yearsInBusiness: '',
@@ -34,6 +37,62 @@ export default function SignupPage() {
     }
   }
 
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }))
+    // Clear error when user selects
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const handleServiceToggle = (service: string) => {
+    setFormData(prev => ({
+      ...prev,
+      services: prev.services.includes(service)
+        ? prev.services.filter(s => s !== service)
+        : [...prev.services, service]
+    }))
+  }
+
+  // Trade options and their corresponding services
+  const tradeOptions = {
+    landscaping: {
+      name: 'Landscaping',
+      services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation', 'Hardscaping', 'Snow Removal', 'Pest Control']
+    },
+    electrical: {
+      name: 'Electrical',
+      services: ['Residential Wiring', 'Commercial Electric', 'Panel Upgrades', 'Lighting Installation', 'Generator Installation', 'Emergency Repairs']
+    },
+    hvac: {
+      name: 'HVAC',
+      services: ['AC Installation', 'Heating Repair', 'Duct Cleaning', 'Maintenance Plans', 'Indoor Air Quality', 'Commercial HVAC']
+    },
+    plumbing: {
+      name: 'Plumbing',
+      services: ['Drain Cleaning', 'Pipe Repair', 'Water Heater Service', 'Bathroom Remodeling', 'Emergency Plumbing', 'Sewer Line']
+    },
+    roofing: {
+      name: 'Roofing',
+      services: ['Roof Replacement', 'Roof Repair', 'Gutter Installation', 'Storm Damage', 'Inspections', 'Commercial Roofing']
+    },
+    pest_control: {
+      name: 'Pest Control',
+      services: ['Monthly Service', 'One-Time Treatment', 'Termite Control', 'Rodent Control', 'Commercial Pest Control', 'Wildlife Removal']
+    },
+    general_contractor: {
+      name: 'General Contractor',
+      services: ['Home Remodeling', 'Kitchen Renovation', 'Bathroom Renovation', 'Additions', 'Commercial Construction', 'Handyman Services']
+    }
+  }
+
+  const getServicesForTrade = () => {
+    if (!formData.trade || !tradeOptions[formData.trade as keyof typeof tradeOptions]) {
+      return []
+    }
+    return tradeOptions[formData.trade as keyof typeof tradeOptions].services
+  }
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
@@ -48,6 +107,7 @@ export default function SignupPage() {
 
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
     if (!formData.location) newErrors.location = 'Location is required'
+    if (!formData.trade) newErrors.trade = 'Please select your trade'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -72,7 +132,8 @@ export default function SignupPage() {
           businessProfile: {
             business_name: formData.businessName,
             location: formData.location,
-            services: formData.services ? formData.services.split(',').map(s => s.trim()) : [],
+            trade: formData.trade,
+            services: formData.customService ? [...formData.services, formData.customService] : formData.services,
             team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
             target_customers: formData.targetCustomers,
             years_in_business: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
@@ -84,8 +145,9 @@ export default function SignupPage() {
       const data = await response.json()
 
       if (response.ok) {
-        // Success - redirect to landscaping chat
-        window.location.href = '/landscaping'
+        // Success - redirect to appropriate trade page
+        const tradePage = formData.trade === 'landscaping' ? '/landscaping' : '/landscaping' // Default to landscaping for now
+        window.location.href = tradePage
       } else {
         setErrors({ submit: data.error || 'Failed to create account' })
       }
@@ -122,12 +184,12 @@ export default function SignupPage() {
             </div>
 
             <div className="flex items-center space-x-3 cursor-pointer" onClick={() => (window.location.href = "/")}>
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Leaf className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h1 className="text-lg font-bold text-white">AI Sidekick</h1>
-                <p className="text-xs text-gray-300">Landscaping Business Growth</p>
+                <p className="text-xs text-gray-300">Specialized AI for Local Trades</p>
               </div>
             </div>
 
@@ -140,9 +202,9 @@ export default function SignupPage() {
       <main className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-6 py-3 mb-6 hover:scale-105 transition-all duration-300">
-              <Sparkles className="w-5 h-5 text-emerald-400" />
-              <span className="text-emerald-300 font-medium">Get Started</span>
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-6 hover:scale-105 transition-all duration-300">
+              <Sparkles className="w-5 h-5 text-blue-400" />
+              <span className="text-blue-300 font-medium">Get Started</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
@@ -150,7 +212,7 @@ export default function SignupPage() {
               </span>
             </h1>
             <p className="text-lg text-gray-300">
-              Join AI Sidekick and get personalized landscaping business advice
+              Join AI Sidekick and get personalized business advice for your trade
             </p>
           </div>
 
@@ -171,7 +233,7 @@ export default function SignupPage() {
                       placeholder="Email address"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                       disabled={isLoading}
                     />
                     {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
@@ -184,7 +246,7 @@ export default function SignupPage() {
                       placeholder="Password (6+ characters)"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
                       disabled={isLoading}
                     />
                     <button
@@ -204,7 +266,7 @@ export default function SignupPage() {
                       placeholder="Confirm password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
                       disabled={isLoading}
                     />
                     <button
@@ -229,7 +291,7 @@ export default function SignupPage() {
                       placeholder="Business name *"
                       value={formData.businessName}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                       disabled={isLoading}
                     />
                     {errors.businessName && <p className="text-red-400 text-sm mt-1">{errors.businessName}</p>}
@@ -242,10 +304,30 @@ export default function SignupPage() {
                       placeholder="City, State *"
                       value={formData.location}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                       disabled={isLoading}
                     />
                     {errors.location && <p className="text-red-400 text-sm mt-1">{errors.location}</p>}
+                  </div>
+
+                  <div>
+                    <Select
+                      value={formData.trade}
+                      onValueChange={(value) => handleSelectChange('trade', value)}
+                      disabled={isLoading}
+                    >
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 focus:ring-blue-500/25">
+                        <SelectValue placeholder="Select your trade *" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-600">
+                        {Object.entries(tradeOptions).map(([key, trade]) => (
+                          <SelectItem key={key} value={key} className="text-white hover:bg-gray-700">
+                            {trade.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.trade && <p className="text-red-400 text-sm mt-1">{errors.trade}</p>}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -255,7 +337,7 @@ export default function SignupPage() {
                       placeholder="Team size"
                       value={formData.teamSize}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                       disabled={isLoading}
                     />
                     <Input
@@ -264,20 +346,58 @@ export default function SignupPage() {
                       placeholder="Years in business"
                       value={formData.yearsInBusiness}
                       onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                       disabled={isLoading}
                     />
                   </div>
 
-                  <Input
-                    type="text"
-                    name="services"
-                    placeholder="Services offered (comma separated)"
-                    value={formData.services}
-                    onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
-                    disabled={isLoading}
-                  />
+                  {/* Services Selection */}
+                  {formData.trade && (
+                    <div>
+                      <p className="text-white text-sm mb-3">Services you offer (select all that apply):</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                        {getServicesForTrade().map((service) => (
+                          <label
+                            key={service}
+                            className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-white/5 border border-white/20 hover:bg-white/10 transition-all duration-300"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={formData.services.includes(service)}
+                              onChange={() => handleServiceToggle(service)}
+                              className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
+                              disabled={isLoading}
+                            />
+                            <span className="text-gray-200 text-sm">{service}</span>
+                          </label>
+                        ))}
+                      </div>
+                      
+                      {/* Custom Service Input */}
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="checkbox"
+                          checked={!!formData.customService}
+                          onChange={(e) => {
+                            if (!e.target.checked) {
+                              setFormData(prev => ({ ...prev, customService: '' }))
+                            }
+                          }}
+                          className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
+                          disabled={isLoading}
+                        />
+                        <Input
+                          type="text"
+                          name="customService"
+                          placeholder="Other service not listed"
+                          value={formData.customService}
+                          onChange={handleInputChange}
+                          className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 flex-1"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   <Input
                     type="text"
@@ -285,7 +405,7 @@ export default function SignupPage() {
                     placeholder="Target customers (e.g., residential, commercial)"
                     value={formData.targetCustomers}
                     onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25"
+                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                     disabled={isLoading}
                   />
 
@@ -294,7 +414,7 @@ export default function SignupPage() {
                     placeholder="Main business challenges (comma separated)"
                     value={formData.mainChallenges}
                     onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 resize-none"
+                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 resize-none"
                     rows={3}
                     disabled={isLoading}
                   />
@@ -310,7 +430,7 @@ export default function SignupPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 py-3"
+                    className="w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 py-3"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center space-x-2">
@@ -332,7 +452,7 @@ export default function SignupPage() {
                     <button
                       type="button"
                       onClick={() => window.location.href = '/login'}
-                      className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300"
+                      className="text-blue-400 hover:text-blue-300 transition-colors duration-300"
                     >
                       Sign in here
                     </button>
