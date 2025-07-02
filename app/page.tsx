@@ -659,9 +659,9 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1">
-            {/* Free Trial - Centered Above */}
-            <div className="flex justify-center mb-4">
+          {/* Free Trial - Own Container */}
+          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1 mb-6">
+            <div className="flex justify-center">
               <div className="w-full max-w-sm">
                 <PricingCard
                   title="Free Trial"
@@ -680,8 +680,10 @@ export default function LandingPage() {
                 />
               </div>
             </div>
+          </div>
 
-            {/* Three Paid Plans Row */}
+          {/* Three Paid Plans - Separate Container */}
+          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1">
             <div className="flex flex-col gap-4 md:flex-row">
               <PricingCard
                 title="Starter Plan"
