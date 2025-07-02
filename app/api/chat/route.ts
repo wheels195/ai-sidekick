@@ -180,13 +180,14 @@ Use this context to provide more personalized and relevant advice.`
     }
 
     const responseTime = Date.now() - startTime
+    let storedAssistantMessage: any = null
 
     // Store assistant response if authenticated and Supabase is available
     if (user && assistantMessage.content && process.env.NEXT_PUBLIC_SUPABASE_URL) {
       try {
         const { supabase } = createClient(request)
         
-        await supabase
+        const { data } = await supabase
           .from('user_conversations')
           .insert({
             user_id: user.id,
@@ -202,6 +203,10 @@ Use this context to provide more personalized and relevant advice.`
             response_time_ms: responseTime,
             tokens_used: completion.usage?.total_tokens
           })
+          .select('id')
+          .single()
+
+        storedAssistantMessage = data
 
         // Store anonymized data for global learning
         await supabase
@@ -227,6 +232,7 @@ Use this context to provide more personalized and relevant advice.`
       message: {
         role: assistantMessage.role,
         content: assistantMessage.content,
+        id: user && process.env.NEXT_PUBLIC_SUPABASE_URL ? (storedAssistantMessage?.id || null) : null,
       },
       usage: completion.usage,
       sessionId: sessionId || crypto.randomUUID()

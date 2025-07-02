@@ -28,7 +28,21 @@ interface Message {
   role: "user" | "assistant"
   content: string
   timestamp: Date
+  reaction?: string
 }
+
+interface MessageReaction {
+  messageId: string
+  reaction: string
+  timestamp: Date
+}
+
+const EMOJI_REACTIONS = [
+  { emoji: '🔥', label: 'Fire - This is excellent!' },
+  { emoji: '💡', label: 'Lightbulb - Very helpful insight!' },
+  { emoji: '👍', label: 'Thumbs up - Good advice' },
+  { emoji: '😕', label: 'Confused - Not quite what I needed' }
+]
 
 export default function LandscapingChat() {
   const [messages, setMessages] = useState<Message[]>([
@@ -42,6 +56,11 @@ export default function LandscapingChat() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [reactions, setReactions] = useState<Record<string, string>>({})
+  const [conversationStartTime] = useState(new Date())
+  const [messageCount, setMessageCount] = useState(1)
+  const [showRatingPrompt, setShowRatingPrompt] = useState(false)
+  const [hasRatedConversation, setHasRatedConversation] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -138,6 +157,59 @@ export default function LandscapingChat() {
     }
   }, [messages.length]) // Changed dependency to messages.length instead of messages
 
+  const handleConversationRating = async (rating: number) => {
+    setHasRatedConversation(true)
+    setShowRatingPrompt(false)
+    
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'conversation_rating',
+          rating,
+          conversationLength: messages.length,
+          conversationDuration: Date.now() - conversationStartTime.getTime(),
+          messageCount
+        }),
+      })
+    } catch (error) {
+      console.error('Failed to send conversation rating:', error)
+    }
+  }
+
+  const handleReaction = async (messageId: string, emoji: string) => {
+    // Update local state immediately for good UX
+    setReactions(prev => ({ ...prev, [messageId]: emoji }))
+    
+    try {
+      // Send feedback to API
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messageId,
+          reaction: emoji,
+          type: 'emoji_reaction',
+          conversationLength: messages.length,
+          conversationDuration: Date.now() - conversationStartTime.getTime()
+        }),
+      })
+    } catch (error) {
+      console.error('Failed to send reaction:', error)
+      // Revert on error
+      setReactions(prev => {
+        const updated = { ...prev }
+        delete updated[messageId]
+        return updated
+      })
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isLoading) return
@@ -152,6 +224,7 @@ export default function LandscapingChat() {
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
+    setMessageCount(prev => prev + 1)
 
     try {
       // Call our OpenAI API endpoint
@@ -179,13 +252,21 @@ export default function LandscapingChat() {
       }
 
       const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: data.message.id || (Date.now() + 1).toString(), // Use database ID if available
         role: "assistant",
         content: data.message.content,
         timestamp: new Date(),
       }
 
       setMessages((prev) => [...prev, assistantMessage])
+      setMessageCount(prev => {
+        const newCount = prev + 1
+        // Show rating prompt after 6+ messages (3+ exchanges) and not already rated
+        if (newCount >= 6 && !hasRatedConversation && !showRatingPrompt) {
+          setTimeout(() => setShowRatingPrompt(true), 2000) // Delay to not interrupt reading
+        }
+        return newCount
+      })
     } catch (error) {
       console.error('Chat API Error:', error)
       
@@ -270,7 +351,7 @@ export default function LandscapingChat() {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex items-start space-x-2 sm:space-x-4 ${
+                    className={`group flex items-start space-x-2 sm:space-x-4 ${
                       message.role === "user" ? "flex-row-reverse space-x-reverse" : ""
                     }`}
                   >
@@ -323,9 +404,38 @@ export default function LandscapingChat() {
                           <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
-                      <p className="text-xs text-gray-400 mt-2">
-                        {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </p>
+                      
+                      {/* Emoji Reactions - Only for assistant messages */}
+                      {message.role === "assistant" && (
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            {EMOJI_REACTIONS.map(({ emoji, label }) => (
+                              <button
+                                key={emoji}
+                                onClick={() => handleReaction(message.id, emoji)}
+                                title={label}
+                                className={`text-lg hover:scale-125 transition-all duration-200 p-1 rounded-full hover:bg-white/10 ${
+                                  reactions[message.id] === emoji 
+                                    ? 'bg-emerald-500/20 scale-110' 
+                                    : ''
+                                }`}
+                              >
+                                {emoji}
+                              </button>
+                            ))}
+                          </div>
+                          <p className="text-xs text-gray-400">
+                            {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {/* Timestamp for user messages */}
+                      {message.role === "user" && (
+                        <p className="text-xs text-gray-400 mt-2">
+                          {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -358,6 +468,33 @@ export default function LandscapingChat() {
                 <div ref={messagesEndRef} />
               </div>
 
+              {/* Conversation Rating Prompt */}
+              {showRatingPrompt && (
+                <div className="px-4 py-3 border-t border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-sm text-emerald-300 font-medium">How's this chat going?</span>
+                      <div className="flex items-center space-x-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            onClick={() => handleConversationRating(star)}
+                            className="text-lg hover:scale-110 transition-all duration-200 text-gray-400 hover:text-yellow-400"
+                          >
+                            ⭐
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowRatingPrompt(false)}
+                      className="text-gray-400 hover:text-gray-300 text-sm"
+                    >
+                      Maybe later
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Input Area */}
               <div className="p-3 sm:p-4 lg:p-6 border-t border-white/10 flex-shrink-0">
