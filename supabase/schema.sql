@@ -7,6 +7,7 @@ CREATE TABLE user_profiles (
   email TEXT,
   business_name TEXT,
   location TEXT,
+  trade TEXT, -- User's selected trade (landscaping, electrical, hvac, etc.)
   services TEXT[], -- Array of services offered
   team_size INTEGER,
   price_range TEXT, -- e.g., "budget", "premium", "luxury"

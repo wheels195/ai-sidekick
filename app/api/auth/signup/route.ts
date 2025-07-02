@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, businessData } = await request.json()
+    const { email, password, businessProfile } = await request.json()
 
     if (!email || !password) {
       return NextResponse.json(
@@ -27,23 +27,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // If user was created and business data provided, create profile
-    if (authData.user && businessData) {
+    // If user was created and business profile provided, create profile
+    if (authData.user && businessProfile) {
       const { error: profileError } = await supabase
         .from('user_profiles')
         .insert({
           id: authData.user.id,
           email: authData.user.email,
-          business_name: businessData.businessName,
-          location: businessData.location,
-          services: businessData.services || [],
-          team_size: businessData.teamSize,
-          price_range: businessData.priceRange,
-          target_customers: businessData.targetCustomers,
-          years_in_business: businessData.yearsInBusiness,
-          monthly_revenue_range: businessData.monthlyRevenueRange,
-          main_challenges: businessData.mainChallenges || [],
-          marketing_budget: businessData.marketingBudget,
+          business_name: businessProfile.business_name,
+          location: businessProfile.location,
+          trade: businessProfile.trade,
+          services: businessProfile.services || [],
+          team_size: businessProfile.team_size,
+          target_customers: businessProfile.target_customers,
+          years_in_business: businessProfile.years_in_business,
+          main_challenges: businessProfile.main_challenges || [],
         })
 
       if (profileError) {
