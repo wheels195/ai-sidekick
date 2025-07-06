@@ -12,7 +12,7 @@ import {
   Users,
   Target,
 } from "lucide-react"
-import { PricingCard } from "@/components/ui/pricing"
+import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -659,83 +659,74 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Free Trial - Own Container */}
-          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1 mb-6">
-            <div className="flex justify-center">
-              <div className="w-full max-w-sm">
-                <PricingCard
-                  title="Free Trial"
-                  price="$0 / 7 days"
-                  description="Test drive our AI sidekicks"
-                  buttonVariant="outline"
-                  buttonText="Start Free Trial"
-                  features={[
-                    "7-day full access trial",
-                    "Full access to your trade's AI sidekick",
-                    "Unlimited questions & conversations",
-                    "All features included",
-                    "No credit card required",
-                  ]}
-                  onClick={() => window.location.href = '/signup'}
-                />
-              </div>
-            </div>
+          {/* Free Trial - Centered Above */}
+          <div className="flex justify-center mb-12">
+            <ModernPricingCard
+              planName="Free Trial"
+              price="$0"
+              description="Test drive our AI sidekicks for 7 days"
+              buttonText="Start Free Trial"
+              features={[
+                "7-day full access trial",
+                "Full access to your trade's AI sidekick",
+                "Unlimited questions & conversations",
+                "All features included",
+                "No credit card required",
+              ]}
+              onClick={() => window.location.href = '/signup'}
+            />
           </div>
 
-          {/* Three Paid Plans - Separate Container */}
-          <div className="rounded-xl flex flex-col justify-between border border-gray-600/30 p-1">
-            <div className="flex flex-col gap-4 md:flex-row">
-              <PricingCard
-                title="Starter Plan"
-                price="$10 / mo"
-                description="Perfect for getting started"
-                buttonVariant="default"
-                buttonText="Start Free Trial"
-                features={[
-                  "Full access to your trade's AI sidekick",
-                  "Unlimited questions & conversations",
-                  "Local SEO guidance",
-                  "Content generation tools",
-                  "Email support",
-                ]}
-                onClick={() => window.location.href = '/signup'}
-              />
+          {/* Three Paid Plans in a Row */}
+          <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-stretch">
+            <ModernPricingCard
+              planName="Starter"
+              price="$19"
+              description="Perfect for getting started with AI guidance"
+              buttonText="Start Free Trial"
+              features={[
+                "Full access to your trade's AI sidekick",
+                "Unlimited questions & conversations",
+                "Local SEO guidance",
+                "Content generation tools",
+                "Email support",
+              ]}
+              onClick={() => window.location.href = '/signup'}
+            />
 
-              <PricingCard
-                title="Advanced Plan"
-                price="$59 / mo"
-                description="Our Most Advanced AI with Real Time Web Search"
-                buttonVariant="default"
-                highlight
-                badge="Most Advanced AI"
-                buttonText="Start Free Trial"
-                features={[
-                  "Everything in Starter Plan",
-                  "Powered by Our Most Advanced AI Model",
-                  "Real-time web search & research",
-                  "Latest industry trends & insights",
-                  "Advanced competitive analysis",
-                ]}
-                onClick={() => window.location.href = '/signup'}
-              />
+            <ModernPricingCard
+              planName="Advanced"
+              price="$59"
+              description="Our most advanced AI with real-time web search"
+              buttonText="Start Free Trial"
+              isPopular={true}
+              badge="Most Popular"
+              features={[
+                "Everything in Starter Plan",
+                "Powered by our most advanced AI model",
+                "Real-time web search & research",
+                "Latest industry trends & insights",
+                "Advanced competitive analysis",
+                "Priority support",
+              ]}
+              onClick={() => window.location.href = '/signup'}
+            />
 
-              <PricingCard
-                title="Multi-Trade"
-                price="$49 / mo"
-                description="Access to all trade AI sidekicks"
-                buttonVariant="default"
-                badge="General Contractors"
-                buttonText="Get Multi-Trade Access"
-                features={[
-                  "Access to ALL trade AI sidekicks",
-                  "Perfect for general contractors",
-                  "Priority support & faster responses",
-                  "Advanced cross-trade strategies",
-                  "Early access to new trade launches",
-                ]}
-                onClick={() => window.location.href = '/signup'}
-              />
-            </div>
+            <ModernPricingCard
+              planName="Multi-Trade"
+              price="$49"
+              description="Access to all trade AI sidekicks for contractors"
+              buttonText="Get Multi-Trade Access"
+              badge="Best for Contractors"
+              features={[
+                "Access to ALL trade AI sidekicks",
+                "Perfect for general contractors",
+                "Priority support & faster responses",
+                "Advanced cross-trade strategies",
+                "Early access to new trade launches",
+              ]}
+              onClick={() => window.location.href = '/signup'}
+            />
           </div>
         </div>
       </section>
