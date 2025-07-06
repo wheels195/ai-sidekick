@@ -3,9 +3,7 @@
 import React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
-import rehypeHighlight from "rehype-highlight"
+// ReactMarkdown removed - using custom text processing
 import {
   ArrowLeft,
   Send,
@@ -564,25 +562,70 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="space-y-4">
-                            <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              className="prose prose-invert max-w-none"
-                              components={{
-                                h1: (props) => <h1 className="text-2xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2" {...props} />,
-                                h2: (props) => <h2 className="text-xl font-semibold text-emerald-300 mb-3 mt-5 first:mt-0" {...props} />,
-                                h3: (props) => <h3 className="text-lg font-medium text-emerald-300 mb-2 mt-4 first:mt-0" {...props} />,
-                                p: (props) => <p className="text-gray-200 leading-relaxed mb-3 last:mb-0 text-base" {...props} />,
-                                ul: (props) => <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200" {...props} />,
-                                ol: (props) => <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200" {...props} />,
-                                li: (props) => <li className="text-gray-200 leading-relaxed" {...props} />,
-                                strong: (props) => <strong className="font-semibold text-white" {...props} />,
-                                code: (props) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono" {...props} />,
-                                blockquote: (props) => <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300" {...props} />,
-                              }}
-                            >
-                              {message.content}
-                            </ReactMarkdown>
+                          <div className="space-y-3">
+                            {message.content.split('\n').map((line, index) => {
+                              // Handle ## headers
+                              if (line.startsWith('## ')) {
+                                return (
+                                  <h2 key={index} className="text-xl font-semibold text-emerald-300 mb-3 mt-5 first:mt-0">
+                                    {line.replace('## ', '')}
+                                  </h2>
+                                )
+                              }
+                              // Handle ### headers
+                              if (line.startsWith('### ')) {
+                                return (
+                                  <h3 key={index} className="text-lg font-medium text-emerald-300 mb-2 mt-4 first:mt-0">
+                                    {line.replace('### ', '')}
+                                  </h3>
+                                )
+                              }
+                              // Handle numbered lists
+                              if (/^\d+\.\s/.test(line)) {
+                                return (
+                                  <div key={index} className="text-gray-200 leading-relaxed mb-2 ml-6">
+                                    <span className="font-medium text-emerald-400">{line.match(/^\d+\./)[0]}</span>
+                                    <span className="ml-2">{line.replace(/^\d+\.\s/, '')}</span>
+                                  </div>
+                                )
+                              }
+                              // Handle bullet points
+                              if (line.startsWith('- ')) {
+                                return (
+                                  <div key={index} className="text-gray-200 leading-relaxed mb-2 ml-6">
+                                    <span className="text-emerald-400 mr-2">•</span>
+                                    {line.replace('- ', '')}
+                                  </div>
+                                )
+                              }
+                              // Handle bold text **text**
+                              if (line.includes('**')) {
+                                const parts = line.split(/(\*\*.*?\*\*)/g)
+                                return (
+                                  <p key={index} className="text-gray-200 leading-relaxed mb-3 text-base">
+                                    {parts.map((part, partIndex) => 
+                                      part.startsWith('**') && part.endsWith('**') ? (
+                                        <strong key={partIndex} className="font-semibold text-white">
+                                          {part.replace(/\*\*/g, '')}
+                                        </strong>
+                                      ) : (
+                                        part
+                                      )
+                                    )}
+                                  </p>
+                                )
+                              }
+                              // Regular paragraphs
+                              if (line.trim()) {
+                                return (
+                                  <p key={index} className="text-gray-200 leading-relaxed mb-3 text-base">
+                                    {line}
+                                  </p>
+                                )
+                              }
+                              // Empty lines
+                              return <div key={index} className="h-2" />
+                            })}
                           </div>
                         ) : (
                           <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
