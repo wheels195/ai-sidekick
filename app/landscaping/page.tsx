@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useState, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
@@ -18,6 +19,8 @@ import {
   FileText,
   ImageIcon,
   X,
+  LogOut,
+  ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -46,6 +49,9 @@ const EMOJI_REACTIONS = [
 ]
 
 export default function LandscapingChat() {
+  const router = useRouter()
+  const [user, setUser] = useState<{email: string, businessName: string} | null>(null)
+  const [showUserMenu, setShowUserMenu] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -184,6 +190,49 @@ export default function LandscapingChat() {
       scrollToBottom()
     }
   }, [messages.length]) // Changed dependency to messages.length instead of messages
+
+  // Fetch user profile on component mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/user/profile')
+        if (response.ok) {
+          const data = await response.json()
+          setUser({
+            email: data.user.email,
+            businessName: data.user.businessName || 'Your Business'
+          })
+        }
+      } catch (error) {
+        console.error('Failed to fetch user:', error)
+      }
+    }
+    fetchUser()
+  }, [])
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (showUserMenu && !target.closest('.relative')) {
+        setShowUserMenu(false)
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showUserMenu])
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout failed:', error)
+      // Force redirect even if API fails
+      router.push('/login')
+    }
+  }
 
   const handleConversationRating = async (rating: number) => {
     setHasRatedConversation(true)
@@ -358,7 +407,7 @@ export default function LandscapingChat() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <Button
                 variant="ghost"
                 size="sm"
@@ -369,6 +418,41 @@ export default function LandscapingChat() {
                 <span className="sm:hidden">Tips</span>
                 <span className="hidden sm:inline">Tips</span>
               </Button>
+              
+              {/* User Profile Dropdown */}
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2 flex items-center space-x-1 sm:space-x-2"
+                >
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                    <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                  </div>
+                  <span className="hidden sm:inline max-w-20 truncate">{user?.businessName || 'User'}</span>
+                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                </Button>
+                
+                {showUserMenu && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800/95 backdrop-blur-xl border border-gray-600/30 rounded-lg shadow-2xl z-50">
+                    <div className="p-3 border-b border-gray-600/30">
+                      <p className="text-sm text-white font-medium truncate">{user?.businessName || 'Your Business'}</p>
+                      <p className="text-xs text-gray-400 truncate">{user?.email || 'user@example.com'}</p>
+                    </div>
+                    <div className="p-1">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors duration-200 flex items-center space-x-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
               <div className="hidden md:flex items-center space-x-2 bg-emerald-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-4 py-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                 <span className="text-emerald-300 text-sm font-medium">Online</span>

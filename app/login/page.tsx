@@ -1,12 +1,15 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Sparkles, ArrowLeft, Eye, EyeOff, LogIn } from "lucide-react"
 
-export default function LoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -14,6 +17,14 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [successMessage, setSuccessMessage] = useState('')
+
+  useEffect(() => {
+    // Check if user just verified their email
+    if (searchParams.get('verified') === 'true') {
+      setSuccessMessage('Email verified successfully! You can now log in.')
+    }
+  }, [searchParams])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -44,7 +55,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/auth/signin', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,9 +69,9 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (response.ok) {
-        // Success - redirect to appropriate trade page based on user profile
-        // For now, default to landscaping since it's the only one available
-        window.location.href = '/landscaping'
+        // Success - redirect to the intended page or default to landscaping
+        const redirectUrl = searchParams.get('redirect') || '/landscaping'
+        router.push(redirectUrl)
       } else {
         setErrors({ submit: data.error || 'Failed to sign in' })
       }
@@ -134,6 +145,11 @@ export default function LoginPage() {
               <CardTitle className="text-xl text-white text-center">Access Your Account</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
+              {successMessage && (
+                <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                  <p className="text-emerald-300 text-sm text-center">{successMessage}</p>
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Input
@@ -228,5 +244,13 @@ export default function LoginPage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+      <LoginForm />
+    </Suspense>
   )
 }

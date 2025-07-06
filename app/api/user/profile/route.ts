@@ -1,35 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
+import { getUser } from '@/lib/auth'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function GET(request: NextRequest) {
   try {
-    const { supabase } = createClient(request)
-
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-
-    if (userError || !user) {
+    const user = await getUser(request)
+    
+    if (!user) {
       return NextResponse.json(
-        { error: 'Not authenticated' },
+        { error: 'Unauthorized' },
         { status: 401 }
       )
     }
 
-    const { data: profile, error: profileError } = await supabase
+    // Fetch user profile from database
+    const { data: profile, error } = await supabase
       .from('user_profiles')
-      .select('*')
-      .eq('id', user.id)
+      .select('id, email, business_name, trade, selected_plan, created_at')
+      .eq('id', user.userId)
       .single()
 
-    if (profileError && profileError.code !== 'PGRST116') {
+    if (error || !profile) {
       return NextResponse.json(
-        { error: 'Failed to fetch profile' },
-        { status: 500 }
+        { error: 'Profile not found' },
+        { status: 404 }
       )
     }
 
     return NextResponse.json({
-      user,
-      profile,
+      success: true,
+      user: {
+        id: profile.id,
+        email: profile.email,
+        businessName: profile.business_name,
+        trade: profile.trade,
+        selectedPlan: profile.selected_plan,
+        createdAt: profile.created_at
+      }
     })
 
   } catch (error) {
@@ -43,25 +54,25 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const { supabase } = createClient(request)
+    const user = await getUser(request)
     const profileData = await request.json()
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-
-    if (userError || !user) {
+    if (!user) {
       return NextResponse.json(
-        { error: 'Not authenticated' },
+        { error: 'Unauthorized' },
         { status: 401 }
       )
     }
 
     const { data, error } = await supabase
       .from('user_profiles')
-      .upsert({
-        id: user.id,
-        email: user.email,
-        ...profileData,
+      .update({
+        business_name: profileData.businessName,
+        trade: profileData.trade,
+        selected_plan: profileData.selectedPlan,
+        updated_at: new Date().toISOString()
       })
+      .eq('id', user.userId)
       .select()
       .single()
 
@@ -73,8 +84,15 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json({
-      profile: data,
-      message: 'Profile updated successfully',
+      success: true,
+      user: {
+        id: data.id,
+        email: data.email,
+        businessName: data.business_name,
+        trade: data.trade,
+        selectedPlan: data.selected_plan
+      },
+      message: 'Profile updated successfully'
     })
 
   } catch (error) {
