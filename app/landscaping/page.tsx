@@ -565,7 +565,9 @@ export default function LandscapingChat() {
                       >
                         {message.role === "assistant" ? (
                           <div className="markdown-content">
-                            <ReactMarkdown>
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                            >
                               {message.content}
                             </ReactMarkdown>
                           </div>
