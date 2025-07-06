@@ -160,8 +160,25 @@ export default function LandscapingChat() {
   }, [input])
 
   useEffect(() => {
-    // Scroll to top when page loads
+    // Scroll to top when page loads and handle mobile viewport
     window.scrollTo(0, 0)
+    
+    // Add mobile-specific viewport handling
+    const handleViewportChange = () => {
+      if (window.innerWidth < 640) {
+        const vh = window.innerHeight * 0.01
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+      }
+    }
+    
+    handleViewportChange()
+    window.addEventListener('resize', handleViewportChange)
+    window.addEventListener('orientationchange', handleViewportChange)
+    
+    return () => {
+      window.removeEventListener('resize', handleViewportChange)
+      window.removeEventListener('orientationchange', handleViewportChange)
+    }
   }, [])
 
   useEffect(() => {
@@ -306,7 +323,7 @@ export default function LandscapingChat() {
   ]
 
   return (
-    <div className="h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
+    <div className="bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden" style={{ height: 'calc(var(--vh, 1vh) * 100)', minHeight: '-webkit-fill-available' }}>
       {/* Background Elements - Behind everything */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.2),transparent_70%)] pointer-events-none"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none"></div>
@@ -349,9 +366,10 @@ export default function LandscapingChat() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowHelpPanel(true)}
-                className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
+                className="text-xs sm:text-sm text-emerald-300 hover:text-emerald-100 hover:bg-emerald-500/20 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2 border border-emerald-500/30 sm:border-0"
               >
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+                <span className="sm:hidden">Tips</span>
                 <span className="hidden sm:inline">Tips</span>
               </Button>
               <div className="hidden md:flex items-center space-x-2 bg-emerald-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-4 py-2">
@@ -523,7 +541,7 @@ export default function LandscapingChat() {
               )}
 
               {/* Input Area - Your Original Design */}
-              <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0">
+              <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
                 <form onSubmit={handleSubmit} className="flex items-end space-x-3 sm:space-x-4">
                   <div className="flex-1 relative">
                     <Textarea
@@ -544,7 +562,18 @@ export default function LandscapingChat() {
                           target.style.overflowY = 'hidden'
                         }
                       }}
-                      onFocus={() => setIsInputFocused(true)}
+                      onFocus={(e) => {
+                        setIsInputFocused(true)
+                        // Prevent mobile keyboard from cutting off chat
+                        if (window.innerWidth < 640) {
+                          // Don't auto-scroll on mobile, let the user see the full chat
+                          e.preventDefault()
+                          // Ensure input stays visible but don't cut off chat
+                          setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }, 300)
+                        }
+                      }}
                       onBlur={() => setIsInputFocused(false)}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && !e.shiftKey) {
@@ -557,7 +586,8 @@ export default function LandscapingChat() {
                           ? "Ask me anything about growing your business..."
                           : placeholderText
                       }
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-5 text-sm sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[2.75rem] sm:min-h-[3rem] lg:min-h-[3.5rem] max-h-[120px] sm:max-h-[150px] overflow-hidden hover:overflow-y-auto focus:overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 w-full leading-relaxed"
+                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-5 text-base sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[2.75rem] sm:min-h-[3rem] lg:min-h-[3.5rem] max-h-[120px] sm:max-h-[150px] overflow-hidden hover:overflow-y-auto focus:overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 w-full leading-relaxed"
+                      style={{ fontSize: '16px' }}
                       rows={1}
                       disabled={isLoading}
                     />
