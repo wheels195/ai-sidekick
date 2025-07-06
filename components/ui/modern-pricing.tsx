@@ -54,7 +54,7 @@ export const ModernPricingCard = ({
       
       <div className="my-8 flex items-baseline gap-2">
         <span className="text-5xl font-extralight text-white">{price}</span>
-        {price !== "$0" && <span className="text-sm text-gray-400">/mo</span>}
+        {price !== "$0" && price !== "Contact Us" && <span className="text-sm text-gray-400">/mo</span>}
       </div>
       
       <div className="w-full mb-6 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"></div>

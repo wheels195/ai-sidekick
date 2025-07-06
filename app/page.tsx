@@ -710,17 +710,18 @@ export default function LandingPage() {
             />
 
             <ModernPricingCard
-              planName="Multi-Trade"
-              price="$49"
-              description="Access to all trade AI sidekicks for contractors"
-              buttonText="Get Multi-Trade Access"
-              badge="Best for Contractors"
+              planName="Sidepiece AI"
+              price="Contact Us"
+              description="Custom pricing to add on AI sidekicks"
+              buttonText="Contact for Pricing"
+              badge="Multi-Trades"
               features={[
-                "Access to ALL trade AI sidekicks",
-                "Perfect for general contractors",
-                "Priority support & faster responses",
-                "Advanced cross-trade strategies",
-                "Early access to new trade launches",
+                "Add multiple AI sidekicks to your current plan",
+                "Upgrade from Starter to Advanced anytime",
+                "Custom pricing based on your needs",
+                "Volume discounts for multiple sidekicks",
+                "Priority support for custom plans",
+                "Flexible billing and contract terms",
               ]}
               onClick={() => window.location.href = '/signup'}
             />
