@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AI Sidekick is a Next.js 15 application that provides specialized AI assistants for local trade businesses. The app uses modern React with TypeScript, Tailwind CSS, and Radix UI components.
 
-**Current Status:** ✅ **SMART LEARNING SYSTEM COMPLETE** - Full authentication, trade selection, and intelligent feedback collection for AI improvement
+**Current Status:** ✅ **MARKET READY** - Complete authentication system, email verification, protected routes, and user management implemented for free tier launch
 
 ## Development Commands
 
@@ -72,12 +72,14 @@ npm run lint
 
 ## Backend Integration Status
 
-### Completed
-- **`/api/chat`** - OpenAI GPT-4o-mini integration with enhanced landscaping system prompts focused on digital marketing, local SEO, and content creation
-- **Supabase Integration** - Database schema, authentication, and conversation storage
+### Completed ✅
+- **`/api/chat`** - OpenAI GPT-4o-mini integration with enhanced landscaping system prompts
+- **Supabase Integration** - Database schema and conversation storage
+- **JWT Authentication System** - Custom email verification, protected routes, secure login/logout
+- **Email System** - Resend integration with verification and welcome emails
+- **User Management** - Profile dropdown, business context, session handling
+- **Route Protection** - Middleware blocking unauthorized access to `/landscaping`
 - **Two-Layer Learning System** - Individual user learning and global pattern recognition
-- **Authentication APIs** - Sign up, sign in, sign out, and profile management
-- **Conversation Storage** - All chats stored with business context for personalization
 - **Privacy Protection** - Row Level Security and anonymized global learning
 
 ### Database Schema (Implemented)
@@ -89,21 +91,23 @@ npm run lint
 - `proven_strategies` - Knowledge base of successful strategies
 - `user_sessions` - Session tracking and engagement metrics
 
-### API Endpoints (Completed)
-- `POST /api/auth/signup` - User registration with complete business profile including trade selection
-- `POST /api/auth/signin` - User authentication with profile retrieval
-- `POST /api/auth/signout` - User logout
-- `GET/PUT /api/user/profile` - User profile management
-- `POST /api/feedback` - Advanced feedback system (emoji reactions, conversation ratings, passive metrics)
-- `POST /api/chat` - OpenAI chat with conversation storage and database message ID tracking
+### API Endpoints (Completed) ✅
+- `POST /api/auth/signup` - User registration with email verification and business profile
+- `POST /api/auth/login` - JWT-based authentication with secure cookies
+- `POST /api/auth/logout` - Cookie clearing and session termination
+- `GET /api/verify-email` - Email verification token validation
+- `GET/PUT /api/user/profile` - User profile management with JWT authorization
+- `POST /api/feedback` - Advanced feedback system (emoji reactions, conversation ratings)
+- `POST /api/chat` - OpenAI chat with conversation storage and user context
 
-### Authentication System (✅ COMPLETED)
-- **Generic AI Sidekick Branding** - Login/signup pages are trade-agnostic
-- **Trade Selection** - 7 trades available: Landscaping, Electrical, HVAC, Plumbing, Roofing, Pest Control, General Contractor
-- **Dynamic Services Selection** - Services dropdown updates based on selected trade
-- **Custom Services** - "Other" option with text input for unlisted services
-- **Complete User Onboarding** - Captures business profile, trade, services, team size, experience
-- **Homepage Integration** - All CTA buttons properly connected to signup flow
+### Authentication System (✅ MARKET READY)
+- **JWT Authentication** - HTTP-only cookies with 7-day expiration
+- **Email Verification** - Resend integration with branded verification emails
+- **Protected Routes** - Middleware protecting `/landscaping` from unauthorized access
+- **User Session Management** - Profile dropdown with business info and logout
+- **Secure Password Storage** - SHA-256 hashed passwords in database
+- **Plan-Specific Signup** - Pricing CTAs auto-populate selected plan
+- **Production Builds** - Suspense boundaries for useSearchParams compatibility
 
 ### Smart Learning System (✅ COMPLETED)
 - **Emoji Reactions** - 🔥💡👍😕 on AI responses (appear on hover, non-intrusive)
@@ -114,23 +118,35 @@ npm run lint
 - **High-Engagement Design** - 3-5x better response rates than traditional thumbs up/down
 - **Privacy-Protected** - Anonymized global learning with user data hashing
 
-### Planned (Future Development)
+### Ready for Market Testing ✅
+- **Free Tier Only** - Simplified launch with single plan
+- **Landscaping AI Only** - Focused market validation
+- **Complete Authentication** - Signup → Email verification → Login → Chat access
+- **Production Ready** - All systems operational for user testing
+
+### Future Development (Post-Launch)
 - `/api/upload` - File processing and analysis implementation
-- Conversation history interface
-- Learning analytics dashboard showing AI improvement over time
-- Additional trade-specific AI sidekick pages (/electrical, /hvac, etc.)
-- Trade-based routing after authentication
+- Conversation history interface in user dashboard
+- Payment integration for paid plans
+- Additional trade-specific AI pages (/electrical, /hvac, etc.)
+- Custom domain email setup (ai-sidekick.io)
 - Advanced learning implementation using collected feedback data
+- User onboarding flow optimization
 
 ### Environment Variables
 ```
-# Production Environment (Configured in Vercel)
-OPENAI_API_KEY=configured_in_vercel
+# Required for Production (All Configured ✅)
+OPENAI_API_KEY=sk-proj-...
+RESEND_API_KEY=re_QkT8FHeA_DpUR7PK7sAMech3TmCNQvuzq
+JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
 
 # Supabase Integration (Configured)
 NEXT_PUBLIC_SUPABASE_URL=https://tgrwtbtyfznebqrwenji.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=configured_in_vercel
 SUPABASE_SERVICE_ROLE_KEY=configured_in_vercel
+
+# Site Configuration
+NEXT_PUBLIC_SITE_URL=http://localhost:3000  # Update for production domain
 
 # File Upload Settings (Configured)
 NEXT_PUBLIC_MAX_FILE_SIZE=10485760
