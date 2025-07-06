@@ -133,11 +133,16 @@ export default function LandscapingChat() {
   ])
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    })
+    const scrollContainer = document.querySelector('.messages-scroll-container')
+    if (scrollContainer) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight
+    } else {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      })
+    }
   }
 
   // Auto-resize textarea when input changes - smooth and responsive
@@ -374,16 +379,18 @@ export default function LandscapingChat() {
       </header>
 
       {/* Main Chat Area - Full Height with Internal Scroll */}
-      <div className="flex-1 flex flex-col min-h-0 relative z-40">
+      <div className="flex-1 flex flex-col relative z-40 overflow-hidden">
         {/* Chat Messages Container - Your Original Card Design */}
-        <div className="flex-1 p-2 sm:p-4 lg:p-6">
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col">
-            <CardContent className="p-0 flex flex-col h-full">
+        <div className="flex-1 p-2 sm:p-4 lg:p-6 overflow-hidden">
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col overflow-hidden">
+            <CardContent className="p-0 flex flex-col h-full overflow-hidden">
               {/* Messages Area - Internal Scroll */}
-              <div className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6" style={{
-                scrollbarWidth: 'thin',
-                scrollbarColor: 'rgba(16, 185, 129, 0.2) transparent'
-              }}>
+              <div 
+                className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20" 
+                style={{
+                  scrollBehavior: 'smooth'
+                }}
+              >
                 {messages.map((message) => (
                   <div
                     key={message.id}
