@@ -565,24 +565,19 @@ export default function LandscapingChat() {
                       >
                         {message.role === "assistant" ? (
                           <div className="markdown-content">
-                            {/* Debug: Show raw content */}
-                            <div className="text-xs text-red-400 mb-2 font-mono bg-red-900/20 p-2 rounded">
-                              DEBUG: {message.content.substring(0, 100)}...
-                            </div>
-                            
-                            {/* Test: Hard-coded markdown */}
-                            <div className="mb-4 p-2 border border-yellow-500/30 rounded">
-                              <p className="text-xs text-yellow-400 mb-2">TEST - Hard-coded markdown:</p>
-                              <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                              >
-                                {`## Test Header\n\nThis is a test paragraph.\n\n### Sub Header\n\n1. First item\n2. Second item`}
-                              </ReactMarkdown>
-                            </div>
-                            
-                            {/* Actual content */}
                             <ReactMarkdown
                               remarkPlugins={[remarkGfm]}
+                              components={{
+                                h1: ({node, ...props}) => <h1 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#6ee7b7', marginBottom: '1rem', marginTop: '1.5rem', borderBottom: '1px solid rgba(110, 231, 183, 0.3)', paddingBottom: '0.5rem'}} {...props} />,
+                                h2: ({node, ...props}) => <h2 style={{fontSize: '1.25rem', fontWeight: '600', color: '#6ee7b7', marginBottom: '0.75rem', marginTop: '1.25rem'}} {...props} />,
+                                h3: ({node, ...props}) => <h3 style={{fontSize: '1.125rem', fontWeight: '500', color: '#6ee7b7', marginBottom: '0.5rem', marginTop: '1rem'}} {...props} />,
+                                p: ({node, ...props}) => <p style={{color: '#e5e7eb', lineHeight: '1.625', marginBottom: '0.75rem'}} {...props} />,
+                                ol: ({node, ...props}) => <ol style={{listStyleType: 'decimal', listStylePosition: 'outside', marginBottom: '1rem', marginLeft: '1.5rem', color: '#e5e7eb'}} {...props} />,
+                                ul: ({node, ...props}) => <ul style={{listStyleType: 'disc', listStylePosition: 'outside', marginBottom: '1rem', marginLeft: '1.5rem', color: '#e5e7eb'}} {...props} />,
+                                li: ({node, ...props}) => <li style={{color: '#e5e7eb', lineHeight: '1.625', marginBottom: '0.5rem'}} {...props} />,
+                                strong: ({node, ...props}) => <strong style={{fontWeight: '600', color: '#ffffff'}} {...props} />,
+                                code: ({node, ...props}) => <code style={{backgroundColor: '#374151', padding: '0.125rem 0.5rem', borderRadius: '0.25rem', color: '#6ee7b7', fontSize: '0.875rem', fontFamily: 'monospace'}} {...props} />,
+                              }}
                             >
                               {message.content}
                             </ReactMarkdown>
