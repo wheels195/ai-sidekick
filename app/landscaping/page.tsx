@@ -304,7 +304,7 @@ export default function LandscapingChat() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black relative">
+    <div className="h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
       {/* Background Elements - Behind everything */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.2),transparent_70%)] pointer-events-none"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none"></div>
@@ -312,8 +312,8 @@ export default function LandscapingChat() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/40 to-teal-500/40 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/35 to-indigo-500/35 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
 
-      {/* Header */}
-      <header className="sticky top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
+      {/* Fixed Header - Your Original Design */}
+      <header className="flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl relative z-50">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
             <div className="flex items-center">
@@ -352,20 +352,17 @@ export default function LandscapingChat() {
         </div>
       </header>
 
-      {/* Main Chat Section - Full Screen */}
-      <main className="relative z-40 h-[100dvh] pt-14 sm:pt-16 lg:pt-20 touch-manipulation">
-        <div className="h-full flex flex-col px-2 py-1 sm:px-4 sm:py-2 lg:px-6 lg:py-3">
-          {/* Chat Messages Container - Full Height */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col touch-manipulation">
+      {/* Main Chat Area - Full Height with Internal Scroll */}
+      <div className="flex-1 flex flex-col min-h-0 relative z-40">
+        {/* Chat Messages Container - Your Original Card Design */}
+        <div className="flex-1 p-2 sm:p-4 lg:p-6">
+          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
-              {/* Messages Area - Takes remaining space */}
-              <div 
-                className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6"
-                style={{
-                  scrollbarWidth: 'thin',
-                  scrollbarColor: 'rgba(16, 185, 129, 0.2) transparent'
-                }}
-              >
+              {/* Messages Area - Internal Scroll */}
+              <div className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6" style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(16, 185, 129, 0.2) transparent'
+              }}>
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -514,7 +511,7 @@ export default function LandscapingChat() {
                 </div>
               )}
 
-              {/* Input Area */}
+              {/* Input Area - Your Original Design */}
               <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0">
                 <form onSubmit={handleSubmit} className="flex items-end space-x-3 sm:space-x-4">
                   <div className="flex-1 relative">
@@ -569,284 +566,6 @@ export default function LandscapingChat() {
                 <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
                   Powered by specialized AI trained for landscaping businesses
                 </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-
-      {/* Additional Content Below Chat */}
-      <div className="relative z-10 bg-gradient-to-br from-black via-gray-950 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-12">
-          
-          {/* Upload & Suggestions Section */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-            <CardContent className="p-6 sm:p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-xl flex items-center justify-center">
-                  <Upload className="w-5 h-5 text-emerald-400" />
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white">Get Started</h3>
-              </div>
-
-              {/* Upload Button */}
-              <div className="mb-6">
-                <label className="inline-flex items-center space-x-3 text-sm bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/30 rounded-lg px-6 py-4 text-emerald-300 hover:text-emerald-200 transition-all duration-300 hover:scale-105 cursor-pointer">
-                  <Upload className="w-5 h-5" />
-                  <span>Upload Document or Image</span>
-                  <input
-                    type="file"
-                    accept="image/*,.pdf,.doc,.docx,.txt"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        console.log("File selected:", file.name)
-                      }
-                    }}
-                  />
-                </label>
-              </div>
-
-              {/* Upload Examples */}
-              <div className="mb-6">
-                <p className="text-gray-400 text-sm mb-4">Upload examples:</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <ImageIcon className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm font-medium text-white">Landscape Design Ideas</span>
-                    </div>
-                    <p className="text-sm text-gray-300">
-                      Upload photos of yards, design inspiration, or current landscapes for improvement suggestions
-                    </p>
-                  </div>
-
-                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <FileText className="w-4 h-4 text-green-400" />
-                      <span className="text-sm font-medium text-white">Pricing Analysis</span>
-                    </div>
-                    <p className="text-sm text-gray-300">
-                      Upload your current price list or competitor pricing for market analysis and recommendations
-                    </p>
-                  </div>
-
-                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <ImageIcon className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium text-white">Problem Diagnosis</span>
-                    </div>
-                    <p className="text-sm text-gray-300">
-                      Upload photos of plant diseases, pest damage, or lawn issues for identification and treatment advice
-                    </p>
-                  </div>
-
-                  <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <FileText className="w-4 h-4 text-orange-400" />
-                      <span className="text-sm font-medium text-white">Contract Review</span>
-                    </div>
-                    <p className="text-sm text-gray-300">
-                      Upload contracts, proposals, or service agreements for improvement suggestions and best practices
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Suggested Questions */}
-              <div>
-                <p className="text-gray-400 text-sm mb-4">Or try asking:</p>
-                <div className="flex flex-wrap gap-3">
-                  {suggestedQuestions.map((question, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setInput(question)}
-                      className="text-sm bg-white/5 hover:bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-gray-300 hover:text-white transition-all duration-300 hover:scale-105"
-                    >
-                      {question}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-4 sm:gap-6">
-            {[
-              { icon: MessageSquare, label: "Expert Advice", value: "24/7" },
-              { icon: TrendingUp, label: "Local SEO", value: "Optimized" },
-              { icon: Leaf, label: "Industry Focus", value: "100%" },
-            ].map((stat, index) => (
-              <Card
-                key={index}
-                className="backdrop-blur-xl bg-white/5 border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                <CardContent className="p-4 text-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-lg flex items-center justify-center mb-2 mx-auto">
-                    <stat.icon className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div className="text-sm font-semibold text-white">{stat.value}</div>
-                  <div className="text-xs text-gray-300">{stat.label}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Tips Section */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-            <CardContent className="p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-yellow-400" />
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white">Get More Specific Answers</h3>
-              </div>
-
-              <p className="text-gray-200 mb-6">
-                The more context you provide, the better I can help your landscaping business. Here are some ways to get
-                more targeted advice:
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {[
-                  {
-                    icon: "📍",
-                    title: "Share Your Location",
-                    desc: "Tell me your city/state for local SEO tips, seasonal advice, and regional market insights.",
-                    example: "I'm a landscaper in Phoenix, Arizona...",
-                  },
-                  {
-                    icon: "📊",
-                    title: "Describe Your Business",
-                    desc: "Share your services, team size, and target customers for personalized growth strategies.",
-                    example: "We're a 5-person team focusing on residential lawn care and tree trimming...",
-                  },
-                  {
-                    icon: "🎯",
-                    title: "Be Specific About Goals",
-                    desc: "Tell me what you want to achieve - more leads, higher prices, new services, etc.",
-                    example: "I want to increase my average job value from $200 to $350...",
-                  },
-                  {
-                    icon: "📈",
-                    title: "Share Current Challenges",
-                    desc: "Describe what's not working so I can give targeted solutions and improvements.",
-                    example: "My Google My Business gets views but no calls...",
-                  },
-                  {
-                    icon: "💰",
-                    title: "Mention Your Budget",
-                    desc: "Share your marketing budget or investment capacity for realistic recommendations.",
-                    example: "I have $500/month for marketing and advertising...",
-                  },
-                  {
-                    icon: "📅",
-                    title: "Include Timeframes",
-                    desc: "Tell me your deadlines or seasonal needs for time-sensitive advice.",
-                    example: "I need to prepare for spring rush season starting in March...",
-                  },
-                ].map((tip, index) => (
-                  <div
-                    key={index}
-                    className="bg-white/5 rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 group"
-                  >
-                    <div className="flex items-start space-x-4">
-                      <div className="text-2xl">{tip.icon}</div>
-                      <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
-                          {tip.title}
-                        </h4>
-                        <p className="text-gray-300 text-sm mb-3 leading-relaxed">{tip.desc}</p>
-                        <div className="bg-gray-700/30 rounded-lg p-3 border-l-4 border-emerald-500/50">
-                          <p className="text-xs text-gray-400 italic">Example: "{tip.example}"</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* FAQ Section */}
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-            <CardContent className="p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-xl flex items-center justify-center">
-                  <MessageSquare className="w-5 h-5 text-blue-400" />
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white">Frequently Asked Questions</h3>
-              </div>
-
-              <div className="space-y-4">
-                {[
-                  {
-                    q: "What types of landscaping questions can you help with?",
-                    a: "I can help with business growth strategies, local SEO, content creation, pricing strategies, seasonal planning, customer retention, upselling techniques, marketing campaigns, Google My Business optimization, review management, and operational efficiency for landscaping businesses.",
-                  },
-                  {
-                    q: "How do I get the most accurate local SEO advice?",
-                    a: "Always mention your specific city and state, your main service areas, and your target keywords. For example: 'I'm in Denver, Colorado, serving residential customers within 15 miles, and want to rank for lawn care Denver.' The more location-specific details you provide, the better my recommendations.",
-                  },
-                  {
-                    q: "Can you help me write content for my website and social media?",
-                    a: "I can help create blog posts, service page content, social media captions, email newsletters, and Google My Business posts. Just tell me your target audience, services, and any specific topics or seasons you want to focus on.",
-                  },
-                  {
-                    q: "How can you help me increase my prices without losing customers?",
-                    a: "I can provide strategies for value-based pricing, service bundling, premium service offerings, and customer communication scripts. Share your current pricing, services, and market position for personalized advice on raising prices while maintaining customer satisfaction.",
-                  },
-                  {
-                    q: "What's the best way to ask about seasonal business strategies?",
-                    a: "Tell me your location (for climate-specific advice), your current services, and which season you're preparing for. For example: 'I'm in Chicago and want to maximize revenue during winter months when lawn care slows down.' I can then suggest winter services, preparation strategies, and year-round revenue ideas.",
-                  },
-                  {
-                    q: "Can you help me analyze my competition?",
-                    a: "Yes! Share your competitors' names, their services, pricing (if known), and what makes them successful in your area. I can help you identify opportunities to differentiate your business and compete more effectively.",
-                  },
-                  {
-                    q: "How do I get help with customer service and retention issues?",
-                    a: "Describe specific customer service challenges you're facing, your current processes, and any recurring complaints or issues. I can provide scripts, processes, and strategies to improve customer satisfaction and retention rates.",
-                  },
-                  {
-                    q: "What if I need help with something not directly related to landscaping?",
-                    a: "While I'm specialized for landscaping businesses, I can help with general business topics like hiring, scheduling, invoicing, and basic marketing principles as they apply to your landscaping company. Just be specific about your landscaping business context.",
-                  },
-                ].map((faq, index) => (
-                  <details
-                    key={index}
-                    className="bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 group"
-                  >
-                    <summary className="p-6 cursor-pointer text-white font-semibold hover:text-emerald-400 transition-colors duration-300 flex items-center justify-between">
-                      <span className="text-lg">{faq.q}</span>
-                      <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500/30 transition-all duration-300">
-                        <span className="text-emerald-400 text-sm">+</span>
-                      </div>
-                    </summary>
-                    <div className="px-6 pb-6">
-                      <p className="text-gray-200 leading-relaxed">{faq.a}</p>
-                    </div>
-                  </details>
-                ))}
-              </div>
-
-              <div className="mt-8 p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl border border-emerald-500/20">
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                    <Leaf className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-white mb-2">Pro Tip for Best Results</h4>
-                    <p className="text-gray-200 text-sm leading-relaxed">
-                      Start your questions with context about your business, then ask your specific question. For
-                      example: "I run a 3-person landscaping crew in Austin, Texas, focusing on residential lawn care
-                      and tree trimming. We charge $50/hour but competitors charge $75. How can I justify higher prices
-                      to customers?"
-                    </p>
-                  </div>
-                </div>
               </div>
             </CardContent>
           </Card>

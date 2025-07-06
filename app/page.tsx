@@ -704,14 +704,14 @@ export default function LandingPage() {
               <PricingCard
                 title="Advanced Plan"
                 price="$59 / mo"
-                description="GPT-4o powered with web search"
+                description="Our Most Advanced AI with Real Time Web Search"
                 buttonVariant="default"
                 highlight
                 badge="Most Advanced AI"
                 buttonText="Start Free Trial"
                 features={[
                   "Everything in Starter Plan",
-                  "Powered by GPT-4o (most advanced AI)",
+                  "Powered by Our Most Advanced AI Model",
                   "Real-time web search & research",
                   "Latest industry trends & insights",
                   "Advanced competitive analysis",
