@@ -11,8 +11,6 @@ import {
   Zap,
   Users,
   Target,
-  Calendar,
-  BarChart3,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
@@ -318,7 +316,7 @@ export default function LandingPage() {
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {[
                     {
                       icon: TrendingUp,
@@ -331,9 +329,7 @@ export default function LandingPage() {
                       desc: "Seasonal blogs and service pages that convert",
                     },
                     { icon: DollarSign, title: "Upsell Strategies", desc: "Increase revenue per customer visit" },
-                    { icon: Star, title: "Reputation Builder", desc: "Turn happy customers into 5-star reviews that build trust and attract new business" },
-                    { icon: Calendar, title: "Seasonal Planning", desc: "Year-round business strategies and cash flow optimization" },
-                    { icon: BarChart3, title: "Smart Business Insights", desc: "Get clear, AI-driven advice on what to fix, improve, or double down on in your business" },
+                    { icon: Star, title: "Review Management", desc: "Get more 5-star reviews the right way" },
                   ].map((feature, index) => (
                     <div
                       key={index}
