@@ -562,138 +562,99 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="text-base leading-relaxed space-y-3">
+                          <div className="space-y-4">
                             {(() => {
-                              let content = message.content
+                              const content = message.content
                               
-                              // Handle step headers (Step1:, Step2:, etc.)
-                              content = content.replace(/Step(\d+):/g, '\n\n## Step $1\n\n')
-                              
-                              // Handle numbered headers that should be green (##1., ##2., etc.)
-                              content = content.replace(/##(\d+)\.\s*([^#\n]+)/g, '\n\n## $1. $2\n\n')
-                              
-                              // Fix any standalone # that should be ##
-                              content = content.replace(/^#([^#])/gm, '## $1')
-                              
-                              // Clean up the H2 Outline text and similar markdown artifacts
-                              content = content.replace(/H2 Outline:/g, 'Content Structure:')
-                              content = content.replace(/Meta Description:/g, '**Meta Description:**')
-                              content = content.replace(/CTA:/g, '**Call to Action:**')
-                              content = content.replace(/Keywords:/g, '**Keywords:**')
-                              
-                              // Now split by double newlines to create proper paragraphs
-                              const sections = content.split(/\n\n+/).filter(section => section.trim())
-                              
-                              return sections.map((section, index) => {
-                                const trimmed = section.trim()
+                              // Process the content to render it properly
+                              const renderContent = (text) => {
+                                const elements = []
+                                let currentIndex = 0
                                 
-                                // Handle ## headers
-                                if (trimmed.startsWith('## ')) {
-                                  const headerText = trimmed.replace('## ', '')
-                                  return (
-                                    <h2 key={index} className="text-xl font-semibold text-emerald-300 mb-3 mt-6 first:mt-0">
-                                      {headerText}
-                                    </h2>
-                                  )
-                                }
+                                // Split into parts and process each
+                                const parts = text.split(/(\d+\.\s[^-]*(?:-[^-]*)*)|(\*\*[^*]*\*\*)|##/g).filter(Boolean)
                                 
-                                // Handle ### headers
-                                if (trimmed.startsWith('### ')) {
-                                  const headerText = trimmed.replace('### ', '')
-                                  return (
-                                    <h3 key={index} className="text-lg font-medium text-emerald-300 mb-2 mt-4 first:mt-0">
-                                      {headerText}
-                                    </h3>
-                                  )
-                                }
-                                
-                                // Handle numbered lists and bullet points within the section
-                                const lines = trimmed.split('\n').filter(line => line.trim())
-                                
-                                if (lines.length === 1) {
-                                  const line = lines[0]
+                                parts.forEach((part, index) => {
+                                  if (!part || part.trim() === '') return
                                   
-                                  // Single numbered item
-                                  if (/^\d+\.\s/.test(line)) {
-                                    const match = line.match(/^(\d+\.)\s*(.*)/)
-                                    if (match) {
-                                      return (
-                                        <div key={index} className="text-gray-200 leading-relaxed mb-2 ml-6">
-                                          <span className="font-medium text-emerald-400">{match[1]}</span>
-                                          <span className="ml-2">{match[2]}</span>
-                                        </div>
-                                      )
-                                    }
-                                  }
-                                  
-                                  // Single bullet point
-                                  if (line.startsWith('- ')) {
-                                    return (
-                                      <div key={index} className="text-gray-200 leading-relaxed mb-2 ml-6">
-                                        <span className="text-emerald-400 mr-2">•</span>
-                                        {line.replace('- ', '')}
+                                  // Handle numbered sections (1. Title- content- content)
+                                  if (/^\d+\.\s/.test(part)) {
+                                    const lines = part.split(/(?=-\s)/).filter(line => line.trim())
+                                    const title = lines[0].replace(/^\d+\.\s/, '').trim()
+                                    const items = lines.slice(1)
+                                    
+                                    elements.push(
+                                      <div key={`section-${index}`} className="mb-6">
+                                        <h3 className="text-lg font-semibold text-emerald-300 mb-3">
+                                          {`${part.match(/^\d+\./)[0]} ${title}`}
+                                        </h3>
+                                        {items.length > 0 && (
+                                          <ul className="space-y-2 ml-4">
+                                            {items.map((item, itemIndex) => {
+                                              const cleanItem = item.replace(/^-\s/, '').trim()
+                                              // Handle bold within items
+                                              if (cleanItem.includes('**')) {
+                                                const boldParts = cleanItem.split(/(\*\*[^*]*\*\*)/g)
+                                                return (
+                                                  <li key={itemIndex} className="text-gray-200 leading-relaxed">
+                                                    <span className="text-emerald-400 mr-2">•</span>
+                                                    {boldParts.map((boldPart, boldIndex) => 
+                                                      boldPart.startsWith('**') && boldPart.endsWith('**') ? (
+                                                        <strong key={boldIndex} className="font-semibold text-white">
+                                                          {boldPart.replace(/\*\*/g, '')}
+                                                        </strong>
+                                                      ) : (
+                                                        boldPart
+                                                      )
+                                                    )}
+                                                  </li>
+                                                )
+                                              } else {
+                                                return (
+                                                  <li key={itemIndex} className="text-gray-200 leading-relaxed">
+                                                    <span className="text-emerald-400 mr-2">•</span>
+                                                    {cleanItem}
+                                                  </li>
+                                                )
+                                              }
+                                            })}
+                                          </ul>
+                                        )}
                                       </div>
                                     )
                                   }
-                                }
-                                
-                                // Multiple lines - render as a paragraph with internal formatting
-                                return (
-                                  <div key={index} className="space-y-2">
-                                    {lines.map((line, lineIndex) => {
-                                      const lineKey = `${index}-${lineIndex}`
-                                      
-                                      // Numbered list item
-                                      if (/^\d+\.\s/.test(line)) {
-                                        const match = line.match(/^(\d+\.)\s*(.*)/)
-                                        if (match) {
-                                          return (
-                                            <div key={lineKey} className="text-gray-200 leading-relaxed mb-1 ml-6">
-                                              <span className="font-medium text-emerald-400">{match[1]}</span>
-                                              <span className="ml-2">{match[2]}</span>
-                                            </div>
-                                          )
-                                        }
-                                      }
-                                      
-                                      // Bullet point
-                                      if (line.startsWith('- ')) {
-                                        return (
-                                          <div key={lineKey} className="text-gray-200 leading-relaxed mb-1 ml-6">
-                                            <span className="text-emerald-400 mr-2">•</span>
-                                            {line.replace('- ', '')}
-                                          </div>
-                                        )
-                                      }
-                                      
-                                      // Regular line with bold formatting
-                                      if (line.includes('**')) {
-                                        const parts = line.split(/(\*\*[^*]+\*\*)/g)
-                                        return (
-                                          <p key={lineKey} className="text-gray-200 leading-relaxed">
-                                            {parts.map((part, partIndex) => 
-                                              part.startsWith('**') && part.endsWith('**') ? (
-                                                <strong key={partIndex} className="font-semibold text-white">
-                                                  {part.replace(/\*\*/g, '')}
-                                                </strong>
-                                              ) : (
-                                                part
-                                              )
-                                            )}
-                                          </p>
-                                        )
-                                      }
-                                      
-                                      // Regular text line
-                                      return (
-                                        <p key={lineKey} className="text-gray-200 leading-relaxed">
-                                          {line}
+                                  // Handle other content
+                                  else if (part.trim() && !part.includes('##')) {
+                                    // Handle bold text in regular paragraphs
+                                    if (part.includes('**')) {
+                                      const boldParts = part.split(/(\*\*[^*]*\*\*)/g)
+                                      elements.push(
+                                        <p key={`text-${index}`} className="text-gray-200 leading-relaxed mb-3 text-base">
+                                          {boldParts.map((boldPart, boldIndex) => 
+                                            boldPart.startsWith('**') && boldPart.endsWith('**') ? (
+                                              <strong key={boldIndex} className="font-semibold text-white">
+                                                {boldPart.replace(/\*\*/g, '')}
+                                              </strong>
+                                            ) : (
+                                              boldPart
+                                            )
+                                          )}
                                         </p>
                                       )
-                                    })}
-                                  </div>
-                                )
-                              })
+                                    } else {
+                                      elements.push(
+                                        <p key={`text-${index}`} className="text-gray-200 leading-relaxed mb-3 text-base">
+                                          {part.trim()}
+                                        </p>
+                                      )
+                                    }
+                                  }
+                                })
+                                
+                                return elements
+                              }
+                              
+                              return renderContent(content)
                             })()}
                           </div>
                         ) : (
