@@ -29,16 +29,20 @@ export const ModernPricingCard = ({
   planName, description, price, features, buttonText, isPopular = false, badge, onClick
 }: ModernPricingCardProps) => {
   const cardClasses = `
-    backdrop-blur-2xl bg-gradient-to-br rounded-2xl shadow-2xl flex-1 max-w-sm px-8 py-10 flex flex-col transition-all duration-300 relative
+    backdrop-blur-2xl bg-gradient-to-br rounded-2xl shadow-2xl flex-1 max-w-sm px-8 py-10 flex flex-col transition-all duration-300 relative font-inter
     from-gray-900/80 to-gray-950/80 border border-emerald-500/20
     hover:border-emerald-500/40 hover:shadow-emerald-500/25 hover:scale-105
-    ${isPopular ? 'scale-105 ring-2 ring-emerald-400/30 border-emerald-400/40 shadow-emerald-500/30' : ''}
+    ${isPopular ? 'scale-110 ring-4 ring-emerald-400/40 border-emerald-400/60 shadow-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-gray-900/80' : ''}
   `;
 
   return (
     <div className={cardClasses.trim()}>
       {badge && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 text-xs font-bold rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 text-black shadow-lg">
+        <div className={`absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 text-xs font-bold rounded-full shadow-lg ${
+          isPopular 
+            ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-black animate-pulse' 
+            : 'bg-gradient-to-r from-emerald-400 to-teal-500 text-black'
+        }`}>
           {badge}
         </div>
       )}

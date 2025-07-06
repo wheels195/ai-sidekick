@@ -648,19 +648,19 @@ export default function LandingPage() {
       {/* Pricing Section */}
       <section id="pricing" className="py-16 md:py-32 bg-black">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mx-auto flex max-w-3xl flex-col text-left md:text-center">
-            <h2 className="mb-3 text-3xl font-semibold md:mb-4 lg:mb-6 lg:text-4xl">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 font-inter">
               <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
                 Simple, Honest Pricing
               </span>
             </h2>
-            <p className="text-muted-foreground lg:text-lg mb-6 md:mb-8 lg:mb-12 text-xl text-gray-200">
+            <p className="text-xl text-gray-200 font-inter">
               No tokens. No fluff. Just results for your business.
             </p>
           </div>
 
-          {/* Free Trial - Centered Above */}
-          <div className="flex justify-center mb-12">
+          {/* All Plans in a Row */}
+          <div className="flex flex-col xl:flex-row gap-8 justify-center items-center xl:items-stretch">
             <ModernPricingCard
               planName="Free Trial"
               price="$0"
@@ -675,10 +675,7 @@ export default function LandingPage() {
               ]}
               onClick={() => window.location.href = '/signup'}
             />
-          </div>
 
-          {/* Three Paid Plans in a Row */}
-          <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-stretch">
             <ModernPricingCard
               planName="Starter"
               price="$19"
