@@ -11,6 +11,7 @@ import {
   Zap,
   Users,
   Target,
+  BarChart3,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
@@ -144,8 +145,13 @@ export default function LandingPage() {
               },
               {
                 icon: Star,
-                title: "Review Management",
-                desc: "Handle bad reviews professionally and get more 5-star ratings",
+                title: "Reputation Builder",
+                desc: "Turn happy customers into 5-star reviews that build trust and attract new business",
+              },
+              {
+                icon: BarChart3,
+                title: "Smart Business Insights",
+                desc: "Get clear, AI-driven advice on what to fix, improve, or double down on in your business",
               },
             ].map((value, index) => (
               <Card
