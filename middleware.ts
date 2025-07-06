@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getUser } from '@/lib/auth'
 
 export async function middleware(request: NextRequest) {
+  // TEMPORARILY DISABLED FOR TESTING
   // Only protect the /landscaping route for now
   if (request.nextUrl.pathname.startsWith('/landscaping')) {
+    // AUTHENTICATION DISABLED FOR TESTING
+    return NextResponse.next()
+    
+    /* 
     const user = await getUser(request)
     
     if (!user) {
@@ -12,6 +17,7 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
       return NextResponse.redirect(loginUrl)
     }
+    */
   }
 
   return NextResponse.next()
