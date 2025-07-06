@@ -565,6 +565,22 @@ export default function LandscapingChat() {
                       >
                         {message.role === "assistant" ? (
                           <div className="markdown-content">
+                            {/* Debug: Show raw content */}
+                            <div className="text-xs text-red-400 mb-2 font-mono bg-red-900/20 p-2 rounded">
+                              DEBUG: {message.content.substring(0, 100)}...
+                            </div>
+                            
+                            {/* Test: Hard-coded markdown */}
+                            <div className="mb-4 p-2 border border-yellow-500/30 rounded">
+                              <p className="text-xs text-yellow-400 mb-2">TEST - Hard-coded markdown:</p>
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                              >
+                                {`## Test Header\n\nThis is a test paragraph.\n\n### Sub Header\n\n1. First item\n2. Second item`}
+                              </ReactMarkdown>
+                            </div>
+                            
+                            {/* Actual content */}
                             <ReactMarkdown
                               remarkPlugins={[remarkGfm]}
                             >
