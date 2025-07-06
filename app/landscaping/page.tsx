@@ -562,27 +562,44 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="space-y-3">
+                          <div className="text-base leading-relaxed space-y-3">
                             {(() => {
-                              const content = message.content
+                              let content = message.content
                               
-                              // Split content into chunks by finding markdown patterns
-                              const parts = content.split(/(##[^#][^##]*|###[^#][^###]*)/g).filter(part => part.trim())
+                              // Handle step headers (Step1:, Step2:, etc.)
+                              content = content.replace(/Step(\d+):/g, '\n\n## Step $1\n\n')
                               
-                              return parts.map((part, index) => {
+                              // Handle numbered headers that should be green (##1., ##2., etc.)
+                              content = content.replace(/##(\d+)\.\s*([^#\n]+)/g, '\n\n## $1. $2\n\n')
+                              
+                              // Fix any standalone # that should be ##
+                              content = content.replace(/^#([^#])/gm, '## $1')
+                              
+                              // Clean up the H2 Outline text and similar markdown artifacts
+                              content = content.replace(/H2 Outline:/g, 'Content Structure:')
+                              content = content.replace(/Meta Description:/g, '**Meta Description:**')
+                              content = content.replace(/CTA:/g, '**Call to Action:**')
+                              content = content.replace(/Keywords:/g, '**Keywords:**')
+                              
+                              // Now split by double newlines to create proper paragraphs
+                              const sections = content.split(/\n\n+/).filter(section => section.trim())
+                              
+                              return sections.map((section, index) => {
+                                const trimmed = section.trim()
+                                
                                 // Handle ## headers
-                                if (part.startsWith('##') && !part.startsWith('###')) {
-                                  const headerText = part.replace(/^##\s*/, '').split(/[.:]?\s*(?=###|##|$)/)[0]
+                                if (trimmed.startsWith('## ')) {
+                                  const headerText = trimmed.replace('## ', '')
                                   return (
-                                    <h2 key={index} className="text-xl font-semibold text-emerald-300 mb-3 mt-5 first:mt-0">
+                                    <h2 key={index} className="text-xl font-semibold text-emerald-300 mb-3 mt-6 first:mt-0">
                                       {headerText}
                                     </h2>
                                   )
                                 }
                                 
                                 // Handle ### headers
-                                if (part.startsWith('###')) {
-                                  const headerText = part.replace(/^###\s*/, '').split(/[.:]?\s*(?=###|##|$)/)[0]
+                                if (trimmed.startsWith('### ')) {
+                                  const headerText = trimmed.replace('### ', '')
                                   return (
                                     <h3 key={index} className="text-lg font-medium text-emerald-300 mb-2 mt-4 first:mt-0">
                                       {headerText}
@@ -590,18 +607,18 @@ export default function LandscapingChat() {
                                   )
                                 }
                                 
-                                // Process regular content for lists and formatting
-                                const lines = part.split(/(?=\d+\.\s|-\s)/).filter(line => line.trim())
+                                // Handle numbered lists and bullet points within the section
+                                const lines = trimmed.split('\n').filter(line => line.trim())
                                 
-                                return lines.map((line, lineIndex) => {
-                                  const key = `${index}-${lineIndex}`
+                                if (lines.length === 1) {
+                                  const line = lines[0]
                                   
-                                  // Handle numbered lists
+                                  // Single numbered item
                                   if (/^\d+\.\s/.test(line)) {
                                     const match = line.match(/^(\d+\.)\s*(.*)/)
                                     if (match) {
                                       return (
-                                        <div key={key} className="text-gray-200 leading-relaxed mb-2 ml-6">
+                                        <div key={index} className="text-gray-200 leading-relaxed mb-2 ml-6">
                                           <span className="font-medium text-emerald-400">{match[1]}</span>
                                           <span className="ml-2">{match[2]}</span>
                                         </div>
@@ -609,45 +626,73 @@ export default function LandscapingChat() {
                                     }
                                   }
                                   
-                                  // Handle bullet points
+                                  // Single bullet point
                                   if (line.startsWith('- ')) {
                                     return (
-                                      <div key={key} className="text-gray-200 leading-relaxed mb-2 ml-6">
+                                      <div key={index} className="text-gray-200 leading-relaxed mb-2 ml-6">
                                         <span className="text-emerald-400 mr-2">•</span>
-                                        {line.replace(/^-\s*/, '')}
+                                        {line.replace('- ', '')}
                                       </div>
                                     )
                                   }
-                                  
-                                  // Handle bold text **text**
-                                  if (line.includes('**')) {
-                                    const parts = line.split(/(\*\*[^*]+\*\*)/g)
-                                    return (
-                                      <p key={key} className="text-gray-200 leading-relaxed mb-3 text-base">
-                                        {parts.map((textPart, partIndex) => 
-                                          textPart.startsWith('**') && textPart.endsWith('**') ? (
-                                            <strong key={partIndex} className="font-semibold text-white">
-                                              {textPart.replace(/\*\*/g, '')}
-                                            </strong>
-                                          ) : (
-                                            textPart
+                                }
+                                
+                                // Multiple lines - render as a paragraph with internal formatting
+                                return (
+                                  <div key={index} className="space-y-2">
+                                    {lines.map((line, lineIndex) => {
+                                      const lineKey = `${index}-${lineIndex}`
+                                      
+                                      // Numbered list item
+                                      if (/^\d+\.\s/.test(line)) {
+                                        const match = line.match(/^(\d+\.)\s*(.*)/)
+                                        if (match) {
+                                          return (
+                                            <div key={lineKey} className="text-gray-200 leading-relaxed mb-1 ml-6">
+                                              <span className="font-medium text-emerald-400">{match[1]}</span>
+                                              <span className="ml-2">{match[2]}</span>
+                                            </div>
                                           )
-                                        )}
-                                      </p>
-                                    )
-                                  }
-                                  
-                                  // Regular paragraphs
-                                  if (line.trim()) {
-                                    return (
-                                      <p key={key} className="text-gray-200 leading-relaxed mb-3 text-base">
-                                        {line.trim()}
-                                      </p>
-                                    )
-                                  }
-                                  
-                                  return null
-                                })
+                                        }
+                                      }
+                                      
+                                      // Bullet point
+                                      if (line.startsWith('- ')) {
+                                        return (
+                                          <div key={lineKey} className="text-gray-200 leading-relaxed mb-1 ml-6">
+                                            <span className="text-emerald-400 mr-2">•</span>
+                                            {line.replace('- ', '')}
+                                          </div>
+                                        )
+                                      }
+                                      
+                                      // Regular line with bold formatting
+                                      if (line.includes('**')) {
+                                        const parts = line.split(/(\*\*[^*]+\*\*)/g)
+                                        return (
+                                          <p key={lineKey} className="text-gray-200 leading-relaxed">
+                                            {parts.map((part, partIndex) => 
+                                              part.startsWith('**') && part.endsWith('**') ? (
+                                                <strong key={partIndex} className="font-semibold text-white">
+                                                  {part.replace(/\*\*/g, '')}
+                                                </strong>
+                                              ) : (
+                                                part
+                                              )
+                                            )}
+                                          </p>
+                                        )
+                                      }
+                                      
+                                      // Regular text line
+                                      return (
+                                        <p key={lineKey} className="text-gray-200 leading-relaxed">
+                                          {line}
+                                        </p>
+                                      )
+                                    })}
+                                  </div>
+                                )
                               })
                             })()}
                           </div>
