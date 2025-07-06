@@ -564,26 +564,28 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="markdown-content">
+                          <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none">
                             <ReactMarkdown
                               remarkPlugins={[remarkGfm]}
+                              rehypePlugins={[rehypeHighlight]}
                               components={{
-                                h1: ({node, ...props}) => <h1 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#6ee7b7', marginBottom: '1rem', marginTop: '1.5rem', borderBottom: '1px solid rgba(110, 231, 183, 0.3)', paddingBottom: '0.5rem'}} {...props} />,
-                                h2: ({node, ...props}) => <h2 style={{fontSize: '1.25rem', fontWeight: '600', color: '#6ee7b7', marginBottom: '0.75rem', marginTop: '1.25rem'}} {...props} />,
-                                h3: ({node, ...props}) => <h3 style={{fontSize: '1.125rem', fontWeight: '500', color: '#6ee7b7', marginBottom: '0.5rem', marginTop: '1rem'}} {...props} />,
-                                p: ({node, ...props}) => <p style={{color: '#e5e7eb', lineHeight: '1.625', marginBottom: '0.75rem'}} {...props} />,
-                                ol: ({node, ...props}) => <ol style={{listStyleType: 'decimal', listStylePosition: 'outside', marginBottom: '1rem', marginLeft: '1.5rem', color: '#e5e7eb'}} {...props} />,
-                                ul: ({node, ...props}) => <ul style={{listStyleType: 'disc', listStylePosition: 'outside', marginBottom: '1rem', marginLeft: '1.5rem', color: '#e5e7eb'}} {...props} />,
-                                li: ({node, ...props}) => <li style={{color: '#e5e7eb', lineHeight: '1.625', marginBottom: '0.5rem'}} {...props} />,
-                                strong: ({node, ...props}) => <strong style={{fontWeight: '600', color: '#ffffff'}} {...props} />,
-                                code: ({node, ...props}) => <code style={{backgroundColor: '#374151', padding: '0.125rem 0.5rem', borderRadius: '0.25rem', color: '#6ee7b7', fontSize: '0.875rem', fontFamily: 'monospace'}} {...props} />,
+                                h1: ({children}) => <h1 className="text-xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2">{children}</h1>,
+                                h2: ({children}) => <h2 className="text-lg font-bold text-emerald-300 mb-3 mt-5 first:mt-0">{children}</h2>,
+                                h3: ({children}) => <h3 className="text-base font-semibold text-emerald-400 mb-2 mt-4 first:mt-0">{children}</h3>,
+                                ul: ({children}) => <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ul>,
+                                ol: ({children}) => <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ol>,
+                                li: ({children}) => <li className="text-gray-200 leading-relaxed">{children}</li>,
+                                p: ({children}) => <p className="mb-3 last:mb-0 text-gray-200 leading-relaxed">{children}</p>,
+                                strong: ({children}) => <strong className="font-semibold text-white">{children}</strong>,
+                                code: ({children}) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono">{children}</code>,
+                                blockquote: ({children}) => <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300">{children}</blockquote>,
                               }}
                             >
                               {message.content}
                             </ReactMarkdown>
                           </div>
                         ) : (
-                          <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
                       
