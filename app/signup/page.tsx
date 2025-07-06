@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,6 +16,7 @@ export default function SignupPage() {
     businessName: '',
     location: '',
     trade: '',
+    selectedPlan: '',
     services: [] as string[],
     customService: '',
     teamSize: '',
@@ -27,6 +28,24 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  // Auto-populate plan from URL parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const planParam = urlParams.get('plan')
+    if (planParam) {
+      const planMap: Record<string, string> = {
+        'free-trial': 'Free Trial',
+        'starter': 'Starter Plan',
+        'advanced': 'Advanced Plan',
+        'sidepiece-ai': 'Sidepiece AI'
+      }
+      const planName = planMap[planParam] || ''
+      if (planName) {
+        setFormData(prev => ({ ...prev, selectedPlan: planName }))
+      }
+    }
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -106,6 +125,7 @@ export default function SignupPage() {
     else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
 
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
+    if (!formData.selectedPlan) newErrors.selectedPlan = 'Please select a plan'
     if (!formData.location) newErrors.location = 'Location is required'
     if (!formData.trade) newErrors.trade = 'Please select your trade'
 
@@ -129,6 +149,7 @@ export default function SignupPage() {
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
+          selectedPlan: formData.selectedPlan,
           businessProfile: {
             business_name: formData.businessName,
             location: formData.location,
@@ -295,6 +316,21 @@ export default function SignupPage() {
                       disabled={isLoading}
                     />
                     {errors.businessName && <p className="text-red-400 text-sm mt-1">{errors.businessName}</p>}
+                  </div>
+
+                  <div>
+                    <Select value={formData.selectedPlan} onValueChange={(value) => handleSelectChange('selectedPlan', value)} disabled={isLoading}>
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 focus:ring-blue-500/25">
+                        <SelectValue placeholder="Select your plan *" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-600">
+                        <SelectItem value="Free Trial" className="text-white hover:bg-gray-700">Free Trial - $0 (7 days)</SelectItem>
+                        <SelectItem value="Starter Plan" className="text-white hover:bg-gray-700">Starter Plan - $19/mo</SelectItem>
+                        <SelectItem value="Advanced Plan" className="text-white hover:bg-gray-700">Advanced Plan - $59/mo (Most Popular)</SelectItem>
+                        <SelectItem value="Sidepiece AI" className="text-white hover:bg-gray-700">Sidepiece AI - Contact Us</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.selectedPlan && <p className="text-red-400 text-sm mt-1">{errors.selectedPlan}</p>}
                   </div>
 
                   <div>

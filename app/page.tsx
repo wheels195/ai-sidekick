@@ -673,7 +673,7 @@ export default function LandingPage() {
                 "All features included",
                 "No credit card required",
               ]}
-              onClick={() => window.location.href = '/signup'}
+              onClick={() => window.location.href = '/signup?plan=free-trial'}
             />
 
             <ModernPricingCard
@@ -688,7 +688,7 @@ export default function LandingPage() {
                 "Content generation tools",
                 "Email support",
               ]}
-              onClick={() => window.location.href = '/signup'}
+              onClick={() => window.location.href = '/signup?plan=starter'}
             />
 
             <ModernPricingCard
@@ -706,7 +706,7 @@ export default function LandingPage() {
                 "Advanced competitive analysis",
                 "Priority support",
               ]}
-              onClick={() => window.location.href = '/signup'}
+              onClick={() => window.location.href = '/signup?plan=advanced'}
             />
 
             <ModernPricingCard
@@ -723,7 +723,7 @@ export default function LandingPage() {
                 "Priority support for custom plans",
                 "Flexible billing and contract terms",
               ]}
-              onClick={() => window.location.href = '/signup'}
+              onClick={() => window.location.href = '/signup?plan=sidepiece-ai'}
             />
           </div>
         </div>
