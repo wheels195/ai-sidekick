@@ -564,27 +564,21 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="prose prose-invert max-w-none">
+                          <div className="markdown-content">
                             <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              rehypePlugins={[rehypeHighlight]}
                               components={{
-                                h1: ({children}) => <h1 className="text-2xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2">{children}</h1>,
-                                h2: ({children}) => <h2 className="text-xl font-semibold text-emerald-300 mb-3 mt-5 first:mt-0">{children}</h2>,
-                                h3: ({children}) => <h3 className="text-lg font-medium text-emerald-300 mb-2 mt-4 first:mt-0">{children}</h3>,
-                                p: ({children}) => <p className="text-gray-200 leading-relaxed mb-3 last:mb-0">{children}</p>,
-                                ol: ({children}) => <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ol>,
-                                ul: ({children}) => <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ul>,
-                                li: ({children}) => <li className="text-gray-200 leading-relaxed">{children}</li>,
-                                strong: ({children}) => <strong className="font-semibold text-white">{children}</strong>,
-                                code: ({children}) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono">{children}</code>,
-                                blockquote: ({children}) => <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300">{children}</blockquote>,
-                                em: ({children}) => <em className="italic text-gray-300">{children}</em>,
-                                a: ({children, href}) => <a href={href} className="text-emerald-400 hover:text-emerald-300 underline transition-colors" target="_blank" rel="noopener noreferrer">{children}</a>,
-                                pre: ({children}) => <pre className="bg-gray-800/50 p-4 rounded-lg my-4 overflow-x-auto border border-gray-600/50">{children}</pre>,
-                                table: ({children}) => <table className="w-full border-collapse border border-gray-600 my-4">{children}</table>,
-                                th: ({children}) => <th className="border border-gray-600 px-3 py-2 bg-gray-700 text-emerald-300 font-semibold text-left">{children}</th>,
-                                td: ({children}) => <td className="border border-gray-600 px-3 py-2 text-gray-200">{children}</td>,
+                                h1: ({children}) => <h1 className="!text-2xl !font-bold !text-emerald-300 !mb-4 !mt-6 first:!mt-0 !border-b !border-emerald-400/30 !pb-2">{children}</h1>,
+                                h2: ({children}) => <h2 className="!text-xl !font-semibold !text-emerald-300 !mb-3 !mt-5 first:!mt-0">{children}</h2>,
+                                h3: ({children}) => <h3 className="!text-lg !font-medium !text-emerald-300 !mb-2 !mt-4 first:!mt-0">{children}</h3>,
+                                p: ({children}) => <p className="!text-gray-200 !leading-relaxed !mb-3 last:!mb-0">{children}</p>,
+                                ol: ({children}) => <ol className="!list-decimal !list-outside !space-y-2 !mb-4 !ml-6 !text-gray-200">{children}</ol>,
+                                ul: ({children}) => <ul className="!list-disc !list-outside !space-y-2 !mb-4 !ml-6 !text-gray-200">{children}</ul>,
+                                li: ({children}) => <li className="!text-gray-200 !leading-relaxed">{children}</li>,
+                                strong: ({children}) => <strong className="!font-semibold !text-white">{children}</strong>,
+                                code: ({children}) => <code className="!bg-gray-700 !px-2 !py-1 !rounded !text-emerald-300 !text-sm !font-mono">{children}</code>,
+                                blockquote: ({children}) => <blockquote className="!border-l-4 !border-emerald-400 !pl-4 !my-4 !italic !text-gray-300">{children}</blockquote>,
+                                em: ({children}) => <em className="!italic !text-gray-300">{children}</em>,
+                                a: ({children, href}) => <a href={href} className="!text-emerald-400 hover:!text-emerald-300 !underline !transition-colors" target="_blank" rel="noopener noreferrer">{children}</a>,
                               }}
                             >
                               {message.content}
