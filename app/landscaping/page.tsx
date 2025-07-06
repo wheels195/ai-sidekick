@@ -79,7 +79,7 @@ export default function LandscapingChat() {
 
   // Mobile-friendly shorter suggestions for better UX
   const placeholderSuggestions = [
-    "Ask me anything about growing your business...",
+    "Ask me anything",
     "How can I get more local customers?",
     "What should I charge for maintenance?",
     "Help me with spring cleanup content",
