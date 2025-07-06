@@ -680,7 +680,7 @@ export default function LandingPage() {
               planName="Starter"
               price="$19"
               description="Perfect for getting started with AI guidance"
-              buttonText="Start Free Trial"
+              buttonText="Start with Starter"
               features={[
                 "Full access to your trade's AI sidekick",
                 "Unlimited questions & conversations",
@@ -695,7 +695,7 @@ export default function LandingPage() {
               planName="Advanced"
               price="$59"
               description="Our most advanced AI with real-time web search"
-              buttonText="Start Free Trial"
+              buttonText="Grow with Advanced"
               isPopular={true}
               badge="Most Popular"
               features={[
