@@ -564,28 +564,28 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none">
+                          <div className="space-y-4">
                             <ReactMarkdown
                               remarkPlugins={[remarkGfm]}
-                              rehypePlugins={[rehypeHighlight]}
+                              className="prose prose-invert max-w-none"
                               components={{
-                                h1: ({children}) => <h1 className="text-xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2">{children}</h1>,
-                                h2: ({children}) => <h2 className="text-lg font-bold text-emerald-300 mb-3 mt-5 first:mt-0">{children}</h2>,
-                                h3: ({children}) => <h3 className="text-base font-semibold text-emerald-400 mb-2 mt-4 first:mt-0">{children}</h3>,
-                                ul: ({children}) => <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ul>,
-                                ol: ({children}) => <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200">{children}</ol>,
-                                li: ({children}) => <li className="text-gray-200 leading-relaxed">{children}</li>,
-                                p: ({children}) => <p className="mb-3 last:mb-0 text-gray-200 leading-relaxed">{children}</p>,
-                                strong: ({children}) => <strong className="font-semibold text-white">{children}</strong>,
-                                code: ({children}) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono">{children}</code>,
-                                blockquote: ({children}) => <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300">{children}</blockquote>,
+                                h1: (props) => <h1 className="text-2xl font-bold text-emerald-300 mb-4 mt-6 first:mt-0 border-b border-emerald-400/30 pb-2" {...props} />,
+                                h2: (props) => <h2 className="text-xl font-semibold text-emerald-300 mb-3 mt-5 first:mt-0" {...props} />,
+                                h3: (props) => <h3 className="text-lg font-medium text-emerald-300 mb-2 mt-4 first:mt-0" {...props} />,
+                                p: (props) => <p className="text-gray-200 leading-relaxed mb-3 last:mb-0 text-base" {...props} />,
+                                ul: (props) => <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200" {...props} />,
+                                ol: (props) => <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200" {...props} />,
+                                li: (props) => <li className="text-gray-200 leading-relaxed" {...props} />,
+                                strong: (props) => <strong className="font-semibold text-white" {...props} />,
+                                code: (props) => <code className="bg-gray-700 px-2 py-1 rounded text-emerald-300 text-sm font-mono" {...props} />,
+                                blockquote: (props) => <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300" {...props} />,
                               }}
                             >
                               {message.content}
                             </ReactMarkdown>
                           </div>
                         ) : (
-                          <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                          <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
                       
