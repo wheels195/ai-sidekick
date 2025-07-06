@@ -160,82 +160,101 @@ Use this context to provide more personalized and relevant advice.`
       }
     }
 
-    // Call OpenAI API
+    // Call OpenAI API with streaming
     const openai = getOpenAIClient()
-    const completion = await openai.chat.completions.create({
+    const stream = await openai.chat.completions.create({
       model: 'gpt-4o-mini', // Using gpt-4o-mini for cost efficiency
       messages: chatMessages,
       max_tokens: 1000,
       temperature: 0.7,
-      stream: false,
+      stream: true,
     })
 
-    const assistantMessage = completion.choices[0]?.message
-
-    if (!assistantMessage) {
-      return NextResponse.json(
-        { error: 'No response generated' },
-        { status: 500 }
-      )
-    }
-
-    const responseTime = Date.now() - startTime
-    let storedAssistantMessage: any = null
-
-    // Store assistant response if authenticated and Supabase is available
-    if (user && assistantMessage.content && process.env.NEXT_PUBLIC_SUPABASE_URL) {
-      try {
-        const { supabase } = createClient(request)
+    // Set up streaming response
+    const encoder = new TextEncoder()
+    const readable = new ReadableStream({
+      async start(controller) {
+        let fullResponse = ''
+        let tokenCount = 0
         
-        const { data } = await supabase
-          .from('user_conversations')
-          .insert({
-            user_id: user.id,
-            session_id: sessionId || crypto.randomUUID(),
-            message_role: 'assistant',
-            message_content: assistantMessage.content,
-            context_used: userProfile ? {
-              business_name: userProfile.business_name,
-              location: userProfile.location,
-              services: userProfile.services,
-              team_size: userProfile.team_size
-            } : null,
-            response_time_ms: responseTime,
-            tokens_used: completion.usage?.total_tokens
-          })
-          .select('id')
-          .single()
-
-        storedAssistantMessage = data
-
-        // Store anonymized data for global learning
-        await supabase
-          .from('global_conversations')
-          .insert({
-            business_type: 'landscaping',
-            message_category: extractMessageCategory(currentUserMessage?.content || ''),
-            user_message_hash: await hashMessage(currentUserMessage?.content || ''),
-            response_pattern: extractResponsePattern(assistantMessage.content),
-            context_factors: {
-              has_location: !!userProfile?.location,
-              team_size_range: getTeamSizeRange(userProfile?.team_size),
-              years_in_business_range: getYearsRange(userProfile?.years_in_business),
-              services_count: userProfile?.services?.length || 0
+        try {
+          for await (const chunk of stream) {
+            const content = chunk.choices[0]?.delta?.content || ''
+            if (content) {
+              fullResponse += content
+              tokenCount += 1
+              // Send the token as Server-Sent Event
+              controller.enqueue(encoder.encode(`data: ${content}\n\n`))
             }
-          })
-      } catch (error) {
-        console.log('Could not store conversation data:', error.message)
-      }
-    }
+          }
 
-    return NextResponse.json({
-      message: {
-        role: assistantMessage.role,
-        content: assistantMessage.content,
-        id: user && process.env.NEXT_PUBLIC_SUPABASE_URL ? (storedAssistantMessage?.id || null) : null,
+          const responseTime = Date.now() - startTime
+
+          // Store assistant response if authenticated and Supabase is available
+          if (user && fullResponse && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+            try {
+              const { supabase } = createClient(request)
+              
+              const { data } = await supabase
+                .from('user_conversations')
+                .insert({
+                  user_id: user.id,
+                  session_id: sessionId || crypto.randomUUID(),
+                  message_role: 'assistant',
+                  message_content: fullResponse,
+                  context_used: userProfile ? {
+                    business_name: userProfile.business_name,
+                    location: userProfile.location,
+                    services: userProfile.services,
+                    team_size: userProfile.team_size
+                  } : null,
+                  response_time_ms: responseTime,
+                  tokens_used: tokenCount
+                })
+                .select('id')
+                .single()
+
+              // Store anonymized data for global learning
+              await supabase
+                .from('global_conversations')
+                .insert({
+                  business_type: 'landscaping',
+                  message_category: extractMessageCategory(currentUserMessage?.content || ''),
+                  user_message_hash: await hashMessage(currentUserMessage?.content || ''),
+                  response_pattern: extractResponsePattern(fullResponse),
+                  context_factors: {
+                    has_location: !!userProfile?.location,
+                    team_size_range: getTeamSizeRange(userProfile?.team_size),
+                    years_in_business_range: getYearsRange(userProfile?.years_in_business),
+                    services_count: userProfile?.services?.length || 0
+                  }
+                })
+
+              // Send completion signal with metadata
+              controller.enqueue(encoder.encode(`data: [DONE:${data?.id || 'null'}:${sessionId || crypto.randomUUID()}]\n\n`))
+            } catch (error) {
+              console.log('Could not store conversation data:', error.message)
+              controller.enqueue(encoder.encode(`data: [DONE:null:${sessionId || crypto.randomUUID()}]\n\n`))
+            }
+          } else {
+            // Send completion signal without storage
+            controller.enqueue(encoder.encode(`data: [DONE:null:${sessionId || crypto.randomUUID()}]\n\n`))
+          }
+
+          controller.close()
+        } catch (error) {
+          console.error('Streaming error:', error)
+          controller.error(error)
+        }
+      }
+    })
+
+    return new NextResponse(readable, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
       },
-      usage: completion.usage,
-      sessionId: sessionId || crypto.randomUUID()
     })
 
   } catch (error) {

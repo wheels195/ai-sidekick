@@ -291,6 +291,7 @@ export default function LandscapingChat() {
     e.preventDefault()
     if (!input.trim() || isLoading) return
 
+    // ① Add user message immediately
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
@@ -303,8 +304,15 @@ export default function LandscapingChat() {
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
 
+    // ② Create empty assistant message for streaming
+    const assistantId = (Date.now() + 1).toString()
+    setMessages(prev => [
+      ...prev,
+      { id: assistantId, role: "assistant", content: "", timestamp: new Date() },
+    ])
+
     try {
-      // Call our OpenAI API endpoint
+      // Call our streaming API endpoint
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -318,24 +326,70 @@ export default function LandscapingChat() {
         }),
       })
 
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         throw new Error(`API request failed: ${response.status}`)
       }
 
-      const data = await response.json()
+      // ③ Read the SSE stream chunk-by-chunk
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let assistantText = ""
+      let finalMessageId = null
+      let sessionId = null
 
-      if (data.error) {
-        throw new Error(data.error)
+      while (true) {
+        const { value, done } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value)
+        const lines = chunk.split('\n')
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const content = line.slice(6) // Remove 'data: ' prefix
+            
+            // Check for completion signal
+            if (content.startsWith('[DONE:')) {
+              const parts = content.match(/\[DONE:([^:]*):([^\]]*)\]/)
+              if (parts) {
+                finalMessageId = parts[1] !== 'null' ? parts[1] : null
+                sessionId = parts[2]
+              }
+              break
+            }
+            
+            // Regular content token
+            if (content.trim()) {
+              assistantText += content
+              
+              // ④ Update the assistant message in real-time
+              setMessages(prev => {
+                const idx = prev.findIndex(m => m.id === assistantId)
+                if (idx === -1) return prev
+                const updated = [...prev]
+                updated[idx] = { 
+                  ...updated[idx], 
+                  content: assistantText,
+                  id: finalMessageId || assistantId // Update with database ID when available
+                }
+                return updated
+              })
+            }
+          }
+        }
       }
 
-      const assistantMessage: Message = {
-        id: data.message.id || (Date.now() + 1).toString(), // Use database ID if available
-        role: "assistant",
-        content: data.message.content,
-        timestamp: new Date(),
+      // ⑤ Final update with database ID if available
+      if (finalMessageId) {
+        setMessages(prev => {
+          const idx = prev.findIndex(m => m.id === assistantId)
+          if (idx === -1) return prev
+          const updated = [...prev]
+          updated[idx] = { ...updated[idx], id: finalMessageId }
+          return updated
+        })
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
       setMessageCount(prev => {
         const newCount = prev + 1
         // Show rating prompt after 6+ messages (3+ exchanges) and not already rated
@@ -344,12 +398,15 @@ export default function LandscapingChat() {
         }
         return newCount
       })
+
     } catch (error) {
       console.error('Chat API Error:', error)
       
-      // Show error message to user
+      // Remove the empty assistant message and show error
+      setMessages(prev => prev.filter(m => m.id !== assistantId))
+      
       const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: (Date.now() + 2).toString(),
         role: "assistant",
         content: "I apologize, but I'm having trouble connecting right now. Please check that your OpenAI API key is configured correctly and try again. If the problem persists, please refresh the page.",
         timestamp: new Date(),
