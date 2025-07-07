@@ -1,11 +1,8 @@
 "use client"
 
 import React from "react"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
-import rehypeHighlight from "rehype-highlight"
 import {
   ArrowLeft,
   Send,
@@ -21,6 +18,8 @@ import {
   X,
   LogOut,
   ChevronDown,
+  ArrowUpIcon,
+  Paperclip,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -47,6 +46,62 @@ const EMOJI_REACTIONS = [
   { emoji: '👍', label: 'Thumbs up - Good advice' },
   { emoji: '😕', label: 'Confused - Not quite what I needed' }
 ]
+
+interface UseAutoResizeTextareaProps {
+  minHeight: number;
+  maxHeight?: number;
+}
+
+function useAutoResizeTextarea({
+  minHeight,
+  maxHeight,
+}: UseAutoResizeTextareaProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = useCallback(
+    (reset?: boolean) => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+
+      if (reset) {
+        textarea.style.height = `${minHeight}px`;
+        return;
+      }
+
+      // Temporarily shrink to get the right scrollHeight
+      textarea.style.height = `${minHeight}px`;
+
+      // Calculate new height
+      const newHeight = Math.max(
+        minHeight,
+        Math.min(
+          textarea.scrollHeight,
+          maxHeight ?? Number.POSITIVE_INFINITY
+        )
+      );
+
+      textarea.style.height = `${newHeight}px`;
+    },
+    [minHeight, maxHeight]
+  );
+
+  useEffect(() => {
+    // Set initial height
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = `${minHeight}px`;
+    }
+  }, [minHeight]);
+
+  // Adjust height on window resize
+  useEffect(() => {
+    const handleResize = () => adjustHeight();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [adjustHeight]);
+
+  return { textareaRef, adjustHeight };
+}
 
 export default function LandscapingChat() {
   const router = useRouter()
@@ -76,6 +131,12 @@ export default function LandscapingChat() {
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
   const [isTyping, setIsTyping] = useState(true)
   const [isInputFocused, setIsInputFocused] = useState(false)
+  
+  // Auto-resize textarea hook
+  const { textareaRef, adjustHeight } = useAutoResizeTextarea({
+    minHeight: 60,
+    maxHeight: 200,
+  })
 
   // Mobile-friendly shorter suggestions for better UX
   const placeholderSuggestions = [
@@ -564,76 +625,98 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="prose prose-invert max-w-none [&>*]:text-inherit">
-                            <ReactMarkdown
-                              components={{
-                                h2: ({ node, ...props }) => (
-                                  <h2
-                                    className="mt-6 mb-2 text-2xl font-semibold text-emerald-300"
-                                    {...props}
-                                  />
-                                ),
-                                h3: ({ node, ...props }) => (
-                                  <h3
-                                    className="mt-4 mb-2 text-xl font-semibold text-emerald-200"
-                                    {...props}
-                                  />
-                                ),
-                                p: ({ node, ...props }) => (
-                                  <p
-                                    className="mb-3 text-base leading-relaxed text-white"
-                                    {...props}
-                                  />
-                                ),
-                                ul: ({ node, ...props }) => (
-                                  <ul
-                                    className="list-disc ml-6 mb-3 text-white"
-                                    {...props}
-                                  />
-                                ),
-                                ol: ({ node, ...props }) => (
-                                  <ol
-                                    className="list-decimal ml-6 mb-3 text-white"
-                                    {...props}
-                                  />
-                                ),
-                                li: ({ node, ...props }) => (
-                                  <li
-                                    className="mb-1"
-                                    {...props}
-                                  />
-                                ),
-                                strong: ({ node, ...props }) => (
-                                  <strong className="font-semibold text-white" {...props} />
-                                ),
-                                a: ({ node, ...props }) => (
-                                  <a className="text-blue-400 underline" {...props} />
-                                ),
-                                code: ({ node, ...props }) => (
-                                  <code className="bg-black/20 text-emerald-200 px-1 py-0.5 rounded" {...props} />
-                                ),
-                              }}
-                            >
-                              {(() => {
-                                // Fix streaming markdown by adding proper line breaks
-                                let content = message.content
-                                  // Add line breaks before headers
-                                  .replace(/(\w)##(\s*\w)/g, '$1\n\n##$2')
-                                  .replace(/(\w)###(\s*\w)/g, '$1\n\n###$2')
-                                  // Add line breaks after headers
-                                  .replace(/(##[^#\n]+)/g, '$1\n\n')
-                                  .replace(/(###[^#\n]+)/g, '$1\n\n')
-                                  // Fix numbered lists
-                                  .replace(/(\w)(\d+\.\s)/g, '$1\n\n$2')
-                                  // Fix bullet points
-                                  .replace(/(\w)(-\s)/g, '$1\n\n$2')
-                                  // Clean up extra line breaks
-                                  .replace(/\n{3,}/g, '\n\n')
-                                  .trim()
+                          <div className="space-y-4">
+                            {(() => {
+                              const content = message.content
+                              const lines = content.split('\n').filter(line => line.trim() !== '')
+                              const elements = []
+                              let currentList = []
+                              let currentListType = null
+                              
+                              const flushList = () => {
+                                if (currentList.length > 0) {
+                                  if (currentListType === 'numbered') {
+                                    elements.push(
+                                      <ol key={elements.length} className="space-y-2 mb-4 ml-6 list-decimal list-outside">
+                                        {currentList.map((item, idx) => (
+                                          <li key={idx} className="text-white leading-relaxed">{item}</li>
+                                        ))}
+                                      </ol>
+                                    )
+                                  } else if (currentListType === 'bullet') {
+                                    elements.push(
+                                      <ul key={elements.length} className="space-y-2 mb-4 ml-6 list-disc list-outside">
+                                        {currentList.map((item, idx) => (
+                                          <li key={idx} className="text-white leading-relaxed">{item}</li>
+                                        ))}
+                                      </ul>
+                                    )
+                                  }
+                                  currentList = []
+                                  currentListType = null
+                                }
+                              }
+                              
+                              lines.forEach((line, index) => {
+                                const trimmed = line.trim()
                                 
-                                return content
-                              })()}
-                            </ReactMarkdown>
+                                // Handle headers
+                                if (trimmed.startsWith('## ')) {
+                                  flushList()
+                                  const text = trimmed.substring(3).trim()
+                                  elements.push(
+                                    <h2 key={elements.length} className="text-xl font-bold text-white mt-6 mb-3 leading-tight">
+                                      {text}
+                                    </h2>
+                                  )
+                                }
+                                else if (trimmed.startsWith('### ')) {
+                                  flushList()
+                                  const text = trimmed.substring(4).trim()
+                                  elements.push(
+                                    <h3 key={elements.length} className="text-lg font-semibold text-white mt-5 mb-2 leading-tight">
+                                      {text}
+                                    </h3>
+                                  )
+                                }
+                                // Handle numbered lists
+                                else if (/^\d+\.\s/.test(trimmed)) {
+                                  if (currentListType !== 'numbered') {
+                                    flushList()
+                                    currentListType = 'numbered'
+                                  }
+                                  const text = trimmed.replace(/^\d+\.\s/, '').trim()
+                                  const processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                  currentList.push(<span dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                }
+                                // Handle bullet points
+                                else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+                                  if (currentListType !== 'bullet') {
+                                    flushList()
+                                    currentListType = 'bullet'
+                                  }
+                                  const text = trimmed.substring(2).trim()
+                                  const processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                  currentList.push(<span dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                }
+                                // Handle regular paragraphs
+                                else if (trimmed.length > 0) {
+                                  flushList()
+                                  const processedText = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                  elements.push(
+                                    <p key={elements.length} className="text-white leading-relaxed mb-3">
+                                      <span dangerouslySetInnerHTML={{ __html: processedText }} />
+                                    </p>
+                                  )
+                                }
+                              })
+                              
+                              flushList() // Flush any remaining list items
+                              
+                              return elements.length > 0 ? elements : (
+                                <p className="text-white leading-relaxed">{content}</p>
+                              )
+                            })()}
                           </div>
                         ) : (
                           <p className="text-base leading-relaxed whitespace-pre-wrap text-white">{message.content}</p>
@@ -731,58 +814,119 @@ export default function LandscapingChat() {
                 </div>
               )}
 
-              {/* Input Area - Your Original Design */}
+              {/* Enhanced Input Area with Landscaping Theme */}
               <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0">
-                <form onSubmit={handleSubmit} className="flex items-end space-x-3 sm:space-x-4">
-                  <div className="flex-1 relative">
-                    <Textarea
-                      value={input}
-                      onChange={(e) => {
-                        setInput(e.target.value)
-                        // Smooth auto-resize textarea
-                        const target = e.target as HTMLTextAreaElement
-                        const maxHeight = window.innerWidth < 640 ? 120 : 150 // Responsive max height
-                        target.style.height = 'auto'
-                        const newHeight = Math.min(target.scrollHeight, maxHeight)
-                        target.style.height = newHeight + 'px'
-                        
-                        // Only show scrollbar if content exceeds max height
-                        if (target.scrollHeight > maxHeight) {
-                          target.style.overflowY = 'auto'
-                        } else {
-                          target.style.overflowY = 'hidden'
+                <form onSubmit={handleSubmit} className="w-full">
+                  <div className="relative bg-gray-900/50 backdrop-blur-xl rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300">
+                    <div className="overflow-hidden">
+                      <Textarea
+                        ref={textareaRef}
+                        value={input}
+                        onChange={(e) => {
+                          setInput(e.target.value)
+                          adjustHeight()
+                        }}
+                        onFocus={() => setIsInputFocused(true)}
+                        onBlur={() => setIsInputFocused(false)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault()
+                            if (input.trim()) {
+                              handleSubmit(e as any)
+                              adjustHeight(true)
+                            }
+                          }
+                        }}
+                        placeholder={
+                          isInputFocused || input.length > 0 || messages.length > 1
+                            ? "Ask me anything about growing your landscaping business..."
+                            : placeholderText
                         }
-                      }}
-                      onFocus={() => setIsInputFocused(true)}
-                      onBlur={() => setIsInputFocused(false)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault()
-                          handleSubmit(e as any)
-                        }
-                      }}
-                      placeholder={
-                        isInputFocused || input.length > 0 || messages.length > 1
-                          ? "Ask me anything about growing your business..."
-                          : placeholderText
-                      }
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50 focus:ring-emerald-500/25 pr-10 sm:pr-12 py-3 sm:py-4 lg:py-5 text-base sm:text-base lg:text-lg backdrop-blur-sm touch-manipulation resize-none min-h-[2.75rem] sm:min-h-[3rem] lg:min-h-[3.5rem] max-h-[120px] sm:max-h-[150px] overflow-hidden hover:overflow-y-auto focus:overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 w-full leading-relaxed"
-                      style={{ fontSize: isMobile ? '16px' : undefined }}
-                      rows={1}
-                      disabled={isLoading}
-                    />
-                    <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <Sparkles className="w-4 h-4 text-gray-500" />
+                        className="w-full px-4 py-3 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500 placeholder:text-sm min-h-[60px]"
+                        style={{
+                          overflow: "hidden",
+                          fontSize: isMobile ? '16px' : undefined
+                        }}
+                        disabled={isLoading}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between p-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          className="group p-2 hover:bg-emerald-500/10 rounded-lg transition-colors flex items-center gap-1"
+                          disabled={isLoading}
+                        >
+                          <Paperclip className="w-4 h-4 text-emerald-300" />
+                          <span className="text-xs text-emerald-400 hidden group-hover:inline transition-opacity">
+                            Attach
+                          </span>
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          className={`px-1.5 py-1.5 rounded-lg text-sm transition-all duration-300 border flex items-center justify-center ${
+                            input.trim() && !isLoading
+                              ? "bg-emerald-500 text-white border-emerald-500 hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25 hover:scale-105"
+                              : "text-gray-400 border-gray-700 hover:border-emerald-500/50 hover:bg-emerald-500/10"
+                          }`}
+                          onClick={(e) => {
+                            if (input.trim()) {
+                              handleSubmit(e as any)
+                              adjustHeight(true)
+                            }
+                          }}
+                          disabled={!input.trim() || isLoading}
+                        >
+                          {isLoading ? (
+                            <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <ArrowUpIcon className="w-4 h-4" />
+                          )}
+                          <span className="sr-only">Send</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <Button
-                    type="submit"
-                    disabled={!input.trim() || isLoading}
-                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 px-3 sm:px-4 lg:px-5 py-3 sm:py-4 lg:py-5 touch-manipulation flex-shrink-0 h-[2.75rem] sm:h-[3rem] lg:h-[3.5rem] flex items-center justify-center"
-                  >
-                    <Send className="w-4 h-4 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
-                  </Button>
                 </form>
+
+                {/* Quick Action Suggestions for Landscaping */}
+                {messages.length === 1 && (
+                  <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
+                    <ActionButton
+                      icon={<TrendingUp className="w-4 h-4" />}
+                      label="Local SEO Tips"
+                      onClick={() => {
+                        setInput("How can I improve my local SEO for landscaping?")
+                        if (textareaRef.current) {
+                          textareaRef.current.focus()
+                        }
+                      }}
+                    />
+                    <ActionButton
+                      icon={<Leaf className="w-4 h-4" />}
+                      label="Seasonal Services"
+                      onClick={() => {
+                        setInput("What services should I offer this season?")
+                        if (textareaRef.current) {
+                          textareaRef.current.focus()
+                        }
+                      }}
+                    />
+                    <ActionButton
+                      icon={<MessageSquare className="w-4 h-4" />}
+                      label="Content Ideas"
+                      onClick={() => {
+                        setInput("Help me create content for my landscaping business")
+                        if (textareaRef.current) {
+                          textareaRef.current.focus()
+                        }
+                      }}
+                    />
+                  </div>
+                )}
 
                 <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
                   Powered by specialized AI trained for landscaping businesses
@@ -962,4 +1106,23 @@ export default function LandscapingChat() {
       )}
     </div>
   )
+}
+
+interface ActionButtonProps {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+}
+
+function ActionButton({ icon, label, onClick }: ActionButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex items-center gap-2 px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 rounded-full border border-emerald-500/20 text-emerald-300 hover:text-emerald-200 transition-all duration-300 hover:scale-105"
+    >
+      {icon}
+      <span className="text-xs">{label}</span>
+    </button>
+  );
 }
