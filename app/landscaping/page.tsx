@@ -566,54 +566,51 @@ export default function LandscapingChat() {
                         {message.role === "assistant" ? (
                           <div className="prose prose-invert max-w-none [&>*]:text-inherit">
                             <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              rehypePlugins={[rehypeHighlight]}
                               components={{
-                                h1: ({ children }) => (
-                                  <h1 className="!text-2xl !font-bold !text-emerald-300 !mt-6 !mb-4 !border-b !border-emerald-500/30 !pb-2">
-                                    {children}
-                                  </h1>
+                                h2: ({ node, ...props }) => (
+                                  <h2
+                                    className="mt-6 mb-2 text-2xl font-semibold text-emerald-300"
+                                    {...props}
+                                  />
                                 ),
-                                h2: ({ children }) => (
-                                  <h2 className="!text-xl !font-semibold !text-emerald-300 !mt-5 !mb-3">
-                                    {children}
-                                  </h2>
+                                h3: ({ node, ...props }) => (
+                                  <h3
+                                    className="mt-4 mb-2 text-xl font-semibold text-emerald-200"
+                                    {...props}
+                                  />
                                 ),
-                                h3: ({ children }) => (
-                                  <h3 className="!text-lg !font-medium !text-emerald-300 !mt-4 !mb-2">
-                                    {children}
-                                  </h3>
+                                p: ({ node, ...props }) => (
+                                  <p
+                                    className="mb-3 text-base leading-relaxed text-white"
+                                    {...props}
+                                  />
                                 ),
-                                p: ({ children }) => (
-                                  <p className="!text-gray-200 !leading-relaxed !mb-3 last:!mb-0">
-                                    {children}
-                                  </p>
+                                ul: ({ node, ...props }) => (
+                                  <ul
+                                    className="list-disc ml-6 mb-3 text-white"
+                                    {...props}
+                                  />
                                 ),
-                                ol: ({ children }) => (
-                                  <ol className="!list-decimal !list-outside !space-y-2 !mb-4 !ml-6 !text-gray-200 [&>li::marker]:!text-emerald-300">
-                                    {children}
-                                  </ol>
+                                ol: ({ node, ...props }) => (
+                                  <ol
+                                    className="list-decimal ml-6 mb-3 text-white"
+                                    {...props}
+                                  />
                                 ),
-                                ul: ({ children }) => (
-                                  <ul className="!list-disc !list-outside !space-y-2 !mb-4 !ml-6 !text-gray-200 [&>li::marker]:!text-emerald-300">
-                                    {children}
-                                  </ul>
+                                li: ({ node, ...props }) => (
+                                  <li
+                                    className="mb-1"
+                                    {...props}
+                                  />
                                 ),
-                                li: ({ children }) => (
-                                  <li className="!text-gray-200 !leading-relaxed">{children}</li>
+                                strong: ({ node, ...props }) => (
+                                  <strong className="font-semibold text-white" {...props} />
                                 ),
-                                strong: ({ children }) => (
-                                  <strong className="!font-semibold !text-white">{children}</strong>
+                                a: ({ node, ...props }) => (
+                                  <a className="text-blue-400 underline" {...props} />
                                 ),
-                                blockquote: ({ children }) => (
-                                  <blockquote className="!border-l-4 !border-emerald-400 !pl-4 !my-4 !italic !text-gray-300">
-                                    {children}
-                                  </blockquote>
-                                ),
-                                code: ({ children }) => (
-                                  <code className="!bg-gray-800 !px-2 !py-1 !rounded !text-emerald-300 !text-sm !font-mono">
-                                    {children}
-                                  </code>
+                                code: ({ node, ...props }) => (
+                                  <code className="bg-black/20 text-emerald-200 px-1 py-0.5 rounded" {...props} />
                                 ),
                               }}
                             >
