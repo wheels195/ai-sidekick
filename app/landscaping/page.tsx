@@ -617,7 +617,25 @@ export default function LandscapingChat() {
                                 ),
                               }}
                             >
-                              {message.content}
+                              {(() => {
+                                // Fix streaming markdown by adding proper line breaks
+                                let content = message.content
+                                  // Add line breaks before headers
+                                  .replace(/(\w)##(\s*\w)/g, '$1\n\n##$2')
+                                  .replace(/(\w)###(\s*\w)/g, '$1\n\n###$2')
+                                  // Add line breaks after headers
+                                  .replace(/(##[^#\n]+)/g, '$1\n\n')
+                                  .replace(/(###[^#\n]+)/g, '$1\n\n')
+                                  // Fix numbered lists
+                                  .replace(/(\w)(\d+\.\s)/g, '$1\n\n$2')
+                                  // Fix bullet points
+                                  .replace(/(\w)(-\s)/g, '$1\n\n$2')
+                                  // Clean up extra line breaks
+                                  .replace(/\n{3,}/g, '\n\n')
+                                  .trim()
+                                
+                                return content
+                              })()}
                             </ReactMarkdown>
                           </div>
                         ) : (
