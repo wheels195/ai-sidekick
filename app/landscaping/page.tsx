@@ -3,7 +3,9 @@
 import React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-// ReactMarkdown removed - using custom text processing
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
 import {
   ArrowLeft,
   Send,
@@ -562,101 +564,60 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="space-y-4">
-                            {(() => {
-                              const content = message.content
-                              
-                              // Process the content to render it properly
-                              const renderContent = (text) => {
-                                const elements = []
-                                let currentIndex = 0
-                                
-                                // Split into parts and process each
-                                const parts = text.split(/(\d+\.\s[^-]*(?:-[^-]*)*)|(\*\*[^*]*\*\*)|##/g).filter(Boolean)
-                                
-                                parts.forEach((part, index) => {
-                                  if (!part || part.trim() === '') return
-                                  
-                                  // Handle numbered sections (1. Title- content- content)
-                                  if (/^\d+\.\s/.test(part)) {
-                                    const lines = part.split(/(?=-\s)/).filter(line => line.trim())
-                                    const title = lines[0].replace(/^\d+\.\s/, '').trim()
-                                    const items = lines.slice(1)
-                                    
-                                    elements.push(
-                                      <div key={`section-${index}`} className="mb-6">
-                                        <h3 className="text-lg font-semibold text-emerald-300 mb-3">
-                                          {`${part.match(/^\d+\./)[0]} ${title}`}
-                                        </h3>
-                                        {items.length > 0 && (
-                                          <ul className="space-y-2 ml-4">
-                                            {items.map((item, itemIndex) => {
-                                              const cleanItem = item.replace(/^-\s/, '').trim()
-                                              // Handle bold within items
-                                              if (cleanItem.includes('**')) {
-                                                const boldParts = cleanItem.split(/(\*\*[^*]*\*\*)/g)
-                                                return (
-                                                  <li key={itemIndex} className="text-gray-200 leading-relaxed">
-                                                    <span className="text-emerald-400 mr-2">•</span>
-                                                    {boldParts.map((boldPart, boldIndex) => 
-                                                      boldPart.startsWith('**') && boldPart.endsWith('**') ? (
-                                                        <strong key={boldIndex} className="font-semibold text-white">
-                                                          {boldPart.replace(/\*\*/g, '')}
-                                                        </strong>
-                                                      ) : (
-                                                        boldPart
-                                                      )
-                                                    )}
-                                                  </li>
-                                                )
-                                              } else {
-                                                return (
-                                                  <li key={itemIndex} className="text-gray-200 leading-relaxed">
-                                                    <span className="text-emerald-400 mr-2">•</span>
-                                                    {cleanItem}
-                                                  </li>
-                                                )
-                                              }
-                                            })}
-                                          </ul>
-                                        )}
-                                      </div>
-                                    )
-                                  }
-                                  // Handle other content
-                                  else if (part.trim() && !part.includes('##')) {
-                                    // Handle bold text in regular paragraphs
-                                    if (part.includes('**')) {
-                                      const boldParts = part.split(/(\*\*[^*]*\*\*)/g)
-                                      elements.push(
-                                        <p key={`text-${index}`} className="text-gray-200 leading-relaxed mb-3 text-base">
-                                          {boldParts.map((boldPart, boldIndex) => 
-                                            boldPart.startsWith('**') && boldPart.endsWith('**') ? (
-                                              <strong key={boldIndex} className="font-semibold text-white">
-                                                {boldPart.replace(/\*\*/g, '')}
-                                              </strong>
-                                            ) : (
-                                              boldPart
-                                            )
-                                          )}
-                                        </p>
-                                      )
-                                    } else {
-                                      elements.push(
-                                        <p key={`text-${index}`} className="text-gray-200 leading-relaxed mb-3 text-base">
-                                          {part.trim()}
-                                        </p>
-                                      )
-                                    }
-                                  }
-                                })
-                                
-                                return elements
-                              }
-                              
-                              return renderContent(content)
-                            })()}
-                          </div>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                            components={{
+                              h1: ({ children }) => (
+                                <h1 className="text-2xl font-bold text-emerald-300 mt-6 mb-4 border-b border-emerald-500/30 pb-2">
+                                  {children}
+                                </h1>
+                              ),
+                              h2: ({ children }) => (
+                                <h2 className="text-xl font-semibold text-emerald-300 mt-5 mb-3">
+                                  {children}
+                                </h2>
+                              ),
+                              h3: ({ children }) => (
+                                <h3 className="text-lg font-medium text-emerald-300 mt-4 mb-2">
+                                  {children}
+                                </h3>
+                              ),
+                              p: ({ children }) => (
+                                <p className="text-gray-200 leading-relaxed mb-3 last:mb-0">
+                                  {children}
+                                </p>
+                              ),
+                              ol: ({ children }) => (
+                                <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200 marker:text-emerald-300">
+                                  {children}
+                                </ol>
+                              ),
+                              ul: ({ children }) => (
+                                <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200 marker:text-emerald-300">
+                                  {children}
+                                </ul>
+                              ),
+                              li: ({ children }) => (
+                                <li className="text-gray-200 leading-relaxed">{children}</li>
+                              ),
+                              strong: ({ children }) => (
+                                <strong className="font-semibold text-white">{children}</strong>
+                              ),
+                              blockquote: ({ children }) => (
+                                <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300">
+                                  {children}
+                                </blockquote>
+                              ),
+                              code: ({ children }) => (
+                                <code className="bg-gray-800 px-2 py-1 rounded text-emerald-300 text-sm font-mono">
+                                  {children}
+                                </code>
+                              ),
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
                         ) : (
                           <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
                         )}
