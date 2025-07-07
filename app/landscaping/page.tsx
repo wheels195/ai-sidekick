@@ -560,66 +560,68 @@ export default function LandscapingChat() {
                         className={`inline-block p-4 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl ${
                           message.role === "user"
                             ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-br-md"
-                            : "bg-white/10 backdrop-blur-xl text-gray-100 border border-white/20 rounded-bl-md hover:bg-white/15"
+                            : "bg-white/10 backdrop-blur-xl border border-white/20 rounded-bl-md hover:bg-white/15"
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            rehypePlugins={[rehypeHighlight]}
-                            components={{
-                              h1: ({ children }) => (
-                                <h1 className="text-2xl font-bold text-emerald-300 mt-6 mb-4 border-b border-emerald-500/30 pb-2">
-                                  {children}
-                                </h1>
-                              ),
-                              h2: ({ children }) => (
-                                <h2 className="text-xl font-semibold text-emerald-300 mt-5 mb-3">
-                                  {children}
-                                </h2>
-                              ),
-                              h3: ({ children }) => (
-                                <h3 className="text-lg font-medium text-emerald-300 mt-4 mb-2">
-                                  {children}
-                                </h3>
-                              ),
-                              p: ({ children }) => (
-                                <p className="text-gray-200 leading-relaxed mb-3 last:mb-0">
-                                  {children}
-                                </p>
-                              ),
-                              ol: ({ children }) => (
-                                <ol className="list-decimal list-outside space-y-2 mb-4 ml-6 text-gray-200 marker:text-emerald-300">
-                                  {children}
-                                </ol>
-                              ),
-                              ul: ({ children }) => (
-                                <ul className="list-disc list-outside space-y-2 mb-4 ml-6 text-gray-200 marker:text-emerald-300">
-                                  {children}
-                                </ul>
-                              ),
-                              li: ({ children }) => (
-                                <li className="text-gray-200 leading-relaxed">{children}</li>
-                              ),
-                              strong: ({ children }) => (
-                                <strong className="font-semibold text-white">{children}</strong>
-                              ),
-                              blockquote: ({ children }) => (
-                                <blockquote className="border-l-4 border-emerald-400 pl-4 my-4 italic text-gray-300">
-                                  {children}
-                                </blockquote>
-                              ),
-                              code: ({ children }) => (
-                                <code className="bg-gray-800 px-2 py-1 rounded text-emerald-300 text-sm font-mono">
-                                  {children}
-                                </code>
-                              ),
-                            }}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
+                          <div className="prose prose-invert max-w-none [&>*]:text-inherit">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              rehypePlugins={[rehypeHighlight]}
+                              components={{
+                                h1: ({ children }) => (
+                                  <h1 className="!text-2xl !font-bold !text-emerald-300 !mt-6 !mb-4 !border-b !border-emerald-500/30 !pb-2">
+                                    {children}
+                                  </h1>
+                                ),
+                                h2: ({ children }) => (
+                                  <h2 className="!text-xl !font-semibold !text-emerald-300 !mt-5 !mb-3">
+                                    {children}
+                                  </h2>
+                                ),
+                                h3: ({ children }) => (
+                                  <h3 className="!text-lg !font-medium !text-emerald-300 !mt-4 !mb-2">
+                                    {children}
+                                  </h3>
+                                ),
+                                p: ({ children }) => (
+                                  <p className="!text-gray-200 !leading-relaxed !mb-3 last:!mb-0">
+                                    {children}
+                                  </p>
+                                ),
+                                ol: ({ children }) => (
+                                  <ol className="!list-decimal !list-outside !space-y-2 !mb-4 !ml-6 !text-gray-200 [&>li::marker]:!text-emerald-300">
+                                    {children}
+                                  </ol>
+                                ),
+                                ul: ({ children }) => (
+                                  <ul className="!list-disc !list-outside !space-y-2 !mb-4 !ml-6 !text-gray-200 [&>li::marker]:!text-emerald-300">
+                                    {children}
+                                  </ul>
+                                ),
+                                li: ({ children }) => (
+                                  <li className="!text-gray-200 !leading-relaxed">{children}</li>
+                                ),
+                                strong: ({ children }) => (
+                                  <strong className="!font-semibold !text-white">{children}</strong>
+                                ),
+                                blockquote: ({ children }) => (
+                                  <blockquote className="!border-l-4 !border-emerald-400 !pl-4 !my-4 !italic !text-gray-300">
+                                    {children}
+                                  </blockquote>
+                                ),
+                                code: ({ children }) => (
+                                  <code className="!bg-gray-800 !px-2 !py-1 !rounded !text-emerald-300 !text-sm !font-mono">
+                                    {children}
+                                  </code>
+                                ),
+                              }}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
+                          </div>
                         ) : (
-                          <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                          <p className="text-base leading-relaxed whitespace-pre-wrap text-white">{message.content}</p>
                         )}
                       </div>
                       
