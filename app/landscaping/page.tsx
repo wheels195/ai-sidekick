@@ -22,6 +22,9 @@ import {
   ChevronDown,
   ArrowUpIcon,
   Paperclip,
+  Menu,
+  History,
+  Plus,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -40,6 +43,14 @@ interface MessageReaction {
   messageId: string
   reaction: string
   timestamp: Date
+}
+
+interface SavedConversation {
+  id: string
+  title: string
+  messages: Message[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 const EMOJI_REACTIONS = [
@@ -127,6 +138,9 @@ export default function LandscapingChat() {
   const [hasRatedConversation, setHasRatedConversation] = useState(false)
   const [showHelpPanel, setShowHelpPanel] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false)
+  const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -291,6 +305,17 @@ export default function LandscapingChat() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [showUserMenu])
 
+  // Auto-save conversation when messages change
+  useEffect(() => {
+    if (messages.length > 1) {
+      const timeoutId = setTimeout(() => {
+        saveCurrentConversation()
+      }, 2000) // Save 2 seconds after last message
+      
+      return () => clearTimeout(timeoutId)
+    }
+  }, [messages])
+
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' })
@@ -300,6 +325,68 @@ export default function LandscapingChat() {
       // Force redirect even if API fails
       router.push('/login')
     }
+  }
+
+  // Save current conversation
+  const saveCurrentConversation = () => {
+    if (messages.length <= 1) return // Don't save empty conversations
+    
+    const title = generateConversationTitle(messages)
+    const conversationId = currentConversationId || Date.now().toString()
+    
+    const conversation: SavedConversation = {
+      id: conversationId,
+      title,
+      messages: [...messages],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+
+    setSavedConversations(prev => {
+      const existingIndex = prev.findIndex(c => c.id === conversationId)
+      if (existingIndex >= 0) {
+        // Update existing conversation
+        const updated = [...prev]
+        updated[existingIndex] = conversation
+        return updated
+      } else {
+        // Add new conversation
+        return [conversation, ...prev]
+      }
+    })
+    
+    setCurrentConversationId(conversationId)
+  }
+
+  // Generate conversation title from first user message
+  const generateConversationTitle = (messages: Message[]): string => {
+    const firstUserMessage = messages.find(m => m.role === 'user')
+    if (firstUserMessage) {
+      const title = firstUserMessage.content.slice(0, 50)
+      return title.length < firstUserMessage.content.length ? title + '...' : title
+    }
+    return 'New Conversation'
+  }
+
+  // Load a saved conversation
+  const loadConversation = (conversation: SavedConversation) => {
+    setMessages(conversation.messages)
+    setCurrentConversationId(conversation.id)
+    setShowSidebar(false)
+  }
+
+  // Start a new conversation
+  const startNewConversation = () => {
+    setMessages([
+      {
+        id: "1",
+        role: "assistant",
+        content: "Hi! I'm your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more. What can I help you with today?",
+        timestamp: new Date(),
+      },
+    ])
+    setCurrentConversationId(null)
+    setShowSidebar(false)
   }
 
   const handleConversationRating = async (rating: number) => {
@@ -517,7 +604,16 @@ export default function LandscapingChat() {
       <header className="flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl relative z-50">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
-            <div className="flex items-center">
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowSidebar(!showSidebar)}
+                className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
+              >
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline">Chats</span>
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"
@@ -597,6 +693,82 @@ export default function LandscapingChat() {
           </div>
         </div>
       </header>
+
+      {/* Chat History Sidebar */}
+      {showSidebar && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowSidebar(false)}
+          />
+          
+          {/* Sidebar */}
+          <div className="absolute left-0 top-0 h-full w-full sm:w-80 bg-gradient-to-br from-gray-900 via-gray-950 to-black border-r border-white/10 shadow-2xl overflow-y-auto">
+            {/* Sidebar Header */}
+            <div className="sticky top-0 bg-gray-900/95 backdrop-blur-xl border-b border-white/10 p-4 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
+                  <History className="w-4 h-4 text-white" />
+                </div>
+                <h2 className="text-lg font-bold text-white">Chat History</h2>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowSidebar(false)}
+                className="text-gray-400 hover:text-white p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {/* New Chat Button */}
+            <div className="p-4 border-b border-white/10">
+              <Button
+                onClick={startNewConversation}
+                className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center space-x-2"
+              >
+                <Plus className="w-4 h-4" />
+                <span>New Chat</span>
+              </Button>
+            </div>
+
+            {/* Conversations List */}
+            <div className="p-4 space-y-2">
+              {savedConversations.length === 0 ? (
+                <div className="text-center py-8">
+                  <MessageSquare className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-400 text-sm">No conversations yet</p>
+                  <p className="text-gray-500 text-xs mt-1">Start chatting to see your history here</p>
+                </div>
+              ) : (
+                savedConversations.map((conversation) => (
+                  <button
+                    key={conversation.id}
+                    onClick={() => loadConversation(conversation)}
+                    className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
+                      currentConversationId === conversation.id 
+                        ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-300' 
+                        : 'bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <MessageSquare className="w-4 h-4 mt-1 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate text-sm">{conversation.title}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {conversation.messages.length} messages • {conversation.createdAt.toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Chat Area - Full Height with Internal Scroll */}
       <div className="flex-1 flex flex-col relative z-40 overflow-hidden">
