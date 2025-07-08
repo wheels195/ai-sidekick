@@ -491,6 +491,7 @@ export default function LandscapingChat() {
       let assistantText = ""
       let finalMessageId = null
       let sessionId = null
+      let lastUpdateTime = 0
 
       while (true) {
         const { value, done } = await reader.read()
@@ -515,46 +516,42 @@ export default function LandscapingChat() {
             
             // Regular content token - preserve all whitespace and newlines
             if (content) {
-              // Debug: log what we're receiving
-              if (content.includes('\n') || content.includes('##')) {
-                console.log('Streaming content with formatting:', JSON.stringify(content))
-              }
-              
               assistantText += content
               
-              // ④ Update the assistant message in real-time with throttling to prevent hydration errors
-              const updateMessage = () => {
+              // Only update UI every 50ms to prevent hydration errors and allow proper buffering
+              const now = Date.now()
+              if (!lastUpdateTime || now - lastUpdateTime > 50) {
+                lastUpdateTime = now
+                
                 setMessages(prev => {
                   const idx = prev.findIndex(m => m.id === assistantId)
                   if (idx === -1) return prev
                   const updated = [...prev]
                   updated[idx] = { 
                     ...updated[idx], 
-                    // Ensure content preserves line breaks
                     content: assistantText,
-                    id: finalMessageId || assistantId // Update with database ID when available
+                    id: finalMessageId || assistantId
                   }
                   return updated
                 })
               }
-              
-              // Use requestAnimationFrame to throttle updates and prevent hydration errors
-              requestAnimationFrame(updateMessage)
             }
           }
         }
       }
 
-      // ⑤ Final update with database ID if available
-      if (finalMessageId) {
-        setMessages(prev => {
-          const idx = prev.findIndex(m => m.id === assistantId)
-          if (idx === -1) return prev
-          const updated = [...prev]
-          updated[idx] = { ...updated[idx], id: finalMessageId }
-          return updated
-        })
-      }
+      // ⑤ Final update with complete content and database ID
+      setMessages(prev => {
+        const idx = prev.findIndex(m => m.id === assistantId)
+        if (idx === -1) return prev
+        const updated = [...prev]
+        updated[idx] = { 
+          ...updated[idx], 
+          content: assistantText,
+          id: finalMessageId || assistantId
+        }
+        return updated
+      })
 
       setMessageCount(prev => {
         const newCount = prev + 1
