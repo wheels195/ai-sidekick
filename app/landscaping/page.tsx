@@ -5,7 +5,6 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import rehypeHighlight from "rehype-highlight"
 import {
   ArrowLeft,
   Send,
@@ -628,80 +627,23 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            rehypePlugins={[rehypeHighlight]}
-                            components={{
-                              h1: ({ children }) => (
-                                <h1 className="text-2xl font-bold text-white mt-6 mb-4 leading-tight">
-                                  {children}
-                                </h1>
-                              ),
-                              h2: ({ children }) => (
-                                <h2 className="text-xl font-bold text-white mt-6 mb-3 leading-tight">
-                                  {children}
-                                </h2>
-                              ),
-                              h3: ({ children }) => (
-                                <h3 className="text-lg font-semibold text-white mt-5 mb-2 leading-tight">
-                                  {children}
-                                </h3>
-                              ),
-                              p: ({ children }) => (
-                                <p className="text-white leading-relaxed mb-3">
-                                  {children}
-                                </p>
-                              ),
-                              ul: ({ children }) => (
-                                <ul className="space-y-2 mb-4 ml-6 list-disc list-outside">
-                                  {children}
-                                </ul>
-                              ),
-                              ol: ({ children }) => (
-                                <ol className="space-y-2 mb-4 ml-6 list-decimal list-outside">
-                                  {children}
-                                </ol>
-                              ),
-                              li: ({ children }) => (
-                                <li className="text-white leading-relaxed">
-                                  {children}
-                                </li>
-                              ),
-                              strong: ({ children }) => (
-                                <strong className="font-semibold text-white">
-                                  {children}
-                                </strong>
-                              ),
-                              em: ({ children }) => (
-                                <em className="italic text-white">
-                                  {children}
-                                </em>
-                              ),
-                              blockquote: ({ children }) => (
-                                <blockquote className="border-l-4 border-emerald-500 pl-4 italic text-gray-300 my-4">
-                                  {children}
-                                </blockquote>
-                              ),
-                              code: ({ inline, children }) => (
-                                inline ? (
-                                  <code className="bg-gray-800 text-emerald-300 px-2 py-1 rounded text-sm">
-                                    {children}
-                                  </code>
-                                ) : (
-                                  <code className="block bg-gray-800 text-emerald-300 p-4 rounded-lg text-sm overflow-x-auto">
-                                    {children}
-                                  </code>
-                                )
-                              ),
-                              pre: ({ children }) => (
-                                <pre className="bg-gray-800 text-emerald-300 p-4 rounded-lg text-sm overflow-x-auto mb-4">
-                                  {children}
-                                </pre>
-                              ),
-                            }}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
+                          <div className="text-white">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                h1: ({ children }) => <h1 className="text-2xl font-bold text-white mt-6 mb-4">{children}</h1>,
+                                h2: ({ children }) => <h2 className="text-xl font-bold text-white mt-6 mb-3">{children}</h2>,
+                                h3: ({ children }) => <h3 className="text-lg font-semibold text-white mt-5 mb-2">{children}</h3>,
+                                p: ({ children }) => <p className="text-white leading-relaxed mb-3">{children}</p>,
+                                ul: ({ children }) => <ul className="space-y-2 mb-4 ml-6 list-disc list-outside text-white">{children}</ul>,
+                                ol: ({ children }) => <ol className="space-y-2 mb-4 ml-6 list-decimal list-outside text-white">{children}</ol>,
+                                li: ({ children }) => <li className="text-white leading-relaxed">{children}</li>,
+                                strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+                              }}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
+                          </div>
                         ) : (
                           <p className="text-base leading-relaxed whitespace-pre-wrap text-white">{message.content}</p>
                         )}
