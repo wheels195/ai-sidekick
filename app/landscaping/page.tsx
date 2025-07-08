@@ -459,11 +459,11 @@ export default function LandscapingChat() {
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
 
-    // ② Create empty assistant message for streaming
+    // ② Create assistant message with thinking indicator
     const assistantId = (Date.now() + 1).toString()
     setMessages(prev => [
       ...prev,
-      { id: assistantId, role: "assistant", content: "", timestamp: new Date() },
+      { id: assistantId, role: "assistant", content: "⌛ Thinking...", timestamp: new Date() },
     ])
 
     try {
@@ -514,33 +514,20 @@ export default function LandscapingChat() {
               break
             }
             
-            // Regular content token - preserve all whitespace and newlines
+            // Regular content token - collect all content, no UI updates during streaming
             if (content) {
               assistantText += content
-              
-              // Only update UI every 50ms to prevent hydration errors and allow proper buffering
-              const now = Date.now()
-              if (!lastUpdateTime || now - lastUpdateTime > 50) {
-                lastUpdateTime = now
-                
-                setMessages(prev => {
-                  const idx = prev.findIndex(m => m.id === assistantId)
-                  if (idx === -1) return prev
-                  const updated = [...prev]
-                  updated[idx] = { 
-                    ...updated[idx], 
-                    content: assistantText,
-                    id: finalMessageId || assistantId
-                  }
-                  return updated
-                })
-              }
+              // No UI updates during streaming to prevent React errors
             }
           }
         }
       }
 
       // ⑤ Final update with complete content and database ID
+      console.log('Final assistantText:', assistantText.substring(0, 200) + '...')
+      console.log('Has newlines:', assistantText.includes('\n'))
+      console.log('Has headers:', assistantText.includes('##'))
+      
       setMessages(prev => {
         const idx = prev.findIndex(m => m.id === assistantId)
         if (idx === -1) return prev
