@@ -423,6 +423,11 @@ export default function LandscapingChat() {
             
             // Regular content token - preserve all whitespace and newlines
             if (content) {
+              // Debug: log what we're receiving
+              if (content.includes('\n') || content.includes('##')) {
+                console.log('Streaming content with formatting:', JSON.stringify(content))
+              }
+              
               assistantText += content
               
               // ④ Update the assistant message in real-time
@@ -432,6 +437,7 @@ export default function LandscapingChat() {
                 const updated = [...prev]
                 updated[idx] = { 
                   ...updated[idx], 
+                  // Ensure content preserves line breaks
                   content: assistantText,
                   id: finalMessageId || assistantId // Update with database ID when available
                 }
