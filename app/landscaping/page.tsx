@@ -3,6 +3,9 @@
 import React from "react"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
 import {
   ArrowLeft,
   Send,
@@ -625,99 +628,80 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="space-y-4">
-                            {(() => {
-                              const content = message.content
-                              const lines = content.split('\n').filter(line => line.trim() !== '')
-                              const elements = []
-                              let currentList = []
-                              let currentListType = null
-                              
-                              const flushList = () => {
-                                if (currentList.length > 0) {
-                                  if (currentListType === 'numbered') {
-                                    elements.push(
-                                      <ol key={elements.length} className="space-y-2 mb-4 ml-6 list-decimal list-outside">
-                                        {currentList.map((item, idx) => (
-                                          <li key={idx} className="text-white leading-relaxed">{item}</li>
-                                        ))}
-                                      </ol>
-                                    )
-                                  } else if (currentListType === 'bullet') {
-                                    elements.push(
-                                      <ul key={elements.length} className="space-y-2 mb-4 ml-6 list-disc list-outside">
-                                        {currentList.map((item, idx) => (
-                                          <li key={idx} className="text-white leading-relaxed">{item}</li>
-                                        ))}
-                                      </ul>
-                                    )
-                                  }
-                                  currentList = []
-                                  currentListType = null
-                                }
-                              }
-                              
-                              lines.forEach((line, index) => {
-                                const trimmed = line.trim()
-                                
-                                // Handle headers
-                                if (trimmed.startsWith('## ')) {
-                                  flushList()
-                                  const text = trimmed.substring(3).trim()
-                                  elements.push(
-                                    <h2 key={elements.length} className="text-xl font-bold text-white mt-6 mb-3 leading-tight">
-                                      {text}
-                                    </h2>
-                                  )
-                                }
-                                else if (trimmed.startsWith('### ')) {
-                                  flushList()
-                                  const text = trimmed.substring(4).trim()
-                                  elements.push(
-                                    <h3 key={elements.length} className="text-lg font-semibold text-white mt-5 mb-2 leading-tight">
-                                      {text}
-                                    </h3>
-                                  )
-                                }
-                                // Handle numbered lists
-                                else if (/^\d+\.\s/.test(trimmed)) {
-                                  if (currentListType !== 'numbered') {
-                                    flushList()
-                                    currentListType = 'numbered'
-                                  }
-                                  const text = trimmed.replace(/^\d+\.\s/, '').trim()
-                                  const processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                  currentList.push(<span dangerouslySetInnerHTML={{ __html: processedText }} />)
-                                }
-                                // Handle bullet points
-                                else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-                                  if (currentListType !== 'bullet') {
-                                    flushList()
-                                    currentListType = 'bullet'
-                                  }
-                                  const text = trimmed.substring(2).trim()
-                                  const processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                  currentList.push(<span dangerouslySetInnerHTML={{ __html: processedText }} />)
-                                }
-                                // Handle regular paragraphs
-                                else if (trimmed.length > 0) {
-                                  flushList()
-                                  const processedText = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                  elements.push(
-                                    <p key={elements.length} className="text-white leading-relaxed mb-3">
-                                      <span dangerouslySetInnerHTML={{ __html: processedText }} />
-                                    </p>
-                                  )
-                                }
-                              })
-                              
-                              flushList() // Flush any remaining list items
-                              
-                              return elements.length > 0 ? elements : (
-                                <p className="text-white leading-relaxed">{content}</p>
-                              )
-                            })()}
-                          </div>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                            components={{
+                              h1: ({ children }) => (
+                                <h1 className="text-2xl font-bold text-white mt-6 mb-4 leading-tight">
+                                  {children}
+                                </h1>
+                              ),
+                              h2: ({ children }) => (
+                                <h2 className="text-xl font-bold text-white mt-6 mb-3 leading-tight">
+                                  {children}
+                                </h2>
+                              ),
+                              h3: ({ children }) => (
+                                <h3 className="text-lg font-semibold text-white mt-5 mb-2 leading-tight">
+                                  {children}
+                                </h3>
+                              ),
+                              p: ({ children }) => (
+                                <p className="text-white leading-relaxed mb-3">
+                                  {children}
+                                </p>
+                              ),
+                              ul: ({ children }) => (
+                                <ul className="space-y-2 mb-4 ml-6 list-disc list-outside">
+                                  {children}
+                                </ul>
+                              ),
+                              ol: ({ children }) => (
+                                <ol className="space-y-2 mb-4 ml-6 list-decimal list-outside">
+                                  {children}
+                                </ol>
+                              ),
+                              li: ({ children }) => (
+                                <li className="text-white leading-relaxed">
+                                  {children}
+                                </li>
+                              ),
+                              strong: ({ children }) => (
+                                <strong className="font-semibold text-white">
+                                  {children}
+                                </strong>
+                              ),
+                              em: ({ children }) => (
+                                <em className="italic text-white">
+                                  {children}
+                                </em>
+                              ),
+                              blockquote: ({ children }) => (
+                                <blockquote className="border-l-4 border-emerald-500 pl-4 italic text-gray-300 my-4">
+                                  {children}
+                                </blockquote>
+                              ),
+                              code: ({ inline, children }) => (
+                                inline ? (
+                                  <code className="bg-gray-800 text-emerald-300 px-2 py-1 rounded text-sm">
+                                    {children}
+                                  </code>
+                                ) : (
+                                  <code className="block bg-gray-800 text-emerald-300 p-4 rounded-lg text-sm overflow-x-auto">
+                                    {children}
+                                  </code>
+                                )
+                              ),
+                              pre: ({ children }) => (
+                                <pre className="bg-gray-800 text-emerald-300 p-4 rounded-lg text-sm overflow-x-auto mb-4">
+                                  {children}
+                                </pre>
+                              ),
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
                         ) : (
                           <p className="text-base leading-relaxed whitespace-pre-wrap text-white">{message.content}</p>
                         )}
