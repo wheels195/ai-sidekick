@@ -6,6 +6,8 @@ import { createClient } from '@/lib/supabase/server'
 const getOpenAIClient = () => {
   return new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
+    timeout: 60000, // 60 seconds timeout
+    maxRetries: 2,
   })
 }
 
@@ -163,13 +165,23 @@ Use this context to provide more personalized and relevant advice.`
 
     // Call OpenAI API with streaming
     const openai = getOpenAIClient()
-    const stream = await openai.chat.completions.create({
-      model: 'gpt-4o-mini', // Using gpt-4o-mini for cost efficiency
-      messages: chatMessages,
-      max_tokens: 1000,
-      temperature: 0.7,
-      stream: true,
-    })
+    let stream
+    
+    try {
+      stream = await openai.chat.completions.create({
+        model: 'gpt-4o-mini', // Using gpt-4o-mini for cost efficiency
+        messages: chatMessages,
+        max_tokens: 1000,
+        temperature: 0.7,
+        stream: true,
+      })
+    } catch (error) {
+      console.error('OpenAI API call failed:', error)
+      return NextResponse.json(
+        { error: 'OpenAI API is currently unavailable. Please try again in a moment.' },
+        { status: 503 }
+      )
+    }
 
     // Set up streaming response
     const encoder = new TextEncoder()

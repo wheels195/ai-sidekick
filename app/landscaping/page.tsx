@@ -499,7 +499,10 @@ export default function LandscapingChat() {
     ])
 
     try {
-      // Call our streaming API endpoint
+      // Call our streaming API endpoint with timeout
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 90000) // 90 second timeout
+      
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -511,7 +514,10 @@ export default function LandscapingChat() {
             content: msg.content
           }))
         }),
+        signal: controller.signal
       })
+      
+      clearTimeout(timeoutId)
 
       if (!response.ok || !response.body) {
         throw new Error(`API request failed: ${response.status}`)
@@ -587,10 +593,20 @@ export default function LandscapingChat() {
       // Remove the empty assistant message and show error
       setMessages(prev => prev.filter(m => m.id !== assistantId))
       
+      let errorContent = "I apologize, but I'm having trouble connecting right now. Please try again in a moment."
+      
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          errorContent = "The request timed out. The AI service might be busy. Please try again in a moment."
+        } else if (error.message.includes('503')) {
+          errorContent = "The AI service is temporarily unavailable. Please try again in a few minutes."
+        }
+      }
+      
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
         role: "assistant",
-        content: "I apologize, but I'm having trouble connecting right now. Please try again in a moment. If the problem persists, please refresh the page.",
+        content: errorContent,
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, errorMessage])
