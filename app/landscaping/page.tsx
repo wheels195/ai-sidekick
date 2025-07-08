@@ -266,9 +266,9 @@ export default function LandscapingChat() {
             businessName: data.user.businessName || 'Your Business'
           })
         } else if (response.status === 401) {
-          // User not authenticated, redirect to login
-          console.log('User not authenticated, redirecting to login')
-          router.push('/login')
+          // User not authenticated - for now, continue without auth (testing mode)
+          console.log('User not authenticated, continuing without user context')
+          // router.push('/login') // Disabled for testing
         }
       } catch (error) {
         console.error('Failed to fetch user:', error)
@@ -566,15 +566,15 @@ export default function LandscapingChat() {
                   <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
                     <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="hidden sm:inline max-w-20 truncate">{user?.businessName || 'User'}</span>
+                  <span className="hidden sm:inline max-w-20 truncate">{user?.businessName || 'Test User'}</span>
                   <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
                 
                 {showUserMenu && (
                   <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800/95 backdrop-blur-xl border border-gray-600/30 rounded-lg shadow-2xl z-50">
                     <div className="p-3 border-b border-gray-600/30">
-                      <p className="text-sm text-white font-medium truncate">{user?.businessName || 'Your Business'}</p>
-                      <p className="text-xs text-gray-400 truncate">{user?.email || 'user@example.com'}</p>
+                      <p className="text-sm text-white font-medium truncate">{user?.businessName || 'Test User Business'}</p>
+                      <p className="text-xs text-gray-400 truncate">{user?.email || 'test@example.com'}</p>
                     </div>
                     <div className="p-1">
                       <button
