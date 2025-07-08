@@ -265,13 +265,18 @@ export default function LandscapingChat() {
             email: data.user.email,
             businessName: data.user.businessName || 'Your Business'
           })
+        } else if (response.status === 401) {
+          // User not authenticated, redirect to login
+          console.log('User not authenticated, redirecting to login')
+          router.push('/login')
         }
       } catch (error) {
         console.error('Failed to fetch user:', error)
+        // Don't redirect on network errors, just continue without user context
       }
     }
     fetchUser()
-  }, [])
+  }, [router])
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -430,19 +435,24 @@ export default function LandscapingChat() {
               
               assistantText += content
               
-              // ④ Update the assistant message in real-time
-              setMessages(prev => {
-                const idx = prev.findIndex(m => m.id === assistantId)
-                if (idx === -1) return prev
-                const updated = [...prev]
-                updated[idx] = { 
-                  ...updated[idx], 
-                  // Ensure content preserves line breaks
-                  content: assistantText,
-                  id: finalMessageId || assistantId // Update with database ID when available
-                }
-                return updated
-              })
+              // ④ Update the assistant message in real-time with throttling to prevent hydration errors
+              const updateMessage = () => {
+                setMessages(prev => {
+                  const idx = prev.findIndex(m => m.id === assistantId)
+                  if (idx === -1) return prev
+                  const updated = [...prev]
+                  updated[idx] = { 
+                    ...updated[idx], 
+                    // Ensure content preserves line breaks
+                    content: assistantText,
+                    id: finalMessageId || assistantId // Update with database ID when available
+                  }
+                  return updated
+                })
+              }
+              
+              // Use requestAnimationFrame to throttle updates and prevent hydration errors
+              requestAnimationFrame(updateMessage)
             }
           }
         }
@@ -477,7 +487,7 @@ export default function LandscapingChat() {
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
         role: "assistant",
-        content: "I apologize, but I'm having trouble connecting right now. Please check that your OpenAI API key is configured correctly and try again. If the problem persists, please refresh the page.",
+        content: "I apologize, but I'm having trouble connecting right now. Please try again in a moment. If the problem persists, please refresh the page.",
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, errorMessage])
