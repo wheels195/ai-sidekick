@@ -422,8 +422,8 @@ export default function LandscapingChat() {
               break
             }
             
-            // Regular content token
-            if (content.trim()) {
+            // Regular content token - preserve all whitespace and newlines
+            if (content) {
               assistantText += content
               
               // ④ Update the assistant message in real-time
