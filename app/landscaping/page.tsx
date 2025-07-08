@@ -3,8 +3,7 @@
 import React from "react"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
+// Removed ReactMarkdown to fix hydration issues
 import {
   ArrowLeft,
   Send,
@@ -59,6 +58,39 @@ const EMOJI_REACTIONS = [
   { emoji: '👍', label: 'Thumbs up - Good advice' },
   { emoji: '😕', label: 'Confused - Not quite what I needed' }
 ]
+
+// Simple markdown-to-HTML converter
+const convertMarkdownToHtml = (markdown: string): string => {
+  let html = markdown
+    // Headers
+    .replace(/^### (.*$)/gm, '<h3 class="text-lg font-semibold text-white mt-5 mb-2">$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2 class="text-xl font-bold text-white mt-6 mb-3">$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold text-white mt-6 mb-4">$1</h1>')
+    
+    // Bold text
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+    
+    // Lists - numbered
+    .replace(/^\d+\.\s+(.*)$/gm, '<li class="text-white leading-relaxed">$1</li>')
+    
+    // Lists - bullets
+    .replace(/^-\s+(.*)$/gm, '<li class="text-white leading-relaxed">$1</li>')
+    
+    // Wrap consecutive <li> items in <ul> or <ol>
+    .replace(/(<li class="text-white leading-relaxed">.*?<\/li>)/gs, (match) => {
+      return `<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">${match}</ul>`
+    })
+    
+    // Paragraphs
+    .replace(/^(.+)$/gm, '<p class="text-white leading-relaxed mb-3">$1</p>')
+    
+    // Clean up extra tags
+    .replace(/<\/ul>\s*<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">/g, '')
+    .replace(/<p class="text-white leading-relaxed mb-3"><h([1-3])/g, '<h$1')
+    .replace(/<\/h([1-3])><\/p>/g, '</h$1>')
+    
+  return html
+}
 
 interface UseAutoResizeTextareaProps {
   minHeight: number;
@@ -799,23 +831,12 @@ export default function LandscapingChat() {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="text-white">
-                            <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              components={{
-                                h1: ({ children }) => <h1 className="text-2xl font-bold text-white mt-6 mb-4">{children}</h1>,
-                                h2: ({ children }) => <h2 className="text-xl font-bold text-white mt-6 mb-3">{children}</h2>,
-                                h3: ({ children }) => <h3 className="text-lg font-semibold text-white mt-5 mb-2">{children}</h3>,
-                                p: ({ children }) => <p className="text-white leading-relaxed mb-3">{children}</p>,
-                                ul: ({ children }) => <ul className="space-y-2 mb-4 ml-6 list-disc list-outside text-white">{children}</ul>,
-                                ol: ({ children }) => <ol className="space-y-2 mb-4 ml-6 list-decimal list-outside text-white">{children}</ol>,
-                                li: ({ children }) => <li className="text-white leading-relaxed">{children}</li>,
-                                strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
-                              }}
-                            >
-                              {message.content}
-                            </ReactMarkdown>
-                          </div>
+                          <div 
+                            className="text-white"
+                            dangerouslySetInnerHTML={{ 
+                              __html: convertMarkdownToHtml(message.content) 
+                            }}
+                          />
                         ) : (
                           <p className="text-base leading-relaxed whitespace-pre-wrap text-white">{message.content}</p>
                         )}
