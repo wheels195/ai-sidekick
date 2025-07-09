@@ -197,10 +197,6 @@ Use this context to provide more personalized and relevant advice.`
               fullResponse += content
               tokenCount += 1
               
-              // Debug: Log content that contains newlines or headers
-              if (content.includes('\n') || content.includes('#')) {
-                console.log('Backend streaming content:', JSON.stringify(content))
-              }
               
               // Send the token as Server-Sent Event - preserve exact content including empty strings
               controller.enqueue(encoder.encode(`data: ${JSON.stringify(content)}\n\n`))
@@ -209,10 +205,6 @@ Use this context to provide more personalized and relevant advice.`
 
           const responseTime = Date.now() - startTime
 
-          // Debug: Log final response
-          console.log('Backend final response preview:', fullResponse.substring(0, 200) + '...')
-          console.log('Backend has newlines:', fullResponse.includes('\n'))
-          console.log('Backend has headers:', fullResponse.includes('#'))
 
           // Store assistant response if authenticated and Supabase is available
           if (user && fullResponse && process.env.NEXT_PUBLIC_SUPABASE_URL) {

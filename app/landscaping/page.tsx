@@ -61,35 +61,78 @@ const EMOJI_REACTIONS = [
 
 // Simple markdown-to-HTML converter
 const convertMarkdownToHtml = (markdown: string): string => {
-  let html = markdown
+  const lines = markdown.split('\n')
+  const htmlLines = []
+  let inNumberedList = false
+  let inBulletList = false
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim()
+    
+    if (line === '') {
+      // Close any open lists on empty lines
+      if (inNumberedList) {
+        htmlLines.push('</ol>')
+        inNumberedList = false
+      }
+      if (inBulletList) {
+        htmlLines.push('</ul>')
+        inBulletList = false
+      }
+      htmlLines.push('<div class="mb-3"></div>')
+      continue
+    }
+    
     // Headers
-    .replace(/^### (.*$)/gm, '<h3 class="text-lg font-semibold text-white mt-5 mb-2">$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2 class="text-xl font-bold text-white mt-6 mb-3">$1</h2>')
-    .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold text-white mt-6 mb-4">$1</h1>')
-    
-    // Bold text
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
-    
-    // Lists - numbered
-    .replace(/^\d+\.\s+(.*)$/gm, '<li class="text-white leading-relaxed">$1</li>')
-    
-    // Lists - bullets
-    .replace(/^-\s+(.*)$/gm, '<li class="text-white leading-relaxed">$1</li>')
-    
-    // Wrap consecutive <li> items in <ul> or <ol>
-    .replace(/(<li class="text-white leading-relaxed">.*?<\/li>)/gs, (match) => {
-      return `<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">${match}</ul>`
-    })
-    
-    // Paragraphs
-    .replace(/^(.+)$/gm, '<p class="text-white leading-relaxed mb-3">$1</p>')
-    
-    // Clean up extra tags
-    .replace(/<\/ul>\s*<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">/g, '')
-    .replace(/<p class="text-white leading-relaxed mb-3"><h([1-3])/g, '<h$1')
-    .replace(/<\/h([1-3])><\/p>/g, '</h$1>')
-    
-  return html
+    if (line.startsWith('### ')) {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${line.substring(4)}</h3>`)
+    }
+    else if (line.startsWith('## ')) {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${line.substring(3)}</h2>`)
+    }
+    else if (line.startsWith('# ')) {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      htmlLines.push(`<h1 class="text-2xl font-bold text-emerald-200 mt-6 mb-4">${line.substring(2)}</h1>`)
+    }
+    // Numbered lists
+    else if (/^\d+\.\s/.test(line)) {
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (!inNumberedList) {
+        htmlLines.push('<ol class="space-y-2 mb-4 ml-6 list-decimal list-outside">')
+        inNumberedList = true
+      }
+      const text = line.replace(/^\d+\.\s/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      htmlLines.push(`<li class="text-white leading-relaxed">${text}</li>`)
+    }
+    // Bullet lists
+    else if (line.startsWith('- ') || line.startsWith('* ')) {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (!inBulletList) {
+        htmlLines.push('<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">')
+        inBulletList = true
+      }
+      const text = line.substring(2).replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      htmlLines.push(`<li class="text-white leading-relaxed">${text}</li>`)
+    }
+    // Regular paragraphs
+    else {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      const text = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
+    }
+  }
+  
+  // Close any remaining lists
+  if (inNumberedList) htmlLines.push('</ol>')
+  if (inBulletList) htmlLines.push('</ul>')
+  
+  return htmlLines.join('\n')
 }
 
 interface UseAutoResizeTextareaProps {
@@ -491,11 +534,11 @@ export default function LandscapingChat() {
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
 
-    // ② Create assistant message with thinking indicator
+    // ② Create assistant message placeholder for streaming
     const assistantId = (Date.now() + 1).toString()
     setMessages(prev => [
       ...prev,
-      { id: assistantId, role: "assistant", content: "⌛ Thinking...", timestamp: new Date() },
+      { id: assistantId, role: "assistant", content: "", timestamp: new Date() },
     ])
 
     try {
@@ -555,24 +598,42 @@ export default function LandscapingChat() {
             // Parse JSON-encoded content to preserve newlines and empty strings
             try {
               const content = JSON.parse(rawContent)
-              console.log('Parsed SSE content:', JSON.stringify(content), 'Length:', content.length)
               assistantText += content
+              
+              // Real-time streaming updates with throttling
+              const now = Date.now()
+              if (now - lastUpdateTime > 50) { // Throttle to 50ms
+                setMessages(prev => {
+                  const idx = prev.findIndex(m => m.id === assistantId)
+                  if (idx === -1) return prev
+                  const updated = [...prev]
+                  updated[idx] = { ...updated[idx], content: assistantText }
+                  return updated
+                })
+                lastUpdateTime = now
+              }
             } catch (e) {
               // Fallback for non-JSON content
-              console.log('Fallback SSE content:', JSON.stringify(rawContent), 'Length:', rawContent.length)
               assistantText += rawContent
+              
+              // Real-time streaming updates with throttling
+              const now = Date.now()
+              if (now - lastUpdateTime > 50) { // Throttle to 50ms
+                setMessages(prev => {
+                  const idx = prev.findIndex(m => m.id === assistantId)
+                  if (idx === -1) return prev
+                  const updated = [...prev]
+                  updated[idx] = { ...updated[idx], content: assistantText }
+                  return updated
+                })
+                lastUpdateTime = now
+              }
             }
-            
-            // No UI updates during streaming to prevent React errors
           }
         }
       }
 
       // ⑤ Final update with complete content and database ID
-      console.log('Final assistantText:', assistantText.substring(0, 200) + '...')
-      console.log('Has newlines:', assistantText.includes('\n'))
-      console.log('Has headers:', assistantText.includes('##'))
-      
       setMessages(prev => {
         const idx = prev.findIndex(m => m.id === assistantId)
         if (idx === -1) return prev
