@@ -553,21 +553,11 @@ export default function LandscapingChat() {
             }
             
             // Regular content token - collect all content, no UI updates during streaming
-            if (content) {
-              // Debug: Log what we're receiving from backend
-              if (content.includes('\n') || content.includes('#')) {
-                console.log('Frontend received:', JSON.stringify(content))
-              }
-              
-              // Preserve newlines that were stripped during SSE parsing
-              if (content === '') {
-                assistantText += '\n';            // keep explicit blank breaks
-              } else {
-                assistantText += content;  // add content as-is (it may already contain newlines)
-              }
-              
-              // No UI updates during streaming to prevent React errors
-            }
+            // ALWAYS add content, even if empty (could be whitespace/newlines)
+            console.log('Raw SSE content:', JSON.stringify(content), 'Length:', content.length)
+            assistantText += content
+            
+            // No UI updates during streaming to prevent React errors
           }
         }
       }
