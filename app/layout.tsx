@@ -8,8 +8,36 @@ const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-cur
 
 export const metadata: Metadata = {
   title: 'AI Sidekick | Local Business Growth Agent',
-  description: 'Specialized AI assistant for landscaping businesses. Get expert advice on marketing, SEO, operations, and growth strategies.',
+  description: 'Specialized AI assistant for local trade businesses. Get expert advice on marketing, SEO, operations, and growth strategies for landscaping, electrical, HVAC, plumbing, roofing, and more.',
   generator: 'v0.dev',
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
+  openGraph: {
+    title: 'AI Sidekick | Local Business Growth Agent',
+    description: 'Specialized AI assistant for local trade businesses. Get expert advice on marketing, SEO, operations, and growth strategies for landscaping, electrical, HVAC, plumbing, roofing, and more.',
+    url: 'https://ai-sidekick-alpha.vercel.app',
+    siteName: 'AI Sidekick',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'AI Sidekick - Local Business Growth Agent',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Sidekick | Local Business Growth Agent',
+    description: 'Specialized AI assistant for local trade businesses. Get expert advice on marketing, SEO, operations, and growth strategies for landscaping, electrical, HVAC, plumbing, roofing, and more.',
+    images: ['/og-image.png'],
+  },
 }
 
 export const viewport: Viewport = {
