@@ -31,7 +31,7 @@ export default function LandingPage() {
 
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="flex justify-between items-center h-16 sm:h-20">
             <div
               className="flex items-center space-x-3 group cursor-pointer"
@@ -77,14 +77,14 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-20">
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-8 hover:scale-105 transition-all duration-300">
               <Zap className="w-5 h-5 text-emerald-400" />
               <span className="text-blue-300 font-medium">AI-Powered Business Growth</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-8xl font-semibold mb-6 sm:mb-8 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-semibold mb-6 sm:mb-8 leading-tight">
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
                 Specialized AI
               </span>
@@ -94,7 +94,7 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-4xl mx-auto mb-8 sm:mb-12 px-4">
+            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-200 leading-relaxed max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
               We build AI sidekicks trained specifically for local businesses. No generic advice—just expert guidance
               tailored to your trade.
             </p>
@@ -176,14 +176,14 @@ export default function LandingPage() {
         id="features"
         className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black"
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 How AI Sidekick Works
               </span>
             </h2>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
               We create specialized AI assistants for each trade, trained on industry-specific knowledge and best
               practices
             </p>
@@ -288,14 +288,14 @@ export default function LandingPage() {
 
       {/* Products Section - AI Sidekicks */}
       <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
-        <div className="max-w-7xl mx-auto relative">
+        <div className="max-w-7xl xl:max-w-none mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Our AI Sidekicks
               </span>
             </h2>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
               Specialized AI assistants built for specific trades. Each one trained to understand your industry inside
               and out.
             </p>
@@ -373,18 +373,18 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.1),transparent_50%)] pointer-events-none"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative z-10">
               <div className="text-center mb-16">
                 <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-6 py-3 mb-8 hover:scale-105 transition-all duration-300">
                   <Sparkles className="w-5 h-5 text-emerald-400" />
                   <span className="text-emerald-300 font-medium">Coming Soon</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-6">
                   <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
                     More AI Sidekicks
                   </span>
                 </h2>
-                <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg sm:text-xl xl:text-2xl 2xl:text-3xl text-gray-300 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
                   Specialized AI assistants for every trade, each trained with industry-specific expertise
                 </p>
               </div>
@@ -653,14 +653,14 @@ export default function LandingPage() {
 
       {/* Pricing Section */}
       <section id="pricing" className="py-16 md:py-32 bg-black">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl xl:max-w-none px-6 xl:px-12 2xl:px-20">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6 font-inter">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 font-inter">
               <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
                 Simple, Honest Pricing
               </span>
             </h2>
-            <p className="text-xl text-gray-200 font-inter">
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 font-inter">
               No tokens. No fluff. Just results for your business.
             </p>
           </div>
@@ -740,9 +740,9 @@ export default function LandingPage() {
         id="faq"
         className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-black"
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent">
                 Frequently Asked Questions
               </span>
@@ -802,7 +802,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 border-t border-gray-600/30 bg-black">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div
               className="flex items-center space-x-3 mb-6 md:mb-0 group cursor-pointer"
