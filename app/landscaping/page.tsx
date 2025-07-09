@@ -725,7 +725,13 @@ export default function LandscapingChat() {
   ]
 
   return (
-    <div className="h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
+    <>
+      <style>{`
+        .font-cursive {
+          font-family: var(--font-cursive), 'Brush Script MT', cursive;
+        }
+      `}</style>
+      <div className="h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
       {/* Background Elements - Behind everything */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.2),transparent_70%)] pointer-events-none"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none"></div>
@@ -1340,7 +1346,8 @@ export default function LandscapingChat() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   )
 }
 
