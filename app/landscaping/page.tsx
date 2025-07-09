@@ -535,7 +535,7 @@ export default function LandscapingChat() {
         const { value, done } = await reader.read()
         if (done) break
 
-        const chunk = decoder.decode(value)
+        const chunk = decoder.decode(value, { stream: true })
         const lines = chunk.split('\n')
         
         for (const line of lines) {
@@ -554,6 +554,11 @@ export default function LandscapingChat() {
             
             // Regular content token - collect all content, no UI updates during streaming
             if (content) {
+              // Debug: Log what we're receiving from backend
+              if (content.includes('\n') || content.includes('#')) {
+                console.log('Frontend received:', JSON.stringify(content))
+              }
+              
               assistantText += content
               // No UI updates during streaming to prevent React errors
             }
