@@ -741,21 +741,21 @@ export default function LandscapingChat() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setShowSidebar(!showSidebar)}
-                className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
-              >
-                <Menu className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
-                <span className="hidden xs:inline">Chats</span>
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
                 onClick={() => (window.location.href = "/")}
                 className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
               >
                 <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Home</span>
                 <span className="xs:hidden">Back</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowSidebar(!showSidebar)}
+                className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
+              >
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline">Chats</span>
               </Button>
             </div>
 
@@ -1095,7 +1095,7 @@ export default function LandscapingChat() {
                           disabled={isLoading}
                         >
                           <Sparkles className="w-4 h-4 text-emerald-300" />
-                          <span className="text-xs text-emerald-400 hidden group-hover:inline transition-opacity">
+                          <span className="text-xs text-emerald-400">
                             Tips
                           </span>
                         </button>
