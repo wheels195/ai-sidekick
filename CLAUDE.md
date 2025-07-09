@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. cd ~/ai-sidekick
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. Open in Ubuntu with "cd ~/ai-sidekick"
 
 ## Project Overview
 
