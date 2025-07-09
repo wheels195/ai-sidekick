@@ -40,7 +40,7 @@ export default function LandingPage() {
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
                 <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
                 AI Sidekick
               </span>
             </div>
@@ -84,7 +84,7 @@ export default function LandingPage() {
               <span className="text-blue-300 font-medium">AI-Powered Business Growth</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-8xl font-bold mb-6 sm:mb-8 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-8xl font-semibold mb-6 sm:mb-8 leading-tight">
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
                 Specialized AI
               </span>
@@ -162,7 +162,7 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-all duration-300 backdrop-blur-sm border border-white/10">
                     <value.icon className="w-7 h-7 text-blue-400" />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{value.title}</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">{value.title}</h3>
                   <p className="text-gray-200 text-sm leading-relaxed">{value.desc}</p>
                 </CardContent>
               </Card>
@@ -178,7 +178,7 @@ export default function LandingPage() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 How AI Sidekick Works
               </span>
@@ -224,7 +224,7 @@ export default function LandingPage() {
                     <feature.icon className="w-7 h-7 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-white mb-3">{feature.title}</h3>
+                    <h3 className="text-2xl font-medium text-white mb-3">{feature.title}</h3>
                     <p className="text-gray-200 text-lg leading-relaxed">{feature.description}</p>
                   </div>
                 </div>
@@ -290,7 +290,7 @@ export default function LandingPage() {
       <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
         <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Our AI Sidekicks
               </span>
@@ -316,7 +316,7 @@ export default function LandingPage() {
                   <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-110">
                     <span className="text-3xl">🌿</span>
                   </div>
-                  <h3 className="text-4xl font-bold text-white mb-4">Landscaping AI Sidekick</h3>
+                  <h3 className="text-4xl font-semibold text-white mb-4">Landscaping AI Sidekick</h3>
                   <p className="text-xl text-gray-200 mb-8">
                     Your expert partner for growing your landscaping business
                   </p>
@@ -345,7 +345,7 @@ export default function LandingPage() {
                         <feature.icon className="w-6 h-6 text-emerald-400" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-white mb-2">{feature.title}</h4>
+                        <h4 className="text-lg font-medium text-white mb-2">{feature.title}</h4>
                         <p className="text-gray-200">{feature.desc}</p>
                       </div>
                     </div>
@@ -379,7 +379,7 @@ export default function LandingPage() {
                   <Sparkles className="w-5 h-5 text-emerald-400" />
                   <span className="text-emerald-300 font-medium">Coming Soon</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6">
                   <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
                     More AI Sidekicks
                   </span>
@@ -399,7 +399,7 @@ export default function LandingPage() {
                       <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">⚡</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Electricians AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Electricians AI</h3>
                       <p className="text-gray-300 text-sm">Wiring, codes & safety expertise</p>
                     </div>
                     
@@ -439,7 +439,7 @@ export default function LandingPage() {
                       <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🔧</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Plumbers AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Plumbers AI</h3>
                       <p className="text-gray-300 text-sm">Emergency services & pipe systems</p>
                     </div>
                     
@@ -479,7 +479,7 @@ export default function LandingPage() {
                       <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🏠</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">HVAC AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">HVAC AI</h3>
                       <p className="text-gray-300 text-sm">Climate systems & energy efficiency</p>
                     </div>
                     
@@ -519,7 +519,7 @@ export default function LandingPage() {
                       <div className="w-16 h-16 bg-gradient-to-br from-stone-400 to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🏗️</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Roofers AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Roofers AI</h3>
                       <p className="text-gray-300 text-sm">Materials, weather & insurance</p>
                     </div>
                     
@@ -559,7 +559,7 @@ export default function LandingPage() {
                       <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🐛</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Pest Control AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Pest Control AI</h3>
                       <p className="text-gray-300 text-sm">Treatment methods & prevention</p>
                     </div>
                     
@@ -599,7 +599,7 @@ export default function LandingPage() {
                       <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🔨</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Contractors AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Contractors AI</h3>
                       <p className="text-gray-300 text-sm">Project management & bidding</p>
                     </div>
                     
@@ -655,7 +655,7 @@ export default function LandingPage() {
       <section id="pricing" className="py-16 md:py-32 bg-black">
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 font-inter">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6 font-inter">
               <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
                 Simple, Honest Pricing
               </span>
@@ -742,7 +742,7 @@ export default function LandingPage() {
       >
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent">
                 Frequently Asked Questions
               </span>
@@ -788,7 +788,7 @@ export default function LandingPage() {
                   },
                 ].map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`} className="border-b border-white/10">
-                    <AccordionTrigger className="text-left text-xl font-semibold text-white hover:no-underline hover:text-blue-400 transition-colors duration-300">
+                    <AccordionTrigger className="text-left text-xl font-medium text-white hover:no-underline hover:text-blue-400 transition-colors duration-300">
                       {faq.q}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-200 pt-4 text-lg leading-relaxed">{faq.a}</AccordionContent>
@@ -811,7 +811,7 @@ export default function LandingPage() {
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
+              <span className="text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
                 AI Sidekick
               </span>
             </div>
