@@ -59,12 +59,13 @@ const EMOJI_REACTIONS = [
   { emoji: '😕', label: 'Confused - Not quite what I needed' }
 ]
 
-// Simple markdown-to-HTML converter
+// Enhanced markdown-to-HTML converter with checklist support
 const convertMarkdownToHtml = (markdown: string): string => {
   const lines = markdown.split('\n')
   const htmlLines = []
   let inNumberedList = false
   let inBulletList = false
+  let inCheckList = false
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim()
@@ -79,6 +80,10 @@ const convertMarkdownToHtml = (markdown: string): string => {
         htmlLines.push('</ul>')
         inBulletList = false
       }
+      if (inCheckList) {
+        htmlLines.push('</ul>')
+        inCheckList = false
+      }
       htmlLines.push('<div class="mb-3"></div>')
       continue
     }
@@ -87,21 +92,40 @@ const convertMarkdownToHtml = (markdown: string): string => {
     if (line.startsWith('### ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${line.substring(4)}</h3>`)
     }
     else if (line.startsWith('## ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${line.substring(3)}</h2>`)
     }
     else if (line.startsWith('# ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       htmlLines.push(`<h1 class="text-2xl font-bold text-emerald-200 mt-6 mb-4">${line.substring(2)}</h1>`)
+    }
+    // Checklist items with emerald checkmarks
+    else if (line.match(/^[-*]\s*\[[ x]\]/)) {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (!inCheckList) {
+        htmlLines.push('<ul class="space-y-2 mb-4 ml-2">')
+        inCheckList = true
+      }
+      const isChecked = line.includes('[x]') || line.includes('[X]')
+      const text = line.replace(/^[-*]\s*\[[ xX]\]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      const checkmark = isChecked 
+        ? '<span class="text-emerald-400 text-lg mr-2">✓</span>' 
+        : '<span class="text-gray-500 text-lg mr-2">☐</span>'
+      htmlLines.push(`<li class="text-white leading-relaxed flex items-start">${checkmark}<span class="flex-1">${text}</span></li>`)
     }
     // Numbered lists
     else if (/^\d+\.\s/.test(line)) {
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (!inNumberedList) {
         htmlLines.push('<ol class="space-y-2 mb-4 ml-6 list-decimal list-outside">')
         inNumberedList = true
@@ -112,6 +136,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     // Bullet lists
     else if (line.startsWith('- ') || line.startsWith('* ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (!inBulletList) {
         htmlLines.push('<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">')
         inBulletList = true
@@ -123,14 +148,22 @@ const convertMarkdownToHtml = (markdown: string): string => {
     else {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       const text = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
-      htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
+      
+      // Check if this is an ending question (contains ? and appears to be a question)
+      if (text.includes('?') && (text.toLowerCase().includes('what') || text.toLowerCase().includes('how') || text.toLowerCase().includes('which') || text.toLowerCase().includes('where') || text.toLowerCase().includes('when') || text.toLowerCase().includes('why') || text.toLowerCase().includes('would') || text.toLowerCase().includes('could') || text.toLowerCase().includes('should') || text.toLowerCase().includes('do you') || text.toLowerCase().includes('have you') || text.toLowerCase().includes('are you'))) {
+        htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
+      } else {
+        htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
+      }
     }
   }
   
   // Close any remaining lists
   if (inNumberedList) htmlLines.push('</ol>')
   if (inBulletList) htmlLines.push('</ul>')
+  if (inCheckList) htmlLines.push('</ul>')
   
   return htmlLines.join('\n')
 }
@@ -200,7 +233,7 @@ export default function LandscapingChat() {
       id: "1",
       role: "assistant",
       content:
-        "Hi! I'm your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more. What can I help you with today?",
+        "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the Tips button below for guidance on getting the most detailed and actionable responses.\n\nWhat can I help you with today?",
       timestamp: new Date(),
     },
   ])
@@ -456,7 +489,7 @@ export default function LandscapingChat() {
       {
         id: "1",
         role: "assistant",
-        content: "Hi! I'm your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more. What can I help you with today?",
+        content: "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the Tips button below for guidance on getting the most detailed and actionable responses.\n\nWhat can I help you with today?",
         timestamp: new Date(),
       },
     ])
@@ -731,26 +764,15 @@ export default function LandscapingChat() {
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white">Landscaping AI Sidekick</h1>
-                <p className="text-xs sm:text-sm text-gray-300">Your expert business growth partner</p>
+                <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white">Dirt.i</h1>
+                <p className="text-xs sm:text-sm text-gray-300">Your Landscaping AI Sidekick</p>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-sm font-bold text-white">AI Sidekick</h1>
+                <h1 className="text-sm font-bold text-white">Dirt.i</h1>
               </div>
             </div>
 
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowHelpPanel(true)}
-                className="text-xs sm:text-sm text-emerald-300 hover:text-emerald-100 hover:bg-emerald-500/20 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2 border border-emerald-500/30 sm:border-0"
-              >
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-                <span className="sm:hidden">Tips</span>
-                <span className="hidden sm:inline">Tips</span>
-              </Button>
-              
               {/* User Profile Dropdown */}
               <div className="relative">
                 <Button
@@ -1064,6 +1086,17 @@ export default function LandscapingChat() {
                           <Paperclip className="w-4 h-4 text-emerald-300" />
                           <span className="text-xs text-emerald-400 hidden group-hover:inline transition-opacity">
                             Attach
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowHelpPanel(true)}
+                          className="group p-2 hover:bg-emerald-500/10 rounded-lg transition-colors flex items-center gap-1"
+                          disabled={isLoading}
+                        >
+                          <Sparkles className="w-4 h-4 text-emerald-300" />
+                          <span className="text-xs text-emerald-400 hidden group-hover:inline transition-opacity">
+                            Tips
                           </span>
                         </button>
                       </div>
