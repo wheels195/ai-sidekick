@@ -559,7 +559,13 @@ export default function LandscapingChat() {
                 console.log('Frontend received:', JSON.stringify(content))
               }
               
-              assistantText += content
+              // Preserve newlines that were stripped during SSE parsing
+              if (content === '') {
+                assistantText += '\n';            // keep explicit blank breaks
+              } else {
+                assistantText += content;  // add content as-is (it may already contain newlines)
+              }
+              
               // No UI updates during streaming to prevent React errors
             }
           }
