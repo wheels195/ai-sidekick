@@ -666,7 +666,7 @@ export default function LandingPage() {
           </div>
 
           {/* All Plans in a Row */}
-          <div className="flex flex-col xl:flex-row gap-8 justify-center items-center xl:items-stretch">
+          <div className="flex flex-col xl:flex-row gap-12 sm:gap-16 xl:gap-8 justify-center items-center xl:items-stretch">
             <ModernPricingCard
               planName="Free Trial"
               price="$0"

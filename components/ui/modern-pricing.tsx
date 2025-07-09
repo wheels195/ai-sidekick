@@ -32,7 +32,7 @@ export const ModernPricingCard = ({
     backdrop-blur-2xl bg-gradient-to-br rounded-2xl shadow-2xl flex-1 max-w-sm px-8 py-10 flex flex-col transition-all duration-300 relative font-inter
     from-gray-900/80 to-gray-950/80 border border-emerald-500/20
     ${isPopular 
-      ? 'scale-110 ring-4 ring-emerald-400/40 border-emerald-400/60 shadow-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-gray-900/80 hover:scale-[1.15] hover:ring-emerald-400/60 hover:shadow-emerald-500/75' 
+      ? 'xl:scale-110 ring-4 ring-emerald-400/40 border-emerald-400/60 shadow-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-gray-900/80 hover:xl:scale-[1.15] hover:ring-emerald-400/60 hover:shadow-emerald-500/75' 
       : 'hover:border-emerald-500/40 hover:shadow-emerald-500/25 hover:scale-105'
     }
   `;
