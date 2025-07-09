@@ -540,11 +540,11 @@ export default function LandscapingChat() {
         
         for (const line of lines) {
           if (line.startsWith('data: ')) {
-            const content = line.slice(6) // Remove 'data: ' prefix
+            const rawContent = line.slice(6) // Remove 'data: ' prefix
             
             // Check for completion signal
-            if (content.startsWith('[DONE:')) {
-              const parts = content.match(/\[DONE:([^:]*):([^\]]*)\]/)
+            if (rawContent.startsWith('[DONE:')) {
+              const parts = rawContent.match(/\[DONE:([^:]*):([^\]]*)\]/)
               if (parts) {
                 finalMessageId = parts[1] !== 'null' ? parts[1] : null
                 sessionId = parts[2]
@@ -552,10 +552,16 @@ export default function LandscapingChat() {
               break
             }
             
-            // Regular content token - collect all content, no UI updates during streaming
-            // ALWAYS add content, even if empty (could be whitespace/newlines)
-            console.log('Raw SSE content:', JSON.stringify(content), 'Length:', content.length)
-            assistantText += content
+            // Parse JSON-encoded content to preserve newlines and empty strings
+            try {
+              const content = JSON.parse(rawContent)
+              console.log('Parsed SSE content:', JSON.stringify(content), 'Length:', content.length)
+              assistantText += content
+            } catch (e) {
+              // Fallback for non-JSON content
+              console.log('Fallback SSE content:', JSON.stringify(rawContent), 'Length:', rawContent.length)
+              assistantText += rawContent
+            }
             
             // No UI updates during streaming to prevent React errors
           }

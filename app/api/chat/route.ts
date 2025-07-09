@@ -193,7 +193,7 @@ Use this context to provide more personalized and relevant advice.`
         try {
           for await (const chunk of stream) {
             const content = chunk.choices[0]?.delta?.content || ''
-            if (content) {
+            if (content !== undefined && content !== null) {
               fullResponse += content
               tokenCount += 1
               
@@ -202,8 +202,8 @@ Use this context to provide more personalized and relevant advice.`
                 console.log('Backend streaming content:', JSON.stringify(content))
               }
               
-              // Send the token as Server-Sent Event
-              controller.enqueue(encoder.encode(`data: ${content}\n\n`))
+              // Send the token as Server-Sent Event - preserve exact content including empty strings
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify(content)}\n\n`))
             }
           }
 
