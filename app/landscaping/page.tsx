@@ -764,11 +764,11 @@ export default function LandscapingChat() {
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white">Dirt.i</h1>
+                <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white font-cursive">Dirt.i</h1>
                 <p className="text-xs sm:text-sm text-gray-300">Your Landscaping AI Sidekick</p>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-sm font-bold text-white">Dirt.i</h1>
+                <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
               </div>
             </div>
 
