@@ -253,51 +253,75 @@ export default function LandingPage() {
 
             {/* Enhanced Chat Interface */}
             <div className="relative mt-8 lg:mt-0">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl lg:rounded-3xl blur-xl"></div>
-              <div className="relative backdrop-blur-2xl bg-gray-800/60 rounded-2xl lg:rounded-3xl border border-gray-600/40 shadow-2xl p-4 sm:p-6 lg:p-8 hover:shadow-blue-500/20 transition-all duration-500 hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-2xl lg:rounded-3xl blur-xl"></div>
+              <div className="relative backdrop-blur-2xl bg-gray-800/60 rounded-2xl lg:rounded-3xl border border-gray-600/40 shadow-2xl p-4 sm:p-6 lg:p-8 hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105">
                 <div className="flex items-center space-x-4 pb-6 border-b border-white/20">
                   <div className="flex space-x-2">
                     <div className="w-4 h-4 bg-red-400 rounded-full"></div>
                     <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
                     <div className="w-4 h-4 bg-green-400 rounded-full"></div>
                   </div>
-                  <span className="text-gray-200 font-medium">Landscaping AI Sidekick</span>
+                  <span className="text-gray-200 font-medium">Trade AI Sidekick</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span className="text-emerald-300 text-sm">Live Demo</span>
+                  </div>
                 </div>
 
-                <div className="space-y-6 mt-6">
+                <div className="space-y-6 mt-6 max-h-96 overflow-y-auto">
                   <div className="flex justify-end">
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-xs sm:max-w-sm shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
-                      <p className="text-xs sm:text-sm font-medium">
-                        How can I rank higher for "landscaping Dallas" on Google?
+                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-md shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                      <p className="text-sm font-medium">
+                        I'm struggling to compete with the big landscaping companies in Atlanta. They charge $75/hour and have huge marketing budgets. How can my 3-person crew compete and justify charging more than our current $45/hour?
                       </p>
                     </div>
                   </div>
 
                   <div className="flex justify-start">
-                    <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-sm sm:max-w-lg border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
-                      <p className="text-xs sm:text-sm leading-relaxed">
-                        Great question! For Dallas landscaping SEO, focus on: 1) Optimize your Google Business Profile
-                        with Dallas-specific keywords 2) Create neighborhood-specific service pages 3) Get reviews
-                        mentioning "Dallas" 4) Build local citations...
-                      </p>
+                    <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-2xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
+                      <div className="space-y-3 text-sm leading-relaxed">
+                        <p className="font-semibold text-emerald-300">Perfect question! Here's your competitive advantage strategy:</p>
+                        
+                        <div>
+                          <p className="font-medium text-white">🎯 **Position as the Premium Boutique Option**</p>
+                          <p className="text-gray-200">• "Personalized landscaping with the owner on every job"</p>
+                          <p className="text-gray-200">• "3-person dedicated teams vs. rotating crews"</p>
+                          <p className="text-gray-200">• "Same crew, same quality, every time"</p>
+                        </div>
+
+                        <div>
+                          <p className="font-medium text-white">💰 **Justify $65-70/hour with Value-Based Pricing**</p>
+                          <p className="text-gray-200">• Bundle consultations: "Design + Install + Maintain"</p>
+                          <p className="text-gray-200">• Offer seasonal contracts with 15% discount</p>
+                          <p className="text-gray-200">• Add plant guarantees and priority service</p>
+                        </div>
+
+                        <div>
+                          <p className="font-medium text-white">📍 **Dominate Local SEO in Atlanta**</p>
+                          <p className="text-gray-200">• Target neighborhood keywords: "Buckhead landscaping," "Midtown landscape design"</p>
+                          <p className="text-gray-200">• Get reviews mentioning specific Atlanta areas</p>
+                          <p className="text-gray-200">• Create service pages for each neighborhood you serve</p>
+                        </div>
+
+                        <div>
+                          <p className="font-medium text-white">🚀 **Marketing on a Budget**</p>
+                          <p className="text-gray-200">• Before/after Instagram posts with location tags</p>
+                          <p className="text-gray-200">• Partner with local nurseries for referrals</p>
+                          <p className="text-gray-200">• Offer "referral rewards" to existing customers</p>
+                        </div>
+
+                        <p className="text-emerald-300 font-medium pt-2">Want me to create a specific 90-day plan for your Atlanta market? I can detail pricing scripts, SEO content ideas, and partnership strategies.</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex justify-end">
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-xs sm:max-w-sm shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
-                      <p className="text-xs sm:text-sm font-medium">
-                        What should I upsell to lawn maintenance clients?
-                      </p>
+                  <div className="flex justify-start items-center space-x-2 pl-4">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                     </div>
-                  </div>
-
-                  <div className="flex justify-start">
-                    <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-sm sm:max-w-lg border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
-                      <p className="text-xs sm:text-sm leading-relaxed">
-                        Perfect timing for upsells! Consider: Seasonal fertilization programs, irrigation system
-                        maintenance, mulching services, pest control treatments, and landscape lighting installation...
-                      </p>
-                    </div>
+                    <span className="text-emerald-300 text-xs">AI is typing...</span>
                   </div>
                 </div>
               </div>
