@@ -20,6 +20,141 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export default function LandingPage() {
+  const [demoStep, setDemoStep] = useState(0)
+  const [userMessage, setUserMessage] = useState("")
+  const [aiMessage, setAiMessage] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
+
+  const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
+  
+  const fullAiMessage = `## Justifying Higher Pricing in the Atlanta Landscaping Market
+
+Charging more for your landscaping services can be a strategic move, especially if you can clearly communicate the value you provide. Here are several actionable strategies to help you justify higher prices in the Atlanta area:
+
+### 1. Highlight Quality and Expertise
+**Showcase Experience:** Provide a detailed portfolio highlighting your best work and the expertise of your team. Include before-and-after photos, especially for unique projects.
+**Certifications and Training:** If you or your team have received any certifications or training, make these known. It can greatly enhance your credibility.
+
+### 2. Emphasize Customer Service
+**Personalized Services:** Offer tailored landscaping solutions that meet the specific needs of your customers. Emphasize your commitment to exceptional customer service and communication.
+**Responsive Communication:** Be prompt and clear in your communication. Customers often value companies that are easy to reach and responsive.
+
+### 3. Leverage Local SEO
+**Optimize for Local Searches:** Use local keywords relevant to Atlanta (e.g., "premium landscaping in Atlanta") to attract customers looking for high-quality services.
+**Google Business Profile:** Optimize your profile with detailed descriptions of services, high-quality images, and customer reviews.
+
+### Next Steps
+- Optimize your Google Business Profile with local keywords and images
+- Create a premium service package that showcases your best offerings
+- Develop a content calendar for blog posts that educate potential customers
+
+What specific services do you currently offer, and what challenges have you faced in pricing your work?`
+
+  useEffect(() => {
+    const startDemo = () => {
+      // Reset everything
+      setUserMessage("")
+      setAiMessage("")
+      setIsTyping(false)
+      setDemoStep(0)
+
+      // Step 1: Start typing user message after 2 seconds
+      setTimeout(() => {
+        setDemoStep(1)
+        let currentIndex = 0
+        const typeUserMessage = () => {
+          if (currentIndex < fullUserMessage.length) {
+            setUserMessage(fullUserMessage.substring(0, currentIndex + 1))
+            currentIndex++
+            setTimeout(typeUserMessage, 50 + Math.random() * 50) // Variable typing speed
+          } else {
+            // User finished typing, show AI thinking
+            setTimeout(() => {
+              setDemoStep(2)
+              setIsTyping(true)
+              
+              // Start AI response after 1.5 seconds
+              setTimeout(() => {
+                setIsTyping(false)
+                setDemoStep(3)
+                let aiIndex = 0
+                const typeAiMessage = () => {
+                  if (aiIndex < fullAiMessage.length) {
+                    setAiMessage(fullAiMessage.substring(0, aiIndex + 1))
+                    aiIndex++
+                    setTimeout(typeAiMessage, 20 + Math.random() * 30) // Faster AI typing
+                  } else {
+                    // AI finished, wait 3 seconds then restart
+                    setTimeout(() => {
+                      startDemo()
+                    }, 4000)
+                  }
+                }
+                typeAiMessage()
+              }, 1500)
+            }, 500)
+          }
+        }
+        typeUserMessage()
+      }, 2000)
+    }
+
+    startDemo()
+  }, [])
+
+  // Convert markdown to HTML with emerald headings (similar to chat interface)
+  const convertMarkdownToHtml = (markdown: string): string => {
+    const lines = markdown.split('\n')
+    const htmlLines = []
+    let inList = false
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim()
+      
+      if (line === '') {
+        if (inList) {
+          htmlLines.push('</ul>')
+          inList = false
+        }
+        htmlLines.push('<div class="mb-3"></div>')
+        continue
+      }
+      
+      // Headers
+      if (line.startsWith('### ')) {
+        if (inList) { htmlLines.push('</ul>'); inList = false; }
+        htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${line.substring(4)}</h3>`)
+      }
+      else if (line.startsWith('## ')) {
+        if (inList) { htmlLines.push('</ul>'); inList = false; }
+        htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${line.substring(3)}</h2>`)
+      }
+      // List items
+      else if (line.startsWith('- ')) {
+        if (!inList) {
+          htmlLines.push('<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">')
+          inList = true
+        }
+        const text = line.substring(2).replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+        htmlLines.push(`<li class="text-white leading-relaxed">${text}</li>`)
+      }
+      // Regular paragraphs
+      else {
+        if (inList) { htmlLines.push('</ul>'); inList = false; }
+        const text = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+        
+        // Check if this is an ending question
+        if (text.includes('?') && (text.toLowerCase().includes('what') || text.toLowerCase().includes('how') || text.toLowerCase().includes('which'))) {
+          htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
+        } else {
+          htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
+        }
+      }
+    }
+    
+    if (inList) htmlLines.push('</ul>')
+    return htmlLines.join('\n')
+  }
 
   return (
     <>
@@ -269,60 +404,60 @@ export default function LandingPage() {
                 </div>
 
                 <div className="space-y-6 mt-6 max-h-96 overflow-y-auto">
-                  <div className="flex justify-end">
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-md shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
-                      <p className="text-sm font-medium">
-                        I'm struggling to compete with the big landscaping companies in Atlanta. They charge $75/hour and have huge marketing budgets. How can my 3-person crew compete and justify charging more than our current $45/hour?
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-start">
-                    <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-2xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
-                      <div className="space-y-3 text-sm leading-relaxed">
-                        <p className="font-semibold text-emerald-300">Perfect question! Here's your competitive advantage strategy:</p>
-                        
-                        <div>
-                          <p className="font-medium text-white">🎯 **Position as the Premium Boutique Option**</p>
-                          <p className="text-gray-200">• "Personalized landscaping with the owner on every job"</p>
-                          <p className="text-gray-200">• "3-person dedicated teams vs. rotating crews"</p>
-                          <p className="text-gray-200">• "Same crew, same quality, every time"</p>
-                        </div>
-
-                        <div>
-                          <p className="font-medium text-white">💰 **Justify $65-70/hour with Value-Based Pricing**</p>
-                          <p className="text-gray-200">• Bundle consultations: "Design + Install + Maintain"</p>
-                          <p className="text-gray-200">• Offer seasonal contracts with 15% discount</p>
-                          <p className="text-gray-200">• Add plant guarantees and priority service</p>
-                        </div>
-
-                        <div>
-                          <p className="font-medium text-white">📍 **Dominate Local SEO in Atlanta**</p>
-                          <p className="text-gray-200">• Target neighborhood keywords: "Buckhead landscaping," "Midtown landscape design"</p>
-                          <p className="text-gray-200">• Get reviews mentioning specific Atlanta areas</p>
-                          <p className="text-gray-200">• Create service pages for each neighborhood you serve</p>
-                        </div>
-
-                        <div>
-                          <p className="font-medium text-white">🚀 **Marketing on a Budget**</p>
-                          <p className="text-gray-200">• Before/after Instagram posts with location tags</p>
-                          <p className="text-gray-200">• Partner with local nurseries for referrals</p>
-                          <p className="text-gray-200">• Offer "referral rewards" to existing customers</p>
-                        </div>
-
-                        <p className="text-emerald-300 font-medium pt-2">Want me to create a specific 90-day plan for your Atlanta market? I can detail pricing scripts, SEO content ideas, and partnership strategies.</p>
+                  {/* User Message - Only show when typing or complete */}
+                  {demoStep >= 1 && (
+                    <div className="flex justify-end">
+                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-md shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                        <p className="text-sm font-medium">
+                          {userMessage}
+                          {demoStep === 1 && <span className="animate-pulse">|</span>}
+                        </p>
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                  <div className="flex justify-start items-center space-x-2 pl-4">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                  {/* AI Thinking Indicator */}
+                  {isTyping && (
+                    <div className="flex justify-start items-center space-x-2 pl-4">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      </div>
+                      <span className="text-emerald-300 text-xs">AI is thinking...</span>
                     </div>
-                    <span className="text-emerald-300 text-xs">AI is typing...</span>
-                  </div>
+                  )}
+
+                  {/* AI Response - Only show when typing or complete */}
+                  {demoStep >= 3 && (
+                    <div className="flex justify-start">
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-2xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
+                        <div className="space-y-3 text-sm leading-relaxed">
+                          <div 
+                            dangerouslySetInnerHTML={{ 
+                              __html: convertMarkdownToHtml(aiMessage) 
+                            }}
+                          />
+                          {demoStep === 3 && aiMessage.length > 0 && !aiMessage.includes('What specific services') && (
+                            <span className="animate-pulse text-emerald-400">|</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Default state - show when demo hasn't started */}
+                  {demoStep === 0 && (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                          <Sparkles className="w-6 h-6 text-white" />
+                        </div>
+                        <p className="text-emerald-300 font-medium">Live Demo Starting...</p>
+                        <p className="text-gray-400 text-sm mt-1">Watch a real conversation unfold</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
