@@ -1058,32 +1058,36 @@ What specific services do you currently offer, and what challenges have you face
                     a: "A consultant gives you generic advice and disappears after a few sessions. AI Sidekick is available 24/7, costs less than one consultant hour per month, and is trained specifically on your industry's challenges. Plus, you can ask unlimited questions without watching the clock tick away your budget.",
                   },
                   {
-                    q: "Will this actually save me time, or just give me more work to do?",
+                    q: "Is this going to actually save me time — or just be another tool I don't end up using?",
                     a: "AI Sidekick eliminates the hours you spend researching marketing strategies, writing content, and figuring out pricing. Instead of spending your weekend Googling 'how to get more landscaping customers,' you get expert answers in seconds. Most users save 5-10 hours per week on business development tasks.",
                   },
                   {
-                    q: "How do I know the advice is actually good and not just AI nonsense?",
-                    a: "Each AI sidekick is trained on proven strategies from successful businesses in your exact industry. We don't use generic business advice—every recommendation is based on what actually works for local trades. Plus, you can test small changes before making big investments.",
+                    q: "How do I know this isn't just generic AI advice?",
+                    a: "Each AI sidekick is trained on proven strategies from successful businesses in your exact trade, learns from your specific business context (location, services, team size), and adapts based on what works for similar businesses. We don't use generic business advice—every recommendation is tailored to local trades like yours.",
                   },
                   {
                     q: "What if my trade isn't available yet? Am I stuck waiting?",
-                    a: "Start with our Pro Plan to get early access to new AI sidekicks as they launch. We're adding new trades every month based on demand. Pro members also get input on which trades we prioritize next, so you can influence our roadmap.",
+                    a: "We're starting with landscaping and adding new trades based on demand. Want yours next? Let us know at hello@aisidekick.com. You can also try the landscaping AI for general business growth strategies that work across trades—pricing, local SEO, customer retention, and more.",
                   },
                   {
                     q: "I'm already spending money on marketing. Can this replace what I'm doing?",
-                    a: "AI Sidekick makes your existing marketing more effective rather than replacing it. It helps you write better Google ads, create content that actually converts, and identify which marketing channels are worth your money. Think of it as having a marketing expert optimize everything you're already doing.",
+                    a: "This isn't meant to replace your marketing agency — but it can help you make smarter, faster decisions without paying for every question or strategy session. It helps you write better Google ads, create content that actually converts, and identify which marketing channels are worth your money.",
                   },
                   {
                     q: "How quickly will I actually see results in my business?",
-                    a: "Most users see improvements within the first month. You'll get immediate help with urgent questions, better content for your website, and smarter pricing strategies. The compound effect builds over time—better SEO, more reviews, higher prices, and more referrals all add up to significant growth.",
+                    a: "You'll get immediate help with urgent questions and strategy ideas from day one. During your 7-day trial, you can test pricing strategies, improve your Google Business profile, and create better content. Bigger results like improved SEO rankings and more referrals build over time as you implement the advice consistently.",
                   },
                   {
                     q: "This sounds too good to be true. What's the catch?",
-                    a: "The only 'catch' is that you still have to implement the advice. AI Sidekick gives you the roadmap, but you need to do the work. It's not magic—it's just expert guidance available whenever you need it, without the consultant price tag.",
+                    a: "No catch. It's free for 7 days while we're testing. If it doesn't help you, no harm done. The only 'catch' is that you still have to implement the advice—AI Sidekick gives you the roadmap, but you need to do the work.",
                   },
                   {
                     q: "Will this work for a small business like mine, or is it just for bigger companies?",
-                    a: "AI Sidekick is specifically designed for small local businesses. We understand you don't have a marketing team or unlimited budget. Every strategy is built for businesses that need practical, affordable solutions that actually work in competitive local markets.",
+                    a: "AI Sidekick was built specifically for solo operators and small crews. We understand you don't have a marketing team or unlimited budget. Every strategy is designed for businesses that need practical, affordable solutions that actually work in competitive local markets.",
+                  },
+                  {
+                    q: "What happens after the free trial?",
+                    a: "After the 7-day free trial, you'll have the option to subscribe if you're seeing value. We'll be upfront about pricing before anything gets charged — no surprise bills. If it's not helping your business, just stop using it.",
                   },
                   {
                     q: "How does the AI learn and get better over time?",
