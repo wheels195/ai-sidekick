@@ -130,6 +130,14 @@ npm run lint
 
 ### ⚠️ CRITICAL FOR MARKET TESTING
 - **NEXT_PUBLIC_SITE_URL** - Must update from localhost to production URL for email verification links to work for real users
+- **AUTHENTICATION MIDDLEWARE** - Re-enable route protection for `/landscaping` to enforce trial signup
+
+### 🌐 PLANNED INFRASTRUCTURE UPGRADES
+- **Custom Domain** - Purchase ai-sidekick.com from Namecheap
+- **Google Workspace** - Professional email addresses (hello@, onboarding@, support@, no-reply@)
+- **DNS Configuration** - A/CNAME records pointing to Vercel, MX records for Gmail
+- **Resend Integration** - Update from sandbox to custom domain email addresses
+- **SSL & Authentication** - DKIM, SPF records for email deliverability
 
 ### ✅ Security Complete
 - **JWT_SECRET** - Secure random key configured (Dec 2024) - user sessions fully protected
@@ -142,12 +150,18 @@ npm run lint
 - **CTA Updates** - "Request Your Trade Next" button directs to contact form with red/gray gradient
 - **Visual Cohesion** - Matching gradients between CTAs and section headings
 
+### 🤖 AI MODEL UPGRADE OPTIONS
+- **Current**: GPT-4o-mini ($0.15/$0.60 per 1M tokens) - Fast, cost-effective
+- **Upgrade Path**: GPT-4o ($2.50/$10.00 per 1M tokens) - Advanced reasoning, web search capability
+- **Implementation**: Environment variable toggle, non-disruptive upgrade
+- **Strategy**: Smart model selection based on query complexity
+- **Rollout**: Gradual deployment after market testing validation
+
 ### Future Development (Post-Market Testing)
 - `/api/upload` - File processing and analysis implementation  
 - Conversation history interface in user dashboard
 - Payment integration for paid plans (post-trial conversion)
 - Additional trade-specific AI pages (/electrical, /hvac, etc.) based on demand
-- Custom domain email setup (ai-sidekick.io)
 - Advanced learning implementation using collected feedback data
 - User onboarding flow optimization based on trial user feedback
 
@@ -164,7 +178,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=configured_in_vercel               # ✅ Configure
 SUPABASE_SERVICE_ROLE_KEY=configured_in_vercel                   # ✅ Configured in Vercel
 
 # Site Configuration  
-NEXT_PUBLIC_SITE_URL=http://localhost:3000                      # ⚠️ CRITICAL - must update to https://ai-sidekick-alpha.vercel.app for email verification to work
+NEXT_PUBLIC_SITE_URL=http://localhost:3000                      # ⚠️ CRITICAL - must update to production domain
+# Temporary: https://ai-sidekick-alpha.vercel.app
+# Final: https://ai-sidekick.com (after domain purchase)
+
+# Email Configuration (Post-Domain Setup)
+RESEND_FROM_EMAIL=onboarding@ai-sidekick.com                    # 🔄 TODO - update from resend.dev sandbox
+
+# AI Model Configuration  
+OPENAI_MODEL=gpt-4o-mini                                        # 🔄 UPGRADE READY - can change to gpt-4o
 
 # File Upload Settings (Configured)
 NEXT_PUBLIC_MAX_FILE_SIZE=10485760

@@ -81,7 +81,9 @@ RESEND_API_KEY=re_QkT8FHeA_...               # ✅ Configured in Vercel
 JWT_SECRET=secure-random-key-generated         # ✅ Configured in Vercel (Dec 2024)
 NEXT_PUBLIC_SUPABASE_URL=https://...         # ✅ Configured in Vercel
 SUPABASE_SERVICE_ROLE_KEY=...                # ✅ Configured in Vercel
-NEXT_PUBLIC_SITE_URL=http://localhost:3000   # ⚠️ CRITICAL - must update to production URL for email verification
+NEXT_PUBLIC_SITE_URL=http://localhost:3000   # ⚠️ CRITICAL - must update to production domain
+RESEND_FROM_EMAIL=onboarding@resend.dev      # 🔄 TODO - update to custom domain
+OPENAI_MODEL=gpt-4o-mini                     # 🔄 UPGRADE READY - can switch to gpt-4o
 ```
 
 ---
@@ -126,10 +128,14 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000   # ⚠️ CRITICAL - must update to 
 ## ⚡ Final Requirements for Market Testing
 
 ### ⚠️ CRITICAL - Must Complete Before Testing
-- [ ] **Update NEXT_PUBLIC_SITE_URL** - Change from localhost to `https://ai-sidekick-alpha.vercel.app` in Vercel environment variables
+- [ ] **Update NEXT_PUBLIC_SITE_URL** - Change from localhost to production URL in Vercel environment variables
   - **Current:** `http://localhost:3000` 
-  - **Required:** `https://ai-sidekick-alpha.vercel.app`
+  - **Temporary:** `https://ai-sidekick-alpha.vercel.app`
+  - **Final:** `https://ai-sidekick.com` (after domain purchase)
   - **Impact:** Email verification links won't work for real users without this fix
+- [ ] **Re-enable Authentication Middleware** - Protect `/landscaping` route to enforce trial signup
+  - **Current:** Route accessible without authentication (testing mode)
+  - **Required:** Authentication protection enabled for business model
 
 ### 🚀 Ready for Market Testing After SITE_URL Fix
 - ✅ **JWT Security** - Production-grade JWT secret already configured
@@ -139,9 +145,26 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000   # ⚠️ CRITICAL - must update to 
 - ✅ **Mobile Experience** - Fully optimized for mobile landscaping businesses
 - ✅ **Email System** - Resend integration ready for production email delivery
 
+### 🌐 Infrastructure Upgrades (Planned)
+- [ ] **Domain Purchase** - Buy ai-sidekick.com from Namecheap
+- [ ] **Google Workspace Setup** - Professional email addresses
+  - hello@ai-sidekick.com (main contact)
+  - onboarding@ai-sidekick.com (system emails)
+  - support@ai-sidekick.com (customer support)
+  - no-reply@ai-sidekick.com (automated notifications)
+- [ ] **DNS Configuration** - A/CNAME records (Vercel) + MX records (Gmail)
+- [ ] **Resend Domain Setup** - Update from sandbox to custom domain
+- [ ] **Email Authentication** - DKIM, SPF records for deliverability
+
+### 🤖 AI Model Upgrade Options
+- [ ] **Environment Variable Setup** - Add OPENAI_MODEL configuration
+- [ ] **Smart Model Selection** - Implement query complexity detection
+- [ ] **GPT-4o Integration** - Advanced model for complex queries + web search
+- [ ] **Cost Monitoring** - Track usage and implement smart fallbacks
+- [ ] **Gradual Rollout** - Test with subset of users before full deployment
+
 ### 📈 Priority 2 (Post-Launch Improvements)
 - [ ] **Email Deliverability Testing** - Monitor inbox vs spam delivery rates
-- [ ] **Custom Domain Setup** - Purchase ai-sidekick.io for branded emails  
 - [ ] **Analytics Integration** - Track user signups, trial conversions, and engagement
 - [ ] **Error Monitoring** - Add Sentry or similar for production error tracking
 - [ ] **Password Reset** - Implement forgot password functionality
