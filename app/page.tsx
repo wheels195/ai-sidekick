@@ -938,10 +938,10 @@ What specific services do you currently offer, and what challenges have you face
                 </p>
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
-                  onClick={() => window.location.href = '/signup'}
+                  className="bg-gradient-to-r from-red-500 to-gray-600 hover:from-red-400 hover:to-gray-500 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
+                  onClick={() => window.location.href = '/contact'}
                 >
-                  Get Early Access to All Trades
+                  Request Your Trade Next
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </div>
