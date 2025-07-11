@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AI Sidekick is a Next.js 15 application that provides specialized AI assistants for local trade businesses. The app uses modern React with TypeScript, Tailwind CSS, and Radix UI components.
 
-**Current Status:** ✅ **MARKET READY** - Complete authentication system, email verification, protected routes, and user management implemented for free tier launch
+**Current Status:** ✅ **MARKET TESTING READY** - Complete authentication system, email verification, protected routes, user management, legal pages, and contact system implemented for 7-day trial launch with landscaping businesses
 
 ## Development Commands
 
@@ -122,23 +122,34 @@ npm run lint
 - **Production URL** - Successfully deployed to Vercel
 - **Authentication System** - Signup → Email verification → Login → Chat access working
 - **Email System** - Resend integration sending verification emails
-- **Free Tier Launch** - Single plan focus for market validation
+- **7-Day Trial Focus** - Trial-based signup for market validation
 - **Landscaping AI** - GPT-4o-mini responding with business expertise
+- **Legal Compliance** - Updated Terms of Use and Privacy Policy for trial stage
+- **Contact System** - Professional contact form for trade requests and support
+- **Enhanced FAQ** - Comprehensive AI learning explanation and trial expectations
 
-### ⚠️ Remaining for Full Production
-- **NEXT_PUBLIC_SITE_URL** - Currently localhost, email verification links won't work for users
+### ⚠️ CRITICAL FOR MARKET TESTING
+- **NEXT_PUBLIC_SITE_URL** - Must update from localhost to production URL for email verification links to work for real users
 
 ### ✅ Security Complete
 - **JWT_SECRET** - Secure random key configured (Dec 2024) - user sessions fully protected
 
-### Future Development (Post-Launch)
-- `/api/upload` - File processing and analysis implementation
+### Recent Updates (January 2025)
+- **Legal Pages** - Comprehensive Terms of Use and Privacy Policy for trial stage
+- **Contact Form** - Professional contact system at `/contact` for trade requests
+- **Enhanced FAQ** - Added detailed AI learning explanation with proper formatting
+- **Authentication Fix** - Corrected login page text from "Supabase-powered" to "encrypted sessions"
+- **CTA Updates** - "Request Your Trade Next" button directs to contact form with red/gray gradient
+- **Visual Cohesion** - Matching gradients between CTAs and section headings
+
+### Future Development (Post-Market Testing)
+- `/api/upload` - File processing and analysis implementation  
 - Conversation history interface in user dashboard
-- Payment integration for paid plans
-- Additional trade-specific AI pages (/electrical, /hvac, etc.)
+- Payment integration for paid plans (post-trial conversion)
+- Additional trade-specific AI pages (/electrical, /hvac, etc.) based on demand
 - Custom domain email setup (ai-sidekick.io)
 - Advanced learning implementation using collected feedback data
-- User onboarding flow optimization
+- User onboarding flow optimization based on trial user feedback
 
 ### Environment Variables
 ```
@@ -152,8 +163,8 @@ NEXT_PUBLIC_SUPABASE_URL=https://tgrwtbtyfznebqrwenji.supabase.co  # ✅ Configu
 NEXT_PUBLIC_SUPABASE_ANON_KEY=configured_in_vercel               # ✅ Configured in Vercel
 SUPABASE_SERVICE_ROLE_KEY=configured_in_vercel                   # ✅ Configured in Vercel
 
-# Site Configuration
-NEXT_PUBLIC_SITE_URL=http://localhost:3000                      # ⚠️ TODO - needs production URL for email links
+# Site Configuration  
+NEXT_PUBLIC_SITE_URL=http://localhost:3000                      # ⚠️ CRITICAL - must update to https://ai-sidekick-alpha.vercel.app for email verification to work
 
 # File Upload Settings (Configured)
 NEXT_PUBLIC_MAX_FILE_SIZE=10485760
@@ -184,7 +195,7 @@ NEXT_PUBLIC_ALLOWED_FILE_TYPES=image/*,.pdf,.doc,.docx,.txt
 
 ## Important Notes
 
-- **Production Ready:** ✅ Fully deployed and operational at https://ai-sidekick-alpha.vercel.app
+- **Market Testing Ready:** ✅ Fully deployed at https://ai-sidekick-alpha.vercel.app (pending SITE_URL fix for email verification)
 - **Mobile Optimized:** ✅ Comprehensive mobile experience with touch-friendly interactions
 - **No Generic Business Logic:** All AI responses must be trade-specific
 - **Enhanced AI Prompts:** Focused on digital marketing, local SEO, and content creation strategies
