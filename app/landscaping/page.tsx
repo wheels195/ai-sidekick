@@ -224,17 +224,68 @@ function useAutoResizeTextarea({
   return { textareaRef, adjustHeight };
 }
 
+// Helper function to generate personalized greeting
+const generatePersonalizedGreeting = (user: {
+  email: string, 
+  businessName: string,
+  location: string,
+  trade: string,
+  services: string[],
+  teamSize: number,
+  targetCustomers: string,
+  yearsInBusiness: number,
+  mainChallenges: string[]
+} | null): string => {
+  const baseGreeting = "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the <span style=\"color: #10b981;\">Tips</span> button below for guidance on getting the most detailed and actionable responses.\n\n"
+  
+  if (!user) {
+    return baseGreeting + "What can I help you with today?"
+  }
+
+  const { businessName, location, services, teamSize } = user
+  
+  let personalizedContext = `I see you're **${businessName}**`
+  
+  if (location) {
+    personalizedContext += ` located in **${location}**`
+  }
+  
+  if (teamSize && teamSize > 0) {
+    personalizedContext += ` with a **${teamSize}-person team**`
+  }
+  
+  if (services && services.length > 0) {
+    const serviceList = services.length > 3 
+      ? `${services.slice(0, 3).join(', ')} and ${services.length - 3} more services`
+      : services.join(', ')
+    personalizedContext += ` offering **${serviceList}**`
+  }
+  
+  personalizedContext += ". What can I help you with today?"
+  
+  return baseGreeting + personalizedContext
+}
+
 export default function LandscapingChat() {
   const router = useRouter()
-  const [user, setUser] = useState<{email: string, businessName: string} | null>(null)
+  const [user, setUser] = useState<{
+    email: string, 
+    businessName: string,
+    location: string,
+    trade: string,
+    services: string[],
+    teamSize: number,
+    targetCustomers: string,
+    yearsInBusiness: number,
+    mainChallenges: string[]
+  } | null>(null)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       role: "assistant",
-      content:
-        "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the Tips button below for guidance on getting the most detailed and actionable responses.\n\nWhat can I help you with today?",
+      content: generatePersonalizedGreeting(null), // Default greeting until user profile loads
       timestamp: new Date(),
     },
   ])
@@ -384,10 +435,27 @@ export default function LandscapingChat() {
         const response = await fetch('/api/user/profile')
         if (response.ok) {
           const data = await response.json()
-          setUser({
+          const userProfile = {
             email: data.user.email,
-            businessName: data.user.businessName || 'Your Business'
-          })
+            businessName: data.user.businessName || 'Your Business',
+            location: data.user.location || '',
+            trade: data.user.trade || 'landscaping',
+            services: data.user.services || [],
+            teamSize: data.user.teamSize || 0,
+            targetCustomers: data.user.targetCustomers || '',
+            yearsInBusiness: data.user.yearsInBusiness || 0,
+            mainChallenges: data.user.mainChallenges || []
+          }
+          setUser(userProfile)
+          
+          // Update initial message with personalized greeting
+          const personalizedGreeting = generatePersonalizedGreeting(userProfile)
+          setMessages([{
+            id: "1",
+            role: "assistant",
+            content: personalizedGreeting,
+            timestamp: new Date(),
+          }])
         } else if (response.status === 401) {
           // User not authenticated - for now, continue without auth (testing mode)
           console.log('User not authenticated, continuing without user context')
@@ -486,11 +554,12 @@ export default function LandscapingChat() {
 
   // Start a new conversation
   const startNewConversation = () => {
+    const personalizedGreeting = generatePersonalizedGreeting(user)
     setMessages([
       {
         id: "1",
         role: "assistant",
-        content: "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the Tips button below for guidance on getting the most detailed and actionable responses.\n\nWhat can I help you with today?",
+        content: personalizedGreeting,
         timestamp: new Date(),
       },
     ])

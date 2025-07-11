@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Fetch user profile from database
     const { data: profile, error } = await supabase
       .from('user_profiles')
-      .select('id, email, business_name, trade, selected_plan, created_at')
+      .select('id, email, business_name, trade, selected_plan, created_at, location, services, team_size, target_customers, years_in_business, main_challenges')
       .eq('id', user.userId)
       .single()
 
@@ -39,7 +39,13 @@ export async function GET(request: NextRequest) {
         businessName: profile.business_name,
         trade: profile.trade,
         selectedPlan: profile.selected_plan,
-        createdAt: profile.created_at
+        createdAt: profile.created_at,
+        location: profile.location,
+        services: profile.services || [],
+        teamSize: profile.team_size,
+        targetCustomers: profile.target_customers,
+        yearsInBusiness: profile.years_in_business,
+        mainChallenges: profile.main_challenges || []
       }
     })
 
