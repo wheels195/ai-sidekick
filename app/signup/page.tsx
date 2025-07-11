@@ -500,7 +500,14 @@ export default function SignupPage() {
 
           <div className="text-center mt-8">
             <p className="text-gray-400 text-sm">
-              By creating an account, you agree to our terms and privacy policy.
+              By creating an account, you agree to our{" "}
+              <a href="/terms" className="text-emerald-400 hover:text-emerald-300 underline">
+                terms
+              </a>{" "}
+              and{" "}
+              <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">
+                privacy policy
+              </a>.
               <br />
               Your business information helps us provide personalized advice.
             </p>
