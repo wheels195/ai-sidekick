@@ -24,6 +24,7 @@ export default function LandingPage() {
   const [userMessage, setUserMessage] = useState("")
   const [aiMessage, setAiMessage] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [demoStarted, setDemoStarted] = useState(false)
 
   const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
   
@@ -52,55 +53,65 @@ What specific services do you currently offer, and what challenges have you face
 
   useEffect(() => {
     const startDemo = () => {
-      // Reset everything
-      setUserMessage("")
+      // Set user message immediately
+      setUserMessage(fullUserMessage)
+      setDemoStep(1)
       setAiMessage("")
-      setIsTyping(false)
-      setDemoStep(0)
-
-      // Step 1: Start typing user message after 2 seconds
+      
+      // Start AI thinking immediately
       setTimeout(() => {
-        setDemoStep(1)
-        let currentIndex = 0
-        const typeUserMessage = () => {
-          if (currentIndex < fullUserMessage.length) {
-            setUserMessage(fullUserMessage.substring(0, currentIndex + 1))
-            currentIndex++
-            setTimeout(typeUserMessage, 50 + Math.random() * 50) // Variable typing speed
-          } else {
-            // User finished typing, show AI thinking
-            setTimeout(() => {
-              setDemoStep(2)
-              setIsTyping(true)
-              
-              // Start AI response after 1.5 seconds
+        setDemoStep(2)
+        setIsTyping(true)
+        
+        // Start AI response after 1 second
+        setTimeout(() => {
+          setIsTyping(false)
+          setDemoStep(3)
+          let aiIndex = 0
+          const typeAiMessage = () => {
+            if (aiIndex < fullAiMessage.length) {
+              setAiMessage(fullAiMessage.substring(0, aiIndex + 1))
+              aiIndex++
+              setTimeout(typeAiMessage, 8 + Math.random() * 15) // Much faster AI typing
+            } else {
+              // AI finished, wait 3 seconds then restart
               setTimeout(() => {
-                setIsTyping(false)
-                setDemoStep(3)
-                let aiIndex = 0
-                const typeAiMessage = () => {
-                  if (aiIndex < fullAiMessage.length) {
-                    setAiMessage(fullAiMessage.substring(0, aiIndex + 1))
-                    aiIndex++
-                    setTimeout(typeAiMessage, 20 + Math.random() * 30) // Faster AI typing
-                  } else {
-                    // AI finished, wait 3 seconds then restart
-                    setTimeout(() => {
-                      startDemo()
-                    }, 4000)
-                  }
-                }
-                typeAiMessage()
-              }, 1500)
-            }, 500)
+                setDemoStarted(false)
+                setTimeout(() => {
+                  if (demoStarted) startDemo()
+                }, 1000)
+              }, 3000)
+            }
           }
-        }
-        typeUserMessage()
-      }, 2000)
+          typeAiMessage()
+        }, 1000)
+      }, 500)
     }
 
-    startDemo()
-  }, [])
+    // Intersection Observer to start demo when scrolled into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !demoStarted) {
+            setDemoStarted(true)
+            startDemo()
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    const demoElement = document.getElementById('chat-demo')
+    if (demoElement) {
+      observer.observe(demoElement)
+    }
+
+    return () => {
+      if (demoElement) {
+        observer.unobserve(demoElement)
+      }
+    }
+  }, [demoStarted, fullUserMessage, fullAiMessage])
 
   // Convert markdown to HTML with emerald headings (similar to chat interface)
   const convertMarkdownToHtml = (markdown: string): string => {
@@ -387,7 +398,7 @@ What specific services do you currently offer, and what challenges have you face
             </div>
 
             {/* Enhanced Chat Interface */}
-            <div className="relative mt-8 lg:mt-0">
+            <div id="chat-demo" className="relative mt-8 lg:mt-0">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-2xl lg:rounded-3xl blur-xl"></div>
               <div className="relative backdrop-blur-2xl bg-gray-800/60 rounded-2xl lg:rounded-3xl border border-gray-600/40 shadow-2xl p-4 sm:p-6 lg:p-8 hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105">
                 <div className="flex items-center space-x-4 pb-6 border-b border-white/20">
@@ -404,17 +415,14 @@ What specific services do you currently offer, and what challenges have you face
                 </div>
 
                 <div className="space-y-6 mt-6 max-h-96 overflow-y-auto">
-                  {/* User Message - Only show when typing or complete */}
-                  {demoStep >= 1 && (
-                    <div className="flex justify-end">
-                      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-md shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
-                        <p className="text-sm font-medium">
-                          {userMessage}
-                          {demoStep === 1 && <span className="animate-pulse">|</span>}
-                        </p>
-                      </div>
+                  {/* User Message - Always show */}
+                  <div className="flex justify-end">
+                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-md shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                      <p className="text-sm font-medium">
+                        {demoStep >= 1 ? userMessage : fullUserMessage}
+                      </p>
                     </div>
-                  )}
+                  </div>
 
                   {/* AI Thinking Indicator */}
                   {isTyping && (
@@ -447,18 +455,30 @@ What specific services do you currently offer, and what challenges have you face
                   )}
 
                   {/* Default state - show when demo hasn't started */}
-                  {demoStep === 0 && (
+                  {demoStep === 0 && !demoStarted && (
                     <div className="flex items-center justify-center py-8">
                       <div className="text-center">
                         <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                           <Sparkles className="w-6 h-6 text-white" />
                         </div>
-                        <p className="text-emerald-300 font-medium">Live Demo Starting...</p>
+                        <p className="text-emerald-300 font-medium">Scroll to see live demo</p>
                         <p className="text-gray-400 text-sm mt-1">Watch a real conversation unfold</p>
                       </div>
                     </div>
                   )}
                 </div>
+              </div>
+              
+              {/* CTA Button */}
+              <div className="text-center mt-8">
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 backdrop-blur-sm border border-white/20"
+                  onClick={() => window.location.href = '/signup?plan=free-trial'}
+                >
+                  Try For Free
+                  <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                </Button>
               </div>
             </div>
           </div>
