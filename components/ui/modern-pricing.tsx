@@ -29,11 +29,11 @@ export const ModernPricingCard = ({
   planName, description, price, features, buttonText, isPopular = false, badge, onClick
 }: ModernPricingCardProps) => {
   const cardClasses = `
-    backdrop-blur-2xl bg-gradient-to-br rounded-2xl shadow-2xl flex-1 max-w-sm px-8 py-10 flex flex-col transition-all duration-300 relative font-inter
+    backdrop-blur-2xl bg-gradient-to-br rounded-2xl shadow-2xl flex-1 max-w-sm px-6 sm:px-8 py-8 sm:py-10 flex flex-col transition-all duration-300 relative font-inter h-full
     from-gray-900/80 to-gray-950/80 border border-emerald-500/20
     ${isPopular 
-      ? 'xl:scale-110 ring-4 ring-emerald-400/40 border-emerald-400/60 shadow-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-gray-900/80 hover:xl:scale-[1.15] hover:ring-emerald-400/60 hover:shadow-emerald-500/75' 
-      : 'hover:border-emerald-500/40 hover:shadow-emerald-500/25 hover:scale-105'
+      ? 'sm:xl:scale-110 ring-2 sm:ring-4 ring-emerald-400/40 border-emerald-400/60 shadow-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-gray-900/80 sm:hover:xl:scale-[1.15] sm:hover:ring-emerald-400/60 sm:hover:shadow-emerald-500/75' 
+      : 'sm:hover:border-emerald-500/40 sm:hover:shadow-emerald-500/25 sm:hover:scale-105'
     }
   `;
 
@@ -49,22 +49,22 @@ export const ModernPricingCard = ({
         </div>
       )}
       
-      <div className="mb-6">
-        <h2 className="text-4xl font-extralight tracking-tight text-white mb-2">{planName}</h2>
-        <p className="text-gray-300 text-base leading-relaxed">{description}</p>
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-3xl sm:text-4xl font-extralight tracking-tight text-white mb-2">{planName}</h2>
+        <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{description}</p>
       </div>
       
-      <div className="my-8 flex items-baseline gap-2">
-        <span className="text-5xl font-extralight text-white">{price}</span>
+      <div className="my-6 sm:my-8 flex items-baseline gap-2">
+        <span className="text-4xl sm:text-5xl font-extralight text-white">{price}</span>
         {price !== "$0" && price !== "Contact Us" && <span className="text-sm text-gray-400">/mo</span>}
       </div>
       
       <div className="w-full mb-6 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"></div>
       
-      <ul className="flex flex-col gap-3 text-sm text-gray-200 mb-8 flex-grow">
+      <ul className="flex flex-col gap-2 sm:gap-3 text-xs sm:text-sm text-gray-200 mb-6 sm:mb-8 flex-grow">
         {features.map((feature, index) => (
           <li key={index} className="flex items-center gap-3">
-            <CheckIcon className="text-emerald-400 w-4 h-4 flex-shrink-0" /> 
+            <CheckIcon className="text-emerald-400 w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" /> 
             <span>{feature}</span>
           </li>
         ))}
@@ -73,10 +73,10 @@ export const ModernPricingCard = ({
       <Button
         onClick={onClick}
         className={`
-          mt-auto w-full py-4 rounded-xl font-semibold text-base transition-all duration-300
+          mt-auto w-full py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300
           ${isPopular 
-            ? 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-lg hover:shadow-emerald-500/25 hover:scale-105' 
-            : 'bg-gray-800/60 hover:bg-gray-700/60 text-white border border-gray-600/40 hover:border-emerald-500/40 backdrop-blur-xl'
+            ? 'bg-gradient-to-r from-emerald-500 to-teal-500 sm:hover:from-emerald-400 sm:hover:to-teal-400 text-white shadow-lg sm:hover:shadow-emerald-500/25 sm:hover:scale-105' 
+            : 'bg-gray-800/60 sm:hover:bg-gray-700/60 text-white border border-gray-600/40 sm:hover:border-emerald-500/40 backdrop-blur-xl'
           }
         `}
       >
