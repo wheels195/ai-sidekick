@@ -145,8 +145,11 @@ Remember: you're not just answering questions. You are Dirt.i, the marketing and
 
 // Tavily search function
 async function performWebSearch(query: string, location?: string): Promise<string> {
+  console.log('🔍 performWebSearch called with:', { query, location, hasApiKey: !!process.env.TAVILY_API_KEY })
+  
   if (!process.env.TAVILY_API_KEY) {
-    return "Web search is not available at the moment."
+    console.log('❌ No Tavily API key found')
+    return "Web search is not available at the moment - API key not configured."
   }
 
   try {
@@ -158,6 +161,8 @@ async function performWebSearch(query: string, location?: string): Promise<strin
       ? `${query} ${location} landscaping lawn care`
       : `${query} landscaping lawn care`
     
+    console.log('🔍 Enhanced search query:', enhancedQuery)
+    
     const results = await tavilyClient.search(enhancedQuery, {
       searchDepth: "basic",
       maxResults: 5,
@@ -166,6 +171,8 @@ async function performWebSearch(query: string, location?: string): Promise<strin
       excludeDomains: ["facebook.com", "instagram.com", "twitter.com"]
     })
     
+    console.log('🔍 Tavily results:', { resultCount: results.results?.length, hasResults: !!results.results })
+    
     if (results.results && results.results.length > 0) {
       // Format results for AI consumption
       const formattedResults = results.results
@@ -173,13 +180,15 @@ async function performWebSearch(query: string, location?: string): Promise<strin
         .map((result: any) => `${result.title}: ${result.content}`)
         .join('\n\n')
       
+      console.log('✅ Returning formatted results')
       return `Recent web search results:\n\n${formattedResults}`
     }
     
+    console.log('⚠️ No results found')
     return "No relevant current information found for this query."
   } catch (error) {
-    console.error('Tavily search error:', error)
-    return "Web search encountered an error. Providing general guidance instead."
+    console.error('❌ Tavily search error:', error)
+    return `Web search encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}. Providing general guidance instead.`
   }
 }
 
@@ -299,21 +308,34 @@ Provide advice based on your training knowledge. Do not mention web search capab
       const searchTriggers = [
         'price', 'cost', 'charge', 'supplier', 'vendor', 'near me', 'local', 
         'current', 'latest', 'now', 'today', 'regulation', 'permit', 'law',
-        'competition', 'competitor', 'market rate', 'going rate'
+        'competition', 'competitor', 'market rate', 'going rate', 'best'
       ]
       
-      const shouldSearch = searchTriggers.some(trigger => userQuery.includes(trigger))
+      const matchedTriggers = searchTriggers.filter(trigger => userQuery.includes(trigger))
+      const shouldSearch = matchedTriggers.length > 0
+      
+      console.log('🔍 Web search check:', { 
+        webSearchEnabled, 
+        userQuery: userQuery.substring(0, 50), 
+        matchedTriggers, 
+        shouldSearch,
+        userLocation: userProfile?.location 
+      })
       
       if (shouldSearch) {
         const location = userProfile?.location || ''
+        console.log('🔍 Triggering web search...')
         searchResults = await performWebSearch(currentUserMessage.content, location)
         
         // Add search results to the conversation context
-        if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available')) {
+        if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
+          console.log('✅ Adding search results to context')
           chatMessages.push({
             role: 'system' as const,
             content: `CURRENT WEB SEARCH RESULTS (use this information to enhance your response):\n\n${searchResults}`
           })
+        } else {
+          console.log('⚠️ Search results not added to context:', searchResults.substring(0, 100))
         }
       }
     }

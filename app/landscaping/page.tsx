@@ -303,6 +303,7 @@ export default function LandscapingChat() {
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
   const [webSearchEnabled, setWebSearchEnabled] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [isSearching, setIsSearching] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -639,6 +640,20 @@ export default function LandscapingChat() {
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
 
+    // Check if web search might be triggered
+    if (webSearchEnabled) {
+      const userQuery = input.trim().toLowerCase()
+      const searchTriggers = [
+        'price', 'cost', 'charge', 'supplier', 'vendor', 'near me', 'local', 
+        'current', 'latest', 'now', 'today', 'regulation', 'permit', 'law',
+        'competition', 'competitor', 'market rate', 'going rate', 'best'
+      ]
+      const shouldSearch = searchTriggers.some(trigger => userQuery.includes(trigger))
+      if (shouldSearch) {
+        setIsSearching(true)
+      }
+    }
+
     // ② Create assistant message placeholder for streaming
     const assistantId = (Date.now() + 1).toString()
     setMessages(prev => [
@@ -761,6 +776,9 @@ export default function LandscapingChat() {
         return newCount
       })
 
+      // Reset search indicator
+      setIsSearching(false)
+
     } catch (error) {
       console.error('Chat API Error:', error)
       
@@ -786,6 +804,7 @@ export default function LandscapingChat() {
       setMessages((prev) => [...prev, errorMessage])
     } finally {
       setIsLoading(false)
+      setIsSearching(false)
     }
   }
 
@@ -1183,8 +1202,27 @@ export default function LandscapingChat() {
                   </div>
                 ))}
 
+                {/* Web Search Indicator */}
+                {isSearching && (
+                  <div className="flex items-start space-x-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-2xl rounded-bl-md p-4 shadow-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: "0.3s" }}></div>
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: "0.6s" }}></div>
+                        </div>
+                        <span className="text-sm text-blue-300 font-medium">🌐 Searching the web for current information...</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Loading Indicator */}
-                {isLoading && (
+                {isLoading && !isSearching && (
                   <div className="flex items-start space-x-4">
                     <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
                       <Bot className="w-5 h-5 text-white" />
