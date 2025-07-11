@@ -11,6 +11,10 @@ body {
     text-wrap: balance;
   }
   
+  .font-cursive {
+    font-family: var(--font-cursive);
+  }
+  
   /* Mobile optimization utilities */
   .touch-manipulation {
     touch-action: manipulation;

@@ -14,7 +14,8 @@ export default function SignupPage() {
     password: '',
     confirmPassword: '',
     businessName: '',
-    location: '',
+    city: '',
+    state: '',
     trade: 'landscaping', // Pre-selected for landscaping trial
     selectedPlan: 'Free Trial', // Pre-selected for trial
     services: [] as string[],
@@ -125,7 +126,8 @@ export default function SignupPage() {
     else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
 
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
-    if (!formData.location) newErrors.location = 'Location is required'
+    if (!formData.city) newErrors.city = 'City is required'
+    if (!formData.state) newErrors.state = 'State is required'
     // Trade and plan are pre-selected for landscaping trial
 
     setErrors(newErrors)
@@ -151,7 +153,7 @@ export default function SignupPage() {
           selectedPlan: formData.selectedPlan,
           businessProfile: {
             business_name: formData.businessName,
-            location: formData.location,
+            location: `${formData.city}, ${formData.state}`,
             trade: formData.trade,
             services: formData.customService ? [...formData.services, formData.customService] : formData.services,
             team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
@@ -327,17 +329,31 @@ export default function SignupPage() {
                     <p className="text-gray-400 text-xs mt-1">Currently only offering landscaping trials</p>
                   </div>
 
-                  <div>
-                    <Input
-                      type="text"
-                      name="location"
-                      placeholder="City, State *"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
-                      disabled={isLoading}
-                    />
-                    {errors.location && <p className="text-red-400 text-sm mt-1">{errors.location}</p>}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Input
+                        type="text"
+                        name="city"
+                        placeholder="City *"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                        disabled={isLoading}
+                      />
+                      {errors.city && <p className="text-red-400 text-sm mt-1">{errors.city}</p>}
+                    </div>
+                    <div>
+                      <Input
+                        type="text"
+                        name="state"
+                        placeholder="State *"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                        disabled={isLoading}
+                      />
+                      {errors.state && <p className="text-red-400 text-sm mt-1">{errors.state}</p>}
+                    </div>
                   </div>
 
                   <div>
