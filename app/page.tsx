@@ -1132,7 +1132,7 @@ What specific services do you currently offer, and what challenges have you face
           </div>
 
           <div className="mt-12 pt-8 border-t border-white/10 text-center text-gray-300">
-            <p>© 2024 AI Sidekick. Specialized AI for local businesses that want to grow.</p>
+            <p>© 2025 AI Sidekick. Specialized AI for local businesses that want to grow.</p>
           </div>
         </div>
       </footer>
