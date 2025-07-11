@@ -228,6 +228,7 @@ export default function LandscapingChat() {
   const router = useRouter()
   const [user, setUser] = useState<{email: string, businessName: string} | null>(null)
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -779,48 +780,169 @@ export default function LandscapingChat() {
             </div>
 
             <div className="flex items-center space-x-2 sm:space-x-4">
-              {/* User Profile Dropdown */}
-              <div className="relative">
+              {/* Sign In Link - Desktop */}
+              {!user && (
                 <Button
                   variant="ghost"
-                  size="sm"
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2 flex items-center space-x-1 sm:space-x-2"
+                  className="hidden md:inline-flex text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 text-sm px-4 py-2"
+                  onClick={() => window.location.href = '/login'}
                 >
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                    <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
-                  </div>
-                  <span className="hidden sm:inline max-w-20 truncate">{user?.businessName || 'Test User'}</span>
-                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                  Sign In
                 </Button>
-                
-                {showUserMenu && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800/95 backdrop-blur-xl border border-gray-600/30 rounded-lg shadow-2xl z-50">
-                    <div className="p-3 border-b border-gray-600/30">
-                      <p className="text-sm text-white font-medium truncate">{user?.businessName || 'Test User Business'}</p>
-                      <p className="text-xs text-gray-400 truncate">{user?.email || 'test@example.com'}</p>
+              )}
+
+              {/* User Profile Dropdown */}
+              {user && (
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2 flex items-center space-x-1 sm:space-x-2"
+                  >
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                      <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                     </div>
-                    <div className="p-1">
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors duration-200 flex items-center space-x-2"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Sign Out</span>
-                      </button>
+                    <span className="hidden sm:inline max-w-20 truncate">{user?.businessName || 'Test User'}</span>
+                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                  </Button>
+                  
+                  {showUserMenu && (
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800/95 backdrop-blur-xl border border-gray-600/30 rounded-lg shadow-2xl z-50">
+                      <div className="p-3 border-b border-gray-600/30">
+                        <p className="text-sm text-white font-medium truncate">{user?.businessName || 'Test User Business'}</p>
+                        <p className="text-xs text-gray-400 truncate">{user?.email || 'test@example.com'}</p>
+                      </div>
+                      <div className="p-1">
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors duration-200 flex items-center space-x-2"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
               
               <div className="hidden md:flex items-center space-x-2 bg-emerald-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-4 py-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                 <span className="text-emerald-300 text-sm font-medium">Online</span>
               </div>
+
+              {/* Mobile Menu Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 p-2"
+                onClick={() => setShowMobileMenu(true)}
+              >
+                <Menu className="w-5 h-5" />
+              </Button>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Mobile Menu Slide-in */}
+      {showMobileMenu && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowMobileMenu(false)}
+          />
+          
+          {/* Menu Panel sliding from right */}
+          <div className="absolute right-0 top-0 h-full w-80 bg-gradient-to-br from-gray-900 via-gray-950 to-black border-l border-white/10 shadow-2xl transform transition-transform duration-300 ease-out">
+            {/* Menu Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/10">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <Leaf className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-semibold text-white font-cursive">
+                  Dirt.i
+                </span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-gray-400 hover:text-white p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {/* Menu Items */}
+            <div className="flex flex-col p-6 space-y-6">
+              <a
+                href="/#features"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-lg text-gray-200 hover:text-white transition-all duration-300 py-2"
+              >
+                Features
+              </a>
+              <a
+                href="/#products"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-lg text-gray-200 hover:text-white transition-all duration-300 py-2"
+              >
+                Products
+              </a>
+              <a
+                href="/#pricing"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-lg text-gray-200 hover:text-white transition-all duration-300 py-2"
+              >
+                Pricing
+              </a>
+              <a
+                href="/#faq"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-lg text-gray-200 hover:text-white transition-all duration-300 py-2"
+              >
+                FAQ
+              </a>
+              
+              {/* Conditional Sign In/User Menu */}
+              {!user ? (
+                <Button
+                  variant="ghost"
+                  className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0"
+                  onClick={() => {
+                    setShowMobileMenu(false)
+                    window.location.href = '/login'
+                  }}
+                >
+                  Sign In
+                </Button>
+              ) : (
+                <div className="space-y-4 pt-4 border-t border-white/10">
+                  <div>
+                    <p className="text-sm text-white font-medium">{user.businessName || 'Test User Business'}</p>
+                    <p className="text-xs text-gray-400">{user.email || 'test@example.com'}</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0 w-full"
+                    onClick={() => {
+                      setShowMobileMenu(false)
+                      handleLogout()
+                    }}
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Chat History Sidebar */}
       {showSidebar && (

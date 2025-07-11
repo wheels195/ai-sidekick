@@ -13,6 +13,8 @@ import {
   Users,
   Target,
   BarChart3,
+  Menu,
+  X,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
@@ -25,6 +27,7 @@ export default function LandingPage() {
   const [aiMessage, setAiMessage] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [demoStarted, setDemoStarted] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
 
   const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
   
@@ -227,17 +230,114 @@ What specific services do you currently offer, and what challenges have you face
               ))}
             </div>
 
-            <Button
-              className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20 text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:px-6 py-2 whitespace-nowrap"
-              onClick={() => window.location.href = '/signup'}
-            >
-              <span className="hidden sm:inline">Get Early Access</span>
-              <span className="sm:hidden">Get Access</span>
-              <Sparkles className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4" />
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                className="hidden md:inline-flex text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 text-sm px-4 py-2"
+                onClick={() => window.location.href = '/login'}
+              >
+                Sign In
+              </Button>
+              
+              <Button
+                className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20 text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:px-6 py-2 whitespace-nowrap"
+                onClick={() => window.location.href = '/signup'}
+              >
+                <span className="hidden sm:inline">Get Early Access</span>
+                <span className="sm:hidden">Get Access</span>
+                <Sparkles className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4" />
+              </Button>
+
+              {/* Mobile Menu Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 p-2"
+                onClick={() => setShowMobileMenu(true)}
+              >
+                <Menu className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu Slide-in */}
+      {showMobileMenu && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowMobileMenu(false)}
+          />
+          
+          {/* Menu Panel sliding from right */}
+          <div className="absolute right-0 top-0 h-full w-80 bg-gradient-to-br from-gray-900 via-gray-950 to-black border-l border-white/10 shadow-2xl transform transition-transform duration-300 ease-out">
+            {/* Menu Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/10">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive">
+                  AI Sidekick
+                </span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-gray-400 hover:text-white p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {/* Menu Items */}
+            <div className="flex flex-col p-6 space-y-6">
+              {[
+                { name: "Features", href: "#features" },
+                { name: "Products", href: "#products" },
+                { name: "Pricing", href: "#pricing" },
+                { name: "FAQ", href: "#faq" },
+              ].map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setShowMobileMenu(false)}
+                  className="text-lg text-gray-200 hover:text-white transition-all duration-300 py-2"
+                >
+                  {item.name}
+                </a>
+              ))}
+              
+              {/* Sign In Button */}
+              <Button
+                variant="ghost"
+                className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0"
+                onClick={() => {
+                  setShowMobileMenu(false)
+                  window.location.href = '/login'
+                }}
+              >
+                Sign In
+              </Button>
+              
+              {/* Get Access Button */}
+              <Button
+                className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 text-base py-3 mt-4"
+                onClick={() => {
+                  setShowMobileMenu(false)
+                  window.location.href = '/signup'
+                }}
+              >
+                Get Early Access
+                <Sparkles className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="pt-8 sm:pt-16 pb-16 sm:pb-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative">
