@@ -1087,7 +1087,31 @@ What specific services do you currently offer, and what challenges have you face
                   },
                   {
                     q: "How does the AI learn and get better over time?",
-                    a: "Your AI Sidekick uses a smart, two-layer learning system to improve the more you use it — without compromising your privacy.\n\n1. Personalized learning for your business\nAs you chat, the AI adapts to your specific trade, location, services, team size, and how you prefer to communicate. It remembers what kind of advice works for your business and gets more accurate over time.\n\n2. Smarter system-wide improvements (without sharing your info)\nWe also use anonymous, hashed data to spot bigger trends — like what pricing strategies work best for small crews in the Southeast, or which formats (like checklists vs. paragraphs) people find most helpful. This helps everyone get better answers, faster.\n\n3. You're in control of your data\nAll of your data is protected with strong encryption and Row Level Security. Your business info is never shared or used to train outside models, and you can opt out of learning features if you want.\n\n4. Built-in feedback system\nYou can rate answers with a quick emoji or star rating. That helps your Sidekick learn what to improve, and helps us find better ways to support businesses like yours.",
+                    a: (
+                      <div className="space-y-4">
+                        <p>Your AI Sidekick uses a smart, two-layer learning system to improve the more you use it — without compromising your privacy.</p>
+                        
+                        <div>
+                          <h4 className="font-semibold text-white mb-2">1. Personalized learning for your business</h4>
+                          <p>As you chat, the AI adapts to your specific trade, location, services, team size, and how you prefer to communicate. It remembers what kind of advice works for your business and gets more accurate over time.</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-white mb-2">2. Smarter system-wide improvements (without sharing your info)</h4>
+                          <p>We also use anonymous, hashed data to spot bigger trends — like what pricing strategies work best for small crews in the Southeast, or which formats (like checklists vs. paragraphs) people find most helpful. This helps everyone get better answers, faster.</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-white mb-2">3. You're in control of your data</h4>
+                          <p>All of your data is protected with strong encryption and Row Level Security. Your business info is never shared or used to train outside models, and you can opt out of learning features if you want.</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-white mb-2">4. Built-in feedback system</h4>
+                          <p>You can rate answers with a quick emoji or star rating. That helps your Sidekick learn what to improve, and helps us find better ways to support businesses like yours.</p>
+                        </div>
+                      </div>
+                    ),
                   },
                 ].map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`} className="border-b border-white/10">
