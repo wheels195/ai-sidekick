@@ -238,7 +238,7 @@ function LoginForm() {
 
           <div className="text-center mt-8">
             <p className="text-gray-400 text-sm">
-              Secure login powered by Supabase
+              Secure login with encrypted sessions
             </p>
           </div>
         </div>
