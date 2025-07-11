@@ -301,6 +301,8 @@ export default function LandscapingChat() {
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
+  const [webSearchEnabled, setWebSearchEnabled] = useState(false)
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -658,7 +660,8 @@ export default function LandscapingChat() {
           messages: [...messages, userMessage].map(msg => ({
             role: msg.role,
             content: msg.content
-          }))
+          })),
+          webSearchEnabled: webSearchEnabled
         }),
         signal: controller.signal
       })
@@ -1241,6 +1244,25 @@ export default function LandscapingChat() {
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative bg-gray-900/50 backdrop-blur-xl rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300">
                     <div className="overflow-hidden">
+                      {/* File Upload Display */}
+                      {uploadedFiles.length > 0 && (
+                        <div className="px-4 pt-3 pb-2">
+                          <div className="flex flex-wrap gap-2">
+                            {uploadedFiles.map((file, index) => (
+                              <div key={index} className="flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 rounded-lg px-3 py-1 text-xs">
+                                <span className="text-emerald-300">{file.name}</span>
+                                <button
+                                  onClick={() => setUploadedFiles(prev => prev.filter((_, i) => i !== index))}
+                                  className="text-emerald-400 hover:text-emerald-300"
+                                >
+                                  <X className="w-3 h-3" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
                       <Textarea
                         ref={textareaRef}
                         value={input}
@@ -1275,14 +1297,37 @@ export default function LandscapingChat() {
 
                     <div className="flex items-center justify-between p-3">
                       <div className="flex items-center gap-2">
+                        <label className="group p-2 hover:bg-emerald-500/10 rounded-lg transition-colors flex items-center gap-1 cursor-pointer">
+                          <Paperclip className="w-4 h-4 text-emerald-300" />
+                          <span className="text-xs text-emerald-400">
+                            Attach
+                          </span>
+                          <input
+                            type="file"
+                            accept="image/*,.pdf,.doc,.docx,.txt"
+                            multiple
+                            className="hidden"
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files || [])
+                              setUploadedFiles(prev => [...prev, ...files])
+                            }}
+                            disabled={isLoading}
+                          />
+                        </label>
                         <button
                           type="button"
-                          className="group p-2 hover:bg-emerald-500/10 rounded-lg transition-colors flex items-center gap-1"
+                          onClick={() => setWebSearchEnabled(!webSearchEnabled)}
+                          className={`group p-2 rounded-lg transition-colors flex items-center gap-1 ${
+                            webSearchEnabled 
+                              ? 'bg-emerald-500/20 text-emerald-300' 
+                              : 'hover:bg-emerald-500/10 text-emerald-400'
+                          }`}
                           disabled={isLoading}
+                          title={webSearchEnabled ? 'Web search enabled' : 'Web search disabled'}
                         >
-                          <Paperclip className="w-4 h-4 text-emerald-300" />
-                          <span className="text-xs text-emerald-400 hidden group-hover:inline transition-opacity">
-                            Attach
+                          <div className={`w-2 h-2 rounded-full ${webSearchEnabled ? 'bg-emerald-400' : 'bg-gray-500'}`} />
+                          <span className="text-xs">
+                            Web Search
                           </span>
                         </button>
                         <button

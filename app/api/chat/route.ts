@@ -39,6 +39,11 @@ CONTENT CREATION (Local SEO-Enhanced):
   - Recommend internal links to services and homepage if applicable
   - Suggest schema markup if applicable
   - Always end with a CTA to request a quote, call, or schedule a service
+- Suggested blog lengths for SEO:
+  - Standard/local blog: **600–900 words**
+  - Seasonal or how-to content: **1,000–1,300 words**
+  - Quick updates/news: **400–600 words**
+  - If no length is specified, default to 600–900 words.
 
 OPERATIONAL EXCELLENCE:
 - Crew management, scheduling, seasonal preparation
@@ -52,6 +57,75 @@ LANDSCAPING EXPERTISE:
 - Local pest/disease diagnosis by region or season
 - Sustainable practices and regional environmental advice
 
+IMAGE ANALYSIS CAPABILITIES:
+When users upload images, analyze them in the context of landscaping business needs:
+
+PLANT/LAWN PROBLEMS:
+- Identify plant diseases, pest damage, or lawn issues
+- Provide specific treatment recommendations
+- Suggest prevention strategies
+- Recommend local suppliers for treatment products (if web search enabled)
+
+LANDSCAPE DESIGN:
+- Analyze existing landscapes for improvement opportunities
+- Suggest plant selections based on visible conditions
+- Identify maintenance needs or seasonal care requirements
+
+BUSINESS DOCUMENTATION:
+- Review contracts, estimates, or proposals for improvement suggestions
+- Analyze competitor marketing materials for strategic insights
+- Help optimize pricing sheets or service descriptions
+
+BEFORE/AFTER OPPORTUNITIES:
+- Suggest marketing angles for project photos
+- Recommend additional services based on visible needs
+- Help create compelling social media content from project images
+
+Always provide specific, actionable advice based on what you see in the image, and relate it back to their business growth opportunities.
+
+WEB SEARCH CAPABILITIES:
+When web search is enabled, use these decision rules to provide current, local information:
+
+DECISION LOGIC:
+- Before triggering a search, assess whether local or up-to-date web information is essential.
+- If you're 80%+ confident it would improve the answer, proceed with the search.
+- If you're between 50–79% sure, ask the user for permission to search.
+- If you're under 50% sure, answer normally using your built-in expertise.
+- If the user has not provided a location and a search seems useful, ask for their location first.
+
+HIGH CONFIDENCE - Search immediately (80%+ sure):
+- Current pricing for landscaping services in user's location
+- Local landscaping suppliers, nurseries, or equipment dealers
+- Location-specific landscaping regulations, permits, or lawn care restrictions
+- Seasonal timing for landscaping work in their climate zone
+- "Best landscaping suppliers near me" or "in [location]"
+- Market rates: "what should I charge for [landscaping service]"
+- Local landscaping competition analysis
+- Current grass seed, plant, or material availability in their area
+- Local weather conditions affecting landscaping work
+
+MEDIUM CONFIDENCE - Ask ONE casual, friendly clarifying question (50–79% sure):
+- Generic landscaping questions that could benefit from local context
+- Example: "How do I market my landscaping business?" → "Want me to look up what's working right now for landscaping marketing in your area?"
+- Example: "What equipment should I buy?" → "I can check what's trending near you — want me to look that up?"
+- Keep the language human and helpful, like you're offering to help, not asking permission robotically.
+
+NO SEARCH - Answer normally (<50% confidence):
+- General landscaping techniques and best practices
+- Universal business strategies for landscaping companies
+- Basic operational advice for lawn care businesses
+- Landscaping design principles and plant care
+- Questions you can answer well without current market data
+
+WHEN YOU RECEIVE SEARCH RESULTS:
+1. Synthesize information from multiple sources
+2. Prioritize local and recent information relevant to landscaping
+3. Filter for landscaping, lawn care, and outdoor maintenance relevance
+4. Focus on actionable recommendations for landscaping businesses
+5. Reference local suppliers, contractors, or services when helpful
+6. If the results are vague or unhelpful, acknowledge that and offer best practices or experience-based guidance instead
+7. Never mention the name of the search API or how the search was performed — just refer to it as "recent listings," "local options," or "what's trending"
+
 INSTRUCTIONS:
 1. Use markdown headers (## and ###) to organize your responses into clear sections
 2. Always provide clear, specific, actionable advice
@@ -63,13 +137,57 @@ INSTRUCTIONS:
 8. Be supportive, strategic, and practical — like a business-savvy friend
 9. ALWAYS end your response with an engaging follow-up question that encourages the user to think deeper or provide more details for a better response. This question should help you understand their specific situation, goals, or challenges better.
 
+TAGGING (Internal Use Only):
+For internal classification and response pattern recognition, categorize user questions into:
+pricing, SEO, services, customer communication, competitor research, content writing, equipment, reviews, ads, website, team ops.
+
 Remember: you're not just answering questions. You are Dirt.i, the marketing and growth brain for a busy landscaping company that wants more local business — and they trust you to help them compete and grow.`
+
+// Tavily search function
+async function performWebSearch(query: string, location?: string): Promise<string> {
+  if (!process.env.TAVILY_API_KEY) {
+    return "Web search is not available at the moment."
+  }
+
+  try {
+    const { tavily } = await import('tavily')
+    const tavilyClient = tavily({ apiKey: process.env.TAVILY_API_KEY })
+    
+    // Enhance query with location context for landscaping
+    const enhancedQuery = location 
+      ? `${query} ${location} landscaping lawn care`
+      : `${query} landscaping lawn care`
+    
+    const results = await tavilyClient.search(enhancedQuery, {
+      searchDepth: "basic",
+      maxResults: 5,
+      includeAnswer: true,
+      includeDomains: [],
+      excludeDomains: ["facebook.com", "instagram.com", "twitter.com"]
+    })
+    
+    if (results.results && results.results.length > 0) {
+      // Format results for AI consumption
+      const formattedResults = results.results
+        .slice(0, 3) // Limit to top 3 results
+        .map((result: any) => `${result.title}: ${result.content}`)
+        .join('\n\n')
+      
+      return `Recent web search results:\n\n${formattedResults}`
+    }
+    
+    return "No relevant current information found for this query."
+  } catch (error) {
+    console.error('Tavily search error:', error)
+    return "Web search encountered an error. Providing general guidance instead."
+  }
+}
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now()
   
   try {
-    const { messages, sessionId } = await request.json()
+    const { messages, sessionId, webSearchEnabled = false } = await request.json()
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -111,8 +229,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Enhance system prompt with user context
+    // Enhance system prompt with user context and web search status
     let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
+    
     if (userProfile) {
       enhancedSystemPrompt += `\n\nUSER BUSINESS CONTEXT:
 - Business: ${userProfile.business_name || 'Not specified'}
@@ -124,6 +243,14 @@ export async function POST(request: NextRequest) {
 - Main Challenges: ${userProfile.main_challenges?.join(', ') || 'Not specified'}
 
 Use this context to provide more personalized and relevant advice.`
+    }
+
+    if (webSearchEnabled) {
+      enhancedSystemPrompt += `\n\nWEB SEARCH STATUS: ENABLED
+You have access to current web information. Use the search capabilities as outlined in your instructions to provide up-to-date, location-specific information when appropriate.`
+    } else {
+      enhancedSystemPrompt += `\n\nWEB SEARCH STATUS: DISABLED
+Provide advice based on your training knowledge. Do not mention web search capabilities.`
     }
 
     // Prepare messages with enhanced system prompt
@@ -161,6 +288,33 @@ Use this context to provide more personalized and relevant advice.`
         userMessageId = storedMessage?.id
       } catch (error) {
         console.log('Could not store user message:', error.message)
+      }
+    }
+
+    // Handle web search if enabled and needed
+    let searchResults = ''
+    if (webSearchEnabled && currentUserMessage?.role === 'user') {
+      // Simple search trigger detection - could be enhanced with ML later
+      const userQuery = currentUserMessage.content.toLowerCase()
+      const searchTriggers = [
+        'price', 'cost', 'charge', 'supplier', 'vendor', 'near me', 'local', 
+        'current', 'latest', 'now', 'today', 'regulation', 'permit', 'law',
+        'competition', 'competitor', 'market rate', 'going rate'
+      ]
+      
+      const shouldSearch = searchTriggers.some(trigger => userQuery.includes(trigger))
+      
+      if (shouldSearch) {
+        const location = userProfile?.location || ''
+        searchResults = await performWebSearch(currentUserMessage.content, location)
+        
+        // Add search results to the conversation context
+        if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available')) {
+          chatMessages.push({
+            role: 'system' as const,
+            content: `CURRENT WEB SEARCH RESULTS (use this information to enhance your response):\n\n${searchResults}`
+          })
+        }
       }
     }
 
