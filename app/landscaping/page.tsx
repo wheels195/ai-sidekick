@@ -765,7 +765,7 @@ export default function LandscapingChat() {
               </Button>
             </div>
 
-            <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => (window.location.href = "/")}>
+            <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
