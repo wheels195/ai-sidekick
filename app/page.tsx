@@ -1126,10 +1126,7 @@ What specific services do you currently offer, and what challenges have you face
               <a href="/privacy" className="hover:text-white transition-all duration-300 hover:scale-105">
                 Privacy
               </a>
-              <a
-                href="mailto:hello@aisidekick.com"
-                className="hover:text-white transition-all duration-300 hover:scale-105"
-              >
+              <a href="/contact" className="hover:text-white transition-all duration-300 hover:scale-105">
                 Contact
               </a>
             </div>

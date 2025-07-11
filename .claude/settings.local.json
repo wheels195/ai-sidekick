@@ -13,7 +13,9 @@
       "Bash(grep:*)",
       "Bash(git stash:*)",
       "Bash(npm run lint)",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "Bash(git pull:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }
