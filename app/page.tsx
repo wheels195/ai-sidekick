@@ -679,7 +679,7 @@ What specific services do you currently offer, and what challenges have you face
                   <span className="text-emerald-300 font-medium">Coming Soon</span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-6">
-                  <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-red-500 to-gray-600 bg-clip-text text-transparent">
                     More AI Sidekicks
                   </span>
                 </h2>
