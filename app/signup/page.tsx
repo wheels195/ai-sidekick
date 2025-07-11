@@ -15,8 +15,8 @@ export default function SignupPage() {
     confirmPassword: '',
     businessName: '',
     location: '',
-    trade: '',
-    selectedPlan: '',
+    trade: 'landscaping', // Pre-selected for landscaping trial
+    selectedPlan: 'Free Trial', // Pre-selected for trial
     services: [] as string[],
     customService: '',
     teamSize: '',
@@ -125,9 +125,8 @@ export default function SignupPage() {
     else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
 
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
-    if (!formData.selectedPlan) newErrors.selectedPlan = 'Please select a plan'
     if (!formData.location) newErrors.location = 'Location is required'
-    if (!formData.trade) newErrors.trade = 'Please select your trade'
+    // Trade and plan are pre-selected for landscaping trial
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -233,13 +232,13 @@ export default function SignupPage() {
               </span>
             </h1>
             <p className="text-lg text-gray-300">
-              Join AI Sidekick and get personalized business advice for your trade
+              Start your 7-day free trial for landscaping business growth
             </p>
           </div>
 
           <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
             <CardHeader>
-              <CardTitle className="text-xl text-white text-center">Business Information</CardTitle>
+              <CardTitle className="text-xl text-white text-center">Landscaping Business Information</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -319,18 +318,13 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <Select value={formData.selectedPlan} onValueChange={(value) => handleSelectChange('selectedPlan', value)} disabled={isLoading}>
-                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 focus:ring-blue-500/25">
-                        <SelectValue placeholder="Select your plan *" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-800 border-gray-600">
-                        <SelectItem value="Free Trial" className="text-white hover:bg-gray-700">Free Trial - $0 (7 days)</SelectItem>
-                        <SelectItem value="Starter Plan" className="text-white hover:bg-gray-700">Starter Plan - $19/mo</SelectItem>
-                        <SelectItem value="Advanced Plan" className="text-white hover:bg-gray-700">Advanced Plan - $59/mo (Most Popular)</SelectItem>
-                        <SelectItem value="Sidepiece AI" className="text-white hover:bg-gray-700">Sidepiece AI - Contact Us</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {errors.selectedPlan && <p className="text-red-400 text-sm mt-1">{errors.selectedPlan}</p>}
+                    <div className="bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white opacity-75">
+                      <div className="flex items-center justify-between">
+                        <span>Free Trial - $0 (7 days)</span>
+                        <span className="text-emerald-400 text-sm">✓ Selected</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-400 text-xs mt-1">Currently only offering landscaping trials</p>
                   </div>
 
                   <div>
@@ -347,23 +341,13 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <Select
-                      value={formData.trade}
-                      onValueChange={(value) => handleSelectChange('trade', value)}
-                      disabled={isLoading}
-                    >
-                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 focus:ring-blue-500/25">
-                        <SelectValue placeholder="Select your trade *" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-800 border-gray-600">
-                        {Object.entries(tradeOptions).map(([key, trade]) => (
-                          <SelectItem key={key} value={key} className="text-white hover:bg-gray-700">
-                            {trade.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {errors.trade && <p className="text-red-400 text-sm mt-1">{errors.trade}</p>}
+                    <div className="bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white opacity-75">
+                      <div className="flex items-center justify-between">
+                        <span>Landscaping</span>
+                        <span className="text-emerald-400 text-sm">✓ Selected</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-400 text-xs mt-1">Market testing with landscaping businesses only</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
