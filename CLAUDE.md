@@ -150,6 +150,14 @@ npm run lint
 - **CTA Updates** - "Request Your Trade Next" button directs to contact form with red/gray gradient
 - **Visual Cohesion** - Matching gradients between CTAs and section headings
 
+### ✅ Phase 1 UX Enhancements (January 2025)
+- **Increased Token Limits** - GPT-4o: 6000 tokens, GPT-4o-mini: 4000 tokens for better response quality and longer conversations
+- **Copy Functionality** - One-click copy button for all AI responses with visual feedback (green checkmark)
+- **Model Indicator** - Real-time display showing which AI model is being used (💪 GPT-4o vs ⚡ GPT-4o-mini)
+- **Smart Loading States** - "Searching the web" and "AI is thinking" automatically disappear when text generation starts
+- **Table Support** - Full markdown table rendering for competitive analysis with emerald styling and responsive design
+- **Google Places Integration** - Complete replacement of Tavily with Google Places API for better business data quality
+
 ### 🤖 AI MODEL UPGRADE OPTIONS
 - **Current**: GPT-4o-mini ($0.15/$0.60 per 1M tokens) - Fast, cost-effective
 - **Upgrade Path**: GPT-4o ($2.50/$10.00 per 1M tokens) - Advanced reasoning, web search capability

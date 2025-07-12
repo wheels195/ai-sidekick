@@ -427,7 +427,7 @@ ALWAYS end with ## Next Steps containing specific actionable advice for Johnson'
     let stream
     
     const modelToUse = (searchResults && searchResults.length > 0) ? 'gpt-4o' : 'gpt-4o-mini'
-    const maxTokens = (searchResults && searchResults.length > 0) ? 2000 : 1000 // Higher token limit for GPT-4o detailed responses
+    const maxTokens = (searchResults && searchResults.length > 0) ? 6000 : 4000 // Increased token limits for better responses
     
     console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, useGPT4o: ${useGPT4o})`)
     

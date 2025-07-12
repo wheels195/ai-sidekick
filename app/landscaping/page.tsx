@@ -24,6 +24,8 @@ import {
   Menu,
   History,
   Plus,
+  Copy,
+  Check,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -36,6 +38,7 @@ interface Message {
   content: string
   timestamp: Date
   reaction?: string
+  modelUsed?: string
 }
 
 interface MessageReaction {
@@ -407,6 +410,8 @@ export default function LandscapingChat() {
   const [webSearchEnabled, setWebSearchEnabled] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [isSearching, setIsSearching] = useState(false)
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
+  const [currentModel, setCurrentModel] = useState<string>('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -723,6 +728,24 @@ export default function LandscapingChat() {
     setShowSidebar(false)
   }
 
+  // Copy message content to clipboard
+  const handleCopyMessage = async (messageId: string, content: string) => {
+    try {
+      // Strip HTML tags and convert to plain text for copying
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = content
+      const plainText = tempDiv.textContent || tempDiv.innerText || ''
+      
+      await navigator.clipboard.writeText(plainText)
+      setCopiedMessageId(messageId)
+      
+      // Reset copy indicator after 2 seconds
+      setTimeout(() => setCopiedMessageId(null), 2000)
+    } catch (error) {
+      console.error('Failed to copy message:', error)
+    }
+  }
+
   const handleConversationRating = async (rating: number) => {
     setHasRatedConversation(true)
     setShowRatingPrompt(false)
@@ -792,6 +815,10 @@ export default function LandscapingChat() {
     setInput("")
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
+
+    // Determine which model will be used (matches backend logic)
+    const modelToUse = webSearchEnabled ? 'gpt-4o' : 'gpt-4o-mini'
+    setCurrentModel(modelToUse)
 
     // Check if web search might be triggered
     if (webSearchEnabled) {
@@ -922,7 +949,8 @@ export default function LandscapingChat() {
         updated[idx] = { 
           ...updated[idx], 
           content: assistantText,
-          id: finalMessageId || assistantId
+          id: finalMessageId || assistantId,
+          modelUsed: modelToUse
         }
         return updated
       })
@@ -1327,7 +1355,7 @@ export default function LandscapingChat() {
                         )}
                       </div>
                       
-                      {/* Emoji Reactions - Only for assistant messages */}
+                      {/* Emoji Reactions and Copy Button - Only for assistant messages */}
                       {message.role === "assistant" && (
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -1345,10 +1373,34 @@ export default function LandscapingChat() {
                                 {emoji}
                               </button>
                             ))}
+                            {/* Copy Button */}
+                            <button
+                              onClick={() => handleCopyMessage(message.id, message.content)}
+                              title="Copy message"
+                              className="p-1 rounded-full hover:bg-white/10 transition-all duration-200 hover:scale-110"
+                            >
+                              {copiedMessageId === message.id ? (
+                                <Check className="w-4 h-4 text-emerald-400" />
+                              ) : (
+                                <Copy className="w-4 h-4 text-gray-400" />
+                              )}
+                            </button>
                           </div>
-                          <p className="text-xs text-gray-400">
-                            {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                          </p>
+                          <div className="flex items-center space-x-2">
+                            {/* Model Indicator */}
+                            {message.modelUsed && (
+                              <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                                message.modelUsed === 'gpt-4o' 
+                                  ? 'bg-purple-500/20 text-purple-300' 
+                                  : 'bg-blue-500/20 text-blue-300'
+                              }`}>
+                                {message.modelUsed === 'gpt-4o' ? '💪 GPT-4o' : '⚡ GPT-4o-mini'}
+                              </span>
+                            )}
+                            <p className="text-xs text-gray-400">
+                              {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                            </p>
+                          </div>
                         </div>
                       )}
                       
@@ -1381,8 +1433,8 @@ export default function LandscapingChat() {
                   </div>
                 )}
 
-                {/* Loading Indicator */}
-                {isLoading && !isSearching && (
+                {/* Loading Indicator - hide when AI starts generating text */}
+                {isLoading && !isSearching && !messages[messages.length - 1]?.content && (
                   <div className="flex items-start space-x-4">
                     <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
                       <Bot className="w-5 h-5 text-white" />
