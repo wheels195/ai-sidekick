@@ -417,6 +417,7 @@ export default function LandscapingChat() {
   const [hasRatedConversation, setHasRatedConversation] = useState(false)
   const [showHelpPanel, setShowHelpPanel] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isClient, setIsClient] = useState(false)
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
@@ -537,7 +538,10 @@ export default function LandscapingChat() {
   }, [input])
 
   useEffect(() => {
-    // Only run on client side to prevent hydration issues
+    // Set client state first to prevent hydration issues
+    setIsClient(true)
+    
+    // Only run on client side after hydration
     if (typeof window !== 'undefined') {
       // Scroll to top when page loads and detect mobile
       window.scrollTo(0, 0)
@@ -1601,7 +1605,7 @@ export default function LandscapingChat() {
                         className="w-full px-4 py-3 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500 placeholder:text-sm min-h-[60px]"
                         style={{
                           overflow: "hidden",
-                          fontSize: isMobile ? '16px' : undefined
+                          fontSize: isClient && isMobile ? '16px' : undefined
                         }}
                         disabled={isLoading}
                       />
