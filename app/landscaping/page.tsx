@@ -184,6 +184,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     else if (/^\d+\.\s/.test(line)) {
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       if (!inNumberedList) {
         htmlLines.push('<ol class="space-y-3 mb-4 ml-6" style="list-style-type: decimal; padding-left: 1rem;">')
         inNumberedList = true
@@ -218,6 +219,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     else if (line.startsWith('- ') || line.startsWith('* ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       if (!inBulletList) {
         // Check if previous line was a check mark business for better indentation
         const wasCheckMarkBusiness = htmlLines.length > 0 && htmlLines[htmlLines.length - 1].includes('text-emerald-400')
@@ -253,11 +255,22 @@ const convertMarkdownToHtml = (markdown: string): string => {
       const lowerText = text.toLowerCase()
       const isQuestion = text.includes('?') && (lowerText.includes('what') || lowerText.includes('how') || lowerText.includes('which') || lowerText.includes('where') || lowerText.includes('when') || lowerText.includes('why') || lowerText.includes('would') || lowerText.includes('could') || lowerText.includes('should') || lowerText.includes('do you') || lowerText.includes('have you') || lowerText.includes('are you') || lowerText.includes('let me know') || lowerText.includes('need help') || lowerText.includes('looking for'))
       
+      // Check if this could be a section header (ends with colon) that should close lists
+      const isSectionHeader = text.endsWith(':') && text.length < 100
+      if (isSectionHeader) {
+        // Close any open lists before section headers
+        if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+        if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+        if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      }
+      
       // Check if we're in a "Next Steps" section by looking for previous "Next Steps" header
       const isInNextStepsSection = htmlLines.some(line => line.includes('Next Steps') || line.includes('next steps'))
       
       if (isQuestion || (isInNextStepsSection && i > htmlLines.findIndex(line => line.includes('Next Steps')))) {
         htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
+      } else if (isSectionHeader) {
+        htmlLines.push(`<p class="text-white font-semibold leading-relaxed mb-2 mt-4">${text}</p>`)
       } else {
         htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
       }
