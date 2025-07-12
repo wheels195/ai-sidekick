@@ -386,7 +386,13 @@ A search was attempted, but no relevant business listings were returned. Provide
       enhancedSystemPrompt += `
 🌐 WEB SEARCH STATUS: ❌ SEARCH DISABLED
 
-You do not have access to live business data for this conversation. Rely on your domain expertise only, and do not mention any web search capabilities.`;
+For this conversation, focus on general business strategy and expertise. 
+
+**IMPORTANT**: If the user asks about competitors, market research, or "top companies" in their area, proactively suggest they enable Web Search for live business data:
+
+"💡 **Want live competitor data?** Turn on **Web Search** in the chat controls below to get real ratings, reviews, phone numbers, and current business information for landscaping companies in your area. This will give you much more accurate competitive analysis!"
+
+Then provide general strategic advice about competitive research and differentiation.`;
     }
 
     // Prepare messages with enhanced system prompt
