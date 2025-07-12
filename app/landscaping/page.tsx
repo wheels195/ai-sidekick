@@ -1021,6 +1021,11 @@ export default function LandscapingChat() {
     } catch (error) {
       console.error('Chat API Error:', error)
       
+      // Try to get more details from the response
+      if (error instanceof Error && error.message.includes('500')) {
+        console.error('500 Error Details - this might be rate limits or API issues')
+      }
+      
       // Remove the empty assistant message and show error
       setMessages(prev => prev.filter(m => m.id !== assistantId))
       
