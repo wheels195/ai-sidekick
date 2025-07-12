@@ -163,23 +163,37 @@ async function performWebSearch(query: string, location?: string): Promise<strin
     
     const results = await tavilyClient.search({
       query: query,
-      search_depth: "basic",
-      max_results: 5,
+      search_depth: "advanced",
+      max_results: 8,
       include_answer: true,
-      exclude_domains: ["facebook.com", "instagram.com", "twitter.com"]
+      include_raw_content: true,
+      exclude_domains: ["facebook.com", "instagram.com", "twitter.com", "pinterest.com", "youtube.com"]
     })
     
     console.log('🔍 Tavily results:', { resultCount: results.results?.length, hasResults: !!results.results })
     
     if (results.results && results.results.length > 0) {
-      // Format results for AI consumption
+      // Format results for AI consumption with more detail
       const formattedResults = results.results
-        .slice(0, 3) // Limit to top 3 results
-        .map((result: any) => `${result.title}: ${result.content}`)
-        .join('\n\n')
+        .slice(0, 5) // Increase to top 5 results for better coverage
+        .map((result: any) => {
+          let formatted = `**${result.title}**\n`
+          formatted += `URL: ${result.url}\n`
+          formatted += `Content: ${result.content}\n`
+          if (result.raw_content) {
+            // Try to extract phone, address, hours from raw content
+            const phoneMatch = result.raw_content.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
+            const addressMatch = result.raw_content.match(/\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln)[^,]*,?\s*[A-Za-z\s]+,?\s*[A-Z]{2}\s*\d{5}/);
+            
+            if (phoneMatch) formatted += `Phone: ${phoneMatch[1]}\n`
+            if (addressMatch) formatted += `Address: ${addressMatch[0]}\n`
+          }
+          return formatted
+        })
+        .join('\n---\n\n')
       
-      console.log('✅ Returning formatted results')
-      return `Recent web search results:\n\n${formattedResults}`
+      console.log('✅ Returning enhanced formatted results with business details')
+      return `Recent web search results with business details:\n\n${formattedResults}`
     }
     
     console.log('⚠️ No results found')
@@ -361,15 +375,15 @@ Provide advice based on your training knowledge. Do not mention web search capab
         const localContext = zipCode || location
         
         if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
-          enhancedQuery += ` near ${localContext}`
+          enhancedQuery += ` near ${localContext} address phone hours pricing`
         } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
-          enhancedQuery += ` ${localContext} landscaping market rates pricing`
+          enhancedQuery += ` ${localContext} landscaping market rates pricing cost`
         } else if (matchedCategories.includes('regulations')) {
-          enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules`
+          enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules requirements`
         } else if (matchedCategories.includes('weather')) {
-          enhancedQuery += ` weather forecast for ${localContext} and landscaping impact`
+          enhancedQuery += ` weather forecast for ${localContext} and landscaping impact today tomorrow`
         } else if (matchedCategories.includes('best_top')) {
-          enhancedQuery += ` ${localContext} landscaping recommendations`
+          enhancedQuery += ` ${localContext} address phone hours pricing reviews`
         } else {
           enhancedQuery += ` ${localContext} landscaping lawn care`
         }
