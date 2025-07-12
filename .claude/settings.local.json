@@ -15,7 +15,8 @@
       "Bash(npm run lint)",
       "Bash(rg:*)",
       "Bash(git pull:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm info:*)"
     ],
     "deny": []
   }

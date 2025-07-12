@@ -155,8 +155,8 @@ async function performWebSearch(query: string, location?: string): Promise<strin
   }
 
   try {
-    const { TavilySearchAPIClient } = await import('tavily')
-    const tavilyClient = new TavilySearchAPIClient({ apiKey: process.env.TAVILY_API_KEY })
+    const { TavilyClient } = await import('tavily')
+    const tavilyClient = new TavilyClient({ apiKey: process.env.TAVILY_API_KEY })
     
     // Enhance query with location context for landscaping
     const enhancedQuery = location 
@@ -165,11 +165,11 @@ async function performWebSearch(query: string, location?: string): Promise<strin
     
     console.log('🔍 Enhanced search query:', enhancedQuery)
     
-    const results = await tavilyClient.search(enhancedQuery, {
+    const results = await tavilyClient.search({
+      query: enhancedQuery,
       search_depth: "basic",
       max_results: 5,
       include_answer: true,
-      include_domains: [],
       exclude_domains: ["facebook.com", "instagram.com", "twitter.com"]
     })
     
