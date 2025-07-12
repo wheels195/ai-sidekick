@@ -420,10 +420,12 @@ ${searchResults}
 Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.
 
 IMPORTANT FORMATTING for business listings:
-- Use numbered lists (1. Business Name 2. Business Name) for multiple businesses
-- Bold business names with **Business Name**
+- Use numbered lists (1. **Business Name** 2. **Business Name**) for multiple businesses
+- Always bold business names with **Business Name**
 - Use markdown links [Business Website](URL) for clickable links
-- Group related details under each business with bullet points`
+- Include complete phone numbers and addresses when available
+- End with a follow-up question to encourage engagement
+- Keep responses complete and don't cut off mid-sentence`
             })
           } else {
             console.log('⚠️ Search results not added to context. Reason:', {

@@ -127,7 +127,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (!inNumberedList) {
-        htmlLines.push('<ol class="space-y-2 mb-4 ml-6 list-decimal list-outside">')
+        htmlLines.push('<ol class="space-y-4 mb-4 ml-6 list-decimal list-outside">')
         inNumberedList = true
       }
       let text = line.replace(/^\d+\.\s/, '')
@@ -135,7 +135,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-      htmlLines.push(`<li class="text-white leading-relaxed mb-3">${text}</li>`)
+      htmlLines.push(`<li class="text-white leading-relaxed mb-4">${text}</li>`)
     }
     // Bullet lists
     else if (line.startsWith('- ') || line.startsWith('* ')) {
@@ -164,7 +164,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       
       // Check if this is an ending question (contains ? and appears to be a question)
-      if (text.includes('?') && (text.toLowerCase().includes('what') || text.toLowerCase().includes('how') || text.toLowerCase().includes('which') || text.toLowerCase().includes('where') || text.toLowerCase().includes('when') || text.toLowerCase().includes('why') || text.toLowerCase().includes('would') || text.toLowerCase().includes('could') || text.toLowerCase().includes('should') || text.toLowerCase().includes('do you') || text.toLowerCase().includes('have you') || text.toLowerCase().includes('are you'))) {
+      const lowerText = text.toLowerCase()
+      if (text.includes('?') && (lowerText.includes('what') || lowerText.includes('how') || lowerText.includes('which') || lowerText.includes('where') || lowerText.includes('when') || lowerText.includes('why') || lowerText.includes('would') || lowerText.includes('could') || lowerText.includes('should') || lowerText.includes('do you') || lowerText.includes('have you') || lowerText.includes('are you') || lowerText.includes('let me know') || lowerText.includes('need help') || lowerText.includes('looking for'))) {
         htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
       } else {
         htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
