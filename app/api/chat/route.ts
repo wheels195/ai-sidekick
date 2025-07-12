@@ -145,6 +145,81 @@ pricing, SEO, services, customer communication, competitor research, content wri
 
 Remember: you're not just answering questions. You are Dirt.i, the marketing and growth brain for a busy landscaping company that wants more local business — and they trust you to help them compete and grow.`
 
+// GPT-4o Query Optimizer for enhanced search queries
+async function optimizeSearchQuery(
+  userQuery: string, 
+  categories: string[], 
+  location: string, 
+  userProfile: any
+): Promise<string> {
+  if (!process.env.OPENAI_API_KEY) {
+    console.log('❌ No OpenAI API key found for query optimization')
+    // Fallback to simple enhancement
+    return `${userQuery} ${location} landscaping`
+  }
+
+  try {
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+      timeout: 10000, // 10 seconds timeout for query optimization
+      maxRetries: 1,
+    })
+
+    const optimizationPrompt = `You are a search query optimization expert. Transform the user's landscaping business question into the most effective web search query for finding local business information.
+
+USER CONTEXT:
+- Business: ${userProfile?.business_name || 'Landscaping business'}
+- Location: ${location}
+- Query Categories: ${categories.join(', ')}
+- Original Query: "${userQuery}"
+
+OPTIMIZATION RULES:
+1. Focus on getting specific business listings with contact details
+2. Include location (ZIP code preferred): ${location}
+3. For supplier queries: prioritize "address phone hours pricing delivery"
+4. For pricing queries: include "market rates cost pricing ${location}"
+5. For regulations: include "permits requirements regulations ${location}"
+6. Keep query concise but comprehensive
+7. Use business-oriented keywords that return actionable results
+8. Avoid generic terms, focus on specific local business information
+
+OUTPUT: Return ONLY the optimized search query, nothing else.
+
+Examples:
+- "Where can I buy mulch?" → "bulk mulch suppliers ${location} address phone delivery pricing"
+- "What should I charge for lawn care?" → "lawn care service rates pricing ${location} landscaping market rates"
+- "Best grass seed for hot weather?" → "grass seed varieties hot climate ${location} landscaping suppliers recommendations"
+
+Optimized query:`
+
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini', // Use mini for quick query optimization
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a search query optimization expert. Return only the optimized search query, no explanations or additional text.'
+        },
+        {
+          role: 'user', 
+          content: optimizationPrompt
+        }
+      ],
+      max_tokens: 100,
+      temperature: 0.3,
+    })
+
+    const optimizedQuery = completion.choices[0]?.message?.content?.trim() || userQuery
+    console.log('✅ Query optimized successfully')
+    return optimizedQuery
+
+  } catch (error) {
+    console.error('❌ Query optimization failed:', error)
+    // Fallback to simple enhancement
+    const fallbackQuery = `${userQuery} ${location} landscaping business information`
+    return fallbackQuery
+  }
+}
+
 // Tavily search function
 async function performWebSearch(query: string, location?: string): Promise<string> {
   console.log('🔍 performWebSearch called with:', { query, location, hasApiKey: !!process.env.TAVILY_API_KEY })
@@ -316,38 +391,34 @@ export async function POST(request: NextRequest) {
       })
       
       if (shouldSearch) {
-        // Smart query enhancement based on detected categories and user context
-        let enhancedQuery = currentUserMessage.content
+        // Use GPT-4o Query Optimizer instead of simple string concatenation
         const location = userProfile?.location || ''
         const zipCode = userProfile?.zip_code || ''
-        
-        // Enhance query based on category and add hyper-local context (zip code preferred)
         const localContext = zipCode || location
         
-        if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
-          enhancedQuery += ` near ${localContext} address phone hours pricing`
-        } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
-          enhancedQuery += ` ${localContext} landscaping market rates pricing cost`
-        } else if (matchedCategories.includes('regulations')) {
-          enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules requirements`
-        } else if (matchedCategories.includes('weather')) {
-          enhancedQuery += ` weather forecast for ${localContext} and landscaping impact today tomorrow`
-        } else if (matchedCategories.includes('best_top')) {
-          enhancedQuery += ` ${localContext} address phone hours pricing reviews`
-        } else {
-          enhancedQuery += ` ${localContext} landscaping lawn care`
-        }
-        
-        console.log('🔍 Triggering smart web search...', { 
+        console.log('🔍 Triggering GPT-4o query optimizer...', { 
           originalQuery: currentUserMessage.content, 
-          enhancedQuery, 
           categories: matchedCategories,
           localContext 
         })
         
         try {
-          console.log('🔍 About to call performWebSearch with enhanced query:', enhancedQuery)
-          searchResults = await performWebSearch(enhancedQuery, location)
+          const optimizedQuery = await optimizeSearchQuery(
+            currentUserMessage.content,
+            matchedCategories,
+            localContext,
+            userProfile
+          )
+          
+          console.log('🔍 Query optimization result:', { 
+            originalQuery: currentUserMessage.content, 
+            optimizedQuery,
+            categories: matchedCategories,
+            localContext 
+          })
+          
+          console.log('🔍 About to call performWebSearch with optimized query:', optimizedQuery)
+          searchResults = await performWebSearch(optimizedQuery, location)
           console.log('🔍 performWebSearch returned:', { 
             searchResults: searchResults.substring(0, 200), 
             length: searchResults.length,
@@ -528,38 +599,34 @@ CRITICAL FORMATTING REQUIREMENTS for business listings:
       })
       
       if (shouldSearch) {
-        // Smart query enhancement based on detected categories and user context
-        let enhancedQuery = currentUserMessage.content
+        // Use GPT-4o Query Optimizer instead of simple string concatenation
         const location = userProfile?.location || ''
         const zipCode = userProfile?.zip_code || ''
-        
-        // Enhance query based on category and add hyper-local context (zip code preferred)
         const localContext = zipCode || location
         
-        if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
-          enhancedQuery += ` near ${localContext} address phone hours pricing`
-        } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
-          enhancedQuery += ` ${localContext} landscaping market rates pricing cost`
-        } else if (matchedCategories.includes('regulations')) {
-          enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules requirements`
-        } else if (matchedCategories.includes('weather')) {
-          enhancedQuery += ` weather forecast for ${localContext} and landscaping impact today tomorrow`
-        } else if (matchedCategories.includes('best_top')) {
-          enhancedQuery += ` ${localContext} address phone hours pricing reviews`
-        } else {
-          enhancedQuery += ` ${localContext} landscaping lawn care`
-        }
-        
-        console.log('🔍 Triggering smart web search...', { 
+        console.log('🔍 Triggering GPT-4o query optimizer...', { 
           originalQuery: currentUserMessage.content, 
-          enhancedQuery, 
           categories: matchedCategories,
           localContext 
         })
         
         try {
-          console.log('🔍 About to call performWebSearch with enhanced query:', enhancedQuery)
-          searchResults = await performWebSearch(enhancedQuery, location)
+          const optimizedQuery = await optimizeSearchQuery(
+            currentUserMessage.content,
+            matchedCategories,
+            localContext,
+            userProfile
+          )
+          
+          console.log('🔍 Query optimization result:', { 
+            originalQuery: currentUserMessage.content, 
+            optimizedQuery,
+            categories: matchedCategories,
+            localContext 
+          })
+          
+          console.log('🔍 About to call performWebSearch with optimized query:', optimizedQuery)
+          searchResults = await performWebSearch(optimizedQuery, location)
           console.log('🔍 performWebSearch returned:', { 
             searchResults: searchResults.substring(0, 200), 
             length: searchResults.length,
