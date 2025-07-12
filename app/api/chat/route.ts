@@ -334,7 +334,10 @@ export async function POST(request: NextRequest) {
         console.error('❌ Google Places search failed with exception:', searchError)
         console.error('❌ Search error details:', {
           message: searchError instanceof Error ? searchError.message : 'Unknown error',
-          stack: searchError instanceof Error ? searchError.stack : undefined
+          stack: searchError instanceof Error ? searchError.stack : undefined,
+          apiKey: process.env.GOOGLE_PLACES_API_KEY ? 'Present' : 'Missing',
+          query: currentUserMessage.content,
+          location
         })
         // Continue without search results rather than crashing the entire API
         searchResults = ''
@@ -604,11 +607,19 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
     })
 
   } catch (error) {
-    console.error('OpenAI API Error:', error)
+    console.error('❌ Chat API Error:', error)
+    console.error('❌ Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      webSearchEnabled,
+      filesLength: files?.length || 0,
+      hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+      hasGooglePlacesKey: !!process.env.GOOGLE_PLACES_API_KEY
+    })
     
     if (error instanceof Error) {
       return NextResponse.json(
-        { error: `OpenAI API Error: ${error.message}` },
+        { error: `Chat API Error: ${error.message}` },
         { status: 500 }
       )
     }
