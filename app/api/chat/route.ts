@@ -238,7 +238,9 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now()
   
   try {
+    console.log('🔥 Chat API called - parsing request...')
     const { messages, sessionId, webSearchEnabled = false, files = [] } = await request.json()
+    console.log('🔥 Request parsed successfully:', { messagesCount: messages?.length, webSearchEnabled, filesCount: files?.length })
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
