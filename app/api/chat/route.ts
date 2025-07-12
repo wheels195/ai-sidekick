@@ -355,15 +355,17 @@ Provide advice based on your training knowledge. Do not mention web search capab
         const location = userProfile?.location || ''
         const zipCode = userProfile?.zip_code || ''
         
-        // Enhance query based on category and add location context
+        // Enhance query based on category and add hyper-local context (zip code preferred)
+        const localContext = zipCode || location
+        
         if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
-          enhancedQuery += ` near ${zipCode || location} landscaping supply nursery`
+          enhancedQuery += ` near ${localContext} landscaping supply nursery`
         } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
-          enhancedQuery += ` ${location} landscaping market rates pricing`
+          enhancedQuery += ` ${localContext} landscaping market rates pricing`
         } else if (matchedCategories.includes('regulations')) {
-          enhancedQuery += ` ${location} landscaping permits regulations lawn care rules`
+          enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules`
         } else {
-          enhancedQuery += ` ${location} landscaping lawn care`
+          enhancedQuery += ` ${localContext} landscaping lawn care`
         }
         
         console.log('🔍 Triggering smart web search...', { originalQuery: currentUserMessage.content, enhancedQuery })
