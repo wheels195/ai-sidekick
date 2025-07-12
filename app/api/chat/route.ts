@@ -417,7 +417,13 @@ Provide advice based on your training knowledge. Do not mention web search capab
 
 ${searchResults}
 
-Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.`
+Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.
+
+IMPORTANT FORMATTING for business listings:
+- Use numbered lists (1. Business Name 2. Business Name) for multiple businesses
+- Bold business names with **Business Name**
+- Use markdown links [Business Website](URL) for clickable links
+- Group related details under each business with bullet points`
             })
           } else {
             console.log('⚠️ Search results not added to context. Reason:', {

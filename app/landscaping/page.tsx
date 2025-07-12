@@ -130,8 +130,12 @@ const convertMarkdownToHtml = (markdown: string): string => {
         htmlLines.push('<ol class="space-y-2 mb-4 ml-6 list-decimal list-outside">')
         inNumberedList = true
       }
-      const text = line.replace(/^\d+\.\s/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
-      htmlLines.push(`<li class="text-white leading-relaxed">${text}</li>`)
+      let text = line.replace(/^\d+\.\s/, '')
+      // Handle bold text
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle markdown links [text](url)
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+      htmlLines.push(`<li class="text-white leading-relaxed mb-3">${text}</li>`)
     }
     // Bullet lists
     else if (line.startsWith('- ') || line.startsWith('* ')) {
@@ -141,15 +145,23 @@ const convertMarkdownToHtml = (markdown: string): string => {
         htmlLines.push('<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">')
         inBulletList = true
       }
-      const text = line.substring(2).replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
-      htmlLines.push(`<li class="text-white leading-relaxed">${text}</li>`)
+      let text = line.substring(2)
+      // Handle bold text
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle markdown links [text](url)
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+      htmlLines.push(`<li class="text-white leading-relaxed mb-2">${text}</li>`)
     }
     // Regular paragraphs
     else {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
-      const text = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      let text = line
+      // Handle bold text
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle markdown links [text](url)
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       
       // Check if this is an ending question (contains ? and appears to be a question)
       if (text.includes('?') && (text.toLowerCase().includes('what') || text.toLowerCase().includes('how') || text.toLowerCase().includes('which') || text.toLowerCase().includes('where') || text.toLowerCase().includes('when') || text.toLowerCase().includes('why') || text.toLowerCase().includes('would') || text.toLowerCase().includes('could') || text.toLowerCase().includes('should') || text.toLowerCase().includes('do you') || text.toLowerCase().includes('have you') || text.toLowerCase().includes('are you'))) {
