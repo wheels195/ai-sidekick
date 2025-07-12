@@ -342,17 +342,23 @@ Provide advice based on your training knowledge. Do not mention web search capab
       if (shouldSearch) {
         const location = userProfile?.location || ''
         console.log('🔍 Triggering web search...')
-        searchResults = await performWebSearch(currentUserMessage.content, location)
         
-        // Add search results to the conversation context
-        if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
-          console.log('✅ Adding search results to context')
-          chatMessages.push({
-            role: 'system' as const,
-            content: `CURRENT WEB SEARCH RESULTS (use this information to enhance your response):\n\n${searchResults}`
-          })
-        } else {
-          console.log('⚠️ Search results not added to context:', searchResults.substring(0, 100))
+        try {
+          searchResults = await performWebSearch(currentUserMessage.content, location)
+          
+          // Add search results to the conversation context
+          if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
+            console.log('✅ Adding search results to context')
+            chatMessages.push({
+              role: 'system' as const,
+              content: `CURRENT WEB SEARCH RESULTS (use this information to enhance your response):\n\n${searchResults}`
+            })
+          } else {
+            console.log('⚠️ Search results not added to context:', searchResults.substring(0, 100))
+          }
+        } catch (searchError) {
+          console.error('❌ Web search failed, continuing without search results:', searchError)
+          // Continue without search results rather than crashing the entire API
         }
       }
     }
