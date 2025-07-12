@@ -736,6 +736,7 @@ export default function LandscapingChat() {
       let finalMessageId = null
       let sessionId = null
       let lastUpdateTime = 0
+      let firstTokenReceived = false
 
       while (true) {
         const { value, done } = await reader.read()
@@ -763,6 +764,12 @@ export default function LandscapingChat() {
               const content = JSON.parse(rawContent)
               assistantText += content
               
+              // Hide search indicator once first token is received
+              if (!firstTokenReceived && content.length > 0) {
+                setIsSearching(false)
+                firstTokenReceived = true
+              }
+              
               // Real-time streaming updates with throttling
               const now = Date.now()
               if (now - lastUpdateTime > 50) { // Throttle to 50ms
@@ -778,6 +785,12 @@ export default function LandscapingChat() {
             } catch (e) {
               // Fallback for non-JSON content
               assistantText += rawContent
+              
+              // Hide search indicator on first content
+              if (!firstTokenReceived && rawContent.length > 0) {
+                setIsSearching(false)
+                firstTokenReceived = true
+              }
               
               // Real-time streaming updates with throttling
               const now = Date.now()
