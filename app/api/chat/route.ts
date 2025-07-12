@@ -145,114 +145,87 @@ pricing, SEO, services, customer communication, competitor research, content wri
 
 Remember: you're not just answering questions. You are Dirt.i, the marketing and growth brain for a busy landscaping company that wants more local business — and they trust you to help them compete and grow.`
 
-// GPT-4o Query Optimizer for enhanced search queries  
-async function optimizeSearchQuery(
-  userQuery: string, 
-  categories: string[], 
-  location: string, 
-  userProfile: any
-): Promise<string> {
-  if (!process.env.OPENAI_API_KEY) {
-    console.log('❌ No OpenAI API key found for query optimization')
-    return `${userQuery} ${location} landscaping`
-  }
 
-  try {
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-      timeout: 10000,
-      maxRetries: 1,
-    })
-
-    const systemPrompt = `You are a search query optimizer that rewrites user questions into short, highly specific search queries formatted for Google-style web search. Focus on the core topic (e.g., mulch, lawn care, grass seed), make it local (include ZIP or city), and include relevant modifiers like pricing, delivery, phone, reviews, or recommendations.`
-    
-    const userPrompt = `User: ${userQuery}\nLocation: ${location}\nProfile: ${userProfile?.business_name || "landscaping pro"}\nSearch Query:`
-
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
-      ],
-      temperature: 0.2,
-      max_tokens: 50,
-    })
-
-    const optimizedQuery = response.choices[0]?.message?.content?.trim() || userQuery
-    console.log('✅ Query optimized successfully')
-    return optimizedQuery
-
-  } catch (error) {
-    console.error('❌ Query optimization failed:', error)
-    return `${userQuery} ${location} landscaping business information`
-  }
-}
-
-// Tavily search function
-async function performWebSearch(query: string, location?: string): Promise<string> {
-  console.log('🔍 performWebSearch called with:', { query, location, hasApiKey: !!process.env.TAVILY_API_KEY })
+// Google Places API search function
+async function performGooglePlacesSearch(query: string, location?: string): Promise<string> {
+  console.log('🔍 performGooglePlacesSearch called with:', { query, location, hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY })
   
-  if (!process.env.TAVILY_API_KEY) {
-    console.log('❌ No Tavily API key found')
-    return "Web search is not available at the moment - API key not configured."
+  if (!process.env.GOOGLE_PLACES_API_KEY) {
+    console.log('❌ No Google Places API key found')
+    return "Business search is not available at the moment - API key not configured."
   }
 
   try {
-    const { TavilyClient } = await import('tavily')
-    const tavilyClient = new TavilyClient({ apiKey: process.env.TAVILY_API_KEY })
+    // Construct search query for Google Places
+    const searchQuery = location ? `${query} in ${location}` : query
+    console.log('🔍 Google Places search query:', searchQuery)
     
-    // Query is already enhanced by smart search logic, use as-is
-    console.log('🔍 Using smart-enhanced search query:', query)
+    // Text Search (New) - for finding businesses by query
+    const textSearchUrl = `https://places.googleapis.com/v1/places:searchText`
     
-    const results = await tavilyClient.search({
-      query: query,
-      search_depth: "advanced",
-      max_results: 8,
-      include_answer: true,
-      include_raw_content: true,
-      exclude_domains: ["facebook.com", "instagram.com", "twitter.com", "pinterest.com", "youtube.com"]
+    const response = await fetch(textSearchUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': process.env.GOOGLE_PLACES_API_KEY,
+        'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.priceLevel,places.websiteUri,places.businessStatus,places.types,places.editorialSummary'
+      },
+      body: JSON.stringify({
+        textQuery: searchQuery,
+        maxResultCount: 8,
+        languageCode: 'en'
+      })
     })
+
+    if (!response.ok) {
+      console.error('❌ Google Places API error:', response.status, response.statusText)
+      return `Business search encountered an error: ${response.statusText}. Providing general guidance instead.`
+    }
+
+    const data = await response.json()
+    console.log('🔍 Google Places results:', { resultCount: data.places?.length, hasResults: !!data.places })
     
-    console.log('🔍 Tavily results:', { resultCount: results.results?.length, hasResults: !!results.results })
-    
-    if (results.results && results.results.length > 0) {
-      console.log('🔍 Raw Tavily results sample:', JSON.stringify(results.results[0], null, 2))
+    if (data.places && data.places.length > 0) {
+      console.log('🔍 Raw Google Places results sample:', JSON.stringify(data.places[0], null, 2))
       
-      // Format results for AI consumption with strict validation
-      const formattedResults = results.results
-        .slice(0, 5) // Increase to top 5 results for better coverage
-        .map((result: any, index: number) => {
-          let formatted = `BUSINESS ${index + 1}: **${result.title}**\n`
-          formatted += `URL: ${result.url}\n`
-          formatted += `Content: ${result.content}\n`
+      // Format results for AI consumption with rich business data
+      const formattedResults = data.places
+        .slice(0, 6) // Top 6 results for comprehensive analysis
+        .map((place: any, index: number) => {
+          const name = place.displayName?.text || 'Business Name Not Available'
+          const address = place.formattedAddress || 'Address not available'
+          const phone = place.nationalPhoneNumber || 'Phone not available'
+          const rating = place.rating ? `${place.rating}⭐` : 'No rating'
+          const reviewCount = place.userRatingCount ? `${place.userRatingCount} reviews` : 'No reviews'
+          const priceLevel = place.priceLevel ? '$'.repeat(place.priceLevel) : 'Price level unknown'
+          const website = place.websiteUri || 'Website not available'
+          const businessTypes = place.types ? place.types.join(', ') : 'Services not specified'
+          const summary = place.editorialSummary?.text || 'No summary available'
+          const status = place.businessStatus || 'Status unknown'
           
-          // Extract contact details from both content and raw_content
-          let phone = 'NOT AVAILABLE'
-          let address = 'NOT AVAILABLE'
-          
-          const searchText = `${result.content} ${result.raw_content || ''}`
-          const phoneMatch = searchText.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
-          const addressMatch = searchText.match(/\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln)[^,]*,?\s*[A-Za-z\s]+,?\s*[A-Z]{2}\s*\d{5}/);
-          
-          if (phoneMatch) phone = phoneMatch[1]
-          if (addressMatch) address = addressMatch[0]
-          
-          formatted += `VERIFIED_PHONE: ${phone}\n`
-          formatted += `VERIFIED_ADDRESS: ${address}\n`
+          let formatted = `BUSINESS ${index + 1}: **${name}**\n`
+          formatted += `ADDRESS: ${address}\n`
+          formatted += `PHONE: ${phone}\n`
+          formatted += `RATING: ${rating} (${reviewCount})\n`
+          formatted += `PRICE_LEVEL: ${priceLevel}\n`
+          formatted += `WEBSITE: ${website}\n`
+          formatted += `BUSINESS_STATUS: ${status}\n`
+          formatted += `SERVICES/TYPES: ${businessTypes}\n`
+          formatted += `SUMMARY: ${summary}\n`
           
           return formatted
         })
         .join('\n---\n\n')
       
-      console.log('✅ Returning enhanced formatted results with business details. Length:', formattedResults.length)
-      return `Recent web search results with business details:\n\n${formattedResults}`
+      console.log('✅ Returning Google Places formatted results with business details. Length:', formattedResults.length)
+      return `Current local business data from Google Places:\n\n${formattedResults}`
     }
     
-    console.log('⚠️ No results found')
-    return "No relevant current information found for this query."
+    console.log('⚠️ No Google Places results found')
+    return "No local businesses found for this query."
   } catch (error) {
-    console.error('❌ Tavily search error:', error)
-    return `Web search encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}. Providing general guidance instead.`
+    console.error('❌ Google Places search error:', error)
+    return `Business search encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}. Providing general guidance instead.`
   }
 }
 
@@ -323,108 +296,35 @@ export async function POST(request: NextRequest) {
     let useGPT4o = false
     const currentUserMessage = messages[messages.length - 1]
     
-    if (currentUserMessage?.role === 'user') {
-      // Determine if we should search based on toggle state
-      let shouldSearch = false
-      let matchedCategories = []
+    if (currentUserMessage?.role === 'user' && webSearchEnabled) {
+      // Simple logic: Toggle ON = always search with Google Places
+      console.log('🔍 Google Places search enabled - searching for current business data')
       
-      if (webSearchEnabled) {
-        // Toggle ON: Always search automatically
-        shouldSearch = true
-        matchedCategories = ['user_requested']
-        console.log('🔍 Web search: Always searching (toggle ON)')
-      } else {
-        // Toggle OFF: Only search if specific triggers match
-        const userQuery = currentUserMessage.content.toLowerCase()
-        
-        const highConfidenceTriggers = {
-          pricing: ['price', 'cost', 'charge', 'rate', 'what should i charge', 'how much', 'pricing'],
-          suppliers: ['supplier', 'vendor', 'near me', 'where to buy', 'store', 'nursery', 'equipment dealer'],
-          regulations: ['regulation', 'permit', 'law', 'legal', 'code', 'requirement', 'restriction'],
-          competition: ['competition', 'competitor', 'market rate', 'going rate', 'what others charge'],
-          current: ['current', 'latest', 'now', 'today', 'recent', 'this year', '2025'],
-          availability: ['available', 'in stock', 'find', 'source', 'buy'],
-          weather: ['weather', 'rain', 'temperature', 'forecast', 'climate', 'cold', 'heat', 'freeze'],
-          best_top: ['best', 'top', 'most popular', 'most effective', 'leading']
-        }
-        
-        for (const [category, triggers] of Object.entries(highConfidenceTriggers)) {
-          if (triggers.some(trigger => userQuery.includes(trigger))) {
-            matchedCategories.push(category)
-          }
-        }
-        
-        shouldSearch = matchedCategories.length > 0
-        console.log('🔍 Web search: Smart triggers', { matchedCategories, shouldSearch })
-      }
+      const location = userProfile?.location || userProfile?.zip_code || 'Dallas, TX'
       
-      console.log('🔍 Web search check:', { 
-        webSearchEnabled, 
-        userQuery: currentUserMessage.content.substring(0, 50), 
-        matchedCategories, 
-        shouldSearch,
-        userLocation: userProfile?.location,
-        userZipCode: userProfile?.zip_code 
+      console.log('🔍 Performing Google Places search...', { 
+        originalQuery: currentUserMessage.content, 
+        location 
       })
       
-      if (shouldSearch) {
-        // Use GPT-4o Query Optimizer instead of simple string concatenation
-        const location = userProfile?.location || ''
-        const zipCode = userProfile?.zip_code || ''
-        const localContext = zipCode || location
-        
-        console.log('🔍 Triggering GPT-4o query optimizer...', { 
-          originalQuery: currentUserMessage.content, 
-          categories: matchedCategories,
-          localContext 
+      try {
+        searchResults = await performGooglePlacesSearch(currentUserMessage.content, location)
+        console.log('🔍 Google Places search returned:', { 
+          searchResults: searchResults.substring(0, 200), 
+          length: searchResults.length,
+          hasError: searchResults.includes('error'),
+          hasNotAvailable: searchResults.includes('not available'),
+          hasNotConfigured: searchResults.includes('not configured')
         })
         
-        try {
-          const optimizedQuery = await optimizeSearchQuery(
-            currentUserMessage.content,
-            matchedCategories,
-            localContext,
-            userProfile
-          )
-          
-          console.log('🔍 Query optimization result:', { 
-            originalQuery: currentUserMessage.content, 
-            optimizedQuery,
-            categories: matchedCategories,
-            localContext 
-          })
-          
-          console.log('🔍 About to call performWebSearch with optimized query:', optimizedQuery)
-          searchResults = await performWebSearch(optimizedQuery, location)
-          console.log('🔍 performWebSearch returned:', { 
-            searchResults: searchResults.substring(0, 200), 
-            length: searchResults.length,
-            hasError: searchResults.includes('error'),
-            hasNotAvailable: searchResults.includes('not available'),
-            hasNotConfigured: searchResults.includes('not configured')
-          })
-          
-          // Add search results to the conversation context
-          if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
-            console.log('✅ Adding search results to context')
-            // Use GPT-4o for web search queries to match ChatGPT quality
-            useGPT4o = true
-          } else {
-            console.log('⚠️ Search results not added to context. Reason:', {
-              hasError: searchResults.includes('error'),
-              hasNotAvailable: searchResults.includes('not available'), 
-              hasNotConfigured: searchResults.includes('not configured'),
-              searchResults: searchResults.substring(0, 200)
-            })
-          }
-        } catch (searchError) {
-          console.error('❌ Web search failed with exception:', searchError)
-          console.error('❌ Search error details:', {
-            message: searchError instanceof Error ? searchError.message : 'Unknown error',
-            stack: searchError instanceof Error ? searchError.stack : undefined
-          })
-          // Continue without search results rather than crashing the entire API
-        }
+      } catch (searchError) {
+        console.error('❌ Google Places search failed with exception:', searchError)
+        console.error('❌ Search error details:', {
+          message: searchError instanceof Error ? searchError.message : 'Unknown error',
+          stack: searchError instanceof Error ? searchError.stack : undefined
+        })
+        // Continue without search results rather than crashing the entire API
+        searchResults = ''
       }
     }
 
@@ -479,33 +379,37 @@ Provide advice based on your training knowledge. Do not mention web search capab
       const localContext = userProfile?.zip_code || userProfile?.location || ''
       chatMessages.push({
         role: 'system' as const,
-        content: `CURRENT WEB SEARCH RESULTS for query "${currentUserMessage.content}" in ${localContext}:
+        content: `CURRENT GOOGLE PLACES BUSINESS DATA for query "${currentUserMessage.content}" in ${localContext}:
 
 ${searchResults}
 
-Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.
+COMPETITIVE ANALYSIS FORMATTING:
 
-CRITICAL FORMATTING REQUIREMENTS for business listings:
+If this appears to be competitor research (questions about "top companies", "best landscapers", "competitors"), format as a professional analysis table:
 
-1. MUST use this exact green check mark format:
-   ✅ **Business Name**
-   - Phone: (use VERIFIED_PHONE or write "Not available")
-   - Address: (use VERIFIED_ADDRESS or write "Not available") 
-   - Website: [Business Name](actual_URL)
-   - Services: Description
+## Competitive Analysis: ${localContext}
 
-2. STRICT RULES:
-   - Start each business with green check mark: ✅ **Business Name**
-   - NO placeholder text like "Visit their website" - use actual URLs or "Not available"
-   - NO fake addresses like "Dallas, TX 75201" - use VERIFIED_ADDRESS or "Not available"
-   - NO generic phone instructions - use VERIFIED_PHONE or "Not available"
-   - Each business gets a green check mark for visual separation
+| Business Name | Rating | Reviews | Price | Phone | Key Services | Competitive Insight |
+|---------------|--------|---------|-------|-------|--------------|-------------------|
+| Company A | 4.8⭐ | 127 reviews | $$$ | (555) 123-4567 | Full service | High ratings, premium pricing - opportunity to undercut |
+| Company B | 4.2⭐ | 43 reviews | $$ | (555) 234-5678 | Basic lawn care | Limited services - upsell opportunity |
 
-3. End with "## Next Steps" containing specific landscaping business advice:
-   - Pricing negotiation tips
-   - Relationship building strategies  
-   - Seasonal ordering advice
-   - Quality assessment questions`
+Then provide strategic insights:
+- **Market Gaps:** What services are missing or underserved?
+- **Pricing Opportunities:** Where can you compete on price or value?
+- **Service Differentiation:** How can you stand out?
+- **Quality Standards:** What level of service is expected?
+
+If this is NOT competitor research, use the standard format:
+
+✅ **Business Name**
+- Phone: (from PHONE field)
+- Address: (from ADDRESS field)
+- Rating: (from RATING field)
+- Website: (from WEBSITE field or "Not available")
+- Services: (from SERVICES/TYPES field)
+
+ALWAYS end with ## Next Steps containing specific actionable advice for Johnson's Landscaping business growth.`
       })
     }
 
