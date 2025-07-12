@@ -327,7 +327,9 @@ Provide advice based on your training knowledge. Do not mention web search capab
         regulations: ['regulation', 'permit', 'law', 'legal', 'code', 'requirement', 'restriction'],
         competition: ['competition', 'competitor', 'market rate', 'going rate', 'what others charge'],
         current: ['current', 'latest', 'now', 'today', 'recent', 'this year', '2025'],
-        availability: ['available', 'in stock', 'find', 'source', 'buy']
+        availability: ['available', 'in stock', 'find', 'source', 'buy'],
+        weather: ['weather', 'rain', 'temperature', 'forecast', 'climate', 'cold', 'heat', 'freeze'],
+        best_top: ['best', 'top', 'most popular', 'most effective', 'leading']
       }
       
       // Check for high confidence triggers
@@ -364,11 +366,20 @@ Provide advice based on your training knowledge. Do not mention web search capab
           enhancedQuery += ` ${localContext} landscaping market rates pricing`
         } else if (matchedCategories.includes('regulations')) {
           enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules`
+        } else if (matchedCategories.includes('weather')) {
+          enhancedQuery += ` weather forecast for ${localContext} and landscaping impact`
+        } else if (matchedCategories.includes('best_top')) {
+          enhancedQuery += ` ${localContext} landscaping recommendations`
         } else {
           enhancedQuery += ` ${localContext} landscaping lawn care`
         }
         
-        console.log('🔍 Triggering smart web search...', { originalQuery: currentUserMessage.content, enhancedQuery })
+        console.log('🔍 Triggering smart web search...', { 
+          originalQuery: currentUserMessage.content, 
+          enhancedQuery, 
+          categories: matchedCategories,
+          localContext 
+        })
         
         try {
           searchResults = await performWebSearch(enhancedQuery, location)
@@ -378,7 +389,11 @@ Provide advice based on your training knowledge. Do not mention web search capab
             console.log('✅ Adding search results to context')
             chatMessages.push({
               role: 'system' as const,
-              content: `CURRENT WEB SEARCH RESULTS (use this information to enhance your response):\n\n${searchResults}`
+              content: `CURRENT WEB SEARCH RESULTS for query "${currentUserMessage.content}" in ${localContext} (Categories: ${matchedCategories.join(', ')}):
+
+${searchResults}
+
+Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.`
             })
           } else {
             console.log('⚠️ Search results not added to context:', searchResults.substring(0, 100))

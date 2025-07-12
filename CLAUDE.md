@@ -292,3 +292,27 @@ No test framework currently implemented. When adding tests:
 - Test both frontend components and API endpoints
 - Verify file upload/processing workflows
 - Test mobile responsiveness and touch interactions
+
+## Web Search System (Tavily Integration)
+
+### Current Implementation ✅
+- **Smart Category Detection**: Automatic keyword-based triggering for 8 categories
+- **Hyper-Local Enhancement**: Zip code + location-specific query enhancement
+- **Categories Supported**:
+  - **Pricing/Competition**: Market rates and competitor analysis
+  - **Suppliers/Availability**: All suppliers (Home Depot, Lowe's, nurseries, etc.)
+  - **Regulations/Legal**: Permits, codes, and local restrictions
+  - **Weather**: Forecast data with landscaping impact analysis
+  - **Best/Top**: Local recommendations and rankings
+  - **Current/Time-Sensitive**: Latest trends and recent information
+- **Enhanced Query Logic**: Smart category-based query enhancement with local context
+- **Response Integration**: GPT receives search results with category metadata for structured responses
+
+### Future Optimization Options
+- **Confidence Threshold System**: Currently auto-triggers on keyword match. Could implement:
+  - 80%+ confidence: Auto-search (current behavior)
+  - 50-79% confidence: Ask user permission ("Want me to look up current pricing in your area?")
+  - <50% confidence: Use built-in knowledge only
+- **ML-Based Intent Recognition**: Replace keyword matching with learned query classification
+- **Search Result Quality Scoring**: Rate and filter Tavily results based on landscaping relevance
+- **User Search Preference Learning**: Track which search categories users find most valuable
