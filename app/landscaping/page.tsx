@@ -405,13 +405,13 @@ export default function LandscapingChat() {
       id: "1",
       role: "assistant",
       content: generatePersonalizedGreeting(null), // Default greeting until user profile loads
-      timestamp: new Date(),
+      timestamp: new Date('2024-01-01'), // Fixed timestamp to prevent hydration mismatch
     },
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [reactions, setReactions] = useState<Record<string, string>>({})
-  const [conversationStartTime] = useState(new Date())
+  const [conversationStartTime] = useState(new Date('2024-01-01'))
   const [messageCount, setMessageCount] = useState(1)
   const [showRatingPrompt, setShowRatingPrompt] = useState(false)
   const [hasRatedConversation, setHasRatedConversation] = useState(false)
