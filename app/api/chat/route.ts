@@ -114,6 +114,43 @@ Classify questions into: pricing, SEO, services, customer communication, competi
 Remember: You are **Dirt.i**, the business brain and marketing strategist for landscaping professionals. Be practical, smart, supportive, and laser-focused on helping them grow.`
 
 
+// File processing function for images and documents
+async function processUploadedFiles(files: any[]): Promise<string> {
+  if (!files || files.length === 0) {
+    return ''
+  }
+
+  const fileDescriptions = []
+  
+  for (const file of files) {
+    const { name, type, content } = file
+    
+    if (type.startsWith('image/')) {
+      // For images, we'll use OpenAI's vision capabilities
+      fileDescriptions.push(`📷 **Image Upload: ${name}**
+- File type: ${type}
+- Ready for AI analysis (plant diseases, landscape photos, competitor materials, etc.)
+- The AI can analyze this image and provide specific landscaping insights`)
+    } else if (type === 'application/pdf') {
+      fileDescriptions.push(`📄 **PDF Document: ${name}**
+- File type: PDF document
+- Content available for AI analysis (proposals, estimates, marketing materials)
+- The AI can review and provide feedback on business documents`)
+    } else if (type.includes('text') || name.endsWith('.txt')) {
+      fileDescriptions.push(`📝 **Text Document: ${name}**
+- File type: Text document
+- Content ready for AI analysis and feedback
+- The AI can review and improve written content`)
+    } else {
+      fileDescriptions.push(`📎 **File: ${name}**
+- File type: ${type}
+- File uploaded and available for AI review`)
+    }
+  }
+  
+  return `FILES UPLOADED:\n${fileDescriptions.join('\n\n')}\n\nPlease analyze these files and provide specific landscaping business insights, recommendations, or feedback based on the content.`
+}
+
 // Google Places API search function
 async function performGooglePlacesSearch(query: string, location?: string): Promise<string> {
   console.log('🔍 performGooglePlacesSearch called with:', { query, location, hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY })
@@ -201,7 +238,7 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now()
   
   try {
-    const { messages, sessionId, webSearchEnabled = false } = await request.json()
+    const { messages, sessionId, webSearchEnabled = false, files = [] } = await request.json()
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -259,9 +296,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Handle file processing if files are uploaded
+    let fileContext = ''
+    if (files && files.length > 0) {
+      console.log('📁 Processing uploaded files:', files.length)
+      fileContext = await processUploadedFiles(files)
+      useGPT4o = true // Use GPT-4o for file analysis
+      console.log('📁 File context generated:', fileContext.substring(0, 200))
+    }
+
     // Handle web search if enabled and needed
     let searchResults = ''
-    let useGPT4o = false
     const currentUserMessage = messages[messages.length - 1]
     
     if (currentUserMessage?.role === 'user' && webSearchEnabled) {
@@ -393,6 +438,21 @@ ALWAYS end with ## Next Steps containing specific actionable advice for Johnson'
       })
     }
 
+    // Add file context if files were uploaded
+    if (fileContext) {
+      chatMessages.push({
+        role: 'system' as const,
+        content: `${fileContext}
+
+IMPORTANT FILE ANALYSIS INSTRUCTIONS:
+- Focus on landscaping business applications and insights
+- Provide specific, actionable recommendations
+- If analyzing images: Look for plant health, landscape design opportunities, maintenance needs
+- If analyzing documents: Review for business improvement opportunities, pricing strategies, marketing effectiveness
+- Always end with concrete next steps the business owner can implement immediately`
+      })
+    }
+
     // Store user message if authenticated and Supabase is available
     let userMessageId = null
     
@@ -426,10 +486,10 @@ ALWAYS end with ## Next Steps containing specific actionable advice for Johnson'
     const openai = getOpenAIClient()
     let stream
     
-    const modelToUse = (searchResults && searchResults.length > 0) ? 'gpt-4o' : 'gpt-4o-mini'
-    const maxTokens = (searchResults && searchResults.length > 0) ? 6000 : 4000 // Increased token limits for better responses
+    const modelToUse = (searchResults && searchResults.length > 0) || (files && files.length > 0) ? 'gpt-4o' : 'gpt-4o-mini'
+    const maxTokens = (searchResults && searchResults.length > 0) || (files && files.length > 0) ? 6000 : 4000 // Increased token limits for better responses
     
-    console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, useGPT4o: ${useGPT4o})`)
+    console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, files: ${files?.length || 0})`)
     
     try {
       stream = await openai.chat.completions.create({

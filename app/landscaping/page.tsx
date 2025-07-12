@@ -728,6 +728,26 @@ export default function LandscapingChat() {
     setShowSidebar(false)
   }
 
+  // Convert files to base64 for API transmission
+  const convertFilesToBase64 = async (files: File[]): Promise<any[]> => {
+    const filePromises = files.map(async (file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onload = () => {
+          resolve({
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            content: reader.result
+          })
+        }
+        reader.readAsDataURL(file)
+      })
+    })
+    
+    return Promise.all(filePromises)
+  }
+
   // Copy message content to clipboard
   const handleCopyMessage = async (messageId: string, content: string) => {
     try {
@@ -816,8 +836,19 @@ export default function LandscapingChat() {
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
 
+    // Convert uploaded files to base64 for transmission
+    let filesToSend: any[] = []
+    if (uploadedFiles.length > 0) {
+      try {
+        filesToSend = await convertFilesToBase64(uploadedFiles)
+        console.log('📁 Converted files for transmission:', filesToSend.length)
+      } catch (error) {
+        console.error('Failed to process files:', error)
+      }
+    }
+
     // Determine which model will be used (matches backend logic)
-    const modelToUse = webSearchEnabled ? 'gpt-4o' : 'gpt-4o-mini'
+    const modelToUse = webSearchEnabled || uploadedFiles.length > 0 ? 'gpt-4o' : 'gpt-4o-mini'
     setCurrentModel(modelToUse)
 
     // Check if web search might be triggered
@@ -850,7 +881,8 @@ export default function LandscapingChat() {
             role: msg.role,
             content: msg.content
           })),
-          webSearchEnabled: webSearchEnabled
+          webSearchEnabled: webSearchEnabled,
+          files: filesToSend
         }),
         signal: controller.signal
       })
@@ -964,8 +996,9 @@ export default function LandscapingChat() {
         return newCount
       })
 
-      // Reset search indicator
+      // Reset search indicator and clear uploaded files
       setIsSearching(false)
+      setUploadedFiles([]) // Clear files after successful submission
 
     } catch (error) {
       console.error('Chat API Error:', error)
@@ -1582,6 +1615,20 @@ export default function LandscapingChat() {
                         </button>
                         <button
                           type="button"
+                          className="group p-2 rounded-lg transition-colors flex items-center gap-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 cursor-not-allowed relative"
+                          disabled={true}
+                          title="Website analysis coming soon! This will scan your website for SEO opportunities, content gaps, and local optimization improvements."
+                        >
+                          <div className="w-2 h-2 rounded-full bg-purple-400" />
+                          <span className="text-xs">
+                            Analyze Website
+                          </span>
+                          <div className="absolute -top-1 -right-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-medium">
+                            Soon
+                          </div>
+                        </button>
+                        <button
+                          type="button"
                           onClick={() => setShowHelpPanel(true)}
                           className="group p-2 hover:bg-emerald-500/10 rounded-lg transition-colors flex items-center gap-1"
                           disabled={isLoading}
@@ -1803,6 +1850,7 @@ export default function LandscapingChat() {
                     { q: "How to get better local SEO advice?", a: "Always mention your city, state, service areas, and target keywords. More location details = better recommendations." },
                     { q: "Can you write content?", a: "Yes! Blog posts, service pages, social media, emails, and Google My Business posts. Tell me your audience and services." },
                     { q: "Help with pricing?", a: "I provide value-based pricing strategies, service bundling, and customer communication scripts to raise prices without losing customers." },
+                    { q: "What's 'Analyze Website' about?", a: "🚀 COMING SOON: I'll scan your website for SEO gaps, content opportunities, local optimization issues, and conversion improvements. Perfect for finding quick wins to outrank competitors!" },
                   ].map((faq, index) => (
                     <details key={index} className="bg-white/5 rounded-lg border border-white/10">
                       <summary className="p-3 cursor-pointer text-white font-medium text-sm hover:text-emerald-400">
