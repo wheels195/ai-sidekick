@@ -396,7 +396,15 @@ Provide advice based on your training knowledge. Do not mention web search capab
         })
         
         try {
+          console.log('🔍 About to call performWebSearch with enhanced query:', enhancedQuery)
           searchResults = await performWebSearch(enhancedQuery, location)
+          console.log('🔍 performWebSearch returned:', { 
+            searchResults: searchResults.substring(0, 200), 
+            length: searchResults.length,
+            hasError: searchResults.includes('error'),
+            hasNotAvailable: searchResults.includes('not available'),
+            hasNotConfigured: searchResults.includes('not configured')
+          })
           
           // Add search results to the conversation context
           if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
@@ -410,10 +418,19 @@ ${searchResults}
 Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.`
             })
           } else {
-            console.log('⚠️ Search results not added to context:', searchResults.substring(0, 100))
+            console.log('⚠️ Search results not added to context. Reason:', {
+              hasError: searchResults.includes('error'),
+              hasNotAvailable: searchResults.includes('not available'), 
+              hasNotConfigured: searchResults.includes('not configured'),
+              searchResults: searchResults.substring(0, 200)
+            })
           }
         } catch (searchError) {
-          console.error('❌ Web search failed, continuing without search results:', searchError)
+          console.error('❌ Web search failed with exception:', searchError)
+          console.error('❌ Search error details:', {
+            message: searchError instanceof Error ? searchError.message : 'Unknown error',
+            stack: searchError instanceof Error ? searchError.stack : undefined
+          })
           // Continue without search results rather than crashing the entire API
         }
       }

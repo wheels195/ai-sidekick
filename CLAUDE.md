@@ -316,3 +316,12 @@ No test framework currently implemented. When adding tests:
 - **ML-Based Intent Recognition**: Replace keyword matching with learned query classification
 - **Search Result Quality Scoring**: Rate and filter Tavily results based on landscaping relevance
 - **User Search Preference Learning**: Track which search categories users find most valuable
+
+### Backup Search APIs (If Tavily Issues)
+- **Google Places API**: Better for local business searches with guaranteed contact details
+  - Provides: addresses, phone numbers, hours, ratings, photos
+  - Cost: ~$17 per 1000 Place Details requests
+  - Perfect for supplier/vendor queries
+- **Google Maps Places API**: Alternative with similar features
+- **Yelp Fusion API**: Good for business reviews and details
+- **Implementation**: Could use Google Places for supplier queries, keep Tavily for general searches
