@@ -359,7 +359,7 @@ Provide advice based on your training knowledge. Do not mention web search capab
         const localContext = zipCode || location
         
         if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
-          enhancedQuery += ` near ${localContext} landscaping supply nursery`
+          enhancedQuery += ` near ${localContext}`
         } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
           enhancedQuery += ` ${localContext} landscaping market rates pricing`
         } else if (matchedCategories.includes('regulations')) {
