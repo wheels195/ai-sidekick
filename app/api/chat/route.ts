@@ -333,24 +333,42 @@ export async function POST(request: NextRequest) {
 Use this context to provide more personalized and relevant advice.`
     }
 
-    if (webSearchEnabled) {
-      enhancedSystemPrompt += `\n\nWEB SEARCH STATUS: ENABLED
-You have access to current web information. Use the search capabilities as outlined in your instructions to provide up-to-date, location-specific information when appropriate.`
-      
-      // Add enhanced instructions for GPT-4o when using web search
-      if (useGPT4o) {
-        enhancedSystemPrompt += `\n\nENHANCED FORMATTING (GPT-4o Mode):
-- Use sophisticated visual hierarchy with icons and emojis for sections
-- Include detailed business intelligence: exact distances, pricing ranges, minimum orders
-- Add competitive analysis and recommendations tables when multiple suppliers found
-- Include local testimonials or reviews when available in search results
-- Provide specific actionable tips with measured calculations
-- Use professional formatting similar to premium business intelligence reports
-- Include both immediate suppliers AND alternative online options with pricing when relevant`
-      }
+    if (webSearchEnabled && searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
+      enhancedSystemPrompt += `\n\n🌐 WEB SEARCH STATUS: ✅ ACTIVE WITH LIVE DATA
+Current Google Places business data is attached in the next system message. This includes:
+- Verified business names, ratings, and review counts
+- Real phone numbers and addresses
+- Price levels ($ to $$$$) and business categories
+- Current operational status and website links
+
+IMPORTANT: Google Places data is provided in this exact format:
+BUSINESS 1: **Business Name**
+ADDRESS: Full address
+PHONE: Phone number
+RATING: X.X⭐ (XX reviews)
+PRICE_LEVEL: $ to $$$$
+WEBSITE: URL or "Website not available"
+SERVICES/TYPES: Business categories
+
+FOR COMPETITIVE ANALYSIS (questions about "top companies", "best landscapers", "competitors"):
+- Create professional table format with columns for Business Name, Rating, Reviews, Price, Phone, Services, Competitive Insight
+- Provide strategic market analysis: gaps, pricing opportunities, differentiation strategies
+- Use the VERIFIED data only - do not fabricate any information
+
+FOR STANDARD SEARCHES (suppliers, vendors, services):
+- Use green check mark (✅) format with verified contact information
+- Include all available data from the Google Places results
+- Never make up phone numbers, addresses, or other details`
+    } else if (webSearchEnabled) {
+      enhancedSystemPrompt += `\n\n🌐 WEB SEARCH STATUS: ⚠️ ENABLED BUT NO RESULTS
+Web search was attempted but no local businesses were found for this query. 
+Provide advice based on your landscaping expertise and training knowledge.
+Do not mention that a search was attempted.`
     } else {
-      enhancedSystemPrompt += `\n\nWEB SEARCH STATUS: DISABLED
-Provide advice based on your training knowledge. Do not mention web search capabilities.`
+      enhancedSystemPrompt += `\n\n🌐 WEB SEARCH STATUS: ❌ DISABLED
+You do not have access to current web information for this conversation.
+Provide advice based on your landscaping expertise and training knowledge only.
+Do not mention web search capabilities or suggest looking things up online.`
     }
 
     // Prepare messages with enhanced system prompt
