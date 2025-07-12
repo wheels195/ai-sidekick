@@ -533,10 +533,10 @@ CRITICAL FORMATTING REQUIREMENTS for business listings:
     const openai = getOpenAIClient()
     let stream
     
-    const modelToUse = useGPT4o ? 'gpt-4o' : 'gpt-4o-mini'
-    const maxTokens = useGPT4o ? 2000 : 1000 // Higher token limit for GPT-4o detailed responses
+    const modelToUse = (webSearchEnabled && searchResults) ? 'gpt-4o' : 'gpt-4o-mini'
+    const maxTokens = (webSearchEnabled && searchResults) ? 2000 : 1000 // Higher token limit for GPT-4o detailed responses
     
-    console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults})`)
+    console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, useGPT4o: ${useGPT4o})`)
     
     try {
       stream = await openai.chat.completions.create({
