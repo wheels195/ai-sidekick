@@ -428,16 +428,24 @@ If this appears to be competitor research (questions about "top companies", "bes
 
 ## Competitive Analysis: ${localContext}
 
-| Business Name | Rating | Reviews | Price | Phone | Key Services | Competitive Insight |
-|---------------|--------|---------|-------|-------|--------------|-------------------|
-| Company A | 4.8⭐ | 127 reviews | $$$ | (555) 123-4567 | Full service | High ratings, premium pricing - opportunity to undercut |
-| Company B | 4.2⭐ | 43 reviews | $$ | (555) 234-5678 | Basic lawn care | Limited services - upsell opportunity |
+| Business Name | Rating | Reviews | Price | Phone | Website | Key Services | Competitive Insight |
+|---------------|--------|---------|-------|-------|---------|--------------|-------------------|
+| Company A | 4.8⭐ | 127 | $$$ | (555) 123-4567 | company-a.com | Full service landscaping | High ratings, premium pricing - opportunity to undercut |
+| Company B | 4.2⭐ | 43 | $$ | (555) 234-5678 | company-b.com | Lawn care, tree trimming | Limited services - upsell opportunity |
 
-Then provide strategic insights:
-- **Market Gaps:** What services are missing or underserved?
-- **Pricing Opportunities:** Where can you compete on price or value?
-- **Service Differentiation:** How can you stand out?
-- **Quality Standards:** What level of service is expected?
+**IMPORTANT FORMATTING REQUIREMENTS:**
+- Use the exact RATING field with ⭐ symbol
+- Use PRICE_LEVEL field (show $ symbols if available, or "N/A" if price level unknown)
+- Include WEBSITE field (show domain only, remove https://, or "No website" if not available)
+- Use PHONE field exactly as provided
+- For Key Services: Extract specific landscaping services from SERVICES/TYPES and SUMMARY fields, avoid generic terms like "general contracting"
+- Reviews column should show just the number (without "reviews" text)
+
+Then provide detailed strategic insights with specific actionable advice:
+- **Market Gaps:** What specific landscaping services are missing or underserved?
+- **Pricing Opportunities:** Where can you compete on price or value based on the price levels shown?
+- **Service Differentiation:** How can you stand out from these specific competitors?
+- **Quality Standards:** What service quality is expected based on competitor ratings?
 
 If this is NOT competitor research, use the standard format:
 
@@ -448,7 +456,19 @@ If this is NOT competitor research, use the standard format:
 - Website: (from WEBSITE field or "Not available")
 - Services: (from SERVICES/TYPES field)
 
-ALWAYS end with ## Next Steps containing specific actionable advice for Johnson's Landscaping business growth.`
+**STRATEGIC ANALYSIS REQUIREMENTS:**
+After the table, provide a comprehensive competitive analysis with:
+
+### Strategic Insights for Johnson's Landscaping
+- **Market Gaps:** Identify 2-3 specific services missing from competitors
+- **Pricing Opportunities:** Analyze price points and suggest competitive positioning  
+- **Service Differentiation:** Recommend 3-4 ways to stand out from these competitors
+- **Quality Standards:** Set benchmarks based on competitor ratings and reviews
+
+### Actionable Recommendations
+Provide 4-6 specific, immediately actionable strategies Johnson's Landscaping can implement.
+
+ALWAYS end with ## Next Steps containing 3-4 specific actionable items for Johnson's Landscaping business growth.`
       })
     }
 
