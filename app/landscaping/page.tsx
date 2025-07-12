@@ -137,12 +137,34 @@ const convertMarkdownToHtml = (markdown: string): string => {
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       htmlLines.push(`<li class="text-white leading-relaxed mb-4">${text}</li>`)
     }
+    // Green check mark business listings
+    else if (line.startsWith('✅ ')) {
+      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      
+      let text = line.substring(2).trim() // Remove ✅ and space
+      // Handle bold text
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle markdown links [text](url)
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+      
+      htmlLines.push(`<div class="flex items-start space-x-3 mb-6 mt-6">
+        <span class="text-emerald-400 text-xl mt-1">✅</span>
+        <div class="flex-1">
+          <div class="text-white text-lg font-semibold mb-2">${text}</div>
+        </div>
+      </div>`)
+    }
     // Bullet lists
     else if (line.startsWith('- ') || line.startsWith('* ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (!inBulletList) {
-        htmlLines.push('<ul class="space-y-2 mb-4 ml-6 list-disc list-outside">')
+        // Check if previous line was a check mark business for better indentation
+        const wasCheckMarkBusiness = htmlLines.length > 0 && htmlLines[htmlLines.length - 1].includes('text-emerald-400')
+        const indentClass = wasCheckMarkBusiness ? 'ml-8' : 'ml-6'
+        htmlLines.push(`<ul class="space-y-2 mb-4 ${indentClass} list-disc list-outside">`)
         inBulletList = true
       }
       let text = line.substring(2)

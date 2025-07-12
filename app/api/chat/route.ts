@@ -428,18 +428,19 @@ Structure your response with local context like "Here's what I found locally in 
 
 CRITICAL FORMATTING REQUIREMENTS for business listings:
 
-1. MUST use this exact numbered format:
-   1. **Business Name**
+1. MUST use this exact green check mark format:
+   ✅ **Business Name**
    - Phone: (use VERIFIED_PHONE or write "Not available")
    - Address: (use VERIFIED_ADDRESS or write "Not available") 
    - Website: [Business Name](actual_URL)
    - Services: Description
 
 2. STRICT RULES:
+   - Start each business with green check mark: ✅ **Business Name**
    - NO placeholder text like "Visit their website" - use actual URLs or "Not available"
    - NO fake addresses like "Dallas, TX 75201" - use VERIFIED_ADDRESS or "Not available"
    - NO generic phone instructions - use VERIFIED_PHONE or "Not available"
-   - Each business must be numbered: 1., 2., 3. (not 1., 1., 1.)
+   - Each business gets a green check mark for visual separation
 
 3. End with "## Next Steps" containing specific landscaping business advice:
    - Pricing negotiation tips
