@@ -465,6 +465,8 @@ Provide advice based on your training knowledge. Do not mention web search capab
 
     // Add search results to context if available
     if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
+      // Use GPT-4o for web search queries to match ChatGPT quality
+      useGPT4o = true
       const localContext = userProfile?.zip_code || userProfile?.location || ''
       chatMessages.push({
         role: 'system' as const,
