@@ -150,7 +150,12 @@ const convertMarkdownToHtml = (markdown: string): string => {
       text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-      htmlLines.push(`<li class="text-white leading-relaxed mb-2">${text}</li>`)
+      
+      // Check if we're in Next Steps section for emerald color
+      const isInNextStepsSection = htmlLines.some(line => line.includes('Next Steps') || line.includes('next steps'))
+      const colorClass = isInNextStepsSection ? 'text-emerald-400' : 'text-white'
+      
+      htmlLines.push(`<li class="${colorClass} leading-relaxed mb-2">${text}</li>`)
     }
     // Regular paragraphs
     else {
@@ -167,10 +172,10 @@ const convertMarkdownToHtml = (markdown: string): string => {
       const lowerText = text.toLowerCase()
       const isQuestion = text.includes('?') && (lowerText.includes('what') || lowerText.includes('how') || lowerText.includes('which') || lowerText.includes('where') || lowerText.includes('when') || lowerText.includes('why') || lowerText.includes('would') || lowerText.includes('could') || lowerText.includes('should') || lowerText.includes('do you') || lowerText.includes('have you') || lowerText.includes('are you') || lowerText.includes('let me know') || lowerText.includes('need help') || lowerText.includes('looking for'))
       
-      // Check if previous line was a "Next Steps" or similar header
-      const isAfterNextSteps = htmlLines.length > 0 && htmlLines[htmlLines.length - 1].includes('Next Steps')
+      // Check if we're in a "Next Steps" section by looking for previous "Next Steps" header
+      const isInNextStepsSection = htmlLines.some(line => line.includes('Next Steps') || line.includes('next steps'))
       
-      if (isQuestion || isAfterNextSteps) {
+      if (isQuestion || (isInNextStepsSection && i > htmlLines.findIndex(line => line.includes('Next Steps')))) {
         htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
       } else {
         htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)

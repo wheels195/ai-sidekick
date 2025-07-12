@@ -175,21 +175,28 @@ async function performWebSearch(query: string, location?: string): Promise<strin
     if (results.results && results.results.length > 0) {
       console.log('🔍 Raw Tavily results sample:', JSON.stringify(results.results[0], null, 2))
       
-      // Format results for AI consumption with more detail
+      // Format results for AI consumption with strict validation
       const formattedResults = results.results
         .slice(0, 5) // Increase to top 5 results for better coverage
-        .map((result: any) => {
-          let formatted = `**${result.title}**\n`
+        .map((result: any, index: number) => {
+          let formatted = `BUSINESS ${index + 1}: **${result.title}**\n`
           formatted += `URL: ${result.url}\n`
           formatted += `Content: ${result.content}\n`
-          if (result.raw_content) {
-            // Try to extract phone, address, hours from raw content
-            const phoneMatch = result.raw_content.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
-            const addressMatch = result.raw_content.match(/\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln)[^,]*,?\s*[A-Za-z\s]+,?\s*[A-Z]{2}\s*\d{5}/);
-            
-            if (phoneMatch) formatted += `Phone: ${phoneMatch[1]}\n`
-            if (addressMatch) formatted += `Address: ${addressMatch[0]}\n`
-          }
+          
+          // Extract contact details from both content and raw_content
+          let phone = 'NOT AVAILABLE'
+          let address = 'NOT AVAILABLE'
+          
+          const searchText = `${result.content} ${result.raw_content || ''}`
+          const phoneMatch = searchText.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
+          const addressMatch = searchText.match(/\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln)[^,]*,?\s*[A-Za-z\s]+,?\s*[A-Z]{2}\s*\d{5}/);
+          
+          if (phoneMatch) phone = phoneMatch[1]
+          if (addressMatch) address = addressMatch[0]
+          
+          formatted += `VERIFIED_PHONE: ${phone}\n`
+          formatted += `VERIFIED_ADDRESS: ${address}\n`
+          
           return formatted
         })
         .join('\n---\n\n')
@@ -419,17 +426,26 @@ ${searchResults}
 
 Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.
 
-IMPORTANT FORMATTING for business listings:
-- ALWAYS use numbered list format: "1. **Business Name**" on its own line, then details as bullet points
-- Example format:
-  1. **Gerald's Landscape Management**
-  - Services: Description here
-  - Phone: 123-456-7890
-  2. **Soil Building Systems** 
-  - Services: Description here
-- Use markdown links [Business Website](URL) for clickable links
-- End with "## Next Steps" header followed by emerald follow-up questions
-- Keep responses complete and don't cut off mid-sentence`
+CRITICAL FORMATTING REQUIREMENTS for business listings:
+
+1. MUST use this exact numbered format:
+   1. **Business Name**
+   - Phone: (use VERIFIED_PHONE or write "Not available")
+   - Address: (use VERIFIED_ADDRESS or write "Not available") 
+   - Website: [Business Name](actual_URL)
+   - Services: Description
+
+2. STRICT RULES:
+   - NO placeholder text like "Visit their website" - use actual URLs or "Not available"
+   - NO fake addresses like "Dallas, TX 75201" - use VERIFIED_ADDRESS or "Not available"
+   - NO generic phone instructions - use VERIFIED_PHONE or "Not available"
+   - Each business must be numbered: 1., 2., 3. (not 1., 1., 1.)
+
+3. End with "## Next Steps" containing specific landscaping business advice:
+   - Pricing negotiation tips
+   - Relationship building strategies  
+   - Seasonal ordering advice
+   - Quality assessment questions`
             })
           } else {
             console.log('⚠️ Search results not added to context. Reason:', {
