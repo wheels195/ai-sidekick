@@ -323,35 +323,44 @@ export async function POST(request: NextRequest) {
     let useGPT4o = false
     const currentUserMessage = messages[messages.length - 1]
     
-    if (webSearchEnabled && currentUserMessage?.role === 'user') {
-      // Enhanced search trigger detection with smart query logic
-      const userQuery = currentUserMessage.content.toLowerCase()
+    if (currentUserMessage?.role === 'user') {
+      // Determine if we should search based on toggle state
+      let shouldSearch = false
+      let matchedCategories = []
       
-      // Smart search triggers categorized by query type
-      const highConfidenceTriggers = {
-        pricing: ['price', 'cost', 'charge', 'rate', 'what should i charge', 'how much', 'pricing'],
-        suppliers: ['supplier', 'vendor', 'near me', 'where to buy', 'store', 'nursery', 'equipment dealer'],
-        regulations: ['regulation', 'permit', 'law', 'legal', 'code', 'requirement', 'restriction'],
-        competition: ['competition', 'competitor', 'market rate', 'going rate', 'what others charge'],
-        current: ['current', 'latest', 'now', 'today', 'recent', 'this year', '2025'],
-        availability: ['available', 'in stock', 'find', 'source', 'buy'],
-        weather: ['weather', 'rain', 'temperature', 'forecast', 'climate', 'cold', 'heat', 'freeze'],
-        best_top: ['best', 'top', 'most popular', 'most effective', 'leading']
-      }
-      
-      // Check for high confidence triggers
-      const matchedCategories = []
-      for (const [category, triggers] of Object.entries(highConfidenceTriggers)) {
-        if (triggers.some(trigger => userQuery.includes(trigger))) {
-          matchedCategories.push(category)
+      if (webSearchEnabled) {
+        // Toggle ON: Always search automatically
+        shouldSearch = true
+        matchedCategories = ['user_requested']
+        console.log('🔍 Web search: Always searching (toggle ON)')
+      } else {
+        // Toggle OFF: Only search if specific triggers match
+        const userQuery = currentUserMessage.content.toLowerCase()
+        
+        const highConfidenceTriggers = {
+          pricing: ['price', 'cost', 'charge', 'rate', 'what should i charge', 'how much', 'pricing'],
+          suppliers: ['supplier', 'vendor', 'near me', 'where to buy', 'store', 'nursery', 'equipment dealer'],
+          regulations: ['regulation', 'permit', 'law', 'legal', 'code', 'requirement', 'restriction'],
+          competition: ['competition', 'competitor', 'market rate', 'going rate', 'what others charge'],
+          current: ['current', 'latest', 'now', 'today', 'recent', 'this year', '2025'],
+          availability: ['available', 'in stock', 'find', 'source', 'buy'],
+          weather: ['weather', 'rain', 'temperature', 'forecast', 'climate', 'cold', 'heat', 'freeze'],
+          best_top: ['best', 'top', 'most popular', 'most effective', 'leading']
         }
+        
+        for (const [category, triggers] of Object.entries(highConfidenceTriggers)) {
+          if (triggers.some(trigger => userQuery.includes(trigger))) {
+            matchedCategories.push(category)
+          }
+        }
+        
+        shouldSearch = matchedCategories.length > 0
+        console.log('🔍 Web search: Smart triggers', { matchedCategories, shouldSearch })
       }
-      
-      const shouldSearch = matchedCategories.length > 0
       
       console.log('🔍 Web search check:', { 
         webSearchEnabled, 
-        userQuery: userQuery.substring(0, 50), 
+        userQuery: currentUserMessage.content.substring(0, 50), 
         matchedCategories, 
         shouldSearch,
         userLocation: userProfile?.location,
@@ -533,8 +542,8 @@ CRITICAL FORMATTING REQUIREMENTS for business listings:
     const openai = getOpenAIClient()
     let stream
     
-    const modelToUse = (webSearchEnabled && searchResults) ? 'gpt-4o' : 'gpt-4o-mini'
-    const maxTokens = (webSearchEnabled && searchResults) ? 2000 : 1000 // Higher token limit for GPT-4o detailed responses
+    const modelToUse = (searchResults && searchResults.length > 0) ? 'gpt-4o' : 'gpt-4o-mini'
+    const maxTokens = (searchResults && searchResults.length > 0) ? 2000 : 1000 // Higher token limit for GPT-4o detailed responses
     
     console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, useGPT4o: ${useGPT4o})`)
     
