@@ -59,19 +59,21 @@ const EMOJI_REACTIONS = [
   { emoji: '😕', label: 'Confused - Not quite what I needed' }
 ]
 
-// Enhanced markdown-to-HTML converter with checklist support
+// Enhanced markdown-to-HTML converter with checklist support and table support
 const convertMarkdownToHtml = (markdown: string): string => {
   const lines = markdown.split('\n')
   const htmlLines = []
   let inNumberedList = false
   let inBulletList = false
   let inCheckList = false
+  let inTable = false
+  let tableHeaders: string[] = []
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim()
     
     if (line === '') {
-      // Close any open lists on empty lines
+      // Close any open lists and tables on empty lines
       if (inNumberedList) {
         htmlLines.push('</ol>')
         inNumberedList = false
@@ -84,27 +86,80 @@ const convertMarkdownToHtml = (markdown: string): string => {
         htmlLines.push('</ul>')
         inCheckList = false
       }
+      if (inTable) {
+        htmlLines.push('</tbody></table></div>')
+        inTable = false
+        tableHeaders = []
+      }
       htmlLines.push('<div class="mb-3"></div>')
       continue
     }
     
+    // Table detection and processing
+    if (line.startsWith('|') && line.endsWith('|')) {
+      const cells = line.split('|').slice(1, -1).map(cell => cell.trim())
+      
+      if (!inTable) {
+        // Start new table
+        if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+        if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+        if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+        
+        tableHeaders = cells
+        htmlLines.push('<div class="overflow-x-auto my-6">')
+        htmlLines.push('<table class="min-w-full bg-gray-800/50 border border-gray-600 rounded-lg">')
+        htmlLines.push('<thead class="bg-gray-700/50">')
+        htmlLines.push('<tr>')
+        
+        cells.forEach(header => {
+          htmlLines.push(`<th class="px-4 py-3 text-left text-emerald-400 font-semibold border-b border-gray-600">${header}</th>`)
+        })
+        
+        htmlLines.push('</tr>')
+        htmlLines.push('</thead>')
+        htmlLines.push('<tbody>')
+        inTable = true
+      } else {
+        // Skip separator line (contains dashes)
+        if (cells.every(cell => cell.match(/^[-:]+$/))) {
+          continue
+        }
+        
+        // Add table row
+        htmlLines.push('<tr class="border-b border-gray-700 hover:bg-gray-700/30">')
+        
+        cells.forEach((cell, index) => {
+          // Handle bold text in cells
+          let processedCell = cell.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+          // Handle links in cells
+          processedCell = processedCell.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+          
+          htmlLines.push(`<td class="px-4 py-3 text-white">${processedCell}</td>`)
+        })
+        
+        htmlLines.push('</tr>')
+      }
+    }
     // Headers
-    if (line.startsWith('### ')) {
+    else if (line.startsWith('### ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${line.substring(4)}</h3>`)
     }
     else if (line.startsWith('## ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${line.substring(3)}</h2>`)
     }
     else if (line.startsWith('# ')) {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       htmlLines.push(`<h1 class="text-2xl font-bold text-emerald-200 mt-6 mb-4">${line.substring(2)}</h1>`)
     }
     // Checklist items with emerald checkmarks
@@ -184,6 +239,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      // Don't close table here - let it continue across multiple lines
       let text = line
       // Handle bold text
       text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
@@ -205,10 +261,11 @@ const convertMarkdownToHtml = (markdown: string): string => {
     }
   }
   
-  // Close any remaining lists
+  // Close any remaining lists and tables
   if (inNumberedList) htmlLines.push('</ol>')
   if (inBulletList) htmlLines.push('</ul>')
   if (inCheckList) htmlLines.push('</ul>')
+  if (inTable) htmlLines.push('</tbody></table></div>')
   
   return htmlLines.join('\n')
 }
@@ -738,23 +795,10 @@ export default function LandscapingChat() {
 
     // Check if web search might be triggered
     if (webSearchEnabled) {
-      const userQuery = input.trim().toLowerCase()
-      const searchTriggers = [
-        'price', 'cost', 'charge', 'supplier', 'vendor', 'near me', 'local', 
-        'current', 'latest', 'now', 'today', 'regulation', 'permit', 'law',
-        'competition', 'competitor', 'market rate', 'going rate', 'best'
-      ]
-      const shouldSearch = searchTriggers.some(trigger => userQuery.includes(trigger))
-      console.log('🔍 Frontend search check:', { 
-        webSearchEnabled, 
-        userQuery: userQuery.substring(0, 50), 
-        triggers: searchTriggers.filter(t => userQuery.includes(t)),
-        shouldSearch 
-      })
-      if (shouldSearch) {
-        setIsSearching(true)
-        console.log('🔍 Setting isSearching to true')
-      }
+      // Simple logic: Toggle ON = always search (matches backend)
+      console.log('🔍 Frontend search check: Web search enabled - always searching')
+      setIsSearching(true)
+      console.log('🔍 Setting isSearching to true')
     }
 
     // ② Create assistant message placeholder for streaming
