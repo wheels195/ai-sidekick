@@ -400,8 +400,6 @@ export async function POST(request: NextRequest) {
             console.log('✅ Adding search results to context')
             // Use GPT-4o for web search queries to match ChatGPT quality
             useGPT4o = true
-            
-            // Store search context to add to messages later
           } else {
             console.log('⚠️ Search results not added to context. Reason:', {
               hasError: searchResults.includes('error'),
@@ -466,7 +464,7 @@ Provide advice based on your training knowledge. Do not mention web search capab
     const chatMessages = [systemMessage, ...messages]
 
     // Add search results to context if available
-    if (useGPT4o && searchResults && !searchResults.includes('error')) {
+    if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
       const localContext = userProfile?.zip_code || userProfile?.location || ''
       chatMessages.push({
         role: 'system' as const,
