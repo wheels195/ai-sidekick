@@ -236,7 +236,7 @@ const generatePersonalizedGreeting = (user: {
   yearsInBusiness: number,
   mainChallenges: string[]
 } | null): string => {
-  const baseGreeting = "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the <span style=\"color: #10b981;\">Tips</span> button below for guidance on getting the most detailed and actionable responses.\n\n"
+  const baseGreeting = "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the Tips button below for guidance on getting the most detailed and actionable responses.\n\n"
   
   if (!user) {
     return baseGreeting + "What can I help you with today?"
@@ -244,21 +244,22 @@ const generatePersonalizedGreeting = (user: {
 
   const { businessName, location, services, teamSize } = user
   
-  let personalizedContext = `I see you're **${businessName}**`
+  let personalizedContext = `I see you're ${businessName}`
   
   if (location) {
-    personalizedContext += ` located in **${location}**`
+    personalizedContext += ` located in ${location}`
   }
   
   if (teamSize && teamSize > 0) {
-    personalizedContext += ` with a **${teamSize}-person team**`
+    personalizedContext += ` with a ${teamSize}-person team`
   }
   
   if (services && services.length > 0) {
-    const serviceList = services.length > 3 
-      ? `${services.slice(0, 3).join(', ')} and ${services.length - 3} more services`
-      : services.join(', ')
-    personalizedContext += ` offering **${serviceList}**`
+    if (services.length <= 4) {
+      personalizedContext += ` offering ${services.join(', ')}`
+    } else {
+      personalizedContext += ` offering ${services.slice(0, 4).join(', ')}, and more`
+    }
   }
   
   personalizedContext += ". What can I help you with today?"
