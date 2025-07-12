@@ -275,6 +275,113 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Handle web search if enabled and needed
+    let searchResults = ''
+    let useGPT4o = false
+    const currentUserMessage = messages[messages.length - 1]
+    
+    if (webSearchEnabled && currentUserMessage?.role === 'user') {
+      // Enhanced search trigger detection with smart query logic
+      const userQuery = currentUserMessage.content.toLowerCase()
+      
+      // Smart search triggers categorized by query type
+      const highConfidenceTriggers = {
+        pricing: ['price', 'cost', 'charge', 'rate', 'what should i charge', 'how much', 'pricing'],
+        suppliers: ['supplier', 'vendor', 'near me', 'where to buy', 'store', 'nursery', 'equipment dealer'],
+        regulations: ['regulation', 'permit', 'law', 'legal', 'code', 'requirement', 'restriction'],
+        competition: ['competition', 'competitor', 'market rate', 'going rate', 'what others charge'],
+        current: ['current', 'latest', 'now', 'today', 'recent', 'this year', '2025'],
+        availability: ['available', 'in stock', 'find', 'source', 'buy'],
+        weather: ['weather', 'rain', 'temperature', 'forecast', 'climate', 'cold', 'heat', 'freeze'],
+        best_top: ['best', 'top', 'most popular', 'most effective', 'leading']
+      }
+      
+      // Check for high confidence triggers
+      const matchedCategories = []
+      for (const [category, triggers] of Object.entries(highConfidenceTriggers)) {
+        if (triggers.some(trigger => userQuery.includes(trigger))) {
+          matchedCategories.push(category)
+        }
+      }
+      
+      const shouldSearch = matchedCategories.length > 0
+      
+      console.log('🔍 Web search check:', { 
+        webSearchEnabled, 
+        userQuery: userQuery.substring(0, 50), 
+        matchedCategories, 
+        shouldSearch,
+        userLocation: userProfile?.location,
+        userZipCode: userProfile?.zip_code 
+      })
+      
+      if (shouldSearch) {
+        // Smart query enhancement based on detected categories and user context
+        let enhancedQuery = currentUserMessage.content
+        const location = userProfile?.location || ''
+        const zipCode = userProfile?.zip_code || ''
+        
+        // Enhance query based on category and add hyper-local context (zip code preferred)
+        const localContext = zipCode || location
+        
+        if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
+          enhancedQuery += ` near ${localContext} address phone hours pricing`
+        } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
+          enhancedQuery += ` ${localContext} landscaping market rates pricing cost`
+        } else if (matchedCategories.includes('regulations')) {
+          enhancedQuery += ` ${localContext} landscaping permits regulations lawn care rules requirements`
+        } else if (matchedCategories.includes('weather')) {
+          enhancedQuery += ` weather forecast for ${localContext} and landscaping impact today tomorrow`
+        } else if (matchedCategories.includes('best_top')) {
+          enhancedQuery += ` ${localContext} address phone hours pricing reviews`
+        } else {
+          enhancedQuery += ` ${localContext} landscaping lawn care`
+        }
+        
+        console.log('🔍 Triggering smart web search...', { 
+          originalQuery: currentUserMessage.content, 
+          enhancedQuery, 
+          categories: matchedCategories,
+          localContext 
+        })
+        
+        try {
+          console.log('🔍 About to call performWebSearch with enhanced query:', enhancedQuery)
+          searchResults = await performWebSearch(enhancedQuery, location)
+          console.log('🔍 performWebSearch returned:', { 
+            searchResults: searchResults.substring(0, 200), 
+            length: searchResults.length,
+            hasError: searchResults.includes('error'),
+            hasNotAvailable: searchResults.includes('not available'),
+            hasNotConfigured: searchResults.includes('not configured')
+          })
+          
+          // Add search results to the conversation context
+          if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
+            console.log('✅ Adding search results to context')
+            // Use GPT-4o for web search queries to match ChatGPT quality
+            useGPT4o = true
+            
+            // Store search context to add to messages later
+          } else {
+            console.log('⚠️ Search results not added to context. Reason:', {
+              hasError: searchResults.includes('error'),
+              hasNotAvailable: searchResults.includes('not available'), 
+              hasNotConfigured: searchResults.includes('not configured'),
+              searchResults: searchResults.substring(0, 200)
+            })
+          }
+        } catch (searchError) {
+          console.error('❌ Web search failed with exception:', searchError)
+          console.error('❌ Search error details:', {
+            message: searchError instanceof Error ? searchError.message : 'Unknown error',
+            stack: searchError instanceof Error ? searchError.stack : undefined
+          })
+          // Continue without search results rather than crashing the entire API
+        }
+      }
+    }
+
     // Enhance system prompt with user context and web search status
     let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
     
@@ -294,6 +401,18 @@ Use this context to provide more personalized and relevant advice.`
     if (webSearchEnabled) {
       enhancedSystemPrompt += `\n\nWEB SEARCH STATUS: ENABLED
 You have access to current web information. Use the search capabilities as outlined in your instructions to provide up-to-date, location-specific information when appropriate.`
+      
+      // Add enhanced instructions for GPT-4o when using web search
+      if (useGPT4o) {
+        enhancedSystemPrompt += `\n\nENHANCED FORMATTING (GPT-4o Mode):
+- Use sophisticated visual hierarchy with icons and emojis for sections
+- Include detailed business intelligence: exact distances, pricing ranges, minimum orders
+- Add competitive analysis and recommendations tables when multiple suppliers found
+- Include local testimonials or reviews when available in search results
+- Provide specific actionable tips with measured calculations
+- Use professional formatting similar to premium business intelligence reports
+- Include both immediate suppliers AND alternative online options with pricing when relevant`
+      }
     } else {
       enhancedSystemPrompt += `\n\nWEB SEARCH STATUS: DISABLED
 Provide advice based on your training knowledge. Do not mention web search capabilities.`
@@ -307,8 +426,42 @@ Provide advice based on your training knowledge. Do not mention web search capab
 
     const chatMessages = [systemMessage, ...messages]
 
+    // Add search results to context if available
+    if (useGPT4o && searchResults && !searchResults.includes('error')) {
+      const localContext = userProfile?.zip_code || userProfile?.location || ''
+      chatMessages.push({
+        role: 'system' as const,
+        content: `CURRENT WEB SEARCH RESULTS for query "${currentUserMessage.content}" in ${localContext}:
+
+${searchResults}
+
+Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.
+
+CRITICAL FORMATTING REQUIREMENTS for business listings:
+
+1. MUST use this exact green check mark format:
+   ✅ **Business Name**
+   - Phone: (use VERIFIED_PHONE or write "Not available")
+   - Address: (use VERIFIED_ADDRESS or write "Not available") 
+   - Website: [Business Name](actual_URL)
+   - Services: Description
+
+2. STRICT RULES:
+   - Start each business with green check mark: ✅ **Business Name**
+   - NO placeholder text like "Visit their website" - use actual URLs or "Not available"
+   - NO fake addresses like "Dallas, TX 75201" - use VERIFIED_ADDRESS or "Not available"
+   - NO generic phone instructions - use VERIFIED_PHONE or "Not available"
+   - Each business gets a green check mark for visual separation
+
+3. End with "## Next Steps" containing specific landscaping business advice:
+   - Pricing negotiation tips
+   - Relationship building strategies  
+   - Seasonal ordering advice
+   - Quality assessment questions`
+      })
+    }
+
     // Store user message if authenticated and Supabase is available
-    const currentUserMessage = messages[messages.length - 1]
     let userMessageId = null
     
     if (user && currentUserMessage?.role === 'user' && process.env.NEXT_PUBLIC_SUPABASE_URL) {
@@ -467,15 +620,20 @@ CRITICAL FORMATTING REQUIREMENTS for business listings:
       }
     }
 
-    // Call OpenAI API with streaming
+    // Call OpenAI API with streaming - use GPT-4o for web search, GPT-4o-mini for general advice
     const openai = getOpenAIClient()
     let stream
     
+    const modelToUse = useGPT4o ? 'gpt-4o' : 'gpt-4o-mini'
+    const maxTokens = useGPT4o ? 2000 : 1000 // Higher token limit for GPT-4o detailed responses
+    
+    console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults})`)
+    
     try {
       stream = await openai.chat.completions.create({
-        model: 'gpt-4o-mini', // Using gpt-4o-mini for cost efficiency
+        model: modelToUse,
         messages: chatMessages,
-        max_tokens: 1000,
+        max_tokens: maxTokens,
         temperature: 0.7,
         stream: true,
       })
