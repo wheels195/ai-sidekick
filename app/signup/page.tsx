@@ -16,6 +16,7 @@ export default function SignupPage() {
     businessName: '',
     city: '',
     state: '',
+    zipCode: '',
     trade: 'landscaping', // Pre-selected for landscaping trial
     selectedPlan: 'Free Trial', // Pre-selected for trial
     services: [] as string[],
@@ -128,6 +129,7 @@ export default function SignupPage() {
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
     if (!formData.city) newErrors.city = 'City is required'
     if (!formData.state) newErrors.state = 'State is required'
+    if (!formData.zipCode) newErrors.zipCode = 'Zip code is required'
     // Trade and plan are pre-selected for landscaping trial
 
     setErrors(newErrors)
@@ -154,6 +156,7 @@ export default function SignupPage() {
           businessProfile: {
             business_name: formData.businessName,
             location: `${formData.city}, ${formData.state}`,
+            zip_code: formData.zipCode,
             trade: formData.trade,
             services: formData.customService ? [...formData.services, formData.customService] : formData.services,
             team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
@@ -329,7 +332,7 @@ export default function SignupPage() {
                     <p className="text-gray-400 text-xs mt-1">Currently only offering landscaping trials</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <Input
                         type="text"
@@ -353,6 +356,18 @@ export default function SignupPage() {
                         disabled={isLoading}
                       />
                       {errors.state && <p className="text-red-400 text-sm mt-1">{errors.state}</p>}
+                    </div>
+                    <div>
+                      <Input
+                        type="text"
+                        name="zipCode"
+                        placeholder="ZIP Code *"
+                        value={formData.zipCode}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                        disabled={isLoading}
+                      />
+                      {errors.zipCode && <p className="text-red-400 text-sm mt-1">{errors.zipCode}</p>}
                     </div>
                   </div>
 

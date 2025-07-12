@@ -158,15 +158,11 @@ async function performWebSearch(query: string, location?: string): Promise<strin
     const { TavilyClient } = await import('tavily')
     const tavilyClient = new TavilyClient({ apiKey: process.env.TAVILY_API_KEY })
     
-    // Enhance query with location context for landscaping
-    const enhancedQuery = location 
-      ? `${query} ${location} landscaping lawn care`
-      : `${query} landscaping lawn care`
-    
-    console.log('🔍 Enhanced search query:', enhancedQuery)
+    // Query is already enhanced by smart search logic, use as-is
+    console.log('🔍 Using smart-enhanced search query:', query)
     
     const results = await tavilyClient.search({
-      query: enhancedQuery,
+      query: query,
       search_depth: "basic",
       max_results: 5,
       include_answer: true,
@@ -246,6 +242,7 @@ export async function POST(request: NextRequest) {
       userProfile = {
         business_name: "Johnson's Landscaping",
         location: 'Dallas, TX',
+        zip_code: '75201',
         trade: 'landscaping',
         services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
         team_size: 4,
@@ -320,31 +317,59 @@ Provide advice based on your training knowledge. Do not mention web search capab
     // Handle web search if enabled and needed
     let searchResults = ''
     if (webSearchEnabled && currentUserMessage?.role === 'user') {
-      // Simple search trigger detection - could be enhanced with ML later
+      // Enhanced search trigger detection with smart query logic
       const userQuery = currentUserMessage.content.toLowerCase()
-      const searchTriggers = [
-        'price', 'cost', 'charge', 'supplier', 'vendor', 'near me', 'local', 
-        'current', 'latest', 'now', 'today', 'regulation', 'permit', 'law',
-        'competition', 'competitor', 'market rate', 'going rate', 'best'
-      ]
       
-      const matchedTriggers = searchTriggers.filter(trigger => userQuery.includes(trigger))
-      const shouldSearch = matchedTriggers.length > 0
+      // Smart search triggers categorized by query type
+      const highConfidenceTriggers = {
+        pricing: ['price', 'cost', 'charge', 'rate', 'what should i charge', 'how much', 'pricing'],
+        suppliers: ['supplier', 'vendor', 'near me', 'where to buy', 'store', 'nursery', 'equipment dealer'],
+        regulations: ['regulation', 'permit', 'law', 'legal', 'code', 'requirement', 'restriction'],
+        competition: ['competition', 'competitor', 'market rate', 'going rate', 'what others charge'],
+        current: ['current', 'latest', 'now', 'today', 'recent', 'this year', '2025'],
+        availability: ['available', 'in stock', 'find', 'source', 'buy']
+      }
+      
+      // Check for high confidence triggers
+      const matchedCategories = []
+      for (const [category, triggers] of Object.entries(highConfidenceTriggers)) {
+        if (triggers.some(trigger => userQuery.includes(trigger))) {
+          matchedCategories.push(category)
+        }
+      }
+      
+      const shouldSearch = matchedCategories.length > 0
       
       console.log('🔍 Web search check:', { 
         webSearchEnabled, 
         userQuery: userQuery.substring(0, 50), 
-        matchedTriggers, 
+        matchedCategories, 
         shouldSearch,
-        userLocation: userProfile?.location 
+        userLocation: userProfile?.location,
+        userZipCode: userProfile?.zip_code 
       })
       
       if (shouldSearch) {
+        // Smart query enhancement based on detected categories and user context
+        let enhancedQuery = currentUserMessage.content
         const location = userProfile?.location || ''
-        console.log('🔍 Triggering web search...')
+        const zipCode = userProfile?.zip_code || ''
+        
+        // Enhance query based on category and add location context
+        if (matchedCategories.includes('suppliers') || matchedCategories.includes('availability')) {
+          enhancedQuery += ` near ${zipCode || location} landscaping supply nursery`
+        } else if (matchedCategories.includes('pricing') || matchedCategories.includes('competition')) {
+          enhancedQuery += ` ${location} landscaping market rates pricing`
+        } else if (matchedCategories.includes('regulations')) {
+          enhancedQuery += ` ${location} landscaping permits regulations lawn care rules`
+        } else {
+          enhancedQuery += ` ${location} landscaping lawn care`
+        }
+        
+        console.log('🔍 Triggering smart web search...', { originalQuery: currentUserMessage.content, enhancedQuery })
         
         try {
-          searchResults = await performWebSearch(currentUserMessage.content, location)
+          searchResults = await performWebSearch(enhancedQuery, location)
           
           // Add search results to the conversation context
           if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
