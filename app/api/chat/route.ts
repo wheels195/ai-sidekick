@@ -145,7 +145,7 @@ pricing, SEO, services, customer communication, competitor research, content wri
 
 Remember: you're not just answering questions. You are Dirt.i, the marketing and growth brain for a busy landscaping company that wants more local business — and they trust you to help them compete and grow.`
 
-// GPT-4o Query Optimizer for enhanced search queries
+// GPT-4o Query Optimizer for enhanced search queries  
 async function optimizeSearchQuery(
   userQuery: string, 
   categories: string[], 
@@ -154,69 +154,37 @@ async function optimizeSearchQuery(
 ): Promise<string> {
   if (!process.env.OPENAI_API_KEY) {
     console.log('❌ No OpenAI API key found for query optimization')
-    // Fallback to simple enhancement
     return `${userQuery} ${location} landscaping`
   }
 
   try {
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
-      timeout: 10000, // 10 seconds timeout for query optimization
+      timeout: 10000,
       maxRetries: 1,
     })
 
-    const optimizationPrompt = `You are a search query optimization expert. Transform the user's landscaping business question into the most effective web search query for finding local business information.
+    const systemPrompt = `You are a search query optimizer that rewrites user questions into short, highly specific search queries formatted for Google-style web search. Focus on the core topic (e.g., mulch, lawn care, grass seed), make it local (include ZIP or city), and include relevant modifiers like pricing, delivery, phone, reviews, or recommendations.`
+    
+    const userPrompt = `User: ${userQuery}\nLocation: ${location}\nProfile: ${userProfile?.business_name || "landscaping pro"}\nSearch Query:`
 
-USER CONTEXT:
-- Business: ${userProfile?.business_name || 'Landscaping business'}
-- Location: ${location}
-- Query Categories: ${categories.join(', ')}
-- Original Query: "${userQuery}"
-
-OPTIMIZATION RULES:
-1. Focus on getting specific business listings with contact details
-2. Include location (ZIP code preferred): ${location}
-3. For supplier queries: prioritize "address phone hours pricing delivery"
-4. For pricing queries: include "market rates cost pricing ${location}"
-5. For regulations: include "permits requirements regulations ${location}"
-6. Keep query concise but comprehensive
-7. Use business-oriented keywords that return actionable results
-8. Avoid generic terms, focus on specific local business information
-
-OUTPUT: Return ONLY the optimized search query, nothing else.
-
-Examples:
-- "Where can I buy mulch?" → "bulk mulch suppliers ${location} address phone delivery pricing"
-- "What should I charge for lawn care?" → "lawn care service rates pricing ${location} landscaping market rates"
-- "Best grass seed for hot weather?" → "grass seed varieties hot climate ${location} landscaping suppliers recommendations"
-
-Optimized query:`
-
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini', // Use mini for quick query optimization
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
       messages: [
-        {
-          role: 'system',
-          content: 'You are a search query optimization expert. Return only the optimized search query, no explanations or additional text.'
-        },
-        {
-          role: 'user', 
-          content: optimizationPrompt
-        }
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
       ],
-      max_tokens: 100,
-      temperature: 0.3,
+      temperature: 0.2,
+      max_tokens: 50,
     })
 
-    const optimizedQuery = completion.choices[0]?.message?.content?.trim() || userQuery
+    const optimizedQuery = response.choices[0]?.message?.content?.trim() || userQuery
     console.log('✅ Query optimized successfully')
     return optimizedQuery
 
   } catch (error) {
     console.error('❌ Query optimization failed:', error)
-    // Fallback to simple enhancement
-    const fallbackQuery = `${userQuery} ${location} landscaping business information`
-    return fallbackQuery
+    return `${userQuery} ${location} landscaping business information`
   }
 }
 
