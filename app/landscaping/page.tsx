@@ -851,17 +851,18 @@ export default function LandscapingChat() {
 
     // Convert uploaded files to base64 for transmission
     let filesToSend: any[] = []
-    if (uploadedFiles.length > 0) {
-      try {
-        filesToSend = await convertFilesToBase64(uploadedFiles)
-        console.log('📁 Converted files for transmission:', filesToSend.length)
-      } catch (error) {
-        console.error('Failed to process files:', error)
-      }
-    }
+    // Temporarily disable file processing to debug 500 error
+    // if (uploadedFiles.length > 0) {
+    //   try {
+    //     filesToSend = await convertFilesToBase64(uploadedFiles)
+    //     console.log('📁 Converted files for transmission:', filesToSend.length)
+    //   } catch (error) {
+    //     console.error('Failed to process files:', error)
+    //   }
+    // }
 
     // Determine which model will be used (matches backend logic)
-    const modelToUse = webSearchEnabled || uploadedFiles.length > 0 ? 'gpt-4o' : 'gpt-4o-mini'
+    const modelToUse = webSearchEnabled ? 'gpt-4o' : 'gpt-4o-mini'
     setCurrentModel(modelToUse)
 
     // Check if web search might be triggered
