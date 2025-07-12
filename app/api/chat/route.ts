@@ -408,6 +408,10 @@ Then provide SPECIFIC, ACTIONABLE competitive strategies based on common Dallas 
 
     const chatMessages = [systemMessage, ...messages]
 
+    // Check if we have valid search results and files
+    const hasSearchResults = searchResults && searchResults.length > 0 && !searchResults.includes('error') && !searchResults.includes('not available')
+    const hasFiles = files && files.length > 0
+
     // Add search results to context if available and valid
     if (hasSearchResults) {
       const localContext = userProfile?.zip_code || userProfile?.location || ''
@@ -495,8 +499,6 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
     const openai = getOpenAIClient()
     let stream
     
-    const hasSearchResults = searchResults && searchResults.length > 0 && !searchResults.includes('error') && !searchResults.includes('not available')
-    const hasFiles = files && files.length > 0
     const modelToUse = hasSearchResults || hasFiles ? 'gpt-4o' : 'gpt-4o-mini'
     const maxTokens = hasSearchResults || hasFiles ? 6000 : 4000 // Increased token limits for better responses
     
@@ -613,8 +615,6 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
     console.error('❌ Error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
-      webSearchEnabled,
-      filesLength: files?.length || 0,
       hasOpenAIKey: !!process.env.OPENAI_API_KEY,
       hasGooglePlacesKey: !!process.env.GOOGLE_PLACES_API_KEY
     })
