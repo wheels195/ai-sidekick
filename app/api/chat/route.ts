@@ -392,7 +392,7 @@ For this conversation, focus on general business strategy and expertise.
 
 "💡 **Want live competitor data?** Turn on **Web Search** in the chat controls below to get real ratings, reviews, phone numbers, and current business information for landscaping companies in your area. This will give you much more accurate competitive analysis!"
 
-Then provide general strategic advice about competitive research and differentiation.`;
+Then provide SPECIFIC, ACTIONABLE competitive strategies based on common Dallas landscaping market patterns. Use concrete examples, real pricing insights, and tactical advice. Avoid generic lists - give professional business intelligence.`;
     }
 
     // Prepare messages with enhanced system prompt

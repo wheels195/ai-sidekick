@@ -181,20 +181,20 @@ const convertMarkdownToHtml = (markdown: string): string => {
       htmlLines.push(`<li class="text-white leading-relaxed flex items-start">${checkmark}<span class="flex-1">${text}</span></li>`)
     }
     // Numbered lists
-    else if (/^\d+\.\s/.test(line)) {
+    else if (/^\d+\.\s+/.test(line)) {
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       if (!inNumberedList) {
-        htmlLines.push('<ol class="space-y-3 mb-4 ml-6" style="list-style-type: decimal; padding-left: 1rem;">')
+        htmlLines.push('<ol class="list-decimal list-outside space-y-2 mb-4 ml-6 pl-2">')
         inNumberedList = true
       }
-      let text = line.replace(/^\d+\.\s/, '')
+      let text = line.replace(/^\d+\.\s+/, '')
       // Handle bold text
       text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-      htmlLines.push(`<li class="text-white leading-relaxed" style="margin-bottom: 0.75rem;">${text}</li>`)
+      htmlLines.push(`<li class="text-white leading-relaxed mb-2">${text}</li>`)
     }
     // Green check mark business listings
     else if (line.startsWith('✅ ')) {
