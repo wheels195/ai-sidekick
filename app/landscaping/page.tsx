@@ -144,6 +144,13 @@ const convertMarkdownToHtml = (markdown: string): string => {
       }
     }
     // Headers
+    else if (line.startsWith('#### ')) {
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
+      if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
+      if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
+      if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
+      htmlLines.push(`<h4 class="text-base font-semibold text-emerald-300 mt-4 mb-2">${line.substring(5)}</h4>`)
+    }
     else if (line.startsWith('### ')) {
       if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
@@ -1493,7 +1500,7 @@ export default function LandscapingChat() {
                       
                       {/* Copy button and timestamp for user messages */}
                       {message.role === "user" && (
-                        <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center justify-end space-x-2 mt-2">
                           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <button
                               onClick={() => handleCopyMessage(message.id, message.content)}

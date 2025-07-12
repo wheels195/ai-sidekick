@@ -154,9 +154,10 @@ async function processUploadedFiles(files: any[]): Promise<string> {
 // Google Places API search function
 async function performGooglePlacesSearch(query: string, location?: string): Promise<string> {
   console.log('🔍 performGooglePlacesSearch called with:', { query, location, hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY })
+  console.log('🔍 API Key first 10 chars:', process.env.GOOGLE_PLACES_API_KEY?.substring(0, 10))
   
-  if (!process.env.GOOGLE_PLACES_API_KEY) {
-    console.log('❌ No Google Places API key found')
+  if (!process.env.GOOGLE_PLACES_API_KEY || process.env.GOOGLE_PLACES_API_KEY === 'your-google-places-api-key-here' || process.env.GOOGLE_PLACES_API_KEY === 'PLACEHOLDER_FOR_REAL_KEY') {
+    console.log('❌ No valid Google Places API key found')
     return "Business search is not available at the moment - API key not configured."
   }
 
