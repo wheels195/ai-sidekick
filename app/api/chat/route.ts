@@ -238,6 +238,21 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // If no authenticated user, use mock profile for testing
+    if (!userProfile) {
+      console.log('No authenticated user, using mock test profile for web search context')
+      userProfile = {
+        business_name: "Johnson's Landscaping",
+        location: 'Dallas, TX',
+        trade: 'landscaping',
+        services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
+        team_size: 4,
+        target_customers: 'residential homeowners',
+        years_in_business: 8,
+        main_challenges: ['finding new customers', 'pricing competition', 'seasonal cash flow']
+      }
+    }
+
     // Enhance system prompt with user context and web search status
     let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
     

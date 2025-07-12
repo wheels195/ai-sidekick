@@ -460,13 +460,54 @@ export default function LandscapingChat() {
             timestamp: new Date(),
           }])
         } else if (response.status === 401) {
-          // User not authenticated - for now, continue without auth (testing mode)
-          console.log('User not authenticated, continuing without user context')
-          // router.push('/login') // Disabled for testing
+          // User not authenticated - use mock test data for development
+          console.log('User not authenticated, loading mock test user for development')
+          
+          const mockUserProfile = {
+            email: 'test@johnsonlandscaping.com',
+            businessName: "Johnson's Landscaping",
+            location: 'Dallas, TX',
+            trade: 'landscaping',
+            services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
+            teamSize: 4,
+            targetCustomers: 'residential homeowners',
+            yearsInBusiness: 8,
+            mainChallenges: ['finding new customers', 'pricing competition', 'seasonal cash flow']
+          }
+          setUser(mockUserProfile)
+          
+          // Update initial message with personalized greeting using mock data
+          const personalizedGreeting = generatePersonalizedGreeting(mockUserProfile)
+          setMessages([{
+            id: "1",
+            role: "assistant",
+            content: personalizedGreeting,
+            timestamp: new Date(),
+          }])
         }
       } catch (error) {
         console.error('Failed to fetch user:', error)
-        // Don't redirect on network errors, just continue without user context
+        // Load mock user on network errors too for testing
+        const mockUserProfile = {
+          email: 'test@johnsonlandscaping.com',
+          businessName: "Johnson's Landscaping",
+          location: 'Dallas, TX',
+          trade: 'landscaping',
+          services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
+          teamSize: 4,
+          targetCustomers: 'residential homeowners',
+          yearsInBusiness: 8,
+          mainChallenges: ['finding new customers', 'pricing competition', 'seasonal cash flow']
+        }
+        setUser(mockUserProfile)
+        
+        const personalizedGreeting = generatePersonalizedGreeting(mockUserProfile)
+        setMessages([{
+          id: "1",
+          role: "assistant",
+          content: personalizedGreeting,
+          timestamp: new Date(),
+        }])
       }
     }
     fetchUser()
