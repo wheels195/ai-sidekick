@@ -78,7 +78,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     if (line === '') {
       // Close any open lists and tables on empty lines
       if (inNumberedList) {
-        htmlLines.push('</ol>')
+        htmlLines.push('</div>')
         inNumberedList = false
       }
       if (inBulletList) {
@@ -104,7 +104,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       
       if (!inTable) {
         // Start new table
-        if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+        if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
         if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
         if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
         
@@ -145,21 +145,21 @@ const convertMarkdownToHtml = (markdown: string): string => {
     }
     // Headers
     else if (line.startsWith('### ')) {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${line.substring(4)}</h3>`)
     }
     else if (line.startsWith('## ')) {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${line.substring(3)}</h2>`)
     }
     else if (line.startsWith('# ')) {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
@@ -167,7 +167,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     }
     // Checklist items with emerald checkmarks
     else if (line.match(/^[-*]\s*\[[ x]\]/)) {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (!inCheckList) {
         htmlLines.push('<ul class="space-y-2 mb-4 ml-2">')
@@ -186,19 +186,20 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       if (!inNumberedList) {
-        htmlLines.push('<ol class="list-decimal list-outside space-y-2 mb-4 ml-6 pl-2">')
+        htmlLines.push('<div class="space-y-3 mb-4">')
         inNumberedList = true
       }
+      const number = line.match(/^\d+/)[0]
       let text = line.replace(/^\d+\.\s+/, '')
-      // Handle bold text
-      text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle bold text with emerald color for titles
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-emerald-400">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-      htmlLines.push(`<li class="text-white leading-relaxed mb-2">${text}</li>`)
+      htmlLines.push(`<div class="flex items-start mb-3"><span class="text-emerald-400 font-semibold text-lg mr-2 mt-0.5">${number}.</span><div class="text-white leading-relaxed flex-1">${text}</div></div>`)
     }
     // Green check mark business listings
     else if (line.startsWith('✅ ')) {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       
@@ -217,7 +218,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     }
     // Bullet lists
     else if (line.startsWith('- ') || line.startsWith('* ')) {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
       if (!inBulletList) {
@@ -241,7 +242,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
     }
     // Regular paragraphs
     else {
-      if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+      if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       // Don't close table here - let it continue across multiple lines
@@ -259,7 +260,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       const isSectionHeader = text.endsWith(':') && text.length < 100
       if (isSectionHeader) {
         // Close any open lists before section headers
-        if (inNumberedList) { htmlLines.push('</ol>'); inNumberedList = false; }
+        if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
         if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
         if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       }
@@ -278,7 +279,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
   }
   
   // Close any remaining lists and tables
-  if (inNumberedList) htmlLines.push('</ol>')
+  if (inNumberedList) htmlLines.push('</div>')
   if (inBulletList) htmlLines.push('</ul>')
   if (inCheckList) htmlLines.push('</ul>')
   if (inTable) htmlLines.push('</tbody></table></div>')
@@ -426,6 +427,8 @@ export default function LandscapingChat() {
   const [isSearching, setIsSearching] = useState(false)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const [currentModel, setCurrentModel] = useState<string>('')
+  const [tokensUsedTrial, setTokensUsedTrial] = useState(0)
+  const [trialTokenLimit] = useState(250000) // 250k tokens total for 7-day trial
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -1005,6 +1008,10 @@ export default function LandscapingChat() {
         return updated
       })
 
+      // Track token usage (estimate: ~4 chars per token for English text)
+      const estimatedTokens = Math.ceil((input.length + assistantText.length) / 4)
+      setTokensUsedTrial(prev => prev + estimatedTokens)
+
       setMessageCount(prev => {
         const newCount = prev + 1
         // Show rating prompt after 6+ messages (3+ exchanges) and not already rated
@@ -1161,6 +1168,23 @@ export default function LandscapingChat() {
                   )}
                 </div>
               )}
+
+              {/* Token Usage Meter - Only for logged in users */}
+              {user && (
+                <div className="hidden md:flex items-center space-x-2 bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-3 py-2">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 bg-gray-700 rounded-full h-1.5 overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-300"
+                        style={{ width: `${Math.min((tokensUsedTrial / trialTokenLimit) * 100, 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-blue-300 text-xs font-medium min-w-fit">
+                      {(tokensUsedTrial / 1000).toFixed(0)}k / {(trialTokenLimit / 1000)}k
+                    </span>
+                  </div>
+                </div>
+              )}
               
               <div className="hidden md:flex items-center space-x-2 bg-emerald-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-4 py-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
@@ -1261,6 +1285,23 @@ export default function LandscapingChat() {
                     <p className="text-sm text-white font-medium">{user.businessName || 'Test User Business'}</p>
                     <p className="text-xs text-gray-400">{user.email || 'test@example.com'}</p>
                   </div>
+                  
+                  {/* Token Usage - Mobile */}
+                  <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-blue-300 text-sm font-medium">Trial Usage</span>
+                      <span className="text-blue-300 text-xs">
+                        {(tokensUsedTrial / 1000).toFixed(0)}k / {(trialTokenLimit / 1000)}k
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-300"
+                        style={{ width: `${Math.min((tokensUsedTrial / trialTokenLimit) * 100, 100)}%` }}
+                      />
+                    </div>
+                  </div>
+                  
                   <Button
                     variant="ghost"
                     className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0 w-full"
@@ -1443,16 +1484,6 @@ export default function LandscapingChat() {
                             </button>
                           </div>
                           <div className="flex items-center space-x-2">
-                            {/* Model Indicator */}
-                            {message.modelUsed && (
-                              <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                                message.modelUsed === 'gpt-4o' 
-                                  ? 'bg-purple-500/20 text-purple-300' 
-                                  : 'bg-blue-500/20 text-blue-300'
-                              }`}>
-                                {message.modelUsed === 'gpt-4o' ? '💪 GPT-4o' : '⚡ GPT-4o-mini'}
-                              </span>
-                            )}
                             <p className="text-xs text-gray-400">
                               {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                             </p>
