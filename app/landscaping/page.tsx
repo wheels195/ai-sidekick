@@ -127,7 +127,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (!inNumberedList) {
-        htmlLines.push('<ol class="space-y-4 mb-4 ml-6 list-decimal list-outside">')
+        htmlLines.push('<ol class="space-y-3 mb-4 ml-6" style="list-style-type: decimal; padding-left: 1rem;">')
         inNumberedList = true
       }
       let text = line.replace(/^\d+\.\s/, '')
@@ -135,7 +135,7 @@ const convertMarkdownToHtml = (markdown: string): string => {
       text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-      htmlLines.push(`<li class="text-white leading-relaxed mb-4">${text}</li>`)
+      htmlLines.push(`<li class="text-white leading-relaxed" style="margin-bottom: 0.75rem;">${text}</li>`)
     }
     // Green check mark business listings
     else if (line.startsWith('✅ ')) {
@@ -425,23 +425,26 @@ export default function LandscapingChat() {
   ])
 
   const scrollToBottom = () => {
-    const scrollContainer = document.querySelector('.messages-scroll-container')
-    if (scrollContainer) {
-      scrollContainer.scrollTop = scrollContainer.scrollHeight
-    } else {
-      messagesEndRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "nearest",
-      })
+    if (typeof document !== 'undefined') {
+      const scrollContainer = document.querySelector('.messages-scroll-container')
+      if (scrollContainer) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight
+      } else {
+        messagesEndRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "nearest",
+        })
+      }
     }
   }
 
   // Auto-resize textarea when input changes - smooth and responsive
   useEffect(() => {
-    const textarea = document.querySelector('textarea') as HTMLTextAreaElement
-    if (textarea && input) {
-      const maxHeight = window.innerWidth < 640 ? 120 : 150
+    if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+      const textarea = document.querySelector('textarea') as HTMLTextAreaElement
+      if (textarea && input) {
+        const maxHeight = window.innerWidth < 640 ? 120 : 150
       textarea.style.height = 'auto'
       const newHeight = Math.min(textarea.scrollHeight, maxHeight)
       textarea.style.height = newHeight + 'px'
@@ -454,20 +457,24 @@ export default function LandscapingChat() {
         textarea.style.overflowY = 'hidden'
         textarea.classList.remove('scrollbar-thin', 'scrollbar-track-transparent', 'scrollbar-thumb-emerald-500/20')
       }
+      }
     }
   }, [input])
 
   useEffect(() => {
-    // Scroll to top when page loads and detect mobile
-    window.scrollTo(0, 0)
-    setIsMobile(window.innerWidth < 640)
-    
-    const handleResize = () => {
+    // Only run on client side to prevent hydration issues
+    if (typeof window !== 'undefined') {
+      // Scroll to top when page loads and detect mobile
+      window.scrollTo(0, 0)
       setIsMobile(window.innerWidth < 640)
+      
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 640)
+      }
+      
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
     }
-    
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   useEffect(() => {
@@ -561,15 +568,17 @@ export default function LandscapingChat() {
 
   // Close user menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element
-      if (showUserMenu && !target.closest('.relative')) {
-        setShowUserMenu(false)
+    if (typeof document !== 'undefined') {
+      const handleClickOutside = (event: MouseEvent) => {
+        const target = event.target as Element
+        if (showUserMenu && !target.closest('.relative')) {
+          setShowUserMenu(false)
+        }
       }
+      
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
     }
-    
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [showUserMenu])
 
   // Auto-save conversation when messages change
