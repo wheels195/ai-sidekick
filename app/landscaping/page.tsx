@@ -1277,7 +1277,7 @@ export default function LandscapingChat() {
                           <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: "0.3s" }}></div>
                           <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: "0.6s" }}></div>
                         </div>
-                        <span className="text-sm text-blue-300 font-medium">🌐 Searching the web for current information...</span>
+                        <span className="text-sm text-blue-300 font-medium">🌐 Searching the web...</span>
                       </div>
                     </div>
                   </div>

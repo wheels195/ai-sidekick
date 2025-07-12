@@ -173,6 +173,8 @@ async function performWebSearch(query: string, location?: string): Promise<strin
     console.log('🔍 Tavily results:', { resultCount: results.results?.length, hasResults: !!results.results })
     
     if (results.results && results.results.length > 0) {
+      console.log('🔍 Raw Tavily results sample:', JSON.stringify(results.results[0], null, 2))
+      
       // Format results for AI consumption with more detail
       const formattedResults = results.results
         .slice(0, 5) // Increase to top 5 results for better coverage
@@ -192,7 +194,7 @@ async function performWebSearch(query: string, location?: string): Promise<strin
         })
         .join('\n---\n\n')
       
-      console.log('✅ Returning enhanced formatted results with business details')
+      console.log('✅ Returning enhanced formatted results with business details. Length:', formattedResults.length)
       return `Recent web search results with business details:\n\n${formattedResults}`
     }
     
