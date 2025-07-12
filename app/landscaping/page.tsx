@@ -691,8 +691,15 @@ export default function LandscapingChat() {
         'competition', 'competitor', 'market rate', 'going rate', 'best'
       ]
       const shouldSearch = searchTriggers.some(trigger => userQuery.includes(trigger))
+      console.log('🔍 Frontend search check:', { 
+        webSearchEnabled, 
+        userQuery: userQuery.substring(0, 50), 
+        triggers: searchTriggers.filter(t => userQuery.includes(t)),
+        shouldSearch 
+      })
       if (shouldSearch) {
         setIsSearching(true)
+        console.log('🔍 Setting isSearching to true')
       }
     }
 
