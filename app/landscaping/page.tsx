@@ -1451,11 +1451,26 @@ export default function LandscapingChat() {
                         </div>
                       )}
                       
-                      {/* Timestamp for user messages */}
+                      {/* Copy button and timestamp for user messages */}
                       {message.role === "user" && (
-                        <p className="text-xs text-gray-400 mt-2">
-                          {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        </p>
+                        <div className="flex items-center justify-between mt-2">
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <button
+                              onClick={() => handleCopyMessage(message.id, message.content)}
+                              title="Copy message"
+                              className="p-1 rounded-full hover:bg-white/10 transition-all duration-200 hover:scale-110"
+                            >
+                              {copiedMessageId === message.id ? (
+                                <Check className="w-4 h-4 text-emerald-400" />
+                              ) : (
+                                <Copy className="w-4 h-4 text-gray-400" />
+                              )}
+                            </button>
+                          </div>
+                          <p className="text-xs text-gray-400">
+                            {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          </p>
+                        </div>
                       )}
                     </div>
                   </div>
