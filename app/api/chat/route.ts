@@ -406,10 +406,8 @@ Then provide SPECIFIC, ACTIONABLE competitive strategies based on common Dallas 
 
     const chatMessages = [systemMessage, ...messages]
 
-    // Add search results to context if available
-    if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available') && !searchResults.includes('not configured')) {
-      // Use GPT-4o for web search queries to match ChatGPT quality
-      useGPT4o = true
+    // Add search results to context if available and valid
+    if (hasSearchResults) {
       const localContext = userProfile?.zip_code || userProfile?.location || ''
       chatMessages.push({
         role: 'system' as const,
@@ -495,8 +493,10 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
     const openai = getOpenAIClient()
     let stream
     
-    const modelToUse = (searchResults && searchResults.length > 0) || (files && files.length > 0) ? 'gpt-4o' : 'gpt-4o-mini'
-    const maxTokens = (searchResults && searchResults.length > 0) || (files && files.length > 0) ? 6000 : 4000 // Increased token limits for better responses
+    const hasSearchResults = searchResults && searchResults.length > 0 && !searchResults.includes('error') && !searchResults.includes('not available')
+    const hasFiles = files && files.length > 0
+    const modelToUse = hasSearchResults || hasFiles ? 'gpt-4o' : 'gpt-4o-mini'
+    const maxTokens = hasSearchResults || hasFiles ? 6000 : 4000 // Increased token limits for better responses
     
     console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, files: ${files?.length || 0})`)
     
