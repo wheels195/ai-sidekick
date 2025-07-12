@@ -163,9 +163,14 @@ const convertMarkdownToHtml = (markdown: string): string => {
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       
-      // Check if this is an ending question (contains ? and appears to be a question)
+      // Check if this is an ending question (contains ? and appears to be a question) OR follows a "Next Steps" header
       const lowerText = text.toLowerCase()
-      if (text.includes('?') && (lowerText.includes('what') || lowerText.includes('how') || lowerText.includes('which') || lowerText.includes('where') || lowerText.includes('when') || lowerText.includes('why') || lowerText.includes('would') || lowerText.includes('could') || lowerText.includes('should') || lowerText.includes('do you') || lowerText.includes('have you') || lowerText.includes('are you') || lowerText.includes('let me know') || lowerText.includes('need help') || lowerText.includes('looking for'))) {
+      const isQuestion = text.includes('?') && (lowerText.includes('what') || lowerText.includes('how') || lowerText.includes('which') || lowerText.includes('where') || lowerText.includes('when') || lowerText.includes('why') || lowerText.includes('would') || lowerText.includes('could') || lowerText.includes('should') || lowerText.includes('do you') || lowerText.includes('have you') || lowerText.includes('are you') || lowerText.includes('let me know') || lowerText.includes('need help') || lowerText.includes('looking for'))
+      
+      // Check if previous line was a "Next Steps" or similar header
+      const isAfterNextSteps = htmlLines.length > 0 && htmlLines[htmlLines.length - 1].includes('Next Steps')
+      
+      if (isQuestion || isAfterNextSteps) {
         htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
       } else {
         htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)

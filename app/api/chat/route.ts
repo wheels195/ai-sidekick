@@ -420,11 +420,15 @@ ${searchResults}
 Structure your response with local context like "Here's what I found locally in ${localContext}:" and reference the specific search categories when relevant.
 
 IMPORTANT FORMATTING for business listings:
-- Use numbered lists (1. **Business Name** 2. **Business Name**) for multiple businesses
-- Always bold business names with **Business Name**
+- ALWAYS use numbered list format: "1. **Business Name**" on its own line, then details as bullet points
+- Example format:
+  1. **Gerald's Landscape Management**
+  - Services: Description here
+  - Phone: 123-456-7890
+  2. **Soil Building Systems** 
+  - Services: Description here
 - Use markdown links [Business Website](URL) for clickable links
-- Include complete phone numbers and addresses when available
-- End with a follow-up question to encourage engagement
+- End with "## Next Steps" header followed by emerald follow-up questions
 - Keep responses complete and don't cut off mid-sentence`
             })
           } else {
