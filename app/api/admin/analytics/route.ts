@@ -7,10 +7,12 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function GET(request: NextRequest) {
   try {
-    // Simple admin auth - check for admin API key
-    const apiKey = request.headers.get('x-admin-key')
-    if (apiKey !== process.env.ADMIN_API_KEY && process.env.NODE_ENV === 'production') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    // Simple admin auth - check for admin API key in production only
+    if (process.env.NODE_ENV === 'production') {
+      const apiKey = request.headers.get('x-admin-key')
+      if (apiKey !== process.env.ADMIN_API_KEY) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
     }
 
     const now = new Date()
