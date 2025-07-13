@@ -544,7 +544,7 @@ Then provide strategic insights with emerald green numbered formatting:
 <span style="color: #34d399; font-weight: 600;">4. Quality Standards:</span> [Based on actual ratings/reviews]
 
 For competitive analysis tables, include these columns in this order:
-| Business Name | Phone | Location | Rating | Website | Services |
+| Business Name | Phone | Location | Rating | Website | Key Services |
 
 For non-competitive research, use the standard format:
 
@@ -553,7 +553,7 @@ For non-competitive research, use the standard format:
 - Location: (from ADDRESS field - show zip code or full address)
 - Rating: (from RATING field)
 - Website: (clickable HTML link with emerald styling or "Not available")
-- Services: (infer landscaping services from business name/context, ignore generic "general_contractor" labels)
+- Key Services: (infer landscaping services from business name/context, ignore generic "general_contractor" labels)
 
 **STRATEGIC ANALYSIS REQUIREMENTS:**
 After the table, provide a comprehensive competitive analysis with emerald green numbered formatting:
