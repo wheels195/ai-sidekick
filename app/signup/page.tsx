@@ -703,7 +703,7 @@ export default function SignupPage() {
                           key={customer}
                           className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all duration-300 ${
                             formData.targetCustomers.split(', ').filter(c => c).includes(customer)
-                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                              ? 'bg-blue-500/30 border-blue-500 text-blue-200 shadow-lg'
                               : 'bg-white/5 border-white/20 hover:bg-blue-500/10 hover:border-blue-500/30 text-gray-200 hover:text-blue-200'
                           }`}
                         >
@@ -716,7 +716,7 @@ export default function SignupPage() {
                           />
                           <span className={`text-sm font-medium ${
                             formData.targetCustomers.split(', ').filter(c => c).includes(customer)
-                              ? 'text-blue-300'
+                              ? 'text-blue-100 font-bold'
                               : ''
                           }`}>{customer}</span>
                         </label>
@@ -733,7 +733,7 @@ export default function SignupPage() {
                           key={goal}
                           className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all duration-300 ${
                             formData.mainChallenges.split(', ').filter(g => g).includes(goal)
-                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                              ? 'bg-blue-500/30 border-blue-500 text-blue-200 shadow-lg'
                               : 'bg-white/5 border-white/20 hover:bg-blue-500/10 hover:border-blue-500/30 text-gray-200 hover:text-blue-200'
                           }`}
                         >
@@ -746,7 +746,7 @@ export default function SignupPage() {
                           />
                           <span className={`text-sm ${
                             formData.mainChallenges.split(', ').filter(g => g).includes(goal)
-                              ? 'text-blue-300 font-medium'
+                              ? 'text-blue-100 font-bold'
                               : 'text-gray-200'
                           }`}>{goal}</span>
                         </label>
