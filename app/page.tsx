@@ -590,155 +590,179 @@ What specific services do you currently offer, and what challenges have you face
         <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-500 to-black bg-clip-text text-transparent">
-                Instant Competitive Intel. <span className="font-cursive">More Customers</span>. Smarter Pricing.
-              </span>
+              <span className="text-white">Instant Competitive Intel. </span>
+              <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">More Customers</span>
+              <span className="text-white">. Smarter Pricing.</span>
             </h2>
             <p className="text-xl xl:text-2xl text-gray-200 max-w-4xl mx-auto mb-12">
               Watch our AI analyze your local market and competitors in seconds, not hours
             </p>
           </div>
 
-          {/* Demo Interface */}
+          {/* Interactive Demo Interface */}
           <div className="max-w-6xl mx-auto">
-            {/* Pre-populated Question */}
-            <div className="mb-8">
-              <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-600/30 rounded-xl p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                    <span className="text-white text-sm font-semibold">You</span>
+            {!demoStarted ? (
+              /* Initial CTA State */
+              <div className="text-center mb-12">
+                <div className="mb-8">
+                  <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-600/30 rounded-xl p-6 max-w-2xl mx-auto">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                        <span className="text-white text-sm font-semibold">You</span>
+                      </div>
+                      <span className="text-gray-300 text-lg font-medium">Try asking:</span>
+                    </div>
+                    <p className="text-white text-lg sm:text-xl leading-relaxed pl-11">
+                      "Who are the top landscaping companies near me and how can I improve my rankings?"
+                    </p>
                   </div>
-                  <span className="text-gray-300 text-lg font-medium">Your Question:</span>
                 </div>
-                <p className="text-white text-lg sm:text-xl leading-relaxed pl-11">
-                  "Who are the top landscaping companies near me and how can I improve my rankings?"
-                </p>
+                
+                <Button 
+                  onClick={() => setDemoStarted(true)}
+                  size="lg"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 border-2 border-emerald-400/20 backdrop-blur-sm relative overflow-hidden group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <span className="relative flex items-center">
+                    <Sparkles className="w-6 h-6 mr-3 animate-pulse" />
+                    Watch AI Analysis in Action
+                    <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                </Button>
+                <p className="text-gray-400 text-sm mt-4">See how AI analyzes your competitors in seconds</p>
               </div>
-            </div>
+            ) : (
+              /* Interactive Chat Demo */
+              <div className="bg-gray-900/80 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 max-w-4xl mx-auto mb-12">
+                {/* Chat Header */}
+                <div className="flex items-center space-x-4 pb-6 border-b border-white/20 mb-6">
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                  </div>
+                  <span className="text-gray-200 font-medium">Landscape AI Sidekick</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span className="text-emerald-300 text-sm">Live Demo</span>
+                  </div>
+                </div>
 
-            {/* Demo CTA */}
-            <div className="text-center mb-12">
-              <Button 
-                onClick={() => setDemoStarted(true)}
-                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-lg px-8 py-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
-              >
-                See Demo
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </div>
+                {/* Chat Messages */}
+                <div className="space-y-6 max-h-96 overflow-y-auto">
+                  {/* User Message */}
+                  <div className="flex justify-end">
+                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-6 py-4 max-w-md shadow-lg">
+                      <p className="text-sm font-medium">
+                        Who are the top landscaping companies near me and how can I improve my rankings?
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* AI Response */}
+                  <div className="flex justify-start">
+                    <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-6 py-4 max-w-3xl border border-white/20 shadow-lg">
+                      <div className="space-y-3 text-sm leading-relaxed">
+                        <div 
+                          dangerouslySetInnerHTML={{ 
+                            __html: convertMarkdownToHtml(aiMessage || fullAiMessage) 
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Before/After Comparison */}
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-              {/* Before - Generic Google Search */}
+              {/* Before - Traditional Google Search */}
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-gray-300 text-center">Traditional Google Search</h3>
-                <div className="bg-gray-800/30 border border-gray-600/20 rounded-xl p-6 opacity-50">
-                  <div className="space-y-3">
-                    <div className="h-4 bg-gray-600 rounded animate-pulse"></div>
-                    <div className="h-3 bg-gray-700 rounded w-3/4 animate-pulse"></div>
-                    <div className="h-3 bg-gray-700 rounded w-1/2 animate-pulse"></div>
-                    <div className="mt-6 space-y-2">
-                      <div className="h-3 bg-gray-600 rounded animate-pulse"></div>
-                      <div className="h-3 bg-gray-700 rounded w-4/5 animate-pulse"></div>
+                <div className="bg-white/5 border border-gray-600/20 rounded-xl p-4 opacity-50">
+                  {/* Mock Google Search Interface */}
+                  <div className="bg-white rounded-lg p-4 space-y-4">
+                    {/* Google Search Header */}
+                    <div className="flex items-center space-x-4 pb-3 border-b border-gray-200">
+                      <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-red-500 rounded-sm"></div>
+                      <div className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-gray-500 text-sm">
+                        landscaping companies near me
+                      </div>
+                    </div>
+                    
+                    {/* Mock Search Results */}
+                    <div className="space-y-4 text-xs">
+                      <div className="space-y-1">
+                        <div className="text-blue-600 underline text-sm">Dallas Green Pros | Professional Landscaping Services</div>
+                        <div className="text-gray-600 text-xs">www.dallasgreenp ros.com</div>
+                        <div className="text-gray-700 text-xs">Professional landscaping services in Dallas. Call today for a free estimate on lawn care, tree trimming, and garden design...</div>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <div className="text-blue-600 underline text-sm">Lone Star Yard Services - Landscaping & Lawn Care</div>
+                        <div className="text-gray-600 text-xs">www.lonestaryard.com</div>
+                        <div className="text-gray-700 text-xs">Expert landscaping and lawn maintenance. Serving Dallas and surrounding areas for over 10 years...</div>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <div className="text-blue-600 underline text-sm">Trinity River Landscapes | Hardscaping Specialists</div>
+                        <div className="text-gray-600 text-xs">www.trinityriverlandscapes.com</div>
+                        <div className="text-gray-700 text-xs">Hardscaping and landscape design services. Patios, walkways, retaining walls, and more...</div>
+                      </div>
                     </div>
                   </div>
-                  <p className="text-center text-gray-500 mt-6 text-sm">Hours of manual research...</p>
+                  <p className="text-center text-gray-500 mt-4 text-sm">Hours of manual research to find basic contact info...</p>
                 </div>
               </div>
 
               {/* After - AI Analysis */}
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-emerald-300 text-center">AI Competitive Intelligence</h3>
-                {demoStarted ? (
-                  <div className="bg-emerald-900/10 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-6">
-                    {/* AI Response Header */}
-                    <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
-                        <span className="text-white text-sm font-semibold">AI</span>
+                <div className="bg-emerald-900/10 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-6">
+                  <div className="text-center space-y-6">
+                    <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto">
+                      <Sparkles className="w-8 h-8 text-white animate-pulse" />
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h4 className="text-xl font-semibold text-emerald-300">Instant Competitive Analysis</h4>
+                      <div className="space-y-3 text-white">
+                        <p className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                          <span>Complete competitor profiles with ratings & reviews</span>
+                        </p>
+                        <p className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                          <span>Market gaps and pricing opportunities</span>
+                        </p>
+                        <p className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                          <span>Actionable strategies to outrank competitors</span>
+                        </p>
+                        <p className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                          <span>All delivered in under 30 seconds</span>
+                        </p>
                       </div>
-                      <span className="text-emerald-300 text-lg font-medium">Dirt.i Analysis:</span>
                     </div>
 
-                    {/* AI Response Content */}
-                    <div className="space-y-6 text-white">
-                      <p className="text-lg">I can see you're in <span className="text-emerald-300 font-semibold">Dallas, TX 75201</span>. Here's your competitive landscape:</p>
-                      
-                      {/* Competitive Analysis Table */}
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b border-emerald-500/20">
-                              <th className="text-left py-2 text-emerald-300">Business Name</th>
-                              <th className="text-left py-2 text-emerald-300">Rating</th>
-                              <th className="text-left py-2 text-emerald-300">Reviews</th>
-                              <th className="text-left py-2 text-emerald-300">Key Services</th>
-                            </tr>
-                          </thead>
-                          <tbody className="space-y-2">
-                            <tr className="border-b border-gray-700/30">
-                              <td className="py-2 font-medium">Dallas Green Pro</td>
-                              <td className="py-2">4.8⭐</td>
-                              <td className="py-2">234</td>
-                              <td className="py-2">Lawn Care, Tree Trimming</td>
-                            </tr>
-                            <tr className="border-b border-gray-700/30">
-                              <td className="py-2 font-medium">Lone Star Yard Services</td>
-                              <td className="py-2">4.5⭐</td>
-                              <td className="py-2">156</td>
-                              <td className="py-2">Garden Design, Irrigation</td>
-                            </tr>
-                            <tr className="border-b border-gray-700/30">
-                              <td className="py-2 font-medium">Trinity River Landscapes</td>
-                              <td className="py-2">4.6⭐</td>
-                              <td className="py-2">89</td>
-                              <td className="py-2">Hardscaping, Maintenance</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* Strategic Insights */}
-                      <div className="space-y-4">
-                        <h4 className="text-lg font-semibold text-emerald-300">Strategic Insights:</h4>
-                        <div className="space-y-2">
-                          <p><span className="text-emerald-400 font-semibold">1. Market Gap:</span> No competitor offers comprehensive seasonal packages</p>
-                          <p><span className="text-emerald-400 font-semibold">2. Pricing Opportunity:</span> Premium services underrepresented in your area</p>
-                          <p><span className="text-emerald-400 font-semibold">3. Quality Standard:</span> Aim for 4.7+ rating to compete effectively</p>
-                        </div>
-                      </div>
-
-                      {/* Next Steps */}
-                      <div className="bg-emerald-900/20 rounded-lg p-4">
-                        <h4 className="text-emerald-300 font-semibold mb-2">Next Steps:</h4>
-                        <ul className="space-y-1 text-sm">
-                          <li>• Focus on seasonal maintenance packages</li>
-                          <li>• Optimize Google Business Profile for local SEO</li>
-                          <li>• Implement review generation strategy</li>
-                        </ul>
-                      </div>
-
-                      {/* Mock Data Disclaimer */}
-                      <p className="text-xs text-gray-500 italic text-center mt-4">
-                        *Mock data used for demo purposes
+                    <div className="bg-emerald-900/20 rounded-lg p-4">
+                      <p className="text-emerald-300 font-medium text-sm">
+                        ↑ See the live demo above to watch AI analysis in action
                       </p>
                     </div>
 
-                    {/* Final CTA */}
-                    <div className="text-center mt-8">
-                      <Button 
-                        onClick={() => window.location.href = '/signup?plan=free-trial'}
-                        className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-lg px-8 py-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
-                      >
-                        Start Using Your AI Sidekick Today
-                        <Sparkles className="ml-2 w-5 h-5" />
-                      </Button>
-                    </div>
+                    <Button 
+                      onClick={() => window.location.href = '/signup?plan=free-trial'}
+                      className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-lg px-8 py-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+                    >
+                      Get Your AI Sidekick
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
                   </div>
-                ) : (
-                  <div className="bg-gray-800/30 border border-gray-600/20 rounded-xl p-6 flex items-center justify-center h-96">
-                    <p className="text-gray-400 text-lg">Click "See Demo" to watch AI analysis in action</p>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
