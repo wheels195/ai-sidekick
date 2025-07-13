@@ -529,7 +529,7 @@ Create a table using ONLY the actual businesses from the Google Places data abov
 - Use ONLY verified business data from the Google Places results above
 - Extract RATING field with ⭐ symbol from the actual data
 - Use PRICE_LEVEL field from the data (show $ symbols or "N/A" if unknown)
-- Include WEBSITE field as clickable HTML links: `<a href="https://website.com" target="_blank" style="color: #34d399; text-decoration: underline;">website.com</a>`
+- Include WEBSITE field as clickable HTML links: <a href="https://website.com" target="_blank" style="color: #34d399; text-decoration: underline;">website.com</a>
 - Use PHONE field exactly as provided in the data
 - For Key Services: IGNORE generic terms like "general_contractor" - instead list specific landscaping services like "Lawn Care, Landscape Design, Tree Services, Irrigation, Hardscaping" based on the business name and context
 - Reviews column: show just the number from userRatingCount
