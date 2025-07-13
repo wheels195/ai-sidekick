@@ -446,7 +446,7 @@ What specific services do you currently offer, and what challenges have you face
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                How AI Sidekick Works
+                How <span className="font-cursive">AI Sidekick</span> Works
               </span>
             </h2>
             <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
@@ -591,7 +591,7 @@ What specific services do you currently offer, and what challenges have you face
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Our AI Sidekicks
+                Our <span className="font-cursive">AI Sidekicks</span>
               </span>
             </h2>
             <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
@@ -684,7 +684,7 @@ What specific services do you currently offer, and what challenges have you face
                 </div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-6">
                   <span className="bg-gradient-to-r from-red-500 to-gray-600 bg-clip-text text-transparent">
-                    More AI Sidekicks
+                    More <span className="font-cursive">AI Sidekicks</span>
                   </span>
                 </h2>
                 <p className="text-lg sm:text-xl xl:text-2xl 2xl:text-3xl text-gray-300 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
