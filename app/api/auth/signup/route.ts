@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
         selected_plan: selectedPlan || 'Free Trial',
         business_name: businessProfile?.business_name,
         location: businessProfile?.location,
+        zip_code: businessProfile?.zip_code,
         trade: businessProfile?.trade,
         services: businessProfile?.services || [],
         team_size: businessProfile?.team_size,

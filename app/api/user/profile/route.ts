@@ -76,16 +76,28 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    // Build update object with only provided fields
+    const updateData: any = {
+      updated_at: new Date().toISOString()
+    }
+
+    // Map frontend field names to database column names
+    if (profileData.businessName !== undefined) updateData.business_name = profileData.businessName
+    if (profileData.trade !== undefined) updateData.trade = profileData.trade
+    if (profileData.selectedPlan !== undefined) updateData.selected_plan = profileData.selectedPlan
+    if (profileData.location !== undefined) updateData.location = profileData.location
+    if (profileData.zipCode !== undefined) updateData.zip_code = profileData.zipCode
+    if (profileData.services !== undefined) updateData.services = profileData.services
+    if (profileData.teamSize !== undefined) updateData.team_size = profileData.teamSize
+    if (profileData.targetCustomers !== undefined) updateData.target_customers = profileData.targetCustomers
+    if (profileData.yearsInBusiness !== undefined) updateData.years_in_business = profileData.yearsInBusiness
+    if (profileData.mainChallenges !== undefined) updateData.main_challenges = profileData.mainChallenges
+
     const { data, error } = await supabase
       .from('user_profiles')
-      .update({
-        business_name: profileData.businessName,
-        trade: profileData.trade,
-        selected_plan: profileData.selectedPlan,
-        updated_at: new Date().toISOString()
-      })
+      .update(updateData)
       .eq('id', user.userId)
-      .select()
+      .select('id, email, business_name, trade, selected_plan, location, zip_code, services, team_size, target_customers, years_in_business, main_challenges')
       .single()
 
     if (error) {
@@ -102,7 +114,14 @@ export async function PUT(request: NextRequest) {
         email: data.email,
         businessName: data.business_name,
         trade: data.trade,
-        selectedPlan: data.selected_plan
+        selectedPlan: data.selected_plan,
+        location: data.location,
+        zipCode: data.zip_code,
+        services: data.services || [],
+        teamSize: data.team_size,
+        targetCustomers: data.target_customers,
+        yearsInBusiness: data.years_in_business,
+        mainChallenges: data.main_challenges || []
       },
       message: 'Profile updated successfully'
     })
