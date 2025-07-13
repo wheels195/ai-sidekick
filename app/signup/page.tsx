@@ -4,9 +4,102 @@ import React, { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Sparkles, ArrowLeft, Eye, EyeOff, CheckCircle, XCircle } from "lucide-react"
+import { Sparkles, ArrowLeft, Eye, EyeOff, CheckCircle, XCircle, ChevronDown, X } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+// Multi-Select Dropdown Component
+interface MultiSelectProps {
+  options: string[]
+  value: string[]
+  onChange: (value: string[]) => void
+  placeholder: string
+  disabled?: boolean
+}
+
+function MultiSelect({ options, value, onChange, placeholder, disabled }: MultiSelectProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (!target.closest('.multi-select-container')) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
+
+  const handleToggleOption = (option: string) => {
+    if (value.includes(option)) {
+      onChange(value.filter(v => v !== option))
+    } else {
+      onChange([...value, option])
+    }
+  }
+
+  const handleRemoveOption = (option: string) => {
+    onChange(value.filter(v => v !== option))
+  }
+
+  return (
+    <div className="relative multi-select-container">
+      <div
+        className="bg-white/5 border border-white/20 text-blue-200 focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300 rounded-md px-3 py-2 cursor-pointer flex items-center justify-between min-h-10"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+      >
+        <div className="flex flex-wrap gap-1 flex-1">
+          {value.length === 0 ? (
+            <span className="text-gray-400">{placeholder}</span>
+          ) : (
+            value.map((item) => (
+              <span
+                key={item}
+                className="bg-blue-500/20 text-blue-200 px-2 py-1 rounded text-xs flex items-center gap-1"
+              >
+                {item}
+                <X
+                  className="w-3 h-3 cursor-pointer hover:text-white"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleRemoveOption(item)
+                  }}
+                />
+              </span>
+            ))
+          )}
+        </div>
+        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </div>
+      
+      {isOpen && (
+        <div className="absolute z-50 w-full mt-1 bg-gray-800 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-y-auto">
+          {options.map((option) => (
+            <div
+              key={option}
+              className={`px-3 py-2 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                value.includes(option)
+                  ? 'bg-blue-700 text-blue-200'
+                  : 'text-white hover:bg-blue-700 hover:text-blue-200'
+              }`}
+              onClick={() => handleToggleOption(option)}
+            >
+              <span>{option}</span>
+              {value.includes(option) && (
+                <CheckCircle className="w-4 h-4 text-blue-200" />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -24,7 +117,7 @@ export default function SignupPage() {
     teamSize: '',
     targetCustomers: '',
     yearsInBusiness: '',
-    mainChallenges: ''
+    mainChallenges: [] as string[]
   })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -81,7 +174,7 @@ export default function SignupPage() {
           teamSize: user.teamSize?.toString() || '',
           targetCustomers: user.targetCustomers || '',
           yearsInBusiness: user.yearsInBusiness?.toString() || '',
-          mainChallenges: user.mainChallenges?.[0] || ''
+          mainChallenges: user.mainChallenges || []
         }))
         
         // Parse location into city/state if possible and add zip code
@@ -140,6 +233,14 @@ export default function SignupPage() {
         ? prev.services.filter(s => s !== service)
         : [...prev.services, service]
     }))
+  }
+
+  const handleServicesChange = (services: string[]) => {
+    setFormData(prev => ({ ...prev, services }))
+  }
+
+  const handleMainChallengesChange = (challenges: string[]) => {
+    setFormData(prev => ({ ...prev, mainChallenges: challenges }))
   }
 
 
@@ -274,7 +375,7 @@ export default function SignupPage() {
           team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
           years_in_business: formData.yearsInBusiness,
-          main_challenges: formData.mainChallenges ? [formData.mainChallenges] : []
+          main_challenges: formData.mainChallenges
         }
       } : {
         email: formData.email,
@@ -289,7 +390,7 @@ export default function SignupPage() {
           team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
           years_in_business: formData.yearsInBusiness,
-          main_challenges: formData.mainChallenges ? [formData.mainChallenges] : []
+          main_challenges: formData.mainChallenges
         }
       }
 
@@ -647,25 +748,14 @@ export default function SignupPage() {
                   {/* Services Selection */}
                   {formData.trade && (
                     <div>
-                      <p className="text-white text-sm mb-3">Services you offer (select all that apply):</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                        {getServicesForTrade().map((service) => (
-                          <label
-                            key={service}
-                            className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-white/5 border border-white/20 hover:bg-white/10 transition-all duration-300"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={formData.services.includes(service)}
-                              onChange={() => handleServiceToggle(service)}
-                              className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
-                              disabled={isLoading}
-                            />
-                            <span className="text-gray-200 text-sm">{service}</span>
-                          </label>
-                        ))}
-                      </div>
-                      
+                      <p className="text-white text-sm mb-2">Services you offer (select all that apply):</p>
+                      <MultiSelect
+                        options={getServicesForTrade()}
+                        value={formData.services}
+                        onChange={handleServicesChange}
+                        placeholder="Select your services"
+                        disabled={isLoading}
+                      />
                     </div>
                   )}
 
@@ -688,19 +778,14 @@ export default function SignupPage() {
 
                   {/* Business Goals */}
                   <div>
-                    <p className="text-white text-sm mb-2">Top business priority:</p>
-                    <Select onValueChange={(value) => handleSelectChange('mainChallenges', value)} value={formData.mainChallenges}>
-                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
-                        <SelectValue placeholder="Select your main business goal" className="text-blue-200" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-800 border-gray-600">
-                        {businessGoalsOptions.map((option) => (
-                          <SelectItem key={option} value={option} className="text-white hover:bg-blue-700 hover:text-blue-200 transition-all duration-300">
-                            {option}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <p className="text-white text-sm mb-2">Top business priorities (select all that apply):</p>
+                    <MultiSelect
+                      options={businessGoalsOptions}
+                      value={formData.mainChallenges}
+                      onChange={handleMainChallengesChange}
+                      placeholder="Select your business goals"
+                      disabled={isLoading}
+                    />
                   </div>
                 </div>
 
