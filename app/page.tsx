@@ -20,7 +20,6 @@ import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import SectionWithMockup from "@/components/ui/section-with-mockup"
 
 export default function LandingPage() {
   const [demoStep, setDemoStep] = useState(0)
@@ -29,7 +28,6 @@ export default function LandingPage() {
   const [isTyping, setIsTyping] = useState(false)
   const [demoStarted, setDemoStarted] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-
 
   const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
   
@@ -55,7 +53,6 @@ Charging more for your landscaping services can be a strategic move, especially 
 - Develop a content calendar for blog posts that educate potential customers
 
 What specific services do you currently offer, and what challenges have you faced in pricing your work?`
-
 
   useEffect(() => {
     const startDemo = () => {
@@ -118,7 +115,6 @@ What specific services do you currently offer, and what challenges have you face
       }
     }
   }, [demoStarted, fullUserMessage, fullAiMessage])
-
 
   // Convert markdown to HTML with emerald headings (similar to chat interface)
   const convertMarkdownToHtml = (markdown: string): string => {
@@ -589,54 +585,75 @@ What specific services do you currently offer, and what challenges have you face
         </div>
       </section>
 
-      {/* Advanced AI Features Section */}
-      {/* Real-Time Competitive Intelligence */}
-      <SectionWithMockup
-        title={
-          <>
-            <span className="text-white">Real-Time</span>{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
-              Competitive Intelligence
-            </span>
-          </>
-        }
-        description="Our AI instantly searches Google Places and analyzes your local competitors, providing ratings, reviews, pricing insights, and strategic market gaps in under 30 seconds. No more hours of manual research."
-        primaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDkwOTA5O3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTE2Yzc7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2JnKSIgcng9IjMyIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI4MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMTBiOTgxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+Q29tcGV0aXRvciBBbmFseXNpczwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iMTIwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzE5MTkxOSIgcng9IjEyIi8+CiAgPHRleHQgeD0iNjAiIHk9IjE1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiBmb250LXdlaWdodD0iYm9sZCI+RGFsbGFzIEdyZWVuIFBybyAtIDQuOOKXhDwvdGV4dD4KICA8dGV4dCB4PSI2MCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiNhYWFhYWEiPjIzNCByZXZpZXdzIOKAoiBMYXduIENhcmUsIFRyZWUgVHJpbW1pbmc8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjIwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMTBiOTgxIj4oMjE0KSA1NTUtMDEyMzwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iMjQwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzE5MTkxOSIgcng9IjEyIi8+CiAgPHRleHQgeD0iNjAiIHk9IjI3MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiBmb250LXdlaWdodD0iYm9sZCI+TG9uZSBTdGFyIFlhcmQgU2VydmljZXMgLSA0LjXilIQ8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjI5NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYWFhYWFhIj4xNTYgcmV2aWV3cyDigKIgR2FyZGVuIERlc2lnbiwgSXJyaWdhdGlvbjwvdGV4dD4KICA8dGV4dCB4PSI2MCIgeT0iMzIwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMxMGI5ODEiPigyMTQpIDU1NS0wNDU2PC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIzNjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMTkxOTE5IiByeD0iMTIiLz4KICA8dGV4dCB4PSI2MCIgeT0iMzkwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmZmZmYiIGZvbnQtd2VpZ2h0PSJib2xkIj5UcmluaXR5IFJpdmVyIExhbmRzY2FwZXMgLSA0LjbilIQ8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjQxNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYWFhYWFhIj44OSByZXZpZXdzIOKAoiBIYXJkc2NhcGluZywgTWFpbnRlbmFuY2U8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjQ0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMTBiOTgxIj4oMjE0KSA1NTUtMDc4OTwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjUwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMTBiOTgxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+QUkgSW5zaWdodDo8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI1MzAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TWFya2V0IEdhcDogU2Vhc29uYWwgUGFja2FnZXM8L3RleHQ+Cjwvc3ZnPg=="
-        secondaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDkwOTA5IiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjMwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNDQ0NDQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Hb29nbGUgUGxhY2VzPC90ZXh0Pgo8L3N2Zz4="
-        reverseLayout={false}
-      />
+      {/* Competitive Intelligence Section */}
+      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
+        <div className="max-w-7xl mx-auto relative">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-4 sm:mb-6">
+              <span className="text-white">Real-Time</span>{" "}
+              <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
+                Competitive Intelligence
+              </span>
+            </h2>
+            <p className="text-xl xl:text-2xl text-gray-200 max-w-4xl mx-auto mb-12">
+              Our AI instantly searches Google Places and analyzes your local competitors, providing ratings, reviews, pricing insights, and strategic market gaps in under 30 seconds.
+            </p>
+          </div>
 
-      {/* AI-Powered Website Analysis */}
-      <SectionWithMockup
-        title={
-          <>
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent font-cursive">
-              AI-Powered
-            </span>{" "}
-            <span className="text-white">Website Analysis</span>
-          </>
-        }
-        description="Coming soon: Upload competitor websites and get instant analysis of their marketing strategies, pricing models, service offerings, and SEO tactics to stay ahead of the competition."
-        primaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzA5MDkwOTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjM2NmYxO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNiZzIpIiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2MzY2ZjEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5XZWJzaXRlIEFuYWx5c2lzPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIxMjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iODAiIGZpbGw9IiMxOTE5MTkiIHJ4PSIxMiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5TRU8gQW5hbHlzaXM8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSIxNzUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzYzNjZmMSI+U2NvcmU6IDg1LzEwMDwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iMjIwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMTkxOTE5IiByeD0iMTIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+UHJpY2luZyBTdHJhdGVneTwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjI3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjM2NmYxIj5QcmVtaXVtIFBvc2l0aW9uaW5nPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIzMjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iODAiIGZpbGw9IiMxOTE5MTkiIHJ4PSIxMiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iMzUwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5Db250ZW50IEFuYWx5c2lzPC90ZXh0PgogIDx0ZXh0IHg9IjUwJSIgeT0iMzc1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2MzY2ZjEiPjE1IFNlcnZpY2UgUGFnZXM8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI0NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzYzNjZmMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4="
-        secondaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDkwOTA5IiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjMwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNDQ0NDQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5XZWJzaXRlPC90ZXh0Pgo8L3N2Zz4="
-        reverseLayout={true}
-      />
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
+            {/* Before - Traditional Research */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold text-gray-300 text-center">Traditional Method</h3>
+              <div className="bg-gray-800/30 border border-gray-600/20 rounded-xl p-6 opacity-60">
+                <div className="space-y-4 text-gray-400">
+                  <p>• Hours of manual Google searches</p>
+                  <p>• Incomplete competitor information</p>
+                  <p>• No strategic insights</p>
+                  <p>• Time-consuming research process</p>
+                </div>
+                <p className="text-center text-gray-500 mt-6 text-sm italic">Takes hours... if you even remember to do it</p>
+              </div>
+            </div>
 
-      {/* Hyper-Local Market Intelligence */}
-      <SectionWithMockup
-        title={
-          <>
-            <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent font-cursive">
-              Hyper-Local
-            </span>{" "}
-            <span className="text-white">Market Intelligence</span>
-          </>
-        }
-        description="Get detailed market analysis within a 5-mile radius of your business location. Discover pricing opportunities, service gaps, and competitive positioning strategies tailored to your exact market."
-        primaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzA5MDkwOTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZjk3MzE2O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNiZzMpIiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmOTczMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5NYXJrZXQgSW50ZWxsaWdlbmNlPC90ZXh0PgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y5NzMxNiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtZGFzaGFycmF5PSI1LDUiLz4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjUiIGZpbGw9IiNmOTczMTYiLz4KICA8dGV4dCB4PSIyMDAiIHk9IjIxNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Zb3UgSGVyZTwvdGV4dD4KICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIxNjAiIHI9IjMiIGZpbGw9IiMxMGI5ODEiLz4KICA8dGV4dCB4PSIxNDAiIHk9IjE0NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMTBiOTgxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Db21wZXRpdG9yPC90ZXh0PgogIDxjaXJjbGUgY3g9IjI2MCIgY3k9IjE4MCIgcj0iMyIgZmlsbD0iIzEwYjk4MSIvPgogIDx0ZXh0IHg9IjI2MCIgeT0iMTY1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMxMGI5ODEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNvbXBldGl0b3I8L3RleHQ+CiAgPGNpcmNsZSBjeD0iMTgwIiBjeT0iMjQwIiByPSIzIiBmaWxsPSIjMTBiOTgxIi8+CiAgPHRleHQgeD0iMTgwIiB5PSIyNTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzEwYjk4MSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q29tcGV0aXRvcjwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjM1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+NS1NaWxlIFJhZGl1cyBBbmFseXNpczwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjM4MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZjk3MzE2Ij7igKIgMTIgQ29tcGV0aXRvcnMgRm91bmQ8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2Y5NzMxNiI+4oCiIEF2ZyBSYXRpbmc6IDQuNDwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjQyMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZjk3MzE2Ij7igKIgTWFya2V0IEdhcDogTGFuZHNjYXBpbmc8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI0ODAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2Y5NzMxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPkxvY2FsIE9wcG9ydHVuaXRpZXM8L3RleHQ+Cjwvc3ZnPg=="
-        secondaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDkwOTA5IiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjMwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNDQ0NDQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5NYXJrZXQgRGF0YTwvdGV4dD4KPC9zdmc+">
-        reverseLayout={false}
-      />
+            {/* After - AI Intelligence */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold text-emerald-300 text-center">AI Competitive Intelligence</h3>
+              <div className="bg-emerald-900/10 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-6">
+                <div className="space-y-4 text-white">
+                  <p className="flex items-center space-x-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-400" />
+                    <span>Complete competitor profiles with ratings & reviews</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-400" />
+                    <span>Market gaps and pricing opportunities</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-400" />
+                    <span>Actionable strategies to outrank competitors</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-400" />
+                    <span>All delivered in under 30 seconds</span>
+                  </p>
+                </div>
+                <p className="text-center text-emerald-300 mt-6 text-sm font-medium">See it in action in the demo above!</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Button 
+              onClick={() => window.location.href = '/signup?plan=free-trial'}
+              size="lg"
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+            >
+              Start Your Free Trial
+              <ArrowRight className="ml-3 w-6 h-6" />
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* Products Section - AI Sidekicks */}
       <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
