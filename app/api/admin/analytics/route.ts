@@ -57,20 +57,20 @@ export async function GET(request: NextRequest) {
     const conversionRate = totalTrialSignups > 0 ? (totalConversions / totalTrialSignups * 100) : 0
 
     // Conversions by time period
-    const todayConversions = conversions?.filter(c => 
+    const todayConversions = conversions?.filter(c =>
       new Date(c.converted_at) >= today
     ).length || 0
 
-    const weekConversions = conversions?.filter(c => 
+    const weekConversions = conversions?.filter(c =>
       new Date(c.converted_at) >= weekAgo
     ).length || 0
 
-    const monthConversions = conversions?.filter(c => 
+    const monthConversions = conversions?.filter(c =>
       new Date(c.converted_at) >= monthAgo
     ).length || 0
 
     // Average metrics
-    const avgTokensUsed = conversions?.length > 0 
+    const avgTokensUsed = conversions?.length > 0
       ? Math.round(conversions.reduce((sum, c) => sum + (c.trial_tokens_used || 0), 0) / conversions.length)
       : 0
 
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       generatedAt: now.toISOString(),
-      
+
       // Key metrics for market testing
       overview: {
         totalConversions,

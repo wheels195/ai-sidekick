@@ -382,35 +382,24 @@ curl -H "x-admin-key: your-admin-key" https://your-domain.com/api/admin/analytic
 - **After optimization**: ~2,200 tokens per message (75% reduction)
 - **Smart model switching**: Use expensive GPT-4o only when needed
 
-## Web Search System (Tavily Integration)
+## Google Places Web Search System
 
 ### Current Implementation ✅
-- **Smart Category Detection**: Automatic keyword-based triggering for 8 categories
-- **Hyper-Local Enhancement**: Zip code + location-specific query enhancement
-- **Categories Supported**:
-  - **Pricing/Competition**: Market rates and competitor analysis
-  - **Suppliers/Availability**: All suppliers (Home Depot, Lowe's, nurseries, etc.)
-  - **Regulations/Legal**: Permits, codes, and local restrictions
-  - **Weather**: Forecast data with landscaping impact analysis
-  - **Best/Top**: Local recommendations and rankings
-  - **Current/Time-Sensitive**: Latest trends and recent information
-- **Enhanced Query Logic**: Smart category-based query enhancement with local context
-- **Response Integration**: GPT receives search results with category metadata for structured responses
+- **Google Places API Integration**: Real-time competitor and vendor data
+- **Local Business Intelligence**: 
+  - Competitor analysis with ratings, reviews, pricing levels
+  - Supplier/vendor lookup with contact details
+  - Local market insights for landscaping businesses
+- **Smart Query Enhancement**: Location-based search with user's ZIP code
+- **Professional Data Formatting**: Structured competitive analysis tables
+- **Toggle Control**: Users can enable/disable web search per conversation
 
-### Future Optimization Options
-- **Confidence Threshold System**: Currently auto-triggers on keyword match. Could implement:
-  - 80%+ confidence: Auto-search (current behavior)
-  - 50-79% confidence: Ask user permission ("Want me to look up current pricing in your area?")
-  - <50% confidence: Use built-in knowledge only
-- **ML-Based Intent Recognition**: Replace keyword matching with learned query classification
-- **Search Result Quality Scoring**: Rate and filter Tavily results based on landscaping relevance
-- **User Search Preference Learning**: Track which search categories users find most valuable
+### Search Capabilities ✅
+- **Competitor Research**: "Top landscaping companies in Dallas" → Real business listings
+- **Vendor Lookup**: "Nurseries near me" → Contact info and hours  
+- **Market Analysis**: Pricing levels, service gaps, competitive opportunities
+- **Local Context**: All results tailored to user's business location
 
-### Backup Search APIs (If Tavily Issues)
-- **Google Places API**: Better for local business searches with guaranteed contact details
-  - Provides: addresses, phone numbers, hours, ratings, photos
-  - Cost: ~$17 per 1000 Place Details requests
-  - Perfect for supplier/vendor queries
-- **Google Maps Places API**: Alternative with similar features
-- **Yelp Fusion API**: Good for business reviews and details
-- **Implementation**: Could use Google Places for supplier queries, keep Tavily for general searches
+### Cost Optimization ✅
+- **Smart Model Selection**: Uses GPT-4o only for web search results analysis
+- **Efficient API Usage**: Single search per user query, cached during conversation

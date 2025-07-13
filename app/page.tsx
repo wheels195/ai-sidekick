@@ -615,7 +615,11 @@ What specific services do you currently offer, and what challenges have you face
                   <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-110">
                     <span className="text-3xl">🌿</span>
                   </div>
-                  <h3 className="text-4xl font-semibold text-white mb-4">Landscaping AI Sidekick</h3>
+                  <h3 className="text-4xl font-semibold mb-4">
+                    <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
+                      Landscape AI Sidekick
+                    </span>
+                  </h3>
                   <p className="text-xl text-gray-200 mb-8">
                     Your expert partner for growing your landscaping business
                   </p>

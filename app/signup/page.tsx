@@ -701,7 +701,11 @@ export default function SignupPage() {
                       {targetCustomerOptions.map((customer) => (
                         <label
                           key={customer}
-                          className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-white/5 border border-white/20 hover:bg-white/10 transition-all duration-300"
+                          className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all duration-300 ${
+                            formData.targetCustomers.split(', ').includes(customer)
+                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                              : 'bg-white/5 border-white/20 hover:bg-blue-500/10 hover:border-blue-500/30 text-gray-200 hover:text-blue-200'
+                          }`}
                         >
                           <input
                             type="checkbox"
@@ -710,7 +714,11 @@ export default function SignupPage() {
                             className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
                             disabled={isLoading}
                           />
-                          <span className="text-gray-200 text-sm">{customer}</span>
+                          <span className={`text-sm font-medium ${
+                            formData.targetCustomers.split(', ').includes(customer)
+                              ? 'text-blue-300'
+                              : ''
+                          }`}>{customer}</span>
                         </label>
                       ))}
                     </div>
@@ -723,7 +731,11 @@ export default function SignupPage() {
                       {businessGoalsOptions.map((goal) => (
                         <label
                           key={goal}
-                          className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-white/5 border border-white/20 hover:bg-white/10 transition-all duration-300"
+                          className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all duration-300 ${
+                            formData.mainChallenges.split(', ').includes(goal)
+                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                              : 'bg-white/5 border-white/20 hover:bg-blue-500/10 hover:border-blue-500/30 text-gray-200 hover:text-blue-200'
+                          }`}
                         >
                           <input
                             type="checkbox"
@@ -732,7 +744,11 @@ export default function SignupPage() {
                             className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
                             disabled={isLoading}
                           />
-                          <span className="text-gray-200 text-sm">{goal}</span>
+                          <span className={`text-sm ${
+                            formData.mainChallenges.split(', ').includes(goal)
+                              ? 'text-blue-300 font-medium'
+                              : 'text-gray-200'
+                          }`}>{goal}</span>
                         </label>
                       ))}
                     </div>
