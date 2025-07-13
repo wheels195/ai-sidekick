@@ -360,15 +360,18 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
       <div className="px-6 py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
         <div className="space-y-4">
           <h1 className="text-2xl text-white font-semibold">
-            Hi! I'm <span className="font-cursive text-emerald-400 font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
+            Hi!<br />
+            I'm <span className="font-cursive text-emerald-400 font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
           </h1>
           <p className="text-lg text-gray-100 leading-relaxed">
-            I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
+            I'm here to help you grow your landscaping business with expert advice on local SEO, competitor analysis, upselling strategies, review generation, and more.
           </p>
           <p className="text-lg text-emerald-300">
-            💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the Tips button below for guidance on getting the most detailed and actionable responses.
+            💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Use the <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below to get more targeted, high-impact suggestions.
           </p>
-          <p className="text-emerald-300 font-normal text-xl mt-4">What can I help you with today?</p>
+          <p className="text-emerald-300 font-normal text-xl mt-4">
+            What's your top priority right now? → <span className="text-gray-400 text-lg italic">(Try "How do I rank higher in my area?" or "What should I charge for services?")</span>
+          </p>
         </div>
       </div>
     )
@@ -399,7 +402,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         {/* Main greeting */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl text-white font-semibold">
-            Hi, <span className="font-cursive text-emerald-400 font-bold text-3xl">{displayName}</span>!<br />
+            Hi, <span className="font-cursive text-emerald-400 font-bold text-3xl italic">{displayName}</span>!<br />
             I'm <span className="font-cursive text-emerald-400 font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
           </h1>
           {!isFirstTime && (
@@ -412,30 +415,39 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
           )}
         </div>
         
-        {/* Description */}
+        {/* Enhanced description */}
         <p className="text-lg text-gray-100 leading-relaxed">
-          I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
+          I'm here to help you grow <span className="text-emerald-200 font-semibold">{businessName || 'your landscaping business'}</span> with expert advice on local SEO, competitor analysis, upselling strategies, review generation, and more.
         </p>
         
-        {/* Pro tip */}
+        {/* Enhanced pro tip */}
         <p className="text-lg text-emerald-300">
-          💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the{' '}
-          <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below for guidance on getting the most detailed and actionable responses.
+          💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Use the{' '}
+          <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below to get more targeted, high-impact suggestions.
         </p>
         
-        {/* Business context - collapsible, single professional line */}
-        {showBusinessContext && businessSummary && (
+        {/* Enhanced business context */}
+        {showBusinessContext && (
           <div className="bg-emerald-900/20 rounded-xl p-4 border border-emerald-400/30">
             <p className="text-lg text-white leading-relaxed">
-              I see you're{' '}
-              <span className="text-emerald-200 font-semibold">{businessSummary}</span>.
+              📍 I see you're based in <span className="text-emerald-200 font-semibold">{location || 'your area'}</span>
+              {zipCode && <span className="text-emerald-200 font-semibold"> ({zipCode})</span>}
+              {teamSize && <span> with a <span className="text-emerald-200 font-semibold italic">{teamSize}-person team</span></span>}
+              {services && services.length > 0 && (
+                <span> offering <span className="text-emerald-200 font-semibold">
+                  {services.length <= 4 
+                    ? services.join(', ') 
+                    : `${services.slice(0, 4).join(', ')}, and more`
+                  }
+                </span></span>
+              )}. That gives me everything I need to tailor insights to your business goals.
             </p>
           </div>
         )}
         
-        {/* Call to action */}
+        {/* Enhanced call to action */}
         <p className="text-emerald-300 font-normal text-xl mt-4">
-          {isFirstTime ? "What can I help you with today?" : "How can we grow your business today?"}
+          What's your top priority right now? → <span className="text-gray-400 text-lg italic">(Try "How do I rank higher in my area?" or "What should I charge for irrigation?")</span>
         </p>
       </div>
     </div>
