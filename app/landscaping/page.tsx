@@ -360,15 +360,15 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
       <div className="px-6 py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
         <div className="space-y-4">
           <h1 className="text-2xl text-white font-semibold">
-            Hi! I'm <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-white bg-clip-text text-transparent font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
+            Hi! I'm <span className="font-cursive text-emerald-400 font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
           </h1>
           <p className="text-lg text-gray-100 leading-relaxed">
             I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
           </p>
           <p className="text-lg text-emerald-300">
-            💡 <span className="font-cursive text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the Tips button below for guidance on getting the most detailed and actionable responses.
+            💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the Tips button below for guidance on getting the most detailed and actionable responses.
           </p>
-          <p className="text-emerald-300 font-semibold text-xl mt-4">What can I help you with today?</p>
+          <p className="text-emerald-300 font-normal text-xl mt-4">What can I help you with today?</p>
         </div>
       </div>
     )
@@ -399,8 +399,8 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         {/* Main greeting */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl text-white font-semibold">
-            Hi, <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-white bg-clip-text text-transparent font-bold text-3xl">{displayName}</span>! I'm{' '}
-            <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-white bg-clip-text text-transparent font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
+            Hi, <span className="font-cursive text-emerald-400 font-bold text-3xl">{displayName}</span>!<br />
+            I'm <span className="font-cursive text-emerald-400 font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
           </h1>
           {!isFirstTime && (
             <button
@@ -419,7 +419,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         
         {/* Pro tip */}
         <p className="text-lg text-emerald-300">
-          💡 <span className="font-cursive text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the{' '}
+          💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the{' '}
           <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below for guidance on getting the most detailed and actionable responses.
         </p>
         
@@ -434,7 +434,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         )}
         
         {/* Call to action */}
-        <p className="text-emerald-300 font-semibold text-xl mt-4">
+        <p className="text-emerald-300 font-normal text-xl mt-4">
           {isFirstTime ? "What can I help you with today?" : "How can we grow your business today?"}
         </p>
       </div>
