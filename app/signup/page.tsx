@@ -81,7 +81,7 @@ export default function SignupPage() {
           teamSize: user.teamSize?.toString() || '',
           targetCustomers: user.targetCustomers || '',
           yearsInBusiness: user.yearsInBusiness?.toString() || '',
-          mainChallenges: user.mainChallenges?.join(', ') || ''
+          mainChallenges: user.mainChallenges?.[0] || ''
         }))
         
         // Parse location into city/state if possible and add zip code
@@ -142,31 +142,6 @@ export default function SignupPage() {
     }))
   }
 
-  const handleTargetCustomerToggle = (customer: string) => {
-    // Convert targetCustomers to array if it's a string
-    const currentCustomers = typeof formData.targetCustomers === 'string' 
-      ? formData.targetCustomers.split(', ').filter(c => c) 
-      : (Array.isArray(formData.targetCustomers) ? formData.targetCustomers : [])
-    
-    const updatedCustomers = currentCustomers.includes(customer)
-      ? currentCustomers.filter(c => c !== customer)
-      : [...currentCustomers, customer]
-    
-    setFormData(prev => ({ ...prev, targetCustomers: updatedCustomers.join(', ') }))
-  }
-
-  const handleBusinessGoalToggle = (goal: string) => {
-    // Convert mainChallenges to array if it's a string
-    const currentGoals = typeof formData.mainChallenges === 'string' 
-      ? formData.mainChallenges.split(', ').filter(g => g) 
-      : (Array.isArray(formData.mainChallenges) ? formData.mainChallenges : [])
-    
-    const updatedGoals = currentGoals.includes(goal)
-      ? currentGoals.filter(g => g !== goal)
-      : [...currentGoals, goal]
-    
-    setFormData(prev => ({ ...prev, mainChallenges: updatedGoals.join(', ') }))
-  }
 
   // Trade options and their corresponding services
   const tradeOptions = {
@@ -299,7 +274,7 @@ export default function SignupPage() {
           team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
           years_in_business: formData.yearsInBusiness,
-          main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
+          main_challenges: formData.mainChallenges ? [formData.mainChallenges] : []
         }
       } : {
         email: formData.email,
@@ -314,7 +289,7 @@ export default function SignupPage() {
           team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
           years_in_business: formData.yearsInBusiness,
-          main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
+          main_challenges: formData.mainChallenges ? [formData.mainChallenges] : []
         }
       }
 
@@ -640,12 +615,12 @@ export default function SignupPage() {
                     <div>
                       <p className="text-white text-sm mb-2">Team size:</p>
                       <Select onValueChange={(value) => handleSelectChange('teamSize', value)} value={formData.teamSize}>
-                        <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50">
+                        <SelectTrigger className="bg-white/5 border-white/20 text-blue-200 focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
                           <SelectValue placeholder="Select team size" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 border-gray-600">
                           {teamSizeOptions.map((option) => (
-                            <SelectItem key={option} value={option} className="text-white hover:bg-gray-700">
+                            <SelectItem key={option} value={option} className="text-white hover:bg-blue-700 hover:text-blue-200 transition-all duration-300">
                               {option}
                             </SelectItem>
                           ))}
@@ -655,12 +630,12 @@ export default function SignupPage() {
                     <div>
                       <p className="text-white text-sm mb-2">Years in business:</p>
                       <Select onValueChange={(value) => handleSelectChange('yearsInBusiness', value)} value={formData.yearsInBusiness}>
-                        <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50">
+                        <SelectTrigger className="bg-white/5 border-white/20 text-blue-200 focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
                           <SelectValue placeholder="Select experience" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 border-gray-600">
                           {yearsInBusinessOptions.map((option) => (
-                            <SelectItem key={option} value={option} className="text-white hover:bg-gray-700">
+                            <SelectItem key={option} value={option} className="text-white hover:bg-blue-700 hover:text-blue-200 transition-all duration-300">
                               {option}
                             </SelectItem>
                           ))}
@@ -696,62 +671,36 @@ export default function SignupPage() {
 
                   {/* Target Customers */}
                   <div>
-                    <p className="text-white text-sm mb-3">Target customers (select all that apply):</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {targetCustomerOptions.map((customer) => (
-                        <label
-                          key={customer}
-                          className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all duration-300 ${
-                            formData.targetCustomers.split(', ').filter(c => c).includes(customer)
-                              ? 'bg-blue-500/30 border-blue-500 text-blue-200 shadow-lg'
-                              : 'bg-white/5 border-white/20 hover:bg-blue-500/10 hover:border-blue-500/30 text-gray-200 hover:text-blue-200'
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={formData.targetCustomers.split(', ').filter(c => c).includes(customer)}
-                            onChange={() => handleTargetCustomerToggle(customer)}
-                            className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
-                            disabled={isLoading}
-                          />
-                          <span className={`text-sm font-medium ${
-                            formData.targetCustomers.split(', ').filter(c => c).includes(customer)
-                              ? 'text-blue-100 font-bold'
-                              : ''
-                          }`}>{customer}</span>
-                        </label>
-                      ))}
-                    </div>
+                    <p className="text-white text-sm mb-2">Primary target customers:</p>
+                    <Select onValueChange={(value) => handleSelectChange('targetCustomers', value)} value={formData.targetCustomers}>
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
+                        <SelectValue placeholder="Select your main customer type" className="text-blue-200" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-600">
+                        {targetCustomerOptions.map((option) => (
+                          <SelectItem key={option} value={option} className="text-white hover:bg-blue-700 hover:text-blue-200 transition-all duration-300">
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   {/* Business Goals */}
                   <div>
-                    <p className="text-white text-sm mb-3">Primary business goals (select all that apply):</p>
-                    <div className="grid grid-cols-1 gap-3">
-                      {businessGoalsOptions.map((goal) => (
-                        <label
-                          key={goal}
-                          className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all duration-300 ${
-                            formData.mainChallenges.split(', ').filter(g => g).includes(goal)
-                              ? 'bg-blue-500/30 border-blue-500 text-blue-200 shadow-lg'
-                              : 'bg-white/5 border-white/20 hover:bg-blue-500/10 hover:border-blue-500/30 text-gray-200 hover:text-blue-200'
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={formData.mainChallenges.split(', ').filter(g => g).includes(goal)}
-                            onChange={() => handleBusinessGoalToggle(goal)}
-                            className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
-                            disabled={isLoading}
-                          />
-                          <span className={`text-sm ${
-                            formData.mainChallenges.split(', ').filter(g => g).includes(goal)
-                              ? 'text-blue-100 font-bold'
-                              : 'text-gray-200'
-                          }`}>{goal}</span>
-                        </label>
-                      ))}
-                    </div>
+                    <p className="text-white text-sm mb-2">Top business priority:</p>
+                    <Select onValueChange={(value) => handleSelectChange('mainChallenges', value)} value={formData.mainChallenges}>
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
+                        <SelectValue placeholder="Select your main business goal" className="text-blue-200" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-600">
+                        {businessGoalsOptions.map((option) => (
+                          <SelectItem key={option} value={option} className="text-white hover:bg-blue-700 hover:text-blue-200 transition-all duration-300">
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
