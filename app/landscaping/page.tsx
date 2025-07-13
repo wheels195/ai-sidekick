@@ -930,7 +930,7 @@ export default function LandscapingChat() {
             const errorMessage: Message = {
               id: (Date.now() + 2).toString(),
               role: "assistant",
-              content: `🚨 **Trial Limit Reached**\n\nYou've used all ${(errorData.tokenLimit/1000)}k tokens in your free trial!\n\n**Ready to upgrade?** Get unlimited access to continue growing your landscaping business with AI.\n\n**What happens next:**\n- Sign up for a paid plan to continue chatting\n- Keep all your conversation history\n- Access advanced features\n\n**[Upgrade Your Plan →](/pricing)**`,
+              content: `🚨 **Trial Limit Reached**\n\nYou've used all ${(errorData.tokenLimit/1000)}k tokens in your free trial!\n\n**Ready to upgrade?** Get unlimited access to continue growing your landscaping business with AI.\n\n**What happens next:**\n- Choose a paid plan to continue chatting\n- Keep all your conversation history\n- Access advanced features\n\n**[Choose Your Plan →](/signup?upgrade=true)**`,
               timestamp: new Date(),
             }
             setMessages((prev) => [...prev, errorMessage])
@@ -941,7 +941,7 @@ export default function LandscapingChat() {
             const errorMessage: Message = {
               id: (Date.now() + 2).toString(),
               role: "assistant", 
-              content: `⏰ **7-Day Trial Expired**\n\nYour free trial has ended! Hope you found AI Sidekick helpful for your landscaping business.\n\n**Ready to continue?** Upgrade to keep using your AI business advisor.\n\n**What you'll get:**\n- Unlimited conversations\n- Advanced competitor analysis\n- Priority support\n- New features as they launch\n\n**[Choose Your Plan →](/pricing)**`,
+              content: `⏰ **7-Day Trial Expired**\n\nYour free trial has ended! Hope you found AI Sidekick helpful for your landscaping business.\n\n**Ready to continue?** Upgrade to keep using your AI business advisor.\n\n**What you'll get:**\n- Unlimited conversations\n- Advanced competitor analysis\n- Priority support\n- New features as they launch\n\n**[Choose Your Plan →](/signup?upgrade=true)**`,
               timestamp: new Date(),
             }
             setMessages((prev) => [...prev, errorMessage])

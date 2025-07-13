@@ -31,14 +31,27 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  // Auto-populate plan from URL parameter
+  // Auto-populate plan from URL parameter and detect upgrade mode
+  const [isUpgradeMode, setIsUpgradeMode] = useState(false)
+  
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const planParam = urlParams.get('plan')
+    const upgradeParam = urlParams.get('upgrade')
+    
+    // Check if this is an upgrade from trial expiration
+    if (upgradeParam === 'true') {
+      setIsUpgradeMode(true)
+      setFormData(prev => ({ ...prev, selectedPlan: 'Starter Plan' })) // Default to starter for upgrades
+      
+      // Pre-populate existing user data for upgrade
+      fetchExistingUserData()
+    }
+    
     if (planParam) {
       const planMap: Record<string, string> = {
         'free-trial': 'Free Trial',
-        'starter': 'Starter Plan',
+        'starter': 'Starter Plan', 
         'advanced': 'Advanced Plan',
         'sidepiece-ai': 'Sidepiece AI'
       }
@@ -48,6 +61,45 @@ export default function SignupPage() {
       }
     }
   }, [])
+
+  // Fetch existing user data for upgrade flow
+  const fetchExistingUserData = async () => {
+    try {
+      const response = await fetch('/api/user/profile')
+      if (response.ok) {
+        const data = await response.json()
+        const user = data.user
+        
+        // Pre-populate form with existing data
+        setFormData(prev => ({
+          ...prev,
+          businessName: user.businessName || '',
+          location: user.location || '',
+          trade: user.trade || 'landscaping',
+          services: user.services || [],
+          teamSize: user.teamSize?.toString() || '',
+          targetCustomers: user.targetCustomers || '',
+          yearsInBusiness: user.yearsInBusiness?.toString() || '',
+          mainChallenges: user.mainChallenges?.join(', ') || ''
+        }))
+        
+        // Parse location into city/state if possible and add zip code
+        if (user.location) {
+          const locationParts = user.location.split(', ')
+          if (locationParts.length >= 2) {
+            setFormData(prev => ({
+              ...prev,
+              city: locationParts[0] || '',
+              state: locationParts[1] || '',
+              zipCode: user.zipCode || ''
+            }))
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch existing user data:', error)
+    }
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -233,11 +285,14 @@ export default function SignupPage() {
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
-                Create Your Account
+                {isUpgradeMode ? 'Upgrade Your Plan' : 'Create Your Account'}
               </span>
             </h1>
             <p className="text-lg text-gray-300">
-              Start your 7-day free trial for landscaping business growth
+              {isUpgradeMode 
+                ? 'Choose a plan to continue using AI Sidekick for your landscaping business'
+                : 'Start your 7-day free trial for landscaping business growth'
+              }
             </p>
           </div>
 
@@ -323,13 +378,80 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <div className="bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white opacity-75">
-                      <div className="flex items-center justify-between">
-                        <span>Free Trial - $0 (7 days)</span>
-                        <span className="text-emerald-400 text-sm">✓ Selected</span>
+                    {isUpgradeMode ? (
+                      <div className="space-y-3">
+                        <p className="text-orange-400 text-sm font-medium">⚠️ Choose a paid plan to continue (Free trial already used)</p>
+                        
+                        <div className="grid gap-3">
+                          <label className={`cursor-pointer border rounded-lg p-4 transition-all ${
+                            formData.selectedPlan === 'Starter Plan' ? 'border-blue-500 bg-blue-500/10' : 'border-white/20 bg-white/5'
+                          }`}>
+                            <input
+                              type="radio"
+                              name="selectedPlan"
+                              value="Starter Plan"
+                              checked={formData.selectedPlan === 'Starter Plan'}
+                              onChange={(e) => setFormData(prev => ({ ...prev, selectedPlan: e.target.value }))}
+                              className="sr-only"
+                            />
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="text-white font-semibold">Starter Plan - $29/month</div>
+                                <div className="text-gray-400 text-sm">Unlimited tokens, basic support</div>
+                              </div>
+                              {formData.selectedPlan === 'Starter Plan' && <span className="text-blue-400 text-sm">✓ Selected</span>}
+                            </div>
+                          </label>
+                          
+                          <label className={`cursor-pointer border rounded-lg p-4 transition-all ${
+                            formData.selectedPlan === 'Advanced Plan' ? 'border-blue-500 bg-blue-500/10' : 'border-white/20 bg-white/5'
+                          }`}>
+                            <input
+                              type="radio"
+                              name="selectedPlan"
+                              value="Advanced Plan"
+                              checked={formData.selectedPlan === 'Advanced Plan'}
+                              onChange={(e) => setFormData(prev => ({ ...prev, selectedPlan: e.target.value }))}
+                              className="sr-only"
+                            />
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="text-white font-semibold">Advanced Plan - $59/month</div>
+                                <div className="text-gray-400 text-sm">Everything + priority support, advanced features</div>
+                              </div>
+                              {formData.selectedPlan === 'Advanced Plan' && <span className="text-blue-400 text-sm">✓ Selected</span>}
+                            </div>
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    <p className="text-gray-400 text-xs mt-1">Currently only offering landscaping trials</p>
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white opacity-75">
+                          <div className="flex items-center justify-between">
+                            <span>Free Trial - $0 (7 days)</span>
+                            <span className="text-emerald-400 text-sm">✓ Selected</span>
+                          </div>
+                        </div>
+                        
+                        {/* Show grayed out paid options for context */}
+                        <div className="space-y-2 opacity-40">
+                          <div className="bg-gray-700/30 border border-gray-600/30 rounded-md px-3 py-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-400">Starter Plan - $29/month</span>
+                              <span className="text-gray-500 text-sm">Available after trial</span>
+                            </div>
+                          </div>
+                          <div className="bg-gray-700/30 border border-gray-600/30 rounded-md px-3 py-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-400">Advanced Plan - $59/month</span>
+                              <span className="text-gray-500 text-sm">Available after trial</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-400 text-xs mt-1">Currently only offering landscaping trials</p>
+                      </div>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -486,11 +608,11 @@ export default function SignupPage() {
                     {isLoading ? (
                       <div className="flex items-center justify-center space-x-2">
                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                        <span>Creating Account...</span>
+                        <span>{isUpgradeMode ? 'Processing Upgrade...' : 'Creating Account...'}</span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center space-x-2">
-                        <span>Create Account & Start Chat</span>
+                        <span>{isUpgradeMode ? 'Upgrade & Continue Chat' : 'Create Account & Start Chat'}</span>
                         <CheckCircle className="w-4 h-4" />
                       </div>
                     )}
