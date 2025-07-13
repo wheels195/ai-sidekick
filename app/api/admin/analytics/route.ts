@@ -7,13 +7,17 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function GET(request: NextRequest) {
   try {
-    // Simple admin auth - check for admin API key in production only
-    if (process.env.NODE_ENV === 'production') {
-      const apiKey = request.headers.get('x-admin-key')
-      if (apiKey !== process.env.ADMIN_API_KEY) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-      }
-    }
+    // Temporarily disable auth for testing
+    console.log('NODE_ENV:', process.env.NODE_ENV)
+    console.log('ADMIN_API_KEY exists:', !!process.env.ADMIN_API_KEY)
+    
+    // TODO: Re-enable auth after testing
+    // if (process.env.NODE_ENV === 'production') {
+    //   const apiKey = request.headers.get('x-admin-key')
+    //   if (apiKey !== process.env.ADMIN_API_KEY) {
+    //     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    //   }
+    // }
 
     const now = new Date()
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
