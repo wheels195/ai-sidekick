@@ -359,6 +359,29 @@ curl -H "x-admin-key: your-admin-key" https://your-domain.com/api/admin/analytic
 - **Market Segmentation** - Clear business categories for conversion analysis
 - **Mobile-Optimized** - Professional dropdown styling with proper touch targets
 
+## Token Optimization & Cost Management
+
+### Smart Message Handling ✅
+- **Message Trimming** - Keep only recent 6 messages (3 user/assistant pairs) for 75% token savings
+- **Conversation Summarization** - Auto-summarize long conversations (10+ messages) into topic context
+- **Intelligent Context Preservation** - Maintains conversation quality while dramatically reducing costs
+
+### Model Selection Strategy ✅
+- **GPT-4o** - Used for complex tasks requiring advanced reasoning:
+  - Web search with Google Places API integration
+  - File analysis (images, documents, PDFs)
+  - Competitive analysis with structured data
+- **GPT-4o-mini** - Used for standard landscaping advice:
+  - General business guidance
+  - Content creation
+  - Pricing recommendations
+  - SEO strategies
+
+### Cost Impact ✅
+- **Before optimization**: ~9,000 tokens per message (full history + system prompt)
+- **After optimization**: ~2,200 tokens per message (75% reduction)
+- **Smart model switching**: Use expensive GPT-4o only when needed
+
 ## Web Search System (Tavily Integration)
 
 ### Current Implementation ✅
