@@ -13,14 +13,14 @@ export async function sendVerificationEmail(email: string, verificationToken: st
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #10b981, #0891b2); padding: 40px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to AI Sidekick!</h1>
+            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>!</h1>
             <p style="color: white; margin: 10px 0 0 0; opacity: 0.9;">Your specialized landscaping business assistant</p>
           </div>
           
           <div style="padding: 40px 20px; background: #f9fafb;">
             <h2 style="color: #1f2937; margin-bottom: 20px;">Verify your email address</h2>
             <p style="color: #4b5563; line-height: 1.6; margin-bottom: 30px;">
-              Thanks for signing up! Please click the button below to verify your email address and start getting expert landscaping business advice.
+              Thanks for signing up! Please click the button below to verify your email and unlock expert tools to grow your landscaping business.
             </p>
             
             <div style="text-align: center; margin: 30px 0;">
@@ -32,7 +32,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
                         border-radius: 8px; 
                         font-weight: bold;
                         display: inline-block;">
-                Verify Email Address
+                ✅ Verify Email Address
               </a>
             </div>
             
@@ -42,13 +42,14 @@ export async function sendVerificationEmail(email: string, verificationToken: st
             </p>
             
             <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
-              This link will expire in 24 hours. If you didn't create an account, you can safely ignore this email.
+              This link expires in 24 hours.<br>
+              Didn't sign up? You can safely ignore this email.
             </p>
           </div>
           
           <div style="background: #1f2937; padding: 20px; text-align: center;">
             <p style="color: #9ca3af; margin: 0; font-size: 14px;">
-              © 2025 AI Sidekick. All rights reserved.
+              © 2025 <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>. All rights reserved.
             </p>
           </div>
         </div>
@@ -76,22 +77,23 @@ export async function sendWelcomeEmail(email: string, businessName: string, trad
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #10b981, #0891b2); padding: 40px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to AI Sidekick!</h1>
+            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>!</h1>
             <p style="color: white; margin: 10px 0 0 0; opacity: 0.9;">Your ${trade} business growth partner</p>
           </div>
           
           <div style="padding: 40px 20px; background: #f9fafb;">
             <h2 style="color: #1f2937; margin-bottom: 20px;">Hi ${businessName}! 👋</h2>
             <p style="color: #4b5563; line-height: 1.6; margin-bottom: 30px;">
-              You're all set up! Your AI Sidekick is ready to help you grow your ${trade} business with expert advice on:
+              You're all set up — your <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span> is ready to help you grow with expert insights and time-saving tools, including:
             </p>
             
             <ul style="color: #4b5563; line-height: 1.8; margin-bottom: 30px;">
-              <li>🚀 Local SEO strategies</li>
-              <li>💰 Pricing and upselling opportunities</li>
-              <li>📝 Content creation for your website and social media</li>
+              <li>🚀 Local SEO & Google ranking strategies</li>
+              <li>💰 Pricing and upselling recommendations</li>
+              <li>📝 Website and social media content creation</li>
               <li>⭐ Getting more 5-star reviews</li>
-              <li>📈 Seasonal business planning</li>
+              <li>📈 Seasonal planning for consistent revenue</li>
+              <li>📊 Competitive insights and local market analysis</li>
             </ul>
             
             <div style="text-align: center; margin: 30px 0;">
@@ -103,21 +105,25 @@ export async function sendWelcomeEmail(email: string, businessName: string, trad
                         border-radius: 8px; 
                         font-weight: bold;
                         display: inline-block;">
-                Start Chatting Now
+                ✅ Start Chatting Now
               </a>
             </div>
             
             <div style="background: #e5f3ff; padding: 20px; border-radius: 8px; margin: 30px 0;">
               <h3 style="color: #1f2937; margin: 0 0 10px 0;">💡 Pro Tip:</h3>
-              <p style="color: #4b5563; margin: 0; line-height: 1.6;">
-                Start with specific questions like "How can I rank higher for landscaping in [your city]?" or "What should I charge for spring cleanup in my area?" The more context you provide, the better advice you'll get!
+              <p style="color: #4b5563; margin: 0; line-height: 1.6; font-style: italic;">
+                Ask: "What are 3 things I should fix right now to get more landscaping leads in [your city]?"<br>
+                The more local detail you give, the better your Sidekick can guide you.
               </p>
             </div>
           </div>
           
           <div style="background: #1f2937; padding: 20px; text-align: center;">
+            <p style="color: #9ca3af; margin: 0 0 10px 0; font-size: 14px;">
+              Have questions? Just reply to this email — we're here to help!
+            </p>
             <p style="color: #9ca3af; margin: 0; font-size: 14px;">
-              Questions? Just reply to this email - we're here to help!
+              © 2025 <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>. All rights reserved.
             </p>
           </div>
         </div>
