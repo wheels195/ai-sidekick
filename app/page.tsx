@@ -29,6 +29,13 @@ export default function LandingPage() {
   const [demoStarted, setDemoStarted] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
+  // Competitive Intelligence Demo State
+  const [compDemoStarted, setCompDemoStarted] = useState(false)
+  const [compDemoStep, setCompDemoStep] = useState(0)
+  const [compUserMessage, setCompUserMessage] = useState("")
+  const [compAiMessage, setCompAiMessage] = useState("")
+  const [compIsTyping, setCompIsTyping] = useState(false)
+
   const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
   
   const fullAiMessage = `## Justifying Higher Pricing in the Atlanta Landscaping Market
@@ -53,6 +60,32 @@ Charging more for your landscaping services can be a strategic move, especially 
 - Develop a content calendar for blog posts that educate potential customers
 
 What specific services do you currently offer, and what challenges have you faced in pricing your work?`
+
+  // Competitive Intelligence Demo Content
+  const compUserQuestion = "Who are the top landscaping companies near me and how can I improve my rankings?"
+  
+  const compAiResponse = `## Competitive Analysis for Dallas, TX 75201
+
+I can see you're in **Dallas, TX 75201**. Here's your competitive landscape:
+
+| Business Name | Rating | Reviews | Key Services |
+|---------------|--------|---------|--------------|
+| Dallas Green Pro | 4.8⭐ | 234 | Lawn Care, Tree Trimming |
+| Lone Star Yard Services | 4.5⭐ | 156 | Garden Design, Irrigation |
+| Trinity River Landscapes | 4.6⭐ | 89 | Hardscaping, Maintenance |
+
+### Strategic Insights:
+
+**1. Market Gap:** No competitor offers comprehensive seasonal packages
+**2. Pricing Opportunity:** Premium services underrepresented in your area  
+**3. Quality Standard:** Aim for 4.7+ rating to compete effectively
+
+### Next Steps:
+- Focus on seasonal maintenance packages
+- Optimize Google Business Profile for local SEO
+- Implement review generation strategy
+
+What specific services do you want to focus on to differentiate from these competitors?`
 
   useEffect(() => {
     const startDemo = () => {
@@ -115,6 +148,41 @@ What specific services do you currently offer, and what challenges have you face
       }
     }
   }, [demoStarted, fullUserMessage, fullAiMessage])
+
+  // Competitive Intelligence Demo Effect
+  useEffect(() => {
+    const startCompDemo = () => {
+      // Set user message immediately
+      setCompUserMessage(compUserQuestion)
+      setCompDemoStep(1)
+      setCompAiMessage("")
+      
+      // Start AI thinking immediately
+      setTimeout(() => {
+        setCompDemoStep(2)
+        setCompIsTyping(true)
+        
+        // Start AI response after 1 second
+        setTimeout(() => {
+          setCompIsTyping(false)
+          setCompDemoStep(3)
+          let aiIndex = 0
+          const typeCompAiMessage = () => {
+            if (aiIndex < compAiResponse.length) {
+              setCompAiMessage(compAiResponse.substring(0, aiIndex + 1))
+              aiIndex++
+              setTimeout(typeCompAiMessage, 8 + Math.random() * 15) // Much faster AI typing
+            }
+          }
+          typeCompAiMessage()
+        }, 1000)
+      }, 500)
+    }
+
+    if (compDemoStarted) {
+      startCompDemo()
+    }
+  }, [compDemoStarted, compUserQuestion, compAiResponse])
 
   // Convert markdown to HTML with emerald headings (similar to chat interface)
   const convertMarkdownToHtml = (markdown: string): string => {
@@ -601,7 +669,7 @@ What specific services do you currently offer, and what challenges have you face
 
           {/* Interactive Demo Interface */}
           <div className="max-w-6xl mx-auto">
-            {!demoStarted ? (
+            {!compDemoStarted ? (
               /* Initial CTA State */
               <div className="text-center mb-12">
                 <div className="mb-8">
@@ -619,7 +687,7 @@ What specific services do you currently offer, and what challenges have you face
                 </div>
                 
                 <Button 
-                  onClick={() => setDemoStarted(true)}
+                  onClick={() => setCompDemoStarted(true)}
                   size="lg"
                   className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 border-2 border-emerald-400/20 backdrop-blur-sm relative overflow-hidden group"
                 >
@@ -633,7 +701,7 @@ What specific services do you currently offer, and what challenges have you face
                 <p className="text-gray-400 text-sm mt-4">See how AI analyzes your competitors in seconds</p>
               </div>
             ) : (
-              /* Interactive Chat Demo */
+              /* Interactive Competitive Intelligence Demo */
               <div className="bg-gray-900/80 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 max-w-4xl mx-auto mb-12">
                 {/* Chat Header */}
                 <div className="flex items-center space-x-4 pb-6 border-b border-white/20 mb-6">
@@ -651,27 +719,57 @@ What specific services do you currently offer, and what challenges have you face
 
                 {/* Chat Messages */}
                 <div className="space-y-6 max-h-96 overflow-y-auto">
-                  {/* User Message */}
+                  {/* User Message - Always show */}
                   <div className="flex justify-end">
                     <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-6 py-4 max-w-md shadow-lg">
                       <p className="text-sm font-medium">
-                        Who are the top landscaping companies near me and how can I improve my rankings?
+                        {compDemoStep >= 1 ? compUserMessage : compUserQuestion}
                       </p>
                     </div>
                   </div>
 
-                  {/* AI Response */}
-                  <div className="flex justify-start">
-                    <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-6 py-4 max-w-3xl border border-white/20 shadow-lg">
-                      <div className="space-y-3 text-sm leading-relaxed">
-                        <div 
-                          dangerouslySetInnerHTML={{ 
-                            __html: convertMarkdownToHtml(aiMessage || fullAiMessage) 
-                          }}
-                        />
+                  {/* AI Thinking Indicator */}
+                  {compIsTyping && (
+                    <div className="flex justify-start items-center space-x-2 pl-4">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      </div>
+                      <span className="text-emerald-300 text-xs">Analyzing competitors...</span>
+                    </div>
+                  )}
+
+                  {/* AI Response - Only show when typing or complete */}
+                  {compDemoStep >= 3 && (
+                    <div className="flex justify-start">
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-6 py-4 max-w-3xl border border-white/20 shadow-lg">
+                        <div className="space-y-3 text-sm leading-relaxed">
+                          <div 
+                            dangerouslySetInnerHTML={{ 
+                              __html: convertMarkdownToHtml(compAiMessage) 
+                            }}
+                          />
+                          {compDemoStep === 3 && compAiMessage.length > 0 && !compAiMessage.includes('What specific services') && (
+                            <span className="animate-pulse text-emerald-400">|</span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* Default state - show when demo hasn't started */}
+                  {compDemoStep === 0 && !compDemoStarted && (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                          <BarChart3 className="w-6 h-6 text-white" />
+                        </div>
+                        <p className="text-emerald-300 font-medium">Click to see competitive analysis</p>
+                        <p className="text-gray-400 text-sm mt-1">Watch real competitor data analysis</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
