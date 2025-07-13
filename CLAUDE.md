@@ -403,3 +403,71 @@ curl -H "x-admin-key: your-admin-key" https://your-domain.com/api/admin/analytic
 ### Cost Optimization ✅
 - **Smart Model Selection**: Uses GPT-4o only for web search results analysis
 - **Efficient API Usage**: Single search per user query, cached during conversation
+
+## 🚀 PRE-LAUNCH CHECKLIST
+
+### Domain & DNS Setup
+- [ ] **Purchase Custom Domain** - Buy ai-sidekick.com from Namecheap
+- [ ] **DNS Configuration** - A/CNAME records pointing to Vercel
+- [ ] **SSL Certificate** - Automatic through Vercel/domain provider
+- [ ] **Update NEXT_PUBLIC_SITE_URL** - Change from Vercel URL to custom domain
+
+### Email System Setup
+- [ ] **Google Workspace** - Set up professional email addresses
+  - [ ] hello@ai-sidekick.com
+  - [ ] onboarding@ai-sidekick.com  
+  - [ ] support@ai-sidekick.com
+  - [ ] no-reply@ai-sidekick.com
+- [ ] **MX Records** - Configure for Gmail delivery
+- [ ] **DKIM/SPF Records** - Email authentication for deliverability
+- [ ] **Update Resend Integration** - Change from sandbox to custom domain emails
+- [ ] **Test Email Verification** - Real email signup and verification flow
+
+### API Billing & Quotas
+- [ ] **Google Places API** - Add credit card and set quotas/alerts
+- [ ] **OpenAI API** - Add credit card and monitor usage limits
+- [ ] **Resend API** - Upgrade from free tier if needed
+- [ ] **Supabase** - Monitor database usage and upgrade plan if needed
+
+### Critical Testing
+- [ ] **End-to-End User Flow** - Signup → Email → Login → Chat
+- [ ] **Real Email Testing** - Test with personal email address
+- [ ] **Mobile Experience** - Full responsive functionality testing
+- [ ] **Cross-Browser Testing** - Chrome, Safari, Firefox, Edge
+- [ ] **Geographic Testing** - Test with different zip codes/cities
+- [ ] **Web Search Accuracy** - Verify real competitor data (not fake)
+- [ ] **Token Usage Tracking** - Confirm trial limits work correctly
+- [ ] **Error Handling** - API failures, network issues, edge cases
+
+### Performance & Monitoring
+- [ ] **Vercel Analytics** - Enable and configure
+- [ ] **Error Tracking** - Set up Sentry or similar service
+- [ ] **Database Monitoring** - Supabase performance alerts
+- [ ] **API Rate Limiting** - Implement protection against abuse
+- [ ] **Load Testing** - Test with concurrent users
+
+### Content & Legal
+- [ ] **Demo Section** - Add Advanced AI competitive analysis demo
+- [ ] **Terms of Service** - Review for production launch
+- [ ] **Privacy Policy** - Ensure compliance with email collection
+- [ ] **Contact Information** - Update with professional email addresses
+
+### Marketing Preparation
+- [ ] **Launch Announcement** - Prepare email/social media content
+- [ ] **SEO Optimization** - Meta tags, schema markup for custom domain
+- [ ] **Analytics Setup** - Google Analytics 4 configuration
+- [ ] **Social Media** - Create business accounts if needed
+
+### Launch Day Monitoring
+- [ ] **User Conversion Tracking** - Signup → verification → active use rates
+- [ ] **API Error Monitoring** - Response times and failure rates
+- [ ] **Cost Monitoring** - OpenAI/Google Places usage and costs
+- [ ] **Geographic Distribution** - Track where users are signing up
+- [ ] **Feature Usage** - Web search adoption, token consumption patterns
+
+### Post-Launch Tasks
+- [ ] **User Feedback Collection** - Survey or feedback system
+- [ ] **A/B Testing Setup** - For pricing, messaging, features
+- [ ] **Customer Support System** - Ticketing or chat support
+- [ ] **Backup & Recovery** - Database backup strategy
+- [ ] **Security Audit** - Review authentication and data protection
