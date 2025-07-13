@@ -351,54 +351,120 @@ function useAutoResizeTextarea({
 }
 
 // Helper function to generate personalized greeting
-const generatePersonalizedGreeting = (user: {
-  email: string, 
-  businessName: string,
-  location: string,
-  trade: string,
-  services: string[],
-  teamSize: number,
-  targetCustomers: string,
-  yearsInBusiness: number,
-  mainChallenges: string[]
-} | null): string => {
-  const baseGreeting = "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business with expert advice on SEO, content creation, upselling strategies, and more.\n\n💡 **Pro tip:** Click the Tips button below for guidance on getting the most detailed and actionable responses.\n\n"
+// Component for the persistent welcome header
+const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean }) => {
+  const [showBusinessContext, setShowBusinessContext] = useState(isFirstTime)
   
   if (!user) {
-    return baseGreeting + "What can I help you with today?"
+    return (
+      <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-r from-emerald-500/5 to-teal-500/5">
+        <div className="flex items-center space-x-3">
+          <h1 className="text-lg">
+            Hi! I'm <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-black bg-clip-text text-transparent font-bold">Dirt.i</span>, your Landscaping AI Sidekick.
+          </h1>
+        </div>
+        <p className="text-sm text-gray-300 mt-1">
+          I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
+        </p>
+        <p className="text-sm text-emerald-400 mt-2">
+          💡 <span className="font-cursive text-emerald-300">Pro tip:</span> Click the Tips button below for guidance on getting the most detailed and actionable responses.
+        </p>
+        <p className="text-emerald-400 font-medium mt-3">What can I help you with today?</p>
+      </div>
+    )
   }
 
-  const { businessName, location, services, teamSize } = user
+  const { firstName, businessName, location, services, teamSize, zipCode } = user
+  const displayName = firstName || 'there'
   
-  let personalizedContext = `I see you're ${businessName}`
-  
-  if (location) {
-    personalizedContext += ` located in ${location}`
+  return (
+    <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-r from-emerald-500/5 to-teal-500/5">
+      <div className="space-y-3">
+        {/* Main greeting */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg">
+            Hi, <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-black bg-clip-text text-transparent font-bold">{displayName}</span>! I'm{' '}
+            <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-black bg-clip-text text-transparent font-bold">Dirt.i</span>, your Landscaping AI Sidekick.
+          </h1>
+          {!isFirstTime && (
+            <button
+              onClick={() => setShowBusinessContext(!showBusinessContext)}
+              className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+            >
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showBusinessContext ? 'rotate-180' : ''}`} />
+            </button>
+          )}
+        </div>
+        
+        {/* Description */}
+        <p className="text-sm text-gray-300">
+          I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
+        </p>
+        
+        {/* Pro tip */}
+        <p className="text-sm text-emerald-400">
+          💡 <span className="font-cursive text-emerald-300">Pro tip:</span> Click the{' '}
+          <span className="font-cursive text-emerald-300">Tips</span> button below for guidance on getting the most detailed and actionable responses.
+        </p>
+        
+        {/* Business context - collapsible */}
+        {showBusinessContext && (
+          <div className="bg-black/20 rounded-lg p-3 border border-emerald-500/20">
+            <div className="text-sm text-gray-300 space-y-1">
+              {businessName && (
+                <p>I see your business is <span className="text-emerald-300 font-medium">{businessName}</span></p>
+              )}
+              {location && (
+                <p>
+                  located in <span className="text-emerald-300 font-medium">{location}</span>
+                  {zipCode && <span className="text-emerald-300 font-medium"> {zipCode}</span>}
+                </p>
+              )}
+              {teamSize && (
+                <p>with a <span className="text-emerald-300 font-medium">{teamSize}-person team</span></p>
+              )}
+              {services && services.length > 0 && (
+                <p>
+                  offering{' '}
+                  <span className="text-emerald-300 font-medium">
+                    {services.length <= 5 
+                      ? services.join(', ') 
+                      : `${services.slice(0, 5).join(', ')}, and more!`
+                    }
+                  </span>
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+        
+        {/* Call to action */}
+        <p className="text-emerald-400 font-medium">
+          {isFirstTime ? "What can I help you with today?" : "How can we grow your business today?"}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+// Simple greeting for chat messages (when welcome header is hidden)
+const generateSimpleGreeting = (user: any): string => {
+  if (!user) {
+    return "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business. What can I help you with today?"
   }
   
-  if (teamSize && teamSize > 0) {
-    personalizedContext += ` with a ${teamSize}-person team`
-  }
-  
-  if (services && services.length > 0) {
-    if (services.length <= 4) {
-      personalizedContext += ` offering ${services.join(', ')}`
-    } else {
-      personalizedContext += ` offering ${services.slice(0, 4).join(', ')}, and more`
-    }
-  }
-  
-  personalizedContext += ". What can I help you with today?"
-  
-  return baseGreeting + personalizedContext
+  const displayName = user.firstName || 'there'
+  return `Hi, ${displayName}! I'm **Dirt.i**, your Landscaping AI Sidekick. How can we grow your business today?`
 }
 
 export default function LandscapingChat() {
   const router = useRouter()
   const [user, setUser] = useState<{
-    email: string, 
+    email: string,
+    firstName?: string,
     businessName: string,
     location: string,
+    zipCode?: string,
     trade: string,
     services: string[],
     teamSize: number,
@@ -408,14 +474,9 @@ export default function LandscapingChat() {
   } | null>(null)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      content: generatePersonalizedGreeting(null), // Default greeting until user profile loads
-      timestamp: new Date('2024-01-01'), // Fixed timestamp to prevent hydration mismatch
-    },
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
+  const [showWelcomeHeader, setShowWelcomeHeader] = useState(true)
+  const [isFirstTimeUser, setIsFirstTimeUser] = useState(true)
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [reactions, setReactions] = useState<Record<string, string>>({})
@@ -582,8 +643,10 @@ export default function LandscapingChat() {
           const data = await response.json()
           const userProfile = {
             email: data.user.email,
+            firstName: data.user.firstName || '',
             businessName: data.user.businessName || 'Your Business',
             location: data.user.location || '',
+            zipCode: data.user.zipCode || '',
             trade: data.user.trade || 'landscaping',
             services: data.user.services || [],
             teamSize: data.user.teamSize || 0,
@@ -597,22 +660,19 @@ export default function LandscapingChat() {
           setTokensUsedTrial(data.user.tokensUsedTrial || 0)
           setTrialTokenLimit(data.user.trialTokenLimit || 250000)
           
-          // Update initial message with personalized greeting
-          const personalizedGreeting = generatePersonalizedGreeting(userProfile)
-          setMessages([{
-            id: "1",
-            role: "assistant",
-            content: personalizedGreeting,
-            timestamp: new Date(),
-          }])
+          // Don't add initial message - we'll use the welcome header instead
+          setMessages([])
+          setIsFirstTimeUser(true)
         } else if (response.status === 401) {
           // User not authenticated - use mock test data for development
           console.log('User not authenticated, loading mock test user for development')
           
           const mockUserProfile = {
             email: 'test@johnsonlandscaping.com',
+            firstName: 'Mike',
             businessName: "Johnson's Landscaping",
             location: 'Dallas, TX',
+            zipCode: '75201',
             trade: 'landscaping',
             services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
             teamSize: 4,
@@ -622,22 +682,19 @@ export default function LandscapingChat() {
           }
           setUser(mockUserProfile)
           
-          // Update initial message with personalized greeting using mock data
-          const personalizedGreeting = generatePersonalizedGreeting(mockUserProfile)
-          setMessages([{
-            id: "1",
-            role: "assistant",
-            content: personalizedGreeting,
-            timestamp: new Date(),
-          }])
+          // Don't add initial message - we'll use the welcome header instead
+          setMessages([])
+          setIsFirstTimeUser(true)
         }
       } catch (error) {
         console.error('Failed to fetch user:', error)
         // Load mock user on network errors too for testing
         const mockUserProfile = {
           email: 'test@johnsonlandscaping.com',
+          firstName: 'Mike',
           businessName: "Johnson's Landscaping",
           location: 'Dallas, TX',
+          zipCode: '75201',
           trade: 'landscaping',
           services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
           teamSize: 4,
@@ -647,13 +704,9 @@ export default function LandscapingChat() {
         }
         setUser(mockUserProfile)
         
-        const personalizedGreeting = generatePersonalizedGreeting(mockUserProfile)
-        setMessages([{
-          id: "1",
-          role: "assistant",
-          content: personalizedGreeting,
-          timestamp: new Date(),
-        }])
+        // Don't add initial message - we'll use the welcome header instead
+        setMessages([])
+        setIsFirstTimeUser(true)
       }
     }
     fetchUser()
@@ -746,17 +799,11 @@ export default function LandscapingChat() {
 
   // Start a new conversation
   const startNewConversation = () => {
-    const personalizedGreeting = generatePersonalizedGreeting(user)
-    setMessages([
-      {
-        id: "1",
-        role: "assistant",
-        content: personalizedGreeting,
-        timestamp: new Date(),
-      },
-    ])
+    setMessages([])
     setCurrentConversationId(null)
     setShowSidebar(false)
+    setShowWelcomeHeader(true)
+    setIsFirstTimeUser(false) // Subsequent conversations show shorter greeting
   }
 
   // Convert files to base64 for API transmission
@@ -866,6 +913,12 @@ export default function LandscapingChat() {
     setInput("")
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
+    
+    // Hide welcome header when user sends first message
+    if (showWelcomeHeader) {
+      setShowWelcomeHeader(false)
+      setIsFirstTimeUser(false)
+    }
 
     // Convert uploaded files to base64 for transmission
     let filesToSend: any[] = []
@@ -1123,12 +1176,6 @@ export default function LandscapingChat() {
         }
       `}</style>
       <div className="h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
-      {/* Background Elements - Behind everything */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.2),transparent_70%)] pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.15),transparent_50%)] pointer-events-none"></div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/40 to-teal-500/40 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/35 to-indigo-500/35 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
 
       {/* Fixed Header - Your Original Design */}
       <header className="flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl relative z-50">
@@ -1450,6 +1497,11 @@ export default function LandscapingChat() {
         <div className="flex-1 p-2 sm:p-4 lg:p-6 overflow-hidden">
           <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col overflow-hidden">
             <CardContent className="p-0 flex flex-col h-full overflow-hidden">
+              {/* Welcome Header - Outside Messages */}
+              {showWelcomeHeader && (
+                <WelcomeHeader user={user} isFirstTime={isFirstTimeUser} />
+              )}
+              
               {/* Messages Area - Internal Scroll */}
               <div 
                 className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20" 
