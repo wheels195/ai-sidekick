@@ -103,6 +103,8 @@ function MultiSelect({ options, value, onChange, placeholder, disabled }: MultiS
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -167,6 +169,8 @@ export default function SignupPage() {
         // Pre-populate form with existing data
         setFormData(prev => ({
           ...prev,
+          firstName: user.firstName || '',
+          lastName: user.lastName || '',
           businessName: user.businessName || '',
           location: user.location || '',
           trade: user.trade || 'landscaping',
@@ -334,6 +338,9 @@ export default function SignupPage() {
 
     // Skip email/password validation for upgrade mode
     if (!isUpgradeMode) {
+      if (!formData.firstName) newErrors.firstName = 'First name is required'
+      if (!formData.lastName) newErrors.lastName = 'Last name is required'
+      
       if (!formData.email) newErrors.email = 'Email is required'
       else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format'
 
@@ -342,6 +349,10 @@ export default function SignupPage() {
 
       if (!formData.confirmPassword) newErrors.confirmPassword = 'Please confirm your password'
       else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
+    } else {
+      // For upgrade mode, still require names if they're not provided
+      if (!formData.firstName) newErrors.firstName = 'First name is required'
+      if (!formData.lastName) newErrors.lastName = 'Last name is required'
     }
 
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
@@ -365,6 +376,8 @@ export default function SignupPage() {
       // Use upgrade endpoint for existing users, signup endpoint for new users
       const endpoint = isUpgradeMode ? '/api/auth/upgrade' : '/api/auth/signup'
       const requestBody = isUpgradeMode ? {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         selectedPlan: formData.selectedPlan,
         businessProfile: {
           business_name: formData.businessName,
@@ -378,6 +391,8 @@ export default function SignupPage() {
           business_priorities: formData.businessPriorities
         }
       } : {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
         selectedPlan: formData.selectedPlan,
@@ -495,6 +510,33 @@ export default function SignupPage() {
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-white mb-4">Account Credentials</h3>
                     
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <Input
+                          type="text"
+                          name="firstName"
+                          placeholder="First name"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                          disabled={isLoading}
+                        />
+                        {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
+                      </div>
+                      <div>
+                        <Input
+                          type="text"
+                          name="lastName"
+                          placeholder="Last name"
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                          className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                          disabled={isLoading}
+                        />
+                        {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
+                      </div>
+                    </div>
+
                     <div>
                       <Input
                         type="email"
@@ -565,6 +607,39 @@ export default function SignupPage() {
                       {getPasswordMatchStatus() === false && (
                         <p className="text-red-400 text-sm mt-1">✗ Passwords don't match</p>
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Personal Information for Upgrade Mode */}
+                {isUpgradeMode && (
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-white mb-4">Personal Information</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <Input
+                          type="text"
+                          name="firstName"
+                          placeholder="First name"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                          disabled={isLoading}
+                        />
+                        {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
+                      </div>
+                      <div>
+                        <Input
+                          type="text"
+                          name="lastName"
+                          placeholder="Last name"
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                          className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                          disabled={isLoading}
+                        />
+                        {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
+                      </div>
                     </div>
                   </div>
                 )}

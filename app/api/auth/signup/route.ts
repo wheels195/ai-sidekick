@@ -9,11 +9,11 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, selectedPlan, businessProfile } = await request.json()
+    const { firstName, lastName, email, password, selectedPlan, businessProfile } = await request.json()
 
-    if (!email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        { error: 'First name, last name, email and password are required' },
         { status: 400 }
       )
     }
@@ -45,6 +45,8 @@ export async function POST(request: NextRequest) {
       .from('user_profiles')
       .insert({
         id: userId,
+        first_name: firstName,
+        last_name: lastName,
         email: email,
         password_hash: hashedPassword,
         email_verified: false,

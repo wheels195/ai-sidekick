@@ -383,7 +383,9 @@ export async function POST(request: NextRequest) {
     let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
     
     if (userProfile) {
+      const userName = userProfile.first_name ? ` ${userProfile.first_name}` : ''
       enhancedSystemPrompt += `\n\nUSER BUSINESS CONTEXT:
+- User: ${userProfile.first_name || ''} ${userProfile.last_name || ''}
 - Business: ${userProfile.business_name || 'Not specified'}
 - Location: ${userProfile.location || 'Not specified'}
 - Services: ${userProfile.services?.join(', ') || 'Not specified'}
@@ -392,7 +394,7 @@ export async function POST(request: NextRequest) {
 - Years in Business: ${userProfile.years_in_business || 'Not specified'}
 - Business Priorities: ${userProfile.business_priorities?.join(', ') || 'Not specified'}
 
-Use this context to provide more personalized and relevant advice.`
+Use this context to provide more personalized and relevant advice.${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
     }
 
     if (webSearchEnabled && searchResults && !['error', 'not available', 'not configured'].some(term => searchResults.includes(term))) {

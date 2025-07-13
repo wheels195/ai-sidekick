@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Fetch user profile from database
     const { data: profile, error } = await supabase
       .from('user_profiles')
-      .select('id, email, business_name, trade, selected_plan, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
+      .select('id, first_name, last_name, email, business_name, trade, selected_plan, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
       .eq('id', user.userId)
       .single()
 
@@ -35,6 +35,8 @@ export async function GET(request: NextRequest) {
       success: true,
       user: {
         id: profile.id,
+        firstName: profile.first_name,
+        lastName: profile.last_name,
         email: profile.email,
         businessName: profile.business_name,
         trade: profile.trade,
@@ -82,6 +84,8 @@ export async function PUT(request: NextRequest) {
     }
 
     // Map frontend field names to database column names
+    if (profileData.firstName !== undefined) updateData.first_name = profileData.firstName
+    if (profileData.lastName !== undefined) updateData.last_name = profileData.lastName
     if (profileData.businessName !== undefined) updateData.business_name = profileData.businessName
     if (profileData.trade !== undefined) updateData.trade = profileData.trade
     if (profileData.selectedPlan !== undefined) updateData.selected_plan = profileData.selectedPlan
@@ -97,7 +101,7 @@ export async function PUT(request: NextRequest) {
       .from('user_profiles')
       .update(updateData)
       .eq('id', user.userId)
-      .select('id, email, business_name, trade, selected_plan, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities')
+      .select('id, first_name, last_name, email, business_name, trade, selected_plan, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities')
       .single()
 
     if (error) {
@@ -111,6 +115,8 @@ export async function PUT(request: NextRequest) {
       success: true,
       user: {
         id: data.id,
+        firstName: data.first_name,
+        lastName: data.last_name,
         email: data.email,
         businessName: data.business_name,
         trade: data.trade,

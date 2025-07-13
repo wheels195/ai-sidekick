@@ -8,7 +8,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function POST(request: NextRequest) {
   try {
-    const { selectedPlan, businessProfile } = await request.json()
+    const { firstName, lastName, selectedPlan, businessProfile } = await request.json()
 
     // Get authenticated user
     const user = await getUser(request)
@@ -39,6 +39,9 @@ export async function POST(request: NextRequest) {
       .from('user_profiles')
       .update({
         selected_plan: selectedPlan,
+        // Update personal info if provided
+        first_name: firstName || currentProfile.first_name,
+        last_name: lastName || currentProfile.last_name,
         // Update business profile if provided (user may have refined their info)
         business_name: businessProfile?.business_name || currentProfile.business_name,
         location: businessProfile?.location || currentProfile.location,
