@@ -68,11 +68,17 @@ What specific services do you currently offer, and what challenges have you face
 
 I can see you're in **Dallas, TX 75201**. Here's your competitive landscape:
 
-| Business Name | Rating | Reviews | Key Services |
-|---------------|--------|---------|--------------|
-| Dallas Green Pro | 4.8⭐ | 234 | Lawn Care, Tree Trimming |
-| Lone Star Yard Services | 4.5⭐ | 156 | Garden Design, Irrigation |
-| Trinity River Landscapes | 4.6⭐ | 89 | Hardscaping, Maintenance |
+✅ **Dallas Green Pro** - 4.8⭐ (234 reviews)
+   **Services:** Lawn Care, Tree Trimming
+   **Phone:** (214) 555-0123
+
+✅ **Lone Star Yard Services** - 4.5⭐ (156 reviews)
+   **Services:** Garden Design, Irrigation
+   **Phone:** (214) 555-0456
+
+✅ **Trinity River Landscapes** - 4.6⭐ (89 reviews)
+   **Services:** Hardscaping, Maintenance
+   **Phone:** (214) 555-0789
 
 ### Strategic Insights:
 
