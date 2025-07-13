@@ -42,7 +42,7 @@ export default function SignupPage() {
     // Check if this is an upgrade from trial expiration
     if (upgradeParam === 'true') {
       setIsUpgradeMode(true)
-      setFormData(prev => ({ ...prev, selectedPlan: 'Starter Plan' })) // Default to starter for upgrades
+      setFormData(prev => ({ ...prev, selectedPlan: 'Advanced Plan' })) // Default to Advanced for engaged users
       
       // Pre-populate existing user data for upgrade
       fetchExistingUserData()
@@ -169,14 +169,17 @@ export default function SignupPage() {
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.email) newErrors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format'
+    // Skip email/password validation for upgrade mode
+    if (!isUpgradeMode) {
+      if (!formData.email) newErrors.email = 'Email is required'
+      else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format'
 
-    if (!formData.password) newErrors.password = 'Password is required'
-    else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters'
+      if (!formData.password) newErrors.password = 'Password is required'
+      else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters'
 
-    if (!formData.confirmPassword) newErrors.confirmPassword = 'Please confirm your password'
-    else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
+      if (!formData.confirmPassword) newErrors.confirmPassword = 'Please confirm your password'
+      else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
+    }
 
     if (!formData.businessName) newErrors.businessName = 'Business name is required'
     if (!formData.city) newErrors.city = 'City is required'
@@ -196,37 +199,59 @@ export default function SignupPage() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/auth/signup', {
+      // Use upgrade endpoint for existing users, signup endpoint for new users
+      const endpoint = isUpgradeMode ? '/api/auth/upgrade' : '/api/auth/signup'
+      const requestBody = isUpgradeMode ? {
+        selectedPlan: formData.selectedPlan,
+        businessProfile: {
+          business_name: formData.businessName,
+          location: `${formData.city}, ${formData.state}`,
+          zip_code: formData.zipCode,
+          trade: formData.trade,
+          services: formData.customService ? [...formData.services, formData.customService] : formData.services,
+          team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
+          target_customers: formData.targetCustomers,
+          years_in_business: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
+          main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
+        }
+      } : {
+        email: formData.email,
+        password: formData.password,
+        selectedPlan: formData.selectedPlan,
+        businessProfile: {
+          business_name: formData.businessName,
+          location: `${formData.city}, ${formData.state}`,
+          zip_code: formData.zipCode,
+          trade: formData.trade,
+          services: formData.customService ? [...formData.services, formData.customService] : formData.services,
+          team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
+          target_customers: formData.targetCustomers,
+          years_in_business: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
+          main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
+        }
+      }
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          selectedPlan: formData.selectedPlan,
-          businessProfile: {
-            business_name: formData.businessName,
-            location: `${formData.city}, ${formData.state}`,
-            zip_code: formData.zipCode,
-            trade: formData.trade,
-            services: formData.customService ? [...formData.services, formData.customService] : formData.services,
-            team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
-            target_customers: formData.targetCustomers,
-            years_in_business: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
-            main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
-          }
-        }),
+        body: JSON.stringify(requestBody),
       })
 
       const data = await response.json()
 
       if (response.ok) {
+        if (isUpgradeMode) {
+          // Show success message for upgrade then redirect to chat
+          alert(`🎉 ${data.message}\n\nYou can now continue chatting with unlimited access while we finalize payment processing. All your previous conversations and business data have been preserved.`)
+        }
+        
         // Success - redirect to appropriate trade page
         const tradePage = formData.trade === 'landscaping' ? '/landscaping' : '/landscaping' // Default to landscaping for now
         window.location.href = tradePage
       } else {
-        setErrors({ submit: data.error || 'Failed to create account' })
+        setErrors({ submit: data.error || (isUpgradeMode ? 'Failed to upgrade account' : 'Failed to create account') })
       }
     } catch (error) {
       setErrors({ submit: 'Network error. Please try again.' })
@@ -302,63 +327,65 @@ export default function SignupPage() {
             </CardHeader>
             <CardContent className="p-6">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Account Credentials */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white mb-4">Account Credentials</h3>
-                  
-                  <div>
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email address"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
-                      disabled={isLoading}
-                    />
-                    {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
-                  </div>
+                {/* Account Credentials - Only show for new signups */}
+                {!isUpgradeMode && (
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-white mb-4">Account Credentials</h3>
+                    
+                    <div>
+                      <Input
+                        type="email"
+                        name="email"
+                        placeholder="Email address"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
+                        disabled={isLoading}
+                      />
+                      {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+                    </div>
 
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Password (6+ characters)"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
-                      disabled={isLoading}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                    {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
-                  </div>
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        placeholder="Password (6+ characters)"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
+                        disabled={isLoading}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                      {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+                    </div>
 
-                  <div className="relative">
-                    <Input
-                      type={showConfirmPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      placeholder="Confirm password"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
-                      disabled={isLoading}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                    >
-                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                    {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
+                    <div className="relative">
+                      <Input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        placeholder="Confirm password"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
+                        disabled={isLoading}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                      >
+                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                      {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Business Information */}
                 <div className="space-y-4">
