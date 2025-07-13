@@ -199,6 +199,9 @@ OPENAI_MODEL=gpt-4o-mini                                        # 🔄 UPGRADE R
 # File Upload Settings (Configured)
 NEXT_PUBLIC_MAX_FILE_SIZE=10485760
 NEXT_PUBLIC_ALLOWED_FILE_TYPES=image/*,.pdf,.doc,.docx,.txt
+
+# Analytics & Admin
+ADMIN_API_KEY=your-secure-admin-key-here                            # 🔄 TODO - generate secure key for production analytics
 ```
 
 ## Development Guidelines
@@ -300,6 +303,38 @@ No test framework currently implemented. When adding tests:
 - Test both frontend components and API endpoints
 - Verify file upload/processing workflows
 - Test mobile responsiveness and touch interactions
+
+## Analytics & Conversion Tracking
+
+### Analytics API ✅ `/api/admin/analytics`
+Real-time conversion tracking for market testing without manual data analysis:
+
+**Key Metrics Tracked:**
+- Total conversions and conversion rate (conversions ÷ trial signups)
+- Time-based breakdowns (today, week, month)
+- User behavior: average tokens used, days to convert
+- Revenue projections: plan distribution, projected MRR
+- Progress toward 100-conversion goal for payment system validation
+
+**Access Methods:**
+```bash
+# Development (no auth required)
+curl http://localhost:3000/api/admin/analytics
+
+# Production (requires ADMIN_API_KEY)
+curl -H "x-admin-key: your-admin-key" https://your-domain.com/api/admin/analytics
+```
+
+**Setup Requirements:**
+1. Run SQL script: `/sql/create_upgrade_conversions_table.sql` in Supabase
+2. Set `ADMIN_API_KEY` environment variable for production security
+3. Monitor `/api/admin/analytics` endpoint for real-time conversion data
+
+**Market Testing Workflow:**
+1. Monitor conversion rate from trial to paid plans
+2. Track time-to-convert and token utilization patterns  
+3. Reach 100 conversions before implementing payment processing
+4. Use data to optimize upgrade flow and pricing strategy
 
 ## Web Search System (Tavily Integration)
 
