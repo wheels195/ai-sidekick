@@ -151,6 +151,7 @@ async function processUploadedFiles(files: any[]): Promise<string> {
   return `FILES UPLOADED:\n${fileDescriptions.join('\n\n')}\n\nPlease analyze these files and provide specific landscaping business insights, recommendations, or feedback based on the content.`
 }
 
+
 // Google Places API search function
 async function performGooglePlacesSearch(query: string, location?: string): Promise<string> {
   console.log('🔍 performGooglePlacesSearch called with:', { query, location, hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY })
@@ -177,9 +178,10 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
         'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.priceLevel,places.websiteUri,places.businessStatus,places.types,places.editorialSummary'
       },
       body: JSON.stringify({
-        textQuery: searchQuery,
+        textQuery: `${query} near ${location}`, // Enhanced query for hyper-local results
         maxResultCount: 8,
-        languageCode: 'en'
+        languageCode: 'en',
+        regionCode: 'US' // Focus on US businesses only
       })
     })
 
@@ -408,6 +410,8 @@ You have verified local business data available from the current query. The next
 2. NEVER create fake, hypothetical, or example companies
 3. If no relevant businesses are found, clearly state this fact
 4. DO NOT use placeholder examples like "Company A" or "Green Thumb Landscapes"
+5. **GEOGRAPHIC INTELLIGENCE**: If results include businesses >10 miles from user's location, ask clarifying questions about market expansion goals
+6. **HYPER-LOCAL FOCUS**: Prioritize businesses within 5-mile radius for immediate competition analysis
 
 The search results contain real Google Places data in this format:
 BUSINESS 1: **Actual Business Name**
@@ -525,9 +529,9 @@ Create a table using ONLY the actual businesses from the Google Places data abov
 - Use ONLY verified business data from the Google Places results above
 - Extract RATING field with ⭐ symbol from the actual data
 - Use PRICE_LEVEL field from the data (show $ symbols or "N/A" if unknown)
-- Include WEBSITE field from the data (domain only, or "No website")
+- Include WEBSITE field as clickable HTML links: `<a href="https://website.com" target="_blank" style="color: #34d399; text-decoration: underline;">website.com</a>`
 - Use PHONE field exactly as provided in the data
-- Extract Key Services from SERVICES/TYPES and SUMMARY fields from the actual businesses
+- For Key Services: IGNORE generic terms like "general_contractor" - instead list specific landscaping services like "Lawn Care, Landscape Design, Tree Services, Irrigation, Hardscaping" based on the business name and context
 - Reviews column: show just the number from userRatingCount
 
 If NO real competitor data is available, state: "No local landscaping competitors found in Google Places search. Enable web search and try a more specific query like 'landscaping companies Dallas TX' to find real competitor data."
@@ -545,8 +549,8 @@ If this is NOT competitor research, use the standard format:
 - Phone: (from PHONE field)
 - Address: (from ADDRESS field)
 - Rating: (from RATING field)
-- Website: (from WEBSITE field or "Not available")
-- Services: (from SERVICES/TYPES field)
+- Website: (clickable HTML link with emerald styling or "Not available")
+- Services: (infer landscaping services from business name/context, ignore generic "general_contractor" labels)
 
 **STRATEGIC ANALYSIS REQUIREMENTS:**
 After the table, provide a comprehensive competitive analysis with emerald green numbered formatting:
@@ -569,6 +573,16 @@ After the table, provide a comprehensive competitive analysis with emerald green
 <span style="color: #34d399; font-weight: 600;">2.</span> [Specific action based on actual competitor analysis]
 <span style="color: #34d399; font-weight: 600;">3.</span> [Specific action based on actual competitor analysis]
 <span style="color: #34d399; font-weight: 600;">4.</span> [Specific action based on actual competitor analysis]
+
+**GEOGRAPHIC CONTEXT QUESTIONS:**
+If the search results include businesses from different areas/zip codes than the user's location, add this section:
+
+### 🗺️ **Geographic Market Strategy**
+I notice some competitors are located in different areas/zip codes than your business location. To provide more targeted advice:
+
+<span style="color: #34d399; font-weight: 600;">•</span> Are you looking to compete primarily in your immediate area?
+<span style="color: #34d399; font-weight: 600;">•</span> Are you considering expanding to other nearby markets or suburbs?
+<span style="color: #34d399; font-weight: 600;">•</span> Would you like me to focus on hyper-local competitors within 5 miles of your location?
 
 **REMEMBER: Base all analysis on the actual Google Places business data provided above. Do not create hypothetical examples.**`
       })
