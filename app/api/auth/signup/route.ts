@@ -36,8 +36,11 @@ export async function POST(request: NextRequest) {
     const verificationToken = crypto.randomBytes(32).toString('hex')
     const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
 
-    // Create user profile with verification token
+    // Create user profile with verification token and trial setup
     const userId = crypto.randomUUID()
+    const now = new Date()
+    const trialExpiresAt = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000)) // 7 days from now
+    
     const { error: profileError } = await supabase
       .from('user_profiles')
       .insert({
@@ -56,6 +59,11 @@ export async function POST(request: NextRequest) {
         target_customers: businessProfile?.target_customers,
         years_in_business: businessProfile?.years_in_business,
         main_challenges: businessProfile?.main_challenges || [],
+        // Initialize 7-day trial with 250k tokens
+        tokens_used_trial: 0,
+        trial_token_limit: 250000,
+        trial_started_at: now.toISOString(),
+        trial_expires_at: trialExpiresAt.toISOString(),
       })
 
     if (profileError) {

@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Fetch user profile from database
     const { data: profile, error } = await supabase
       .from('user_profiles')
-      .select('id, email, business_name, trade, selected_plan, created_at, location, services, team_size, target_customers, years_in_business, main_challenges')
+      .select('id, email, business_name, trade, selected_plan, created_at, location, services, team_size, target_customers, years_in_business, main_challenges, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
       .eq('id', user.userId)
       .single()
 
@@ -45,7 +45,12 @@ export async function GET(request: NextRequest) {
         teamSize: profile.team_size,
         targetCustomers: profile.target_customers,
         yearsInBusiness: profile.years_in_business,
-        mainChallenges: profile.main_challenges || []
+        mainChallenges: profile.main_challenges || [],
+        // Trial token information
+        tokensUsedTrial: profile.tokens_used_trial || 0,
+        trialTokenLimit: profile.trial_token_limit || 250000,
+        trialStartedAt: profile.trial_started_at,
+        trialExpiresAt: profile.trial_expires_at
       }
     })
 

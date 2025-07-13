@@ -277,6 +277,38 @@ export async function POST(request: NextRequest) {
             .eq('id', user.id)
             .single()
           userProfile = profile
+          
+          // Check trial limits for authenticated users
+          if (profile) {
+            const now = new Date()
+            const trialExpires = profile.trial_expires_at ? new Date(profile.trial_expires_at) : null
+            const tokensUsed = profile.tokens_used_trial || 0
+            const tokenLimit = profile.trial_token_limit || 250000
+            
+            // Check if trial has expired
+            if (trialExpires && now > trialExpires) {
+              return NextResponse.json(
+                { 
+                  error: 'Your 7-day free trial has expired. Please upgrade to continue using AI Sidekick.',
+                  errorType: 'TRIAL_EXPIRED'
+                },
+                { status: 403 }
+              )
+            }
+            
+            // Check if token limit exceeded
+            if (tokensUsed >= tokenLimit) {
+              return NextResponse.json(
+                { 
+                  error: `You've reached your trial limit of ${(tokenLimit/1000)}k tokens. Please upgrade to continue using AI Sidekick.`,
+                  errorType: 'TOKEN_LIMIT_EXCEEDED',
+                  tokensUsed,
+                  tokenLimit
+                },
+                { status: 403 }
+              )
+            }
+          }
         }
       } catch (error) {
         console.log('Supabase not available, continuing without user context')
@@ -587,6 +619,17 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
                 })
                 .select('id')
                 .single()
+
+              // Update user's token usage in profile
+              const currentUserMessage = messages[messages.length - 1]
+              const estimatedTokens = Math.ceil((currentUserMessage?.content?.length || 0 + fullResponse.length) / 4)
+              
+              await supabase
+                .from('user_profiles')
+                .update({
+                  tokens_used_trial: (userProfile?.tokens_used_trial || 0) + estimatedTokens
+                })
+                .eq('id', user.id)
 
               // Store anonymized data for global learning
               await supabase

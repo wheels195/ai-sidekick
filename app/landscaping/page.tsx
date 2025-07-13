@@ -435,7 +435,7 @@ export default function LandscapingChat() {
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const [currentModel, setCurrentModel] = useState<string>('')
   const [tokensUsedTrial, setTokensUsedTrial] = useState(0)
-  const [trialTokenLimit] = useState(250000) // 250k tokens total for 7-day trial
+  const [trialTokenLimit, setTrialTokenLimit] = useState(250000) // 250k tokens total for 7-day trial
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
@@ -592,6 +592,10 @@ export default function LandscapingChat() {
             mainChallenges: data.user.mainChallenges || []
           }
           setUser(userProfile)
+          
+          // Load user's actual token usage from database
+          setTokensUsedTrial(data.user.tokensUsedTrial || 0)
+          setTrialTokenLimit(data.user.trialTokenLimit || 250000)
           
           // Update initial message with personalized greeting
           const personalizedGreeting = generatePersonalizedGreeting(userProfile)
@@ -918,6 +922,33 @@ export default function LandscapingChat() {
       clearTimeout(timeoutId)
 
       if (!response.ok || !response.body) {
+        // Handle token limit and trial expiration errors
+        if (response.status === 403) {
+          const errorData = await response.json()
+          
+          if (errorData.errorType === 'TOKEN_LIMIT_EXCEEDED') {
+            const errorMessage: Message = {
+              id: (Date.now() + 2).toString(),
+              role: "assistant",
+              content: `🚨 **Trial Limit Reached**\n\nYou've used all ${(errorData.tokenLimit/1000)}k tokens in your free trial!\n\n**Ready to upgrade?** Get unlimited access to continue growing your landscaping business with AI.\n\n**What happens next:**\n- Sign up for a paid plan to continue chatting\n- Keep all your conversation history\n- Access advanced features\n\n**[Upgrade Your Plan →](/pricing)**`,
+              timestamp: new Date(),
+            }
+            setMessages((prev) => [...prev, errorMessage])
+            return
+          }
+          
+          if (errorData.errorType === 'TRIAL_EXPIRED') {
+            const errorMessage: Message = {
+              id: (Date.now() + 2).toString(),
+              role: "assistant", 
+              content: `⏰ **7-Day Trial Expired**\n\nYour free trial has ended! Hope you found AI Sidekick helpful for your landscaping business.\n\n**Ready to continue?** Upgrade to keep using your AI business advisor.\n\n**What you'll get:**\n- Unlimited conversations\n- Advanced competitor analysis\n- Priority support\n- New features as they launch\n\n**[Choose Your Plan →](/pricing)**`,
+              timestamp: new Date(),
+            }
+            setMessages((prev) => [...prev, errorMessage])
+            return
+          }
+        }
+        
         throw new Error(`API request failed: ${response.status}`)
       }
 
@@ -1015,9 +1046,19 @@ export default function LandscapingChat() {
         return updated
       })
 
-      // Track token usage (estimate: ~4 chars per token for English text)
-      const estimatedTokens = Math.ceil((input.length + assistantText.length) / 4)
-      setTokensUsedTrial(prev => prev + estimatedTokens)
+      // Token usage is now tracked in the backend and database
+      // Refresh user token usage from database
+      if (user) {
+        try {
+          const profileResponse = await fetch('/api/user/profile')
+          if (profileResponse.ok) {
+            const profileData = await profileResponse.json()
+            setTokensUsedTrial(profileData.user.tokensUsedTrial || 0)
+          }
+        } catch (error) {
+          console.error('Failed to refresh token usage:', error)
+        }
+      }
 
       setMessageCount(prev => {
         const newCount = prev + 1
