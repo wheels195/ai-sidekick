@@ -401,21 +401,28 @@ Use this context to provide more personalized and relevant advice.${userName ? `
       enhancedSystemPrompt += `
 🌐 WEB SEARCH STATUS: ✅ SEARCH ACTIVE
 
-You have verified local business data available from the current query. The next system message contains structured business listings in the following format:
+You have verified local business data available from the current query. The next system message contains structured business listings.
 
-BUSINESS 1: **Business Name**
-ADDRESS: Full address
-PHONE: Phone number
-RATING: X.X⭐ (XX reviews)
-PRICE_LEVEL: $ to $$
-WEBSITE: URL or "Website not available"
-SERVICES/TYPES: Business categories
+**CRITICAL INSTRUCTIONS:**
+1. ONLY use the actual business data provided in the search results
+2. NEVER create fake, hypothetical, or example companies
+3. If no relevant businesses are found, clearly state this fact
+4. DO NOT use placeholder examples like "Company A" or "Green Thumb Landscapes"
+
+The search results contain real Google Places data in this format:
+BUSINESS 1: **Actual Business Name**
+ADDRESS: Real address
+PHONE: Real phone number
+RATING: Real rating⭐ (real review count)
+PRICE_LEVEL: Real price level or "unknown"
+WEBSITE: Real website or "not available"
+SERVICES/TYPES: Real business categories
 
 Classify the user query intent:
-- If it's about competitors or "top companies", switch to Competitive Analysis mode
-- Otherwise, treat it as a standard supplier/vendor search
+- If it's about competitors or "top companies", switch to Competitive Analysis mode using ONLY real data
+- Otherwise, treat it as a standard supplier/vendor search using ONLY real data
 
-Only reference verified data and do not fabricate missing details.
+Base all analysis on actual verified business data only.
 `;
     } else if (webSearchEnabled) {
       enhancedSystemPrompt += `
@@ -506,28 +513,31 @@ ${searchResults}
 
 COMPETITIVE ANALYSIS FORMATTING:
 
+**CRITICAL: ONLY USE REAL DATA FROM THE GOOGLE PLACES RESULTS ABOVE. NEVER CREATE FAKE OR HYPOTHETICAL COMPETITORS.**
+
 If this appears to be competitor research (questions about "top companies", "best landscapers", "competitors"), format as a professional analysis table:
 
 ## Competitive Analysis: ${localContext}
 
-| Business Name | Rating | Reviews | Price | Phone | Website | Key Services | Competitive Insight |
-|---------------|--------|---------|-------|-------|---------|--------------|-------------------|
-| Company A | 4.8⭐ | 127 | $$$ | (555) 123-4567 | company-a.com | Full service landscaping | High ratings, premium pricing - opportunity to undercut |
-| Company B | 4.2⭐ | 43 | $$ | (555) 234-5678 | company-b.com | Lawn care, tree trimming | Limited services - upsell opportunity |
+Create a table using ONLY the actual businesses from the Google Places data above. Do not invent companies like "Company A" or "Company B".
 
-**IMPORTANT FORMATTING REQUIREMENTS:**
-- Use the exact RATING field with ⭐ symbol
-- Use PRICE_LEVEL field (show $ symbols if available, or "N/A" if price level unknown)
-- Include WEBSITE field (show domain only, remove https://, or "No website" if not available)
-- Use PHONE field exactly as provided
-- For Key Services: Extract specific landscaping services from SERVICES/TYPES and SUMMARY fields, avoid generic terms like "general contracting"
-- Reviews column should show just the number (without "reviews" text)
+**FORMATTING REQUIREMENTS:**
+- Use ONLY verified business data from the Google Places results above
+- Extract RATING field with ⭐ symbol from the actual data
+- Use PRICE_LEVEL field from the data (show $ symbols or "N/A" if unknown)
+- Include WEBSITE field from the data (domain only, or "No website")
+- Use PHONE field exactly as provided in the data
+- Extract Key Services from SERVICES/TYPES and SUMMARY fields from the actual businesses
+- Reviews column: show just the number from userRatingCount
 
-Then provide detailed strategic insights with specific actionable advice:
-- **Market Gaps:** What specific landscaping services are missing or underserved?
-- **Pricing Opportunities:** Where can you compete on price or value based on the price levels shown?
-- **Service Differentiation:** How can you stand out from these specific competitors?
-- **Quality Standards:** What service quality is expected based on competitor ratings?
+If NO real competitor data is available, state: "No local landscaping competitors found in Google Places search. Enable web search and try a more specific query like 'landscaping companies Dallas TX' to find real competitor data."
+
+Then provide strategic insights with emerald green numbered formatting:
+
+<span style="color: #34d399; font-weight: 600;">1. Market Gaps:</span> [Based on actual competitor analysis]
+<span style="color: #34d399; font-weight: 600;">2. Pricing Opportunities:</span> [Based on actual price data]  
+<span style="color: #34d399; font-weight: 600;">3. Service Differentiation:</span> [Based on actual competitor services]
+<span style="color: #34d399; font-weight: 600;">4. Quality Standards:</span> [Based on actual ratings/reviews]
 
 If this is NOT competitor research, use the standard format:
 
@@ -539,18 +549,28 @@ If this is NOT competitor research, use the standard format:
 - Services: (from SERVICES/TYPES field)
 
 **STRATEGIC ANALYSIS REQUIREMENTS:**
-After the table, provide a comprehensive competitive analysis with:
+After the table, provide a comprehensive competitive analysis with emerald green numbered formatting:
 
 ### Strategic Insights for Johnson's Landscaping
-- **Market Gaps:** Identify 2-3 specific services missing from competitors
-- **Pricing Opportunities:** Analyze price points and suggest competitive positioning  
-- **Service Differentiation:** Recommend 3-4 ways to stand out from these competitors
-- **Quality Standards:** Set benchmarks based on competitor ratings and reviews
+
+<span style="color: #34d399; font-weight: 600;">1. Market Gaps:</span> Identify 2-3 specific services missing from actual competitors analyzed
+<span style="color: #34d399; font-weight: 600;">2. Pricing Opportunities:</span> Analyze actual price points and suggest competitive positioning  
+<span style="color: #34d399; font-weight: 600;">3. Service Differentiation:</span> Recommend 3-4 ways to stand out from the specific competitors found
+<span style="color: #34d399; font-weight: 600;">4. Quality Standards:</span> Set benchmarks based on actual competitor ratings and reviews
 
 ### Actionable Recommendations
-Provide 4-6 specific, immediately actionable strategies Johnson's Landscaping can implement.
+<span style="color: #34d399; font-weight: 600;">1.</span> [Strategy based on real competitor data]
+<span style="color: #34d399; font-weight: 600;">2.</span> [Strategy based on real competitor data]
+<span style="color: #34d399; font-weight: 600;">3.</span> [Strategy based on real competitor data]
+<span style="color: #34d399; font-weight: 600;">4.</span> [Strategy based on real competitor data]
 
-ALWAYS end with ## Next Steps containing 3-4 specific actionable items for Johnson's Landscaping business growth.`
+## Next Steps
+<span style="color: #34d399; font-weight: 600;">1.</span> [Specific action based on actual competitor analysis]
+<span style="color: #34d399; font-weight: 600;">2.</span> [Specific action based on actual competitor analysis]
+<span style="color: #34d399; font-weight: 600;">3.</span> [Specific action based on actual competitor analysis]
+<span style="color: #34d399; font-weight: 600;">4.</span> [Specific action based on actual competitor analysis]
+
+**REMEMBER: Base all analysis on the actual Google Places business data provided above. Do not create hypothetical examples.**`
       })
     }
 
