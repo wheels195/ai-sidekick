@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
         team_size: businessProfile?.team_size || currentProfile.team_size,
         target_customers: businessProfile?.target_customers || currentProfile.target_customers,
         years_in_business: businessProfile?.years_in_business || currentProfile.years_in_business,
-        main_challenges: businessProfile?.main_challenges || currentProfile.main_challenges,
+        business_priorities: businessProfile?.business_priorities || currentProfile.business_priorities,
         // Grant unlimited access until payment system is implemented
         tokens_used_trial: currentProfile.tokens_used_trial, // Preserve trial usage history
         trial_token_limit: 999999999, // Essentially unlimited for market testing

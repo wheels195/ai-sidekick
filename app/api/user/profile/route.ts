@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Fetch user profile from database
     const { data: profile, error } = await supabase
       .from('user_profiles')
-      .select('id, email, business_name, trade, selected_plan, created_at, location, zip_code, services, team_size, target_customers, years_in_business, main_challenges, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
+      .select('id, email, business_name, trade, selected_plan, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
       .eq('id', user.userId)
       .single()
 
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
         teamSize: profile.team_size,
         targetCustomers: profile.target_customers,
         yearsInBusiness: profile.years_in_business,
-        mainChallenges: profile.main_challenges || [],
+        businessPriorities: profile.business_priorities || [],
         // Trial token information
         tokensUsedTrial: profile.tokens_used_trial || 0,
         trialTokenLimit: profile.trial_token_limit || 250000,
@@ -91,13 +91,13 @@ export async function PUT(request: NextRequest) {
     if (profileData.teamSize !== undefined) updateData.team_size = profileData.teamSize
     if (profileData.targetCustomers !== undefined) updateData.target_customers = profileData.targetCustomers
     if (profileData.yearsInBusiness !== undefined) updateData.years_in_business = profileData.yearsInBusiness
-    if (profileData.mainChallenges !== undefined) updateData.main_challenges = profileData.mainChallenges
+    if (profileData.businessPriorities !== undefined) updateData.business_priorities = profileData.businessPriorities
 
     const { data, error } = await supabase
       .from('user_profiles')
       .update(updateData)
       .eq('id', user.userId)
-      .select('id, email, business_name, trade, selected_plan, location, zip_code, services, team_size, target_customers, years_in_business, main_challenges')
+      .select('id, email, business_name, trade, selected_plan, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities')
       .single()
 
     if (error) {
@@ -121,7 +121,7 @@ export async function PUT(request: NextRequest) {
         teamSize: data.team_size,
         targetCustomers: data.target_customers,
         yearsInBusiness: data.years_in_business,
-        mainChallenges: data.main_challenges || []
+        businessPriorities: data.business_priorities || []
       },
       message: 'Profile updated successfully'
     })

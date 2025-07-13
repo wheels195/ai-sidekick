@@ -117,7 +117,7 @@ export default function SignupPage() {
     teamSize: '',
     targetCustomers: '',
     yearsInBusiness: '',
-    mainChallenges: [] as string[]
+    businessPriorities: [] as string[]
   })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -174,7 +174,7 @@ export default function SignupPage() {
           teamSize: user.teamSize?.toString() || '',
           targetCustomers: user.targetCustomers || '',
           yearsInBusiness: user.yearsInBusiness?.toString() || '',
-          mainChallenges: user.mainChallenges || []
+          businessPriorities: user.businessPriorities || []
         }))
         
         // Parse location into city/state if possible and add zip code
@@ -239,8 +239,8 @@ export default function SignupPage() {
     setFormData(prev => ({ ...prev, services }))
   }
 
-  const handleMainChallengesChange = (challenges: string[]) => {
-    setFormData(prev => ({ ...prev, mainChallenges: challenges }))
+  const handleBusinessPrioritiesChange = (priorities: string[]) => {
+    setFormData(prev => ({ ...prev, businessPriorities: priorities }))
   }
 
 
@@ -375,7 +375,7 @@ export default function SignupPage() {
           team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
           years_in_business: formData.yearsInBusiness,
-          main_challenges: formData.mainChallenges
+          business_priorities: formData.businessPriorities
         }
       } : {
         email: formData.email,
@@ -390,7 +390,7 @@ export default function SignupPage() {
           team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
           years_in_business: formData.yearsInBusiness,
-          main_challenges: formData.mainChallenges
+          business_priorities: formData.businessPriorities
         }
       }
 
@@ -781,8 +781,8 @@ export default function SignupPage() {
                     <p className="text-white text-sm mb-2">Top business priorities (select all that apply):</p>
                     <MultiSelect
                       options={businessGoalsOptions}
-                      value={formData.mainChallenges}
-                      onChange={handleMainChallengesChange}
+                      value={formData.businessPriorities}
+                      onChange={handleBusinessPrioritiesChange}
                       placeholder="Select your business goals"
                       disabled={isLoading}
                     />

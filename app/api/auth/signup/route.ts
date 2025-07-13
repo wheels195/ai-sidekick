@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         team_size: businessProfile?.team_size,
         target_customers: businessProfile?.target_customers,
         years_in_business: businessProfile?.years_in_business,
-        main_challenges: businessProfile?.main_challenges || [],
+        business_priorities: businessProfile?.business_priorities || [],
         // Initialize 7-day trial with 250k tokens
         tokens_used_trial: 0,
         trial_token_limit: 250000,

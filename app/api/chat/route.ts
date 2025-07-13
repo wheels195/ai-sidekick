@@ -390,7 +390,7 @@ export async function POST(request: NextRequest) {
 - Team Size: ${userProfile.team_size || 'Not specified'}
 - Target Customers: ${userProfile.target_customers || 'Not specified'}
 - Years in Business: ${userProfile.years_in_business || 'Not specified'}
-- Main Challenges: ${userProfile.main_challenges?.join(', ') || 'Not specified'}
+- Business Priorities: ${userProfile.business_priorities?.join(', ') || 'Not specified'}
 
 Use this context to provide more personalized and relevant advice.`
     }
