@@ -20,6 +20,7 @@ import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import SectionWithMockup from "@/components/ui/section-with-mockup"
 
 export default function LandingPage() {
   const [demoStep, setDemoStep] = useState(0)
@@ -29,12 +30,6 @@ export default function LandingPage() {
   const [demoStarted, setDemoStarted] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
-  // Competitive Intelligence Demo State
-  const [compDemoStarted, setCompDemoStarted] = useState(false)
-  const [compDemoStep, setCompDemoStep] = useState(0)
-  const [compUserMessage, setCompUserMessage] = useState("")
-  const [compAiMessage, setCompAiMessage] = useState("")
-  const [compIsTyping, setCompIsTyping] = useState(false)
 
   const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
   
@@ -61,37 +56,6 @@ Charging more for your landscaping services can be a strategic move, especially 
 
 What specific services do you currently offer, and what challenges have you faced in pricing your work?`
 
-  // Competitive Intelligence Demo Content
-  const compUserQuestion = "Who are the top landscaping companies near me and how can I improve my rankings?"
-  
-  const compAiResponse = `## Competitive Analysis for Dallas, TX 75201
-
-I can see you're in **Dallas, TX 75201**. Here's your competitive landscape:
-
-✅ **Dallas Green Pro** - 4.8⭐ (234 reviews)
-   **Services:** Lawn Care, Tree Trimming
-   **Phone:** (214) 555-0123
-
-✅ **Lone Star Yard Services** - 4.5⭐ (156 reviews)
-   **Services:** Garden Design, Irrigation
-   **Phone:** (214) 555-0456
-
-✅ **Trinity River Landscapes** - 4.6⭐ (89 reviews)
-   **Services:** Hardscaping, Maintenance
-   **Phone:** (214) 555-0789
-
-### Strategic Insights:
-
-**1. Market Gap:** No competitor offers comprehensive seasonal packages
-**2. Pricing Opportunity:** Premium services underrepresented in your area  
-**3. Quality Standard:** Aim for 4.7+ rating to compete effectively
-
-### Next Steps:
-- Focus on seasonal maintenance packages
-- Optimize Google Business Profile for local SEO
-- Implement review generation strategy
-
-What specific services do you want to focus on to differentiate from these competitors?`
 
   useEffect(() => {
     const startDemo = () => {
@@ -155,40 +119,6 @@ What specific services do you want to focus on to differentiate from these compe
     }
   }, [demoStarted, fullUserMessage, fullAiMessage])
 
-  // Competitive Intelligence Demo Effect
-  useEffect(() => {
-    const startCompDemo = () => {
-      // Set user message immediately
-      setCompUserMessage(compUserQuestion)
-      setCompDemoStep(1)
-      setCompAiMessage("")
-      
-      // Start AI thinking immediately
-      setTimeout(() => {
-        setCompDemoStep(2)
-        setCompIsTyping(true)
-        
-        // Start AI response after 1 second
-        setTimeout(() => {
-          setCompIsTyping(false)
-          setCompDemoStep(3)
-          let aiIndex = 0
-          const typeCompAiMessage = () => {
-            if (aiIndex < compAiResponse.length) {
-              setCompAiMessage(compAiResponse.substring(0, aiIndex + 1))
-              aiIndex++
-              setTimeout(typeCompAiMessage, 8 + Math.random() * 15) // Much faster AI typing
-            }
-          }
-          typeCompAiMessage()
-        }, 1000)
-      }, 500)
-    }
-
-    if (compDemoStarted) {
-      startCompDemo()
-    }
-  }, [compDemoStarted, compUserQuestion, compAiResponse])
 
   // Convert markdown to HTML with emerald headings (similar to chat interface)
   const convertMarkdownToHtml = (markdown: string): string => {
@@ -659,219 +589,54 @@ What specific services do you want to focus on to differentiate from these compe
         </div>
       </section>
 
-      {/* Competitive Intelligence Demo Section */}
-      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-4 sm:mb-6">
-              <span className="text-white">Instant Competitive Intel. </span>
-              <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">More Customers</span>
-              <span className="text-white">. Smarter Pricing.</span>
-            </h2>
-            <p className="text-xl xl:text-2xl text-gray-200 max-w-4xl mx-auto mb-12">
-              Watch our AI analyze your local market and competitors in seconds, not hours
-            </p>
-          </div>
+      {/* Advanced AI Features Section */}
+      {/* Real-Time Competitive Intelligence */}
+      <SectionWithMockup
+        title={
+          <>
+            <span className="text-white">Real-Time</span>{" "}
+            <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
+              Competitive Intelligence
+            </span>
+          </>
+        }
+        description="Our AI instantly searches Google Places and analyzes your local competitors, providing ratings, reviews, pricing insights, and strategic market gaps in under 30 seconds. No more hours of manual research."
+        primaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDkwOTA5O3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTE2Yzc7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2JnKSIgcng9IjMyIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI4MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMTBiOTgxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+Q29tcGV0aXRvciBBbmFseXNpczwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iMTIwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzE5MTkxOSIgcng9IjEyIi8+CiAgPHRleHQgeD0iNjAiIHk9IjE1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiBmb250LXdlaWdodD0iYm9sZCI+RGFsbGFzIEdyZWVuIFBybyAtIDQuOOKXhDwvdGV4dD4KICA8dGV4dCB4PSI2MCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiNhYWFhYWEiPjIzNCByZXZpZXdzIOKAoiBMYXduIENhcmUsIFRyZWUgVHJpbW1pbmc8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjIwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMTBiOTgxIj4oMjE0KSA1NTUtMDEyMzwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iMjQwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzE5MTkxOSIgcng9IjEyIi8+CiAgPHRleHQgeD0iNjAiIHk9IjI3MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiBmb250LXdlaWdodD0iYm9sZCI+TG9uZSBTdGFyIFlhcmQgU2VydmljZXMgLSA0LjXilIQ8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjI5NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYWFhYWFhIj4xNTYgcmV2aWV3cyDigKIgR2FyZGVuIERlc2lnbiwgSXJyaWdhdGlvbjwvdGV4dD4KICA8dGV4dCB4PSI2MCIgeT0iMzIwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMxMGI5ODEiPigyMTQpIDU1NS0wNDU2PC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIzNjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMTkxOTE5IiByeD0iMTIiLz4KICA8dGV4dCB4PSI2MCIgeT0iMzkwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmZmZmYiIGZvbnQtd2VpZ2h0PSJib2xkIj5UcmluaXR5IFJpdmVyIExhbmRzY2FwZXMgLSA0LjbilIQ8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjQxNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYWFhYWFhIj44OSByZXZpZXdzIOKAoiBIYXJkc2NhcGluZywgTWFpbnRlbmFuY2U8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjQ0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMTBiOTgxIj4oMjE0KSA1NTUtMDc4OTwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjUwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMTBiOTgxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+QUkgSW5zaWdodDo8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI1MzAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TWFya2V0IEdhcDogU2Vhc29uYWwgUGFja2FnZXM8L3RleHQ+Cjwvc3ZnPg=="
+        secondaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDkwOTA5IiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjMwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNDQ0NDQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Hb29nbGUgUGxhY2VzPC90ZXh0Pgo8L3N2Zz4="
+        reverseLayout={false}
+      />
 
-          {/* Interactive Demo Interface */}
-          <div className="max-w-6xl mx-auto">
-            {!compDemoStarted ? (
-              /* Initial CTA State */
-              <div className="text-center mb-12">
-                <div className="mb-8">
-                  <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-600/30 rounded-xl p-6 max-w-2xl mx-auto">
-                    <div className="flex items-center space-x-3 mb-4">
-                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                        <span className="text-white text-sm font-semibold">You</span>
-                      </div>
-                      <span className="text-gray-300 text-lg font-medium">Try asking:</span>
-                    </div>
-                    <p className="text-white text-lg sm:text-xl leading-relaxed pl-11">
-                      "Who are the top landscaping companies near me and how can I improve my rankings?"
-                    </p>
-                  </div>
-                </div>
-                
-                <Button 
-                  onClick={() => setCompDemoStarted(true)}
-                  size="lg"
-                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 border-2 border-emerald-400/20 backdrop-blur-sm relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <span className="relative flex items-center">
-                    <Sparkles className="w-6 h-6 mr-3 animate-pulse" />
-                    Watch AI Analysis in Action
-                    <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
-                  </span>
-                </Button>
-                <p className="text-gray-400 text-sm mt-4">See how AI analyzes your competitors in seconds</p>
-              </div>
-            ) : (
-              /* Interactive Competitive Intelligence Demo */
-              <div className="bg-gray-900/80 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 max-w-4xl mx-auto mb-12">
-                {/* Chat Header */}
-                <div className="flex items-center space-x-4 pb-6 border-b border-white/20 mb-6">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                  </div>
-                  <span className="text-gray-200 font-medium">Landscape AI Sidekick</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span className="text-emerald-300 text-sm">Live Demo</span>
-                  </div>
-                </div>
+      {/* AI-Powered Website Analysis */}
+      <SectionWithMockup
+        title={
+          <>
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent font-cursive">
+              AI-Powered
+            </span>{" "}
+            <span className="text-white">Website Analysis</span>
+          </>
+        }
+        description="Coming soon: Upload competitor websites and get instant analysis of their marketing strategies, pricing models, service offerings, and SEO tactics to stay ahead of the competition."
+        primaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzA5MDkwOTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjM2NmYxO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNiZzIpIiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2MzY2ZjEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5XZWJzaXRlIEFuYWx5c2lzPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIxMjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iODAiIGZpbGw9IiMxOTE5MTkiIHJ4PSIxMiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5TRU8gQW5hbHlzaXM8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSIxNzUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzYzNjZmMSI+U2NvcmU6IDg1LzEwMDwvdGV4dD4KICA8cmVjdCB4PSI0MCIgeT0iMjIwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMTkxOTE5IiByeD0iMTIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+UHJpY2luZyBTdHJhdGVneTwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjI3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjM2NmYxIj5QcmVtaXVtIFBvc2l0aW9uaW5nPC90ZXh0PgogIDxyZWN0IHg9IjQwIiB5PSIzMjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iODAiIGZpbGw9IiMxOTE5MTkiIHJ4PSIxMiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iMzUwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5Db250ZW50IEFuYWx5c2lzPC90ZXh0PgogIDx0ZXh0IHg9IjUwJSIgeT0iMzc1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2MzY2ZjEiPjE1IFNlcnZpY2UgUGFnZXM8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI0NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzYzNjZmMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPkNvbWluZyBTb29uPC90ZXh0Pgo8L3N2Zz4="
+        secondaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDkwOTA5IiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjMwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNDQ0NDQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5XZWJzaXRlPC90ZXh0Pgo8L3N2Zz4="
+        reverseLayout={true}
+      />
 
-                {/* Chat Messages */}
-                <div className="space-y-6 max-h-96 overflow-y-auto">
-                  {/* User Message - Always show */}
-                  <div className="flex justify-end">
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-6 py-4 max-w-md shadow-lg">
-                      <p className="text-sm font-medium">
-                        {compDemoStep >= 1 ? compUserMessage : compUserQuestion}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* AI Thinking Indicator */}
-                  {compIsTyping && (
-                    <div className="flex justify-start items-center space-x-2 pl-4">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                      </div>
-                      <span className="text-emerald-300 text-xs">Analyzing competitors...</span>
-                    </div>
-                  )}
-
-                  {/* AI Response - Only show when typing or complete */}
-                  {compDemoStep >= 3 && (
-                    <div className="flex justify-start">
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-6 py-4 max-w-3xl border border-white/20 shadow-lg">
-                        <div className="space-y-3 text-sm leading-relaxed">
-                          <div 
-                            dangerouslySetInnerHTML={{ 
-                              __html: convertMarkdownToHtml(compAiMessage) 
-                            }}
-                          />
-                          {compDemoStep === 3 && compAiMessage.length > 0 && !compAiMessage.includes('What specific services') && (
-                            <span className="animate-pulse text-emerald-400">|</span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Default state - show when demo hasn't started */}
-                  {compDemoStep === 0 && !compDemoStarted && (
-                    <div className="flex items-center justify-center py-8">
-                      <div className="text-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                          <BarChart3 className="w-6 h-6 text-white" />
-                        </div>
-                        <p className="text-emerald-300 font-medium">Click to see competitive analysis</p>
-                        <p className="text-gray-400 text-sm mt-1">Watch real competitor data analysis</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Before/After Comparison */}
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-              {/* Before - Traditional Google Search */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-gray-300 text-center">Traditional Google Search</h3>
-                <div className="bg-white/5 border border-gray-600/20 rounded-xl p-4 opacity-50">
-                  {/* Mock Google Search Interface */}
-                  <div className="bg-white rounded-lg p-4 space-y-4">
-                    {/* Google Search Header */}
-                    <div className="flex items-center space-x-4 pb-3 border-b border-gray-200">
-                      <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-red-500 rounded-sm"></div>
-                      <div className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-gray-500 text-sm">
-                        landscaping companies near me
-                      </div>
-                    </div>
-                    
-                    {/* Mock Search Results */}
-                    <div className="space-y-4 text-xs">
-                      <div className="space-y-1">
-                        <div className="text-blue-600 underline text-sm">Dallas Green Pros | Professional Landscaping Services</div>
-                        <div className="text-gray-600 text-xs">www.dallasgreenp ros.com</div>
-                        <div className="text-gray-700 text-xs">Professional landscaping services in Dallas. Call today for a free estimate on lawn care, tree trimming, and garden design...</div>
-                      </div>
-                      
-                      <div className="space-y-1">
-                        <div className="text-blue-600 underline text-sm">Lone Star Yard Services - Landscaping & Lawn Care</div>
-                        <div className="text-gray-600 text-xs">www.lonestaryard.com</div>
-                        <div className="text-gray-700 text-xs">Expert landscaping and lawn maintenance. Serving Dallas and surrounding areas for over 10 years...</div>
-                      </div>
-                      
-                      <div className="space-y-1">
-                        <div className="text-blue-600 underline text-sm">Trinity River Landscapes | Hardscaping Specialists</div>
-                        <div className="text-gray-600 text-xs">www.trinityriverlandscapes.com</div>
-                        <div className="text-gray-700 text-xs">Hardscaping and landscape design services. Patios, walkways, retaining walls, and more...</div>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-center text-gray-500 mt-4 text-sm">Hours of manual research to find basic contact info...</p>
-                </div>
-              </div>
-
-              {/* After - AI Analysis */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-emerald-300 text-center">AI Competitive Intelligence</h3>
-                <div className="bg-emerald-900/10 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-6">
-                  <div className="text-center space-y-6">
-                    <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto">
-                      <Sparkles className="w-8 h-8 text-white animate-pulse" />
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <h4 className="text-xl font-semibold text-emerald-300">Instant Competitive Analysis</h4>
-                      <div className="space-y-3 text-white">
-                        <p className="flex items-center justify-center space-x-2">
-                          <CheckCircle className="w-5 h-5 text-emerald-400" />
-                          <span>Complete competitor profiles with ratings & reviews</span>
-                        </p>
-                        <p className="flex items-center justify-center space-x-2">
-                          <CheckCircle className="w-5 h-5 text-emerald-400" />
-                          <span>Market gaps and pricing opportunities</span>
-                        </p>
-                        <p className="flex items-center justify-center space-x-2">
-                          <CheckCircle className="w-5 h-5 text-emerald-400" />
-                          <span>Actionable strategies to outrank competitors</span>
-                        </p>
-                        <p className="flex items-center justify-center space-x-2">
-                          <CheckCircle className="w-5 h-5 text-emerald-400" />
-                          <span>All delivered in under 30 seconds</span>
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="bg-emerald-900/20 rounded-lg p-4">
-                      <p className="text-emerald-300 font-medium text-sm">
-                        ↑ See the live demo above to watch AI analysis in action
-                      </p>
-                    </div>
-
-                    <Button 
-                      onClick={() => window.location.href = '/signup?plan=free-trial'}
-                      className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-lg px-8 py-4 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
-                    >
-                      Get Your AI Sidekick
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hyper-Local Market Intelligence */}
+      <SectionWithMockup
+        title={
+          <>
+            <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent font-cursive">
+              Hyper-Local
+            </span>{" "}
+            <span className="text-white">Market Intelligence</span>
+          </>
+        }
+        description="Get detailed market analysis within a 5-mile radius of your business location. Discover pricing opportunities, service gaps, and competitive positioning strategies tailored to your exact market."
+        primaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzA5MDkwOTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZjk3MzE2O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNiZzMpIiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjgwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmOTczMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5NYXJrZXQgSW50ZWxsaWdlbmNlPC90ZXh0PgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y5NzMxNiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtZGFzaGFycmF5PSI1LDUiLz4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjUiIGZpbGw9IiNmOTczMTYiLz4KICA8dGV4dCB4PSIyMDAiIHk9IjIxNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Zb3UgSGVyZTwvdGV4dD4KICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIxNjAiIHI9IjMiIGZpbGw9IiMxMGI5ODEiLz4KICA8dGV4dCB4PSIxNDAiIHk9IjE0NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMTBiOTgxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Db21wZXRpdG9yPC90ZXh0PgogIDxjaXJjbGUgY3g9IjI2MCIgY3k9IjE4MCIgcj0iMyIgZmlsbD0iIzEwYjk4MSIvPgogIDx0ZXh0IHg9IjI2MCIgeT0iMTY1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMxMGI5ODEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNvbXBldGl0b3I8L3RleHQ+CiAgPGNpcmNsZSBjeD0iMTgwIiBjeT0iMjQwIiByPSIzIiBmaWxsPSIjMTBiOTgxIi8+CiAgPHRleHQgeD0iMTgwIiB5PSIyNTUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzEwYjk4MSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q29tcGV0aXRvcjwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjM1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+NS1NaWxlIFJhZGl1cyBBbmFseXNpczwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjM4MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZjk3MzE2Ij7igKIgMTIgQ29tcGV0aXRvcnMgRm91bmQ8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2Y5NzMxNiI+4oCiIEF2ZyBSYXRpbmc6IDQuNDwvdGV4dD4KICA8dGV4dCB4PSI1MCUiIHk9IjQyMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZjk3MzE2Ij7igKIgTWFya2V0IEdhcDogTGFuZHNjYXBpbmc8L3RleHQ+CiAgPHRleHQgeD0iNTAlIiB5PSI0ODAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2Y5NzMxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPkxvY2FsIE9wcG9ydHVuaXRpZXM8L3RleHQ+Cjwvc3ZnPg=="
+        secondaryImageSrc="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDkwOTA5IiByeD0iMzIiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjMwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNDQ0NDQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5NYXJrZXQgRGF0YTwvdGV4dD4KPC9zdmc+">
+        reverseLayout={false}
+      />
 
       {/* Products Section - AI Sidekicks */}
       <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
