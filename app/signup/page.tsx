@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Sparkles, ArrowLeft, Eye, EyeOff, CheckCircle } from "lucide-react"
+import { Sparkles, ArrowLeft, Eye, EyeOff, CheckCircle, XCircle } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
@@ -30,6 +30,7 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [passwordsChecked, setPasswordsChecked] = useState(false)
 
   // Auto-populate plan from URL parameter and detect upgrade mode
   const [isUpgradeMode, setIsUpgradeMode] = useState(false)
@@ -110,6 +111,20 @@ export default function SignupPage() {
     }
   }
 
+  const handlePasswordBlur = () => {
+    // Only show password matching indicators after both passwords have been entered and user moves away
+    if (formData.password && formData.confirmPassword) {
+      setPasswordsChecked(true)
+    }
+  }
+
+  const getPasswordMatchStatus = () => {
+    if (!passwordsChecked || !formData.password || !formData.confirmPassword) {
+      return null
+    }
+    return formData.password === formData.confirmPassword
+  }
+
   const handleSelectChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }))
     // Clear error when user selects
@@ -127,11 +142,43 @@ export default function SignupPage() {
     }))
   }
 
+  const handleTargetCustomerToggle = (customer: string) => {
+    // Convert targetCustomers to array if it's a string
+    const currentCustomers = typeof formData.targetCustomers === 'string' 
+      ? formData.targetCustomers.split(', ').filter(c => c) 
+      : (Array.isArray(formData.targetCustomers) ? formData.targetCustomers : [])
+    
+    const updatedCustomers = currentCustomers.includes(customer)
+      ? currentCustomers.filter(c => c !== customer)
+      : [...currentCustomers, customer]
+    
+    setFormData(prev => ({ ...prev, targetCustomers: updatedCustomers.join(', ') }))
+  }
+
+  const handleBusinessGoalToggle = (goal: string) => {
+    // Convert mainChallenges to array if it's a string
+    const currentGoals = typeof formData.mainChallenges === 'string' 
+      ? formData.mainChallenges.split(', ').filter(g => g) 
+      : (Array.isArray(formData.mainChallenges) ? formData.mainChallenges : [])
+    
+    const updatedGoals = currentGoals.includes(goal)
+      ? currentGoals.filter(g => g !== goal)
+      : [...currentGoals, goal]
+    
+    setFormData(prev => ({ ...prev, mainChallenges: updatedGoals.join(', ') }))
+  }
+
   // Trade options and their corresponding services
   const tradeOptions = {
     landscaping: {
       name: 'Landscaping',
-      services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation', 'Hardscaping', 'Snow Removal', 'Pest Control']
+      services: [
+        'Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation', 'Hardscaping', 
+        'Snow Removal', 'Pest Control', 'Power Washing/Pressure Washing', 
+        'Holiday & Christmas Lighting', 'Exterior/Landscape Lighting', 
+        'Fence Installation & Repair', 'Outdoor Living Spaces', 
+        'Mosquito Control', 'Leaf Removal', 'Mulching Services'
+      ]
     },
     electrical: {
       name: 'Electrical',
@@ -165,6 +212,46 @@ export default function SignupPage() {
     }
     return tradeOptions[formData.trade as keyof typeof tradeOptions].services
   }
+
+  // Business dropdown options
+  const teamSizeOptions = [
+    'Solo (just me)',
+    '2-3 employees', 
+    '4-7 employees',
+    '8-15 employees',
+    '16+ employees'
+  ]
+
+  const yearsInBusinessOptions = [
+    'Less than 1 year',
+    '1-2 years',
+    '3-5 years', 
+    '6-10 years',
+    '11-20 years',
+    '20+ years'
+  ]
+
+  const targetCustomerOptions = [
+    'Residential homeowners',
+    'Property management companies',
+    'Commercial properties',
+    'HOA communities',
+    'New construction',
+    'Municipal/government contracts'
+  ]
+
+  const businessGoalsOptions = [
+    'Generate more qualified leads',
+    'Improve local search rankings (SEO)',
+    'Increase average job value',
+    'Beat competitor pricing strategies', 
+    'Scale operations & grow team',
+    'Improve customer retention',
+    'Streamline seasonal planning',
+    'Enhance online reputation',
+    'Expand service offerings',
+    'Optimize pricing for profitability'
+  ]
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -209,9 +296,9 @@ export default function SignupPage() {
           zip_code: formData.zipCode,
           trade: formData.trade,
           services: formData.customService ? [...formData.services, formData.customService] : formData.services,
-          team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
+          team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
-          years_in_business: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
+          years_in_business: formData.yearsInBusiness,
           main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
         }
       } : {
@@ -224,9 +311,9 @@ export default function SignupPage() {
           zip_code: formData.zipCode,
           trade: formData.trade,
           services: formData.customService ? [...formData.services, formData.customService] : formData.services,
-          team_size: formData.teamSize ? parseInt(formData.teamSize) : null,
+          team_size: formData.teamSize,
           target_customers: formData.targetCustomers,
-          years_in_business: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
+          years_in_business: formData.yearsInBusiness,
           main_challenges: formData.mainChallenges ? formData.mainChallenges.split(',').map(s => s.trim()) : []
         }
       }
@@ -352,6 +439,7 @@ export default function SignupPage() {
                         placeholder="Password (6+ characters)"
                         value={formData.password}
                         onChange={handleInputChange}
+                        onBlur={handlePasswordBlur}
                         className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
                         disabled={isLoading}
                       />
@@ -372,17 +460,35 @@ export default function SignupPage() {
                         placeholder="Confirm password"
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
-                        className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
+                        onBlur={handlePasswordBlur}
+                        className={`bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-20 ${
+                          getPasswordMatchStatus() === true ? 'border-green-500/50' : 
+                          getPasswordMatchStatus() === false ? 'border-red-500/50' : ''
+                        }`}
                         disabled={isLoading}
                       />
-                      <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                      >
-                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                        {getPasswordMatchStatus() === true && (
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                        )}
+                        {getPasswordMatchStatus() === false && (
+                          <XCircle className="w-4 h-4 text-red-500" />
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="text-gray-400 hover:text-white"
+                        >
+                          {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
                       {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
+                      {getPasswordMatchStatus() === true && (
+                        <p className="text-green-400 text-sm mt-1">✓ Passwords match</p>
+                      )}
+                      {getPasswordMatchStatus() === false && (
+                        <p className="text-red-400 text-sm mt-1">✗ Passwords don't match</p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -531,24 +637,36 @@ export default function SignupPage() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Input
-                      type="number"
-                      name="teamSize"
-                      placeholder="Team size"
-                      value={formData.teamSize}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
-                      disabled={isLoading}
-                    />
-                    <Input
-                      type="number"
-                      name="yearsInBusiness"
-                      placeholder="Years in business"
-                      value={formData.yearsInBusiness}
-                      onChange={handleInputChange}
-                      className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
-                      disabled={isLoading}
-                    />
+                    <div>
+                      <p className="text-white text-sm mb-2">Team size:</p>
+                      <Select onValueChange={(value) => handleSelectChange('teamSize', value)} value={formData.teamSize}>
+                        <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50">
+                          <SelectValue placeholder="Select team size" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600">
+                          {teamSizeOptions.map((option) => (
+                            <SelectItem key={option} value={option} className="text-white hover:bg-gray-700">
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <p className="text-white text-sm mb-2">Years in business:</p>
+                      <Select onValueChange={(value) => handleSelectChange('yearsInBusiness', value)} value={formData.yearsInBusiness}>
+                        <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50">
+                          <SelectValue placeholder="Select experience" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600">
+                          {yearsInBusinessOptions.map((option) => (
+                            <SelectItem key={option} value={option} className="text-white hover:bg-gray-700">
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
                   {/* Services Selection */}
@@ -573,51 +691,52 @@ export default function SignupPage() {
                         ))}
                       </div>
                       
-                      {/* Custom Service Input */}
-                      <div className="flex items-center space-x-3">
-                        <input
-                          type="checkbox"
-                          checked={!!formData.customService}
-                          onChange={(e) => {
-                            if (!e.target.checked) {
-                              setFormData(prev => ({ ...prev, customService: '' }))
-                            }
-                          }}
-                          className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
-                          disabled={isLoading}
-                        />
-                        <Input
-                          type="text"
-                          name="customService"
-                          placeholder="Other service not listed"
-                          value={formData.customService}
-                          onChange={handleInputChange}
-                          className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 flex-1"
-                          disabled={isLoading}
-                        />
-                      </div>
                     </div>
                   )}
 
-                  <Input
-                    type="text"
-                    name="targetCustomers"
-                    placeholder="Target customers (e.g., residential, commercial)"
-                    value={formData.targetCustomers}
-                    onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
-                    disabled={isLoading}
-                  />
+                  {/* Target Customers */}
+                  <div>
+                    <p className="text-white text-sm mb-3">Target customers (select all that apply):</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {targetCustomerOptions.map((customer) => (
+                        <label
+                          key={customer}
+                          className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-white/5 border border-white/20 hover:bg-white/10 transition-all duration-300"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formData.targetCustomers.split(', ').includes(customer)}
+                            onChange={() => handleTargetCustomerToggle(customer)}
+                            className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <span className="text-gray-200 text-sm">{customer}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
 
-                  <Textarea
-                    name="mainChallenges"
-                    placeholder="Main business challenges (comma separated)"
-                    value={formData.mainChallenges}
-                    onChange={handleInputChange}
-                    className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 resize-none"
-                    rows={3}
-                    disabled={isLoading}
-                  />
+                  {/* Business Goals */}
+                  <div>
+                    <p className="text-white text-sm mb-3">Primary business goals (select all that apply):</p>
+                    <div className="grid grid-cols-1 gap-3">
+                      {businessGoalsOptions.map((goal) => (
+                        <label
+                          key={goal}
+                          className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-white/5 border border-white/20 hover:bg-white/10 transition-all duration-300"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formData.mainChallenges.split(', ').includes(goal)}
+                            onChange={() => handleBusinessGoalToggle(goal)}
+                            className="w-4 h-4 text-blue-500 bg-transparent border-gray-300 rounded focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <span className="text-gray-200 text-sm">{goal}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 {errors.submit && (
