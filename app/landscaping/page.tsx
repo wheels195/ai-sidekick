@@ -357,19 +357,19 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
   
   if (!user) {
     return (
-      <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-r from-emerald-500/5 to-teal-500/5">
-        <div className="flex items-center space-x-3">
-          <h1 className="text-lg">
-            Hi! I'm <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-black bg-clip-text text-transparent font-bold">Dirt.i</span>, your Landscaping AI Sidekick.
+      <div className="px-6 py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
+        <div className="space-y-4">
+          <h1 className="text-2xl text-white font-semibold">
+            Hi! I'm <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-white bg-clip-text text-transparent font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
           </h1>
+          <p className="text-lg text-gray-100 leading-relaxed">
+            I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
+          </p>
+          <p className="text-lg text-emerald-300">
+            💡 <span className="font-cursive text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the Tips button below for guidance on getting the most detailed and actionable responses.
+          </p>
+          <p className="text-emerald-300 font-semibold text-xl mt-4">What can I help you with today?</p>
         </div>
-        <p className="text-sm text-gray-300 mt-1">
-          I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
-        </p>
-        <p className="text-sm text-emerald-400 mt-2">
-          💡 <span className="font-cursive text-emerald-300">Pro tip:</span> Click the Tips button below for guidance on getting the most detailed and actionable responses.
-        </p>
-        <p className="text-emerald-400 font-medium mt-3">What can I help you with today?</p>
       </div>
     )
   }
@@ -377,69 +377,64 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
   const { firstName, businessName, location, services, teamSize, zipCode } = user
   const displayName = firstName || 'there'
   
+  // Create a single professional business summary line
+  const businessSummary = (() => {
+    let summary = ''
+    if (businessName) summary += businessName
+    if (location) {
+      summary += summary ? ` in ${location}` : `Located in ${location}`
+      if (zipCode) summary += ` ${zipCode}`
+    }
+    if (teamSize) summary += summary ? ` with a ${teamSize}-person team` : `${teamSize}-person team`
+    if (services && services.length > 0) {
+      const serviceList = services.length <= 4 ? services.join(', ') : `${services.slice(0, 4).join(', ')}, and more`
+      summary += summary ? ` offering ${serviceList}` : `Offering ${serviceList}`
+    }
+    return summary
+  })()
+  
   return (
-    <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-r from-emerald-500/5 to-teal-500/5">
-      <div className="space-y-3">
+    <div className="px-6 py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
+      <div className="space-y-4">
         {/* Main greeting */}
         <div className="flex items-center justify-between">
-          <h1 className="text-lg">
-            Hi, <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-black bg-clip-text text-transparent font-bold">{displayName}</span>! I'm{' '}
-            <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-black bg-clip-text text-transparent font-bold">Dirt.i</span>, your Landscaping AI Sidekick.
+          <h1 className="text-2xl text-white font-semibold">
+            Hi, <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-white bg-clip-text text-transparent font-bold text-3xl">{displayName}</span>! I'm{' '}
+            <span className="font-cursive bg-gradient-to-r from-emerald-400 via-emerald-500 to-white bg-clip-text text-transparent font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
           </h1>
           {!isFirstTime && (
             <button
               onClick={() => setShowBusinessContext(!showBusinessContext)}
-              className="text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+              className="text-gray-300 hover:text-emerald-300 transition-colors duration-200 p-2"
             >
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showBusinessContext ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${showBusinessContext ? 'rotate-180' : ''}`} />
             </button>
           )}
         </div>
         
         {/* Description */}
-        <p className="text-sm text-gray-300">
+        <p className="text-lg text-gray-100 leading-relaxed">
           I'm here to help you grow your landscaping business with expert advice on SEO, competitive insights, content creation, upselling strategies, and more.
         </p>
         
         {/* Pro tip */}
-        <p className="text-sm text-emerald-400">
-          💡 <span className="font-cursive text-emerald-300">Pro tip:</span> Click the{' '}
-          <span className="font-cursive text-emerald-300">Tips</span> button below for guidance on getting the most detailed and actionable responses.
+        <p className="text-lg text-emerald-300">
+          💡 <span className="font-cursive text-emerald-200 text-xl font-semibold">Pro tip:</span> Click the{' '}
+          <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below for guidance on getting the most detailed and actionable responses.
         </p>
         
-        {/* Business context - collapsible */}
-        {showBusinessContext && (
-          <div className="bg-black/20 rounded-lg p-3 border border-emerald-500/20">
-            <div className="text-sm text-gray-300 space-y-1">
-              {businessName && (
-                <p>I see your business is <span className="text-emerald-300 font-medium">{businessName}</span></p>
-              )}
-              {location && (
-                <p>
-                  located in <span className="text-emerald-300 font-medium">{location}</span>
-                  {zipCode && <span className="text-emerald-300 font-medium"> {zipCode}</span>}
-                </p>
-              )}
-              {teamSize && (
-                <p>with a <span className="text-emerald-300 font-medium">{teamSize}-person team</span></p>
-              )}
-              {services && services.length > 0 && (
-                <p>
-                  offering{' '}
-                  <span className="text-emerald-300 font-medium">
-                    {services.length <= 5 
-                      ? services.join(', ') 
-                      : `${services.slice(0, 5).join(', ')}, and more!`
-                    }
-                  </span>
-                </p>
-              )}
-            </div>
+        {/* Business context - collapsible, single professional line */}
+        {showBusinessContext && businessSummary && (
+          <div className="bg-emerald-900/20 rounded-xl p-4 border border-emerald-400/30">
+            <p className="text-lg text-white leading-relaxed">
+              I see you're{' '}
+              <span className="text-emerald-200 font-semibold">{businessSummary}</span>.
+            </p>
           </div>
         )}
         
         {/* Call to action */}
-        <p className="text-emerald-400 font-medium">
+        <p className="text-emerald-300 font-semibold text-xl mt-4">
           {isFirstTime ? "What can I help you with today?" : "How can we grow your business today?"}
         </p>
       </div>
