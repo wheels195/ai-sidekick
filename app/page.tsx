@@ -25,7 +25,7 @@ import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { DisplayCards } from "@/components/ui/display-cards"
+import DisplayCards from "@/components/ui/display-cards"
 
 export default function LandingPage() {
   const [demoStep, setDemoStep] = useState(0)
@@ -594,85 +594,141 @@ What specific services do you currently offer, and what challenges have you face
 
       {/* Advanced AI Capabilities Section */}
       <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
-        <div className="max-w-5xl mx-auto relative">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
+        <div className="max-w-7xl mx-auto relative">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-4 sm:mb-6">
               <span className="text-white">Real-Time</span>{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
                 Competitive Intelligence
               </span>
             </h2>
-            <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-8 text-lg">
+            <p className="text-xl xl:text-2xl text-gray-200 max-w-4xl mx-auto mb-16">
               Our advanced AI doesn't just respond — it proactively researches your local competitors, pricing gaps, and growth opportunities.
               This isn't generic SEO advice — it's strategic guidance tailored to your business and your zip code.
             </p>
-            
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-muted/50 rounded-xl p-6 border">
-                <h3 className="text-xl font-semibold mb-4 text-green-400">✅ What You Get with AI Sidekick</h3>
-                <ul className="space-y-2 text-base text-muted-foreground">
-                  <li>• Competitor ratings, reviews, and services</li>
-                  <li>• Market gaps and pricing opportunities</li>
-                  <li>• Local trends based on zip code & niche</li>
-                  <li>• Actionable growth recommendations</li>
-                  <li>• Reviewed website + tips to improve visibility</li>
-                </ul>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Side - AI Capabilities */}
+            <div className="space-y-8">
+              <div className="text-center lg:text-left">
+                <h3 className="text-2xl xl:text-3xl font-semibold text-emerald-300 mb-6">
+                  ✅ Advanced AI Capabilities
+                </h3>
+                <p className="text-lg text-gray-200 mb-8">
+                  Get strategic business intelligence that goes far beyond basic search results
+                </p>
               </div>
-              <div className="bg-background border border-white/10 rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-4 text-red-400">❌ Traditional Search</h3>
-                <ul className="space-y-2 text-base text-muted-foreground">
-                  <li>• Unstructured business listings</li>
-                  <li>• No context or strategic info</li>
-                  <li>• Generic info, not trade-specific</li>
-                  <li>• No advice or next steps</li>
-                  <li>• Can't assess your website or rank potential</li>
-                </ul>
+              
+              <DisplayCards
+                cards={[
+                  {
+                    icon: <Search className="size-6 text-emerald-300" />,
+                    title: "Live Competitor Analysis",
+                    description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time Google Places data.",
+                    date: "Powered by Google Places API",
+                    iconClassName: "text-emerald-400",
+                    titleClassName: "text-emerald-300",
+                    className: "[grid-area:stack] hover:-translate-y-2 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[20%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                  },
+                  {
+                    icon: <Globe className="size-6 text-purple-300" />,
+                    title: "Website Health Check",
+                    description: "Get custom AI-powered suggestions to improve your website's visibility, SEO rankings, and conversion rates.",
+                    date: "AI Website Analysis",
+                    iconClassName: "text-purple-400",
+                    titleClassName: "text-purple-300",
+                    className: "[grid-area:stack] translate-x-12 translate-y-8 hover:translate-y-6 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[20%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                  },
+                  {
+                    icon: <BarChart3 className="size-6 text-yellow-300" />,
+                    title: "Strategic Growth Insights",
+                    description: "Discover pricing opportunities, upselling strategies, and local market trends specific to your zip code and trade.",
+                    date: "Zip Code Specific Intelligence",
+                    iconClassName: "text-yellow-400",
+                    titleClassName: "text-yellow-300",
+                    className: "[grid-area:stack] translate-x-24 translate-y-16 hover:translate-y-12",
+                  },
+                ]}
+              />
+            </div>
+
+            {/* Right Side - Generic Google Search */}
+            <div className="space-y-8">
+              <div className="text-center lg:text-left">
+                <h3 className="text-2xl xl:text-3xl font-semibold text-gray-400 mb-6">
+                  ❌ Generic Google Search
+                </h3>
+                <p className="text-lg text-gray-400 mb-8">
+                  Basic search results with no strategic context or actionable insights
+                </p>
+              </div>
+              
+              <div className="bg-gray-800/30 border border-gray-600/20 rounded-2xl p-8 opacity-60">
+                <div className="space-y-6 text-gray-400">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
+                    <span>Unstructured business listings with basic contact info</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
+                    <span>No strategic context or competitive analysis</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
+                    <span>Generic information, not trade-specific insights</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
+                    <span>No actionable recommendations or next steps</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
+                    <span>Can't analyze your website or assess ranking potential</span>
+                  </div>
+                </div>
+                <p className="text-center text-gray-500 mt-8 text-sm italic">
+                  "Best landscaping companies near me" → Random listings with no business strategy
+                </p>
               </div>
             </div>
-            
-            <p className="text-center text-sm text-muted-foreground mt-6 mb-8">
+          </div>
+
+          <div className="text-center mt-16">
+            <p className="text-emerald-300 text-lg mb-8">
               💡 Your AI also reviews your website and gives you tips to rank higher, upsell better, and attract more local leads.
             </p>
             
-            <DisplayCards
-              cards={[
-                {
-                  icon: <Search className="size-4 text-green-300" />,
-                  title: "Live Competitor Analysis",
-                  description: "Find local ratings, reviews, and gaps in your service area.",
-                  date: "Powered by Google Places",
-                },
-                {
-                  icon: <Globe className="size-4 text-purple-300" />,
-                  title: "Website Health Check",
-                  description: "Get custom suggestions to improve visibility and rankings.",
-                  date: "AI Website Review",
-                },
-                {
-                  icon: <BarChart3 className="size-4 text-yellow-300" />,
-                  title: "Strategic Growth Insights",
-                  description: "Discover pricing, upsells, and local market trends.",
-                  date: "Zip Code Specific",
-                },
-              ]}
-            />
+            <Button 
+              onClick={() => window.location.href = '/signup?plan=free-trial'}
+              size="lg"
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+            >
+              👉 Start Your Free Trial and Let AI Review Your Business
+              <ArrowRight className="ml-3 w-6 h-6" />
+            </Button>
             
-            <div className="text-center mt-8">
-              <Button 
-                onClick={() => window.location.href = '/signup?plan=free-trial'}
-                size="lg" 
-                className="bg-green-600 hover:bg-green-500 text-white"
-              >
-                👉 Start Your Free Trial and Let AI Review Your Business
-              </Button>
-            </div>
-            
-            <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-1"><Tag className="size-4 text-muted" /> Competitor Prices</div>
-              <div className="flex items-center gap-1"><MapPin className="size-4 text-muted" /> Zip Code Demand</div>
-              <div className="flex items-center gap-1"><Leaf className="size-4 text-muted" /> Missing Services</div>
-              <div className="flex items-center gap-1"><TrendingUp className="size-4 text-muted" /> SEO Visibility</div>
-              <div className="flex items-center gap-1"><Star className="size-4 text-muted" /> Reputation Score</div>
+            <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-300">
+              <div className="flex items-center gap-2">
+                <Tag className="size-4 text-emerald-400" /> 
+                <span>Competitor Prices</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="size-4 text-emerald-400" /> 
+                <span>Zip Code Demand</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Leaf className="size-4 text-emerald-400" /> 
+                <span>Missing Services</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <TrendingUp className="size-4 text-emerald-400" /> 
+                <span>SEO Visibility</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="size-4 text-emerald-400" /> 
+                <span>Reputation Score</span>
+              </div>
             </div>
           </div>
         </div>
