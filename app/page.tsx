@@ -709,16 +709,16 @@ What specific services do you currently offer, and what challenges have you face
 
           <div className="text-center mt-16 lg:mt-20 xl:mt-24">
             <p className="text-blue-300 text-lg xl:text-xl 2xl:text-2xl mb-8 lg:mb-10">
-              💡 Your <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI Sidekick</span> reviews your website, gives you tips to rank higher, upsell more strategically, and bring you more business.
+              💡 Your <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive text-xl xl:text-2xl 2xl:text-3xl">Advanced AI Sidekick</span> reviews your website, gives you tips to rank higher, upsell more strategically, and bring you more business.
             </p>
             
             <Button 
               onClick={() => window.location.href = '/signup?plan=free-trial'}
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg xl:text-xl 2xl:text-2xl px-8 lg:px-12 xl:px-16 py-4 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl px-4 sm:px-6 lg:px-12 xl:px-16 py-3 sm:py-4 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 max-w-full"
             >
-              👉 Start Your Free Trial and Let AI Sidekick Help You Grow
-              <ArrowRight className="ml-3 w-5 h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />
+              <span className="truncate">👉 Start Your Free Trial and Let AI Sidekick Help You Grow</span>
+              <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 flex-shrink-0" />
             </Button>
             
             <div className="mt-8 lg:mt-10 flex flex-wrap justify-center gap-4 lg:gap-6 xl:gap-8 text-sm lg:text-base xl:text-lg text-gray-300">
