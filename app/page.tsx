@@ -893,12 +893,12 @@ What specific services do you currently offer, and what challenges have you face
               </span>
             </div>
 
-            <Card className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative overflow-hidden cursor-pointer">
+            <Card className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative cursor-pointer">
               {/* Premium glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              {/* Live Badge */}
-              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse">
+              {/* Live Badge - positioned outside card */}
+              <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
                 🟢 LIVE NOW
               </div>
               
@@ -916,15 +916,15 @@ What specific services do you currently offer, and what challenges have you face
                     Your expert partner for growing your landscaping business
                   </p>
                   
-                  {/* Social Proof */}
+                  {/* Real Value Props */}
                   <div className="flex items-center justify-center space-x-4 mb-8">
                     <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-4 py-2">
-                      <Users className="w-4 h-4 text-emerald-400" />
-                      <span className="text-emerald-300 text-sm font-medium">1,247 landscapers using daily</span>
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <span className="text-emerald-300 text-sm font-medium">Start making more money today</span>
                     </div>
                     <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-4 py-2">
-                      <Star className="w-4 h-4 text-emerald-400" />
-                      <span className="text-emerald-300 text-sm font-medium">4.9/5 rating</span>
+                      <Zap className="w-4 h-4 text-emerald-400" />
+                      <span className="text-emerald-300 text-sm font-medium">Get instant expert advice</span>
                     </div>
                   </div>
                 </div>
@@ -939,7 +939,7 @@ What specific services do you currently offer, and what challenges have you face
                     "Based on your Dallas location, spring lawn care season is peak time. Here's how to position aeration services at $180/yard for maximum bookings..."
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-emerald-400">⚡ GPT-4o-mini</span>
+                    <span className="text-emerald-400">Advanced AI Capabilities</span>
                     <span className="text-gray-400">Response time: 1.2s</span>
                   </div>
                 </div>
@@ -993,9 +993,9 @@ What specific services do you currently offer, and what challenges have you face
                   <Button
                     size="lg"
                     className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-4 sm:py-5 font-semibold"
-                    onClick={() => (window.location.href = "/landscaping")}
+                    onClick={() => (window.location.href = "/signup")}
                   >
-                    <span className="block sm:inline">🚀 Start Free Trial - No Credit Card</span>
+                    <span className="block sm:inline">Start Free Trial - No Credit Card</span>
                     <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
                   </Button>
                   <p className="text-center text-xs text-emerald-300 mt-3">
