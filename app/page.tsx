@@ -502,8 +502,17 @@ What specific services do you currently offer, and what challenges have you face
                     }`}></div>
                   </div>
                   
-                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors duration-300">
-                    {value.title}
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-white transition-colors duration-300">
+                    <span className={`font-cursive bg-gradient-to-r bg-clip-text text-transparent ${
+                      value.color === 'blue' ? 'from-blue-300 to-blue-500' :
+                      value.color === 'emerald' ? 'from-emerald-300 to-emerald-500' :
+                      value.color === 'purple' ? 'from-purple-300 to-purple-500' :
+                      value.color === 'orange' ? 'from-orange-300 to-orange-500' :
+                      value.color === 'yellow' ? 'from-yellow-300 to-yellow-500' :
+                      'from-pink-300 to-pink-500'
+                    }`}>
+                      {value.title}
+                    </span>
                   </h3>
                   <p className="text-gray-300 text-sm leading-relaxed mb-3 group-hover:text-gray-200 transition-colors duration-300">
                     {value.desc}
@@ -970,82 +979,162 @@ What specific services do you currently offer, and what challenges have you face
               {/* Trade Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
                 {/* Electricians AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Most Requested Badge */}
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
+                    🔥 Most Requested
+                  </div>
+                  
                   <CardContent className="p-6 sm:p-8 relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">⚡</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Electricians AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                        <span className="font-cursive bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+                          Electricians AI
+                        </span>
+                      </h3>
                       <p className="text-gray-300 text-sm">Wiring, codes & safety expertise</p>
+                      
+                      {/* Waitlist Counter */}
+                      <div className="mt-3 flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-3 py-1">
+                        <Users className="w-3 h-3 text-yellow-400" />
+                        <span className="text-yellow-300 text-xs font-medium">2,847 professionals waiting</span>
+                      </div>
+                    </div>
+                    
+                    {/* Interactive Preview */}
+                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-yellow-500/20">
+                      <div className="text-xs text-yellow-300 mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI Preview</span>
+                      </div>
+                      <div className="text-xs text-gray-300 italic">
+                        "Based on your area's electrical codes, I recommend upgrading to smart panels for 40% higher margins. Here's how to position this $3,200 upsell..."
+                      </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        "Smart home upsells",
-                        "Code compliance",
-                        "Emergency pricing",
-                        "Safety protocols"
+                        { text: "Smart home upsells", revenue: "+$2,400/job" },
+                        { text: "Code compliance", revenue: "Avoid fines" },
+                        { text: "Emergency pricing", revenue: "3x rates" },
+                        { text: "Safety protocols", revenue: "Zero liability" }
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <CheckCircle className="w-4 h-4 text-yellow-400 flex-shrink-0" />
-                          <span className="text-gray-200 text-sm">{feature}</span>
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <CheckCircle className="w-4 h-4 text-yellow-400 flex-shrink-0" />
+                            <span className="text-gray-200 text-sm">{feature.text}</span>
+                          </div>
+                          <span className="text-yellow-300 text-xs font-medium">{feature.revenue}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-4 py-2 mb-6">
-                      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-                      <span className="text-yellow-300 text-xs font-medium">In Development</span>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Development Progress</span>
+                        <span>78%</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full" style={{width: '78%'}}></div>
+                      </div>
                     </div>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-2"
+                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-3 font-semibold"
                       onClick={() => window.location.href = '/signup'}
                     >
-                      Get Notified
+                      🚀 Get First Access (Save 40%)
                     </Button>
+                    
+                    <p className="text-center text-xs text-gray-400 mt-2">
+                      Est. launch: Q2 2025 • Early bird pricing
+                    </p>
                   </CardContent>
                 </Card>
 
                 {/* Plumbers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* High Demand Badge */}
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-400 to-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
+                    💧 High Demand
+                  </div>
+                  
                   <CardContent className="p-6 sm:p-8 relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🔧</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Plumbers AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                        <span className="font-cursive bg-gradient-to-r from-blue-300 to-cyan-400 bg-clip-text text-transparent">
+                          Plumbers AI
+                        </span>
+                      </h3>
                       <p className="text-gray-300 text-sm">Emergency services & pipe systems</p>
+                      
+                      {/* Waitlist Counter */}
+                      <div className="mt-3 flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-3 py-1">
+                        <Users className="w-3 h-3 text-blue-400" />
+                        <span className="text-blue-300 text-xs font-medium">1,952 plumbers waiting</span>
+                      </div>
+                    </div>
+                    
+                    {/* Interactive Preview */}
+                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-blue-500/20">
+                      <div className="text-xs text-blue-300 mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI Preview</span>
+                      </div>
+                      <div className="text-xs text-gray-300 italic">
+                        "Emergency calls in your area average $450/hour. Bundle water heater inspections for an additional $200 revenue per visit..."
+                      </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        "Emergency call pricing",
-                        "Water heater sales",
-                        "Pipe upgrade quotes",
-                        "Maintenance contracts"
+                        { text: "Emergency call pricing", revenue: "$450/hr" },
+                        { text: "Water heater sales", revenue: "+$1,800" },
+                        { text: "Pipe upgrade quotes", revenue: "$8K jobs" },
+                        { text: "Maintenance contracts", revenue: "Recurring" }
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                          <span className="text-gray-200 text-sm">{feature}</span>
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                            <span className="text-gray-200 text-sm">{feature.text}</span>
+                          </div>
+                          <span className="text-blue-300 text-xs font-medium">{feature.revenue}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-4 py-2 mb-6">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                      <span className="text-blue-300 text-xs font-medium">In Development</span>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Development Progress</span>
+                        <span>65%</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-blue-400 to-cyan-500 h-2 rounded-full" style={{width: '65%'}}></div>
+                      </div>
                     </div>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-2"
+                      className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-3 font-semibold"
                       onClick={() => window.location.href = '/signup'}
                     >
-                      Get Notified
+                      🚀 Join Waitlist (Save 30%)
                     </Button>
+                    
+                    <p className="text-center text-xs text-gray-400 mt-2">
+                      Est. launch: Q3 2025 • Priority access
+                    </p>
                   </CardContent>
                 </Card>
 
