@@ -838,7 +838,10 @@ What specific services do you currently offer, and what challenges have you face
               size="lg"
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl px-4 sm:px-6 lg:px-12 xl:px-16 py-3 sm:py-4 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 max-w-full"
             >
-              <span className="truncate">👉 Start Your Free Trial and Let AI Sidekick Help You Grow</span>
+              <span className="truncate">
+                <span className="sm:hidden">👉 Start Your Free Trial and Let AI Sidekick Help</span>
+                <span className="hidden sm:inline">👉 Start Your Free Trial and Let AI Sidekick Help You Grow</span>
+              </span>
               <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 flex-shrink-0" />
             </Button>
             
