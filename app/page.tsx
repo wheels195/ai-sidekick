@@ -593,29 +593,29 @@ What specific services do you currently offer, and what challenges have you face
       </section>
 
       {/* Advanced AI Capabilities Section */}
-      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-4 sm:mb-6">
+      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
+        <div className="max-w-7xl xl:max-w-none mx-auto relative">
+          <div className="text-center mb-16 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="text-white">Real-Time</span>{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
                 Competitive Intelligence
               </span>
             </h2>
-            <p className="text-xl xl:text-2xl text-gray-200 max-w-4xl mx-auto mb-16">
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-4xl xl:max-w-6xl mx-auto mb-16 lg:mb-20">
               Our advanced AI doesn't just respond — it proactively researches your local competitors, pricing gaps, and growth opportunities.
               This isn't generic SEO advice — it's strategic guidance tailored to your business and your zip code.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-start">
             {/* Left Side - AI Capabilities */}
-            <div className="space-y-8 lg:pr-8">
+            <div className="space-y-8 lg:space-y-10 lg:pr-8">
               <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl font-semibold mb-6">
+                <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-6">
                   ✅ <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI</span> <span className="text-blue-400">Capabilities</span>
                 </h3>
-                <p className="text-lg text-gray-200 mb-8">
+                <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-200 mb-8 lg:mb-10">
                   Get strategic business intelligence that goes far beyond basic search results
                 </p>
               </div>
@@ -651,12 +651,12 @@ What specific services do you currently offer, and what challenges have you face
             </div>
 
             {/* Right Side - Generic Google Search */}
-            <div className="space-y-8 lg:pl-8">
+            <div className="space-y-8 lg:space-y-10 lg:pl-8">
               <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl font-semibold text-gray-400 mb-6">
+                <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold text-gray-400 mb-6">
                   ❌ Generic Google Search
                 </h3>
-                <p className="text-lg text-gray-400 mb-8">
+                <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-400 mb-8 lg:mb-10">
                   Basic search results with no strategic context or actionable insights
                 </p>
               </div>
@@ -707,39 +707,39 @@ What specific services do you currently offer, and what challenges have you face
             </div>
           </div>
 
-          <div className="text-center mt-16">
-            <p className="text-blue-300 text-lg mb-8">
+          <div className="text-center mt-16 lg:mt-20 xl:mt-24">
+            <p className="text-blue-300 text-lg xl:text-xl 2xl:text-2xl mb-8 lg:mb-10">
               💡 Your AI also reviews your website and gives you tips to rank higher, upsell better, and attract more local leads.
             </p>
             
             <Button 
               onClick={() => window.location.href = '/signup?plan=free-trial'}
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg xl:text-xl 2xl:text-2xl px-8 lg:px-12 xl:px-16 py-4 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105"
             >
               👉 Start Your Free Trial and Let AI Review Your Business
-              <ArrowRight className="ml-3 w-6 h-6" />
+              <ArrowRight className="ml-3 w-5 h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />
             </Button>
             
-            <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-300">
+            <div className="mt-8 lg:mt-10 flex flex-wrap justify-center gap-4 lg:gap-6 xl:gap-8 text-sm lg:text-base xl:text-lg text-gray-300">
               <div className="flex items-center gap-2">
-                <Tag className="size-4 text-blue-400" /> 
+                <Tag className="size-4 lg:size-5 xl:size-6 text-blue-400" /> 
                 <span>Competitor Prices</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="size-4 text-purple-400" /> 
+                <MapPin className="size-4 lg:size-5 xl:size-6 text-purple-400" /> 
                 <span>Zip Code Demand</span>
               </div>
               <div className="flex items-center gap-2">
-                <Leaf className="size-4 text-orange-400" /> 
+                <Leaf className="size-4 lg:size-5 xl:size-6 text-orange-400" /> 
                 <span>Missing Services</span>
               </div>
               <div className="flex items-center gap-2">
-                <TrendingUp className="size-4 text-blue-400" /> 
+                <TrendingUp className="size-4 lg:size-5 xl:size-6 text-blue-400" /> 
                 <span>SEO Visibility</span>
               </div>
               <div className="flex items-center gap-2">
-                <Star className="size-4 text-purple-400" /> 
+                <Star className="size-4 lg:size-5 xl:size-6 text-purple-400" /> 
                 <span>Reputation Score</span>
               </div>
             </div>
