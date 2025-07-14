@@ -395,43 +395,134 @@ What specific services do you currently offer, and what challenges have you face
                 icon: Target,
                 title: "Instant Local Expertise",
                 desc: "Get specific advice for ranking in your city, not generic SEO tips",
+                metric: "Rank #1 locally",
+                color: "blue",
+                tag: "AI-Powered",
               },
               {
                 icon: DollarSign,
                 title: "Pricing Confidence",
                 desc: "Stop undercharging - know exactly what to charge in your market",
+                metric: "Boost profits 35%",
+                color: "emerald",
+                tag: "Market Data",
               },
               {
                 icon: TrendingUp,
                 title: "Upsell Opportunities",
                 desc: "Discover profitable add-ons you can offer every customer",
+                metric: "3x more revenue",
+                color: "purple",
+                tag: "Proven Strategy",
               },
               {
                 icon: FileText,
                 title: "Content That Converts",
                 desc: "Get social media posts and website copy that actually brings in leads",
+                metric: "5x engagement",
+                color: "orange",
+                tag: "Real-Time",
               },
               {
                 icon: Star,
                 title: "Reputation Builder",
                 desc: "Turn happy customers into 5-star reviews that build trust and attract new business",
+                metric: "90% more reviews",
+                color: "yellow",
+                tag: "Automated",
               },
               {
                 icon: BarChart3,
                 title: "Smart Business Insights",
                 desc: "Get clear, AI-driven advice on what to fix, improve, or double down on in your business",
+                metric: "Save 15+ hrs/week",
+                color: "pink",
+                tag: "Intelligence",
               },
             ].map((value, index) => (
               <Card
                 key={index}
-                className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 group"
+                className="relative backdrop-blur-2xl bg-black/40 border border-white/10 shadow-2xl hover:shadow-2xl transition-all duration-500 hover:scale-105 group overflow-hidden"
               >
-                <CardContent className="p-6 text-center">
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-all duration-300 backdrop-blur-sm border border-white/10">
-                    <value.icon className="w-7 h-7 text-blue-400" />
+                {/* Animated border glow */}
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                     style={{
+                       background: value.color === 'blue' ? 'linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1))' :
+                                  value.color === 'emerald' ? 'linear-gradient(45deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1))' :
+                                  value.color === 'purple' ? 'linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))' :
+                                  value.color === 'orange' ? 'linear-gradient(45deg, rgba(249, 115, 22, 0.1), rgba(234, 179, 8, 0.1))' :
+                                  value.color === 'yellow' ? 'linear-gradient(45deg, rgba(234, 179, 8, 0.1), rgba(16, 185, 129, 0.1))' :
+                                  'linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1))'
+                     }}>
+                </div>
+                
+                {/* Feature tag */}
+                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${
+                    value.color === 'blue' ? 'bg-blue-500/20 text-blue-300 border-blue-400/30' :
+                    value.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30' :
+                    value.color === 'purple' ? 'bg-purple-500/20 text-purple-300 border-purple-400/30' :
+                    value.color === 'orange' ? 'bg-orange-500/20 text-orange-300 border-orange-400/30' :
+                    value.color === 'yellow' ? 'bg-yellow-500/20 text-yellow-300 border-yellow-400/30' :
+                    'bg-pink-500/20 text-pink-300 border-pink-400/30'
+                  }`}>
+                    {value.tag}
+                  </span>
+                </div>
+                
+                <CardContent className="p-6 text-center relative z-10">
+                  {/* Enhanced icon container */}
+                  <div className="relative mb-4 mx-auto w-fit">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 backdrop-blur-sm border ${
+                      value.color === 'blue' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/30 border-blue-400/30 group-hover:shadow-blue-500/25' :
+                      value.color === 'emerald' ? 'bg-gradient-to-br from-emerald-500/20 to-emerald-600/30 border-emerald-400/30 group-hover:shadow-emerald-500/25' :
+                      value.color === 'purple' ? 'bg-gradient-to-br from-purple-500/20 to-purple-600/30 border-purple-400/30 group-hover:shadow-purple-500/25' :
+                      value.color === 'orange' ? 'bg-gradient-to-br from-orange-500/20 to-orange-600/30 border-orange-400/30 group-hover:shadow-orange-500/25' :
+                      value.color === 'yellow' ? 'bg-gradient-to-br from-yellow-500/20 to-yellow-600/30 border-yellow-400/30 group-hover:shadow-yellow-500/25' :
+                      'bg-gradient-to-br from-pink-500/20 to-pink-600/30 border-pink-400/30 group-hover:shadow-pink-500/25'
+                    } group-hover:shadow-lg`}>
+                      <value.icon className={`w-7 h-7 transition-colors duration-300 ${
+                        value.color === 'blue' ? 'text-blue-400 group-hover:text-blue-300' :
+                        value.color === 'emerald' ? 'text-emerald-400 group-hover:text-emerald-300' :
+                        value.color === 'purple' ? 'text-purple-400 group-hover:text-purple-300' :
+                        value.color === 'orange' ? 'text-orange-400 group-hover:text-orange-300' :
+                        value.color === 'yellow' ? 'text-yellow-400 group-hover:text-yellow-300' :
+                        'text-pink-400 group-hover:text-pink-300'
+                      }`} />
+                    </div>
+                    
+                    {/* Animated ring */}
+                    <div className={`absolute inset-0 rounded-2xl border-2 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500 ${
+                      value.color === 'blue' ? 'border-blue-400/50' :
+                      value.color === 'emerald' ? 'border-emerald-400/50' :
+                      value.color === 'purple' ? 'border-purple-400/50' :
+                      value.color === 'orange' ? 'border-orange-400/50' :
+                      value.color === 'yellow' ? 'border-yellow-400/50' :
+                      'border-pink-400/50'
+                    }`}></div>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{value.title}</h3>
-                  <p className="text-gray-200 text-sm leading-relaxed">{value.desc}</p>
+                  
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors duration-300">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-3 group-hover:text-gray-200 transition-colors duration-300">
+                    {value.desc}
+                  </p>
+                  
+                  {/* Success metric */}
+                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
+                      value.color === 'blue' ? 'bg-blue-500/10 text-blue-300 border border-blue-400/20' :
+                      value.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20' :
+                      value.color === 'purple' ? 'bg-purple-500/10 text-purple-300 border border-purple-400/20' :
+                      value.color === 'orange' ? 'bg-orange-500/10 text-orange-300 border border-orange-400/20' :
+                      value.color === 'yellow' ? 'bg-yellow-500/10 text-yellow-300 border border-yellow-400/20' :
+                      'bg-pink-500/10 text-pink-300 border border-pink-400/20'
+                    }`}>
+                      <Sparkles className="w-3 h-3 mr-1" />
+                      {value.metric}
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             ))}
