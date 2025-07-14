@@ -612,7 +612,7 @@ What specific services do you currently offer, and what challenges have you face
             {/* Left Side - AI Capabilities */}
             <div className="space-y-8">
               <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl font-semibold text-emerald-300 mb-6">
+                <h3 className="text-2xl xl:text-3xl font-semibold text-blue-400 mb-6">
                   ✅ Advanced AI Capabilities
                 </h3>
                 <p className="text-lg text-gray-200 mb-8">
@@ -623,31 +623,28 @@ What specific services do you currently offer, and what challenges have you face
               <DisplayCards
                 cards={[
                   {
-                    icon: <Search className="size-6 text-emerald-300" />,
+                    icon: <Search className="size-6 text-blue-400" />,
                     title: "Live Competitor Analysis",
                     description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time Google Places data.",
                     date: "Powered by Google Places API",
-                    iconClassName: "text-emerald-400",
-                    titleClassName: "text-emerald-300",
-                    className: "[grid-area:stack] hover:-translate-y-2 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[20%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                    iconClassName: "text-blue-400",
+                    className: "[grid-area:stack] hover:-translate-y-4 hover:shadow-blue-500/25",
                   },
                   {
-                    icon: <Globe className="size-6 text-purple-300" />,
+                    icon: <Globe className="size-6 text-purple-400" />,
                     title: "Website Health Check",
                     description: "Get custom AI-powered suggestions to improve your website's visibility, SEO rankings, and conversion rates.",
                     date: "AI Website Analysis",
                     iconClassName: "text-purple-400",
-                    titleClassName: "text-purple-300",
-                    className: "[grid-area:stack] translate-x-12 translate-y-8 hover:translate-y-6 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[20%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                    className: "[grid-area:stack] translate-x-12 translate-y-8 hover:translate-y-4 hover:shadow-purple-500/25",
                   },
                   {
-                    icon: <BarChart3 className="size-6 text-yellow-300" />,
+                    icon: <BarChart3 className="size-6 text-orange-400" />,
                     title: "Strategic Growth Insights",
                     description: "Discover pricing opportunities, upselling strategies, and local market trends specific to your zip code and trade.",
                     date: "Zip Code Specific Intelligence",
-                    iconClassName: "text-yellow-400",
-                    titleClassName: "text-yellow-300",
-                    className: "[grid-area:stack] translate-x-24 translate-y-16 hover:translate-y-12",
+                    iconClassName: "text-orange-400",
+                    className: "[grid-area:stack] translate-x-24 translate-y-16 hover:translate-y-12 hover:shadow-orange-500/25",
                   },
                 ]}
               />
@@ -664,45 +661,61 @@ What specific services do you currently offer, and what challenges have you face
                 </p>
               </div>
               
-              <div className="bg-gray-800/30 border border-gray-600/20 rounded-2xl p-8 opacity-60">
-                <div className="space-y-6 text-gray-400">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
-                    <span>Unstructured business listings with basic contact info</span>
+              {/* Google-style search results */}
+              <div className="bg-white rounded-lg p-6 shadow-lg">
+                <div className="space-y-4">
+                  {/* Search result 1 */}
+                  <div className="border-b border-gray-200 pb-4">
+                    <h4 className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
+                      Green Lawn Landscaping - Dallas, TX
+                    </h4>
+                    <p className="text-green-700 text-sm">https://greenlawnlandscaping.com</p>
+                    <p className="text-gray-700 text-sm mt-1">
+                      Professional landscaping services in Dallas. Call us today for a free estimate. Serving Dallas and surrounding areas for 15 years.
+                    </p>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
-                    <span>No strategic context or competitive analysis</span>
+                  
+                  {/* Search result 2 */}
+                  <div className="border-b border-gray-200 pb-4">
+                    <h4 className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
+                      Dallas Landscape Design | Premier Landscaping
+                    </h4>
+                    <p className="text-green-700 text-sm">https://premierlandscaping.net</p>
+                    <p className="text-gray-700 text-sm mt-1">
+                      Award-winning landscape design and installation. Residential and commercial. Licensed and insured. Contact us for consultation.
+                    </p>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
-                    <span>Generic information, not trade-specific insights</span>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
-                    <span>No actionable recommendations or next steps</span>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full mt-2"></div>
-                    <span>Can't analyze your website or assess ranking potential</span>
+                  
+                  {/* Search result 3 */}
+                  <div>
+                    <h4 className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
+                      Top 10 Landscaping Companies in Dallas - Angie's List
+                    </h4>
+                    <p className="text-green-700 text-sm">https://angieslist.com/landscaping-dallas</p>
+                    <p className="text-gray-700 text-sm mt-1">
+                      Find the best landscaping companies in Dallas. Read reviews, compare prices, and get quotes from local professionals.
+                    </p>
                   </div>
                 </div>
-                <p className="text-center text-gray-500 mt-8 text-sm italic">
-                  "Best landscaping companies near me" → Random listings with no business strategy
-                </p>
+                
+                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded">
+                  <p className="text-red-700 text-sm font-medium">
+                    ⚠️ What's missing: Pricing insights, competitive gaps, strategic recommendations, website analysis
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="text-center mt-16">
-            <p className="text-emerald-300 text-lg mb-8">
+            <p className="text-blue-300 text-lg mb-8">
               💡 Your AI also reviews your website and gives you tips to rank higher, upsell better, and attract more local leads.
             </p>
             
             <Button 
               onClick={() => window.location.href = '/signup?plan=free-trial'}
               size="lg"
-              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105"
             >
               👉 Start Your Free Trial and Let AI Review Your Business
               <ArrowRight className="ml-3 w-6 h-6" />
@@ -710,23 +723,23 @@ What specific services do you currently offer, and what challenges have you face
             
             <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-300">
               <div className="flex items-center gap-2">
-                <Tag className="size-4 text-emerald-400" /> 
+                <Tag className="size-4 text-blue-400" /> 
                 <span>Competitor Prices</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="size-4 text-emerald-400" /> 
+                <MapPin className="size-4 text-purple-400" /> 
                 <span>Zip Code Demand</span>
               </div>
               <div className="flex items-center gap-2">
-                <Leaf className="size-4 text-emerald-400" /> 
+                <Leaf className="size-4 text-orange-400" /> 
                 <span>Missing Services</span>
               </div>
               <div className="flex items-center gap-2">
-                <TrendingUp className="size-4 text-emerald-400" /> 
+                <TrendingUp className="size-4 text-blue-400" /> 
                 <span>SEO Visibility</span>
               </div>
               <div className="flex items-center gap-2">
-                <Star className="size-4 text-emerald-400" /> 
+                <Star className="size-4 text-purple-400" /> 
                 <span>Reputation Score</span>
               </div>
             </div>

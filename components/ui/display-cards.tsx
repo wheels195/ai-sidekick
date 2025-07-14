@@ -24,7 +24,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
         <Card 
           key={index} 
           className={`
-            relative bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg transition-all duration-500 ease-out
+            relative bg-gray-900/95 backdrop-blur-xl border border-gray-700/50 shadow-2xl transition-all duration-500 ease-out hover:shadow-3xl hover:scale-105 hover:z-10
             ${card.className || ''}
           `}
         >
@@ -34,13 +34,13 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                 {card.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className={`font-semibold text-base mb-2 ${card.titleClassName || 'text-foreground'}`}>
+                <h4 className={`font-semibold text-base mb-2 text-white ${card.titleClassName || ''}`}>
                   {card.title}
                 </h4>
-                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                <p className="text-sm text-gray-300 mb-3 leading-relaxed">
                   {card.description}
                 </p>
-                <p className="text-xs text-muted-foreground/70">
+                <p className="text-xs text-gray-400">
                   {card.date}
                 </p>
               </div>
