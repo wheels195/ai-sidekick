@@ -146,11 +146,11 @@ npm run lint
 - **Hero Section Enhancement** - Premium cursive gradient titles (1.5x larger, bold styling)
 - **Advanced AI Capabilities** - High-end glassmorphism cards with vibrant icons and sophisticated hover effects
 - **Landscaping AI Showcase** - Premium card transformation with:
-  - Animated "🟢 LIVE NOW" badge with pulsing effect
-  - Social proof: "1,247 landscapers using daily" + 4.9/5 rating
-  - Interactive AI preview with technical details (GPT-4o-mini, 1.2s response)
+  - Animated "🟢 LIVE NOW" badge properly positioned outside card boundaries
+  - Honest value props: "Start making more money today" + "Get instant expert advice"
+  - Interactive AI preview with "Advanced AI Capabilities" messaging
   - Success metrics: "+$340 per job", "3x more leads", "5x faster creation"
-  - Enhanced CTA: "🚀 Start Free Trial - No Credit Card"
+  - Clean CTA: "Start Free Trial - No Credit Card" linking to /signup flow
 - **AI Sidekicks Premium Cards** - All 6 future sidekicks enhanced with:
   - Premium badges: "🔥 Most Requested", "💧 High Demand", "❄️ Premium", etc.
   - Interactive AI previews with realistic business advice
