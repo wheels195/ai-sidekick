@@ -8,6 +8,7 @@ interface DisplayCardProps {
   title: string;
   description: string;
   date: string;
+  badge?: string;
   iconClassName?: string;
   titleClassName?: string;
   className?: string;
@@ -21,7 +22,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[400px] lg:h-[450px]">
+    <div className="relative w-full max-w-2xl mx-auto h-[500px] lg:h-[550px]">
       {cards.map((card, index) => {
         const isHovered = hoveredIndex === index;
         const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
@@ -30,7 +31,8 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
         const positions = [
           { x: 0, y: 0, rotation: 0 }, // Top card
           { x: 40, y: 60, rotation: 2 }, // Middle card  
-          { x: 80, y: 120, rotation: 4 }, // Bottom card
+          { x: 80, y: 120, rotation: 4 }, // Third card
+          { x: 120, y: 180, rotation: 6 }, // Fourth card
         ];
         
         const position = positions[index];
@@ -71,10 +73,17 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                   <h4 className="text-lg font-semibold text-white mb-2 tracking-tight">
                     {card.title}
                   </h4>
-                  <div className={`transition-all duration-300 ${isHovered ? 'opacity-100 max-h-40' : 'opacity-60 max-h-8 overflow-hidden'}`}>
+                  <div className={`transition-all duration-300 ${isHovered ? 'opacity-100 max-h-48' : 'opacity-60 max-h-8 overflow-hidden'}`}>
                     <p className="text-sm text-white/80 mb-3 leading-relaxed tracking-wide">
                       {card.description}
                     </p>
+                    {card.badge && (
+                      <div className="mb-2">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-emerald-500/20 to-blue-500/20 text-emerald-300 border border-emerald-400/30">
+                          {card.badge}
+                        </span>
+                      </div>
+                    )}
                     <p className="text-xs text-white/60">
                       {card.date}
                     </p>

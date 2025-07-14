@@ -610,14 +610,24 @@ What specific services do you currently offer, and what challenges have you face
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-start">
             {/* Left Side - AI Capabilities */}
-            <div className="space-y-8 lg:space-y-10 lg:pr-8">
+            <div className="space-y-8 lg:space-y-10 lg:pr-8 relative">
               <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-6">
-                  ✅ <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI</span> <span className="text-blue-400">Capabilities</span>
+                <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-6 flex items-center justify-center lg:justify-start gap-3">
+                  <div className="w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                    <Sparkles className="w-4 h-4 xl:w-5 xl:h-5 text-white" />
+                  </div>
+                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI</span> <span className="text-blue-400">Capabilities</span>
                 </h3>
                 <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-200 mb-8 lg:mb-10">
                   Get strategic business intelligence that goes far beyond basic search results
                 </p>
+              </div>
+              
+              {/* Background Enhancement */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                <div className="absolute top-40 right-20 w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                <div className="absolute bottom-20 left-1/4 w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
               </div>
               
               <DisplayCards
@@ -627,24 +637,36 @@ What specific services do you currently offer, and what challenges have you face
                     title: "Live Competitor Analysis",
                     description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time competitive intelligence.",
                     date: "Powered by Advanced AI Sidekick",
+                    badge: "Save 15+ hours/week",
                     iconClassName: "text-blue-400",
-                    className: "[grid-area:stack] z-30 hover:-translate-y-4 hover:z-40 hover:shadow-blue-500/25",
+                    className: "[grid-area:stack] z-40 hover:-translate-y-4 hover:z-50 hover:shadow-blue-500/25",
                   },
                   {
                     icon: <Globe className="size-6 text-purple-400" />,
                     title: "Website Health Check",
                     description: "Get custom AI-powered suggestions to improve your website's visibility, SEO rankings, and conversion rates.",
                     date: "AI Website Analysis",
+                    badge: "Boost visibility 3x",
                     iconClassName: "text-purple-400",
-                    className: "[grid-area:stack] z-20 translate-x-8 translate-y-12 hover:translate-y-8 hover:z-40 hover:shadow-purple-500/25",
+                    className: "[grid-area:stack] z-30 translate-x-8 translate-y-12 hover:translate-y-8 hover:z-50 hover:shadow-purple-500/25",
                   },
                   {
                     icon: <BarChart3 className="size-6 text-orange-400" />,
                     title: "Strategic Growth Insights",
                     description: "Discover pricing opportunities, upselling strategies, and local market trends specific to your zip code and trade.",
                     date: "Zip Code Specific Intelligence",
+                    badge: "Increase revenue 25%",
                     iconClassName: "text-orange-400",
-                    className: "[grid-area:stack] z-10 translate-x-16 translate-y-24 hover:translate-y-20 hover:z-40 hover:shadow-orange-500/25",
+                    className: "[grid-area:stack] z-20 translate-x-16 translate-y-24 hover:translate-y-20 hover:z-50 hover:shadow-orange-500/25",
+                  },
+                  {
+                    icon: <TrendingUp className="size-6 text-emerald-400" />,
+                    title: "Customer Retention AI",
+                    description: "Identify at-risk customers, optimize follow-up timing, and create personalized retention strategies that keep clients coming back.",
+                    date: "Behavioral Pattern Analysis",
+                    badge: "Retain 40% more customers",
+                    iconClassName: "text-emerald-400",
+                    className: "[grid-area:stack] z-10 translate-x-24 translate-y-36 hover:translate-y-32 hover:z-50 hover:shadow-emerald-500/25",
                   },
                 ]}
               />
