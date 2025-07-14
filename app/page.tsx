@@ -608,9 +608,9 @@ What specific services do you currently offer, and what challenges have you face
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Left Side - AI Capabilities */}
-            <div className="space-y-8">
+            <div className="space-y-8 lg:pr-8">
               <div className="text-center lg:text-left">
                 <h3 className="text-2xl xl:text-3xl font-semibold text-blue-400 mb-6">
                   ✅ Advanced AI Capabilities
@@ -651,7 +651,7 @@ What specific services do you currently offer, and what challenges have you face
             </div>
 
             {/* Right Side - Generic Google Search */}
-            <div className="space-y-8">
+            <div className="space-y-8 lg:pl-8">
               <div className="text-center lg:text-left">
                 <h3 className="text-2xl xl:text-3xl font-semibold text-gray-400 mb-6">
                   ❌ Generic Google Search
