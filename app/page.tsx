@@ -15,11 +15,17 @@ import {
   BarChart3,
   Menu,
   X,
+  Search,
+  Globe,
+  Tag,
+  MapPin,
+  Leaf,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { DisplayCards } from "@/components/ui/display-cards"
 
 export default function LandingPage() {
   const [demoStep, setDemoStep] = useState(0)
@@ -27,6 +33,7 @@ export default function LandingPage() {
   const [aiMessage, setAiMessage] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [demoStarted, setDemoStarted] = useState(false)
+  const [demoComplete, setDemoComplete] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
   const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
@@ -77,13 +84,8 @@ What specific services do you currently offer, and what challenges have you face
               aiIndex++
               setTimeout(typeAiMessage, 8 + Math.random() * 15) // Much faster AI typing
             } else {
-              // AI finished, wait 3 seconds then restart
-              setTimeout(() => {
-                setDemoStarted(false)
-                setTimeout(() => {
-                  if (demoStarted) startDemo()
-                }, 1000)
-              }, 3000)
+              // AI finished, mark demo as complete (no restart)
+              setDemoComplete(true)
             }
           }
           typeAiMessage()
@@ -95,7 +97,7 @@ What specific services do you currently offer, and what challenges have you face
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !demoStarted) {
+          if (entry.isIntersecting && !demoStarted && !demoComplete) {
             setDemoStarted(true)
             startDemo()
           }
@@ -114,7 +116,7 @@ What specific services do you currently offer, and what challenges have you face
         observer.unobserve(demoElement)
       }
     }
-  }, [demoStarted, fullUserMessage, fullAiMessage])
+  }, [demoStarted, demoComplete, fullUserMessage, fullAiMessage])
 
   // Convert markdown to HTML with emerald headings (similar to chat interface)
   const convertMarkdownToHtml = (markdown: string): string => {
@@ -580,77 +582,98 @@ What specific services do you currently offer, and what challenges have you face
                   <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                 </Button>
               </div>
+              
+              {/* Subtle Divider */}
+              <div className="mt-16 flex justify-center">
+                <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Competitive Intelligence Section */}
+      {/* Advanced AI Capabilities Section */}
       <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-4 sm:mb-6">
+        <div className="max-w-5xl mx-auto relative">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
               <span className="text-white">Real-Time</span>{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
                 Competitive Intelligence
               </span>
             </h2>
-            <p className="text-xl xl:text-2xl text-gray-200 max-w-4xl mx-auto mb-12">
-              Our AI instantly searches Google Places and analyzes your local competitors, providing ratings, reviews, pricing insights, and strategic market gaps in under 30 seconds.
+            <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-8 text-lg">
+              Our advanced AI doesn't just respond — it proactively researches your local competitors, pricing gaps, and growth opportunities.
+              This isn't generic SEO advice — it's strategic guidance tailored to your business and your zip code.
             </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
-            {/* Before - Traditional Research */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-gray-300 text-center">Traditional Method</h3>
-              <div className="bg-gray-800/30 border border-gray-600/20 rounded-xl p-6 opacity-60">
-                <div className="space-y-4 text-gray-400">
-                  <p>• Hours of manual Google searches</p>
-                  <p>• Incomplete competitor information</p>
-                  <p>• No strategic insights</p>
-                  <p>• Time-consuming research process</p>
-                </div>
-                <p className="text-center text-gray-500 mt-6 text-sm italic">Takes hours... if you even remember to do it</p>
+            
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-muted/50 rounded-xl p-6 border">
+                <h3 className="text-xl font-semibold mb-4 text-green-400">✅ What You Get with AI Sidekick</h3>
+                <ul className="space-y-2 text-base text-muted-foreground">
+                  <li>• Competitor ratings, reviews, and services</li>
+                  <li>• Market gaps and pricing opportunities</li>
+                  <li>• Local trends based on zip code & niche</li>
+                  <li>• Actionable growth recommendations</li>
+                  <li>• Reviewed website + tips to improve visibility</li>
+                </ul>
+              </div>
+              <div className="bg-background border border-white/10 rounded-xl p-6">
+                <h3 className="text-xl font-semibold mb-4 text-red-400">❌ Traditional Search</h3>
+                <ul className="space-y-2 text-base text-muted-foreground">
+                  <li>• Unstructured business listings</li>
+                  <li>• No context or strategic info</li>
+                  <li>• Generic info, not trade-specific</li>
+                  <li>• No advice or next steps</li>
+                  <li>• Can't assess your website or rank potential</li>
+                </ul>
               </div>
             </div>
-
-            {/* After - AI Intelligence */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-emerald-300 text-center">AI Competitive Intelligence</h3>
-              <div className="bg-emerald-900/10 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-6">
-                <div className="space-y-4 text-white">
-                  <p className="flex items-center space-x-2">
-                    <CheckCircle className="w-5 h-5 text-emerald-400" />
-                    <span>Complete competitor profiles with ratings & reviews</span>
-                  </p>
-                  <p className="flex items-center space-x-2">
-                    <CheckCircle className="w-5 h-5 text-emerald-400" />
-                    <span>Market gaps and pricing opportunities</span>
-                  </p>
-                  <p className="flex items-center space-x-2">
-                    <CheckCircle className="w-5 h-5 text-emerald-400" />
-                    <span>Actionable strategies to outrank competitors</span>
-                  </p>
-                  <p className="flex items-center space-x-2">
-                    <CheckCircle className="w-5 h-5 text-emerald-400" />
-                    <span>All delivered in under 30 seconds</span>
-                  </p>
-                </div>
-                <p className="text-center text-emerald-300 mt-6 text-sm font-medium">See it in action in the demo above!</p>
-              </div>
+            
+            <p className="text-center text-sm text-muted-foreground mt-6 mb-8">
+              💡 Your AI also reviews your website and gives you tips to rank higher, upsell better, and attract more local leads.
+            </p>
+            
+            <DisplayCards
+              cards={[
+                {
+                  icon: <Search className="size-4 text-green-300" />,
+                  title: "Live Competitor Analysis",
+                  description: "Find local ratings, reviews, and gaps in your service area.",
+                  date: "Powered by Google Places",
+                },
+                {
+                  icon: <Globe className="size-4 text-purple-300" />,
+                  title: "Website Health Check",
+                  description: "Get custom suggestions to improve visibility and rankings.",
+                  date: "AI Website Review",
+                },
+                {
+                  icon: <BarChart3 className="size-4 text-yellow-300" />,
+                  title: "Strategic Growth Insights",
+                  description: "Discover pricing, upsells, and local market trends.",
+                  date: "Zip Code Specific",
+                },
+              ]}
+            />
+            
+            <div className="text-center mt-8">
+              <Button 
+                onClick={() => window.location.href = '/signup?plan=free-trial'}
+                size="lg" 
+                className="bg-green-600 hover:bg-green-500 text-white"
+              >
+                👉 Start Your Free Trial and Let AI Review Your Business
+              </Button>
             </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Button 
-              onClick={() => window.location.href = '/signup?plan=free-trial'}
-              size="lg"
-              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xl px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
-            >
-              Start Your Free Trial
-              <ArrowRight className="ml-3 w-6 h-6" />
-            </Button>
+            
+            <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1"><Tag className="size-4 text-muted" /> Competitor Prices</div>
+              <div className="flex items-center gap-1"><MapPin className="size-4 text-muted" /> Zip Code Demand</div>
+              <div className="flex items-center gap-1"><Leaf className="size-4 text-muted" /> Missing Services</div>
+              <div className="flex items-center gap-1"><TrendingUp className="size-4 text-muted" /> SEO Visibility</div>
+              <div className="flex items-center gap-1"><Star className="size-4 text-muted" /> Reputation Score</div>
+            </div>
           </div>
         </div>
       </section>
