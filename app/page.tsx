@@ -502,7 +502,7 @@ What specific services do you currently offer, and what challenges have you face
                     }`}></div>
                   </div>
                   
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-white transition-colors duration-300">
+                  <h3 className="text-2xl font-bold mb-2 group-hover:text-white transition-colors duration-300">
                     <span className={`font-cursive bg-gradient-to-r bg-clip-text text-transparent ${
                       value.color === 'blue' ? 'from-blue-300 to-blue-500' :
                       value.color === 'emerald' ? 'from-emerald-300 to-emerald-500' :
@@ -1139,162 +1139,322 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* HVAC AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Premium Badge */}
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-red-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
+                    ❄️ Premium
+                  </div>
+                  
                   <CardContent className="p-6 sm:p-8 relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🏠</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">HVAC AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                        <span className="font-cursive bg-gradient-to-r from-red-300 to-orange-400 bg-clip-text text-transparent">
+                          HVAC AI
+                        </span>
+                      </h3>
                       <p className="text-gray-300 text-sm">Climate systems & energy efficiency</p>
+                      
+                      {/* Waitlist Counter */}
+                      <div className="mt-3 flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-3 py-1">
+                        <Users className="w-3 h-3 text-red-400" />
+                        <span className="text-red-300 text-xs font-medium">3,142 HVAC pros waiting</span>
+                      </div>
+                    </div>
+                    
+                    {/* Interactive Preview */}
+                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-red-500/20">
+                      <div className="text-xs text-red-300 mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI Preview</span>
+                      </div>
+                      <div className="text-xs text-gray-300 italic">
+                        "Winter is peak season - offer smart thermostat upgrades for $1,200 add-on sales. Your zip code has 67% adoption rate..."
+                      </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        "Energy efficiency upgrades",
-                        "Seasonal maintenance",
-                        "Smart system installs",
-                        "Air quality solutions"
+                        { text: "Smart thermostat sales", revenue: "+$1,200" },
+                        { text: "Seasonal maintenance", revenue: "$600/visit" },
+                        { text: "Energy efficiency", revenue: "$4K jobs" },
+                        { text: "Air quality upsells", revenue: "+$800" }
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <CheckCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                          <span className="text-gray-200 text-sm">{feature}</span>
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <CheckCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                            <span className="text-gray-200 text-sm">{feature.text}</span>
+                          </div>
+                          <span className="text-red-300 text-xs font-medium">{feature.revenue}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-4 py-2 mb-6">
-                      <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
-                      <span className="text-red-300 text-xs font-medium">In Development</span>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Development Progress</span>
+                        <span>42%</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-red-400 to-orange-500 h-2 rounded-full" style={{width: '42%'}}></div>
+                      </div>
                     </div>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 text-sm py-2"
+                      className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 text-sm py-3 font-semibold"
                       onClick={() => window.location.href = '/signup'}
                     >
-                      Get Notified
+                      🚀 Reserve Spot (Save 35%)
                     </Button>
+                    
+                    <p className="text-center text-xs text-gray-400 mt-2">
+                      Est. launch: Q4 2025 • Premium pricing
+                    </p>
                   </CardContent>
                 </Card>
 
                 {/* Roofers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-stone-500/10 to-gray-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Weather Ready Badge */}
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-stone-400 to-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
+                    ⛈️ Weather Ready
+                  </div>
+                  
                   <CardContent className="p-6 sm:p-8 relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-stone-400 to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-stone-400 to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🏗️</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Roofers AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                        <span className="font-cursive bg-gradient-to-r from-stone-300 to-gray-400 bg-clip-text text-transparent">
+                          Roofers AI
+                        </span>
+                      </h3>
                       <p className="text-gray-300 text-sm">Materials, weather & insurance</p>
+                      
+                      {/* Waitlist Counter */}
+                      <div className="mt-3 flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-3 py-1">
+                        <Users className="w-3 h-3 text-stone-400" />
+                        <span className="text-stone-300 text-xs font-medium">2,638 roofers waiting</span>
+                      </div>
+                    </div>
+                    
+                    {/* Interactive Preview */}
+                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-stone-500/20">
+                      <div className="text-xs text-stone-300 mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI Preview</span>
+                      </div>
+                      <div className="text-xs text-gray-300 italic">
+                        "Storm season approaching - prepare insurance claim templates for $18K average roof replacements in your area..."
+                      </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        "Insurance claim guidance",
-                        "Storm damage assessment",
-                        "Material recommendations",
-                        "Preventive maintenance"
+                        { text: "Insurance claim help", revenue: "$18K avg" },
+                        { text: "Storm damage assess", revenue: "Fast pay" },
+                        { text: "Material sourcing", revenue: "20% markup" },
+                        { text: "Preventive contracts", revenue: "Recurring" }
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <CheckCircle className="w-4 h-4 text-stone-400 flex-shrink-0" />
-                          <span className="text-gray-200 text-sm">{feature}</span>
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <CheckCircle className="w-4 h-4 text-stone-400 flex-shrink-0" />
+                            <span className="text-gray-200 text-sm">{feature.text}</span>
+                          </div>
+                          <span className="text-stone-300 text-xs font-medium">{feature.revenue}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-4 py-2 mb-6">
-                      <div className="w-2 h-2 bg-stone-400 rounded-full animate-pulse"></div>
-                      <span className="text-stone-300 text-xs font-medium">In Development</span>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Development Progress</span>
+                        <span>38%</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-stone-400 to-gray-600 h-2 rounded-full" style={{width: '38%'}}></div>
+                      </div>
                     </div>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white shadow-xl hover:shadow-stone-500/25 transition-all duration-300 text-sm py-2"
+                      className="w-full bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white shadow-xl hover:shadow-stone-500/25 transition-all duration-300 text-sm py-3 font-semibold"
                       onClick={() => window.location.href = '/signup'}
                     >
-                      Get Notified
+                      🚀 Secure Early Access (Save 25%)
                     </Button>
+                    
+                    <p className="text-center text-xs text-gray-400 mt-2">
+                      Est. launch: Q1 2026 • Weather alerts included
+                    </p>
                   </CardContent>
                 </Card>
 
                 {/* Pest Control AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Recurring Revenue Badge */}
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
+                    🔄 Recurring $$$
+                  </div>
+                  
                   <CardContent className="p-6 sm:p-8 relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🐛</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Pest Control AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                        <span className="font-cursive bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
+                          Pest Control AI
+                        </span>
+                      </h3>
                       <p className="text-gray-300 text-sm">Treatment methods & prevention</p>
+                      
+                      {/* Waitlist Counter */}
+                      <div className="mt-3 flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-3 py-1">
+                        <Users className="w-3 h-3 text-green-400" />
+                        <span className="text-green-300 text-xs font-medium">1,825 pest pros waiting</span>
+                      </div>
+                    </div>
+                    
+                    {/* Interactive Preview */}
+                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-green-500/20">
+                      <div className="text-xs text-green-300 mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI Preview</span>
+                      </div>
+                      <div className="text-xs text-gray-300 italic">
+                        "Spring ant season peak - offer quarterly contracts at $89/month. Bundle termite inspections for $400 add-on revenue..."
+                      </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        "Monthly service contracts",
-                        "Seasonal pest patterns",
-                        "Treatment recommendations",
-                        "Prevention education"
+                        { text: "Monthly contracts", revenue: "$89/mo" },
+                        { text: "Seasonal treatments", revenue: "4x revenue" },
+                        { text: "Termite inspections", revenue: "+$400" },
+                        { text: "Prevention plans", revenue: "Recurring" }
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
-                          <span className="text-gray-200 text-sm">{feature}</span>
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                            <span className="text-gray-200 text-sm">{feature.text}</span>
+                          </div>
+                          <span className="text-green-300 text-xs font-medium">{feature.revenue}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-4 py-2 mb-6">
-                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-green-300 text-xs font-medium">In Development</span>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Development Progress</span>
+                        <span>35%</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style={{width: '35%'}}></div>
+                      </div>
                     </div>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 text-sm py-2"
+                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 text-sm py-3 font-semibold"
                       onClick={() => window.location.href = '/signup'}
                     >
-                      Get Notified
+                      🚀 Lock In Early Rate (Save 20%)
                     </Button>
+                    
+                    <p className="text-center text-xs text-gray-400 mt-2">
+                      Est. launch: Q2 2026 • Seasonal alerts included
+                    </p>
                   </CardContent>
                 </Card>
 
                 {/* General Contractors AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden md:col-span-2 lg:col-span-1">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden md:col-span-2 lg:col-span-1 cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Big Projects Badge */}
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
+                    🏗️ Big Projects
+                  </div>
+                  
                   <CardContent className="p-6 sm:p-8 relative z-10">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🔨</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Contractors AI</h3>
+                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                        <span className="font-cursive bg-gradient-to-r from-purple-300 to-pink-400 bg-clip-text text-transparent">
+                          Contractors AI
+                        </span>
+                      </h3>
                       <p className="text-gray-300 text-sm">Project management & bidding</p>
+                      
+                      {/* Waitlist Counter */}
+                      <div className="mt-3 flex items-center justify-center space-x-2 bg-purple-500/20 rounded-full px-3 py-1">
+                        <Users className="w-3 h-3 text-purple-400" />
+                        <span className="text-purple-300 text-xs font-medium">4,729 contractors waiting</span>
+                      </div>
+                    </div>
+                    
+                    {/* Interactive Preview */}
+                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-purple-500/20">
+                      <div className="text-xs text-purple-300 mb-2 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI Preview</span>
+                      </div>
+                      <div className="text-xs text-gray-300 italic">
+                        "Kitchen remodel bid: Add 15% for permit delays and 8% material inflation. Total project value: $47,200 vs $35K baseline..."
+                      </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        "Accurate bid estimates",
-                        "Project scheduling",
-                        "Subcontractor management",
-                        "Material sourcing"
+                        { text: "Accurate bid estimates", revenue: "+15% profit" },
+                        { text: "Project scheduling", revenue: "On-time" },
+                        { text: "Sub management", revenue: "Smooth ops" },
+                        { text: "Material sourcing", revenue: "Best prices" }
                       ].map((feature, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <CheckCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                          <span className="text-gray-200 text-sm">{feature}</span>
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <CheckCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                            <span className="text-gray-200 text-sm">{feature.text}</span>
+                          </div>
+                          <span className="text-purple-300 text-xs font-medium">{feature.revenue}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center space-x-2 bg-purple-500/20 rounded-full px-4 py-2 mb-6">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                      <span className="text-purple-300 text-xs font-medium">In Development</span>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Development Progress</span>
+                        <span>25%</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-purple-400 to-pink-500 h-2 rounded-full" style={{width: '25%'}}></div>
+                      </div>
                     </div>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 text-sm py-2"
-                      onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 text-sm py-3 font-semibold"
+                      onClick={() => window.location.href = '/signup'}
                     >
-                      Get Notified
+                      🚀 Join Waitlist (Save 50%)
                     </Button>
+                    
+                    <p className="text-center text-xs text-gray-400 mt-2">
+                      Est. launch: Q3 2026 • Early bird exclusive
+                    </p>
                   </CardContent>
                 </Card>
               </div>
