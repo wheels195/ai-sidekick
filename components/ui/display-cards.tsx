@@ -35,16 +35,16 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
           
           <CardContent className="p-6 relative z-10">
             <div className="flex items-start gap-4">
-              {/* Enhanced Icon Container with better gradients */}
+              {/* Enhanced Icon Container with vibrant gradients */}
               <div className={`
-                w-12 h-12 rounded-full bg-gradient-to-br flex items-center justify-center shadow-lg shrink-0 transition-all duration-300 group-hover:shadow-xl
-                ${card.iconClassName?.includes('blue') ? 'from-blue-600 to-blue-400 shadow-blue-500/25 group-hover:shadow-blue-500/40' : ''}
-                ${card.iconClassName?.includes('purple') ? 'from-purple-600 to-purple-400 shadow-purple-500/25 group-hover:shadow-purple-500/40' : ''}
-                ${card.iconClassName?.includes('orange') ? 'from-orange-600 to-orange-400 shadow-orange-500/25 group-hover:shadow-orange-500/40' : ''}
-                ${card.iconClassName?.includes('emerald') ? 'from-emerald-600 to-emerald-400 shadow-emerald-500/25 group-hover:shadow-emerald-500/40' : ''}
+                w-12 h-12 rounded-full bg-gradient-to-br flex items-center justify-center shadow-xl shrink-0 transition-all duration-300 group-hover:shadow-2xl
+                ${card.iconClassName?.includes('blue') ? 'from-blue-500 to-blue-300 shadow-blue-400/50 group-hover:shadow-blue-400/70' : ''}
+                ${card.iconClassName?.includes('purple') ? 'from-purple-500 to-purple-300 shadow-purple-400/50 group-hover:shadow-purple-400/70' : ''}
+                ${card.iconClassName?.includes('orange') ? 'from-orange-500 to-orange-300 shadow-orange-400/50 group-hover:shadow-orange-400/70' : ''}
+                ${card.iconClassName?.includes('emerald') ? 'from-emerald-500 to-emerald-300 shadow-emerald-400/50 group-hover:shadow-emerald-400/70' : ''}
                 ${hoveredIndex === index ? 'scale-110 rotate-6' : ''}
               `}>
-                <div className="text-white transition-all duration-300 group-hover:scale-110">
+                <div className="text-white transition-all duration-300 group-hover:scale-110 drop-shadow-sm">
                   {card.icon}
                 </div>
               </div>

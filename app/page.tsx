@@ -979,7 +979,7 @@ What specific services do you currently offer, and what challenges have you face
               {/* Trade Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
                 {/* Electricians AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Most Requested Badge */}
@@ -999,10 +999,10 @@ What specific services do you currently offer, and what challenges have you face
                       </h3>
                       <p className="text-gray-300 text-sm">Wiring, codes & safety expertise</p>
                       
-                      {/* Waitlist Counter */}
+                      {/* Status Badge */}
                       <div className="mt-3 flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-3 py-1">
-                        <Users className="w-3 h-3 text-yellow-400" />
-                        <span className="text-yellow-300 text-xs font-medium">2,847 professionals waiting</span>
+                        <Sparkles className="w-3 h-3 text-yellow-400" />
+                        <span className="text-yellow-300 text-xs font-medium">Most requested by contractors</span>
                       </div>
                     </div>
                     
@@ -1013,16 +1013,16 @@ What specific services do you currently offer, and what challenges have you face
                         <span>AI Preview</span>
                       </div>
                       <div className="text-xs text-gray-300 italic">
-                        "Based on your area's electrical codes, I recommend upgrading to smart panels for 40% higher margins. Here's how to position this $3,200 upsell..."
+                        "Here's how to market smart home upgrades in your area - average job value increases from $800 to $3,200 when you position it right..."
                       </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        { text: "Smart home upsells", revenue: "+$2,400/job" },
-                        { text: "Code compliance", revenue: "Avoid fines" },
-                        { text: "Emergency pricing", revenue: "3x rates" },
-                        { text: "Safety protocols", revenue: "Zero liability" }
+                        { text: "Smart home marketing", revenue: "+$2,400/job" },
+                        { text: "Service call optimization", revenue: "3x bookings" },
+                        { text: "Emergency rate positioning", revenue: "Premium pricing" },
+                        { text: "Customer education content", revenue: "Higher trust" }
                       ].map((feature, index) => (
                         <div key={index} className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
@@ -1059,7 +1059,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* Plumbers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* High Demand Badge */}
@@ -1079,10 +1079,10 @@ What specific services do you currently offer, and what challenges have you face
                       </h3>
                       <p className="text-gray-300 text-sm">Emergency services & pipe systems</p>
                       
-                      {/* Waitlist Counter */}
+                      {/* Status Badge */}
                       <div className="mt-3 flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-3 py-1">
-                        <Users className="w-3 h-3 text-blue-400" />
-                        <span className="text-blue-300 text-xs font-medium">1,952 plumbers waiting</span>
+                        <Sparkles className="w-3 h-3 text-blue-400" />
+                        <span className="text-blue-300 text-xs font-medium">High demand from plumbers</span>
                       </div>
                     </div>
                     
@@ -1093,16 +1093,16 @@ What specific services do you currently offer, and what challenges have you face
                         <span>AI Preview</span>
                       </div>
                       <div className="text-xs text-gray-300 italic">
-                        "Emergency calls in your area average $450/hour. Bundle water heater inspections for an additional $200 revenue per visit..."
+                        "Market emergency services at premium rates - here's how to position maintenance plans that generate $200 recurring monthly revenue..."
                       </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        { text: "Emergency call pricing", revenue: "$450/hr" },
-                        { text: "Water heater sales", revenue: "+$1,800" },
-                        { text: "Pipe upgrade quotes", revenue: "$8K jobs" },
-                        { text: "Maintenance contracts", revenue: "Recurring" }
+                        { text: "Emergency service marketing", revenue: "Premium rates" },
+                        { text: "Maintenance plan sales", revenue: "$200/month" },
+                        { text: "Seasonal preparation content", revenue: "Trust building" },
+                        { text: "Customer education campaigns", revenue: "Repeat business" }
                       ].map((feature, index) => (
                         <div key={index} className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
@@ -1139,7 +1139,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* HVAC AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Premium Badge */}
@@ -1159,10 +1159,10 @@ What specific services do you currently offer, and what challenges have you face
                       </h3>
                       <p className="text-gray-300 text-sm">Climate systems & energy efficiency</p>
                       
-                      {/* Waitlist Counter */}
+                      {/* Status Badge */}
                       <div className="mt-3 flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-3 py-1">
-                        <Users className="w-3 h-3 text-red-400" />
-                        <span className="text-red-300 text-xs font-medium">3,142 HVAC pros waiting</span>
+                        <Sparkles className="w-3 h-3 text-red-400" />
+                        <span className="text-red-300 text-xs font-medium">Premium tier launching soon</span>
                       </div>
                     </div>
                     
@@ -1173,16 +1173,16 @@ What specific services do you currently offer, and what challenges have you face
                         <span>AI Preview</span>
                       </div>
                       <div className="text-xs text-gray-300 italic">
-                        "Winter is peak season - offer smart thermostat upgrades for $1,200 add-on sales. Your zip code has 67% adoption rate..."
+                        "Position comfort consultations to sell $1,200 smart thermostat packages - here's the seasonal marketing strategy that works..."
                       </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        { text: "Smart thermostat sales", revenue: "+$1,200" },
-                        { text: "Seasonal maintenance", revenue: "$600/visit" },
-                        { text: "Energy efficiency", revenue: "$4K jobs" },
-                        { text: "Air quality upsells", revenue: "+$800" }
+                        { text: "Comfort consultation sales", revenue: "+$1,200" },
+                        { text: "Maintenance contract marketing", revenue: "$600/visit" },
+                        { text: "Energy audit positioning", revenue: "$4K packages" },
+                        { text: "Air quality sales scripts", revenue: "+$800" }
                       ].map((feature, index) => (
                         <div key={index} className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
@@ -1219,7 +1219,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* Roofers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-stone-500/10 to-gray-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Weather Ready Badge */}
@@ -1239,10 +1239,10 @@ What specific services do you currently offer, and what challenges have you face
                       </h3>
                       <p className="text-gray-300 text-sm">Materials, weather & insurance</p>
                       
-                      {/* Waitlist Counter */}
+                      {/* Status Badge */}
                       <div className="mt-3 flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-3 py-1">
-                        <Users className="w-3 h-3 text-stone-400" />
-                        <span className="text-stone-300 text-xs font-medium">2,638 roofers waiting</span>
+                        <Sparkles className="w-3 h-3 text-stone-400" />
+                        <span className="text-stone-300 text-xs font-medium">Weather-based alerts included</span>
                       </div>
                     </div>
                     
@@ -1253,16 +1253,16 @@ What specific services do you currently offer, and what challenges have you face
                         <span>AI Preview</span>
                       </div>
                       <div className="text-xs text-gray-300 italic">
-                        "Storm season approaching - prepare insurance claim templates for $18K average roof replacements in your area..."
+                        "Storm season marketing prep - here's how to position emergency services and maintenance plans for maximum bookings..."
                       </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        { text: "Insurance claim help", revenue: "$18K avg" },
-                        { text: "Storm damage assess", revenue: "Fast pay" },
-                        { text: "Material sourcing", revenue: "20% markup" },
-                        { text: "Preventive contracts", revenue: "Recurring" }
+                        { text: "Storm response marketing", revenue: "Rapid bookings" },
+                        { text: "Preventive maintenance sales", revenue: "$300/month" },
+                        { text: "Material cost negotiations", revenue: "20% savings" },
+                        { text: "Seasonal business planning", revenue: "Year-round work" }
                       ].map((feature, index) => (
                         <div key={index} className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
@@ -1299,7 +1299,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* Pest Control AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Recurring Revenue Badge */}
@@ -1319,10 +1319,10 @@ What specific services do you currently offer, and what challenges have you face
                       </h3>
                       <p className="text-gray-300 text-sm">Treatment methods & prevention</p>
                       
-                      {/* Waitlist Counter */}
+                      {/* Status Badge */}
                       <div className="mt-3 flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-3 py-1">
-                        <Users className="w-3 h-3 text-green-400" />
-                        <span className="text-green-300 text-xs font-medium">1,825 pest pros waiting</span>
+                        <Sparkles className="w-3 h-3 text-green-400" />
+                        <span className="text-green-300 text-xs font-medium">Recurring revenue specialist</span>
                       </div>
                     </div>
                     
@@ -1333,16 +1333,16 @@ What specific services do you currently offer, and what challenges have you face
                         <span>AI Preview</span>
                       </div>
                       <div className="text-xs text-gray-300 italic">
-                        "Spring ant season peak - offer quarterly contracts at $89/month. Bundle termite inspections for $400 add-on revenue..."
+                        "Peak season marketing - position quarterly service plans at $89/month and seasonal add-ons for maximum customer lifetime value..."
                       </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        { text: "Monthly contracts", revenue: "$89/mo" },
-                        { text: "Seasonal treatments", revenue: "4x revenue" },
-                        { text: "Termite inspections", revenue: "+$400" },
-                        { text: "Prevention plans", revenue: "Recurring" }
+                        { text: "Contract sales strategies", revenue: "$89/month" },
+                        { text: "Seasonal upsell campaigns", revenue: "4x bookings" },
+                        { text: "Inspection service marketing", revenue: "+$400" },
+                        { text: "Customer retention programs", revenue: "95% renewal" }
                       ].map((feature, index) => (
                         <div key={index} className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
@@ -1379,7 +1379,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* General Contractors AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative overflow-hidden md:col-span-2 lg:col-span-1 cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative md:col-span-2 lg:col-span-1 cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Big Projects Badge */}
@@ -1399,10 +1399,10 @@ What specific services do you currently offer, and what challenges have you face
                       </h3>
                       <p className="text-gray-300 text-sm">Project management & bidding</p>
                       
-                      {/* Waitlist Counter */}
+                      {/* Status Badge */}
                       <div className="mt-3 flex items-center justify-center space-x-2 bg-purple-500/20 rounded-full px-3 py-1">
-                        <Users className="w-3 h-3 text-purple-400" />
-                        <span className="text-purple-300 text-xs font-medium">4,729 contractors waiting</span>
+                        <Sparkles className="w-3 h-3 text-purple-400" />
+                        <span className="text-purple-300 text-xs font-medium">Early bird access available</span>
                       </div>
                     </div>
                     
@@ -1413,16 +1413,16 @@ What specific services do you currently offer, and what challenges have you face
                         <span>AI Preview</span>
                       </div>
                       <div className="text-xs text-gray-300 italic">
-                        "Kitchen remodel bid: Add 15% for permit delays and 8% material inflation. Total project value: $47,200 vs $35K baseline..."
+                        "Position project management value - here's how to structure bids that account for delays and increase profit margins by 15%..."
                       </div>
                     </div>
                     
                     <div className="space-y-3 mb-6">
                       {[
-                        { text: "Accurate bid estimates", revenue: "+15% profit" },
-                        { text: "Project scheduling", revenue: "On-time" },
-                        { text: "Sub management", revenue: "Smooth ops" },
-                        { text: "Material sourcing", revenue: "Best prices" }
+                        { text: "Bid strategy optimization", revenue: "+15% margin" },
+                        { text: "Timeline communication", revenue: "Client trust" },
+                        { text: "Subcontractor coordination", revenue: "Efficiency" },
+                        { text: "Procurement negotiations", revenue: "Cost control" }
                       ].map((feature, index) => (
                         <div key={index} className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
