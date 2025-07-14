@@ -709,7 +709,7 @@ What specific services do you currently offer, and what challenges have you face
 
           <div className="text-center mt-16 lg:mt-20 xl:mt-24">
             <p className="text-blue-300 text-lg xl:text-xl 2xl:text-2xl mb-8 lg:mb-10">
-              💡 Your AI also reviews your website and gives you tips to rank higher, upsell better, and attract more local leads.
+              💡 Your <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI Sidekick</span> reviews your website, gives you tips to rank higher, upsell more strategically, and bring you more business.
             </p>
             
             <Button 
