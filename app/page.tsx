@@ -625,8 +625,8 @@ What specific services do you currently offer, and what challenges have you face
                   {
                     icon: <Search className="size-6 text-blue-400" />,
                     title: "Live Competitor Analysis",
-                    description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time Google Places data.",
-                    date: "Powered by Google Places API",
+                    description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time competitive intelligence.",
+                    date: "Powered by Advanced AI Sidekick",
                     iconClassName: "text-blue-400",
                     className: "[grid-area:stack] z-30 hover:-translate-y-4 hover:z-40 hover:shadow-blue-500/25",
                   },
