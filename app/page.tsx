@@ -612,8 +612,8 @@ What specific services do you currently offer, and what challenges have you face
             {/* Left Side - AI Capabilities */}
             <div className="space-y-8 lg:pr-8">
               <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl font-semibold text-blue-400 mb-6">
-                  ✅ Advanced AI Capabilities
+                <h3 className="text-2xl xl:text-3xl font-semibold mb-6">
+                  ✅ <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI</span> <span className="text-blue-400">Capabilities</span>
                 </h3>
                 <p className="text-lg text-gray-200 mb-8">
                   Get strategic business intelligence that goes far beyond basic search results
@@ -628,7 +628,7 @@ What specific services do you currently offer, and what challenges have you face
                     description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time Google Places data.",
                     date: "Powered by Google Places API",
                     iconClassName: "text-blue-400",
-                    className: "[grid-area:stack] hover:-translate-y-4 hover:shadow-blue-500/25",
+                    className: "[grid-area:stack] z-30 hover:-translate-y-4 hover:z-40 hover:shadow-blue-500/25",
                   },
                   {
                     icon: <Globe className="size-6 text-purple-400" />,
@@ -636,7 +636,7 @@ What specific services do you currently offer, and what challenges have you face
                     description: "Get custom AI-powered suggestions to improve your website's visibility, SEO rankings, and conversion rates.",
                     date: "AI Website Analysis",
                     iconClassName: "text-purple-400",
-                    className: "[grid-area:stack] translate-x-12 translate-y-8 hover:translate-y-4 hover:shadow-purple-500/25",
+                    className: "[grid-area:stack] z-20 translate-x-8 translate-y-12 hover:translate-y-8 hover:z-40 hover:shadow-purple-500/25",
                   },
                   {
                     icon: <BarChart3 className="size-6 text-orange-400" />,
@@ -644,7 +644,7 @@ What specific services do you currently offer, and what challenges have you face
                     description: "Discover pricing opportunities, upselling strategies, and local market trends specific to your zip code and trade.",
                     date: "Zip Code Specific Intelligence",
                     iconClassName: "text-orange-400",
-                    className: "[grid-area:stack] translate-x-24 translate-y-16 hover:translate-y-12 hover:shadow-orange-500/25",
+                    className: "[grid-area:stack] z-10 translate-x-16 translate-y-24 hover:translate-y-20 hover:z-40 hover:shadow-orange-500/25",
                   },
                 ]}
               />
