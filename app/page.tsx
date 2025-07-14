@@ -733,39 +733,39 @@ What specific services do you currently offer, and what challenges have you face
               <DisplayCards
                 cards={[
                   {
-                    icon: <Search className="size-6 text-blue-400" />,
+                    icon: <Search className="size-7 text-white drop-shadow-md" />,
                     title: "Live Competitor Analysis",
                     description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time competitive intelligence.",
                     date: "Powered by Advanced AI Sidekick",
                     badge: "Save 15+ hours/week",
-                    iconClassName: "text-blue-400",
+                    iconClassName: "blue",
                     className: "[grid-area:stack] z-40 hover:-translate-y-4 hover:z-50 hover:shadow-blue-500/25",
                   },
                   {
-                    icon: <Globe className="size-6 text-purple-400" />,
+                    icon: <Globe className="size-7 text-white drop-shadow-md" />,
                     title: "Website Health Check",
                     description: "Get custom AI-powered suggestions to improve your website's visibility, SEO rankings, and conversion rates.",
                     date: "AI Website Analysis",
                     badge: "Boost visibility 3x",
-                    iconClassName: "text-purple-400",
+                    iconClassName: "purple",
                     className: "[grid-area:stack] z-30 translate-x-8 translate-y-12 hover:translate-y-8 hover:z-50 hover:shadow-purple-500/25",
                   },
                   {
-                    icon: <BarChart3 className="size-6 text-orange-400" />,
+                    icon: <BarChart3 className="size-7 text-white drop-shadow-md" />,
                     title: "Strategic Growth Insights",
                     description: "Discover pricing opportunities, upselling strategies, and local market trends specific to your zip code and trade.",
                     date: "Zip Code Specific Intelligence",
                     badge: "Increase revenue 25%",
-                    iconClassName: "text-orange-400",
+                    iconClassName: "orange",
                     className: "[grid-area:stack] z-20 translate-x-16 translate-y-24 hover:translate-y-20 hover:z-50 hover:shadow-orange-500/25",
                   },
                   {
-                    icon: <TrendingUp className="size-6 text-emerald-400" />,
+                    icon: <TrendingUp className="size-7 text-white drop-shadow-md" />,
                     title: "Customer Retention AI",
                     description: "Identify at-risk customers, optimize follow-up timing, and create personalized retention strategies that keep clients coming back.",
                     date: "Behavioral Pattern Analysis",
                     badge: "Retain 40% more customers",
-                    iconClassName: "text-emerald-400",
+                    iconClassName: "emerald",
                     className: "[grid-area:stack] z-10 translate-x-24 translate-y-36 hover:translate-y-32 hover:z-50 hover:shadow-emerald-500/25",
                   },
                 ]}
@@ -1047,7 +1047,7 @@ What specific services do you currently offer, and what challenges have you face
 
                     <Button
                       className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/signup'}
+                      onClick={() => window.location.href = '/contact'}
                     >
                       🚀 Get First Access (Save 40%)
                     </Button>
@@ -1127,7 +1127,7 @@ What specific services do you currently offer, and what challenges have you face
 
                     <Button
                       className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/signup'}
+                      onClick={() => window.location.href = '/contact'}
                     >
                       🚀 Join Waitlist (Save 30%)
                     </Button>
@@ -1207,7 +1207,7 @@ What specific services do you currently offer, and what challenges have you face
 
                     <Button
                       className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/signup'}
+                      onClick={() => window.location.href = '/contact'}
                     >
                       🚀 Reserve Spot (Save 35%)
                     </Button>
@@ -1287,7 +1287,7 @@ What specific services do you currently offer, and what challenges have you face
 
                     <Button
                       className="w-full bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white shadow-xl hover:shadow-stone-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/signup'}
+                      onClick={() => window.location.href = '/contact'}
                     >
                       🚀 Secure Early Access (Save 25%)
                     </Button>
@@ -1367,7 +1367,7 @@ What specific services do you currently offer, and what challenges have you face
 
                     <Button
                       className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/signup'}
+                      onClick={() => window.location.href = '/contact'}
                     >
                       🚀 Lock In Early Rate (Save 20%)
                     </Button>
@@ -1447,7 +1447,7 @@ What specific services do you currently offer, and what challenges have you face
 
                     <Button
                       className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/signup'}
+                      onClick={() => window.location.href = '/contact'}
                     >
                       🚀 Join Waitlist (Save 50%)
                     </Button>
