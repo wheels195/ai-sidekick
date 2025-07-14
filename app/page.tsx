@@ -717,7 +717,7 @@ What specific services do you currently offer, and what challenges have you face
               size="lg"
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg xl:text-xl 2xl:text-2xl px-8 lg:px-12 xl:px-16 py-4 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105"
             >
-              👉 Start Your Free Trial and Let AI Review Your Business
+              👉 Start Your Free Trial and Let AI Sidekick Help You Grow
               <ArrowRight className="ml-3 w-5 h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />
             </Button>
             
