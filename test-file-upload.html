@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test File Upload</title>
+</head>
+<body>
+    <h1>Test File Upload to AI Sidekick</h1>
+    
+    <form id="uploadForm">
+        <input type="file" id="fileInput" accept=".txt,.pdf,image/*" />
+        <button type="submit">Upload and Test</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+            
+            // Convert file to base64
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const fileData = {
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    content: e.target.result
+                };
+                
+                try {
+                    // Test the chat API with file
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            messages: [
+                                {
+                                    role: 'user',
+                                    content: 'Please analyze this uploaded file and provide business insights'
+                                }
+                            ],
+                            files: [fileData],
+                            sessionId: 'test-upload-' + Date.now()
+                        })
+                    });
+                    
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let result = '';
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split('\n');
+                        
+                        for (const line of lines) {
+                            if (line.startsWith('data: ')) {
+                                const data = line.slice(6);
+                                if (data !== '[DONE]' && !data.startsWith('[DONE:')) {
+                                    result += JSON.parse(data);
+                                }
+                            }
+                        }
+                    }
+                    
+                    document.getElementById('result').innerHTML = `
+                        <h2>AI Analysis Result:</h2>
+                        <pre>${result}</pre>
+                    `;
+                    
+                } catch (error) {
+                    document.getElementById('result').innerHTML = `
+                        <h2>Error:</h2>
+                        <pre>${error.message}</pre>
+                    `;
+                }
+            };
+            
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>

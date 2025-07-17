@@ -19,7 +19,15 @@
       "Bash(npm info:*)",
       "Bash(echo:*)",
       "Bash(npm uninstall:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(cp:*)",
+      "Bash(sudo apt-get:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(mv:*)",
+      "Bash(npx supabase db reset:*)",
+      "Bash(node:*)",
+      "Bash(source:*)",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

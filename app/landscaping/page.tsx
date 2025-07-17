@@ -921,6 +921,9 @@ export default function LandscapingChat() {
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
     
+    // Clear uploaded files after sending
+    setUploadedFiles([])
+    
     // Hide welcome header when user sends first message
     if (showWelcomeHeader) {
       setShowWelcomeHeader(false)
@@ -929,15 +932,14 @@ export default function LandscapingChat() {
 
     // Convert uploaded files to base64 for transmission
     let filesToSend: any[] = []
-    // Temporarily disable file processing to debug 500 error
-    // if (uploadedFiles.length > 0) {
-    //   try {
-    //     filesToSend = await convertFilesToBase64(uploadedFiles)
-    //     console.log('📁 Converted files for transmission:', filesToSend.length)
-    //   } catch (error) {
-    //     console.error('Failed to process files:', error)
-    //   }
-    // }
+    if (uploadedFiles.length > 0) {
+      try {
+        filesToSend = await convertFilesToBase64(uploadedFiles)
+        console.log('📁 Converted files for transmission:', filesToSend.length)
+      } catch (error) {
+        console.error('Failed to process files:', error)
+      }
+    }
 
     // Determine which model will be used (matches backend logic)
     const modelToUse = webSearchEnabled ? 'gpt-4o' : 'gpt-4o-mini'

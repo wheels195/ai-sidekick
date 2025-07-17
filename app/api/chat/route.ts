@@ -120,35 +120,64 @@ async function processUploadedFiles(files: any[]): Promise<string> {
     return ''
   }
 
-  const fileDescriptions = []
+  const fileAnalyses = []
   
   for (const file of files) {
     const { name, type, content } = file
     
-    if (type.startsWith('image/')) {
-      // For images, we'll use OpenAI's vision capabilities
-      fileDescriptions.push(`📷 **Image Upload: ${name}**
-- File type: ${type}
-- Ready for AI analysis (plant diseases, landscape photos, competitor materials, etc.)
-- The AI can analyze this image and provide specific landscaping insights`)
-    } else if (type === 'application/pdf') {
-      fileDescriptions.push(`📄 **PDF Document: ${name}**
-- File type: PDF document
-- Content available for AI analysis (proposals, estimates, marketing materials)
-- The AI can review and provide feedback on business documents`)
-    } else if (type.includes('text') || name.endsWith('.txt')) {
-      fileDescriptions.push(`📝 **Text Document: ${name}**
-- File type: Text document
-- Content ready for AI analysis and feedback
-- The AI can review and improve written content`)
-    } else {
-      fileDescriptions.push(`📎 **File: ${name}**
-- File type: ${type}
-- File uploaded and available for AI review`)
+    try {
+      if (type.startsWith('image/')) {
+        // For images, we'll use OpenAI's vision capabilities
+        const openai = getOpenAIClient()
+        const response = await openai.chat.completions.create({
+          model: 'gpt-4o',
+          messages: [
+            {
+              role: 'user',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Analyze this image for landscaping business insights. Extract any text, pricing information, service details, or business-relevant data. Focus on actionable information for a landscaping business owner.'
+                },
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: content
+                  }
+                }
+              ]
+            }
+          ],
+          max_tokens: 1000
+        })
+        
+        const analysis = response.choices[0].message.content || 'Could not analyze image'
+        fileAnalyses.push(`📷 **Image Analysis: ${name}**\n${analysis}`)
+        
+      } else if (type === 'application/pdf') {
+        // For PDFs, provide basic info (full PDF parsing would need additional libraries)
+        fileAnalyses.push(`📄 **PDF Document: ${name}**\n- File type: PDF document\n- Content extraction for PDFs requires additional processing\n- Please describe the content or key information you'd like me to focus on`)
+        
+      } else if (type.includes('text') || name.endsWith('.txt')) {
+        // For text files, decode base64 content
+        try {
+          const base64Content = content.split(',')[1]
+          const textContent = atob(base64Content)
+          fileAnalyses.push(`📝 **Text File: ${name}**\n\nContent:\n${textContent}`)
+        } catch (error) {
+          fileAnalyses.push(`📝 **Text File: ${name}**\n- Could not decode file content\n- Please check file format or try re-uploading`)
+        }
+        
+      } else {
+        fileAnalyses.push(`📎 **File: ${name}**\n- File type: ${type}\n- Content type not yet supported for automatic analysis\n- Please describe what information you'd like me to focus on`)
+      }
+    } catch (error) {
+      console.error('Error processing file:', error)
+      fileAnalyses.push(`❌ **Error processing ${name}**: ${error.message}`)
     }
   }
   
-  return `FILES UPLOADED:\n${fileDescriptions.join('\n\n')}\n\nPlease analyze these files and provide specific landscaping business insights, recommendations, or feedback based on the content.`
+  return `FILES UPLOADED AND ANALYZED:\n\n${fileAnalyses.join('\n\n---\n\n')}\n\nBased on the above file analysis, please provide specific landscaping business insights, recommendations, or feedback.`
 }
 
 
@@ -338,8 +367,29 @@ export async function POST(request: NextRequest) {
     if (files && files.length > 0) {
       console.log('📁 Processing uploaded files:', files.length)
       fileContext = await processUploadedFiles(files)
-      useGPT4o = true // Use GPT-4o for file analysis
       console.log('📁 File context generated:', fileContext.substring(0, 200))
+      
+      // Store files in user knowledge base if user is authenticated
+      if (user) {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/files/process`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
+            },
+            body: JSON.stringify({ files }),
+          })
+          
+          if (response.ok) {
+            console.log('📁 Files stored in user knowledge base')
+          } else {
+            console.error('📁 Failed to store files in knowledge base')
+          }
+        } catch (error) {
+          console.error('📁 Error storing files:', error)
+        }
+      }
     }
 
     // Handle web search if enabled and needed
@@ -381,6 +431,31 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Enhanced knowledge retrieval from vector database
+    let vectorKnowledge = ''
+    if (currentUserMessage?.role === 'user') {
+      console.log('🧠 Retrieving relevant knowledge from vector database...')
+      
+      try {
+        // Import the vector search function
+        const { enhancedKnowledgeSearch } = await import('@/lib/vectorSearch')
+        
+        // Search for relevant knowledge chunks
+        const enhancedProfile = userProfile ? { ...userProfile, id: user?.id } : undefined
+        vectorKnowledge = await enhancedKnowledgeSearch(request, currentUserMessage.content, enhancedProfile)
+        
+        console.log('🧠 Vector knowledge retrieved:', { 
+          hasKnowledge: !!vectorKnowledge,
+          length: vectorKnowledge.length 
+        })
+        
+      } catch (vectorError) {
+        console.error('❌ Vector search failed:', vectorError)
+        // Continue without vector knowledge rather than crashing
+        vectorKnowledge = ''
+      }
+    }
+
     // Enhance system prompt with user context and web search status
     let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
     
@@ -397,6 +472,11 @@ export async function POST(request: NextRequest) {
 - Business Priorities: ${userProfile.business_priorities?.join(', ') || 'Not specified'}
 
 Use this context to provide more personalized and relevant advice.${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
+    }
+
+    // Add vector knowledge to system prompt
+    if (vectorKnowledge) {
+      enhancedSystemPrompt += `\n\n${vectorKnowledge}`
     }
 
     if (webSearchEnabled && searchResults && !['error', 'not available', 'not configured'].some(term => searchResults.includes(term))) {

@@ -769,6 +769,50 @@ What specific services do you currently offer, and what challenges have you face
                   },
                 ]}
               />
+              
+              {/* Bonus Feature - File Upload Analysis */}
+              <div className="mt-12 lg:mt-16">
+                <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl p-6 lg:p-8 border border-indigo-500/20 backdrop-blur-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
+                        <FileText className="w-4 h-4 text-white" />
+                      </div>
+                      <h4 className="text-lg xl:text-xl font-semibold text-white">
+                        Upload & Analyze Photos, Files & Content
+                      </h4>
+                    </div>
+                    <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-3 py-1 border border-indigo-400/30">
+                      <span className="text-indigo-300 text-sm font-medium">Instant Expert Results</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-300 mb-6 text-sm xl:text-base">
+                    Turn any image or document into competitive intelligence
+                  </p>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Target className="w-4 h-4 text-indigo-400" />
+                      <span className="text-sm text-gray-300">
+                        <span className="font-medium text-indigo-300">Competitor Analysis</span> - Price with confidence
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Search className="w-4 h-4 text-purple-400" />
+                      <span className="text-sm text-gray-300">
+                        <span className="font-medium text-purple-300">Expert Diagnosis</span> - Solve problems instantly
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <TrendingUp className="w-4 h-4 text-pink-400" />
+                      <span className="text-sm text-gray-300">
+                        <span className="font-medium text-pink-300">Proposal Insights</span> - Win more jobs
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Right Side - Generic Google Search */}
