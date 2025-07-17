@@ -37,9 +37,35 @@ async function extractFileContent(file: any): Promise<string> {
       
       return response.choices[0].message.content || ''
     } else if (type === 'application/pdf') {
-      // For PDFs, return a placeholder for now
-      // In production, you'd use a PDF parsing library like pdf-parse
-      return `PDF document: ${name}. Content extraction for PDFs will be implemented with proper PDF parsing libraries.`
+      // For PDFs, use OpenAI's native PDF processing capabilities
+      try {
+        const response = await openai.chat.completions.create({
+          model: 'gpt-4o',
+          messages: [
+            {
+              role: 'user',
+              content: [
+                {
+                  type: 'text',
+                  text: `Analyze this PDF document and extract all relevant business information, strategies, tips, recommendations, and actionable insights. Focus on content that would be useful for a landscaping business owner. Return the extracted information in a structured, comprehensive format. Document name: ${name}`
+                },
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: content // Base64 PDF data
+                  }
+                }
+              ]
+            }
+          ],
+          max_tokens: 4000
+        })
+        
+        return response.choices[0].message.content || `PDF document: ${name}. Unable to extract content.`
+      } catch (error) {
+        console.error('PDF processing error:', error)
+        return `PDF Document: ${name}. Error processing PDF content: ${error.message}`
+      }
     } else if (type.includes('text') || name.endsWith('.txt')) {
       // For text files, the content is likely base64 encoded
       try {

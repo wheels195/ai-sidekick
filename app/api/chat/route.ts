@@ -474,9 +474,11 @@ export async function POST(request: NextRequest) {
 Use this context to provide more personalized and relevant advice.${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
     }
 
-    // Add vector knowledge to system prompt
+    // Add vector knowledge to system prompt (clean markdown formatting)
     if (vectorKnowledge) {
-      enhancedSystemPrompt += `\n\n${vectorKnowledge}`
+      // Remove markdown formatting from vector knowledge to prevent double-processing
+      const cleanKnowledge = vectorKnowledge.replace(/\*\*([^*]+)\*\*/g, '$1')
+      enhancedSystemPrompt += `\n\n${cleanKnowledge}`
     }
 
     if (webSearchEnabled && searchResults && !['error', 'not available', 'not configured'].some(term => searchResults.includes(term))) {
@@ -672,11 +674,13 @@ I notice some competitors are located in different areas/zip codes than your bus
       })
     }
 
-    // Add file context if files were uploaded
+    // Add file context if files were uploaded (clean markdown formatting)
     if (fileContext) {
+      // Remove markdown formatting from file content to prevent double-processing
+      const cleanFileContext = fileContext.replace(/\*\*([^*]+)\*\*/g, '$1')
       chatMessages.push({
         role: 'system' as const,
-        content: `${fileContext}
+        content: `${cleanFileContext}
 
 IMPORTANT FILE ANALYSIS INSTRUCTIONS:
 - Focus on landscaping business applications and insights

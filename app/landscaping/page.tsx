@@ -132,8 +132,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
         htmlLines.push('<tr class="border-b border-gray-700 hover:bg-gray-700/30">')
         
         cells.forEach((cell, index) => {
-          // Handle bold text in cells - fixed processing
-          let processedCell = cell.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+          // Handle bold text in cells - enhanced processing
+          let processedCell = cell.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
           // Handle links in cells
           processedCell = processedCell.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
           
@@ -198,8 +198,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
       }
       const number = line.match(/^\d+/)[0]
       let text = line.replace(/^\d+\.\s+/, '')
-      // Handle bold text with emerald color for titles - fixed processing
-      text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-emerald-400">$1</strong>')
+      // Handle bold text with emerald color for titles - enhanced processing
+      text = text.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-emerald-400">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       htmlLines.push(`<div class="flex items-start mb-3"><span class="text-emerald-400 font-semibold text-lg mr-2 mt-0.5">${number}.</span><div class="text-white leading-relaxed flex-1">${text}</div></div>`)
@@ -211,8 +211,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       
       let text = line.substring(2).trim() // Remove ✅ and space
-      // Handle bold text - fixed processing
-      text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle bold text - enhanced processing
+      text = text.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       
@@ -236,8 +236,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
         inBulletList = true
       }
       let text = line.substring(2)
-      // Handle bold text - fixed processing
-      text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle bold text - enhanced processing
+      text = text.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       
@@ -254,8 +254,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       // Don't close table here - let it continue across multiple lines
       let text = line
-      // Handle bold text - fixed processing
-      text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      // Handle bold text - enhanced processing
+      text = text.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       
