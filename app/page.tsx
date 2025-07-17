@@ -709,7 +709,7 @@ What specific services do you currently offer, and what challenges have you face
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-start">
             {/* Left Side - AI Capabilities */}
-            <div className="space-y-8 lg:space-y-10 lg:pr-8 relative">
+            <div className="space-y-8 lg:space-y-10 lg:pr-8 relative max-w-none">
               <div className="text-center lg:text-left">
                 <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-6 flex items-center justify-center lg:justify-start gap-3">
                   <div className="w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
@@ -782,8 +782,8 @@ What specific services do you currently offer, and what challenges have you face
                           Upload & Analyze Photos, Files & Content
                         </h4>
                       </div>
-                      <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-3 py-1 border border-indigo-400/30 transition-all duration-300 group-hover:from-indigo-500/30 group-hover:to-purple-500/30 group-hover:border-indigo-400/50">
-                        <span className="text-indigo-300 text-sm font-medium">Instant Expert Results</span>
+                      <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-2 sm:px-3 py-1 border border-indigo-400/30 transition-all duration-300 group-hover:from-indigo-500/30 group-hover:to-purple-500/30 group-hover:border-indigo-400/50">
+                        <span className="text-indigo-300 text-xs sm:text-sm font-medium">Instant Expert Results</span>
                       </div>
                     </div>
                     
