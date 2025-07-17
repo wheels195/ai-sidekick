@@ -738,7 +738,6 @@ What specific services do you currently offer, and what challenges have you face
                     date: "Powered by Advanced AI Sidekick",
                     badge: "Save 15+ hours/week",
                     iconClassName: "blue",
-                    className: "[grid-area:stack] z-40 hover:-translate-y-4 hover:z-50 hover:shadow-blue-500/25",
                   },
                   {
                     icon: <Globe className="size-7 text-white drop-shadow-md" />,
@@ -747,7 +746,6 @@ What specific services do you currently offer, and what challenges have you face
                     date: "AI Website Analysis",
                     badge: "Boost visibility 3x",
                     iconClassName: "purple",
-                    className: "[grid-area:stack] z-30 translate-x-8 translate-y-12 hover:translate-y-8 hover:z-50 hover:shadow-purple-500/25",
                   },
                   {
                     icon: <BarChart3 className="size-7 text-white drop-shadow-md" />,
@@ -756,7 +754,6 @@ What specific services do you currently offer, and what challenges have you face
                     date: "Zip Code Specific Intelligence",
                     badge: "Increase revenue 25%",
                     iconClassName: "orange",
-                    className: "[grid-area:stack] z-20 translate-x-16 translate-y-24 hover:translate-y-20 hover:z-50 hover:shadow-orange-500/25",
                   },
                   {
                     icon: <TrendingUp className="size-7 text-white drop-shadow-md" />,
@@ -765,51 +762,84 @@ What specific services do you currently offer, and what challenges have you face
                     date: "Behavioral Pattern Analysis",
                     badge: "Retain 40% more customers",
                     iconClassName: "emerald",
-                    className: "[grid-area:stack] z-10 translate-x-24 translate-y-36 hover:translate-y-32 hover:z-50 hover:shadow-emerald-500/25",
                   },
                 ]}
               />
               
               {/* Bonus Feature - File Upload Analysis */}
               <div className="mt-12 lg:mt-16">
-                <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl p-6 lg:p-8 border border-indigo-500/20 backdrop-blur-sm">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
-                        <FileText className="w-4 h-4 text-white" />
+                <div className="group w-full bg-white/5 backdrop-blur-md ring-1 ring-white/10 rounded-xl shadow-2xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/20 hover:ring-white/30 hover:bg-white/10 transition-all duration-500 ease-out cursor-pointer relative overflow-hidden">
+                  {/* Animated glow effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
+                  
+                  <div className="p-6 lg:p-8 relative z-10">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-xl shrink-0 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-indigo-400/50 group-hover:scale-110">
+                          <FileText className="w-6 h-6 text-white drop-shadow-md transition-all duration-300 group-hover:scale-110" />
+                        </div>
+                        <h4 className="text-lg xl:text-xl font-semibold text-white tracking-tight transition-all duration-300 group-hover:text-white group-hover:scale-105">
+                          Upload & Analyze Photos, Files & Content
+                        </h4>
                       </div>
-                      <h4 className="text-lg xl:text-xl font-semibold text-white">
-                        Upload & Analyze Photos, Files & Content
-                      </h4>
+                      <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-3 py-1 border border-indigo-400/30 transition-all duration-300 group-hover:from-indigo-500/30 group-hover:to-purple-500/30 group-hover:border-indigo-400/50">
+                        <span className="text-indigo-300 text-sm font-medium">Instant Expert Results</span>
+                      </div>
                     </div>
-                    <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-3 py-1 border border-indigo-400/30">
-                      <span className="text-indigo-300 text-sm font-medium">Instant Expert Results</span>
+                    
+                    <p className="text-white/80 mb-6 text-sm xl:text-base leading-relaxed tracking-wide transition-colors duration-300 group-hover:text-white/90">
+                      Turn any image or document into competitive intelligence
+                    </p>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-300 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-indigo-400/50">
+                          <Target className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white/90">
+                            <span className="font-medium text-indigo-300">Competitor Analysis</span>
+                          </span>
+                          <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
+                            Price with confidence
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-300 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
+                          <Search className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white/90">
+                            <span className="font-medium text-purple-300">Expert Diagnosis</span>
+                          </span>
+                          <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
+                            Solve problems instantly
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-pink-300 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50">
+                          <TrendingUp className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white/90">
+                            <span className="font-medium text-pink-300">Proposal Insights</span>
+                          </span>
+                          <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
+                            Win more jobs
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <p className="text-gray-300 mb-6 text-sm xl:text-base">
-                    Turn any image or document into competitive intelligence
-                  </p>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="flex items-center space-x-2">
-                      <Target className="w-4 h-4 text-indigo-400" />
-                      <span className="text-sm text-gray-300">
-                        <span className="font-medium text-indigo-300">Competitor Analysis</span> - Price with confidence
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Search className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm text-gray-300">
-                        <span className="font-medium text-purple-300">Expert Diagnosis</span> - Solve problems instantly
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <TrendingUp className="w-4 h-4 text-pink-400" />
-                      <span className="text-sm text-gray-300">
-                        <span className="font-medium text-pink-300">Proposal Insights</span> - Win more jobs
-                      </span>
-                    </div>
+                  {/* Subtle animated border on hover */}
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                       style={{
+                         background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)',
+                         backgroundSize: '200% 200%',
+                       }}>
                   </div>
                 </div>
               </div>
