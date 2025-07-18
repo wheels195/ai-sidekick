@@ -39,22 +39,49 @@ export default function LandingPage() {
 
   const fullUserMessage = "Find landscaping companies in my area and help me analyze the competition. I need to understand my market better."
   
-  const fullAiMessage = `🔍 **Searching Google for "landscaping companies near you"...**
+  const fullAiMessage = `**Searching Google for "landscaping companies near you"...**
 
-✅ **Found 6 direct competitors in your local market:**
+**Found 6 direct competitors in your local market:**
 
 ## Live Competitor Intelligence
 
-| Business | Rating | Reviews | Price Level | Phone | Status |
-|----------|--------|---------|-------------|-------|--------|
-| **Elite Landscape Co.** | ⭐⭐⭐⭐⭐ 4.7 | 234 reviews | $$$$  | (555) 123-4567 | OPERATIONAL |
-| **GreenThumb Services** | ⭐⭐⭐⭐☆ 4.2 | 156 reviews | $$$   | (555) 234-5678 | OPERATIONAL |
-| **Budget Lawn Care** | ⭐⭐⭐☆☆ 3.8 | 89 reviews  | $$    | (555) 345-6789 | OPERATIONAL |
-| **Premier Landscapes** | ⭐⭐⭐⭐⭐ 4.9 | 78 reviews  | $$$$$ | (555) 456-7890 | OPERATIONAL |
-| **Yard Masters LLC** | ⭐⭐⭐⭐☆ 4.1 | 203 reviews | $$$   | (555) 567-8901 | OPERATIONAL |
-| **Quick Cut Lawns** | ⭐⭐⭐☆☆ 3.5 | 67 reviews  | $$    | (555) 678-9012 | OPERATIONAL |
+**Elite Landscape Co.**
+- Rating: 4.7 stars (234 reviews)
+- Price Level: $$$$
+- Phone: (555) 123-4567
+- Status: OPERATIONAL
 
-## 📊 Market Intelligence Analysis
+**GreenThumb Services**
+- Rating: 4.2 stars (156 reviews)
+- Price Level: $$$
+- Phone: (555) 234-5678
+- Status: OPERATIONAL
+
+**Budget Lawn Care**
+- Rating: 3.8 stars (89 reviews)
+- Price Level: $$
+- Phone: (555) 345-6789
+- Status: OPERATIONAL
+
+**Premier Landscapes**
+- Rating: 4.9 stars (78 reviews)
+- Price Level: $$$$$
+- Phone: (555) 456-7890
+- Status: OPERATIONAL
+
+**Yard Masters LLC**
+- Rating: 4.1 stars (203 reviews)
+- Price Level: $$$
+- Phone: (555) 567-8901
+- Status: OPERATIONAL
+
+**Quick Cut Lawns**
+- Rating: 3.5 stars (67 reviews)
+- Price Level: $$
+- Phone: (555) 678-9012
+- Status: OPERATIONAL
+
+## Market Intelligence Analysis
 
 **Rating Benchmarks:**
 - Market average: **4.2 stars**
@@ -67,24 +94,24 @@ export default function LandingPage() {
 - Premium ($$$$+): 2 competitors - **Opportunity zone!**
 
 **Service Categories Found:**
-- Basic lawn care: 6/6 competitors ✅
-- Landscape design: 3/6 competitors ⚠️
-- Irrigation systems: 2/6 competitors 🎯
-- Hardscaping: 2/6 competitors 🎯
+- Basic lawn care: 6/6 competitors
+- Landscape design: 3/6 competitors
+- Irrigation systems: 2/6 competitors
+- Hardscaping: 2/6 competitors
 
-## 💡 Strategic Opportunities
+## Strategic Opportunities
 
-**🎯 Immediate Positioning:**
+**Immediate Positioning:**
 - **Rating advantage potential**: Get above 4.5 stars to outrank 4 competitors
 - **Review gap**: Focus on reviews - most have 100+ (social proof matters)
 - **Premium market**: Only 2 competitors in top pricing tier
 
-**📞 Competitive Intelligence:**
+**Competitive Intelligence:**
 - **Direct contact access**: All competitor phone numbers available
 - **Website analysis**: Check their service offerings and pricing
 - **Google Business profiles**: Study their photos, hours, specialties
 
-**🚀 Growth Strategy:**
+**Growth Strategy:**
 - Target **irrigation & hardscaping** (only 2/6 competitors offer this)
 - Position in **premium tier** - less crowded market space
 - Focus on **5-star service** to beat 4.2 market average
@@ -93,7 +120,7 @@ export default function LandingPage() {
 
 Want me to analyze their websites and service offerings? Or should we dive deeper into pricing strategies for your specific services?
 
-**Pro tip:** This data refreshes in real-time, so you always have the latest competitive intelligence! 🔄`
+**Pro tip:** This data refreshes in real-time, so you always have the latest competitive intelligence!`
 
   useEffect(() => {
     const startDemo = () => {
