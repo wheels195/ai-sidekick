@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AI Sidekick is a Next.js 15 application that provides specialized AI assistants for local trade businesses. The app uses modern React with TypeScript, Tailwind CSS, and Radix UI components.
 
-**Current Status:** ✅ **PRODUCTION UI/UX COMPLETE** - Premium SaaS interface, complete authentication system, email verification, protected routes, user management, legal pages, and contact system implemented. Ready for domain setup and final backend testing before 2-week launch.
+**Current Status:** ✅ **ADVANCED SaaS PLATFORM COMPLETE** - Premium interface, vector database intelligence, advanced file processing, universal responsive design, complete authentication system, email verification, protected routes, user management, legal pages, and contact system implemented. Ready for domain setup and production launch.
 
 ## Development Commands
 
@@ -57,14 +57,30 @@ npm run lint
    - Full viewport height utilization for better readability
    - Tips and FAQ content positioned below chat for easy access
    - **Smart Feedback System** - Emoji reactions and conversation ratings
+   - **Revenue-Focused Conversation Starters** - High-impact examples for immediate engagement
 3. **OpenAI API Integration** - Enhanced AI responses with specialized landscaping prompts focused on digital marketing and local SEO
-4. **Component Library** - Full shadcn/ui implementation with custom black theme styling
-5. **Mobile Optimization** - Comprehensive mobile-first approach with:
+4. **Vector Database System** - Advanced knowledge retrieval with:
+   - 501-line landscaping business intelligence database
+   - User-specific file knowledge storage and search
+   - Semantic search combining global research + personal files
+   - Business profile-aware context matching
+5. **Advanced File Upload Processing** - Multi-format document analysis:
+   - OpenAI native PDF processing with full content extraction
+   - GPT-4o Vision for image analysis
+   - Business intelligence extraction and categorization
+   - Automatic integration into personal knowledge base
+6. **Component Library** - Full shadcn/ui implementation with custom black theme styling
+7. **Universal Responsive Design** - Device-optimized interface:
+   - Single responsive breakpoint system works across all devices
+   - Zoom level independence (75% to 150% zoom)
+   - Mobile badge optimization and touch-friendly interactions
+   - Cross-device compatibility verified
+8. **Mobile Optimization** - Comprehensive mobile-first approach with:
    - Fixed scrolling issues on mobile browsers
    - Touch-friendly interface elements
    - Proper viewport handling for various screen sizes
    - Performance optimizations for mobile devices
-6. **Learning Infrastructure** - Complete feedback collection and learning system:
+9. **Learning Infrastructure** - Complete feedback collection and learning system:
    - High-engagement emoji reactions (🔥💡👍😕)
    - Strategic conversation rating prompts
    - Passive engagement tracking
@@ -168,6 +184,35 @@ npm run lint
 - **Table Support** - Full markdown table rendering for competitive analysis with emerald styling and responsive design
 - **Google Places Integration** - Complete replacement of Tavily with Google Places API for better business data quality
 
+### ✅ Vector Database & Advanced Knowledge System (July 2025)
+- **Complete Vector Database Implementation** - Supabase pgvector with 501-line landscaping business intelligence
+- **Enhanced Knowledge Search** - Semantic search combining global research + user-specific file knowledge  
+- **Smart Content Integration** - Vector knowledge seamlessly integrated into AI responses without markdown conflicts
+- **User-Specific Knowledge Storage** - Uploaded files stored and searchable in personal knowledge base
+- **Intelligent Context Matching** - Business profile-aware knowledge retrieval (location, trade, business stage)
+- **Seasonal Intelligence** - Automatically surfaces relevant seasonal strategies and tactics
+
+### ✅ Advanced File Upload System (July 2025)
+- **OpenAI Native PDF Processing** - Full PDF analysis using OpenAI's document processing capabilities
+- **Multi-Format Support** - Images (GPT-4o Vision), PDFs (OpenAI document API), text files
+- **Business Intelligence Extraction** - Automatically categorizes and extracts actionable business insights
+- **Competitive Document Analysis** - Upload competitor flyers, pricing sheets, service menus for analysis
+- **Markdown Formatting Resolution** - Clean processing prevents bold text asterisk display issues
+- **User Knowledge Integration** - Files automatically added to personal vector database for future reference
+
+### ✅ Universal Responsive Design System (July 2025)  
+- **Device-Optimized Breakpoints** - Single lg:grid-cols-2 system works across all devices and zoom levels
+- **DisplayCards Universal Compatibility** - Consistent display on phones, tablets, laptops, desktop monitors
+- **Zoom Level Independence** - Perfect appearance at 75%, 80%, 90%, 100%, 125%, 150% zoom
+- **Mobile Badge Optimization** - Responsive text and padding for proper mobile display
+- **Cross-Device Testing Verified** - Tested across multiple screen sizes and device types
+
+### ✅ Enhanced Chat Experience (July 2025)
+- **Improved Markdown Processing** - Complete bold text rendering fix across all content sources
+- **High-Impact Conversation Starters** - Revenue-focused examples: "How do I upsell existing customers?" and "Generate a plan to get me 10 new customers in 30 days"
+- **Smart System Prompt Integration** - Vector knowledge and file content properly processed to prevent formatting conflicts
+- **Professional Response Quality** - Enhanced business intelligence with proper formatting and actionable insights
+
 ### 🤖 AI MODEL UPGRADE OPTIONS
 - **Current**: GPT-4o-mini ($0.15/$0.60 per 1M tokens) - Fast, cost-effective
 - **Upgrade Path**: GPT-4o ($2.50/$10.00 per 1M tokens) - Advanced reasoning, web search capability
@@ -244,12 +289,17 @@ ADMIN_API_KEY=your-secure-admin-key-here                            # 🔄 TODO 
 
 ## Important Notes
 
-- **Production Ready UI/UX:** ✅ Premium SaaS interface complete with high-end glassmorphism and sophisticated animations
-- **Deployment Status:** ✅ Fully deployed at https://ai-sidekick-alpha.vercel.app (pending domain setup for production launch)
-- **Mobile Optimized:** ✅ Comprehensive mobile experience with touch-friendly interactions
+- **Production Ready Platform:** ✅ Advanced SaaS application with enterprise-grade features and professional UI/UX
+- **Deployment Status:** ✅ Fully deployed at https://ai-sidekick-alpha.vercel.app (ready for domain setup and production launch)
+- **Vector Database Intelligence:** ✅ Advanced knowledge system with 501-line business intelligence + user file storage
+- **OpenAI Integration:** ✅ Native PDF processing, GPT-4o Vision, and smart model selection (GPT-4o/GPT-4o-mini)
+- **Universal Device Compatibility:** ✅ Responsive design works perfectly across all devices and zoom levels
+- **Advanced File Processing:** ✅ Multi-format upload analysis with business intelligence extraction
+- **Revenue-Focused UX:** ✅ High-impact conversation starters and actionable business guidance
+- **Mobile Optimized:** ✅ Comprehensive mobile experience with touch-friendly interactions and responsive badges
 - **Legal Compliance:** ✅ All value propositions focused on business/marketing rather than regulated technical advice
-- **Enhanced AI Prompts:** Focused on digital marketing, local SEO, and content creation strategies
-- **Full-Screen Chat:** Chat interface uses full viewport height for optimal user experience
+- **Enhanced AI Prompts:** Focused on digital marketing, local SEO, and content creation strategies with vector knowledge enhancement
+- **Full-Screen Chat:** Chat interface uses full viewport height with proper markdown rendering
 - **Learning System:** Two-layer learning (global + individual user) with privacy protection
 - **Security:** No sensitive data in client-side code, JWT authentication with secure cookies
 - **Accessibility:** Radix UI ensures WCAG compliance
