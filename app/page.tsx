@@ -772,18 +772,18 @@ What specific services do you currently offer, and what challenges have you face
                   {/* Animated glow effect on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
                   
-                  <div className="p-6 lg:p-8 relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-xl shrink-0 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-indigo-400/50 group-hover:scale-110">
-                          <FileText className="w-6 h-6 text-white drop-shadow-md transition-all duration-300 group-hover:scale-110" />
+                  <div className="p-4 sm:p-6 lg:p-8 relative z-10">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+                      <div className="flex items-center space-x-3 sm:space-x-4 min-w-0">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-xl shrink-0 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-indigo-400/50 group-hover:scale-110">
+                          <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-md transition-all duration-300 group-hover:scale-110" />
                         </div>
-                        <h4 className="text-lg xl:text-xl font-semibold text-white tracking-tight transition-all duration-300 group-hover:text-white group-hover:scale-105">
+                        <h4 className="text-base sm:text-lg xl:text-xl font-semibold text-white tracking-tight transition-all duration-300 group-hover:text-white group-hover:scale-105 leading-tight">
                           Upload & Analyze Photos, Files & Content
                         </h4>
                       </div>
-                      <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-2 sm:px-3 py-1 border border-indigo-400/30 transition-all duration-300 group-hover:from-indigo-500/30 group-hover:to-purple-500/30 group-hover:border-indigo-400/50">
-                        <span className="text-indigo-300 text-xs sm:text-sm font-medium">Instant Expert Results</span>
+                      <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-3 py-1.5 sm:px-3 sm:py-1 border border-indigo-400/30 transition-all duration-300 group-hover:from-indigo-500/30 group-hover:to-purple-500/30 group-hover:border-indigo-400/50 flex-shrink-0 self-start sm:self-auto">
+                        <span className="text-indigo-300 text-xs sm:text-sm font-medium whitespace-nowrap">Instant Expert Results</span>
                       </div>
                     </div>
                     
@@ -978,49 +978,49 @@ What specific services do you currently offer, and what challenges have you face
                 🟢 LIVE NOW
               </div>
               
-              <CardContent className="p-12 relative z-10">
-                <div className="text-center mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-110 group-hover:rotate-6">
-                    <span className="text-3xl">🌿</span>
+              <CardContent className="p-6 sm:p-8 lg:p-12 relative z-10">
+                <div className="text-center mb-6 sm:mb-8">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-110 group-hover:rotate-6">
+                    <span className="text-2xl sm:text-3xl">🌿</span>
                   </div>
-                  <h3 className="text-4xl font-semibold mb-4">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-3 sm:mb-4">
                     <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
                       Landscape AI Sidekick
                     </span>
                   </h3>
-                  <p className="text-xl text-gray-200 mb-6">
+                  <p className="text-lg sm:text-xl text-gray-200 mb-4 sm:mb-6">
                     Your expert partner for growing your landscaping business
                   </p>
                   
-                  {/* Real Value Props */}
-                  <div className="flex items-center justify-center space-x-4 mb-8">
-                    <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-4 py-2">
-                      <CheckCircle className="w-4 h-4 text-emerald-400" />
-                      <span className="text-emerald-300 text-sm font-medium">Start making more money today</span>
+                  {/* Mobile-Optimized Value Props */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-3 lg:space-x-4 mb-6 sm:mb-8">
+                    <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 w-full sm:w-auto justify-center">
+                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
+                      <span className="text-emerald-300 text-xs sm:text-sm font-medium text-center whitespace-nowrap">Start making more money today</span>
                     </div>
-                    <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-4 py-2">
-                      <Zap className="w-4 h-4 text-emerald-400" />
-                      <span className="text-emerald-300 text-sm font-medium">Get instant expert advice</span>
+                    <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 w-full sm:w-auto justify-center">
+                      <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
+                      <span className="text-emerald-300 text-xs sm:text-sm font-medium text-center whitespace-nowrap">Get instant expert advice</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Interactive Preview */}
-                <div className="bg-black/30 rounded-lg p-6 mb-8 border border-emerald-500/20">
-                  <div className="text-sm text-emerald-300 mb-3 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
+                {/* Interactive Preview - Mobile Optimized */}
+                <div className="bg-black/30 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-emerald-500/20">
+                  <div className="text-xs sm:text-sm text-emerald-300 mb-2 sm:mb-3 flex items-center gap-2">
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                     <span>Live AI Preview</span>
                   </div>
-                  <div className="text-sm text-gray-300 italic mb-4">
+                  <div className="text-xs sm:text-sm text-gray-300 italic mb-3 sm:mb-4 leading-relaxed">
                     "Based on your Dallas location, spring lawn care season is peak time. Here's how to position aeration services at $180/yard for maximum bookings..."
                   </div>
-                  <div className="flex items-center justify-between text-xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs">
                     <span className="text-emerald-400">Advanced AI Capabilities</span>
                     <span className="text-gray-400">Response time: 1.2s</span>
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                   {[
                     {
                       icon: TrendingUp,
@@ -1049,17 +1049,17 @@ What specific services do you currently offer, and what challenges have you face
                   ].map((feature, index) => (
                     <div
                       key={index}
-                      className="flex items-start space-x-4 group/item hover:scale-105 transition-all duration-300"
+                      className="flex items-start space-x-3 sm:space-x-4 group/item hover:scale-105 transition-all duration-300"
                     >
-                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-500/20 to-emerald-600/30 rounded-xl flex items-center justify-center shadow-lg border border-emerald-400/30 group-hover/item:shadow-emerald-500/25 transition-all duration-300 group-hover/item:scale-110">
-                        <feature.icon className="w-6 h-6 text-emerald-400 group-hover/item:text-emerald-300 transition-colors duration-300" />
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500/20 to-emerald-600/30 rounded-xl flex items-center justify-center shadow-lg border border-emerald-400/30 group-hover/item:shadow-emerald-500/25 transition-all duration-300 group-hover/item:scale-110 flex-shrink-0">
+                        <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 group-hover/item:text-emerald-300 transition-colors duration-300" />
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="text-lg font-semibold text-white group-hover/item:text-emerald-100 transition-colors duration-300">{feature.title}</h4>
-                          <span className="text-xs text-emerald-300 font-medium">{feature.metric}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1 sm:mb-2 gap-1 sm:gap-0">
+                          <h4 className="text-base sm:text-lg font-semibold text-white group-hover/item:text-emerald-100 transition-colors duration-300">{feature.title}</h4>
+                          <span className="text-xs text-emerald-300 font-medium flex-shrink-0">{feature.metric}</span>
                         </div>
-                        <p className="text-gray-200 group-hover/item:text-gray-100 transition-colors duration-300">{feature.desc}</p>
+                        <p className="text-sm sm:text-base text-gray-200 group-hover/item:text-gray-100 transition-colors duration-300 leading-relaxed">{feature.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1068,13 +1068,13 @@ What specific services do you currently offer, and what challenges have you face
                 <div className="text-center">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-4 sm:py-5 font-semibold"
+                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold"
                     onClick={() => (window.location.href = "/signup")}
                   >
                     <span className="block sm:inline">Start Free Trial - No Credit Card</span>
                     <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
                   </Button>
-                  <p className="text-center text-xs text-emerald-300 mt-3">
+                  <p className="text-center text-xs sm:text-sm text-emerald-300 mt-2 sm:mt-3 px-2">
                     ✅ Instant access • 7-day free trial • Cancel anytime
                   </p>
                 </div>
