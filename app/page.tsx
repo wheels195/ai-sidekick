@@ -369,7 +369,7 @@ What specific services do you currently offer, and what challenges have you face
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 backdrop-blur-sm border border-white/20 text-center"
+                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 backdrop-blur-sm border border-white/20 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
                 onClick={() => window.location.href = '/landscaping'}
               >
                 <span className="block sm:inline">Try Landscaping AI Free</span>
@@ -378,7 +378,7 @@ What specific services do you currently offer, and what challenges have you face
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 hover:border-white/50 text-center"
+                className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 hover:border-white/50 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
                 onClick={() => window.location.href = '/signup'}
               >
                 Create Your Account
@@ -469,7 +469,7 @@ What specific services do you currently offer, and what challenges have you face
                   </span>
                 </div>
                 
-                <CardContent className="p-6 text-center relative z-10">
+                <CardContent className="p-4 sm:p-6 lg:p-8 text-center relative z-10">
                   {/* Enhanced icon container */}
                   <div className="relative mb-4 mx-auto w-fit">
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 backdrop-blur-sm border ${
@@ -501,7 +501,7 @@ What specific services do you currently offer, and what challenges have you face
                     }`}></div>
                   </div>
                   
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-white transition-colors duration-300">
+                  <h3 className="text-xl sm:text-2xl lg:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
                     <span className={`font-cursive bg-gradient-to-r bg-clip-text text-transparent ${
                       value.color === 'blue' ? 'from-blue-300 to-blue-500' :
                       value.color === 'emerald' ? 'from-emerald-300 to-emerald-500' :
@@ -513,13 +513,13 @@ What specific services do you currently offer, and what challenges have you face
                       {value.title}
                     </span>
                   </h3>
-                  <p className="text-gray-300 text-sm leading-relaxed mb-3 group-hover:text-gray-200 transition-colors duration-300">
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 group-hover:text-gray-200 transition-colors duration-300">
                     {value.desc}
                   </p>
                   
                   {/* Success metric */}
                   <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
+                    <span className={`inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-semibold ${`
                       value.color === 'blue' ? 'bg-blue-500/10 text-blue-300 border border-blue-400/20' :
                       value.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20' :
                       value.color === 'purple' ? 'bg-purple-500/10 text-purple-300 border border-purple-400/20' :
@@ -591,8 +591,8 @@ What specific services do you currently offer, and what challenges have you face
                     <feature.icon className="w-7 h-7 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-medium text-white mb-3">{feature.title}</h3>
-                    <p className="text-gray-200 text-lg leading-relaxed">{feature.description}</p>
+                    <h3 className="text-xl sm:text-2xl lg:text-2xl font-medium text-white mb-3">{feature.title}</h3>
+                    <p className="text-gray-200 text-base sm:text-lg lg:text-xl leading-relaxed">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -910,7 +910,7 @@ What specific services do you currently offer, and what challenges have you face
             <Button 
               onClick={() => window.location.href = '/signup?plan=free-trial'}
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl px-4 sm:px-6 lg:px-12 xl:px-16 py-3 sm:py-4 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 max-w-full"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
             >
               <span className="truncate">
                 <span className="sm:hidden">👉 Start Your Free Trial and Let AI Sidekick Help</span>
@@ -1108,7 +1108,7 @@ What specific services do you currently offer, and what challenges have you face
               {/* Trade Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
                 {/* Electricians AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Most Requested Badge */}
@@ -1116,12 +1116,12 @@ What specific services do you currently offer, and what challenges have you face
                     🔥 Most Requested
                   </div>
                   
-                  <CardContent className="p-6 sm:p-8 relative z-10">
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">⚡</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
                         <span className="font-cursive bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
                           Electricians AI
                         </span>
@@ -1146,7 +1146,7 @@ What specific services do you currently offer, and what challenges have you face
                       </div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-6 flex-1">
                       {[
                         { text: "Smart home marketing", revenue: "+$2,400/job" },
                         { text: "Service call optimization", revenue: "3x bookings" },
@@ -1163,32 +1163,34 @@ What specific services do you currently offer, and what challenges have you face
                       ))}
                     </div>
 
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>Development Progress</span>
-                        <span>78%</span>
+                    <div className="mt-auto">
+                      {/* Progress Bar */}
+                      <div className="mb-4">
+                        <div className="flex justify-between text-xs text-gray-400 mb-1">
+                          <span>Development Progress</span>
+                          <span>78%</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full" style={{width: '78%'}}></div>
+                        </div>
                       </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full" style={{width: '78%'}}></div>
-                      </div>
-                    </div>
 
-                    <Button
-                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/contact'}
-                    >
-                      🚀 Get First Access (Save 40%)
-                    </Button>
-                    
-                    <p className="text-center text-xs text-gray-400 mt-2">
-                      Est. launch: Q2 2025 • Early bird pricing
-                    </p>
+                      <Button
+                        className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-3 font-semibold"
+                        onClick={() => window.location.href = '/contact'}
+                      >
+                        🚀 Get First Access (Save 40%)
+                      </Button>
+                      
+                      <p className="text-center text-xs text-gray-400 mt-2">
+                        Est. launch: Q2 2025 • Early bird pricing
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
 
                 {/* Plumbers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* High Demand Badge */}
@@ -1196,12 +1198,12 @@ What specific services do you currently offer, and what challenges have you face
                     💧 High Demand
                   </div>
                   
-                  <CardContent className="p-6 sm:p-8 relative z-10">
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🔧</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
                         <span className="font-cursive bg-gradient-to-r from-blue-300 to-cyan-400 bg-clip-text text-transparent">
                           Plumbers AI
                         </span>
@@ -1226,7 +1228,7 @@ What specific services do you currently offer, and what challenges have you face
                       </div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-6 flex-1">
                       {[
                         { text: "Emergency service marketing", revenue: "Premium rates" },
                         { text: "Maintenance plan sales", revenue: "$200/month" },
@@ -1243,32 +1245,34 @@ What specific services do you currently offer, and what challenges have you face
                       ))}
                     </div>
 
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>Development Progress</span>
-                        <span>65%</span>
+                    <div className="mt-auto">
+                      {/* Progress Bar */}
+                      <div className="mb-4">
+                        <div className="flex justify-between text-xs text-gray-400 mb-1">
+                          <span>Development Progress</span>
+                          <span>65%</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div className="bg-gradient-to-r from-blue-400 to-cyan-500 h-2 rounded-full" style={{width: '65%'}}></div>
+                        </div>
                       </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-blue-400 to-cyan-500 h-2 rounded-full" style={{width: '65%'}}></div>
-                      </div>
-                    </div>
 
-                    <Button
-                      className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/contact'}
-                    >
-                      🚀 Join Waitlist (Save 30%)
-                    </Button>
-                    
-                    <p className="text-center text-xs text-gray-400 mt-2">
-                      Est. launch: Q3 2025 • Priority access
-                    </p>
+                      <Button
+                        className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-3 font-semibold"
+                        onClick={() => window.location.href = '/contact'}
+                      >
+                        🚀 Join Waitlist (Save 30%)
+                      </Button>
+                      
+                      <p className="text-center text-xs text-gray-400 mt-2">
+                        Est. launch: Q3 2025 • Priority access
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
 
                 {/* HVAC AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Premium Badge */}
@@ -1276,12 +1280,12 @@ What specific services do you currently offer, and what challenges have you face
                     ❄️ Premium
                   </div>
                   
-                  <CardContent className="p-6 sm:p-8 relative z-10">
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🏠</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
                         <span className="font-cursive bg-gradient-to-r from-red-300 to-orange-400 bg-clip-text text-transparent">
                           HVAC AI
                         </span>
@@ -1306,7 +1310,7 @@ What specific services do you currently offer, and what challenges have you face
                       </div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-6 flex-1">
                       {[
                         { text: "Comfort consultation sales", revenue: "+$1,200" },
                         { text: "Maintenance contract marketing", revenue: "$600/visit" },
@@ -1348,7 +1352,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* Roofers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-stone-500/10 to-gray-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Weather Ready Badge */}
@@ -1356,12 +1360,12 @@ What specific services do you currently offer, and what challenges have you face
                     ⛈️ Weather Ready
                   </div>
                   
-                  <CardContent className="p-6 sm:p-8 relative z-10">
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-stone-400 to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🏗️</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
                         <span className="font-cursive bg-gradient-to-r from-stone-300 to-gray-400 bg-clip-text text-transparent">
                           Roofers AI
                         </span>
@@ -1386,7 +1390,7 @@ What specific services do you currently offer, and what challenges have you face
                       </div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-6 flex-1">
                       {[
                         { text: "Storm response marketing", revenue: "Rapid bookings" },
                         { text: "Preventive maintenance sales", revenue: "$300/month" },
@@ -1428,7 +1432,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* Pest Control AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Recurring Revenue Badge */}
@@ -1436,12 +1440,12 @@ What specific services do you currently offer, and what challenges have you face
                     🔄 Recurring $$$
                   </div>
                   
-                  <CardContent className="p-6 sm:p-8 relative z-10">
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🐛</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
                         <span className="font-cursive bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
                           Pest Control AI
                         </span>
@@ -1466,7 +1470,7 @@ What specific services do you currently offer, and what challenges have you face
                       </div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-6 flex-1">
                       {[
                         { text: "Contract sales strategies", revenue: "$89/month" },
                         { text: "Seasonal upsell campaigns", revenue: "4x bookings" },
@@ -1508,7 +1512,7 @@ What specific services do you currently offer, and what challenges have you face
                 </Card>
 
                 {/* General Contractors AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative md:col-span-2 lg:col-span-1 cursor-pointer">
+                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative md:col-span-2 lg:col-span-1 cursor-pointer flex flex-col h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   {/* Big Projects Badge */}
@@ -1516,12 +1520,12 @@ What specific services do you currently offer, and what challenges have you face
                     🏗️ Big Projects
                   </div>
                   
-                  <CardContent className="p-6 sm:p-8 relative z-10">
+                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                         <span className="text-2xl">🔨</span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
                         <span className="font-cursive bg-gradient-to-r from-purple-300 to-pink-400 bg-clip-text text-transparent">
                           Contractors AI
                         </span>
@@ -1546,7 +1550,7 @@ What specific services do you currently offer, and what challenges have you face
                       </div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-6 flex-1">
                       {[
                         { text: "Bid strategy optimization", revenue: "+15% margin" },
                         { text: "Timeline communication", revenue: "Client trust" },
