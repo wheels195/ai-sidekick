@@ -370,7 +370,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
             💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Use the <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below to get more targeted, high-impact suggestions.
           </p>
           <p className="text-emerald-300 font-normal text-xl mt-4">
-            What's your top priority right now? → <span className="text-gray-400 text-lg italic">(Try "How do I rank higher in my area?" or "What should I charge for services?")</span>
+            Ready to increase your revenue this month? → <span className="text-gray-400 text-lg italic">(Try "How do I upsell my existing customers?" or "Generate a plan to get me 10 new customers in 30 days")</span>
           </p>
         </div>
       </div>
@@ -447,7 +447,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         
         {/* Enhanced call to action */}
         <p className="text-emerald-300 font-normal text-xl mt-4">
-          What's your top priority right now? → <span className="text-gray-400 text-lg italic">(Try "How do I rank higher in my area?" or "What should I charge for irrigation?")</span>
+          Ready to increase your revenue this month? → <span className="text-gray-400 text-lg italic">(Try "How do I upsell my existing customers?" or "Generate a plan to get me 10 new customers in 30 days")</span>
         </p>
       </div>
     </div>
