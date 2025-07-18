@@ -32,34 +32,68 @@ export default function LandingPage() {
   const [userMessage, setUserMessage] = useState("")
   const [aiMessage, setAiMessage] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
   const [demoStarted, setDemoStarted] = useState(false)
   const [demoComplete, setDemoComplete] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
-  const fullUserMessage = "How can I justify charging more money for jobs in my Atlanta area? I'm a small landscaping company with only 3 employees. What ideas do you have?"
+  const fullUserMessage = "Find landscaping companies in my area and help me analyze the competition. I need to understand my market better."
   
-  const fullAiMessage = `## Justifying Higher Pricing in the Atlanta Landscaping Market
+  const fullAiMessage = `🔍 **Searching Google for "landscaping companies near you"...**
 
-Charging more for your landscaping services can be a strategic move, especially if you can clearly communicate the value you provide. Here are several actionable strategies to help you justify higher prices in the Atlanta area:
+✅ **Found 6 direct competitors in your local market:**
 
-### 1. Highlight Quality and Expertise
-**Showcase Experience:** Provide a detailed portfolio highlighting your best work and the expertise of your team. Include before-and-after photos, especially for unique projects.
-**Certifications and Training:** If you or your team have received any certifications or training, make these known. It can greatly enhance your credibility.
+## Live Competitor Intelligence
 
-### 2. Emphasize Customer Service
-**Personalized Services:** Offer tailored landscaping solutions that meet the specific needs of your customers. Emphasize your commitment to exceptional customer service and communication.
-**Responsive Communication:** Be prompt and clear in your communication. Customers often value companies that are easy to reach and responsive.
+| Business | Rating | Reviews | Price Level | Phone | Status |
+|----------|--------|---------|-------------|-------|--------|
+| **Elite Landscape Co.** | ⭐⭐⭐⭐⭐ 4.7 | 234 reviews | $$$$  | (555) 123-4567 | OPERATIONAL |
+| **GreenThumb Services** | ⭐⭐⭐⭐☆ 4.2 | 156 reviews | $$$   | (555) 234-5678 | OPERATIONAL |
+| **Budget Lawn Care** | ⭐⭐⭐☆☆ 3.8 | 89 reviews  | $$    | (555) 345-6789 | OPERATIONAL |
+| **Premier Landscapes** | ⭐⭐⭐⭐⭐ 4.9 | 78 reviews  | $$$$$ | (555) 456-7890 | OPERATIONAL |
+| **Yard Masters LLC** | ⭐⭐⭐⭐☆ 4.1 | 203 reviews | $$$   | (555) 567-8901 | OPERATIONAL |
+| **Quick Cut Lawns** | ⭐⭐⭐☆☆ 3.5 | 67 reviews  | $$    | (555) 678-9012 | OPERATIONAL |
 
-### 3. Leverage Local SEO
-**Optimize for Local Searches:** Use local keywords relevant to Atlanta (e.g., "premium landscaping in Atlanta") to attract customers looking for high-quality services.
-**Google Business Profile:** Optimize your profile with detailed descriptions of services, high-quality images, and customer reviews.
+## 📊 Market Intelligence Analysis
 
-### Next Steps
-- Optimize your Google Business Profile with local keywords and images
-- Create a premium service package that showcases your best offerings
-- Develop a content calendar for blog posts that educate potential customers
+**Rating Benchmarks:**
+- Market average: **4.2 stars**
+- Premium tier (4.7+ stars): Only **2 competitors**
+- Review volume leader: Elite Landscape (234 reviews)
 
-What specific services do you currently offer, and what challenges have you faced in pricing your work?`
+**Pricing Tier Distribution:**
+- Budget ($$): 2 competitors - High volume, lower margins
+- Mid-range ($$$): 2 competitors - Balanced market position  
+- Premium ($$$$+): 2 competitors - **Opportunity zone!**
+
+**Service Categories Found:**
+- Basic lawn care: 6/6 competitors ✅
+- Landscape design: 3/6 competitors ⚠️
+- Irrigation systems: 2/6 competitors 🎯
+- Hardscaping: 2/6 competitors 🎯
+
+## 💡 Strategic Opportunities
+
+**🎯 Immediate Positioning:**
+- **Rating advantage potential**: Get above 4.5 stars to outrank 4 competitors
+- **Review gap**: Focus on reviews - most have 100+ (social proof matters)
+- **Premium market**: Only 2 competitors in top pricing tier
+
+**📞 Competitive Intelligence:**
+- **Direct contact access**: All competitor phone numbers available
+- **Website analysis**: Check their service offerings and pricing
+- **Google Business profiles**: Study their photos, hours, specialties
+
+**🚀 Growth Strategy:**
+- Target **irrigation & hardscaping** (only 2/6 competitors offer this)
+- Position in **premium tier** - less crowded market space
+- Focus on **5-star service** to beat 4.2 market average
+
+## Next Steps
+
+Want me to analyze their websites and service offerings? Or should we dive deeper into pricing strategies for your specific services?
+
+**Pro tip:** This data refreshes in real-time, so you always have the latest competitive intelligence! 🔄`
 
   useEffect(() => {
     const startDemo = () => {
@@ -68,28 +102,35 @@ What specific services do you currently offer, and what challenges have you face
       setDemoStep(1)
       setAiMessage("")
       
-      // Start AI thinking immediately
+      // Start web search phase
       setTimeout(() => {
         setDemoStep(2)
-        setIsTyping(true)
+        setIsSearching(true)
         
-        // Start AI response after 1 second
+        // Search for 2 seconds, then start AI response
         setTimeout(() => {
-          setIsTyping(false)
+          setIsSearching(false)
+          setIsTyping(true)
           setDemoStep(3)
-          let aiIndex = 0
-          const typeAiMessage = () => {
-            if (aiIndex < fullAiMessage.length) {
-              setAiMessage(fullAiMessage.substring(0, aiIndex + 1))
-              aiIndex++
-              setTimeout(typeAiMessage, 8 + Math.random() * 15) // Much faster AI typing
-            } else {
-              // AI finished, mark demo as complete (no restart)
-              setDemoComplete(true)
+          
+          // Start AI response after brief pause
+          setTimeout(() => {
+            setIsTyping(false)
+            setDemoStep(4)
+            let aiIndex = 0
+            const typeAiMessage = () => {
+              if (aiIndex < fullAiMessage.length) {
+                setAiMessage(fullAiMessage.substring(0, aiIndex + 1))
+                aiIndex++
+                setTimeout(typeAiMessage, 6 + Math.random() * 10) // Faster typing for longer content
+              } else {
+                // AI finished, mark demo as complete
+                setDemoComplete(true)
+              }
             }
-          }
-          typeAiMessage()
-        }, 1000)
+            typeAiMessage()
+          }, 800)
+        }, 2000)
       }, 500)
     }
 
@@ -637,8 +678,25 @@ What specific services do you currently offer, and what challenges have you face
                     </div>
                   )}
 
+                  {/* Web Search Loading */}
+                  {isSearching && (
+                    <div className="flex justify-start items-center space-x-3 pl-4">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center animate-spin">
+                          <Search className="w-3 h-3 text-white" />
+                        </div>
+                        <div className="flex space-x-1">
+                          <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse"></div>
+                          <div className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                        </div>
+                      </div>
+                      <span className="text-blue-300 text-xs font-medium">Searching Google Places for local businesses...</span>
+                    </div>
+                  )}
+
                   {/* AI Response - Only show when typing or complete */}
-                  {demoStep >= 3 && (
+                  {demoStep >= 4 && (
                     <div className="flex justify-start">
                       <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-2xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
                         <div className="space-y-3 text-sm leading-relaxed">
@@ -647,7 +705,7 @@ What specific services do you currently offer, and what challenges have you face
                               __html: convertMarkdownToHtml(aiMessage) 
                             }}
                           />
-                          {demoStep === 3 && aiMessage.length > 0 && !aiMessage.includes('What specific services') && (
+                          {demoStep === 4 && aiMessage.length > 0 && !aiMessage.includes('Ready to dominate') && (
                             <span className="animate-pulse text-emerald-400">|</span>
                           )}
                         </div>
