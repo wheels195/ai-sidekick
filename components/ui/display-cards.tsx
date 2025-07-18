@@ -22,11 +22,11 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-none w-full auto-rows-fr">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-none w-full auto-rows-fr">
       {cards.map((card, index) => (
         <Card 
           key={index}
-          className="group w-full h-full min-h-[200px] sm:min-h-[220px] lg:min-h-[240px] bg-white/5 backdrop-blur-md ring-1 ring-white/10 rounded-xl shadow-2xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/20 hover:ring-white/30 hover:bg-white/10 transition-all duration-500 ease-out cursor-pointer relative overflow-hidden"
+          className="group w-full h-full min-h-[180px] sm:min-h-[200px] lg:min-h-[220px] bg-white/5 backdrop-blur-md ring-1 ring-white/10 rounded-xl shadow-2xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/20 hover:ring-white/30 hover:bg-white/10 transition-all duration-500 ease-out cursor-pointer relative overflow-hidden"
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -59,7 +59,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                 <div className="mt-auto">
                   {card.badge && (
                     <div className="mb-2">
-                      <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-emerald-500/20 to-blue-500/20 text-emerald-300 border border-emerald-400/30 transition-all duration-300 group-hover:from-emerald-500/30 group-hover:to-blue-500/30 group-hover:border-emerald-400/50">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-emerald-500/20 to-blue-500/20 text-emerald-300 border border-emerald-400/30 transition-all duration-300 group-hover:from-emerald-500/30 group-hover:to-blue-500/30 group-hover:border-emerald-400/50 whitespace-nowrap">
                         {card.badge}
                       </span>
                     </div>
