@@ -152,28 +152,52 @@ async function processUploadedFiles(files: any[]): Promise<string> {
         })
         
         const analysis = response.choices[0].message.content || 'Could not analyze image'
-        fileAnalyses.push(`📷 **Image Analysis: ${name}**\n${analysis}`)
+        fileAnalyses.push(`📷 Image Analysis: ${name}\n${analysis}`)
         
       } else if (type === 'application/pdf') {
-        // For PDFs, provide basic info (full PDF parsing would need additional libraries)
-        fileAnalyses.push(`📄 **PDF Document: ${name}**\n- File type: PDF document\n- Content extraction for PDFs requires additional processing\n- Please describe the content or key information you'd like me to focus on`)
+        // For PDFs, use proper OpenAI PDF processing
+        const openai = getOpenAIClient()
+        const response = await openai.chat.completions.create({
+          model: 'gpt-4o',
+          messages: [
+            {
+              role: 'user',
+              content: [
+                {
+                  type: 'text',
+                  text: `Analyze this PDF document and extract all relevant business information, strategies, tips, recommendations, and actionable insights. Focus on content that would be useful for a landscaping business owner. Return the extracted information in a structured, comprehensive format. Document name: ${name}`
+                },
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: content
+                  }
+                }
+              ]
+            }
+          ],
+          max_tokens: 4000
+        })
+        
+        const analysis = response.choices[0].message.content || 'Could not analyze PDF'
+        fileAnalyses.push(`📄 PDF Document: ${name}\n${analysis}`)
         
       } else if (type.includes('text') || name.endsWith('.txt')) {
         // For text files, decode base64 content
         try {
           const base64Content = content.split(',')[1]
           const textContent = atob(base64Content)
-          fileAnalyses.push(`📝 **Text File: ${name}**\n\nContent:\n${textContent}`)
+          fileAnalyses.push(`📝 Text File: ${name}\n\nContent:\n${textContent}`)
         } catch (error) {
-          fileAnalyses.push(`📝 **Text File: ${name}**\n- Could not decode file content\n- Please check file format or try re-uploading`)
+          fileAnalyses.push(`📝 Text File: ${name}\n- Could not decode file content\n- Please check file format or try re-uploading`)
         }
         
       } else {
-        fileAnalyses.push(`📎 **File: ${name}**\n- File type: ${type}\n- Content type not yet supported for automatic analysis\n- Please describe what information you'd like me to focus on`)
+        fileAnalyses.push(`📎 File: ${name}\n- File type: ${type}\n- Content type not yet supported for automatic analysis\n- Please describe what information you'd like me to focus on`)
       }
     } catch (error) {
       console.error('Error processing file:', error)
-      fileAnalyses.push(`❌ **Error processing ${name}**: ${error.message}`)
+      fileAnalyses.push(`❌ Error processing ${name}: ${error.message}`)
     }
   }
   
