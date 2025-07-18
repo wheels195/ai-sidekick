@@ -27,7 +27,9 @@
       "Bash(npx supabase db reset:*)",
       "Bash(node:*)",
       "Bash(source:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(awk:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

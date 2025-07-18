@@ -707,7 +707,7 @@ What specific services do you currently offer, and what challenges have you face
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-start">
+          <div className="grid xl:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-start">
             {/* Left Side - AI Capabilities */}
             <div className="space-y-8 lg:space-y-10 lg:pr-8 relative max-w-none">
               <div className="text-center lg:text-left">

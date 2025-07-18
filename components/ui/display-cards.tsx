@@ -22,7 +22,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-none w-full auto-rows-fr">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-none w-full auto-rows-fr">
       {cards.map((card, index) => (
         <Card 
           key={index}
