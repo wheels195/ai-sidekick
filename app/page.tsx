@@ -519,7 +519,7 @@ What specific services do you currently offer, and what challenges have you face
                   
                   {/* Success metric */}
                   <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                    <span className={`inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-semibold ${`
+                    <span className={`inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-semibold ${
                       value.color === 'blue' ? 'bg-blue-500/10 text-blue-300 border border-blue-400/20' :
                       value.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20' :
                       value.color === 'purple' ? 'bg-purple-500/10 text-purple-300 border border-purple-400/20' :
