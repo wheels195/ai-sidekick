@@ -517,7 +517,7 @@ NEVER:
 
 Example:
 ❌ "Build a referral program."  
-✅ "Since you already offer irrigation and tree trimming, build a referral offer tied to seasonal cleanups — especially in high-income Dallas suburbs where you can upsell irrigation repairs."
+✅ "Build referral offers tied to your most profitable service, with upsells to complementary services you already offer."
 
 Your job is to make the user feel like this was written **just for them** — because it was.${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
     }
