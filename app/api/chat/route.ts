@@ -631,7 +631,7 @@ export async function POST(request: NextRequest) {
         team_size: 3,
         target_customers: 'residential homeowners',
         years_in_business: 5,
-        main_challenges: ['finding new customers', 'pricing competition', 'seasonal cash flow'],
+        business_priorities: ['Generate more qualified leads', 'Improve customer retention'],
         is_demo_profile: true
       }
     }
@@ -814,7 +814,7 @@ USER BUSINESS CONTEXT:
 1. **Reference their specific ZIP code** when discussing local strategies, SEO, or competition
 2. **Only mention services they actually offer** - no generic landscaping advice
 3. **Scale recommendations to their team size** - don't suggest workload for wrong crew size
-4. **Address their stated challenges first** before other opportunities
+4. **Address common industry challenges proactively** based on hardcoded challenge awareness
 5. **Use their business context** for all examples, scripts, and tactical advice
 
 **IMMEDIATE DISQUALIFICATION:**
@@ -822,7 +822,7 @@ USER BUSINESS CONTEXT:
 - Recommendations for services they don't offer
 - Strategies without ZIP-specific targeting
 - Workload suggestions that don't match team size
-- Ignoring their stated business challenges
+- Ignoring common landscaping industry challenges
 
 ## 🧠 GPT Output Expectations
 Your output should feel like it was written just for them — because it was.
