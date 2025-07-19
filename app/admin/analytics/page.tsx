@@ -6,41 +6,29 @@ import { Button } from "@/components/ui/button"
 import { BarChart3, TrendingUp, Users, DollarSign, Clock, Target, ArrowLeft, RefreshCw } from "lucide-react"
 
 interface AnalyticsData {
-  success: boolean
-  generatedAt: string
-  overview: {
-    totalConversions: number
-    totalTrialSignups: number
-    conversionRate: number
-    projectedMRR: number
+  view: string
+  summary: {
+    total_users: number
+    active_users_week: number
+    total_cost_today: number
+    total_cost_month: number
+    upgrade_candidates: number
+    high_priority_alerts: number
   }
-  conversions: {
-    today: number
-    thisWeek: number
-    thisMonth: number
-    total: number
+  quick_metrics: {
+    cost_per_user_today: number
+    avg_engagement_score: number
+    model_usage: {
+      gpt4o_percentage: number
+      gpt4o_mini_percentage: number
+    }
   }
-  userBehavior: {
-    avgTokensUsedBeforeUpgrade: number
-    avgDaysToConvert: number
-    tokenUtilization: number
-  }
-  revenue: {
-    starterPlanConversions: number
-    advancedPlanConversions: number
-    projectedMRR: number
-    averageRevenuePerUser: number
-  }
-  insights: {
-    conversionGoal: number
-    progressToGoal: number
-    estimatedTimeToGoal: string
-  }
-  recentConversions: Array<{
-    date: string
-    plan: string
-    tokensUsed: number
-    daysInTrial: number
+  top_insights: Array<{
+    type: string
+    priority: string
+    title: string
+    description: string
+    action: string
   }>
 }
 
@@ -171,11 +159,11 @@ export default function AdminAnalyticsPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-300 text-sm font-medium">Total Conversions</p>
-                    <p className="text-3xl font-bold text-white">{data.overview.totalConversions}</p>
+                    <p className="text-blue-300 text-sm font-medium">Total Users</p>
+                    <p className="text-3xl font-bold text-white">{data.summary.total_users}</p>
                   </div>
                   <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-blue-400" />
+                    <Users className="w-6 h-6 text-blue-400" />
                   </div>
                 </div>
               </CardContent>
@@ -185,11 +173,11 @@ export default function AdminAnalyticsPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-emerald-300 text-sm font-medium">Trial Signups</p>
-                    <p className="text-3xl font-bold text-white">{data.overview.totalTrialSignups}</p>
+                    <p className="text-emerald-300 text-sm font-medium">Active This Week</p>
+                    <p className="text-3xl font-bold text-white">{data.summary.active_users_week}</p>
                   </div>
                   <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
-                    <Users className="w-6 h-6 text-emerald-400" />
+                    <TrendingUp className="w-6 h-6 text-emerald-400" />
                   </div>
                 </div>
               </CardContent>
@@ -199,11 +187,11 @@ export default function AdminAnalyticsPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-purple-300 text-sm font-medium">Conversion Rate</p>
-                    <p className="text-3xl font-bold text-white">{data.overview.conversionRate}%</p>
+                    <p className="text-purple-300 text-sm font-medium">Cost Today</p>
+                    <p className="text-3xl font-bold text-white">${data.summary.total_cost_today.toFixed(2)}</p>
                   </div>
                   <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                    <Target className="w-6 h-6 text-purple-400" />
+                    <DollarSign className="w-6 h-6 text-purple-400" />
                   </div>
                 </div>
               </CardContent>
@@ -213,11 +201,11 @@ export default function AdminAnalyticsPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-green-300 text-sm font-medium">Projected MRR</p>
-                    <p className="text-3xl font-bold text-white">${data.overview.projectedMRR}</p>
+                    <p className="text-green-300 text-sm font-medium">Upgrade Candidates</p>
+                    <p className="text-3xl font-bold text-white">{data.summary.upgrade_candidates}</p>
                   </div>
                   <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
-                    <DollarSign className="w-6 h-6 text-green-400" />
+                    <Target className="w-6 h-6 text-green-400" />
                   </div>
                 </div>
               </CardContent>
@@ -227,153 +215,83 @@ export default function AdminAnalyticsPage() {
           {/* Detailed Metrics */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
-            {/* Conversion Breakdown */}
-            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <BarChart3 className="w-5 h-5 mr-2" />
-                  Conversion Breakdown
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Today</span>
-                  <span className="text-white font-semibold">{data.conversions.today}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">This Week</span>
-                  <span className="text-white font-semibold">{data.conversions.thisWeek}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">This Month</span>
-                  <span className="text-white font-semibold">{data.conversions.thisMonth}</span>
-                </div>
-                <div className="border-t border-gray-600 pt-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-300 font-medium">Total</span>
-                    <span className="text-emerald-400 font-bold text-lg">{data.conversions.total}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* User Behavior */}
-            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Clock className="w-5 h-5 mr-2" />
-                  User Behavior
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Avg. Tokens Used</span>
-                  <span className="text-white font-semibold">{data.userBehavior.avgTokensUsedBeforeUpgrade.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Avg. Days to Convert</span>
-                  <span className="text-white font-semibold">{data.userBehavior.avgDaysToConvert}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Token Utilization</span>
-                  <span className="text-white font-semibold">{data.userBehavior.tokenUtilization}%</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Revenue Metrics */}
+            {/* Cost Metrics */}
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <DollarSign className="w-5 h-5 mr-2" />
-                  Revenue Breakdown
+                  Cost Breakdown
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Starter Plan</span>
-                  <span className="text-white font-semibold">{data.revenue.starterPlanConversions} users</span>
+                  <span className="text-gray-300">Cost Per User Today</span>
+                  <span className="text-white font-semibold">${data.quick_metrics.cost_per_user_today.toFixed(3)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Advanced Plan</span>
-                  <span className="text-white font-semibold">{data.revenue.advancedPlanConversions} users</span>
+                  <span className="text-gray-300">Monthly Total</span>
+                  <span className="text-white font-semibold">${data.summary.total_cost_month.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Avg. Revenue/User</span>
-                  <span className="text-white font-semibold">${data.revenue.averageRevenuePerUser}</span>
-                </div>
-                <div className="border-t border-gray-600 pt-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-300 font-medium">Total MRR</span>
-                    <span className="text-green-400 font-bold text-lg">${data.revenue.projectedMRR}</span>
-                  </div>
+                  <span className="text-gray-300">High Priority Alerts</span>
+                  <span className="text-white font-semibold">{data.summary.high_priority_alerts}</span>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Market Testing Progress */}
+            {/* Model Usage */}
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
-                  <Target className="w-5 h-5 mr-2" />
-                  Market Testing Progress
+                  <BarChart3 className="w-5 h-5 mr-2" />
+                  Model Usage
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Goal</span>
-                  <span className="text-white font-semibold">{data.insights.conversionGoal} conversions</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-300">Progress</span>
-                    <span className="text-white font-semibold">{data.insights.progressToGoal}%</span>
-                  </div>
-                  <div className="w-full bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-gradient-to-r from-blue-500 to-emerald-500 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${data.insights.progressToGoal}%` }}
-                    ></div>
-                  </div>
+                  <span className="text-gray-300">GPT-4o Usage</span>
+                  <span className="text-white font-semibold">{data.quick_metrics.model_usage.gpt4o_percentage.toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Est. Time to Goal</span>
-                  <span className="text-white font-semibold">{data.insights.estimatedTimeToGoal}</span>
+                  <span className="text-gray-300">GPT-4o-mini Usage</span>
+                  <span className="text-white font-semibold">{data.quick_metrics.model_usage.gpt4o_mini_percentage.toFixed(1)}%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">Avg Engagement Score</span>
+                  <span className="text-white font-semibold">{data.quick_metrics.avg_engagement_score.toFixed(0)}/100</span>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Recent Conversions */}
-          {data.recentConversions.length > 0 && (
+          {/* Business Insights */}
+          {data.top_insights.length > 0 && (
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-white">Recent Conversions</CardTitle>
+                <CardTitle className="text-white">Business Insights & Recommendations</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left py-3 px-4 text-gray-300">Date</th>
-                        <th className="text-left py-3 px-4 text-gray-300">Plan</th>
-                        <th className="text-left py-3 px-4 text-gray-300">Tokens Used</th>
-                        <th className="text-left py-3 px-4 text-gray-300">Days in Trial</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.recentConversions.map((conversion, index) => (
-                        <tr key={index} className="border-b border-gray-700/50">
-                          <td className="py-3 px-4 text-white">
-                            {new Date(conversion.date).toLocaleDateString()}
-                          </td>
-                          <td className="py-3 px-4 text-white">{conversion.plan}</td>
-                          <td className="py-3 px-4 text-white">{conversion.tokensUsed?.toLocaleString() || 'N/A'}</td>
-                          <td className="py-3 px-4 text-white">{conversion.daysInTrial || 'N/A'}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="space-y-4">
+                  {data.top_insights.map((insight, index) => (
+                    <div key={index} className={`p-4 rounded-lg border ${
+                      insight.priority === 'high' ? 'bg-red-900/20 border-red-500/30' :
+                      insight.priority === 'medium' ? 'bg-yellow-900/20 border-yellow-500/30' :
+                      'bg-blue-900/20 border-blue-500/30'
+                    }`}>
+                      <div className="flex items-start space-x-3">
+                        <div className={`w-2 h-2 rounded-full mt-2 ${
+                          insight.priority === 'high' ? 'bg-red-500' :
+                          insight.priority === 'medium' ? 'bg-yellow-500' :
+                          'bg-blue-500'
+                        }`}></div>
+                        <div className="flex-1">
+                          <h4 className="text-white font-semibold">{insight.title}</h4>
+                          <p className="text-gray-300 mt-1">{insight.description}</p>
+                          <p className="text-gray-400 text-sm mt-2 italic">{insight.action}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
