@@ -37,90 +37,40 @@ export default function LandingPage() {
   const [demoComplete, setDemoComplete] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
-  const fullUserMessage = "Find landscaping companies in my area and help me analyze the competition. I need to understand my market better."
+  const fullUserMessage = "Help me get 10 more clients in the next 30 days."
   
-  const fullAiMessage = `**Searching Google for "landscaping companies near you"...**
+  const fullAiMessage = `I'll create a 30-day client acquisition plan tailored to your local market. Let me analyze your competition and identify the fastest opportunities...
 
-**Found 6 direct competitors in your local market:**
+## Your 30-Day Client Acquisition Strategy
 
-## Live Competitor Intelligence
+**1. Week 1-2: Quick Wins (Target: 3-4 clients)**
+- Local SEO optimization: Get visible for "landscaping near me" 
+- Google Business Profile enhancement: Add photos, respond to reviews
+- Referral program launch: Incentivize existing clients
 
-**Elite Landscape Co.**
-- Rating: 4.7 stars (234 reviews)
-- Price Level: $$$$
-- Phone: (555) 123-4567
-- Status: OPERATIONAL
+**2. Week 3-4: Competitive Advantage (Target: 6-7 additional clients)**
+- Undercut competitors on irrigation installs (only 2/6 companies offer this)
+- Target premium market gap: Position above average pricing
+- Seasonal timing: Spring cleanup packages (peak demand period)
 
-**GreenThumb Services**
-- Rating: 4.2 stars (156 reviews)
-- Price Level: $$$
-- Phone: (555) 234-5678
-- Status: OPERATIONAL
+## Immediate Action Items
 
-**Budget Lawn Care**
-- Rating: 3.8 stars (89 reviews)
-- Price Level: $$
-- Phone: (555) 345-6789
-- Status: OPERATIONAL
+**3. Today:**
+- Update Google Business listing with recent project photos
+- Text your last 10 satisfied customers about referral bonuses
 
-**Premier Landscapes**
-- Rating: 4.9 stars (78 reviews)
-- Price Level: $$$$$
-- Phone: (555) 456-7890
-- Status: OPERATIONAL
-
-**Yard Masters LLC**
-- Rating: 4.1 stars (203 reviews)
-- Price Level: $$$
-- Phone: (555) 567-8901
-- Status: OPERATIONAL
-
-**Quick Cut Lawns**
-- Rating: 3.5 stars (67 reviews)
-- Price Level: $$
-- Phone: (555) 678-9012
-- Status: OPERATIONAL
-
-## Market Intelligence Analysis
-
-**Rating Benchmarks:**
-- Market average: **4.2 stars**
-- Premium tier (4.7+ stars): Only **2 competitors**
-- Review volume leader: Elite Landscape (234 reviews)
-
-**Pricing Tier Distribution:**
-- Budget ($$): 2 competitors - High volume, lower margins
-- Mid-range ($$$): 2 competitors - Balanced market position  
-- Premium ($$$$+): 2 competitors - **Opportunity zone!**
-
-**Service Categories Found:**
-- Basic lawn care: 6/6 competitors
-- Landscape design: 3/6 competitors
-- Irrigation systems: 2/6 competitors
-- Hardscaping: 2/6 competitors
-
-## Strategic Opportunities
-
-**Immediate Positioning:**
-- **Rating advantage potential**: Get above 4.5 stars to outrank 4 competitors
-- **Review gap**: Focus on reviews - most have 100+ (social proof matters)
-- **Premium market**: Only 2 competitors in top pricing tier
+**4. This Week:**
+- Price irrigation consultations competitively (competitors charge premium rates)
+- Create "Spring Ready" package targeting March demand
 
 **Competitive Intelligence:**
-- **Direct contact access**: All competitor phone numbers available
-- **Website analysis**: Check their service offerings and pricing
-- **Google Business profiles**: Study their photos, hours, specialties
+Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportunity to offer faster quotes and competitive pricing.
 
-**Growth Strategy:**
-- Target **irrigation & hardscaping** (only 2/6 competitors offer this)
-- Position in **premium tier** - less crowded market space
-- Focus on **5-star service** to beat 4.2 market average
+## Revenue Projection
+- 10 new clients × average job value = significant additional revenue
+- Referral program ROI: Low investment with high return potential
 
-## Next Steps
-
-Want me to analyze their websites and service offerings? Or should we dive deeper into pricing strategies for your specific services?
-
-**Pro tip:** This data refreshes in real-time, so you always have the latest competitive intelligence!`
+**Want me to write the exact text messages to send your past customers today?**`
 
   useEffect(() => {
     const startDemo = () => {
@@ -227,8 +177,16 @@ Want me to analyze their websites and service offerings? Or should we dive deepe
         if (inList) { htmlLines.push('</ul>'); inList = false; }
         const text = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
         
+        // Check if this is a numbered title (starts with **1. **2. **3. **4.)
+        if (text.match(/^\*\*\d+\./)) {
+          htmlLines.push(`<p class="text-emerald-400 font-bold text-lg leading-relaxed mb-3 mt-4">${text}</p>`)
+        }
+        // Check if this is the final CTA (contains "Want me to write")
+        else if (text.includes('Want me to write')) {
+          htmlLines.push(`<p class="text-emerald-400 font-bold leading-relaxed mb-3 mt-4">${text}</p>`)
+        }
         // Check if this is an ending question
-        if (text.includes('?') && (text.toLowerCase().includes('what') || text.toLowerCase().includes('how') || text.toLowerCase().includes('which'))) {
+        else if (text.includes('?') && (text.toLowerCase().includes('what') || text.toLowerCase().includes('how') || text.toLowerCase().includes('which'))) {
           htmlLines.push(`<p class="text-emerald-400 font-medium leading-relaxed mb-3 mt-4">${text}</p>`)
         } else {
           htmlLines.push(`<p class="text-white leading-relaxed mb-3">${text}</p>`)
