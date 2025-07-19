@@ -389,9 +389,9 @@ function convertUserIntentToSearch(userMessage: string, userProfile: any): strin
     return 'residential neighborhoods subdivisions'
   }
   
-  // Commercial client requests
+  // Commercial client requests - find actual businesses that need landscaping
   if (message.includes('commercial') || message.includes('business') && (message.includes('client') || message.includes('property'))) {
-    return 'office buildings retail centers commercial properties property management'
+    return 'hotels restaurants retail stores office buildings medical centers shopping centers apartment complexes'
   }
   
   // Competitor analysis requests  
