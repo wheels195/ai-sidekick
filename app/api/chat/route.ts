@@ -127,7 +127,41 @@ Every recommendation should be measurable:
 - Time to implementation
 - ROI calculations
 
-Remember: You are a business growth specialist, not a content creator. Focus on immediate, tactical, revenue-generating actions.`
+Remember: You are a business growth specialist, not a content creator. Focus on immediate, tactical, revenue-generating actions.
+
+---
+
+## 📋 MANDATORY RESPONSE TEMPLATE
+
+**EVERY RESPONSE MUST FOLLOW THIS STRUCTURE:**
+
+### 🎯 Immediate Actions (Next 48 Hours)
+- [ ] **Specific task with exact steps**
+- [ ] **Scripts/templates to use**
+- [ ] **Contact info/resources to access**
+
+### 📅 Weekly Implementation Plan
+**Week 1:** [Specific actions with metrics]
+**Week 2:** [Specific actions with metrics]  
+**Week 3:** [Specific actions with metrics]
+**Week 4:** [Revenue projections/outcomes]
+
+### 💡 Tactical Intelligence
+- **Local Market Insight:** [ZIP-specific data]
+- **Competitive Edge:** [Differentiation strategy]
+- **Seasonal Advantage:** [Timing optimization]
+
+### 📞 Implementation Tools
+**Phone Script:** [Exact language for calls]
+**Email Template:** [Copy-paste ready text]
+**Pricing Structure:** [Specific numbers/packages]
+
+### 📊 Success Metrics
+- **Target:** [Specific measurable goal]
+- **Timeline:** [Realistic deadline]
+- **ROI Projection:** [Expected revenue impact]
+
+**End every response with a bold call-to-action in emerald green.**`
 
 
 // File processing function for images and documents
@@ -220,6 +254,93 @@ async function processUploadedFiles(files: any[]): Promise<string> {
   return `FILES UPLOADED AND ANALYZED:\n\n${fileAnalyses.join('\n\n---\n\n')}\n\nBased on the above file analysis, please provide specific landscaping business insights, recommendations, or feedback.`
 }
 
+
+// Detect high-value queries that benefit from GPT-4o's advanced reasoning
+function detectHighValueQuery(userMessage: string, userProfile: any): boolean {
+  const message = userMessage.toLowerCase()
+  
+  // Complex business strategy queries
+  if (message.includes('strategy') || message.includes('plan') || message.includes('approach')) {
+    return true
+  }
+  
+  // Multi-step implementation requests
+  if (message.includes('how to') && (message.includes('step') || message.includes('process') || message.includes('implement'))) {
+    return true
+  }
+  
+  // Revenue optimization and pricing analysis
+  if ((message.includes('revenue') || message.includes('profit') || message.includes('money')) && 
+      (message.includes('increase') || message.includes('optimize') || message.includes('improve'))) {
+    return true
+  }
+  
+  // Complex competitive analysis
+  if (message.includes('competitor') && (message.includes('analysis') || message.includes('beat') || message.includes('advantage'))) {
+    return true
+  }
+  
+  // Business scaling and growth planning
+  if ((message.includes('scale') || message.includes('grow') || message.includes('expand')) && 
+      (message.includes('business') || message.includes('team') || message.includes('operation'))) {
+    return true
+  }
+  
+  // Complex client acquisition strategies
+  if (message.includes('client') && message.match(/\d+/)) { // Contains numbers (e.g., "10 clients")
+    return true
+  }
+  
+  // Marketing campaigns and multi-channel strategies
+  if (message.includes('campaign') || (message.includes('marketing') && message.includes('channel'))) {
+    return true
+  }
+  
+  // Long-form content requests
+  if (message.length > 100) { // Detailed, complex queries
+    return true
+  }
+  
+  return false
+}
+
+// Detect question intent and enhance vector search queries
+function detectQuestionIntent(userMessage: string, userProfile: any): string {
+  const message = userMessage.toLowerCase()
+  
+  // Client acquisition intent
+  if (message.includes('client') || message.includes('customer') || message.includes('lead')) {
+    return `${userMessage} client acquisition lead generation ${userProfile?.target_customers || 'residential'}`
+  }
+  
+  // Pricing and revenue intent
+  if (message.includes('pric') || message.includes('money') || message.includes('revenue') || message.includes('profit')) {
+    return `${userMessage} pricing strategies revenue optimization ${userProfile?.services?.join(' ') || 'landscaping services'}`
+  }
+  
+  // Marketing and SEO intent
+  if (message.includes('market') || message.includes('seo') || message.includes('advertis') || message.includes('online')) {
+    return `${userMessage} marketing SEO digital advertising ${userProfile?.zip_code || 'local market'}`
+  }
+  
+  // Seasonal and operations intent
+  if (message.includes('season') || message.includes('winter') || message.includes('spring') || message.includes('summer') || message.includes('fall')) {
+    return `${userMessage} seasonal business planning operations ${userProfile?.services?.join(' ') || 'landscaping'}`
+  }
+  
+  // Competition intent
+  if (message.includes('compet') || message.includes('beat') || message.includes('against')) {
+    return `${userMessage} competitive strategy market positioning ${userProfile?.location || 'local market'}`
+  }
+  
+  // Team and scaling intent
+  if (message.includes('team') || message.includes('grow') || message.includes('scale') || message.includes('hire')) {
+    return `${userMessage} team management business growth scaling operations`
+  }
+  
+  // Default: enhance with user context
+  return `${userMessage} ${userProfile?.trade || 'landscaping'} ${userProfile?.services?.join(' ') || ''} business advice`
+}
 
 // Convert user intent to intelligent search queries
 function convertUserIntentToSearch(userMessage: string, userProfile: any): string {
@@ -427,15 +548,16 @@ export async function POST(request: NextRequest) {
     if (!userProfile) {
       console.log('No authenticated user, using mock test profile for web search context')
       userProfile = {
-        business_name: "Johnson's Landscaping",
-        location: 'Dallas, TX',
-        zip_code: '75201',
+        business_name: "Demo Landscaping Business",
+        location: 'Your City, Your State',
+        zip_code: 'Your ZIP',
         trade: 'landscaping',
         services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
-        team_size: 4,
+        team_size: 3,
         target_customers: 'residential homeowners',
-        years_in_business: 8,
-        main_challenges: ['finding new customers', 'pricing competition', 'seasonal cash flow']
+        years_in_business: 5,
+        main_challenges: ['finding new customers', 'pricing competition', 'seasonal cash flow'],
+        is_demo_profile: true
       }
     }
 
@@ -497,6 +619,17 @@ export async function POST(request: NextRequest) {
           hasNotConfigured: searchResults.includes('not configured')
         })
         
+        // Smart retry logic: if no results, try adjacent areas
+        if (searchResults.includes('No local businesses found') && userProfile?.zip_code && userProfile.zip_code !== 'Your ZIP') {
+          console.log('🔍 No results found, attempting smart retry with adjacent areas...')
+          const adjacentLocation = `${userProfile.zip_code} surrounding areas`
+          const retryResults = await performGooglePlacesSearch(intelligentQuery, adjacentLocation)
+          if (retryResults && !retryResults.includes('No local businesses found')) {
+            searchResults = retryResults
+            console.log('🔍 Smart retry successful with adjacent areas')
+          }
+        }
+        
       } catch (searchError) {
         console.error('❌ Google Places search failed with exception:', searchError)
         console.error('❌ Search error details:', {
@@ -511,22 +644,27 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Enhanced knowledge retrieval from vector database
+    // Enhanced knowledge retrieval from vector database - AUTO-TRIGGERED ON ALL QUESTIONS
     let vectorKnowledge = ''
     if (currentUserMessage?.role === 'user') {
-      console.log('🧠 Retrieving relevant knowledge from vector database...')
+      console.log('🧠 Auto-triggering vector database knowledge retrieval...')
       
       try {
         // Import the vector search function
         const { enhancedKnowledgeSearch } = await import('@/lib/vectorSearch')
         
-        // Search for relevant knowledge chunks
+        // Search for relevant knowledge chunks - enhanced with user context
         const enhancedProfile = userProfile ? { ...userProfile, id: user?.id } : undefined
-        vectorKnowledge = await enhancedKnowledgeSearch(request, currentUserMessage.content, enhancedProfile)
         
-        console.log('🧠 Vector knowledge retrieved:', { 
+        // Detect question intent and enhance search query
+        const searchQuery = detectQuestionIntent(currentUserMessage.content, userProfile)
+        vectorKnowledge = await enhancedKnowledgeSearch(request, searchQuery, enhancedProfile)
+        
+        console.log('🧠 Vector knowledge auto-retrieved:', { 
           hasKnowledge: !!vectorKnowledge,
-          length: vectorKnowledge.length 
+          length: vectorKnowledge.length,
+          originalQuery: currentUserMessage.content,
+          enhancedQuery: searchQuery
         })
         
       } catch (vectorError) {
@@ -570,6 +708,22 @@ USER BUSINESS CONTEXT:
 ### 🔐 Challenge-Focused Strategy
 - Prioritize solutions that address their listed challenges (e.g. "find customers," "pricing pressure")
 
+## ⚠️ CRITICAL ENFORCEMENT RULES
+
+**EVERY RESPONSE MUST:**
+1. **Reference their specific ZIP code** when discussing local strategies, SEO, or competition
+2. **Only mention services they actually offer** - no generic landscaping advice
+3. **Scale recommendations to their team size** - don't suggest workload for wrong crew size
+4. **Address their stated challenges first** before other opportunities
+5. **Use their business context** for all examples, scripts, and tactical advice
+
+**IMMEDIATE DISQUALIFICATION:**
+- Generic advice that could apply to any landscaper
+- Recommendations for services they don't offer
+- Strategies without ZIP-specific targeting
+- Workload suggestions that don't match team size
+- Ignoring their stated business challenges
+
 ## 🧠 GPT Output Expectations
 Your output should feel like it was written just for them — because it was.
 
@@ -585,6 +739,23 @@ Your output should feel like it was written just for them — because it was.
 - Use fake company names or general market advice  
 - Recommend services they don't offer  
 - Ignore their ZIP when giving local strategies${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
+    }
+
+    // Add test data disclaimer for demo profiles
+    if (userProfile?.is_demo_profile) {
+      enhancedSystemPrompt += `\n\n## ⚠️ DEMO MODE ACTIVE
+      
+**IMPORTANT:** You are currently responding to a demo user with placeholder business data. 
+
+**Demo Guidelines:**
+- Use realistic but generic examples 
+- Avoid specific location references like "Dallas" or "75201"
+- Use placeholder language: "your area," "your ZIP code," "your market"
+- Focus on universal strategies that work in any location
+- Include a note that real users get personalized, ZIP-specific advice
+
+**At the end of responses, add:**
+"*This is a demo response with generic examples. Real users receive personalized advice based on their actual business location, services, and profile data.*"`
     }
 
     // Add vector knowledge to system prompt (clean markdown formatting)
@@ -831,14 +1002,20 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
       }
     }
 
-    // Call OpenAI API with streaming - use GPT-4o for web search, GPT-4o-mini for general advice
+    // Call OpenAI API with streaming - SMART MODEL ROUTING for optimal quality/cost balance
     const openai = getOpenAIClient()
     let stream
     
-    const modelToUse = hasSearchResults || hasFiles ? 'gpt-4o' : 'gpt-4o-mini'
-    const maxTokens = hasSearchResults || hasFiles ? 6000 : 4000 // Increased token limits for better responses
+    // Smart model selection based on query complexity and value
+    const isHighValueQuery = detectHighValueQuery(currentUserMessage.content, userProfile)
+    const modelToUse = hasSearchResults || hasFiles || isHighValueQuery ? 'gpt-4o' : 'gpt-4o-mini'
+    const maxTokens = hasSearchResults || hasFiles || isHighValueQuery ? 6000 : 4000
     
-    console.log(`🧠 Using model: ${modelToUse} (web search: ${webSearchEnabled}, has results: ${!!searchResults}, files: ${files?.length || 0})`)
+    console.log(`🧠 Smart routing: ${modelToUse} (web search: ${webSearchEnabled}, files: ${files?.length || 0}, high-value: ${isHighValueQuery})`)
+    console.log(`🧠 Query analysis: "${currentUserMessage.content.substring(0, 100)}..."`)
+    
+    // Log model usage for user awareness
+    const modelIndicator = modelToUse === 'gpt-4o' ? '💪 GPT-4o' : '⚡ GPT-4o-mini'
     
     try {
       stream = await openai.chat.completions.create({
