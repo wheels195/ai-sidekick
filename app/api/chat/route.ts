@@ -289,6 +289,47 @@ async function processUploadedFiles(files: any[]): Promise<string> {
 }
 
 
+// Calculate API costs based on actual usage
+function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls = 0, hasFiles = false }) {
+  // OpenAI pricing per 1M tokens (as of 2024)
+  const pricing = {
+    'gpt-4o': { input: 2.50, output: 10.00 },           // $2.50/$10.00 per 1M tokens
+    'gpt-4o-mini': { input: 0.15, output: 0.60 }        // $0.15/$0.60 per 1M tokens
+  }
+  
+  const modelPricing = pricing[model] || pricing['gpt-4o-mini']
+  
+  // Calculate GPT costs
+  const inputCostUsd = (inputTokens / 1000000) * modelPricing.input
+  const outputCostUsd = (outputTokens / 1000000) * modelPricing.output
+  const gptCostUsd = inputCostUsd + outputCostUsd
+  
+  // Google Places API cost ($0.017 per Text Search request)
+  const placesCostUsd = googlePlacesCalls * 0.017
+  
+  // File processing cost (estimate additional 20% for vision/PDF processing)
+  const filesCostUsd = hasFiles ? gptCostUsd * 0.20 : 0
+  
+  const totalCostUsd = gptCostUsd + placesCostUsd + filesCostUsd
+  
+  return {
+    inputTokens,
+    outputTokens,
+    totalTokens: inputTokens + outputTokens,
+    model,
+    gptCostUsd,
+    placesCostUsd,
+    filesCostUsd,
+    totalCostUsd,
+    breakdown: {
+      inputCostUsd,
+      outputCostUsd,
+      googlePlacesCalls,
+      hasFiles
+    }
+  }
+}
+
 // Detect high-value queries that benefit from GPT-4o's advanced reasoning
 function detectHighValueQuery(userMessage: string, userProfile: any): boolean {
   const message = userMessage.toLowerCase()
@@ -1087,6 +1128,7 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
         max_tokens: maxTokens,
         temperature: 0.7,
         stream: true,
+        stream_options: { include_usage: true }  // Get actual token usage
       })
     } catch (error) {
       console.error('OpenAI API call failed:', error)
@@ -1101,18 +1143,22 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
     const readable = new ReadableStream({
       async start(controller) {
         let fullResponse = ''
-        let tokenCount = 0
+        let actualTokenUsage = null
         
         try {
           for await (const chunk of stream) {
             const content = chunk.choices[0]?.delta?.content || ''
             if (content !== undefined && content !== null) {
               fullResponse += content
-              tokenCount += 1
-              
               
               // Send the token as Server-Sent Event - preserve exact content including empty strings
               controller.enqueue(encoder.encode(`data: ${JSON.stringify(content)}\n\n`))
+            }
+            
+            // Capture actual token usage from OpenAI
+            if (chunk.usage) {
+              actualTokenUsage = chunk.usage
+              console.log('🎯 OpenAI actual token usage:', actualTokenUsage)
             }
           }
 
@@ -1138,23 +1184,41 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
                     team_size: userProfile.team_size
                   } : null,
                   response_time_ms: responseTime,
-                  tokens_used: totalTokens
+                  tokens_used: totalTokens,
+                  cost_breakdown: costs,
+                  model_used: modelToUse
                 })
                 .select('id')
                 .single()
 
-              // Update user's token usage in profile with accurate token estimation
+              // Calculate accurate token usage and costs
               const currentUserMessage = messages[messages.length - 1]
-              const inputTokens = Math.ceil((currentUserMessage?.content?.length || 0) / 4)
-              const outputTokens = Math.ceil(fullResponse.length / 4)
-              const totalTokens = inputTokens + outputTokens
               
-              console.log(`💰 Token usage: Input: ${inputTokens}, Output: ${outputTokens}, Total: ${totalTokens}`)
+              // Use actual OpenAI token counts if available, otherwise estimate
+              const inputTokens = actualTokenUsage?.prompt_tokens || Math.ceil((currentUserMessage?.content?.length || 0) / 4)
+              const outputTokens = actualTokenUsage?.completion_tokens || Math.ceil(fullResponse.length / 4)
+              const totalTokens = actualTokenUsage?.total_tokens || (inputTokens + outputTokens)
               
+              // Calculate costs based on model and actual usage
+              const costs = calculateApiCosts({
+                model: modelToUse,
+                inputTokens,
+                outputTokens,
+                googlePlacesCalls: webSearchEnabled && searchResults ? 1 : 0,
+                hasFiles: files?.length > 0
+              })
+              
+              console.log(`💰 Actual token usage: Input: ${inputTokens}, Output: ${outputTokens}, Total: ${totalTokens}`)
+              console.log(`💰 Estimated cost: $${costs.totalCostUsd.toFixed(4)} (${modelToUse})`)
+              console.log(`💰 Breakdown: GPT: $${costs.gptCostUsd.toFixed(4)}, Places: $${costs.placesCostUsd.toFixed(4)}, Files: $${costs.filesCostUsd.toFixed(4)}`)
+              
+              // Update user profile with token usage and cost tracking
               await supabase
                 .from('user_profiles')
                 .update({
-                  tokens_used_trial: (userProfile?.tokens_used_trial || 0) + totalTokens
+                  tokens_used_trial: (userProfile?.tokens_used_trial || 0) + totalTokens,
+                  total_cost_trial: (userProfile?.total_cost_trial || 0) + costs.totalCostUsd,
+                  last_activity_at: new Date().toISOString()
                 })
                 .eq('id', user.id)
 
