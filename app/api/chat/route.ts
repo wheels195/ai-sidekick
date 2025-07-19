@@ -1138,19 +1138,23 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
                     team_size: userProfile.team_size
                   } : null,
                   response_time_ms: responseTime,
-                  tokens_used: tokenCount
+                  tokens_used: totalTokens
                 })
                 .select('id')
                 .single()
 
-              // Update user's token usage in profile
+              // Update user's token usage in profile with accurate token estimation
               const currentUserMessage = messages[messages.length - 1]
-              const estimatedTokens = Math.ceil((currentUserMessage?.content?.length || 0 + fullResponse.length) / 4)
+              const inputTokens = Math.ceil((currentUserMessage?.content?.length || 0) / 4)
+              const outputTokens = Math.ceil(fullResponse.length / 4)
+              const totalTokens = inputTokens + outputTokens
+              
+              console.log(`💰 Token usage: Input: ${inputTokens}, Output: ${outputTokens}, Total: ${totalTokens}`)
               
               await supabase
                 .from('user_profiles')
                 .update({
-                  tokens_used_trial: (userProfile?.tokens_used_trial || 0) + estimatedTokens
+                  tokens_used_trial: (userProfile?.tokens_used_trial || 0) + totalTokens
                 })
                 .eq('id', user.id)
 
