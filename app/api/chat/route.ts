@@ -916,23 +916,23 @@ When user asks for local businesses, competitors, commercial properties, or any 
 
 <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
 <thead>
-<tr style="background-color: #065f46; color: white;">
-<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Business Name</th>
-<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Phone</th>
-<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Location</th>
-<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Rating</th>
-<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Website</th>
-<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Key Services</th>
+<tr style="background-color: #34d399; color: #000000;">
+<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Business Name</th>
+<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Phone</th>
+<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Location</th>
+<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Rating</th>
+<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Website</th>
+<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Key Services</th>
 </tr>
 </thead>
 <tbody>
-<tr style="background-color: #f0fdf4;">
-<td style="border: 1px solid #34d399; padding: 10px; font-weight: 600;">[Business Name]</td>
-<td style="border: 1px solid #34d399; padding: 10px;">[Phone Number]</td>
-<td style="border: 1px solid #34d399; padding: 10px;">[Full Address]</td>
-<td style="border: 1px solid #34d399; padding: 10px;">[Rating]⭐ ([Review Count] reviews)</td>
-<td style="border: 1px solid #34d399; padding: 10px;"><a href="[Website]" target="_blank" style="color: #34d399; text-decoration: underline;">[Domain]</a></td>
-<td style="border: 1px solid #34d399; padding: 10px;">[Services List]</td>
+<tr style="background-color: #ecfdf5;">
+<td style="border: 1px solid #10b981; padding: 10px; font-weight: 600; color: #000000;">[Business Name]</td>
+<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Phone Number]</td>
+<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Full Address]</td>
+<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Rating]⭐ ([Review Count] reviews)</td>
+<td style="border: 1px solid #10b981; padding: 10px;"><a href="[Website]" target="_blank" style="color: #059669; text-decoration: underline; font-weight: 600;">[Domain]</a></td>
+<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Services List]</td>
 </tr>
 </tbody>
 </table>
