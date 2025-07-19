@@ -489,13 +489,37 @@ export async function POST(request: NextRequest) {
 - User: ${userProfile.first_name || ''} ${userProfile.last_name || ''}
 - Business: ${userProfile.business_name || 'Not specified'}
 - Location: ${userProfile.location || 'Not specified'}
+- ZIP Code: ${userProfile.zip_code || 'Not specified'}
 - Services: ${userProfile.services?.join(', ') || 'Not specified'}
 - Team Size: ${userProfile.team_size || 'Not specified'}
 - Target Customers: ${userProfile.target_customers || 'Not specified'}
 - Years in Business: ${userProfile.years_in_business || 'Not specified'}
+- Main Challenges: ${userProfile.main_challenges?.join(', ') || 'Not specified'}
 - Business Priorities: ${userProfile.business_priorities?.join(', ') || 'Not specified'}
 
-Use this context to provide more personalized and relevant advice.${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
+---
+
+## 🔒 MANDATORY: USE USER PROFILE TO PERSONALIZE ALL OUTPUT
+
+You have full access to this user's business profile. Use this knowledge **internally** to shape every recommendation, without repeating it back to the user.
+
+Always:
+- Tailor strategies to their **location** and local market behavior
+- Scale action plans to their **team size** and capacity
+- Reference the **services they offer** when suggesting ideas
+- Adjust tactics to their **years in business** (e.g., new vs established)
+- Focus on solving their **main challenges** and priorities
+
+NEVER:
+- Repeat user data back to them ("You have a 4-person team in Dallas")
+- Offer generic advice ("Try social media") without tailoring it
+- Suggest services they don't offer
+
+Example:
+❌ "Build a referral program."  
+✅ "Since you already offer irrigation and tree trimming, build a referral offer tied to seasonal cleanups — especially in high-income Dallas suburbs where you can upsell irrigation repairs."
+
+Your job is to make the user feel like this was written **just for them** — because it was.${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
     }
 
     // Add vector knowledge to system prompt (clean markdown formatting)
