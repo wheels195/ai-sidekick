@@ -549,8 +549,8 @@ export async function POST(request: NextRequest) {
       console.log('No authenticated user, using mock test profile for web search context')
       userProfile = {
         business_name: "Demo Landscaping Business",
-        location: 'Your City, Your State',
-        zip_code: 'Your ZIP',
+        location: 'Dallas, TX',
+        zip_code: '75201',
         trade: 'landscaping',
         services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
         team_size: 3,
@@ -910,7 +910,16 @@ Then provide strategic insights with emerald green numbered formatting:
 For competitive analysis tables, include these columns in this order:
 | Business Name | Phone | Location | Rating | Reviews | Website | Key Services |
 
-For non-competitive research, use the standard format:
+**FOR ALL LOCAL BUSINESS SEARCHES (3+ results): ALWAYS USE TABLE FORMAT**
+
+When user asks for local businesses, competitors, commercial properties, or any location-based results with 3 or more businesses, format as a professional table:
+
+| Business Name | Phone | Location | Rating | Reviews | Website | Key Services |
+|---------------|-------|----------|--------|---------|---------|--------------|
+| [Business 1] | [Phone] | [Address] | [Rating]⭐ | [Count] | [Link] | [Services] |
+| [Business 2] | [Phone] | [Address] | [Rating]⭐ | [Count] | [Link] | [Services] |
+
+For single business results, use the standard format:
 
 ✅ **Business Name**
 - Phone: (from PHONE field)
