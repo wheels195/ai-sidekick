@@ -67,28 +67,29 @@ export async function GET(request: NextRequest) {
 }
 
 async function getCostAnalytics(supabase: any, dates: any) {
-  // Get cost breakdown by time period - with fallback for missing columns
-  const { data: todayCosts } = await supabase
-    .from('user_conversations')
-    .select('cost_breakdown, model_used, created_at, tokens_used')
-    .gte('created_at', dates.today)
+  try {
+    // Get cost breakdown by time period - gracefully handle errors
+    const { data: todayCosts } = await supabase
+      .from('user_conversations')
+      .select('cost_breakdown, model_used, created_at, tokens_used')
+      .gte('created_at', dates.today) || []
 
-  const { data: weekCosts } = await supabase
-    .from('user_conversations')
-    .select('cost_breakdown, model_used, created_at, tokens_used')
-    .gte('created_at', dates.weekAgo)
+    const { data: weekCosts } = await supabase
+      .from('user_conversations')
+      .select('cost_breakdown, model_used, created_at, tokens_used')
+      .gte('created_at', dates.weekAgo) || []
 
-  const { data: monthCosts } = await supabase
-    .from('user_conversations')
-    .select('cost_breakdown, model_used, created_at, tokens_used')
-    .gte('created_at', dates.monthAgo)
+    const { data: monthCosts } = await supabase
+      .from('user_conversations')
+      .select('cost_breakdown, model_used, created_at, tokens_used')
+      .gte('created_at', dates.monthAgo) || []
 
-  // Get user cost ranking - with fallback for missing columns
-  const { data: userCosts } = await supabase
-    .from('user_profiles')
-    .select('id, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at')
-    .order('tokens_used_trial', { ascending: false })
-    .limit(50)
+    // Get user cost ranking - gracefully handle errors
+    const { data: userCosts } = await supabase
+      .from('user_profiles')
+      .select('id, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at')
+      .order('tokens_used_trial', { ascending: false })
+      .limit(50) || []
 
   // Calculate aggregated costs - with fallback for missing cost_breakdown
   const calculatePeriodCosts = (costs: any[]) => {
@@ -148,45 +149,58 @@ async function getCostAnalytics(supabase: any, dates: any) {
   monthStats.cost_per_conversation = monthStats.conversation_count > 0 
     ? monthStats.total_cost_usd / monthStats.conversation_count : 0
 
-  return NextResponse.json({
-    view: 'costs',
-    today: todayStats,
-    week: weekStats,
-    month: monthStats,
-    top_users_by_cost: userCosts?.map(user => ({
-      user_id: user.id,
-      name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Anonymous',
-      business: user.business_name,
-      total_cost: user.total_cost_trial || 0,
-      total_tokens: user.tokens_used_trial || 0,
-      cost_per_token: (user.tokens_used_trial > 0 && user.total_cost_trial > 0) ? user.total_cost_trial / user.tokens_used_trial : 0,
-      account_age_days: Math.floor((new Date().getTime() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24)),
-      tier_recommended: (user.total_cost_trial || 0) > 2.0 ? 'Business' : (user.total_cost_trial || 0) > 0.5 ? 'Pro' : 'Starter'
-    })) || [],
-    alerts: {
-      high_cost_users: userCosts?.filter(u => u.total_cost_trial > 2.0).length || 0,
-      daily_cost_high: todayStats.total_cost_usd > 50,
-      unusual_usage: false // TODO: Implement anomaly detection
-    }
-  })
+    return NextResponse.json({
+      view: 'costs',
+      today: todayStats,
+      week: weekStats,
+      month: monthStats,
+      top_users_by_cost: userCosts?.map(user => ({
+        user_id: user.id,
+        name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Anonymous',
+        business: user.business_name,
+        total_cost: user.total_cost_trial || 0,
+        total_tokens: user.tokens_used_trial || 0,
+        cost_per_token: (user.tokens_used_trial > 0 && user.total_cost_trial > 0) ? user.total_cost_trial / user.tokens_used_trial : 0,
+        account_age_days: Math.floor((new Date().getTime() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24)),
+        tier_recommended: (user.total_cost_trial || 0) > 2.0 ? 'Business' : (user.total_cost_trial || 0) > 0.5 ? 'Pro' : 'Starter'
+      })) || [],
+      alerts: {
+        high_cost_users: userCosts?.filter(u => (u.total_cost_trial || 0) > 2.0).length || 0,
+        daily_cost_high: todayStats.total_cost_usd > 50,
+        unusual_usage: false
+      }
+    })
+  } catch (error) {
+    console.error('Cost analytics error:', error)
+    // Return empty data structure instead of error
+    return NextResponse.json({
+      view: 'costs',
+      today: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, files_cost: 0 },
+      week: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, files_cost: 0 },
+      month: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, files_cost: 0 },
+      top_users_by_cost: [],
+      alerts: { high_cost_users: 0, daily_cost_high: false, unusual_usage: false }
+    })
+  }
 }
 
 async function getUserAnalytics(supabase: any, dates: any) {
-  // Get user engagement metrics - with fallback for missing columns
-  const { data: users } = await supabase
-    .from('user_profiles')
-    .select(`
-      id, first_name, last_name, business_name, created_at, 
-      tokens_used_trial, total_cost_trial, last_activity_at,
-      trade, team_size, target_customers
-    `)
-    .order('created_at', { ascending: false })
+  try {
+    // Get user engagement metrics - with fallback for missing columns
+    const { data: users } = await supabase
+      .from('user_profiles')
+      .select(`
+        id, first_name, last_name, business_name, created_at, 
+        tokens_used_trial, total_cost_trial, last_activity_at,
+        trade, team_size, target_customers
+      `)
+      .order('created_at', { ascending: false }) || []
 
-  // Get conversation counts per user
-  const { data: conversationCounts } = await supabase
-    .from('user_conversations')
-    .select('user_id')
-    .gte('created_at', dates.monthAgo)
+    // Get conversation counts per user
+    const { data: conversationCounts } = await supabase
+      .from('user_conversations')
+      .select('user_id')
+      .gte('created_at', dates.monthAgo) || []
 
   const userConversationMap = conversationCounts?.reduce((acc: any, conv: any) => {
     acc[conv.user_id] = (acc[conv.user_id] || 0) + 1
@@ -235,106 +249,154 @@ async function getUserAnalytics(supabase: any, dates: any) {
     }
   }) || []
 
-  return NextResponse.json({
-    view: 'users',
-    total_users: users?.length || 0,
-    active_users_week: userAnalytics.filter(u => u.last_activity_days < 7).length,
-    high_engagement: userAnalytics.filter(u => u.engagement_score > 70).length,
-    upgrade_candidates: userAnalytics.filter(u => u.upgrade_likelihood > 60).length,
-    users: userAnalytics.sort((a, b) => b.upgrade_likelihood - a.upgrade_likelihood)
-  })
+    return NextResponse.json({
+      view: 'users',
+      total_users: users?.length || 0,
+      active_users_week: userAnalytics.filter(u => u.last_activity_days < 7).length,
+      high_engagement: userAnalytics.filter(u => u.engagement_score > 70).length,
+      upgrade_candidates: userAnalytics.filter(u => u.upgrade_likelihood > 60).length,
+      users: userAnalytics.sort((a, b) => b.upgrade_likelihood - a.upgrade_likelihood)
+    })
+  } catch (error) {
+    console.error('User analytics error:', error)
+    return NextResponse.json({
+      view: 'users',
+      total_users: 0,
+      active_users_week: 0,
+      high_engagement: 0,
+      upgrade_candidates: 0,
+      users: []
+    })
+  }
 }
 
 async function getRecommendations(supabase: any, dates: any) {
-  // Get cost and user data for recommendations
-  const [costData, userData] = await Promise.all([
-    getCostAnalytics(supabase, dates),
-    getUserAnalytics(supabase, dates)
-  ])
+  try {
+    // Get cost and user data for recommendations
+    const [costData, userData] = await Promise.all([
+      getCostAnalytics(supabase, dates),
+      getUserAnalytics(supabase, dates)
+    ])
 
-  const costJson = await costData.json()
-  const userJson = await userData.json()
+    const costJson = await costData.json()
+    const userJson = await userData.json()
 
-  const recommendations = []
+    const recommendations = []
 
-  // Cost optimization recommendations
-  if (costJson.today.total_cost_usd > 50) {
-    recommendations.push({
-      type: 'cost_alert',
-      priority: 'high',
-      title: 'Daily Cost Threshold Exceeded',
-      description: `Today's costs ($${costJson.today.total_cost_usd.toFixed(2)}) exceed $50 threshold`,
-      action: 'Consider implementing usage limits or upgrading pricing tiers'
-    })
-  }
-
-  // Upgrade opportunity recommendations
-  const highValueUsers = userJson.users.filter((u: any) => u.upgrade_likelihood > 70)
-  if (highValueUsers.length > 0) {
-    recommendations.push({
-      type: 'upgrade_opportunity',
-      priority: 'medium',
-      title: `${highValueUsers.length} High-Value Upgrade Candidates`,
-      description: 'Users showing strong engagement and usage patterns',
-      action: 'Send targeted upgrade campaigns to these users'
-    })
-  }
-
-  // Pricing optimization
-  const avgCostPerUser = costJson.month.total_cost_usd / (userJson.total_users || 1)
-  if (avgCostPerUser > 1.0) {
-    recommendations.push({
-      type: 'pricing_optimization',
-      priority: 'high',
-      title: 'High Cost Per User Detected',
-      description: `Average monthly cost per user: $${avgCostPerUser.toFixed(2)}`,
-      action: 'Consider raising trial limits or adjusting pricing tiers'
-    })
-  }
-
-  return NextResponse.json({
-    view: 'recommendations',
-    recommendations,
-    summary: {
-      total_recommendations: recommendations.length,
-      high_priority: recommendations.filter(r => r.priority === 'high').length,
-      medium_priority: recommendations.filter(r => r.priority === 'medium').length
+    // Cost optimization recommendations
+    if (costJson.today.total_cost_usd > 50) {
+      recommendations.push({
+        type: 'cost_alert',
+        priority: 'high',
+        title: 'Daily Cost Threshold Exceeded',
+        description: `Today's costs ($${costJson.today.total_cost_usd.toFixed(2)}) exceed $50 threshold`,
+        action: 'Consider implementing usage limits or upgrading pricing tiers'
+      })
     }
-  })
+
+    // Upgrade opportunity recommendations
+    const highValueUsers = userJson.users.filter((u: any) => u.upgrade_likelihood > 70)
+    if (highValueUsers.length > 0) {
+      recommendations.push({
+        type: 'upgrade_opportunity',
+        priority: 'medium',
+        title: `${highValueUsers.length} High-Value Upgrade Candidates`,
+        description: 'Users showing strong engagement and usage patterns',
+        action: 'Send targeted upgrade campaigns to these users'
+      })
+    }
+
+    // Pricing optimization
+    const avgCostPerUser = costJson.month.total_cost_usd / (userJson.total_users || 1)
+    if (avgCostPerUser > 1.0) {
+      recommendations.push({
+        type: 'pricing_optimization',
+        priority: 'high',
+        title: 'High Cost Per User Detected',
+        description: `Average monthly cost per user: $${avgCostPerUser.toFixed(2)}`,
+        action: 'Consider raising trial limits or adjusting pricing tiers'
+      })
+    }
+
+    return NextResponse.json({
+      view: 'recommendations',
+      recommendations,
+      summary: {
+        total_recommendations: recommendations.length,
+        high_priority: recommendations.filter(r => r.priority === 'high').length,
+        medium_priority: recommendations.filter(r => r.priority === 'medium').length
+      }
+    })
+  } catch (error) {
+    console.error('Recommendations error:', error)
+    return NextResponse.json({
+      view: 'recommendations',
+      recommendations: [],
+      summary: {
+        total_recommendations: 0,
+        high_priority: 0,
+        medium_priority: 0
+      }
+    })
+  }
 }
 
 async function getOverviewAnalytics(supabase: any, dates: any) {
-  // Combine key metrics from all views
-  const [costData, userData, recData] = await Promise.all([
-    getCostAnalytics(supabase, dates),
-    getUserAnalytics(supabase, dates),
-    getRecommendations(supabase, dates)
-  ])
+  try {
+    // Combine key metrics from all views
+    const [costData, userData, recData] = await Promise.all([
+      getCostAnalytics(supabase, dates),
+      getUserAnalytics(supabase, dates),
+      getRecommendations(supabase, dates)
+    ])
 
-  const costJson = await costData.json()
-  const userJson = await userData.json()
-  const recJson = await recData.json()
+    const costJson = await costData.json()
+    const userJson = await userData.json()
+    const recJson = await recData.json()
 
-  return NextResponse.json({
-    view: 'overview',
-    summary: {
-      total_users: userJson.total_users,
-      active_users_week: userJson.active_users_week,
-      total_cost_today: costJson.today.total_cost_usd,
-      total_cost_month: costJson.month.total_cost_usd,
-      upgrade_candidates: userJson.upgrade_candidates,
-      high_priority_alerts: recJson.summary.high_priority
-    },
-    quick_metrics: {
-      cost_per_user_today: userJson.total_users > 0 ? costJson.today.total_cost_usd / userJson.total_users : 0,
-      avg_engagement_score: userJson.users.length > 0 ? userJson.users.reduce((acc: number, u: any) => acc + u.engagement_score, 0) / userJson.users.length : 0,
-      model_usage: {
-        gpt4o_percentage: costJson.today.total_cost_usd > 0 ? (costJson.today.gpt4o_cost / costJson.today.total_cost_usd) * 100 : 0,
-        gpt4o_mini_percentage: costJson.today.total_cost_usd > 0 ? (costJson.today.gpt4o_mini_cost / costJson.today.total_cost_usd) * 100 : 0
-      }
-    },
-    top_insights: recJson.recommendations.slice(0, 3)
-  })
+    return NextResponse.json({
+      view: 'overview',
+      summary: {
+        total_users: userJson.total_users || 0,
+        active_users_week: userJson.active_users_week || 0,
+        total_cost_today: costJson.today?.total_cost_usd || 0,
+        total_cost_month: costJson.month?.total_cost_usd || 0,
+        upgrade_candidates: userJson.upgrade_candidates || 0,
+        high_priority_alerts: recJson.summary?.high_priority || 0
+      },
+      quick_metrics: {
+        cost_per_user_today: userJson.total_users > 0 ? (costJson.today?.total_cost_usd || 0) / userJson.total_users : 0,
+        avg_engagement_score: userJson.users?.length > 0 ? userJson.users.reduce((acc: number, u: any) => acc + u.engagement_score, 0) / userJson.users.length : 0,
+        model_usage: {
+          gpt4o_percentage: (costJson.today?.total_cost_usd || 0) > 0 ? ((costJson.today?.gpt4o_cost || 0) / costJson.today.total_cost_usd) * 100 : 0,
+          gpt4o_mini_percentage: (costJson.today?.total_cost_usd || 0) > 0 ? ((costJson.today?.gpt4o_mini_cost || 0) / costJson.today.total_cost_usd) * 100 : 0
+        }
+      },
+      top_insights: recJson.recommendations?.slice(0, 3) || []
+    })
+  } catch (error) {
+    console.error('Overview analytics error:', error)
+    return NextResponse.json({
+      view: 'overview',
+      summary: {
+        total_users: 0,
+        active_users_week: 0,
+        total_cost_today: 0,
+        total_cost_month: 0,
+        upgrade_candidates: 0,
+        high_priority_alerts: 0
+      },
+      quick_metrics: {
+        cost_per_user_today: 0,
+        avg_engagement_score: 0,
+        model_usage: {
+          gpt4o_percentage: 0,
+          gpt4o_mini_percentage: 0
+        }
+      },
+      top_insights: []
+    })
+  }
 }
 
 function getValueSegment(engagementScore: number, totalCost: number) {
