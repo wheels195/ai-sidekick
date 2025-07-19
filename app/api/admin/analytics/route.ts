@@ -67,45 +67,56 @@ export async function GET(request: NextRequest) {
 }
 
 async function getCostAnalytics(supabase: any, dates: any) {
-  // Get cost breakdown by time period
+  // Get cost breakdown by time period - with fallback for missing columns
   const { data: todayCosts } = await supabase
     .from('user_conversations')
-    .select('cost_breakdown, model_used, created_at')
+    .select('cost_breakdown, model_used, created_at, tokens_used')
     .gte('created_at', dates.today)
-    .not('cost_breakdown', 'is', null)
 
   const { data: weekCosts } = await supabase
     .from('user_conversations')
-    .select('cost_breakdown, model_used, created_at')
+    .select('cost_breakdown, model_used, created_at, tokens_used')
     .gte('created_at', dates.weekAgo)
-    .not('cost_breakdown', 'is', null)
 
   const { data: monthCosts } = await supabase
     .from('user_conversations')
-    .select('cost_breakdown, model_used, created_at')
+    .select('cost_breakdown, model_used, created_at, tokens_used')
     .gte('created_at', dates.monthAgo)
-    .not('cost_breakdown', 'is', null)
 
-  // Get user cost ranking
+  // Get user cost ranking - with fallback for missing columns
   const { data: userCosts } = await supabase
     .from('user_profiles')
     .select('id, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at')
-    .not('total_cost_trial', 'is', null)
-    .order('total_cost_trial', { ascending: false })
+    .order('tokens_used_trial', { ascending: false })
     .limit(50)
 
-  // Calculate aggregated costs
+  // Calculate aggregated costs - with fallback for missing cost_breakdown
   const calculatePeriodCosts = (costs: any[]) => {
     return costs?.reduce((acc, conv) => {
       const breakdown = conv.cost_breakdown
-      if (!breakdown) return acc
+      
+      // If we have cost breakdown, use it
+      if (breakdown && breakdown.totalCostUsd) {
+        return {
+          total_cost_usd: acc.total_cost_usd + (breakdown.totalCostUsd || 0),
+          gpt4o_cost: acc.gpt4o_cost + (breakdown.model === 'gpt-4o' ? breakdown.gptCostUsd : 0),
+          gpt4o_mini_cost: acc.gpt4o_mini_cost + (breakdown.model === 'gpt-4o-mini' ? breakdown.gptCostUsd : 0),
+          google_places_cost: acc.google_places_cost + (breakdown.placesCostUsd || 0),
+          files_cost: acc.files_cost + (breakdown.filesCostUsd || 0),
+          conversation_count: acc.conversation_count + 1
+        }
+      }
+      
+      // Fallback: estimate cost from tokens (if no cost breakdown yet)
+      const tokens = conv.tokens_used || 0
+      const estimatedCost = tokens * 0.0001 // Rough estimate $0.0001 per token
       
       return {
-        total_cost_usd: acc.total_cost_usd + (breakdown.totalCostUsd || 0),
-        gpt4o_cost: acc.gpt4o_cost + (breakdown.model === 'gpt-4o' ? breakdown.gptCostUsd : 0),
-        gpt4o_mini_cost: acc.gpt4o_mini_cost + (breakdown.model === 'gpt-4o-mini' ? breakdown.gptCostUsd : 0),
-        google_places_cost: acc.google_places_cost + (breakdown.placesCostUsd || 0),
-        files_cost: acc.files_cost + (breakdown.filesCostUsd || 0),
+        total_cost_usd: acc.total_cost_usd + estimatedCost,
+        gpt4o_cost: acc.gpt4o_cost + (conv.model_used === 'gpt-4o' ? estimatedCost : 0),
+        gpt4o_mini_cost: acc.gpt4o_mini_cost + (conv.model_used === 'gpt-4o-mini' ? estimatedCost : 0),
+        google_places_cost: acc.google_places_cost,
+        files_cost: acc.files_cost,
         conversation_count: acc.conversation_count + 1
       }
     }, {
@@ -146,11 +157,11 @@ async function getCostAnalytics(supabase: any, dates: any) {
       user_id: user.id,
       name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Anonymous',
       business: user.business_name,
-      total_cost: user.total_cost_trial,
-      total_tokens: user.tokens_used_trial,
-      cost_per_token: user.tokens_used_trial > 0 ? user.total_cost_trial / user.tokens_used_trial : 0,
+      total_cost: user.total_cost_trial || 0,
+      total_tokens: user.tokens_used_trial || 0,
+      cost_per_token: (user.tokens_used_trial > 0 && user.total_cost_trial > 0) ? user.total_cost_trial / user.tokens_used_trial : 0,
       account_age_days: Math.floor((new Date().getTime() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24)),
-      tier_recommended: user.total_cost_trial > 2.0 ? 'Business' : user.total_cost_trial > 0.5 ? 'Pro' : 'Starter'
+      tier_recommended: (user.total_cost_trial || 0) > 2.0 ? 'Business' : (user.total_cost_trial || 0) > 0.5 ? 'Pro' : 'Starter'
     })) || [],
     alerts: {
       high_cost_users: userCosts?.filter(u => u.total_cost_trial > 2.0).length || 0,
@@ -161,7 +172,7 @@ async function getCostAnalytics(supabase: any, dates: any) {
 }
 
 async function getUserAnalytics(supabase: any, dates: any) {
-  // Get user engagement metrics
+  // Get user engagement metrics - with fallback for missing columns
   const { data: users } = await supabase
     .from('user_profiles')
     .select(`
