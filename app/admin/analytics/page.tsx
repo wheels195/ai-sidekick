@@ -47,6 +47,7 @@ export default function AdminAnalyticsPage() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'x-admin-key': 'a8f3d2c9b7e4f1a6d8c2e9f3b5a7d4c1e6f8a2b9c5d7e3f1a8b4c6d9e2f5a8b1'
         }
       })
       
