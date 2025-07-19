@@ -910,14 +910,32 @@ Then provide strategic insights with emerald green numbered formatting:
 For competitive analysis tables, include these columns in this order:
 | Business Name | Phone | Location | Rating | Reviews | Website | Key Services |
 
-**FOR ALL LOCAL BUSINESS SEARCHES (3+ results): ALWAYS USE TABLE FORMAT**
+**FOR ALL LOCAL BUSINESS SEARCHES (3+ results): ALWAYS USE HTML TABLE FORMAT**
 
-When user asks for local businesses, competitors, commercial properties, or any location-based results with 3 or more businesses, format as a professional table:
+When user asks for local businesses, competitors, commercial properties, or any location-based results with 3 or more businesses, format as a professional HTML table with emerald styling:
 
-| Business Name | Phone | Location | Rating | Reviews | Website | Key Services |
-|---------------|-------|----------|--------|---------|---------|--------------|
-| [Business 1] | [Phone] | [Address] | [Rating]⭐ | [Count] | [Link] | [Services] |
-| [Business 2] | [Phone] | [Address] | [Rating]⭐ | [Count] | [Link] | [Services] |
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
+<thead>
+<tr style="background-color: #065f46; color: white;">
+<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Business Name</th>
+<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Phone</th>
+<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Location</th>
+<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Rating</th>
+<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Website</th>
+<th style="border: 1px solid #34d399; padding: 12px; text-align: left;">Key Services</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background-color: #f0fdf4;">
+<td style="border: 1px solid #34d399; padding: 10px; font-weight: 600;">[Business Name]</td>
+<td style="border: 1px solid #34d399; padding: 10px;">[Phone Number]</td>
+<td style="border: 1px solid #34d399; padding: 10px;">[Full Address]</td>
+<td style="border: 1px solid #34d399; padding: 10px;">[Rating]⭐ ([Review Count] reviews)</td>
+<td style="border: 1px solid #34d399; padding: 10px;"><a href="[Website]" target="_blank" style="color: #34d399; text-decoration: underline;">[Domain]</a></td>
+<td style="border: 1px solid #34d399; padding: 10px;">[Services List]</td>
+</tr>
+</tbody>
+</table>
 
 For single business results, use the standard format:
 
