@@ -359,6 +359,11 @@ export default function SignupPage() {
     if (!formData.city) newErrors.city = 'City is required'
     if (!formData.state) newErrors.state = 'State is required'
     if (!formData.zipCode) newErrors.zipCode = 'Zip code is required'
+    if (!formData.teamSize) newErrors.teamSize = 'Team size is required'
+    if (!formData.yearsInBusiness) newErrors.yearsInBusiness = 'Years in business is required'
+    if (!formData.services || formData.services.length === 0) newErrors.services = 'Please select at least one service'
+    if (!formData.targetCustomers) newErrors.targetCustomers = 'Primary target customers is required'
+    if (!formData.businessPriorities || formData.businessPriorities.length === 0) newErrors.businessPriorities = 'Please select at least one business priority'
     // Trade and plan are pre-selected for landscaping trial
 
     setErrors(newErrors)
@@ -792,7 +797,7 @@ export default function SignupPage() {
                       <p className="text-white text-sm mb-2">Team size:</p>
                       <Select onValueChange={(value) => handleSelectChange('teamSize', value)} value={formData.teamSize}>
                         <SelectTrigger className="bg-white/5 border-white/20 text-blue-200 focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
-                          <SelectValue placeholder="Select team size" />
+                          <SelectValue placeholder="Select team size *" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 border-gray-600">
                           {teamSizeOptions.map((option) => (
@@ -802,12 +807,13 @@ export default function SignupPage() {
                           ))}
                         </SelectContent>
                       </Select>
+                      {errors.teamSize && <p className="text-red-400 text-sm mt-1">{errors.teamSize}</p>}
                     </div>
                     <div>
                       <p className="text-white text-sm mb-2">Years in business:</p>
                       <Select onValueChange={(value) => handleSelectChange('yearsInBusiness', value)} value={formData.yearsInBusiness}>
                         <SelectTrigger className="bg-white/5 border-white/20 text-blue-200 focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
-                          <SelectValue placeholder="Select experience" />
+                          <SelectValue placeholder="Select experience *" />
                         </SelectTrigger>
                         <SelectContent className="bg-gray-800 border-gray-600">
                           {yearsInBusinessOptions.map((option) => (
@@ -817,29 +823,31 @@ export default function SignupPage() {
                           ))}
                         </SelectContent>
                       </Select>
+                      {errors.yearsInBusiness && <p className="text-red-400 text-sm mt-1">{errors.yearsInBusiness}</p>}
                     </div>
                   </div>
 
                   {/* Services Selection */}
                   {formData.trade && (
                     <div>
-                      <p className="text-white text-sm mb-2">Services you offer (select all that apply):</p>
+                      <p className="text-white text-sm mb-2">Services you offer (select all that apply) *:</p>
                       <MultiSelect
                         options={getServicesForTrade()}
                         value={formData.services}
                         onChange={handleServicesChange}
-                        placeholder="Select your services"
+                        placeholder="Select your services *"
                         disabled={isLoading}
                       />
+                      {errors.services && <p className="text-red-400 text-sm mt-1">{errors.services}</p>}
                     </div>
                   )}
 
                   {/* Target Customers */}
                   <div>
-                    <p className="text-white text-sm mb-2">Primary target customers:</p>
+                    <p className="text-white text-sm mb-2">Primary target customers *:</p>
                     <Select onValueChange={(value) => handleSelectChange('targetCustomers', value)} value={formData.targetCustomers}>
                       <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
-                        <SelectValue placeholder="Select your main customer type" className="text-blue-200" />
+                        <SelectValue placeholder="Select your main customer type *" className="text-blue-200" />
                       </SelectTrigger>
                       <SelectContent className="bg-gray-800 border-gray-600">
                         {targetCustomerOptions.map((option) => (
@@ -849,18 +857,20 @@ export default function SignupPage() {
                         ))}
                       </SelectContent>
                     </Select>
+                    {errors.targetCustomers && <p className="text-red-400 text-sm mt-1">{errors.targetCustomers}</p>}
                   </div>
 
                   {/* Business Goals */}
                   <div>
-                    <p className="text-white text-sm mb-2">Top business priorities (select all that apply):</p>
+                    <p className="text-white text-sm mb-2">Top business priorities (select all that apply) *:</p>
                     <MultiSelect
                       options={businessGoalsOptions}
                       value={formData.businessPriorities}
                       onChange={handleBusinessPrioritiesChange}
-                      placeholder="Select your business goals"
+                      placeholder="Select your business goals *"
                       disabled={isLoading}
                     />
+                    {errors.businessPriorities && <p className="text-red-400 text-sm mt-1">{errors.businessPriorities}</p>}
                   </div>
                 </div>
 

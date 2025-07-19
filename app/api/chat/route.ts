@@ -749,6 +749,30 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Hardcoded landscaping industry challenges (comprehensive coverage for all users)
+    const hardcodedChallenges = [
+      "Labor shortages and retention",
+      "Seasonality and inconsistent demand", 
+      "Rising labor and material costs",
+      "Underpricing and margin pressure",
+      "Scheduling and routing inefficiencies",
+      "Inventory and equipment management",
+      "Lack of operational planning",
+      "Inconsistent service quality",
+      "Ineffective marketing and lead generation",
+      "Weak brand identity",
+      "Poor marketing ROI tracking",
+      "Economic and recession uncertainty",
+      "Labor management for seasonal peaks",
+      "Regulatory and visa constraints (e.g., H-2B caps)",
+      "Technology adoption gaps",
+      "Environmental and pesticide regulations",
+      "Competition from DIY and gig platforms",
+      "Overexpansion without systems",
+      "Lack of business/financial expertise",
+      "Owner burnout and overwork"
+    ]
+
     // Enhance system prompt with user context and web search status
     let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
     
@@ -766,7 +790,7 @@ USER BUSINESS CONTEXT:
 - Team Size: ${userProfile.team_size || 'Not specified'}
 - Years in Business: ${userProfile.years_in_business || 'Not specified'}
 - Target Customers: ${userProfile.target_customers || 'Not specified'}
-- Main Challenges: ${userProfile.main_challenges?.join(', ') || 'Not specified'}
+- Common Industry Challenges: ${hardcodedChallenges.join(', ')}
 - Business Priorities: ${userProfile.business_priorities?.join(', ') || 'Not specified'}
 
 ### 🔐 ZIP Code Targeting
@@ -781,7 +805,8 @@ USER BUSINESS CONTEXT:
 - Suggest workload that fits their crew size (e.g. don't overload a solo operator)
 
 ### 🔐 Challenge-Focused Strategy
-- Prioritize solutions that address their listed challenges (e.g. "find customers," "pricing pressure")
+- Prioritize solutions that address common landscaping challenges (labor shortages, seasonality, pricing pressure, lead generation, etc.)
+- Proactively address industry pain points even if not explicitly mentioned by the user
 
 ## ⚠️ CRITICAL ENFORCEMENT RULES
 
