@@ -948,28 +948,30 @@ For competitive analysis tables, include these columns in this order:
 
 When user asks for local businesses, competitors, commercial properties, or any location-based results with 3 or more businesses, format as a professional HTML table with emerald styling:
 
-<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="width: 100%; min-width: 600px; border-collapse: collapse; font-family: Arial, sans-serif;">
 <thead>
 <tr style="background-color: #34d399; color: #000000;">
-<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Business Name</th>
-<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Phone</th>
-<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Location</th>
-<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Rating</th>
-<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Website</th>
-<th style="border: 1px solid #10b981; padding: 12px; text-align: left; font-weight: 700;">Key Services</th>
+<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Business Name</th>
+<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Phone</th>
+<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Location</th>
+<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Rating</th>
+<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Website</th>
+<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Services</th>
 </tr>
 </thead>
 <tbody>
 <tr style="background-color: #ecfdf5;">
-<td style="border: 1px solid #10b981; padding: 10px; font-weight: 600; color: #000000;">[Business Name]</td>
-<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Phone Number]</td>
-<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Full Address]</td>
-<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Rating]⭐ ([Review Count] reviews)</td>
-<td style="border: 1px solid #10b981; padding: 10px;"><a href="[Website]" target="_blank" style="color: #059669; text-decoration: underline; font-weight: 600;">[Domain]</a></td>
-<td style="border: 1px solid #10b981; padding: 10px; color: #000000;">[Services List]</td>
+<td style="border: 1px solid #10b981; padding: 8px 10px; font-weight: 600; color: #000000; font-size: 13px;">[Business Name]</td>
+<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; white-space: nowrap;">[Phone Number]</td>
+<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; max-width: 150px;">[Full Address]</td>
+<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; white-space: nowrap;">[Rating]⭐ ([Review Count])</td>
+<td style="border: 1px solid #10b981; padding: 8px 10px;"><a href="[Website]" target="_blank" style="color: #059669; text-decoration: underline; font-weight: 600; font-size: 13px;">[Domain]</a></td>
+<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; max-width: 120px;">[Services List]</td>
 </tr>
 </tbody>
 </table>
+</div>
 
 For single business results, use the standard format:
 
