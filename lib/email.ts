@@ -7,7 +7,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
   
   try {
     const { data, error } = await resend.emails.send({
-      from: 'AI Sidekick <onboarding@resend.dev>', // Will change to noreply@ai-sidekick.io once domain is set up
+      from: 'AI Sidekick <no-reply@ai-sidekick.io>',
       to: [email],
       subject: 'Verify your email address - AI Sidekick',
       html: `
@@ -71,7 +71,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
 export async function sendWelcomeEmail(email: string, businessName: string, trade: string) {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'AI Sidekick <onboarding@resend.dev>', // Will change to welcome@ai-sidekick.io once domain is set up
+      from: 'AI Sidekick <no-reply@ai-sidekick.io>',
       to: [email],
       subject: `Welcome to AI Sidekick, ${businessName}! 🌱`,
       html: `
