@@ -46,7 +46,13 @@ ${formData.message}`
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <style>{`
+        .font-cursive {
+          font-family: var(--font-cursive), 'Brush Script MT', cursive;
+        }
+      `}</style>
+      <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
         <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
@@ -343,7 +349,7 @@ ${formData.message}`
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <span className="text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive cursor-pointer hover:scale-105 transition-transform duration-300">
                 AI Sidekick
               </span>
             </div>
@@ -366,6 +372,7 @@ ${formData.message}`
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }
