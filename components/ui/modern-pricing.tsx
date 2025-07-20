@@ -23,10 +23,12 @@ export interface ModernPricingCardProps {
   isPopular?: boolean;
   badge?: string;
   onClick?: () => void;
+  savingsText?: string;
+  isAnnual?: boolean;
 }
 
 export const ModernPricingCard = ({
-  planName, description, price, features, buttonText, isPopular = false, badge, onClick
+  planName, description, price, features, buttonText, isPopular = false, badge, onClick, savingsText, isAnnual = false
 }: ModernPricingCardProps) => {
   const cardClasses = `
     backdrop-blur-2xl bg-gradient-to-br rounded-2xl shadow-2xl flex-1 max-w-sm px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 flex flex-col transition-all duration-300 relative font-inter h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]
@@ -54,9 +56,20 @@ export const ModernPricingCard = ({
         <p className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">{description}</p>
       </div>
       
-      <div className="my-6 sm:my-8 flex items-baseline gap-2">
-        <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-white">{price}</span>
-        {price !== "0" && price !== "Contact Us" && <span className="text-sm sm:text-base text-gray-400">/mo</span>}
+      <div className="my-6 sm:my-8">
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-white">{price}</span>
+          {price !== "0" && price !== "Contact Us" && (
+            <span className="text-sm sm:text-base text-gray-400">
+              {isAnnual ? '/year' : '/mo'}
+            </span>
+          )}
+        </div>
+        {savingsText && (
+          <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-lg px-3 py-1 inline-block">
+            <span className="text-green-400 text-sm font-semibold">{savingsText}</span>
+          </div>
+        )}
       </div>
       
       <div className="w-full mb-6 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"></div>

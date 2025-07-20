@@ -36,6 +36,7 @@ export default function LandingPage() {
   const [demoStarted, setDemoStarted] = useState(false)
   const [demoComplete, setDemoComplete] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [isAnnual, setIsAnnual] = useState(true) // Default to annual for savings
 
   const fullUserMessage = "Help me get 10 more clients in the next 30 days."
   
@@ -1670,6 +1671,37 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </p>
           </div>
 
+          {/* Billing Toggle */}
+          <div className="flex justify-center mb-12">
+            <div className="relative bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-1 shadow-2xl">
+              <div className="flex items-center">
+                <button
+                  onClick={() => setIsAnnual(false)}
+                  className={`relative px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                    !isAnnual 
+                      ? 'text-white bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={`relative px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+                    isAnnual 
+                      ? 'text-white bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  Annual
+                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-2 py-0.5 rounded-full text-xs font-bold">
+                    Save 25%
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           {/* All Plans in a Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center items-stretch max-w-7xl mx-auto">
             <ModernPricingCard
@@ -1677,6 +1709,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               price="0"
               description="Test drive our AI sidekicks for 7 days"
               buttonText="Start Free Trial"
+              isAnnual={false}
               features={[
                 "7-day full access trial",
                 "Full access to your trade's AI sidekick",
@@ -1689,11 +1722,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
             <ModernPricingCard
               planName="Advanced AI"
-              price="59"
+              price={isAnnual ? "531" : "59"}
               description="Our most advanced AI with real-time web search"
               buttonText="Grow with Advanced"
               isPopular={true}
               badge="Most Popular"
+              isAnnual={isAnnual}
+              savingsText={isAnnual ? "💰 Save 177/year vs monthly" : undefined}
               features={[
                 "Full access to your trade's AI sidekick",
                 "Unlimited questions & conversations",
