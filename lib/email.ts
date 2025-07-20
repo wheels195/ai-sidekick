@@ -68,7 +68,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
   }
 }
 
-export async function sendWelcomeEmail(email: string, businessName: string, trade: string) {
+export async function sendWelcomeEmail(email: string, firstName: string, businessName: string, trade: string) {
   try {
     const { data, error } = await resend.emails.send({
       from: 'AI Sidekick <no-reply@ai-sidekick.io>',
@@ -82,7 +82,7 @@ export async function sendWelcomeEmail(email: string, businessName: string, trad
           </div>
           
           <div style="padding: 40px 20px; background: #f9fafb;">
-            <h2 style="color: #1f2937; margin-bottom: 20px;">Hi ${businessName}! 👋</h2>
+            <h2 style="color: #1f2937; margin-bottom: 20px;">Hi ${firstName}! 👋</h2>
             <p style="color: #4b5563; line-height: 1.6; margin-bottom: 30px;">
               You're all set up — your <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span> is ready to help you grow with expert insights and time-saving tools, including:
             </p>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { sendWelcomeEmail } from '@/lib/email'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -48,6 +49,19 @@ export async function GET(request: NextRequest) {
     if (updateError) {
       console.error('Error updating user verification status:', updateError)
       return NextResponse.json({ error: 'Failed to verify email' }, { status: 500 })
+    }
+
+    // Send welcome email after successful verification
+    const welcomeEmailResult = await sendWelcomeEmail(
+      user.email, 
+      user.first_name, 
+      user.business_name || 'Your Business', 
+      user.trade || 'landscaping'
+    )
+    
+    if (!welcomeEmailResult.success) {
+      console.error('Failed to send welcome email:', welcomeEmailResult.error)
+      // Don't fail verification if welcome email fails
     }
 
     // Return success - frontend will redirect
