@@ -1671,10 +1671,10 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           </div>
 
           {/* All Plans in a Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 justify-center items-stretch max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center items-stretch max-w-7xl mx-auto">
             <ModernPricingCard
               planName="Free Trial"
-              price="$0"
+              price="0"
               description="Test drive our AI sidekicks for 7 days"
               buttonText="Start Free Trial"
               features={[
@@ -1688,29 +1688,15 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             />
 
             <ModernPricingCard
-              planName="Starter"
-              price="$19"
-              description="Perfect for getting started with AI guidance"
-              buttonText="Start with Starter"
-              features={[
-                "Full access to your trade's AI sidekick",
-                "Unlimited questions & conversations",
-                "Local SEO guidance",
-                "Content generation tools",
-                "Email support",
-              ]}
-              onClick={() => window.location.href = '/signup?plan=starter'}
-            />
-
-            <ModernPricingCard
-              planName="Advanced"
-              price="$59"
+              planName="Advanced AI"
+              price="59"
               description="Our most advanced AI with real-time web search"
               buttonText="Grow with Advanced"
               isPopular={true}
               badge="Most Popular"
               features={[
-                "Everything in Starter Plan",
+                "Full access to your trade's AI sidekick",
+                "Unlimited questions & conversations",
                 "Powered by our most advanced AI model",
                 "Real-time web search & research",
                 "Latest industry trends & insights",
@@ -1723,18 +1709,18 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             <ModernPricingCard
               planName="Sidepiece AI"
               price="Contact Us"
-              description="Custom pricing to add on AI sidekicks"
+              description="Premium access to all trade AI sidekicks"
               buttonText="Contact for Pricing"
               badge="Multi-Trades"
               features={[
-                "Add multiple AI sidekicks to your current plan",
-                "Upgrade from Starter to Advanced anytime",
-                "Custom pricing based on your needs",
-                "Volume discounts for multiple sidekicks",
-                "Priority support for custom plans",
-                "Flexible billing and contract terms",
+                "Access to ALL trade AI sidekicks",
+                "Landscaping, Electrical, HVAC, Plumbing & more",
+                "Higher token limits & priority processing",
+                "Advanced analytics & reporting",
+                "Custom integrations available",
+                "Dedicated account management",
               ]}
-              onClick={() => window.location.href = '/signup?plan=sidepiece-ai'}
+              onClick={() => window.location.href = '/contact'}
             />
           </div>
         </div>

@@ -50,13 +50,13 @@ export const ModernPricingCard = ({
       )}
       
       <div className="mb-4 sm:mb-6">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extralight tracking-tight text-white mb-2">{planName}</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-2">{planName}</h2>
         <p className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">{description}</p>
       </div>
       
       <div className="my-6 sm:my-8 flex items-baseline gap-2">
         <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-white">{price}</span>
-        {price !== "$0" && price !== "Contact Us" && <span className="text-sm sm:text-base text-gray-400">/mo</span>}
+        {price !== "0" && price !== "Contact Us" && <span className="text-sm sm:text-base text-gray-400">/mo</span>}
       </div>
       
       <div className="w-full mb-6 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"></div>

@@ -147,8 +147,7 @@ export default function SignupPage() {
     if (planParam) {
       const planMap: Record<string, string> = {
         'free-trial': 'Free Trial',
-        'starter': 'Starter Plan', 
-        'advanced': 'Advanced Plan',
+        'advanced': 'Advanced AI',
         'sidepiece-ai': 'Sidepiece AI'
       }
       const planName = planMap[planParam] || ''
@@ -673,42 +672,42 @@ export default function SignupPage() {
                         
                         <div className="grid gap-3">
                           <label className={`cursor-pointer border rounded-lg p-4 transition-all ${
-                            formData.selectedPlan === 'Starter Plan' ? 'border-blue-500 bg-blue-500/10' : 'border-white/20 bg-white/5'
+                            formData.selectedPlan === 'Advanced AI' ? 'border-blue-500 bg-blue-500/10' : 'border-white/20 bg-white/5'
                           }`}>
                             <input
                               type="radio"
                               name="selectedPlan"
-                              value="Starter Plan"
-                              checked={formData.selectedPlan === 'Starter Plan'}
+                              value="Advanced AI"
+                              checked={formData.selectedPlan === 'Advanced AI'}
                               onChange={(e) => setFormData(prev => ({ ...prev, selectedPlan: e.target.value }))}
                               className="sr-only"
                             />
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-white font-semibold">Starter Plan - $29/month</div>
-                                <div className="text-gray-400 text-sm">Unlimited tokens, basic support</div>
+                                <div className="text-white font-semibold">Advanced AI - 59/month</div>
+                                <div className="text-gray-400 text-sm">Full access with web search, priority support</div>
                               </div>
-                              {formData.selectedPlan === 'Starter Plan' && <span className="text-blue-400 text-sm">✓ Selected</span>}
+                              {formData.selectedPlan === 'Advanced AI' && <span className="text-blue-400 text-sm">✓ Selected</span>}
                             </div>
                           </label>
                           
                           <label className={`cursor-pointer border rounded-lg p-4 transition-all ${
-                            formData.selectedPlan === 'Advanced Plan' ? 'border-blue-500 bg-blue-500/10' : 'border-white/20 bg-white/5'
+                            formData.selectedPlan === 'Sidepiece AI' ? 'border-blue-500 bg-blue-500/10' : 'border-white/20 bg-white/5'
                           }`}>
                             <input
                               type="radio"
                               name="selectedPlan"
-                              value="Advanced Plan"
-                              checked={formData.selectedPlan === 'Advanced Plan'}
+                              value="Sidepiece AI"
+                              checked={formData.selectedPlan === 'Sidepiece AI'}
                               onChange={(e) => setFormData(prev => ({ ...prev, selectedPlan: e.target.value }))}
                               className="sr-only"
                             />
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-white font-semibold">Advanced Plan - $59/month</div>
-                                <div className="text-gray-400 text-sm">Everything + priority support, advanced features</div>
+                                <div className="text-white font-semibold">Sidepiece AI - Contact Us</div>
+                                <div className="text-gray-400 text-sm">Access to all trade AIs, premium features</div>
                               </div>
-                              {formData.selectedPlan === 'Advanced Plan' && <span className="text-blue-400 text-sm">✓ Selected</span>}
+                              {formData.selectedPlan === 'Sidepiece AI' && <span className="text-blue-400 text-sm">✓ Selected</span>}
                             </div>
                           </label>
                         </div>
@@ -717,7 +716,7 @@ export default function SignupPage() {
                       <div className="space-y-3">
                         <div className="bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white opacity-75">
                           <div className="flex items-center justify-between">
-                            <span>Free Trial - $0 (7 days)</span>
+                            <span>Free Trial - 0 (7 days)</span>
                             <span className="text-emerald-400 text-sm">✓ Selected</span>
                           </div>
                         </div>
@@ -726,13 +725,13 @@ export default function SignupPage() {
                         <div className="space-y-2 opacity-40">
                           <div className="bg-gray-700/30 border border-gray-600/30 rounded-md px-3 py-2">
                             <div className="flex items-center justify-between">
-                              <span className="text-gray-400">Starter Plan - $29/month</span>
+                              <span className="text-gray-400">Advanced AI - 59/month</span>
                               <span className="text-gray-500 text-sm">Available after trial</span>
                             </div>
                           </div>
                           <div className="bg-gray-700/30 border border-gray-600/30 rounded-md px-3 py-2">
                             <div className="flex items-center justify-between">
-                              <span className="text-gray-400">Advanced Plan - $59/month</span>
+                              <span className="text-gray-400">Sidepiece AI - Contact Us</span>
                               <span className="text-gray-500 text-sm">Available after trial</span>
                             </div>
                           </div>
