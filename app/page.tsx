@@ -239,6 +239,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 { name: "Products", href: "#products" },
                 { name: "Pricing", href: "#pricing" },
                 { name: "FAQ", href: "#faq" },
+                { name: "Contact", href: "/contact" },
               ].map((item) => (
                 <a
                   key={item.name}
@@ -321,6 +322,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 { name: "Products", href: "#products" },
                 { name: "Pricing", href: "#pricing" },
                 { name: "FAQ", href: "#faq" },
+                { name: "Contact", href: "/contact" },
               ].map((item) => (
                 <a
                   key={item.name}
