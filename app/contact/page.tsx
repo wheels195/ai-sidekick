@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, Send, MessageSquare } from "lucide-react"
+import { ArrowLeft, Send, MessageSquare, Sparkles, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -17,6 +17,7 @@ export default function ContactPage() {
     message: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,7 +31,7 @@ Email: ${formData.email}
 Message:
 ${formData.message}`
 
-    const mailtoLink = `mailto:hello@aisidekick.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const mailtoLink = `mailto:info@ai-sidekick.io?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     
     // Open user's email client
     window.location.href = mailtoLink
@@ -46,17 +47,146 @@ ${formData.message}`
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <div className="mb-8">
-          <Link href="/">
-            <Button 
-              variant="ghost" 
-              className="text-gray-300 hover:text-white hover:bg-gray-800/50 mb-6"
+      {/* Header */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
+        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+          <div className="flex justify-between items-center h-16 sm:h-20">
+            <div
+              className="flex items-center space-x-3 group cursor-pointer"
+              onClick={() => (window.location.href = "/")}
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
+                <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+              </div>
+              <span className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive">
+                AI Sidekick
+              </span>
+            </div>
+
+            <div className="hidden md:flex items-center space-x-8">
+              {[
+                { name: "Features", href: "/#features" },
+                { name: "Products", href: "/#products" },
+                { name: "Pricing", href: "/#pricing" },
+                { name: "FAQ", href: "/#faq" },
+                { name: "Contact", href: "/contact" },
+              ].map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-200 hover:text-white transition-all duration-300 hover:scale-105 relative group"
+                >
+                  {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+              ))}
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                className="hidden md:inline-flex text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 text-sm px-4 py-2"
+                onClick={() => window.location.href = '/login'}
+              >
+                Sign In
+              </Button>
+              
+              <Button
+                className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20 text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:px-6 py-2 whitespace-nowrap"
+                onClick={() => window.location.href = '/signup'}
+              >
+                <span className="hidden sm:inline">Get Early Access</span>
+                <span className="sm:hidden">Get Access</span>
+                <Sparkles className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 p-2"
+                onClick={() => setShowMobileMenu(true)}
+              >
+                <Menu className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowMobileMenu(false)}
+          />
+          
+          <div className="absolute right-0 top-0 h-full w-80 bg-gradient-to-br from-gray-900 via-gray-950 to-black border-l border-white/10 shadow-2xl transform transition-transform duration-300 ease-out">
+            <div className="flex items-center justify-between p-6 border-b border-white/10">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive">
+                  AI Sidekick
+                </span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowMobileMenu(false)}
+                className="text-gray-400 hover:text-white p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <div className="flex flex-col p-6 space-y-6">
+              {[
+                { name: "Features", href: "/#features" },
+                { name: "Products", href: "/#products" },
+                { name: "Pricing", href: "/#pricing" },
+                { name: "FAQ", href: "/#faq" },
+                { name: "Contact", href: "/contact" },
+              ].map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setShowMobileMenu(false)}
+                  className="text-lg text-gray-200 hover:text-white transition-all duration-300 py-2"
+                >
+                  {item.name}
+                </a>
+              ))}
+              
+              <Button
+                variant="ghost"
+                className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0"
+                onClick={() => {
+                  setShowMobileMenu(false)
+                  window.location.href = '/login'
+                }}
+              >
+                Sign In
+              </Button>
+              
+              <Button
+                className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-400 hover:via-indigo-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 text-base py-3 mt-4"
+                onClick={() => {
+                  setShowMobileMenu(false)
+                  window.location.href = '/signup'
+                }}
+              >
+                Get Early Access
+                <Sparkles className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-2xl mx-auto px-4 py-12 pt-32">
+        <div className="mb-8">
           
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -172,8 +302,8 @@ ${formData.message}`
               <h2 className="text-2xl font-semibold text-white mb-4">Message Sent!</h2>
               <p className="text-gray-300 mb-6">
                 Your email client should have opened with your message. If it didn't, you can reach us directly at{" "}
-                <a href="mailto:hello@aisidekick.com" className="text-emerald-400 hover:text-emerald-300">
-                  hello@aisidekick.com
+                <a href="mailto:info@ai-sidekick.io" className="text-emerald-400 hover:text-emerald-300">
+                  info@ai-sidekick.io
                 </a>
               </p>
               <p className="text-gray-400 text-sm">
@@ -187,11 +317,11 @@ ${formData.message}`
           <h3 className="text-lg font-semibold text-white mb-4">Other Ways to Reach Us</h3>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
             <a 
-              href="mailto:hello@aisidekick.com"
+              href="mailto:info@ai-sidekick.io"
               className="flex items-center space-x-2 text-emerald-400 hover:text-emerald-300 transition-colors"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>hello@aisidekick.com</span>
+              <span>info@ai-sidekick.io</span>
             </a>
           </div>
           <p className="text-gray-400 text-sm mt-4">
@@ -199,6 +329,43 @@ ${formData.message}`
           </p>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 border-t border-gray-600/30 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)]"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div
+              className="flex items-center space-x-3 mb-6 md:mb-0 group cursor-pointer"
+              onClick={() => (window.location.href = "/")}
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              <span className="text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                AI Sidekick
+              </span>
+            </div>
+
+            <div className="flex space-x-8 text-gray-300">
+              <a href="/terms" className="hover:text-white transition-all duration-300 hover:scale-105">
+                Terms
+              </a>
+              <a href="/privacy" className="hover:text-white transition-all duration-300 hover:scale-105">
+                Privacy
+              </a>
+              <a href="/contact" className="hover:text-white transition-all duration-300 hover:scale-105">
+                Contact
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-white/10 text-center text-gray-300">
+            <p>© 2025 AI Sidekick. Specialized AI for local businesses that want to grow.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
