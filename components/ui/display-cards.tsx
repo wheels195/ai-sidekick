@@ -65,7 +65,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
+                <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70 text-right">
                   {card.date}
                 </p>
               </div>

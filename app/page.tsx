@@ -956,7 +956,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
             >
               <span className="truncate">
-                <span className="sm:hidden">👉 Start Your Free Trial and Let AI Sidekick Help</span>
+                <span className="sm:hidden">👉 Start Your Free Trial</span>
                 <span className="hidden sm:inline">👉 Start Your Free Trial and Let AI Sidekick Help You Grow</span>
               </span>
               <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 flex-shrink-0" />
