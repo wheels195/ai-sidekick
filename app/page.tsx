@@ -414,6 +414,19 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
               </Button>
             </div>
+            
+            {/* Learn Link */}
+            <div className="text-center mt-8">
+              <a 
+                href="/learn" 
+                className="inline-flex items-center text-emerald-400 hover:text-emerald-300 transition-all duration-300 hover:scale-105 text-lg lg:text-xl underline underline-offset-4 decoration-emerald-400/50 hover:decoration-emerald-300"
+              >
+                Learn how to get the best out of AI Sidekick →
+              </a>
+              <p className="text-gray-400 text-sm lg:text-base mt-2">
+                Real questions from real business owners. Get personalized strategies for your specific market.
+              </p>
+            </div>
           </div>
 
           {/* Value Propositions */}
@@ -952,18 +965,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             <p className="text-blue-300 text-lg xl:text-xl 2xl:text-2xl mb-4 lg:mb-6">
               💡 Your <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive text-xl xl:text-2xl 2xl:text-3xl">Advanced AI Sidekick</span> reviews your website, gives you tips to rank higher, upsell more strategically, and bring you more business.
             </p>
-            
-            <div className="text-center mb-8 lg:mb-10">
-              <a 
-                href="/learn" 
-                className="inline-flex items-center text-emerald-400 hover:text-emerald-300 transition-all duration-300 hover:scale-105 text-lg xl:text-xl underline underline-offset-4 decoration-emerald-400/50 hover:decoration-emerald-300"
-              >
-                Learn how to get the best out of AI Sidekick →
-              </a>
-              <p className="text-gray-400 text-sm xl:text-base mt-2">
-                Real questions from real business owners. Get personalized strategies for your specific market.
-              </p>
-            </div>
             
             <Button 
               onClick={() => window.location.href = '/signup?plan=free-trial'}
