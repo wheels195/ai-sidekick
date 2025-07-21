@@ -215,6 +215,40 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         .font-cursive {
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
         }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0%); }
+        }
+        @keyframes scroll-left {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll-right {
+          animation: scroll-right 60s linear infinite;
+          width: 200%;
+        }
+        .animate-scroll-left {
+          animation: scroll-left 60s linear infinite;
+          width: 200%;
+        }
+        .ticker-row:hover .animate-scroll-right,
+        .ticker-row:hover .animate-scroll-left {
+          animation-play-state: paused;
+        }
+        /* Mobile touch - pause on active/focus states */
+        @media (hover: none) and (pointer: coarse) {
+          .ticker-row:active .animate-scroll-right,
+          .ticker-row:active .animate-scroll-left {
+            animation-play-state: paused;
+          }
+          .ticker-card {
+            -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+          }
+          .ticker-card:active {
+            transform: scale(0.98);
+            background: rgba(55, 65, 81, 0.8);
+          }
+        }
       `}</style>
       <div className="min-h-screen bg-black relative overflow-hidden">
 
@@ -415,21 +449,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </Button>
             </div>
             
-            {/* Glass Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+            {/* Glass Button */}
+            <div className="flex justify-center items-center mt-8">
               <Button
                 onClick={() => window.location.href = '/learn'}
                 className="bg-blue-500/20 backdrop-blur-xl border border-blue-400/30 text-white hover:bg-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg hover:shadow-blue-500/25"
               >
                 <FileText className="w-4 h-4 mr-2" />
                 How to Use <span className="font-cursive">AI Sidekick</span>
-              </Button>
-              <Button
-                onClick={() => window.location.href = '/learn'}
-                className="bg-emerald-500/20 backdrop-blur-xl border border-emerald-400/30 text-white hover:bg-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg hover:shadow-emerald-500/25"
-              >
-                <Zap className="w-4 h-4 mr-2" />
-                What is AI
               </Button>
             </div>
           </div>
@@ -580,6 +607,134 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </CardContent>
               </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Idea Ticker Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              Get Inspired
+            </span>
+          </h2>
+          <p className="text-gray-300 text-lg">
+            Real questions from successful landscaping business owners
+          </p>
+        </div>
+
+        {/* Ticker Row 1 - Scrolling Right */}
+        <div className="relative mb-4 ticker-row">
+          <div className="flex animate-scroll-right space-x-4">
+            {[
+              { category: "Customer Acquisition", question: "Generate a 30-day plan to get 10 new high-value customers", color: "from-emerald-500 to-teal-500" },
+              { category: "Revenue Growth", question: "How do I upsell lawn care customers into full landscape design?", color: "from-purple-500 to-pink-500" },
+              { category: "Lead Generation", question: "Create a lead magnet offer that attracts homeowners ready to spend", color: "from-blue-500 to-indigo-500" },
+              { category: "Competitive Analysis", question: "What services are my competitors NOT offering that I should?", color: "from-red-500 to-pink-500" },
+              { category: "Team Building", question: "What questions reveal if someone will be a dependable worker?", color: "from-blue-500 to-teal-500" },
+              { category: "Marketing", question: "How do I get 50+ Google reviews from happy customers?", color: "from-green-500 to-emerald-500" },
+              { category: "Premium Pricing", question: "How do I position myself as the premium option in my market?", color: "from-yellow-500 to-orange-500" },
+              { category: "Market Domination", question: "How do I steal market share from the biggest landscaper in town?", color: "from-orange-500 to-red-500" },
+              { category: "Business Growth", question: "Create a proposal template that wins 70% of my bids", color: "from-purple-500 to-pink-500" },
+              { category: "Local SEO", question: "What local SEO strategies will help me rank #1 in my area?", color: "from-emerald-500 to-teal-500" },
+            ].concat([
+              { category: "Customer Acquisition", question: "Generate a 30-day plan to get 10 new high-value customers", color: "from-emerald-500 to-teal-500" },
+              { category: "Revenue Growth", question: "How do I upsell lawn care customers into full landscape design?", color: "from-purple-500 to-pink-500" },
+              { category: "Lead Generation", question: "Create a lead magnet offer that attracts homeowners ready to spend", color: "from-blue-500 to-indigo-500" },
+              { category: "Competitive Analysis", question: "What services are my competitors NOT offering that I should?", color: "from-red-500 to-pink-500" },
+              { category: "Team Building", question: "What questions reveal if someone will be a dependable worker?", color: "from-blue-500 to-teal-500" },
+              { category: "Marketing", question: "How do I get 50+ Google reviews from happy customers?", color: "from-green-500 to-emerald-500" },
+              { category: "Premium Pricing", question: "How do I position myself as the premium option in my market?", color: "from-yellow-500 to-orange-500" },
+              { category: "Market Domination", question: "How do I steal market share from the biggest landscaper in town?", color: "from-orange-500 to-red-500" },
+              { category: "Business Growth", question: "Create a proposal template that wins 70% of my bids", color: "from-purple-500 to-pink-500" },
+              { category: "Local SEO", question: "What local SEO strategies will help me rank #1 in my area?", color: "from-emerald-500 to-teal-500" },
+            ]).map((item, index) => (
+              <div key={index} className="flex-shrink-0 w-80 h-32 bg-gray-900/60 backdrop-blur-sm border border-white/10 rounded-xl p-4 relative hover:bg-gray-800/60 transition-all duration-300 ticker-card">
+                <div className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${item.color} text-white`}>
+                  {item.category}
+                </div>
+                <p className="text-white text-sm leading-relaxed mt-8">
+                  {item.question}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Ticker Row 2 - Scrolling Left */}
+        <div className="relative mb-4 ticker-row">
+          <div className="flex animate-scroll-left space-x-4">
+            {[
+              { category: "Pricing Strategy", question: "Create a pricing strategy that eliminates lowball competitors", color: "from-yellow-500 to-orange-500" },
+              { category: "Market Domination", question: "Create a strategy to become the go-to landscaper in my zip code", color: "from-orange-500 to-red-500" },
+              { category: "Scaling Operations", question: "How do I scale from solo operator to managing 3+ crews?", color: "from-teal-500 to-cyan-500" },
+              { category: "Operations", question: "How do I schedule jobs to maximize efficiency and profit?", color: "from-indigo-500 to-purple-500" },
+              { category: "Seasonal Planning", question: "Plan my winter strategy to keep revenue flowing year-round", color: "from-blue-500 to-indigo-500" },
+              { category: "Service Expansion", question: "Should I expand into irrigation? Pros and cons for my market", color: "from-orange-500 to-red-500" },
+              { category: "Content Creation", question: "Write 20 social media posts showcasing my recent projects", color: "from-green-500 to-emerald-500" },
+              { category: "Referral Program", question: "Write a referral program that gets my best customers recommending me", color: "from-emerald-500 to-teal-500" },
+              { category: "Door-to-Door", question: "Create a door-to-door script for neighborhoods with dead lawns", color: "from-blue-500 to-indigo-500" },
+              { category: "Commercial Contracts", question: "How do I get commercial property management contracts?", color: "from-purple-500 to-pink-500" },
+            ].concat([
+              { category: "Pricing Strategy", question: "Create a pricing strategy that eliminates lowball competitors", color: "from-yellow-500 to-orange-500" },
+              { category: "Market Domination", question: "Create a strategy to become the go-to landscaper in my zip code", color: "from-orange-500 to-red-500" },
+              { category: "Scaling Operations", question: "How do I scale from solo operator to managing 3+ crews?", color: "from-teal-500 to-cyan-500" },
+              { category: "Operations", question: "How do I schedule jobs to maximize efficiency and profit?", color: "from-indigo-500 to-purple-500" },
+              { category: "Seasonal Planning", question: "Plan my winter strategy to keep revenue flowing year-round", color: "from-blue-500 to-indigo-500" },
+              { category: "Service Expansion", question: "Should I expand into irrigation? Pros and cons for my market", color: "from-orange-500 to-red-500" },
+              { category: "Content Creation", question: "Write 20 social media posts showcasing my recent projects", color: "from-green-500 to-emerald-500" },
+              { category: "Referral Program", question: "Write a referral program that gets my best customers recommending me", color: "from-emerald-500 to-teal-500" },
+              { category: "Door-to-Door", question: "Create a door-to-door script for neighborhoods with dead lawns", color: "from-blue-500 to-indigo-500" },
+              { category: "Commercial Contracts", question: "How do I get commercial property management contracts?", color: "from-purple-500 to-pink-500" },
+            ]).map((item, index) => (
+              <div key={index} className="flex-shrink-0 w-80 h-32 bg-gray-900/60 backdrop-blur-sm border border-white/10 rounded-xl p-4 relative hover:bg-gray-800/60 transition-all duration-300 ticker-card">
+                <div className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${item.color} text-white`}>
+                  {item.category}
+                </div>
+                <p className="text-white text-sm leading-relaxed mt-8">
+                  {item.question}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Ticker Row 3 - Scrolling Right */}
+        <div className="relative ticker-row">
+          <div className="flex animate-scroll-right space-x-4">
+            {[
+              { category: "Business Management", question: "What software tools will help me manage my growing business?", color: "from-purple-500 to-pink-500" },
+              { category: "Year-Round Revenue", question: "What winter services are most profitable in cold climates?", color: "from-teal-500 to-cyan-500" },
+              { category: "Customer Service", question: "What's the best way to handle difficult or demanding customers?", color: "from-indigo-500 to-purple-500" },
+              { category: "Networking", question: "What's the most effective way to network with real estate agents?", color: "from-blue-500 to-indigo-500" },
+              { category: "Upselling", question: "What high-margin services should I add to double my profit?", color: "from-purple-500 to-pink-500" },
+              { category: "Automation", question: "How do I streamline estimates to close deals faster?", color: "from-indigo-500 to-purple-500" },
+              { category: "Retention", question: "How do I turn one-time customers into recurring maintenance clients?", color: "from-blue-500 to-indigo-500" },
+              { category: "Hiring", question: "How do I hire my first reliable crew member?", color: "from-blue-500 to-teal-500" },
+              { category: "Quality Control", question: "Create a quality control checklist for every completed job", color: "from-purple-500 to-pink-500" },
+              { category: "Success Stories", question: "How do I leverage customer success stories for more business?", color: "from-emerald-500 to-teal-500" },
+            ].concat([
+              { category: "Business Management", question: "What software tools will help me manage my growing business?", color: "from-purple-500 to-pink-500" },
+              { category: "Year-Round Revenue", question: "What winter services are most profitable in cold climates?", color: "from-teal-500 to-cyan-500" },
+              { category: "Customer Service", question: "What's the best way to handle difficult or demanding customers?", color: "from-indigo-500 to-purple-500" },
+              { category: "Networking", question: "What's the most effective way to network with real estate agents?", color: "from-blue-500 to-indigo-500" },
+              { category: "Upselling", question: "What high-margin services should I add to double my profit?", color: "from-purple-500 to-pink-500" },
+              { category: "Automation", question: "How do I streamline estimates to close deals faster?", color: "from-indigo-500 to-purple-500" },
+              { category: "Retention", question: "How do I turn one-time customers into recurring maintenance clients?", color: "from-blue-500 to-indigo-500" },
+              { category: "Hiring", question: "How do I hire my first reliable crew member?", color: "from-blue-500 to-teal-500" },
+              { category: "Quality Control", question: "Create a quality control checklist for every completed job", color: "from-purple-500 to-pink-500" },
+              { category: "Success Stories", question: "How do I leverage customer success stories for more business?", color: "from-emerald-500 to-teal-500" },
+            ]).map((item, index) => (
+              <div key={index} className="flex-shrink-0 w-80 h-32 bg-gray-900/60 backdrop-blur-sm border border-white/10 rounded-xl p-4 relative hover:bg-gray-800/60 transition-all duration-300 ticker-card">
+                <div className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${item.color} text-white`}>
+                  {item.category}
+                </div>
+                <p className="text-white text-sm leading-relaxed mt-8">
+                  {item.question}
+                </p>
+              </div>
             ))}
           </div>
         </div>

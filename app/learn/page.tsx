@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { ArrowLeft, Sparkles, TrendingUp, Users, Target, Zap, Star, DollarSign } from "lucide-react"
+import { ArrowLeft, Sparkles, TrendingUp, Users, Target, Zap, Star, DollarSign, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function LearnPage() {
@@ -252,77 +252,266 @@ export default function LearnPage() {
 
             {/* Header */}
             <div className="text-center mb-12 sm:mb-16">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 px-2">
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-                  75+ Questions to Transform
-                </span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold text-white mb-4 sm:mb-6 px-2">
+                Why <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent font-cursive">AI Sidekick</span> Works
                 <br />
-                Your Landscaping Business
+                For Local Trade Businesses
               </h1>
-              
-              {/* Why We Created AI Sidekick */}
-              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 sm:p-6 lg:p-8 max-w-xs sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mb-6 sm:mb-8">
-                <p className="text-base sm:text-lg lg:text-xl text-gray-200 leading-relaxed">
-                  We created AI Sidekick because local business owners deserve better than generic advice. Traditional business guidance doesn't understand your specific market, competition, or challenges. Our AI learns your business context and delivers strategies tailored to your exact situation - helping you outwork and outsmart competitors in your area.
-                </p>
-              </div>
-              
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 max-w-xs sm:max-w-2xl md:max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
-                Learn how to get the best out of AI Sidekick. Real questions from real business owners. 
-                Get personalized strategies and ideas for your specific market.
-              </p>
-              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-3 sm:p-4 lg:p-6 mx-2 sm:mx-auto inline-block">
-                <p className="text-sm sm:text-base lg:text-lg text-emerald-400 font-semibold">
-                  💡 These are inspiration questions - sign up to get personalized answers for YOUR business
-                </p>
-              </div>
             </div>
 
-            {/* Question Sections - Alternating Layout */}
-            <div className="space-y-8 sm:space-y-12 lg:space-y-16">
-              {questionSections.map((section, sectionIndex) => {
-                const isLeftAligned = sectionIndex % 2 === 0
-                
-                return (
-                  <div key={sectionIndex} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center">
-                    {/* Content Section */}
-                    <div className={`${isLeftAligned ? 'lg:order-1' : 'lg:order-2'}`}>
-                      <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8">
-                        <div className="flex items-center mb-6">
-                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center mr-4 shadow-lg`}>
-                            {section.icon}
-                          </div>
-                          <h2 className="text-xl sm:text-2xl font-bold text-white">{section.title}</h2>
+            {/* Main Content - Premium SaaS Style */}
+            <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16">
+              
+              {/* Hero Content */}
+              <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 sm:p-8 lg:p-12">
+                <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
+                  
+                  {/* Main Write-up */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <div className="space-y-4">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                        The Problem with Generic Business Advice
+                      </h2>
+                      <p className="text-gray-200 text-base sm:text-lg leading-relaxed">
+                        Most business advice doesn't work for local trades. You've probably tried it — reading generic marketing blogs that tell you to "create valuable content" or "build your brand," but none of it addresses your real challenges: competing with three other landscapers in your zip code, getting calls when it's raining, or convincing homeowners to pay for quality work instead of choosing the cheapest bid.
+                      </p>
+                      <p className="text-gray-200 text-base sm:text-lg leading-relaxed">
+                        Traditional business guidance treats all businesses the same. A landscaping company in Phoenix gets the same SEO advice as a software startup in San Francisco. But your challenges are completely different. You need to rank for "landscaping near me" in your specific city, deal with seasonal demand, manage crews, and compete with contractors who undercut your prices.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                        Advanced AI Architecture Built for Local Trades
+                      </h2>
+                      <p className="text-gray-200 text-base sm:text-lg leading-relaxed">
+                        AI Sidekick leverages a sophisticated hybrid model architecture with specialized optimization for local service businesses. Our comprehensive knowledge base includes proven strategies from successful local business implementations, extensive market research, and geo-specific competitive intelligence across U.S. metropolitan areas.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                        Intelligent Context-Aware Processing
+                      </h2>
+                      <p className="text-gray-200 text-base sm:text-lg leading-relaxed">
+                        Our system employs advanced semantic search technology to create intelligent relationships between your business profile, local market conditions, and proven strategies. Every query triggers real-time analysis of your ZIP code's competitive landscape, seasonal trends, and demographic data to ensure recommendations are hyperlocal and actionable.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                        Real Results, Not Theory
+                      </h2>
+                      <p className="text-gray-200 text-base sm:text-lg leading-relaxed">
+                        Every recommendation emerges from our comprehensive knowledge base of successful local business implementations. Our system prioritizes proven strategies with documented success patterns, customer acquisition improvements, and revenue growth tactics. You receive battle-tested approaches grounded in real-world market research, not theoretical frameworks.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Technical Specs Panel */}
+                  <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-black/40 backdrop-blur-xl border border-emerald-400/30 rounded-xl p-6">
+                      <h3 className="text-lg font-bold text-emerald-400 mb-4 flex items-center">
+                        <Zap className="w-5 h-5 mr-2" />
+                        Technical Architecture
+                      </h3>
+                      <div className="space-y-4 text-sm">
+                        <div className="space-y-2">
+                          <span className="text-gray-300 block">AI Engine:</span>
+                          <span className="text-white font-medium text-xs leading-relaxed">Hybrid large-language model architecture optimized for local trades</span>
                         </div>
-                        
-                        <div className="space-y-2 sm:space-y-3">
-                          {section.questions.map((question, questionIndex) => (
-                            <div 
-                              key={questionIndex}
-                              className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 hover:bg-white/10 transition-all duration-300"
-                            >
-                              <p className="text-gray-200 leading-relaxed">
-                                "{question}"
-                              </p>
-                            </div>
-                          ))}
+                        <div className="space-y-2">
+                          <span className="text-gray-300 block">Training Intelligence:</span>
+                          <span className="text-white font-medium text-xs leading-relaxed">Comprehensive knowledge base with proven strategies from successful local business implementations, market research, and seasonal planning frameworks</span>
+                        </div>
+                        <div className="space-y-2">
+                          <span className="text-gray-300 block">Market Coverage:</span>
+                          <span className="text-white font-medium text-xs leading-relaxed">ZIP-code-level competitive intelligence across U.S. metro areas</span>
+                        </div>
+                        <div className="space-y-2">
+                          <span className="text-gray-300 block">Data Intelligence:</span>
+                          <span className="text-white font-medium text-xs leading-relaxed">Real-time market analysis with hyperlocal insights and competitive business mapping through live data integration</span>
+                        </div>
+                        <div className="space-y-2">
+                          <span className="text-gray-300 block">Privacy & Security:</span>
+                          <span className="text-white font-medium text-xs leading-relaxed">Enterprise-grade encryption (AES-256), anonymous session handling, and strict data privacy controls</span>
+                        </div>
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-gray-600/30">
+                        <p className="text-xs text-gray-400 leading-relaxed italic">
+                          Built to deliver smart, secure, and context-aware insights — without sacrificing your business's privacy or competitive edge.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-black/40 backdrop-blur-xl border border-blue-400/30 rounded-xl p-6">
+                      <h3 className="text-lg font-bold text-blue-400 mb-4 flex items-center">
+                        <Target className="w-5 h-5 mr-2" />
+                        Enterprise Features
+                      </h3>
+                      <div className="space-y-3 text-sm text-gray-200">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mr-2"></div>
+                          Real-time market intelligence
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                          Continuous model optimization
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-2"></div>
+                          Row-level security protocols
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
+                          Anonymized global learning
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Whitespace/Visual Section */}
-                    <div className={`${isLeftAligned ? 'lg:order-2' : 'lg:order-1'} hidden lg:block`}>
-                      <div className="h-full flex items-center justify-center">
-                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center">
-                          <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center shadow-xl`}>
-                            {section.icon}
-                          </div>
+
+                    <div className="bg-black/40 backdrop-blur-xl border border-purple-400/30 rounded-xl p-6">
+                      <h3 className="text-lg font-bold text-purple-400 mb-4 flex items-center">
+                        <Star className="w-5 h-5 mr-2" />
+                        Success Metrics
+                      </h3>
+                      <div className="space-y-4 text-sm">
+                        <div className="space-y-2">
+                          <div className="text-2xl font-bold text-white">5–10 hrs/week</div>
+                          <div className="text-gray-200 text-xs leading-relaxed">Save time by automating business strategy, content planning, and SEO tasks</div>
                         </div>
+                        <div className="space-y-2">
+                          <div className="text-2xl font-bold text-white">3x faster</div>
+                          <div className="text-gray-200 text-xs leading-relaxed">Create content with AI-guided prompts tuned to your services, season, and location</div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="text-2xl font-bold text-white">+40% visibility</div>
+                          <div className="text-gray-200 text-xs leading-relaxed">Boost local presence by following proven tactics modeled on top-performing businesses</div>
+                        </div>
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-purple-400/20">
+                        <p className="text-xs text-gray-400 leading-relaxed italic">
+                          These results reflect industry benchmarks and pre-launch performance modeling. Actual outcomes may vary depending on your business and market.
+                        </p>
                       </div>
                     </div>
                   </div>
-                )
-              })}
+                </div>
+              </div>
+
+              {/* Advanced Technical Details */}
+              <div className="bg-gradient-to-br from-gray-900/60 to-gray-950/60 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 sm:p-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center mb-4">
+                      <Users className="w-6 h-6 mr-3 text-emerald-400" />
+                      Enterprise-Grade Intelligence Framework
+                    </h2>
+                    <p className="text-gray-200 text-base leading-relaxed">
+                      The platform utilizes a sophisticated feedback integration system: individual user pattern recognition and anonymized global trend analysis. Your interactions are processed through Row Level Security protocols, ensuring complete data privacy while contributing to system-wide knowledge improvements through cryptographically protected pattern recognition.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center mb-4">
+                      <Globe className="w-6 h-6 mr-3 text-blue-400" />
+                      Real-Time Market Intelligence Integration
+                    </h2>
+                    <p className="text-gray-200 text-base leading-relaxed">
+                      AI Sidekick connects to live data sources including market research APIs, competitive business databases, and seasonal trend analysis to provide dynamic recommendations. When you ask about pricing strategies, the system analyzes current local market conditions, competitor positioning, and regional business patterns to deliver precision-calibrated advice.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Data Security Section */}
+              <div className="bg-gradient-to-br from-gray-900/60 to-gray-950/60 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 sm:p-8">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    Data Security and Privacy Architecture
+                  </h2>
+                  <p className="text-gray-200 text-base sm:text-lg leading-relaxed max-w-4xl mx-auto">
+                    All user data is encrypted using AES-256 standards with JWT authentication and secure HTTP-only cookie management. Business-sensitive information is never used to train external models or shared with third parties. Our learning algorithms extract strategic patterns while maintaining complete anonymization of individual business data.
+                  </p>
+                </div>
+                
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="text-center p-4 bg-black/40 rounded-xl border border-emerald-400/20">
+                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Sparkles className="w-6 h-6 text-emerald-400" />
+                    </div>
+                    <h3 className="font-semibold text-white mb-2">AES-256 Encryption</h3>
+                    <p className="text-gray-300 text-sm">Military-grade data protection</p>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-black/40 rounded-xl border border-blue-400/20">
+                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Target className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <h3 className="font-semibold text-white mb-2">Row Level Security</h3>
+                    <p className="text-gray-300 text-sm">Database-level access control</p>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-black/40 rounded-xl border border-purple-400/20">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Users className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <h3 className="font-semibold text-white mb-2">Privacy by Design</h3>
+                    <p className="text-gray-300 text-sm">No external model training</p>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-black/40 rounded-xl border border-orange-400/20">
+                    <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Globe className="w-6 h-6 text-orange-400" />
+                    </div>
+                    <h3 className="font-semibold text-white mb-2">Hashed Analytics</h3>
+                    <p className="text-gray-300 text-sm">Anonymized pattern learning</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Question Categories - Clean List Format */}
+              <div className="bg-gradient-to-br from-gray-900/60 to-gray-950/60 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 sm:p-8">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                      75+ Strategic Questions
+                    </span>
+                  </h2>
+                  <p className="text-gray-300 text-base sm:text-lg">
+                    Real questions from successful landscaping business owners - organized by business area
+                  </p>
+                  <div className="bg-emerald-500/10 border border-emerald-400/30 rounded-xl p-4 mt-6 inline-block">
+                    <p className="text-emerald-400 font-semibold flex items-center">
+                      <Sparkles className="w-5 h-5 mr-2" />
+                      Sign up to get personalized answers for YOUR specific business situation
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {questionSections.map((section, sectionIndex) => (
+                    <div key={sectionIndex} className="space-y-4">
+                      <div className="flex items-center mb-4">
+                        <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${section.color} flex items-center justify-center mr-3 shadow-lg`}>
+                          {React.cloneElement(section.icon, { className: "w-5 h-5 text-white" })}
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-bold text-white">{section.title}</h3>
+                      </div>
+                      
+                      <ul className="space-y-2">
+                        {section.questions.map((question, questionIndex) => (
+                          <li 
+                            key={questionIndex}
+                            className="text-gray-200 text-sm sm:text-base leading-relaxed pl-4 border-l-2 border-gray-600/30 hover:border-emerald-400/50 transition-colors duration-300"
+                          >
+                            {question}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Bottom CTA */}
