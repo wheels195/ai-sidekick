@@ -288,13 +288,11 @@ export default function LearnPage() {
                     {/* Content Section */}
                     <div className={`${isLeftAligned ? 'lg:order-1' : 'lg:order-2'}`}>
                       <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8">
-                        <div className="flex items-center mb-4 sm:mb-6">
-                          <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center mr-3 sm:mr-4 shadow-lg flex-shrink-0`}>
-                            <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7">
-                              {section.icon}
-                            </div>
+                        <div className="flex items-center mb-6">
+                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center mr-4 shadow-lg`}>
+                            {section.icon}
                           </div>
-                          <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white leading-tight">{section.title}</h2>
+                          <h2 className="text-xl sm:text-2xl font-bold text-white">{section.title}</h2>
                         </div>
                         
                         <div className="space-y-2 sm:space-y-3">
@@ -303,7 +301,7 @@ export default function LearnPage() {
                               key={questionIndex}
                               className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 hover:bg-white/10 transition-all duration-300"
                             >
-                              <p className="text-sm sm:text-base lg:text-lg text-gray-200 leading-relaxed">
+                              <p className="text-gray-200 leading-relaxed">
                                 "{question}"
                               </p>
                             </div>
@@ -314,12 +312,10 @@ export default function LearnPage() {
                     
                     {/* Whitespace/Visual Section */}
                     <div className={`${isLeftAligned ? 'lg:order-2' : 'lg:order-1'} hidden lg:block`}>
-                      <div className="h-full flex items-center justify-center py-8">
-                        <div className="w-24 h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 rounded-full bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center">
-                          <div className={`w-12 h-12 lg:w-16 lg:h-16 xl:w-20 xl:h-20 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center shadow-xl`}>
-                            <div className="w-6 h-6 lg:w-8 lg:h-8 xl:w-10 xl:h-10">
-                              {section.icon}
-                            </div>
+                      <div className="h-full flex items-center justify-center">
+                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center">
+                          <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center shadow-xl`}>
+                            {section.icon}
                           </div>
                         </div>
                       </div>
