@@ -421,12 +421,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 onClick={() => window.location.href = '/learn'}
                 className="bg-blue-500/20 backdrop-blur-xl border border-blue-400/30 text-white hover:bg-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg hover:shadow-blue-500/25"
               >
+                <FileText className="w-4 h-4 mr-2" />
                 How to Use <span className="font-cursive">AI Sidekick</span>
               </Button>
               <Button
                 onClick={() => window.location.href = '/learn'}
                 className="bg-emerald-500/20 backdrop-blur-xl border border-emerald-400/30 text-white hover:bg-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg hover:shadow-emerald-500/25"
               >
+                <Zap className="w-4 h-4 mr-2" />
                 What is AI
               </Button>
             </div>
