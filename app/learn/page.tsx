@@ -251,8 +251,8 @@ export default function LearnPage() {
             </Link>
 
             {/* Header */}
-            <div className="text-center mb-16">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <div className="text-center mb-12 sm:mb-16">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 px-2">
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
                   75+ Questions to Transform
                 </span>
@@ -261,47 +261,49 @@ export default function LearnPage() {
               </h1>
               
               {/* Why We Created AI Sidekick */}
-              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-6 max-w-4xl mx-auto mb-8">
-                <p className="text-lg text-gray-200 leading-relaxed">
+              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 sm:p-6 lg:p-8 max-w-xs sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mb-6 sm:mb-8">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-200 leading-relaxed">
                   We created AI Sidekick because local business owners deserve better than generic advice. Traditional business guidance doesn't understand your specific market, competition, or challenges. Our AI learns your business context and delivers strategies tailored to your exact situation - helping you outwork and outsmart competitors in your area.
                 </p>
               </div>
               
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 max-w-xs sm:max-w-2xl md:max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
                 Learn how to get the best out of AI Sidekick. Real questions from real business owners. 
                 Get personalized strategies and ideas for your specific market.
               </p>
-              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 inline-block">
-                <p className="text-emerald-400 font-semibold">
+              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-3 sm:p-4 lg:p-6 mx-2 sm:mx-auto inline-block">
+                <p className="text-sm sm:text-base lg:text-lg text-emerald-400 font-semibold">
                   💡 These are inspiration questions - sign up to get personalized answers for YOUR business
                 </p>
               </div>
             </div>
 
             {/* Question Sections - Alternating Layout */}
-            <div className="space-y-16">
+            <div className="space-y-8 sm:space-y-12 lg:space-y-16">
               {questionSections.map((section, sectionIndex) => {
                 const isLeftAligned = sectionIndex % 2 === 0
                 
                 return (
-                  <div key={sectionIndex} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                  <div key={sectionIndex} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center">
                     {/* Content Section */}
                     <div className={`${isLeftAligned ? 'lg:order-1' : 'lg:order-2'}`}>
-                      <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-8">
-                        <div className="flex items-center mb-6">
-                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center mr-4 shadow-lg`}>
-                            {section.icon}
+                      <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8">
+                        <div className="flex items-center mb-4 sm:mb-6">
+                          <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center mr-3 sm:mr-4 shadow-lg flex-shrink-0`}>
+                            <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7">
+                              {section.icon}
+                            </div>
                           </div>
-                          <h2 className="text-2xl font-bold text-white">{section.title}</h2>
+                          <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white leading-tight">{section.title}</h2>
                         </div>
                         
-                        <div className="space-y-3">
+                        <div className="space-y-2 sm:space-y-3">
                           {section.questions.map((question, questionIndex) => (
                             <div 
                               key={questionIndex}
-                              className="bg-white/5 border border-white/10 rounded-lg p-4 hover:bg-white/10 transition-all duration-300"
+                              className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 hover:bg-white/10 transition-all duration-300"
                             >
-                              <p className="text-gray-200 leading-relaxed">
+                              <p className="text-sm sm:text-base lg:text-lg text-gray-200 leading-relaxed">
                                 "{question}"
                               </p>
                             </div>
@@ -312,10 +314,12 @@ export default function LearnPage() {
                     
                     {/* Whitespace/Visual Section */}
                     <div className={`${isLeftAligned ? 'lg:order-2' : 'lg:order-1'} hidden lg:block`}>
-                      <div className="h-full flex items-center justify-center">
-                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center">
-                          <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center shadow-xl`}>
-                            {section.icon}
+                      <div className="h-full flex items-center justify-center py-8">
+                        <div className="w-24 h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 rounded-full bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center">
+                          <div className={`w-12 h-12 lg:w-16 lg:h-16 xl:w-20 xl:h-20 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center shadow-xl`}>
+                            <div className="w-6 h-6 lg:w-8 lg:h-8 xl:w-10 xl:h-10">
+                              {section.icon}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -326,20 +330,20 @@ export default function LearnPage() {
             </div>
 
             {/* Bottom CTA */}
-            <div className="text-center mt-16 bg-gradient-to-br from-gray-900/80 to-gray-950/80 border border-emerald-500/20 rounded-2xl p-12">
-              <h2 className="text-3xl font-bold text-white mb-4">
+            <div className="text-center mt-12 sm:mt-16 bg-gradient-to-br from-gray-900/80 to-gray-950/80 border border-emerald-500/20 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 mx-2 sm:mx-0">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 px-2">
                 Ready to get personalized answers for <span className="text-emerald-400">YOUR</span> business?
               </h2>
-              <p className="text-xl text-gray-300 mb-8">
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-6 sm:mb-8 px-2">
                 Start your free trial and get specific strategies for your market, competition, and business goals.
               </p>
               <Button
                 onClick={() => window.location.href = '/signup?plan=free-trial'}
                 size="lg"
-                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-lg px-12 py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-base sm:text-lg lg:text-xl px-8 sm:px-12 py-4 sm:py-6 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
               >
-                Start Free Trial - No Credit Card Required
-                <Sparkles className="ml-3 w-5 h-5" />
+                <span className="block sm:inline">Start Free Trial - No Credit Card Required</span>
+                <Sparkles className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 inline" />
               </Button>
             </div>
 
