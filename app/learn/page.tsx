@@ -6,17 +6,25 @@ import { ArrowLeft, Sparkles, TrendingUp, Users, Target, Zap, Star, DollarSign }
 import { Button } from "@/components/ui/button"
 
 export default function LearnPage() {
-  const questionCategories = [
+  // Split into 15 sections with 5 questions each for better digestibility
+  const questionSections = [
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: "Customer Acquisition & Lead Generation",
+      title: "Customer Acquisition Strategies",
       color: "from-emerald-500 to-teal-500",
       questions: [
         "Generate a 30-day plan to get 10 new high-value customers",
         "Write a referral program that gets my best customers recommending me",
         "Create a door-to-door script for neighborhoods with dead lawns",
         "How do I get commercial property management contracts?",
-        "What's the best way to approach new construction builders?",
+        "What's the best way to approach new construction builders?"
+      ]
+    },
+    {
+      icon: <Target className="w-6 h-6" />,
+      title: "Lead Generation & Conversion",
+      color: "from-blue-500 to-indigo-500",
+      questions: [
         "Write a compelling Nextdoor post that generates landscape leads",
         "Create a lead magnet offer that attracts homeowners ready to spend",
         "How do I turn one-time customers into recurring maintenance clients?",
@@ -26,14 +34,21 @@ export default function LearnPage() {
     },
     {
       icon: <DollarSign className="w-6 h-6" />,
-      title: "Revenue Growth & Premium Pricing",
-      color: "from-blue-500 to-indigo-500",
+      title: "Revenue Growth Tactics",
+      color: "from-purple-500 to-pink-500",
       questions: [
         "How do I upsell lawn care customers into full landscape design?",
         "What high-margin services should I add to double my profit?",
         "Create a proposal template that wins 70% of my bids",
         "How do I justify premium pricing to price-sensitive customers?",
-        "Design a maintenance package that maximizes monthly recurring revenue",
+        "Design a maintenance package that maximizes monthly recurring revenue"
+      ]
+    },
+    {
+      icon: <Star className="w-6 h-6" />,
+      title: "Premium Pricing Strategies",
+      color: "from-yellow-500 to-orange-500",
+      questions: [
         "What's the best way to present add-on services during estimates?",
         "How do I position myself as the premium option in my market?",
         "Create a pricing strategy that eliminates lowball competitors",
@@ -43,14 +58,21 @@ export default function LearnPage() {
     },
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Competitive Advantage & Market Domination",
-      color: "from-purple-500 to-pink-500",
+      title: "Competitive Analysis",
+      color: "from-red-500 to-pink-500",
       questions: [
         "Analyze my competitor's website - what are they doing better?",
         "Create a unique selling proposition that sets me apart completely",
         "How do I steal market share from the biggest landscaper in town?",
         "What services are my competitors NOT offering that I should?",
-        "How do I position against companies that compete on price?",
+        "How do I position against companies that compete on price?"
+      ]
+    },
+    {
+      icon: <Zap className="w-6 h-6" />,
+      title: "Market Domination",
+      color: "from-orange-500 to-red-500",
+      questions: [
         "Create a strategy to become the go-to landscaper in my zip code",
         "What makes customers choose one landscaper over another?",
         "How do I differentiate when everyone offers the same services?",
@@ -60,14 +82,21 @@ export default function LearnPage() {
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: "Scaling & Team Building",
-      color: "from-orange-500 to-red-500",
+      title: "Team Building Fundamentals",
+      color: "from-blue-500 to-teal-500",
       questions: [
         "How do I hire my first reliable crew member?",
         "What questions reveal if someone will be a dependable worker?",
         "Create a training system for new landscape employees",
         "How do I manage multiple crews without being everywhere?",
-        "What's the best way to incentivize crew performance and quality?",
+        "What's the best way to incentivize crew performance and quality?"
+      ]
+    },
+    {
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Scaling Operations",
+      color: "from-teal-500 to-cyan-500",
+      questions: [
         "How do I scale from solo operator to managing 3+ crews?",
         "Create job descriptions that attract quality landscaping talent",
         "What equipment investments will help me handle bigger jobs?",
@@ -77,14 +106,21 @@ export default function LearnPage() {
     },
     {
       icon: <Star className="w-6 h-6" />,
-      title: "Marketing & Reputation Building",
-      color: "from-yellow-500 to-orange-500",
+      title: "Marketing & Content Creation",
+      color: "from-green-500 to-emerald-500",
       questions: [
         "Write 20 social media posts showcasing my recent projects",
         "How do I get 50+ Google reviews from happy customers?",
         "Create a content calendar for year-round landscaping marketing",
         "What's the best way to showcase before/after transformations?",
-        "How do I build a reputation as the local landscaping expert?",
+        "How do I build a reputation as the local landscaping expert?"
+      ]
+    },
+    {
+      icon: <Target className="w-6 h-6" />,
+      title: "Reputation Building",
+      color: "from-emerald-500 to-teal-500",
+      questions: [
         "Create email campaigns that keep me top-of-mind with customers",
         "What local SEO strategies will help me rank #1 in my area?",
         "How do I leverage customer success stories for more business?",
@@ -94,14 +130,21 @@ export default function LearnPage() {
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Business Operations & Efficiency",
-      color: "from-teal-500 to-cyan-500",
+      title: "Operations & Efficiency",
+      color: "from-indigo-500 to-purple-500",
       questions: [
         "How do I schedule jobs to maximize efficiency and profit?",
         "Create a system to track profitability by service type",
         "What's the best way to handle difficult or demanding customers?",
         "How do I streamline estimates to close deals faster?",
-        "Design a follow-up system that ensures customer satisfaction",
+        "Design a follow-up system that ensures customer satisfaction"
+      ]
+    },
+    {
+      icon: <Star className="w-6 h-6" />,
+      title: "Business Management",
+      color: "from-purple-500 to-pink-500",
+      questions: [
         "What software tools will help me manage my growing business?",
         "How do I reduce no-shows and last-minute cancellations?",
         "Create a quality control checklist for every completed job",
@@ -111,14 +154,21 @@ export default function LearnPage() {
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: "Seasonal Strategy & Year-Round Revenue",
-      color: "from-green-500 to-emerald-500",
+      title: "Seasonal Planning",
+      color: "from-blue-500 to-indigo-500",
       questions: [
         "Plan my winter strategy to keep revenue flowing year-round",
         "How do I pre-book spring customers during slow season?",
         "What holiday services can I offer for December revenue?",
         "Create a fall cleanup marketing campaign that books solid",
-        "How do I prepare customers for spring with advance planning?",
+        "How do I prepare customers for spring with advance planning?"
+      ]
+    },
+    {
+      icon: <Zap className="w-6 h-6" />,
+      title: "Year-Round Revenue",
+      color: "from-teal-500 to-cyan-500",
+      questions: [
         "What winter services are most profitable in cold climates?",
         "Design a seasonal maintenance program customers love",
         "How do I use slow season to set up next year's growth?",
@@ -128,19 +178,14 @@ export default function LearnPage() {
     },
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Premium Service Expansion",
-      color: "from-indigo-500 to-purple-500",
+      title: "Service Expansion",
+      color: "from-orange-500 to-red-500",
       questions: [
         "Should I expand into irrigation? Pros and cons for my market",
         "How do I add hardscaping services profitably?",
         "What's the ROI on offering landscape lighting installation?",
         "Should I get into tree service or partner with someone?",
-        "How do I transition from maintenance-only to design-build?",
-        "What certifications would help me charge premium rates?",
-        "Create a strategy to become a full-service outdoor specialist",
-        "How do I evaluate new service opportunities?",
-        "What's the best way to test demand for new services?",
-        "How do I train my team on premium service delivery?"
+        "How do I transition from maintenance-only to design-build?"
       ]
     }
   ]
@@ -214,6 +259,14 @@ export default function LearnPage() {
                 <br />
                 Your Landscaping Business
               </h1>
+              
+              {/* Why We Created AI Sidekick */}
+              <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-6 max-w-4xl mx-auto mb-8">
+                <p className="text-lg text-gray-200 leading-relaxed">
+                  We created AI Sidekick because local business owners deserve better than generic advice. Traditional business guidance doesn't understand your specific market, competition, or challenges. Our AI learns your business context and delivers strategies tailored to your exact situation - helping you outwork and outsmart competitors in your area.
+                </p>
+              </div>
+              
               <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
                 Learn how to get the best out of AI Sidekick. Real questions from real business owners. 
                 Get personalized strategies and ideas for your specific market.
@@ -225,31 +278,51 @@ export default function LearnPage() {
               </div>
             </div>
 
-            {/* Question Categories */}
-            <div className="space-y-12">
-              {questionCategories.map((category, categoryIndex) => (
-                <div key={categoryIndex} className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-8">
-                  <div className="flex items-center mb-6">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mr-4 shadow-lg`}>
-                      {category.icon}
-                    </div>
-                    <h2 className="text-2xl font-bold text-white">{category.title}</h2>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {category.questions.map((question, questionIndex) => (
-                      <div 
-                        key={questionIndex}
-                        className="bg-white/5 border border-white/10 rounded-lg p-4 hover:bg-white/10 transition-all duration-300"
-                      >
-                        <p className="text-gray-200 leading-relaxed">
-                          "{question}"
-                        </p>
+            {/* Question Sections - Alternating Layout */}
+            <div className="space-y-16">
+              {questionSections.map((section, sectionIndex) => {
+                const isLeftAligned = sectionIndex % 2 === 0
+                
+                return (
+                  <div key={sectionIndex} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    {/* Content Section */}
+                    <div className={`${isLeftAligned ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-8">
+                        <div className="flex items-center mb-6">
+                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center mr-4 shadow-lg`}>
+                            {section.icon}
+                          </div>
+                          <h2 className="text-2xl font-bold text-white">{section.title}</h2>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          {section.questions.map((question, questionIndex) => (
+                            <div 
+                              key={questionIndex}
+                              className="bg-white/5 border border-white/10 rounded-lg p-4 hover:bg-white/10 transition-all duration-300"
+                            >
+                              <p className="text-gray-200 leading-relaxed">
+                                "{question}"
+                              </p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    ))}
+                    </div>
+                    
+                    {/* Whitespace/Visual Section */}
+                    <div className={`${isLeftAligned ? 'lg:order-2' : 'lg:order-1'} hidden lg:block`}>
+                      <div className="h-full flex items-center justify-center">
+                        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center">
+                          <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center shadow-xl`}>
+                            {section.icon}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             {/* Bottom CTA */}
