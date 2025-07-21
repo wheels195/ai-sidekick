@@ -415,17 +415,20 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </Button>
             </div>
             
-            {/* Learn Link */}
-            <div className="text-center mt-8">
-              <a 
-                href="/learn"
-                className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-all duration-300 hover:scale-105 text-lg lg:text-xl underline underline-offset-4 decoration-blue-400/50 hover:decoration-blue-300 cursor-pointer"
+            {/* Glass Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+              <Button
+                onClick={() => window.location.href = '/learn'}
+                className="bg-white/5 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg"
               >
-                Learn how to get the best out of <span className="font-cursive text-xl lg:text-2xl font-bold">AI Sidekick</span> →
-              </a>
-              <p className="text-gray-400 text-sm lg:text-base mt-2">
-                Real questions from real business owners. Get personalized strategies for your specific market.
-              </p>
+                How to Use AI Sidekick
+              </Button>
+              <Button
+                onClick={() => window.location.href = '/learn'}
+                className="bg-white/5 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg"
+              >
+                What is AI
+              </Button>
             </div>
           </div>
 
