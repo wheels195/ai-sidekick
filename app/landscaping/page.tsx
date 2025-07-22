@@ -1246,18 +1246,20 @@ export default function LandscapingChat() {
         /* Desktop centered layout */
         @media (min-width: 641px) {
           .desktop-chat-container {
+            width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            padding-left: 32px;
-            padding-right: 32px;
+            padding-left: 16px;
+            padding-right: 16px;
           }
         }
         /* High-resolution desktop */
         @media (min-width: 1200px) {
           .desktop-chat-container {
+            width: 100%;
             max-width: 900px;
-            padding-left: 48px;
-            padding-right: 48px;
+            padding-left: 16px;
+            padding-right: 16px;
           }
         }
       `}</style>
