@@ -1231,7 +1231,7 @@ export default function LandscapingChat() {
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: 60px !important;
+            padding-bottom: 160px !important;
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -1517,13 +1517,12 @@ export default function LandscapingChat() {
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container flex-1 overflow-y-auto px-4 py-6 pb-8 space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
+                className={`messages-scroll-container flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
                 style={{
                   // Use instant scroll on mobile for better performance, smooth on desktop
                   scrollBehavior: isMobile ? 'auto' : 'smooth',
-                  // Full scrollability - calculate height minus header and input
-                  height: 'calc(100vh - 140px)',
-                  overflowY: 'auto'
+                  // Add sufficient bottom padding so content is visible above input
+                  paddingBottom: '140px'
                 }}
               >
                 <div className="max-w-[700px] mx-auto">
@@ -1717,7 +1716,7 @@ export default function LandscapingChat() {
 
               {/* Scroll to Bottom Button - ChatGPT Style */}
               {showScrollToBottom && (
-                <div className="absolute bottom-20 right-4 sm:right-6 z-40">
+                <div className="absolute bottom-24 right-4 sm:right-6 z-40">
                   <button
                     onClick={() => {
                       scrollToBottom()
@@ -1731,8 +1730,8 @@ export default function LandscapingChat() {
                 </div>
               )}
 
-              {/* ChatGPT-style Input Bar - Refined */}
-              <div className="sticky bottom-0 left-0 right-0 bg-inherit border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-10">
+              {/* ChatGPT-style Input Bar - Always Visible */}
+              <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom">
                 <form onSubmit={handleSubmit} className="max-w-[700px] mx-auto">
                   <div className="relative bg-[#1f1f1f] rounded-xl border border-transparent hover:border-emerald-500/20 focus-within:border-emerald-500/30 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
