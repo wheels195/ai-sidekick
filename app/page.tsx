@@ -1250,12 +1250,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     </div>
                   </div>
 
-                  {/* Welcome Message */}
-                  <div className="p-4 h-[340px] overflow-visible">
+                  {/* Welcome Message - Responsive */}
+                  <div className="p-2 sm:p-4 min-h-[200px] sm:h-[340px] overflow-visible">
                     {/* Enhanced Chat Bubble with Character Inside */}
                     <div className="relative">
-                      {/* Clean Chat Bubble */}
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-6 py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
+                      {/* Clean Chat Bubble - Responsive padding */}
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-4 py-4 sm:px-6 sm:py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
                         
                         {/* Character - Hidden on mobile, shown on desktop */}
                         <div className="hidden lg:block absolute -left-8 top-0 z-10">
@@ -1275,41 +1275,35 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           </div>
                         </div>
                         
-                        {/* Text content - responsive margin */}
+                        {/* Text content - responsive margin and sizing */}
                         <div className="ml-0 lg:ml-48">
-                        <div className="space-y-3 text-sm">
-                          <p className="text-base">
-                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.
+                        <div className="space-y-2 sm:space-y-3">
+                          <p className="text-base sm:text-lg">
+                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg sm:text-xl">Dirt.i</span>. Your strategic business sidekick.
                           </p>
                           
-                          <p className="text-gray-200 text-sm">
+                          <p className="text-gray-200 text-sm sm:text-base">
                             Personalized to help you with:
                           </p>
                           
-                          <div className="space-y-1.5 ml-3">
+                          {/* Simplified list for mobile */}
+                          <div className="space-y-1 sm:space-y-1.5 ml-2 sm:ml-3">
                             <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Marketing ideas & content creation</span>
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
+                              <span className="text-white text-sm sm:text-base">Marketing & content creation</span>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Upselling strategies</span>
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
+                              <span className="text-white text-sm sm:text-base">Pricing & seasonal strategies</span>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Smarter pricing & seasonal trends</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Custom business planning</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Scaling operations</span>
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
+                              <span className="text-white text-sm sm:text-base">Business growth planning</span>
                             </div>
                           </div>
                           
-                          <div className="bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
+                          {/* Pro tip - hidden on mobile to save space */}
+                          <div className="hidden sm:block bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
                             <div className="flex items-start space-x-2">
                               <span className="text-emerald-300 text-base">💡</span>
                               <div>
