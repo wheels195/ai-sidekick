@@ -470,8 +470,8 @@ export default function LandscapingChat() {
   } | null>(null)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
-  const [showWelcomeHeader, setShowWelcomeHeader] = useState(true)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(true)
+  const [hasShownWelcome, setHasShownWelcome] = useState(false)
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [reactions, setReactions] = useState<Record<string, string>>({})
@@ -655,9 +655,10 @@ export default function LandscapingChat() {
           setTokensUsedTrial(data.user.tokensUsedTrial || 0)
           setTrialTokenLimit(data.user.trialTokenLimit || 250000)
           
-          // Don't add initial message - we'll use the welcome header instead
+          // Set up first-time user state
           setMessages([])
           setIsFirstTimeUser(true)
+          setHasShownWelcome(false)
         } else if (response.status === 401) {
           // User not authenticated - use mock test data for development
           console.log('User not authenticated, loading mock test user for development')
@@ -677,9 +678,10 @@ export default function LandscapingChat() {
           }
           setUser(mockUserProfile)
           
-          // Don't add initial message - we'll use the welcome header instead
+          // Set up first-time user state
           setMessages([])
           setIsFirstTimeUser(true)
+          setHasShownWelcome(false)
         }
       } catch (error) {
         console.error('Failed to fetch user:', error)
@@ -699,13 +701,52 @@ export default function LandscapingChat() {
         }
         setUser(mockUserProfile)
         
-        // Don't add initial message - we'll use the welcome header instead
+        // Set up first-time user state
         setMessages([])
         setIsFirstTimeUser(true)
+        setHasShownWelcome(false)
       }
     }
     fetchUser()
   }, [router])
+
+  // Add welcome message for first-time users
+  useEffect(() => {
+    if (user && isFirstTimeUser && !hasShownWelcome && messages.length === 0) {
+      const displayName = user.firstName || 'there'
+      const businessName = user.businessName || 'your business'
+      
+      const welcomeMessage: Message = {
+        id: 'welcome-' + Date.now().toString(),
+        role: 'assistant',
+        content: `Hi ${displayName}! 👋
+
+I'm **Dirt.i**, your AI Sidekick for growing **${businessName}**.
+
+I can help you with:
+• Marketing ideas & content creation
+• Upselling strategies  
+• Smarter pricing & seasonal trends
+• Custom business planning
+• Scaling operations
+
+💡 Try asking something like:
+→ "How do I upsell spring cleanups?"
+→ "Generate a plan to get 10 new customers this month"`,
+        timestamp: new Date()
+      }
+      
+      setMessages([welcomeMessage])
+      setHasShownWelcome(true)
+      
+      // Focus the input after a short delay
+      setTimeout(() => {
+        if (textareaRef.current) {
+          textareaRef.current.focus()
+        }
+      }, 500)
+    }
+  }, [user, isFirstTimeUser, hasShownWelcome, messages.length, textareaRef])
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -797,8 +838,8 @@ export default function LandscapingChat() {
     setMessages([])
     setCurrentConversationId(null)
     setShowSidebar(false)
-    setShowWelcomeHeader(true)
-    setIsFirstTimeUser(false) // Subsequent conversations show shorter greeting
+    setIsFirstTimeUser(false) // Subsequent conversations don't show welcome message
+    setHasShownWelcome(true) // Prevent welcome message from showing again
   }
 
   // Convert files to base64 for API transmission
@@ -912,9 +953,8 @@ export default function LandscapingChat() {
     // Clear uploaded files after sending
     setUploadedFiles([])
     
-    // Hide welcome header when user sends first message
-    if (showWelcomeHeader) {
-      setShowWelcomeHeader(false)
+    // Mark as no longer first time user when sending first message
+    if (isFirstTimeUser) {
       setIsFirstTimeUser(false)
     }
 
@@ -1463,10 +1503,6 @@ export default function LandscapingChat() {
           <div className="flex-1 p-2 sm:p-4 lg:p-6 overflow-hidden">
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col overflow-hidden">
             <CardContent className="p-0 flex flex-col h-full overflow-hidden">
-              {/* Welcome Header - Outside Messages */}
-              {showWelcomeHeader && (
-                <WelcomeHeader user={user} isFirstTime={isFirstTimeUser} />
-              )}
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
