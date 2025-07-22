@@ -1269,7 +1269,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             
                             {/* Character image */}
                             <img 
-                              src="/character.png?v=2" 
+                              src="/character.png?v=3" 
                               alt="Dirt.i character"
                               className="w-32 h-32 object-contain relative z-10"
                               style={{ 
