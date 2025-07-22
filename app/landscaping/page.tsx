@@ -12,8 +12,6 @@ import {
   Leaf,
   TrendingUp,
   MessageSquare,
-  User,
-  Bot,
   Upload,
   FileText,
   ImageIcon,
@@ -1531,37 +1529,22 @@ export default function LandscapingChat() {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`group flex items-start space-x-2 sm:space-x-4 ${
-                      message.role === "user" ? "flex-row-reverse space-x-reverse" : ""
+                    className={`group mb-4 ${
+                      message.role === "user" ? "flex justify-end" : "flex justify-start"
                     }`}
                   >
-                    {/* Avatar */}
-                    <div
-                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0 ${
-                        message.role === "user"
-                          ? "bg-gradient-to-br from-blue-500 to-indigo-600"
-                          : "bg-gradient-to-br from-emerald-400 to-teal-500"
-                      }`}
-                    >
-                      {message.role === "user" ? (
-                        <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      ) : (
-                        <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      )}
-                    </div>
-
                     {/* Message Content */}
-                    <div className={`flex-1 min-w-0 ${message.role === "user" ? "text-right" : "text-left"}`}>
+                    <div className={`max-w-[80%] ${
+                      message.role === "user" ? "" : ""
+                    }`}>
                       <div
-                        className={`transition-all duration-200 ${
+                        className={`px-4 py-3 rounded-lg transition-all duration-200 ${
                           message.role === "user"
-                            ? "px-4 py-3 rounded-lg bg-blue-600 text-white inline-block max-w-2xl ml-auto"
-                            : "px-4 py-3 rounded-lg bg-[#1a1a1a] text-gray-100 max-w-[700px] align-self-flex-start ml-0"
+                            ? "bg-blue-600 text-white max-w-2xl"
+                            : "bg-[#1a1a1a] text-gray-100 max-w-[700px]"
                         }`}
                         style={{
-                          textAlign: message.role === "assistant" ? "left" : undefined,
-                          alignSelf: message.role === "assistant" ? "flex-start" : undefined,
-                          marginLeft: message.role === "assistant" ? "0" : undefined
+                          textAlign: "left"
                         }}
                       >
                         {message.role === "assistant" ? (
@@ -1642,11 +1625,8 @@ export default function LandscapingChat() {
 
                 {/* Web Search Indicator */}
                 {isSearching && (
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-2xl rounded-bl-md p-4 shadow-lg">
+                  <div className="flex justify-start mb-4">
+                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-lg px-4 py-3 max-w-[80%]">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
@@ -1661,11 +1641,8 @@ export default function LandscapingChat() {
 
                 {/* Loading Indicator - hide when AI starts generating text */}
                 {isLoading && !isSearching && !messages[messages.length - 1]?.content && (
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
-                      <Bot className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl rounded-bl-md p-4 shadow-lg">
+                  <div className="flex justify-start mb-4">
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-4 py-3 max-w-[80%]">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
