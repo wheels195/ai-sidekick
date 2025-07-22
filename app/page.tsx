@@ -1262,25 +1262,36 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                            }}>
                         
                         {/* Character positioned inside bubble */}
-                        <div className="absolute -left-2 bottom-2 z-10">
+                        <div className="absolute -left-2 bottom-6 z-10">
                           <div className="relative">
-                            {/* Character's ground shadow/anchor */}
-                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-4 bg-black/20 rounded-full blur-sm opacity-60"></div>
+                            {/* Enhanced ground shadow/anchor */}
+                            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-5 bg-gradient-to-r from-transparent via-black/15 to-transparent rounded-full blur-md opacity-40"></div>
+                            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-black/25 rounded-full blur-sm opacity-60"></div>
                             
-                            {/* Character image */}
+                            {/* Character image - slightly larger and better positioned */}
                             <img 
                               src="/character.png?v=3" 
                               alt="Dirt.i character"
-                              className="w-32 h-32 object-contain relative z-10"
+                              className="w-36 h-36 object-contain relative z-10"
                               style={{ 
-                                filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.4)) drop-shadow(0 2px 6px rgba(0,0,0,0.3))'
+                                filter: 'drop-shadow(0 8px 20px rgba(0,0,0,0.35)) drop-shadow(0 3px 8px rgba(0,0,0,0.25))'
                               }}
                             />
                           </div>
                         </div>
                         
+                        {/* Speech tail pointing from character to text */}
+                        <div className="absolute left-28 top-8 z-5">
+                          <svg width="20" height="12" viewBox="0 0 20 12" className="text-white/20">
+                            <path d="M2 8 C6 2, 14 2, 18 8" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.3"/>
+                          </svg>
+                        </div>
+                        
+                        {/* Gradient floor effect */}
+                        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-black/5 to-transparent rounded-b-3xl"></div>
+                        
                         {/* Text content with left margin for character */}
-                        <div className="ml-28">
+                        <div className="ml-32">
                         <div className="space-y-3 text-sm">
                           <p className="text-base">
                             Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.
