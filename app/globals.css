@@ -4,6 +4,9 @@
 
 body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
 }
 
 @layer utilities {
@@ -13,6 +16,31 @@ body {
   
   .font-cursive {
     font-family: var(--font-cursive);
+  }
+  
+  /* ChatGPT-style typography */
+  .typography-body {
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+  
+  .typography-heading {
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+  
+  .typography-heading-bold {
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+  
+  .typography-chat {
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
   }
   
   /* Mobile optimization utilities */
@@ -81,7 +109,7 @@ body {
     scrollbar-width: none;
   }
 
-  /* Markdown content styling - force override */
+  /* Markdown content styling - ChatGPT style */
   .markdown-content h1 {
     font-size: 1.5rem !important;
     font-weight: 700 !important;
@@ -90,6 +118,8 @@ body {
     margin-top: 1.5rem !important;
     border-bottom: 1px solid rgba(110, 231, 183, 0.3) !important;
     padding-bottom: 0.5rem !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.02em !important;
   }
   
   .markdown-content h1:first-child {
@@ -102,6 +132,8 @@ body {
     color: rgb(110 231 183) !important;
     margin-bottom: 0.75rem !important;
     margin-top: 1.25rem !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.02em !important;
   }
   
   .markdown-content h2:first-child {
@@ -110,10 +142,12 @@ body {
   
   .markdown-content h3 {
     font-size: 1.125rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     color: rgb(110 231 183) !important;
     margin-bottom: 0.5rem !important;
     margin-top: 1rem !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.02em !important;
   }
   
   .markdown-content h3:first-child {
@@ -122,8 +156,10 @@ body {
   
   .markdown-content p {
     color: rgb(229 231 235) !important;
-    line-height: 1.625 !important;
+    line-height: 1.7 !important;
     margin-bottom: 0.75rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.005em !important;
   }
   
   .markdown-content p:last-child {

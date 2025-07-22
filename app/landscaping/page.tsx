@@ -719,7 +719,7 @@ export default function LandscapingChat() {
       const welcomeMessage: Message = {
         id: 'welcome-' + Date.now().toString(),
         role: 'assistant',
-        content: `Hi ${displayName}! I'm <span class="font-cursive text-emerald-400">**Dirt.i**</span>, your business AI sidekick. How can I help you today?`,
+        content: `<span class="text-white">Hi ${displayName}! I'm </span><span class="font-cursive text-emerald-400 font-semibold">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`,
         timestamp: new Date()
       }
       
@@ -1262,11 +1262,11 @@ export default function LandscapingChat() {
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white font-cursive">Dirt.i</h1>
-                <p className="text-xs sm:text-sm text-gray-300">Your Landscaping AI Sidekick</p>
+                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-cursive">Dirt.i</h1>
+                <p className="text-xs sm:text-sm text-gray-300 typography-body">Your Landscaping AI Sidekick</p>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
+                <h1 className="text-sm typography-heading-bold text-white font-cursive">Dirt.i</h1>
               </div>
             </div>
 
@@ -1324,7 +1324,7 @@ export default function LandscapingChat() {
                     <div className="absolute right-0 top-full mt-2 w-64 sm:w-56 bg-gray-800/95 backdrop-blur-xl border border-gray-600/30 rounded-lg shadow-2xl z-50">
                       {/* User Info Header */}
                       <div className="p-4 border-b border-gray-600/30">
-                        <p className="text-sm text-white font-medium truncate">{user?.businessName || 'Test User Business'}</p>
+                        <p className="text-sm text-white typography-heading truncate">{user?.businessName || 'Test User Business'}</p>
                         <p className="text-xs text-gray-400 truncate">{user?.email || 'test@example.com'}</p>
                         
                         {/* Mobile Token Usage */}
@@ -1415,7 +1415,7 @@ export default function LandscapingChat() {
                 <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
                   <History className="w-4 h-4 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-white">Chat History</h2>
+                <h2 className="text-lg typography-heading-bold text-white">Chat History</h2>
               </div>
               <Button
                 variant="ghost"
@@ -1523,13 +1523,13 @@ export default function LandscapingChat() {
                       >
                         {message.role === "assistant" ? (
                           <div 
-                            className="text-white"
+                            className="text-white typography-chat"
                             dangerouslySetInnerHTML={{ 
                               __html: convertMarkdownToHtml(message.content) 
                             }}
                           />
                         ) : (
-                          <p className="text-base leading-relaxed whitespace-pre-wrap text-white">{message.content}</p>
+                          <p className="text-white typography-chat whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
                       
