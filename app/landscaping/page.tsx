@@ -719,7 +719,7 @@ export default function LandscapingChat() {
       const welcomeMessage: Message = {
         id: 'welcome-' + Date.now().toString(),
         role: 'assistant',
-        content: `<span class="text-white">Hi ${displayName}! I'm </span><span class="font-cursive text-emerald-400 font-semibold">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`,
+        content: `<span class="text-white">Hi ${displayName}! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`,
         timestamp: new Date()
       }
       
