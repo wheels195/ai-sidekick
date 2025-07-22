@@ -1251,21 +1251,36 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
 
                   {/* Welcome Message */}
-                  <div className="p-4 h-[340px] overflow-hidden">
-                    {/* Character and Chat Bubble */}
-                    <div className="flex items-start space-x-3 mb-3">
-                      {/* Character Image */}
-                      <div className="flex-shrink-0">
-                        <img 
-                          src="/character.png?v=2" 
-                          alt="Dirt.i character"
-                          className="w-32 h-32 object-contain"
-                          style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.4))' }}
-                        />
-                      </div>
-                      
-                      {/* Chat Bubble */}
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-4 border border-emerald-500/30 shadow-lg flex-1">
+                  <div className="p-4 h-[340px] overflow-visible">
+                    {/* Enhanced Chat Bubble with Character Inside */}
+                    <div className="relative">
+                      {/* Chat Bubble with softer styling */}
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-3xl px-6 py-6 border border-emerald-500/30 shadow-2xl relative overflow-visible"
+                           style={{ 
+                             boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px rgba(16,185,129,0.2)',
+                             background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%)'
+                           }}>
+                        
+                        {/* Character positioned inside bubble */}
+                        <div className="absolute -left-2 bottom-2 z-10">
+                          <div className="relative">
+                            {/* Character's ground shadow/anchor */}
+                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-4 bg-black/20 rounded-full blur-sm opacity-60"></div>
+                            
+                            {/* Character image */}
+                            <img 
+                              src="/character.png?v=2" 
+                              alt="Dirt.i character"
+                              className="w-32 h-32 object-contain relative z-10"
+                              style={{ 
+                                filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.4)) drop-shadow(0 2px 6px rgba(0,0,0,0.3))'
+                              }}
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Text content with left margin for character */}
+                        <div className="ml-28">
                         <div className="space-y-3 text-sm">
                           <p className="text-base">
                             Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.
@@ -1307,6 +1322,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               </div>
                             </div>
                           </div>
+                        </div>
                         </div>
                       </div>
                     </div>
