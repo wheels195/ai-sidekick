@@ -1494,8 +1494,8 @@ export default function LandscapingChat() {
         {/* Desktop Centered Container */}
         <div className="desktop-chat-container flex-1 flex flex-col min-h-0">
           {/* Chat Messages Container - Responsive Design */}
-          <div className="flex-1 p-2 sm:p-4 lg:p-6 min-h-0">
-            <div className="backdrop-blur-2xl bg-gray-800/40 border border-gray-600/30 rounded-lg shadow-2xl h-full flex flex-col">
+          <div className="flex-1 min-h-0">
+            <div className="h-full flex flex-col">
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
@@ -1532,21 +1532,21 @@ export default function LandscapingChat() {
                     {/* Message Content */}
                     <div className={`flex-1 min-w-0 ${message.role === "user" ? "text-right" : ""}`}>
                       <div
-                        className={`inline-block p-4 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl ${
+                        className={`p-3 rounded-md transition-all duration-200 ${
                           message.role === "user"
-                            ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-br-md"
-                            : "bg-white/10 backdrop-blur-xl border border-white/20 rounded-bl-md hover:bg-white/15"
+                            ? "bg-blue-600 text-white inline-block max-w-lg ml-auto"
+                            : "bg-gray-800/60 text-gray-100 w-full"
                         }`}
                       >
                         {message.role === "assistant" ? (
                           <div 
-                            className="text-white typography-chat"
+                            className="text-gray-100 typography-chat leading-relaxed"
                             dangerouslySetInnerHTML={{ 
                               __html: convertMarkdownToHtml(message.content) 
                             }}
                           />
                         ) : (
-                          <p className="text-white typography-chat whitespace-pre-wrap">{message.content}</p>
+                          <p className="text-white typography-chat whitespace-pre-wrap leading-relaxed">{message.content}</p>
                         )}
                       </div>
                       
