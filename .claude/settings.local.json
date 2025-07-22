@@ -36,7 +36,8 @@
       "Bash(ss:*)",
       "Bash(killall:*)",
       "Bash(PORT=3001 npm run dev)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(PORT=8080 npm run dev)"
     ],
     "deny": []
   }

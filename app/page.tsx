@@ -1254,44 +1254,31 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   <div className="p-4 h-[340px] overflow-visible">
                     {/* Enhanced Chat Bubble with Character Inside */}
                     <div className="relative">
-                      {/* Chat Bubble with softer styling */}
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-3xl px-6 py-6 border border-emerald-500/30 shadow-2xl relative overflow-visible"
-                           style={{ 
-                             boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px rgba(16,185,129,0.2)',
-                             background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%)'
-                           }}>
+                      {/* Clean Chat Bubble */}
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-6 py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
                         
-                        {/* Character positioned inside bubble - MUCH more dramatic */}
-                        <div className="absolute -left-4 bottom-4 z-10">
+                        {/* Character - Aligned with first text line */}
+                        <div className="absolute -left-8 top-0 z-10">
                           <div className="relative">
-                            {/* VISIBLE ground shadow/anchor */}
-                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-8 bg-gradient-to-r from-transparent via-black/40 to-transparent rounded-full blur-lg opacity-80"></div>
-                            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-18 h-4 bg-black/50 rounded-full blur-md opacity-70"></div>
+                            {/* Ground shadow under his boots */}
+                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80"></div>
                             
-                            {/* Character image - MUCH larger and prominent */}
+                            {/* Character - Much larger */}
                             <img 
                               src="/character.png?v=4" 
                               alt="Dirt.i character"
-                              className="w-40 h-40 object-contain relative z-10"
+                              className="w-72 h-72 object-contain relative z-10"
                               style={{ 
-                                filter: 'drop-shadow(0 12px 30px rgba(0,0,0,0.5)) drop-shadow(0 6px 12px rgba(0,0,0,0.3))'
+                                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
                               }}
                             />
                           </div>
                         </div>
                         
-                        {/* VISIBLE speech tail */}
-                        <div className="absolute left-32 top-6 z-5">
-                          <svg width="30" height="16" viewBox="0 0 30 16" className="text-emerald-300/60">
-                            <path d="M4 12 C8 4, 20 4, 26 10" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.7"/>
-                          </svg>
-                        </div>
                         
-                        {/* VISIBLE gradient floor effect */}
-                        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/20 to-transparent rounded-b-3xl"></div>
                         
-                        {/* Text content with left margin for character */}
-                        <div className="ml-36">
+                        {/* Text content with margin for bigger character */}
+                        <div className="ml-48">
                         <div className="space-y-3 text-sm">
                           <p className="text-base">
                             Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.

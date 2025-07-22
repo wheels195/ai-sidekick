@@ -1187,8 +1187,46 @@ export default function LandscapingChat() {
         .font-cursive {
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
         }
+        /* Mobile keyboard handling and safe areas */
+        @media (max-width: 640px) {
+          .mobile-chat-container {
+            height: 100dvh; /* Dynamic viewport height */
+            height: 100vh;
+          }
+          .safe-bottom {
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
+          }
+          /* Ensure input stays visible when keyboard opens */
+          .mobile-input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 60;
+          }
+          .mobile-messages-container {
+            padding-bottom: 120px; /* Space for fixed input */
+          }
+        }
+        /* Desktop centered layout */
+        @media (min-width: 641px) {
+          .desktop-chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 32px;
+            padding-right: 32px;
+          }
+        }
+        /* High-resolution desktop */
+        @media (min-width: 1200px) {
+          .desktop-chat-container {
+            max-width: 900px;
+            padding-left: 48px;
+            padding-right: 48px;
+          }
+        }
       `}</style>
-      <div className="h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
+      <div className="mobile-chat-container h-screen bg-gradient-to-br from-black via-gray-950 to-black relative flex flex-col overflow-hidden">
 
       {/* Fixed Header - Your Original Design */}
       <header className="flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl relative z-50">
@@ -1433,20 +1471,22 @@ export default function LandscapingChat() {
         </div>
       )}
 
-      {/* Main Chat Area - Full Height with Internal Scroll */}
+      {/* Main Chat Area - ChatGPT-like Layout */}
       <div className="flex-1 flex flex-col relative z-40 overflow-hidden">
-        {/* Chat Messages Container - Your Original Card Design */}
-        <div className="flex-1 p-2 sm:p-4 lg:p-6 overflow-hidden">
-          <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col overflow-hidden">
+        {/* Desktop Centered Container */}
+        <div className="desktop-chat-container flex-1 flex flex-col">
+          {/* Chat Messages Container - Responsive Design */}
+          <div className="flex-1 p-2 sm:p-4 lg:p-6 overflow-hidden">
+            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col overflow-hidden">
             <CardContent className="p-0 flex flex-col h-full overflow-hidden">
               {/* Welcome Header - Outside Messages */}
               {showWelcomeHeader && (
                 <WelcomeHeader user={user} isFirstTime={isFirstTimeUser} />
               )}
               
-              {/* Messages Area - Internal Scroll */}
+              {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20" 
+                className={`messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-messages-container' : ''}`}
                 style={{
                   scrollBehavior: 'smooth'
                 }}
@@ -1633,8 +1673,8 @@ export default function LandscapingChat() {
                 </div>
               )}
 
-              {/* Enhanced Input Area with Landscaping Theme */}
-              <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0">
+              {/* Enhanced Input Area with Mobile Keyboard Optimization */}
+              <div className={`px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0 safe-bottom ${isMobile ? 'mobile-input-area bg-gray-800/95 backdrop-blur-xl' : ''}`}>
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative bg-gray-900/50 backdrop-blur-xl rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300">
                     <div className="overflow-hidden">
@@ -1991,6 +2031,8 @@ export default function LandscapingChat() {
           </div>
         </div>
       )}
+        </div>
+      </div>
       </div>
     </>
   )
