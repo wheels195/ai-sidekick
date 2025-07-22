@@ -1207,8 +1207,17 @@ export default function LandscapingChat() {
           .safe-bottom {
             padding-bottom: max(16px, env(safe-area-inset-bottom));
           }
-          .mobile-messages-container {
-            padding-bottom: 20px; /* Reduced padding */
+          /* Ensure messages don't scroll under sticky input */
+          .messages-scroll-container {
+            padding-bottom: 60px !important;
+          }
+          /* Handle keyboard visibility on mobile */
+          @supports (-webkit-touch-callout: none) {
+            .sticky-input-area {
+              position: -webkit-sticky;
+              position: sticky;
+              bottom: env(keyboard-inset-height, 0px);
+            }
           }
         }
         /* Desktop centered layout */
@@ -1485,7 +1494,7 @@ export default function LandscapingChat() {
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20"
+                className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20"
                 style={{
                   scrollBehavior: 'smooth'
                 }}
@@ -1672,8 +1681,8 @@ export default function LandscapingChat() {
                 </div>
               )}
 
-              {/* Enhanced Input Area with Mobile Keyboard Optimization */}
-              <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0 safe-bottom">
+              {/* Enhanced Input Area with Mobile Keyboard Optimization - Sticky at Bottom */}
+              <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0 safe-bottom z-50 sticky-input-area">
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative bg-gray-900/50 backdrop-blur-xl rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300">
                     <div className="overflow-hidden">
