@@ -2033,7 +2033,6 @@ export default function LandscapingChat() {
       )}
         </div>
       </div>
-      </div>
     </>
   )
 }
