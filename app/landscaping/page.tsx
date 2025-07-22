@@ -438,29 +438,6 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
           </div>
         </div>
         
-        {/* Enhanced business context - Desktop only */}
-        {showBusinessContext && (
-          <div className="hidden sm:block bg-emerald-900/20 rounded-xl p-4 border border-emerald-400/30">
-            <p className="text-lg text-white leading-relaxed">
-              📍 I see you're based in <span className="text-emerald-200 font-semibold">{location || 'your area'}</span>
-              {zipCode && <span className="text-emerald-200 font-semibold"> ({zipCode})</span>}
-              {teamSize && <span> with a <span className="text-emerald-200 font-semibold italic">{teamSize}-person team</span></span>}
-              {services && services.length > 0 && (
-                <span> offering <span className="text-emerald-200 font-semibold">
-                  {services.length <= 4 
-                    ? services.join(', ') 
-                    : `${services.slice(0, 4).join(', ')}, and more`
-                  }
-                </span></span>
-              )}. That gives me everything I need to tailor insights to your business goals.
-            </p>
-          </div>
-        )}
-        
-        {/* Enhanced call to action - Mobile optimized */}
-        <p className="text-emerald-300 font-normal text-sm sm:text-xl mt-2 sm:mt-4">
-          Ready to increase your revenue this month? → <span className="text-gray-400 text-xs sm:text-lg italic block sm:inline">(Try "How do I upsell my existing customers?" or "Generate a plan to get me 10 new customers in 30 days")</span>
-        </p>
       </div>
     </div>
   )
