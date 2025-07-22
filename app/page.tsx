@@ -793,8 +793,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   key={index}
                   className="flex items-start space-x-6 group hover:scale-105 transition-all duration-300"
                 >
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl flex items-center justify-center backdrop-blur-xl border border-white/10 group-hover:shadow-blue-500/20 transition-all duration-300">
-                    <feature.icon className="w-7 h-7 text-blue-400" />
+                  <div className="w-16 h-16 sm:w-18 sm:h-18 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl flex items-center justify-center backdrop-blur-xl border border-white/10 group-hover:shadow-blue-500/20 transition-all duration-300 shadow-lg">
+                    <feature.icon className="w-8 h-8 sm:w-9 sm:h-9 text-blue-400 stroke-2" />
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl lg:text-2xl font-medium text-white mb-3">{feature.title}</h3>
