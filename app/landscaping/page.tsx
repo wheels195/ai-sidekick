@@ -12,6 +12,7 @@ import {
   Leaf,
   TrendingUp,
   MessageSquare,
+  User,
   Upload,
   FileText,
   ImageIcon,
