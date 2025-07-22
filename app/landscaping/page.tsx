@@ -500,6 +500,7 @@ export default function LandscapingChat() {
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
   const [isTyping, setIsTyping] = useState(true)
   const [isInputFocused, setIsInputFocused] = useState(false)
+  const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   
   // Auto-resize textarea hook
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
@@ -753,6 +754,23 @@ export default function LandscapingChat() {
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [showUserMenu])
+
+  // Scroll detection for scroll-to-bottom button
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const scrollContainer = document.querySelector('.messages-scroll-container')
+      if (!scrollContainer) return
+      
+      const handleScroll = () => {
+        const { scrollTop, scrollHeight, clientHeight } = scrollContainer
+        const isNearBottom = scrollHeight - scrollTop - clientHeight < 100
+        setShowScrollToBottom(!isNearBottom && messages.length > 1)
+      }
+      
+      scrollContainer.addEventListener('scroll', handleScroll)
+      return () => scrollContainer.removeEventListener('scroll', handleScroll)
+    }
+  }, [messages.length])
 
   // Auto-save conversation when messages change
   useEffect(() => {
@@ -1499,7 +1517,7 @@ export default function LandscapingChat() {
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
+                className={`messages-scroll-container flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-8 sm:pb-12 space-y-6 sm:space-y-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
                 style={{
                   // Use instant scroll on mobile for better performance, smooth on desktop
                   scrollBehavior: isMobile ? 'auto' : 'smooth',
@@ -1532,15 +1550,15 @@ export default function LandscapingChat() {
                     {/* Message Content */}
                     <div className={`flex-1 min-w-0 ${message.role === "user" ? "text-right" : ""}`}>
                       <div
-                        className={`p-3 rounded-md transition-all duration-200 ${
+                        className={`transition-all duration-200 ${
                           message.role === "user"
-                            ? "bg-blue-600 text-white inline-block max-w-lg ml-auto"
-                            : "bg-gray-800/60 text-gray-100 w-full"
+                            ? "px-4 py-3 rounded-lg bg-blue-600 text-white inline-block max-w-2xl ml-auto"
+                            : "px-4 py-3 rounded-lg bg-[#1a1a1a] text-gray-100 max-w-4xl"
                         }`}
                       >
                         {message.role === "assistant" ? (
                           <div 
-                            className="text-gray-100 typography-chat leading-relaxed"
+                            className="text-gray-50 typography-chat leading-relaxed"
                             dangerouslySetInnerHTML={{ 
                               __html: convertMarkdownToHtml(message.content) 
                             }}
@@ -1689,10 +1707,26 @@ export default function LandscapingChat() {
                 </div>
               )}
 
-              {/* Enhanced Input Area with Mobile Keyboard Optimization - Sticky at Bottom */}
-              <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0 safe-bottom z-50 sticky-input-area">
+              {/* Scroll to Bottom Button - ChatGPT Style */}
+              {showScrollToBottom && (
+                <div className="absolute bottom-20 right-4 sm:right-6 z-40">
+                  <button
+                    onClick={() => {
+                      scrollToBottom()
+                      setShowScrollToBottom(false)
+                    }}
+                    className="bg-[#2a2a2a] hover:bg-[#3a3a3a] border border-gray-600/50 rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-105"
+                    title="Scroll to bottom"
+                  >
+                    <ArrowUpIcon className="w-4 h-4 text-gray-300 rotate-180" />
+                  </button>
+                </div>
+              )}
+
+              {/* ChatGPT-style Input Bar - Enhanced */}
+              <div className="sticky bottom-0 left-0 right-0 bg-[#1f1f1f] border-t border-gray-700/50 backdrop-blur-xl shadow-2xl px-4 py-4 sm:px-6 sm:py-5 flex-shrink-0 safe-bottom z-50 sticky-input-area">
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative bg-gray-900/50 backdrop-blur-xl rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300">
+                  <div className="relative bg-[#2a2a2a] backdrop-blur-xl rounded-xl border border-gray-600/30 hover:border-emerald-500/40 transition-all duration-300 shadow-lg">
                     <div className="overflow-hidden">
                       {/* File Upload Display */}
                       {uploadedFiles.length > 0 && (
@@ -1736,7 +1770,7 @@ export default function LandscapingChat() {
                             ? "Ask me anything about growing your landscaping business..."
                             : placeholderText
                         }
-                        className="w-full px-4 py-3 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500 placeholder:text-sm min-h-[60px]"
+                        className="w-full px-5 py-4 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 placeholder:text-sm min-h-[64px] leading-relaxed"
                         style={{
                           overflow: "hidden",
                           // Use 16px on mobile to prevent zoom on iOS
