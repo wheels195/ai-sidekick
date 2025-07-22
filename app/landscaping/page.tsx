@@ -1526,7 +1526,7 @@ export default function LandscapingChat() {
                   paddingBottom: '140px'
                 }}
               >
-                <div className="max-w-[900px] mx-auto">
+                <div className="w-full max-w-[900px] mx-auto">
                 {messages.map((message) => (
                   <div
                     key={message.id}
