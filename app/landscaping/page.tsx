@@ -1844,11 +1844,7 @@ export default function LandscapingChat() {
                           }}
                           disabled={!input.trim() || isLoading}
                         >
-                          {isLoading ? (
-                            <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                          ) : (
                             <ArrowUpIcon className="w-4 h-4" />
-                          )}
                           <span className="sr-only">Send</span>
                         </button>
                       </div>
