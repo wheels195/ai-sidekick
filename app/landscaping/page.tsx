@@ -357,21 +357,33 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
   
   if (!user) {
     return (
-      <div className="px-6 py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
-        <div className="space-y-4">
-          <h1 className="text-2xl text-white font-semibold">
-            Hi!<br />
-            I'm <span className="font-cursive text-emerald-400 font-bold text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
+      <div className="px-3 py-3 sm:px-6 sm:py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
+        <div className="space-y-2 sm:space-y-4">
+          <h1 className="text-lg sm:text-2xl text-white font-semibold">
+            Hi! 👋<br />
+            I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Dirt.i</span>, your AI Sidekick for growing your business.
           </h1>
-          <p className="text-lg text-gray-100 leading-relaxed">
-            I'm here to help you grow your landscaping business with expert advice on local SEO, competitor analysis, upselling strategies, review generation, and more.
-          </p>
-          <p className="text-lg text-emerald-300">
-            💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Use the <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below to get more targeted, high-impact suggestions.
-          </p>
-          <p className="text-emerald-300 font-normal text-xl mt-4">
-            Ready to increase your revenue this month? → <span className="text-gray-400 text-lg italic">(Try "How do I upsell my existing customers?" or "Generate a plan to get me 10 new customers in 30 days")</span>
-          </p>
+          
+          {/* What I can help with */}
+          <div className="space-y-2">
+            <p className="text-sm sm:text-base text-gray-200">I can help you with:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm text-emerald-300">
+              <div>• Marketing ideas & content creation</div>
+              <div>• Upselling strategies</div>
+              <div>• Smarter pricing & seasonal trends</div>
+              <div>• Custom business planning</div>
+              <div className="sm:col-span-2">• Scaling operations</div>
+            </div>
+          </div>
+          
+          {/* Quick examples */}
+          <div className="space-y-1">
+            <p className="text-sm text-gray-300">💡 Try asking something like:</p>
+            <div className="text-xs sm:text-sm text-gray-400 space-y-1">
+              <div>→ "How do I upsell spring cleanups?"</div>
+              <div>→ "Generate a plan to get 10 new customers this month"</div>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -399,37 +411,32 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
   return (
     <div className="px-3 py-3 sm:px-6 sm:py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
       <div className="space-y-2 sm:space-y-4">
-        {/* Main greeting - Mobile optimized */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg sm:text-2xl text-white font-semibold">
-            Hi, <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl italic">{displayName}</span>!<br />
-            I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Dirt.i</span>, your Landscaping AI Sidekick.
-          </h1>
-          {!isFirstTime && (
-            <button
-              onClick={() => setShowBusinessContext(!showBusinessContext)}
-              className="text-gray-300 hover:text-emerald-300 transition-colors duration-200 p-2 hidden sm:block"
-            >
-              <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${showBusinessContext ? 'rotate-180' : ''}`} />
-            </button>
-          )}
+        {/* Simplified greeting */}
+        <h1 className="text-lg sm:text-2xl text-white font-semibold">
+          Hi {displayName}! 👋<br />
+          I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Dirt.i</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
+        </h1>
+        
+        {/* What I can help with */}
+        <div className="space-y-2">
+          <p className="text-sm sm:text-base text-gray-200">I can help you with:</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm text-emerald-300">
+            <div>• Marketing ideas & content creation</div>
+            <div>• Upselling strategies</div>
+            <div>• Smarter pricing & seasonal trends</div>
+            <div>• Custom business planning</div>
+            <div className="sm:col-span-2">• Scaling operations</div>
+          </div>
         </div>
         
-        {/* Enhanced description - Mobile compact */}
-        <p className="text-sm sm:text-lg text-gray-100 leading-relaxed">
-          I'm here to help you grow <span className="text-emerald-200 font-semibold">{businessName || 'your landscaping business'}</span> with expert advice on local SEO, competitor analysis, upselling strategies, review generation, and more.
-        </p>
-        
-        {/* Enhanced pro tip - Hide on mobile */}
-        <p className="hidden sm:block text-lg text-emerald-300">
-          💡 <span className="text-emerald-200 text-xl font-semibold">Pro tip:</span> Use the{' '}
-          <span className="font-cursive text-emerald-200 text-xl font-semibold">Tips</span> button below to get more targeted, high-impact suggestions.
-        </p>
-        
-        {/* Mobile-only simplified pro tip */}
-        <p className="block sm:hidden text-sm text-emerald-300">
-          💡 Tap <span className="font-cursive text-emerald-200 font-semibold">Tips</span> below for targeted suggestions.
-        </p>
+        {/* Quick examples */}
+        <div className="space-y-1">
+          <p className="text-sm text-gray-300">💡 Try asking something like:</p>
+          <div className="text-xs sm:text-sm text-gray-400 space-y-1">
+            <div>→ "How do I upsell spring cleanups?"</div>
+            <div>→ "Generate a plan to get 10 new customers this month"</div>
+          </div>
+        </div>
         
         {/* Enhanced business context - Desktop only */}
         {showBusinessContext && (
