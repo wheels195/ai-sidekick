@@ -719,20 +719,7 @@ export default function LandscapingChat() {
       const welcomeMessage: Message = {
         id: 'welcome-' + Date.now().toString(),
         role: 'assistant',
-        content: `Hi ${displayName}! 👋
-
-I'm **Dirt.i**, your AI Sidekick for growing **${businessName}**.
-
-I can help you with:
-• Marketing ideas & content creation
-• Upselling strategies  
-• Smarter pricing & seasonal trends
-• Custom business planning
-• Scaling operations
-
-💡 Try asking something like:
-→ "How do I upsell spring cleanups?"
-→ "Generate a plan to get 10 new customers this month"`,
+        content: `Hi ${displayName}! I'm **Dirt.i**, your business AI sidekick. How can I help you today?`,
         timestamp: new Date()
       }
       
@@ -1220,16 +1207,8 @@ I can help you with:
           .safe-bottom {
             padding-bottom: max(16px, env(safe-area-inset-bottom));
           }
-          /* Ensure input stays visible when keyboard opens */
-          .mobile-input-area {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 60;
-          }
           .mobile-messages-container {
-            padding-bottom: 120px; /* Space for fixed input */
+            padding-bottom: 20px; /* Reduced padding */
           }
         }
         /* Desktop centered layout */
@@ -1694,7 +1673,7 @@ I can help you with:
               )}
 
               {/* Enhanced Input Area with Mobile Keyboard Optimization */}
-              <div className={`px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0 safe-bottom ${isMobile ? 'mobile-input-area bg-gray-800/95 backdrop-blur-xl' : ''}`}>
+              <div className="px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 border-t border-white/10 flex-shrink-0 safe-bottom">
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative bg-gray-900/50 backdrop-blur-xl rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 transition-all duration-300">
                     <div className="overflow-hidden">
