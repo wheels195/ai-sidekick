@@ -609,16 +609,8 @@ export default function LandscapingChat() {
     
     // Only run on client side after hydration
     if (typeof window !== 'undefined') {
-      // Scroll to top when page loads and detect mobile
+      // Scroll to top when page loads
       window.scrollTo(0, 0)
-      setIsMobile(window.innerWidth < 640)
-      
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 640)
-      }
-      
-      window.addEventListener('resize', handleResize)
-      return () => window.removeEventListener('resize', handleResize)
     }
   }, [])
 
@@ -1211,13 +1203,10 @@ export default function LandscapingChat() {
           .messages-scroll-container {
             padding-bottom: 60px !important;
           }
-          /* Handle keyboard visibility on mobile */
-          @supports (-webkit-touch-callout: none) {
-            .sticky-input-area {
-              position: -webkit-sticky;
-              position: sticky;
-              bottom: env(keyboard-inset-height, 0px);
-            }
+          /* Handle keyboard visibility on mobile - Simplified for compatibility */
+          .sticky-input-area {
+            position: -webkit-sticky;
+            position: sticky;
           }
         }
         /* Desktop centered layout */
