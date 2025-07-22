@@ -30,7 +30,13 @@
       "Bash(curl:*)",
       "Bash(awk:*)",
       "Bash(sed:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(sudo ss:*)",
+      "Bash(sudo lsof:*)",
+      "Bash(ss:*)",
+      "Bash(killall:*)",
+      "Bash(PORT=3001 npm run dev)",
+      "Bash(cat:*)"
     ],
     "deny": []
   }
