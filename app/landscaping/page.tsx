@@ -480,7 +480,7 @@ export default function LandscapingChat() {
   const [showRatingPrompt, setShowRatingPrompt] = useState(false)
   const [hasRatedConversation, setHasRatedConversation] = useState(false)
   const [showHelpPanel, setShowHelpPanel] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  // Mobile detection removed - using responsive CSS instead
   const [isClient, setIsClient] = useState(false)
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
@@ -1475,17 +1475,17 @@ export default function LandscapingChat() {
       )}
 
       {/* Main Chat Area - ChatGPT-like Layout */}
-      <div className="flex-1 flex flex-col relative z-40 overflow-hidden">
+      <div className="flex-1 flex flex-col relative z-40">
         {/* Desktop Centered Container */}
-        <div className="desktop-chat-container flex-1 flex flex-col">
+        <div className="desktop-chat-container flex-1 flex flex-col min-h-0">
           {/* Chat Messages Container - Responsive Design */}
-          <div className="flex-1 p-2 sm:p-4 lg:p-6 overflow-hidden">
-            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col overflow-hidden">
-            <CardContent className="p-0 flex flex-col h-full overflow-hidden">
+          <div className="flex-1 p-2 sm:p-4 lg:p-6 min-h-0">
+            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col">
+            <CardContent className="p-0 flex flex-col h-full min-h-0">
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-messages-container' : ''}`}
+                className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20"
                 style={{
                   scrollBehavior: 'smooth'
                 }}
@@ -1722,7 +1722,7 @@ export default function LandscapingChat() {
                         className="w-full px-4 py-3 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500 placeholder:text-sm min-h-[60px]"
                         style={{
                           overflow: "hidden",
-                          fontSize: isClient && isMobile ? '16px' : undefined
+                          fontSize: isClient ? '16px' : undefined
                         }}
                         disabled={isLoading}
                       />
