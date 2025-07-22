@@ -1246,7 +1246,7 @@ export default function LandscapingChat() {
         /* Desktop centered layout */
         @media (min-width: 641px) {
           .desktop-chat-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding-left: 32px;
             padding-right: 32px;
