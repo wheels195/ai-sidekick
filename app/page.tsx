@@ -766,25 +766,25 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             <div className="space-y-8">
               {[
                 {
-                  icon: Target,
+                  icon: Star,
                   title: "Trade-Specific Training",
                   description:
                     "Each AI sidekick is trained exclusively on your industry's challenges, opportunities, and best practices.",
                 },
                 {
-                  icon: TrendingUp,
+                  icon: MapPin,
                   title: "Local Market Focus",
                   description:
                     "Understands local SEO, seasonal patterns, and regional business dynamics that affect your trade.",
                 },
                 {
-                  icon: Zap,
+                  icon: Sparkles,
                   title: "Instant Expert Advice",
                   description:
                     "Get immediate answers to complex business questions without hiring expensive consultants.",
                 },
                 {
-                  icon: Users,
+                  icon: CheckCircle,
                   title: "Built for Real Businesses",
                   description: "Designed for business owners who need results, not tech experts who want to tinker.",
                 },
