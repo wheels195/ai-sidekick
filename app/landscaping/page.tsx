@@ -1517,10 +1517,12 @@ export default function LandscapingChat() {
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
+                className={`messages-scroll-container overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
                 style={{
                   // Use instant scroll on mobile for better performance, smooth on desktop
                   scrollBehavior: isMobile ? 'auto' : 'smooth',
+                  // Set fixed height to enable proper scrolling - ChatGPT approach
+                  height: 'calc(100vh - 160px)',
                   // Add sufficient bottom padding so content is visible above input
                   paddingBottom: '140px'
                 }}
