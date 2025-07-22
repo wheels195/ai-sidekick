@@ -1216,35 +1216,18 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 {/* Static Chat Interface Preview */}
                 <div className="bg-gradient-to-br from-black via-gray-950 to-black rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
                   
-                  {/* Header */}
+                  {/* Header - Simplified */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
                     <div className="px-4 py-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
-                            <ArrowLeft className="w-4 h-4 mr-1" />
-                            Back
-                          </button>
-                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
-                            <Menu className="w-4 h-4 mr-1" />
-                            Chats
-                          </button>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2 cursor-pointer">
-                          <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                            <Leaf className="w-4 h-4 text-white" />
+                      <div className="flex items-center justify-center">
+                        <div className="flex items-center space-x-3 cursor-pointer">
+                          <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                            <Leaf className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
-                            <p className="text-xs text-gray-300">Your Landscaping AI Sidekick</p>
+                            <h1 className="text-base font-bold text-white font-cursive">Dirt.i</h1>
+                            <p className="text-sm text-gray-300">Your AI Sidekick</p>
                           </div>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1">
-                            Profile
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -1325,7 +1308,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         <div className="relative">
                           <textarea
                             className="w-full bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl px-4 py-3 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
-                            placeholder="Ask me anything about growing your landscaping business..."
+                            placeholder="Ask me anything..."
                             rows={2}
                             disabled
                           />
@@ -1357,7 +1340,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           <span>Tips</span>
                         </span>
                       </div>
-                      <span className="text-emerald-400">⚡ Advanced AI</span>
+                      <span className="hidden sm:inline text-emerald-400">⚡ Advanced AI</span>
                     </div>
                   </div>
                 </div>
