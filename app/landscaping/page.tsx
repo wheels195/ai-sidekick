@@ -1625,7 +1625,7 @@ export default function LandscapingChat() {
                 {/* Web Search Indicator */}
                 {isSearching && (
                   <div className="flex justify-start mb-4">
-                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-lg px-4 py-3 max-w-[700px]">
+                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-lg px-4 py-3 max-w-[900px]">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
@@ -1641,7 +1641,7 @@ export default function LandscapingChat() {
                 {/* Loading Indicator - hide when AI starts generating text */}
                 {isLoading && !isSearching && !messages[messages.length - 1]?.content && (
                   <div className="flex justify-start mb-4">
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-4 py-3 max-w-[700px]">
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-4 py-3 max-w-[900px]">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
