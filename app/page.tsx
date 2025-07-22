@@ -1257,8 +1257,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       {/* Clean Chat Bubble */}
                       <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-6 py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
                         
-                        {/* Character - Aligned with first text line */}
-                        <div className="absolute -left-8 top-0 z-10">
+                        {/* Character - Hidden on mobile, shown on desktop */}
+                        <div className="hidden lg:block absolute -left-8 top-0 z-10">
                           <div className="relative">
                             {/* Ground shadow under his boots */}
                             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80"></div>
@@ -1275,10 +1275,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           </div>
                         </div>
                         
-                        
-                        
-                        {/* Text content with margin for bigger character */}
-                        <div className="ml-48">
+                        {/* Text content - responsive margin */}
+                        <div className="ml-0 lg:ml-48">
                         <div className="space-y-3 text-sm">
                           <p className="text-base">
                             Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.
