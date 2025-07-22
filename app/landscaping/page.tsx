@@ -1526,7 +1526,7 @@ export default function LandscapingChat() {
                   paddingBottom: '140px'
                 }}
               >
-                <div className="max-w-[700px] mx-auto">
+                <div className="max-w-[900px] mx-auto">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -1535,14 +1535,12 @@ export default function LandscapingChat() {
                     }`}
                   >
                     {/* Message Content */}
-                    <div className={`max-w-[80%] ${
-                      message.role === "user" ? "" : ""
-                    }`}>
+                    <div className="max-w-[900px]">
                       <div
                         className={`px-4 py-3 rounded-lg transition-all duration-200 ${
                           message.role === "user"
-                            ? "bg-blue-600 text-white max-w-2xl"
-                            : "bg-[#1a1a1a] text-gray-100 max-w-[700px]"
+                            ? "bg-blue-600 text-white"
+                            : "bg-[#1a1a1a] text-gray-100"
                         }`}
                         style={{
                           textAlign: "left"
@@ -1627,7 +1625,7 @@ export default function LandscapingChat() {
                 {/* Web Search Indicator */}
                 {isSearching && (
                   <div className="flex justify-start mb-4">
-                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-lg px-4 py-3 max-w-[80%]">
+                    <div className="bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-lg px-4 py-3 max-w-[700px]">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
@@ -1643,7 +1641,7 @@ export default function LandscapingChat() {
                 {/* Loading Indicator - hide when AI starts generating text */}
                 {isLoading && !isSearching && !messages[messages.length - 1]?.content && (
                   <div className="flex justify-start mb-4">
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-4 py-3 max-w-[80%]">
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-4 py-3 max-w-[700px]">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
