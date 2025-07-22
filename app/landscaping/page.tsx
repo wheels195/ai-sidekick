@@ -3,6 +3,7 @@
 import React from "react"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import { useIsMobile } from "@/hooks/use-mobile"
 // Removed ReactMarkdown to fix hydration issues
 import {
   ArrowLeft,
@@ -480,7 +481,8 @@ export default function LandscapingChat() {
   const [showRatingPrompt, setShowRatingPrompt] = useState(false)
   const [hasRatedConversation, setHasRatedConversation] = useState(false)
   const [showHelpPanel, setShowHelpPanel] = useState(false)
-  // Mobile detection removed - using responsive CSS instead
+  // Mobile detection hook for runtime behavior
+  const isMobile = useIsMobile()
   const [isClient, setIsClient] = useState(false)
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
@@ -570,10 +572,20 @@ export default function LandscapingChat() {
     if (typeof document !== 'undefined') {
       const scrollContainer = document.querySelector('.messages-scroll-container')
       if (scrollContainer) {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight
+        // Use different scroll behavior for mobile vs desktop
+        if (isMobile) {
+          // Instant scroll on mobile for better performance
+          scrollContainer.scrollTop = scrollContainer.scrollHeight
+        } else {
+          // Smooth scroll on desktop for better UX
+          scrollContainer.scrollTo({
+            top: scrollContainer.scrollHeight,
+            behavior: 'smooth'
+          })
+        }
       } else {
         messagesEndRef.current?.scrollIntoView({
-          behavior: "smooth",
+          behavior: isMobile ? "auto" : "smooth",
           block: "end",
           inline: "nearest",
         })
@@ -1203,6 +1215,11 @@ export default function LandscapingChat() {
           .messages-scroll-container {
             padding-bottom: 60px !important;
           }
+          /* Mobile-specific scroll optimizations */
+          .mobile-scroll-container {
+            -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS */
+            overscroll-behavior: contain; /* Prevent scroll chaining */
+          }
           /* Handle keyboard visibility on mobile - Simplified for compatibility */
           .sticky-input-area {
             position: -webkit-sticky;
@@ -1406,7 +1423,7 @@ export default function LandscapingChat() {
           />
           
           {/* Sidebar */}
-          <div className="absolute left-0 top-0 h-full w-full sm:w-80 bg-gradient-to-br from-gray-900 via-gray-950 to-black border-r border-white/10 shadow-2xl overflow-y-auto">
+          <div className={`absolute left-0 top-0 h-full w-full sm:w-80 bg-gradient-to-br from-gray-900 via-gray-950 to-black border-r border-white/10 shadow-2xl overflow-y-auto ${isMobile ? 'touch-manipulation' : ''}`}>
             {/* Sidebar Header */}
             <div className="sticky top-0 bg-gray-900/95 backdrop-blur-xl border-b border-white/10 p-4 flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -1483,9 +1500,10 @@ export default function LandscapingChat() {
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className="messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20"
+                className={`messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
                 style={{
-                  scrollBehavior: 'smooth'
+                  // Use instant scroll on mobile for better performance, smooth on desktop
+                  scrollBehavior: isMobile ? 'auto' : 'smooth'
                 }}
               >
                 {messages.map((message) => (
@@ -1720,7 +1738,8 @@ export default function LandscapingChat() {
                         className="w-full px-4 py-3 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500 placeholder:text-sm min-h-[60px]"
                         style={{
                           overflow: "hidden",
-                          fontSize: isClient ? '16px' : undefined
+                          // Use 16px on mobile to prevent zoom on iOS
+                          fontSize: isClient && isMobile ? '16px' : undefined
                         }}
                         disabled={isLoading}
                       />
