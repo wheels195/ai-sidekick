@@ -61,7 +61,7 @@ export const ModernPricingCard = ({
           <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-white">{price}</span>
           {price !== "0" && price !== "Contact Us" && (
             <span className="text-sm sm:text-base text-gray-400">
-              {isAnnual ? '/year' : '/mo'}
+              /mo
             </span>
           )}
         </div>

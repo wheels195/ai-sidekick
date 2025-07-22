@@ -20,6 +20,10 @@ import {
   Tag,
   MapPin,
   Leaf,
+  ArrowLeft,
+  Send,
+  Paperclip,
+  Upload,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
@@ -1188,100 +1192,187 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </span>
             </div>
 
-            <Card className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative cursor-pointer">
+            <div className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative rounded-2xl">
               {/* Premium glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
               
               {/* Live Badge - positioned outside card */}
               <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
                 🟢 LIVE NOW
               </div>
               
-              <CardContent className="p-6 sm:p-8 lg:p-12 relative z-10">
+              <div className="p-6 sm:p-8 lg:p-12 relative z-10">
                 <div className="text-center mb-6 sm:mb-8">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-110 group-hover:rotate-6">
-                    <span className="text-2xl sm:text-3xl">🌿</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-3 sm:mb-4">
+                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4">
                     <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
-                      Landscape AI Sidekick
+                      Ready when you are
                     </span>
                   </h3>
-                  <p className="text-lg sm:text-xl text-gray-200 mb-4 sm:mb-6">
-                    Your expert partner for growing your landscaping business
+                  <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8">
+                    Your professional landscaping business AI interface
                   </p>
+                </div>
+
+                {/* Static Chat Interface Preview */}
+                <div className="bg-gradient-to-br from-black via-gray-950 to-black rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
                   
-                  {/* Mobile-Optimized Value Props */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-3 lg:space-x-4 mb-6 sm:mb-8">
-                    <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 w-full sm:w-auto justify-center">
-                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
-                      <span className="text-emerald-300 text-xs sm:text-sm font-medium text-center whitespace-nowrap">Start making more money today</span>
-                    </div>
-                    <div className="flex items-center space-x-2 bg-emerald-500/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 w-full sm:w-auto justify-center">
-                      <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
-                      <span className="text-emerald-300 text-xs sm:text-sm font-medium text-center whitespace-nowrap">Get instant expert advice</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Interactive Preview - Mobile Optimized */}
-                <div className="bg-black/30 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-emerald-500/20">
-                  <div className="text-xs sm:text-sm text-emerald-300 mb-2 sm:mb-3 flex items-center gap-2">
-                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                    <span>Live AI Preview</span>
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-300 italic mb-3 sm:mb-4 leading-relaxed">
-                    "Based on your Dallas location, spring lawn care season is peak time. Here's how to position aeration services at $180/yard for maximum bookings..."
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs">
-                    <span className="text-emerald-400">Advanced AI Capabilities</span>
-                    <span className="text-gray-400">Response time: 1.2s</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                  {[
-                    {
-                      icon: TrendingUp,
-                      title: "Local SEO Mastery",
-                      desc: "Rank higher in your city's Google Map Pack",
-                      metric: "Avg. 3x more leads"
-                    },
-                    {
-                      icon: FileText,
-                      title: "Content Generation",
-                      desc: "Seasonal blogs and service pages that convert",
-                      metric: "5x faster creation"
-                    },
-                    { 
-                      icon: DollarSign, 
-                      title: "Upsell Strategies", 
-                      desc: "Increase revenue per customer visit",
-                      metric: "+$340 per job"
-                    },
-                    { 
-                      icon: Star, 
-                      title: "Review Management", 
-                      desc: "Get more 5-star reviews the right way",
-                      metric: "90% response rate"
-                    },
-                  ].map((feature, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start space-x-3 sm:space-x-4 group/item hover:scale-105 transition-all duration-300"
-                    >
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500/20 to-emerald-600/30 rounded-xl flex items-center justify-center shadow-lg border border-emerald-400/30 group-hover/item:shadow-emerald-500/25 transition-all duration-300 group-hover/item:scale-110 flex-shrink-0">
-                        <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 group-hover/item:text-emerald-300 transition-colors duration-300" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1 sm:mb-2 gap-1 sm:gap-0">
-                          <h4 className="text-base sm:text-lg font-semibold text-white group-hover/item:text-emerald-100 transition-colors duration-300">{feature.title}</h4>
-                          <span className="text-xs text-emerald-300 font-medium flex-shrink-0">{feature.metric}</span>
+                  {/* Header */}
+                  <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
+                    <div className="px-4 py-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
+                            <ArrowLeft className="w-4 h-4 mr-1" />
+                            Back
+                          </button>
+                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
+                            <Menu className="w-4 h-4 mr-1" />
+                            Chats
+                          </button>
                         </div>
-                        <p className="text-sm sm:text-base text-gray-200 group-hover/item:text-gray-100 transition-colors duration-300 leading-relaxed">{feature.desc}</p>
+                        
+                        <div className="flex items-center space-x-2 cursor-pointer">
+                          <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                            <Leaf className="w-4 h-4 text-white" />
+                          </div>
+                          <div>
+                            <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
+                            <p className="text-xs text-gray-300">Your Landscaping AI Sidekick</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1">
+                            Profile
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Welcome Message */}
+                  <div className="p-4 h-[340px] overflow-hidden">
+                    {/* Character and Chat Bubble */}
+                    <div className="flex items-start space-x-3 mb-3">
+                      {/* Character Image */}
+                      <div className="flex-shrink-0">
+                        <img 
+                          src="/placeholder-logo.png" 
+                          alt="Dirt.i character"
+                          className="w-16 h-16 object-contain bg-emerald-100 rounded-full p-2"
+                          style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}
+                        />
+                      </div>
+                      
+                      {/* Chat Bubble */}
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-4 border border-emerald-500/30 shadow-lg flex-1">
+                        <div className="space-y-3 text-sm">
+                          <p className="text-base">
+                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.
+                          </p>
+                          
+                          <p className="text-gray-200 text-sm">
+                            Personalized to help you with:
+                          </p>
+                          
+                          <div className="space-y-1.5 ml-3">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Marketing ideas & content creation</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Upselling strategies</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Smarter pricing & seasonal trends</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Custom business planning</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Scaling operations</span>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
+                            <div className="flex items-start space-x-2">
+                              <span className="text-emerald-300 text-base">💡</span>
+                              <div>
+                                <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
+                                <p className="text-white text-xs">Start with a current problem. Be specific. Let's fix it together.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Input Area */}
+                  <div className="border-t border-white/10 p-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1">
+                        <div className="relative">
+                          <textarea
+                            className="w-full bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl px-4 py-3 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+                            placeholder="Ask me anything about growing your landscaping business..."
+                            rows={2}
+                            disabled
+                          />
+                          <div className="absolute right-2 top-2 flex items-center space-x-1">
+                            <button className="p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
+                              <Paperclip className="w-4 h-4" />
+                            </button>
+                            <button className="p-1.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg transition-colors">
+                              <Send className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Features row */}
+                    <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
+                      <div className="flex items-center space-x-4">
+                        <span className="flex items-center space-x-1">
+                          <Globe className="w-3 h-3 text-blue-400" />
+                          <span>Web Search</span>
+                        </span>
+                        <span className="flex items-center space-x-1">
+                          <Upload className="w-3 h-3 text-emerald-400" />
+                          <span>File Upload</span>
+                        </span>
+                        <span className="flex items-center space-x-1 text-emerald-400">
+                          <Sparkles className="w-3 h-3" />
+                          <span>Tips</span>
+                        </span>
+                      </div>
+                      <span className="text-emerald-400">⚡ Advanced AI</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value Props Below Chat */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 sm:mt-8 mb-6 sm:mb-8">
+                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <h4 className="text-sm font-semibold text-white mb-1">Professional Interface</h4>
+                    <p className="text-xs text-gray-300">Built specifically for landscaping businesses</p>
+                  </div>
+                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <Sparkles className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <h4 className="text-sm font-semibold text-white mb-1">Expert AI Responses</h4>
+                    <p className="text-xs text-gray-300">Detailed, actionable business advice</p>
+                  </div>
+                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <TrendingUp className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <h4 className="text-sm font-semibold text-white mb-1">Real Results</h4>
+                    <p className="text-xs text-gray-300">Strategies that increase revenue</p>
+                  </div>
                 </div>
 
                 <div className="text-center">
@@ -1297,8 +1388,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     ✅ Instant access • 7-day free trial • Cancel anytime
                   </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Coming Soon - AI Sidekicks */}
@@ -1840,39 +1931,41 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </span>
             </h2>
             <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 font-inter">
-              No tokens. No fluff. Just results for your business.
+              Try for free. Upgrade to Advanced. Grow your business.
             </p>
           </div>
 
-          {/* Billing Toggle */}
-          <div className="flex justify-center mb-12">
-            <div className="relative bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-1 shadow-2xl">
-              <div className="flex items-center">
-                <button
-                  onClick={() => setIsAnnual(false)}
-                  className={`relative px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                    !isAnnual 
-                      ? 'text-white bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg' 
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  onClick={() => setIsAnnual(true)}
-                  className={`relative px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                    isAnnual 
-                      ? 'text-white bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg' 
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  Annual
-                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-2 py-0.5 rounded-full text-xs font-bold">
-                    Save 25%
-                  </span>
-                </button>
-              </div>
-            </div>
+          {/* Simple Toggle */}
+          <div className="flex justify-center items-center gap-4 mb-24">
+            <button
+              onClick={() => setIsAnnual(!isAnnual)}
+              className="relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/30 focus:ring-offset-2 focus:ring-offset-black shadow-lg hover:shadow-xl"
+              style={{
+                background: isAnnual 
+                  ? 'linear-gradient(135deg, #10b981, #0d9488)' 
+                  : 'linear-gradient(135deg, #4b5563, #374151)',
+                boxShadow: isAnnual 
+                  ? '0 4px 14px 0 rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)' 
+                  : '0 4px 14px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              <span
+                className={`inline-block h-6 w-6 transform rounded-full bg-white transition-all duration-300 shadow-lg ${
+                  isAnnual ? 'translate-x-7' : 'translate-x-1'
+                }`}
+                style={{
+                  boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.2)'
+                }}
+              />
+            </button>
+            
+            <span className={`px-3 py-1 rounded-full text-sm font-semibold transition-all duration-300 ${
+              isAnnual 
+                ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-black shadow-lg' 
+                : 'bg-gray-700/50 text-gray-400 border border-gray-600/30'
+            }`}>
+              Annual Billing (Save 25%)
+            </span>
           </div>
 
           {/* All Plans in a Row */}
@@ -1895,13 +1988,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
             <ModernPricingCard
               planName="Advanced AI"
-              price={isAnnual ? "531" : "59"}
+              price={isAnnual ? "44" : "59"}
               description="Our most advanced AI with real-time web search"
               buttonText="Grow with Advanced"
               isPopular={true}
-              badge="Most Popular"
               isAnnual={isAnnual}
-              savingsText={isAnnual ? "💰 Save 177/year vs monthly" : undefined}
+              savingsText={isAnnual ? "Save 25%" : undefined}
               features={[
                 "Full access to your trade's AI sidekick",
                 "Unlimited questions & conversations",
@@ -1914,22 +2006,35 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               onClick={() => window.location.href = '/signup?plan=advanced'}
             />
 
-            <ModernPricingCard
-              planName="Sidepiece AI"
-              price="Contact Us"
-              description="Premium access to all trade AI sidekicks"
-              buttonText="Contact for Pricing"
-              badge="Multi-Trades"
-              features={[
-                "Access to ALL trade AI sidekicks",
-                "Landscaping, Electrical, HVAC, Plumbing & more",
-                "Higher token limits & priority processing",
-                "Advanced analytics & reporting",
-                "Custom integrations available",
-                "Dedicated account management",
-              ]}
-              onClick={() => window.location.href = '/contact'}
-            />
+            <div className="relative">
+              {/* Coming Soon Overlay */}
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl z-10 flex items-center justify-center">
+                <div className="transform -rotate-12">
+                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-full text-lg shadow-2xl animate-pulse">
+                    COMING SOON
+                  </span>
+                </div>
+              </div>
+              
+              {/* Blurred Card */}
+              <div className="opacity-70">
+                <ModernPricingCard
+                  planName="Sidepiece AI"
+                  price="Contact Us"
+                  description="Premium access to all trade AI sidekicks"
+                  buttonText="Contact for Pricing"
+                  features={[
+                    "Access to ALL trade AI sidekicks",
+                    "Landscaping, Electrical, HVAC, Plumbing & more",
+                    "Higher token limits & priority processing",
+                    "Advanced analytics & reporting",
+                    "Custom integrations available",
+                    "Dedicated account management",
+                  ]}
+                  onClick={() => {}}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

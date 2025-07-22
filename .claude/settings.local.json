@@ -29,7 +29,8 @@
       "Bash(source:*)",
       "Bash(curl:*)",
       "Bash(awk:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(git rebase:*)"
     ],
     "deny": []
   }
