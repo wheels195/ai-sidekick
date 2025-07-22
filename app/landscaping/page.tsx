@@ -1495,15 +1495,16 @@ export default function LandscapingChat() {
         <div className="desktop-chat-container flex-1 flex flex-col min-h-0">
           {/* Chat Messages Container - Responsive Design */}
           <div className="flex-1 p-2 sm:p-4 lg:p-6 min-h-0">
-            <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl h-full flex flex-col">
-            <CardContent className="p-0 flex flex-col h-full min-h-0">
+            <div className="backdrop-blur-2xl bg-gray-800/40 border border-gray-600/30 rounded-lg shadow-2xl h-full flex flex-col">
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container flex-1 overflow-y-scroll p-4 sm:p-5 lg:p-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
+                className={`messages-scroll-container flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 pb-8 sm:pb-12 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
                 style={{
                   // Use instant scroll on mobile for better performance, smooth on desktop
-                  scrollBehavior: isMobile ? 'auto' : 'smooth'
+                  scrollBehavior: isMobile ? 'auto' : 'smooth',
+                  // Ensure full height is used for scrolling
+                  maxHeight: 'calc(100vh - 160px)'
                 }}
               >
                 {messages.map((message) => (
@@ -1874,8 +1875,7 @@ export default function LandscapingChat() {
                   Powered by specialized AI trained for landscaping businesses
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
         </div>
       </div>
 
