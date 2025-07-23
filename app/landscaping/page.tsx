@@ -522,8 +522,8 @@ export default function LandscapingChat() {
   ]
 
   useEffect(() => {
-    // Stop animation if user is focused on input, has typed something, or has started chatting
-    if (isInputFocused || input.length > 0 || messages.length > 1) {
+    // Only run animation after hydration and if user hasn't interacted
+    if (!isClient || isInputFocused || input.length > 0 || messages.length > 1) {
       return
     }
 
@@ -533,32 +533,34 @@ export default function LandscapingChat() {
       const currentSuggestion = placeholderSuggestions[currentSuggestionIndex]
 
       if (isTyping) {
-        // Typing phase
+        // Typing phase - character by character
         if (placeholderText.length < currentSuggestion.length) {
-          setPlaceholderText(currentSuggestion.slice(0, placeholderText.length + 1))
-          timeout = setTimeout(typeText, 50 + Math.random() * 50) // Random typing speed
+          setPlaceholderText(currentSuggestion.substring(0, placeholderText.length + 1))
+          timeout = setTimeout(typeText, 40 + Math.random() * 20) // Natural typing speed 40-60ms
         } else {
           // Finished typing, wait then start deleting
           timeout = setTimeout(() => setIsTyping(false), 2000)
         }
       } else {
-        // Deleting phase
+        // Deleting phase - character by character
         if (placeholderText.length > 0) {
-          setPlaceholderText(placeholderText.slice(0, -1))
-          timeout = setTimeout(typeText, 30) // Faster deleting
+          setPlaceholderText(placeholderText.substring(0, placeholderText.length - 1))
+          timeout = setTimeout(typeText, 25) // Faster deleting
         } else {
           // Finished deleting, move to next suggestion
           setCurrentSuggestionIndex((prev) => (prev + 1) % placeholderSuggestions.length)
           setIsTyping(true)
-          timeout = setTimeout(typeText, 500) // Pause before next suggestion
+          timeout = setTimeout(typeText, 300) // Brief pause before next suggestion
         }
       }
     }
 
-    timeout = setTimeout(typeText, 300)
+    // Start immediately - no initial delay
+    typeText()
 
     return () => clearTimeout(timeout)
   }, [
+    isClient, // Add isClient dependency for hydration safety
     placeholderText,
     currentSuggestionIndex,
     isTyping,
@@ -624,6 +626,11 @@ export default function LandscapingChat() {
       // Scroll to top when page loads
       window.scrollTo(0, 0)
     }
+    
+    // Reset placeholder animation state after hydration
+    setPlaceholderText("")
+    setCurrentSuggestionIndex(0)
+    setIsTyping(true)
   }, [])
 
   // Handle viewport changes and keyboard visibility
