@@ -1713,7 +1713,7 @@ export default function LandscapingChat() {
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom">
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative rounded-xl border border-transparent hover:border-emerald-500/20 focus-within:border-emerald-500/30 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
+                  <div className="relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
                       {/* File Upload Display */}
                       {uploadedFiles.length > 0 && (
