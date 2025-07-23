@@ -1176,249 +1176,156 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
-              <span className="text-white">Real-Time</span>{" "}
-              <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">
-                Competitive Intelligence
-              </span>
+              <span className="text-white">You don't run a generic business — why use a generic search engine?</span>
             </h2>
             <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-4xl xl:max-w-6xl mx-auto mb-16 lg:mb-20">
-              Our advanced AI doesn't just respond — it proactively researches your local competitors, pricing gaps, and growth opportunities.
-              This isn't generic SEO advice — it's strategic guidance tailored to your business and your zip code.
+              <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">AI Sidekicks</span> are built for your trade — with answers tailored to how your business actually works.
             </p>
           </div>
 
-          <div className="grid xl:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-start">
-            {/* Left Side - AI Capabilities */}
-            <div className="space-y-8 lg:space-y-10 lg:pr-8 relative max-w-none">
-              <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold mb-6 flex items-center justify-center lg:justify-start gap-3">
-                  <div className="w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-                    <Sparkles className="w-4 h-4 xl:w-5 xl:h-5 text-white" />
+          {/* 3-Row Comparison Grid */}
+          <div className="space-y-8 lg:space-y-12">
+            {/* Row 1 - Question Strategy */}
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
+              {/* Left Card - Generic Google Search */}
+              <div className="bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-red-700/30 relative overflow-hidden">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Search className="w-6 h-6 text-white" />
                   </div>
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">Advanced AI</span> <span className="text-blue-400">Capabilities</span>
-                </h3>
-                <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-200 mb-8 lg:mb-10">
-                  Get strategic business intelligence that goes far beyond basic search results
-                </p>
-              </div>
-              
-              {/* Background Enhancement */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                <div className="absolute top-40 right-20 w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-                <div className="absolute bottom-20 left-1/4 w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-              </div>
-              
-              <DisplayCards
-                cards={[
-                  {
-                    icon: <Search className="size-7 text-white drop-shadow-md" />,
-                    title: "Live Competitor Analysis",
-                    description: "Find local ratings, reviews, pricing strategies, and gaps in your service area with real-time competitive intelligence.",
-                    date: "Powered by Advanced AI Sidekick",
-                    badge: "Save 15+ hours/week",
-                    iconClassName: "blue",
-                  },
-                  {
-                    icon: <Globe className="size-7 text-white drop-shadow-md" />,
-                    title: "Website Health Check",
-                    description: "Get custom AI-powered suggestions to improve your website's visibility, SEO rankings, and conversion rates.",
-                    date: "AI Website Analysis",
-                    badge: "Boost visibility 3x",
-                    iconClassName: "purple",
-                  },
-                  {
-                    icon: <BarChart3 className="size-7 text-white drop-shadow-md" />,
-                    title: "Strategic Growth Insights",
-                    description: "Discover pricing opportunities, upselling strategies, and local market trends specific to your zip code and trade.",
-                    date: "Zip Code Specific Intelligence",
-                    badge: "Increase revenue 25%",
-                    iconClassName: "orange",
-                  },
-                  {
-                    icon: <TrendingUp className="size-7 text-white drop-shadow-md" />,
-                    title: "Customer Retention AI",
-                    description: "Identify at-risk customers, optimize follow-up timing, and create personalized retention strategies that keep clients coming back.",
-                    date: "Behavioral Pattern Analysis",
-                    badge: "Retain 40% more customers",
-                    iconClassName: "emerald",
-                  },
-                ]}
-              />
-              
-              {/* Bonus Feature - File Upload Analysis */}
-              <div className="mt-12 lg:mt-16">
-                <div className="group w-full bg-white/5 backdrop-blur-md ring-1 ring-white/10 rounded-xl shadow-2xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/20 hover:ring-white/30 hover:bg-white/10 transition-all duration-500 ease-out cursor-pointer relative overflow-hidden">
-                  {/* Animated glow effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
-                  
-                  <div className="p-4 sm:p-6 lg:p-8 relative z-10">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
-                      <div className="flex items-center space-x-3 sm:space-x-4 min-w-0">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-xl shrink-0 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-indigo-400/50 group-hover:scale-110">
-                          <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-md transition-all duration-300 group-hover:scale-110" />
-                        </div>
-                        <h4 className="text-base sm:text-lg xl:text-xl font-semibold text-white tracking-tight transition-all duration-300 group-hover:text-white group-hover:scale-105 leading-tight">
-                          Upload & Analyze Photos, Files & Content
-                        </h4>
-                      </div>
-                      <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full px-3 py-1.5 sm:px-3 sm:py-1 border border-indigo-400/30 transition-all duration-300 group-hover:from-indigo-500/30 group-hover:to-purple-500/30 group-hover:border-indigo-400/50 flex-shrink-0 self-start sm:self-auto">
-                        <span className="text-indigo-300 text-xs sm:text-sm font-medium whitespace-nowrap">Instant Expert Results</span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-white/80 mb-6 text-sm xl:text-base leading-relaxed tracking-wide transition-colors duration-300 group-hover:text-white/90">
-                      Turn any image or document into competitive intelligence
-                    </p>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-300 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-indigo-400/50">
-                          <Target className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <span className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white/90">
-                            <span className="font-medium text-indigo-300">Competitor Analysis</span>
-                          </span>
-                          <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
-                            Price with confidence
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-300 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-400/50">
-                          <Search className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <span className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white/90">
-                            <span className="font-medium text-purple-300">Expert Diagnosis</span>
-                          </span>
-                          <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
-                            Solve problems instantly
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-pink-300 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-pink-400/50">
-                          <TrendingUp className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <span className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white/90">
-                            <span className="font-medium text-pink-300">Proposal Insights</span>
-                          </span>
-                          <p className="text-xs text-white/60 transition-colors duration-300 group-hover:text-white/70">
-                            Win more jobs
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Subtle animated border on hover */}
-                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                       style={{
-                         background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)',
-                         backgroundSize: '200% 200%',
-                       }}>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold text-red-300 mb-2">"How to grow my business?"</h3>
+                    <p className="text-red-200/80 text-sm">17 blog posts. Most don't apply.</p>
                   </div>
                 </div>
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full">Generic Search</span>
+                </div>
+              </div>
+
+              {/* Right Card - AI Sidekick */}
+              <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold text-emerald-300 mb-2">Knows your trade + zip code</h3>
+                    <p className="text-emerald-200/80 text-sm">Personalized advice built for your market.</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full">Your AI Sidekick</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none"></div>
               </div>
             </div>
 
-            {/* Right Side - Generic Google Search */}
-            <div className="space-y-8 lg:space-y-10 lg:pl-8">
-              <div className="text-center lg:text-left">
-                <h3 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold text-gray-400 mb-6">
-                  ❌ Generic Google Search
-                </h3>
-                <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-400 mb-8 lg:mb-10">
-                  Basic search results with no strategic context or actionable insights
-                </p>
+            {/* Row 2 - Pricing Clarity */}
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
+              {/* Left Card - Generic Google Search */}
+              <div className="bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-red-700/30 relative overflow-hidden">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <DollarSign className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold text-red-300 mb-2">"Best prices for services?"</h3>
+                    <p className="text-red-200/80 text-sm">Forums. Guesswork. Conflicting advice.</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full">Generic Search</span>
+                </div>
               </div>
-              
-              {/* Google-style search results */}
-              <div className="bg-white rounded-lg p-6 shadow-lg">
-                <div className="space-y-4">
-                  {/* Search result 1 */}
-                  <div className="border-b border-gray-200 pb-4">
-                    <h4 className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
-                      Green Lawn Landscaping - Dallas, TX
-                    </h4>
-                    <p className="text-green-700 text-sm">https://greenlawnlandscaping.com</p>
-                    <p className="text-gray-700 text-sm mt-1">
-                      Professional landscaping services in Dallas. Call us today for a free estimate. Serving Dallas and surrounding areas for 15 years.
-                    </p>
+
+              {/* Right Card - AI Sidekick */}
+              <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30">
+                    <BarChart3 className="w-6 h-6 text-white" />
                   </div>
-                  
-                  {/* Search result 2 */}
-                  <div className="border-b border-gray-200 pb-4">
-                    <h4 className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
-                      Dallas Landscape Design | Premier Landscaping
-                    </h4>
-                    <p className="text-green-700 text-sm">https://premierlandscaping.net</p>
-                    <p className="text-gray-700 text-sm mt-1">
-                      Award-winning landscape design and installation. Residential and commercial. Licensed and insured. Contact us for consultation.
-                    </p>
-                  </div>
-                  
-                  {/* Search result 3 */}
-                  <div>
-                    <h4 className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
-                      Top 10 Landscaping Companies in Dallas - Angie's List
-                    </h4>
-                    <p className="text-green-700 text-sm">https://angieslist.com/landscaping-dallas</p>
-                    <p className="text-gray-700 text-sm mt-1">
-                      Find the best landscaping companies in Dallas. Read reviews, compare prices, and get quotes from local professionals.
-                    </p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold text-emerald-300 mb-2">Built-in pricing insights</h3>
+                    <p className="text-emerald-200/80 text-sm">Suggests upsells, margins, and seasonal promos.</p>
                   </div>
                 </div>
-                
-                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded">
-                  <p className="text-red-700 text-sm font-medium">
-                    ⚠️ What's missing: Pricing insights, competitive gaps, strategic recommendations, website analysis
-                  </p>
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full">Your AI Sidekick</span>
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none"></div>
+              </div>
+            </div>
+
+            {/* Row 3 - Website Help */}
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
+              {/* Left Card - Generic Google Search */}
+              <div className="bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-red-700/30 relative overflow-hidden">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold text-red-300 mb-2">"Why is my site underperforming?"</h3>
+                    <p className="text-red-200/80 text-sm">SEO jargon. Audits. No clear action.</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full">Generic Search</span>
+                </div>
+              </div>
+
+              {/* Right Card - AI Sidekick */}
+              <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30">
+                    <Target className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold text-emerald-300 mb-2">Clear fixes, no tech talk</h3>
+                    <p className="text-emerald-200/80 text-sm">Improve rankings and leads with simple suggestions.</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full">Your AI Sidekick</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none"></div>
               </div>
             </div>
           </div>
 
+          {/* Footer Block */}
           <div className="text-center mt-16 lg:mt-20 xl:mt-24">
-            <p className="text-blue-300 text-lg xl:text-xl 2xl:text-2xl mb-4 lg:mb-6">
-              💡 Your <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive text-xl xl:text-2xl 2xl:text-3xl">Advanced AI Sidekick</span> reviews your website, gives you tips to rank higher, upsell more strategically, and bring you more business.
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold text-white mb-4 lg:mb-6">
+              Every <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive">AI Sidekick</span> is trained like a business consultant — just for your trade.
+            </h3>
+            <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-200 mb-8 lg:mb-10 max-w-3xl mx-auto">
+              The first is <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive text-xl xl:text-2xl 2xl:text-3xl">Dirt.i</span>, our landscaping AI sidekick. More trades coming soon.
             </p>
             
             <Button 
-              onClick={() => window.location.href = '/signup?plan=free-trial'}
+              onClick={() => window.location.href = '/landscaping'}
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
+              className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
             >
               <span className="truncate">
-                <span className="sm:hidden">👉 Start Your Free Trial</span>
-                <span className="hidden sm:inline">👉 Start Your Free Trial and Let AI Sidekick Help You Grow</span>
+                → Explore <span className="font-cursive">Dirt.i</span>
               </span>
               <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 flex-shrink-0" />
             </Button>
             
             <div className="mt-8 lg:mt-10 flex flex-wrap justify-center gap-4 lg:gap-6 xl:gap-8 text-sm lg:text-base xl:text-lg text-gray-300">
               <div className="flex items-center gap-2">
-                <Tag className="size-4 lg:size-5 xl:size-6 text-blue-400" /> 
-                <span>Competitor Prices</span>
+                <Target className="size-4 lg:size-5 xl:size-6 text-emerald-400" /> 
+                <span>Trade-Specific Intelligence</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="size-4 lg:size-5 xl:size-6 text-purple-400" /> 
-                <span>Zip Code Demand</span>
+                <MapPin className="size-4 lg:size-5 xl:size-6 text-emerald-400" /> 
+                <span>Local Market Analysis</span>
               </div>
               <div className="flex items-center gap-2">
-                <Leaf className="size-4 lg:size-5 xl:size-6 text-orange-400" /> 
-                <span>Missing Services</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="size-4 lg:size-5 xl:size-6 text-blue-400" /> 
-                <span>SEO Visibility</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="size-4 lg:size-5 xl:size-6 text-purple-400" /> 
-                <span>Reputation Score</span>
+                <BarChart3 className="size-4 lg:size-5 xl:size-6 text-emerald-400" /> 
+                <span>Strategic Business Guidance</span>
               </div>
             </div>
           </div>
