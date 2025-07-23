@@ -6,9 +6,37 @@ export default async function LandscapingChatPage() {
   // Load user data server-side
   const user = await getServerUserProfile()
   
-  // Redirect to login if not authenticated
+  // TEMPORARILY DISABLED FOR TESTING - Allow access without authentication
   if (!user) {
-    redirect('/login')
+    // Use mock user data for testing
+    const mockUser = {
+      id: 'test-user-id',
+      firstName: 'Mike',
+      lastName: 'Johnson',
+      email: 'test@johnsonlandscaping.com',
+      businessName: "Johnson's Landscaping",
+      trade: 'landscaping',
+      location: 'Dallas, TX',
+      zipCode: '75201',
+      services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
+      teamSize: 4,
+      targetCustomers: 'residential homeowners',
+      yearsInBusiness: 8,
+      businessPriorities: ['finding new customers', 'pricing competition', 'seasonal cash flow'],
+      tokensUsedTrial: 0,
+      trialTokenLimit: 250000,
+      hasConversationHistory: false // Treating as first-time user for testing
+    }
+    
+    const initialGreeting = `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
+
+    return (
+      <LandscapingChatClient 
+        user={mockUser}
+        initialGreeting={initialGreeting}
+        isReturningUser={false}
+      />
+    )
   }
 
   // Determine appropriate greeting based on user history
