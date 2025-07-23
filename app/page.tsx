@@ -1188,36 +1188,36 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             {/* Row 1 - Question Strategy */}
             <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
               {/* Left Card - Generic Google Search */}
-              <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
-                    <Search className="w-6 h-6 text-white transition-all duration-300 group-hover:scale-110" />
+              <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
+                </div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
+                    <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-semibold text-red-300 mb-2">"How to grow my business?"</h3>
-                    <p className="text-red-200/80 text-sm">17 blog posts. Most don't apply.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-red-300 mb-2 leading-tight">"How to grow my business?"</h3>
+                    <p className="text-red-200/80 text-sm leading-relaxed">17 blog posts. Most don't apply.</p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
                 </div>
                 {/* Animated glow effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
               </div>
 
               {/* Right Card - AI Sidekick */}
-              <div className="group bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:border-emerald-400/60 cursor-pointer">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg] group-hover:shadow-2xl group-hover:shadow-emerald-500/60">
-                    <Sparkles className="w-6 h-6 text-white transition-all duration-300 group-hover:scale-110" />
+              <div className="group bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:border-emerald-400/60 cursor-pointer">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-emerald-600/40 group-hover:text-emerald-200">Your AI Sidekick</span>
+                </div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg] group-hover:shadow-2xl group-hover:shadow-emerald-500/60">
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-semibold text-emerald-300 mb-2 transition-all duration-300 group-hover:text-emerald-200">Knows your trade + zip code</h3>
-                    <p className="text-emerald-200/80 text-sm">Personalized advice built for your market.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-emerald-300 mb-2 transition-all duration-300 group-hover:text-emerald-200 leading-tight">Knows your trade + zip code</h3>
+                    <p className="text-emerald-200/80 text-sm leading-relaxed">Personalized advice built for your market.</p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-emerald-600/40 group-hover:text-emerald-200">Your AI Sidekick</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none group-hover:from-emerald-500/10 transition-all duration-500"></div>
               </div>
@@ -1226,36 +1226,36 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             {/* Row 2 - Pricing Clarity */}
             <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
               {/* Left Card - Generic Google Search */}
-              <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
-                    <DollarSign className="w-6 h-6 text-white transition-all duration-300 group-hover:scale-110" />
+              <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
+                </div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
+                    <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-semibold text-red-300 mb-2 transition-all duration-300 group-hover:text-red-200">"Best prices for services?"</h3>
-                    <p className="text-red-200/80 text-sm">Forums. Guesswork. Conflicting advice.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-red-300 mb-2 transition-all duration-300 group-hover:text-red-200 leading-tight">"Best prices for services?"</h3>
+                    <p className="text-red-200/80 text-sm leading-relaxed">Forums. Guesswork. Conflicting advice.</p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
                 </div>
                 {/* Animated glow effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
               </div>
 
               {/* Right Card - AI Sidekick */}
-              <div className="group bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:border-emerald-400/60 cursor-pointer">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg] group-hover:shadow-2xl group-hover:shadow-emerald-500/60">
-                    <BarChart3 className="w-6 h-6 text-white transition-all duration-300 group-hover:scale-110" />
+              <div className="group bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:border-emerald-400/60 cursor-pointer">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-emerald-600/40 group-hover:text-emerald-200">Your AI Sidekick</span>
+                </div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg] group-hover:shadow-2xl group-hover:shadow-emerald-500/60">
+                    <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-semibold text-emerald-300 mb-2 transition-all duration-300 group-hover:text-emerald-200">Built-in pricing insights</h3>
-                    <p className="text-emerald-200/80 text-sm">Suggests upsells, margins, and seasonal promos.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-emerald-300 mb-2 leading-tight transition-all duration-300 group-hover:text-emerald-200">Built-in pricing insights</h3>
+                    <p className="text-emerald-200/80 text-sm leading-relaxed">Suggests upsells, margins, and seasonal promos.</p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-emerald-600/40 group-hover:text-emerald-200">Your AI Sidekick</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none group-hover:from-emerald-500/10 transition-all duration-500"></div>
               </div>
@@ -1264,36 +1264,36 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             {/* Row 3 - Website Help */}
             <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
               {/* Left Card - Generic Google Search */}
-              <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
-                    <Globe className="w-6 h-6 text-white transition-all duration-300 group-hover:scale-110" />
+              <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
+                </div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
+                    <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-semibold text-red-300 mb-2 transition-all duration-300 group-hover:text-red-200">"Why is my site underperforming?"</h3>
-                    <p className="text-red-200/80 text-sm">SEO jargon. Audits. No clear action.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-red-300 mb-2 leading-tight transition-all duration-300 group-hover:text-red-200">"Why is my site underperforming?"</h3>
+                    <p className="text-red-200/80 text-sm leading-relaxed">SEO jargon. Audits. No clear action.</p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
                 </div>
                 {/* Animated glow effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
               </div>
 
               {/* Right Card - AI Sidekick */}
-              <div className="group bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:border-emerald-400/60 cursor-pointer">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg] group-hover:shadow-2xl group-hover:shadow-emerald-500/60">
-                    <Target className="w-6 h-6 text-white transition-all duration-300 group-hover:scale-110" />
+              <div className="group bg-gradient-to-br from-emerald-900/20 to-emerald-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-emerald-400/30 relative overflow-hidden shadow-2xl shadow-emerald-500/10 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:border-emerald-400/60 cursor-pointer">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-emerald-600/40 group-hover:text-emerald-200">Your AI Sidekick</span>
+                </div>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg] group-hover:shadow-2xl group-hover:shadow-emerald-500/60">
+                    <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-semibold text-emerald-300 mb-2 transition-all duration-300 group-hover:text-emerald-200">Clear fixes, no tech talk</h3>
-                    <p className="text-emerald-200/80 text-sm">Improve rankings and leads with simple suggestions.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-emerald-300 mb-2 leading-tight transition-all duration-300 group-hover:text-emerald-200">Clear fixes, no tech talk</h3>
+                    <p className="text-emerald-200/80 text-sm leading-relaxed">Improve rankings and leads with simple suggestions.</p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-medium text-emerald-300 bg-emerald-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-emerald-600/40 group-hover:text-emerald-200">Your AI Sidekick</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none group-hover:from-emerald-500/10 transition-all duration-500"></div>
               </div>
