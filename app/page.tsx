@@ -1179,7 +1179,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <span className="text-white">You don't run a generic business — why use a generic search engine?</span>
             </h2>
             <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-4xl xl:max-w-6xl mx-auto mb-16 lg:mb-20">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">AI Sidekicks</span> are built for your trade — with answers tailored to how your business actually works.
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive text-2xl xl:text-3xl 2xl:text-4xl">AI Sidekicks</span> are built for your trade — with answers tailored to how your business actually works.
             </p>
           </div>
 
@@ -1310,7 +1310,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </p>
             
             <Button 
-              onClick={() => window.location.href = '/landscaping'}
+              onClick={() => window.location.href = '/signup'}
               size="lg"
               className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
             >
