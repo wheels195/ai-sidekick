@@ -1,5 +1,6 @@
 "use client"
 
+// Reverted to clean version without sidebar components
 import React from "react"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
