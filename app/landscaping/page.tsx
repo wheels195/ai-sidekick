@@ -495,7 +495,6 @@ export default function LandscapingChat() {
   const [trialTokenLimit, setTrialTokenLimit] = useState(250000) // 250k tokens total for 7-day trial
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const [placeholderText, setPlaceholderText] = useState("")
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   
@@ -505,76 +504,6 @@ export default function LandscapingChat() {
     maxHeight: 200,
   })
 
-  // Mobile-friendly shorter suggestions for better UX
-  const placeholderSuggestions = [
-    "Ask me anything",
-    "How can I get more local customers?",
-    "What should I charge for maintenance?",
-    "Help me with spring cleanup content",
-    "How do I rank higher on Google?",
-    "What winter services should I offer?",
-    "How can I get more 5-star reviews?",
-    "Help me create a quote template",
-    "What's the best way to upsell?",
-    "How do I compete with larger companies?",
-  ]
-
-  useEffect(() => {
-    // Only run animation after hydration and if user hasn't interacted
-    if (!isClient || isInputFocused || input.length > 0 || messages.length > 1) {
-      return
-    }
-
-    let timeout: NodeJS.Timeout
-    let currentCharIndex = 0
-    let currentSuggestionIdx = 0
-    let isCurrentlyTyping = true
-
-    const startTypingAnimation = () => {
-      // Reset to completely empty state
-      setPlaceholderText("")
-      currentCharIndex = 0
-      currentSuggestionIdx = 0
-      isCurrentlyTyping = true
-      
-      // Start typing immediately
-      typeNextCharacter()
-    }
-
-    const typeNextCharacter = () => {
-      const currentSuggestion = placeholderSuggestions[currentSuggestionIdx]
-
-      if (isCurrentlyTyping) {
-        // Typing phase - add one character at a time
-        if (currentCharIndex < currentSuggestion.length) {
-          currentCharIndex++
-          setPlaceholderText(currentSuggestion.substring(0, currentCharIndex))
-          timeout = setTimeout(typeNextCharacter, 45 + Math.random() * 15) // 45-60ms natural typing
-        } else {
-          // Finished typing current suggestion, wait then start deleting
-          isCurrentlyTyping = false
-          timeout = setTimeout(typeNextCharacter, 2000)
-        }
-      } else {
-        // Deleting phase - remove one character at a time
-        if (currentCharIndex > 0) {
-          currentCharIndex--
-          setPlaceholderText(currentSuggestion.substring(0, currentCharIndex))
-          timeout = setTimeout(typeNextCharacter, 25) // Fast deleting
-        } else {
-          // Finished deleting, move to next suggestion
-          currentSuggestionIdx = (currentSuggestionIdx + 1) % placeholderSuggestions.length
-          isCurrentlyTyping = true
-          timeout = setTimeout(typeNextCharacter, 300) // Brief pause before next
-        }
-      }
-    }
-
-    // Start the animation immediately
-    startTypingAnimation()
-
-    return () => clearTimeout(timeout)
-  }, [isClient, isInputFocused, input.length, messages.length]) // Remove internal state dependencies
 
   const scrollToBottom = () => {
     if (typeof document !== 'undefined') {
@@ -1834,11 +1763,7 @@ export default function LandscapingChat() {
                             }
                           }
                         }}
-                        placeholder={
-                          isInputFocused || input.length > 0 || messages.length > 1
-                            ? "Ask me anything about growing your landscaping business..."
-                            : placeholderText
-                        }
+                        placeholder="Ask me anything about growing your landscaping business..."
                         className="w-full px-0 py-0 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 placeholder:text-sm min-h-[48px] leading-relaxed"
                         style={{
                           overflow: "hidden",
