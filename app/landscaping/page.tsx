@@ -555,7 +555,7 @@ export default function LandscapingChat() {
       }
     }
 
-    timeout = setTimeout(typeText, 100)
+    timeout = setTimeout(typeText, 1000)
 
     return () => clearTimeout(timeout)
   }, [
@@ -1854,7 +1854,7 @@ export default function LandscapingChat() {
 
                 {/* Quick Action Suggestions for Landscaping */}
                 {messages.length === 1 && (
-                  <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
+                  <div className="hidden sm:flex items-center justify-center gap-2 mt-4 flex-wrap">
                     <ActionButton
                       icon={<TrendingUp className="w-4 h-4" />}
                       label="Local SEO Tips"

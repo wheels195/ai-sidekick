@@ -685,11 +685,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           </div>
                           <div>
                             <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
-                            <p className="text-xs text-gray-300">Your Landscaping AI Sidekick</p>
+                            <p className="text-xs text-gray-300 hidden sm:inline">Your Landscaping AI Sidekick</p>
+                            <p className="text-xs text-gray-300 sm:hidden">Personal Business Strategist</p>
                           </div>
                         </div>
                         
-                        <div className="flex items-center space-x-2">
+                        <div className="hidden sm:flex items-center space-x-2">
                           <button className="text-gray-200 hover:text-white text-sm px-2 py-1">
                             Profile
                           </button>
@@ -747,17 +748,17 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                               <span className="text-white text-sm">Smarter pricing & seasonal trends</span>
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="hidden sm:flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                               <span className="text-white text-sm">Custom business planning</span>
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="hidden sm:flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                               <span className="text-white text-sm">Scaling operations</span>
                             </div>
                           </div>
                           
-                          <div className="bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
+                          <div className="hidden sm:block bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
                             <div className="flex items-start space-x-2">
                               <span className="text-emerald-300 text-base">💡</span>
                               <div>
@@ -779,7 +780,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         <div className="relative">
                           <textarea
                             className="w-full bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl px-4 py-3 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
-                            placeholder="Ask me anything about growing your landscaping business..."
+                            placeholder="Ask me anything..."
                             rows={2}
                             disabled
                           />
@@ -807,11 +808,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           <span>File Upload</span>
                         </span>
                         <span className="flex items-center space-x-1 text-emerald-400">
-                          <Sparkles className="w-3 h-3" />
+                          <Zap className="w-3 h-3" />
                           <span>Tips</span>
                         </span>
                       </div>
-                      <span className="text-emerald-400">⚡ Advanced AI</span>
+                      <span className="text-emerald-400 hidden sm:inline">⚡ Advanced AI</span>
                     </div>
                   </div>
                 </div>
