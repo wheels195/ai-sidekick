@@ -640,16 +640,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </span>
             </div>
 
-            <div className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative rounded-2xl">
-              {/* Premium glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-              
-              {/* Live Badge - positioned outside card */}
-              <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
+            <div className="max-w-7xl mx-auto relative">
+              {/* Live Badge */}
+              <div className="absolute -top-3 right-4 sm:right-6 lg:right-8 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
                 🟢 LIVE NOW
               </div>
               
-              <div className="p-6 sm:p-8 lg:p-12 relative z-10">
+              <div className="px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-6 sm:mb-8">
                   <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4">
                     <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
@@ -806,7 +803,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 </div>
 
                 {/* Value Props Below Chat */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 sm:mt-8 mb-6 sm:mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 md:mt-12 mb-6 sm:mb-8">
                   <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
                     <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
                     <h4 className="text-sm font-semibold text-white mb-1">Professional Interface</h4>
@@ -838,7 +835,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </p>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
@@ -1253,10 +1249,10 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
               {/* Left Card - Generic Google Search */}
               <div className="group bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8 border border-red-700/30 relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/20 hover:border-red-500/50 cursor-pointer">
-                <div className="mb-3 lg:mb-0 lg:absolute lg:top-4 lg:right-4">
+                <div className="mb-3 lg:mb-0 lg:absolute lg:top-6 lg:right-4">
                   <span className="text-xs font-medium text-red-300 bg-red-600/20 px-2 py-1 rounded-full transition-all duration-300 group-hover:bg-red-600/40 group-hover:text-red-200">Generic Search</span>
                 </div>
-                <div className="flex items-start gap-3 sm:gap-4">
+                <div className="flex items-start gap-3 sm:gap-4 lg:pr-24">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-red-500/50">
                     <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-all duration-300 group-hover:scale-110" />
                   </div>
