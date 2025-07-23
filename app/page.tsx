@@ -668,25 +668,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
                     <div className="px-4 py-3">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
-                            <ArrowLeft className="w-4 h-4 mr-1" />
-                            Back
-                          </button>
-                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
-                            <Menu className="w-4 h-4 mr-1" />
-                            Chats
-                          </button>
-                        </div>
-                        
                         <div className="flex items-center space-x-2 cursor-pointer">
                           <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                            <Leaf className="w-4 h-4 text-white" />
+                            <Leaf className="w-5 h-5 text-white" />
                           </div>
                           <div>
                             <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
-                            <p className="text-xs text-gray-300 hidden sm:inline">Your Landscaping AI Sidekick</p>
-                            <p className="text-xs text-gray-300 sm:hidden">Personal Business Strategist</p>
+                            <p className="text-xs text-gray-300">Personal Business Strategist</p>
                           </div>
                         </div>
                         

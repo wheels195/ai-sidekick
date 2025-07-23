@@ -555,7 +555,7 @@ export default function LandscapingChat() {
       }
     }
 
-    timeout = setTimeout(typeText, 1000)
+    timeout = setTimeout(typeText, 300)
 
     return () => clearTimeout(timeout)
   }, [
@@ -1230,7 +1230,7 @@ export default function LandscapingChat() {
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: 160px !important;
+            padding-bottom: 180px !important;
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -1241,6 +1241,13 @@ export default function LandscapingChat() {
           .sticky-input-area {
             position: -webkit-sticky;
             position: sticky;
+            bottom: 0;
+            z-index: 50;
+          }
+          /* Ensure input is always visible */
+          .mobile-input-container {
+            min-height: 120px;
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
           }
         }
         /* Desktop centered layout */
@@ -1265,8 +1272,8 @@ export default function LandscapingChat() {
       `}</style>
       <div className="flex flex-col h-screen bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden">
 
-      {/* Fixed Header - Your Original Design */}
-      <header className="flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl relative z-50">
+      {/* Fixed Header - Always Visible */}
+      <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
             <div className="flex items-center space-x-2">
@@ -1513,7 +1520,7 @@ export default function LandscapingChat() {
         {/* Desktop Centered Container */}
         <div className="desktop-chat-container flex-1 flex flex-col min-h-0">
           {/* Chat Messages Container - Responsive Design */}
-          <div className="flex-1 min-h-0">
+          <div className="flex-1 min-h-0 pt-14 sm:pt-16 lg:pt-20">
             <div className="h-full flex flex-col">
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
@@ -1522,8 +1529,8 @@ export default function LandscapingChat() {
                 style={{
                   // Use instant scroll on mobile for better performance, smooth on desktop
                   scrollBehavior: isMobile ? 'auto' : 'smooth',
-                  // Set fixed height to enable proper scrolling - ChatGPT approach
-                  height: 'calc(100vh - 160px)',
+                  // Set fixed height to enable proper scrolling - Account for header
+                  height: 'calc(100vh - 240px)',
                   // Add sufficient bottom padding so content is visible above input
                   paddingBottom: '140px'
                 }}
@@ -1711,7 +1718,7 @@ export default function LandscapingChat() {
               )}
 
               {/* ChatGPT-style Input Bar - Always Visible */}
-              <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom">
+              <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container">
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
