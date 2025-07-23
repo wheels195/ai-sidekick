@@ -469,7 +469,12 @@ export default function LandscapingChat() {
     mainChallenges: string[]
   } | null>(null)
   const [showUserMenu, setShowUserMenu] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([{
+    id: 'welcome-initial',
+    role: 'assistant',
+    content: `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`,
+    timestamp: new Date()
+  }])
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(true)
   const [hasShownWelcome, setHasShownWelcome] = useState(false)
   const [input, setInput] = useState("")
@@ -649,9 +654,9 @@ export default function LandscapingChat() {
           setTokensUsedTrial(data.user.tokensUsedTrial || 0)
           setTrialTokenLimit(data.user.trialTokenLimit || 250000)
           
-          // Set up first-time user state
-          setMessages([])
-          setIsFirstTimeUser(true)
+          // Check if user has previous conversations to determine if they're returning
+          const hasConversationHistory = data.user.hasConversationHistory || false
+          setIsFirstTimeUser(!hasConversationHistory)
           setHasShownWelcome(false)
         } else if (response.status === 401) {
           // User not authenticated - use mock test data for development
@@ -672,9 +677,8 @@ export default function LandscapingChat() {
           }
           setUser(mockUserProfile)
           
-          // Set up first-time user state
-          setMessages([])
-          setIsFirstTimeUser(true)
+          // Mock user is treated as returning user for testing
+          setIsFirstTimeUser(false)
           setHasShownWelcome(false)
         }
       } catch (error) {
@@ -695,39 +699,44 @@ export default function LandscapingChat() {
         }
         setUser(mockUserProfile)
         
-        // Set up first-time user state
-        setMessages([])
-        setIsFirstTimeUser(true)
+        // Mock user is treated as returning user for testing
+        setIsFirstTimeUser(false)
         setHasShownWelcome(false)
       }
     }
     fetchUser()
   }, [router])
 
-  // Add welcome message for first-time users
+  // Update welcome message based on user type once user data loads
   useEffect(() => {
-    if (user && isFirstTimeUser && !hasShownWelcome && messages.length === 0) {
+    if (user && !hasShownWelcome && messages.length === 1 && messages[0].id === 'welcome-initial') {
       const displayName = user.firstName || 'there'
-      const businessName = user.businessName || 'your business'
+      let welcomeContent = ''
+      
+      if (isFirstTimeUser) {
+        // First-time user: keep generic message but could personalize slightly
+        welcomeContent = `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
+      } else {
+        // Returning user: personalized greeting with different message
+        welcomeContent = `<span class="text-white">Hi ${displayName}! What are we working on today?</span>`
+      }
       
       const welcomeMessage: Message = {
-        id: 'welcome-' + Date.now().toString(),
+        id: 'welcome-final',
         role: 'assistant',
-        content: `<span class="text-white">Hi ${displayName}! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`,
+        content: welcomeContent,
         timestamp: new Date()
       }
       
       setMessages([welcomeMessage])
       setHasShownWelcome(true)
       
-      // Focus the input after a short delay
-      setTimeout(() => {
-        if (textareaRef.current) {
-          textareaRef.current.focus()
-        }
-      }, 500)
+      // Focus the input immediately (no delay needed since page is already loaded)
+      if (textareaRef.current) {
+        textareaRef.current.focus()
+      }
     }
-  }, [user, isFirstTimeUser, hasShownWelcome, messages.length, textareaRef])
+  }, [user, isFirstTimeUser, hasShownWelcome, messages, textareaRef])
 
   // Close user menu when clicking outside
   useEffect(() => {

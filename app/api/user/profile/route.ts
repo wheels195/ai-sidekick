@@ -31,6 +31,15 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // Check if user has any previous conversations to determine if they're a returning user
+    const { data: conversations, error: convError } = await supabase
+      .from('user_conversations')
+      .select('id')
+      .eq('user_id', user.userId)
+      .limit(1)
+
+    const hasConversationHistory = conversations && conversations.length > 0
+
     return NextResponse.json({
       success: true,
       user: {
@@ -53,7 +62,9 @@ export async function GET(request: NextRequest) {
         tokensUsedTrial: profile.tokens_used_trial || 0,
         trialTokenLimit: profile.trial_token_limit || 250000,
         trialStartedAt: profile.trial_started_at,
-        trialExpiresAt: profile.trial_expires_at
+        trialExpiresAt: profile.trial_expires_at,
+        // Conversation history for welcome message logic
+        hasConversationHistory: hasConversationHistory
       }
     })
 
