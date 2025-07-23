@@ -626,6 +626,59 @@ export default function LandscapingChat() {
     }
   }, [])
 
+  // Handle viewport changes and keyboard visibility
+  useEffect(() => {
+    if (!isClient || typeof window === 'undefined') return
+
+    const handleResize = () => {
+      // Force recalculation of container heights
+      const messagesContainer = document.querySelector('.messages-scroll-container')
+      if (messagesContainer && isMobile) {
+        // Use visualViewport if available for better mobile keyboard handling
+        const viewportHeight = window.visualViewport?.height || window.innerHeight
+        const headerHeight = 80 // Approximate header height
+        const inputHeight = 160 // Approximate input area height
+        const newHeight = Math.max(300, viewportHeight - headerHeight - inputHeight)
+        
+        messagesContainer.style.height = `${newHeight}px`
+        messagesContainer.style.maxHeight = `${newHeight}px`
+      }
+    }
+
+    const handleOrientationChange = () => {
+      // Delay to allow viewport to stabilize
+      setTimeout(handleResize, 300)
+    }
+
+    // Handle visual viewport changes (mobile keyboard)
+    const handleVisualViewportChange = () => {
+      if (window.visualViewport && isMobile) {
+        handleResize()
+      }
+    }
+
+    // Add event listeners
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('orientationchange', handleOrientationChange)
+    
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleVisualViewportChange)
+    }
+
+    // Multiple calculations to handle viewport stabilization
+    setTimeout(handleResize, 100)
+    setTimeout(handleResize, 300)
+    setTimeout(handleResize, 600) // Final calculation after full viewport stabilization
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleOrientationChange)
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleVisualViewportChange)
+      }
+    }
+  }, [isClient, isMobile])
+
   useEffect(() => {
     // Only scroll to bottom when a new message is added, not on initial load or typing
     if (messages.length > 1) {
@@ -1222,15 +1275,14 @@ export default function LandscapingChat() {
         /* Mobile keyboard handling and safe areas */
         @media (max-width: 640px) {
           .mobile-chat-container {
-            height: 100dvh; /* Dynamic viewport height */
-            height: 100vh;
+            height: 100dvh; /* Dynamic viewport height only */
           }
           .safe-bottom {
             padding-bottom: max(16px, env(safe-area-inset-bottom));
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: 180px !important;
+            padding-bottom: max(180px, env(safe-area-inset-bottom)) !important;
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -1247,7 +1299,12 @@ export default function LandscapingChat() {
           /* Ensure input is always visible */
           .mobile-input-container {
             min-height: 120px;
-            padding-bottom: max(20px, env(safe-area-inset-bottom));
+            padding-bottom: max(32px, env(safe-area-inset-bottom));
+          }
+          /* Dynamic viewport height containers */
+          .mobile-messages-container {
+            height: calc(100dvh - 280px); /* Account for header + input + padding */
+            max-height: calc(100dvh - 280px);
           }
         }
         /* Desktop centered layout */
@@ -1270,7 +1327,7 @@ export default function LandscapingChat() {
           }
         }
       `}</style>
-      <div className="flex flex-col h-screen bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden">
+      <div className="flex flex-col mobile-chat-container bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden" style={{ height: isMobile ? '100dvh' : '100vh' }}>
 
       {/* Fixed Header - Always Visible */}
       <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
@@ -1525,13 +1582,17 @@ export default function LandscapingChat() {
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container' : ''}`}
-                style={{
-                  // Use instant scroll on mobile for better performance, smooth on desktop
-                  scrollBehavior: isMobile ? 'auto' : 'smooth',
-                  // Set fixed height to enable proper scrolling - Account for header
+                className={`messages-scroll-container overflow-y-auto px-4 py-6 pb-32 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
+                style={isMobile ? {
+                  // Mobile: Use dynamic viewport height and visualViewport if available
+                  scrollBehavior: 'auto',
+                  height: 'calc(100dvh - 280px)',
+                  maxHeight: 'calc(100dvh - 280px)',
+                  paddingBottom: `max(128px, env(safe-area-inset-bottom))`
+                } : {
+                  // Desktop: Use regular viewport height
+                  scrollBehavior: 'smooth',
                   height: 'calc(100vh - 240px)',
-                  // Add sufficient bottom padding so content is visible above input
                   paddingBottom: '140px'
                 }}
               >
@@ -1718,7 +1779,13 @@ export default function LandscapingChat() {
               )}
 
               {/* ChatGPT-style Input Bar - Always Visible */}
-              <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container">
+              <div 
+                className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
+                style={isMobile ? {
+                  paddingBottom: `max(32px, env(safe-area-inset-bottom))`,
+                  minHeight: '120px'
+                } : undefined}
+              >
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
