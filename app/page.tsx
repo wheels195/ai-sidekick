@@ -204,7 +204,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
   }
 
   return (
-    <>
+    <div>
       <style>{`
         @keyframes slide-in { 
           0% { opacity: 0; transform: translateX(-50px); } 
@@ -835,6 +835,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </p>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1809,6 +1810,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
       </footer>
       </div>
-    </>
+    </div>
   )
 }
