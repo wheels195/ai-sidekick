@@ -258,7 +258,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="flex justify-between items-center h-16 sm:h-20">
             <div
               className="flex items-center space-x-3 group cursor-pointer"
@@ -616,6 +616,244 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
       </section>
 
+      {/* Our AI Sidekicks - Available Now */}
+      <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
+        <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
+              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                Our <span className="font-cursive">AI Sidekicks</span>
+              </span>
+            </h2>
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+              Specialized AI assistants built for specific trades. Each one trained to understand your industry inside
+              and out.
+            </p>
+          </div>
+
+          {/* Available Now - Landscaping */}
+          <div className="mb-20">
+            <div className="text-center mb-12">
+              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-blue-500/30 rounded-full px-6 py-3 text-blue-300 font-semibold">
+                <CheckCircle className="w-5 h-5" />
+                <span>Available Now</span>
+              </span>
+            </div>
+
+            <div className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative rounded-2xl">
+              {/* Premium glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+              
+              {/* Live Badge - positioned outside card */}
+              <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
+                🟢 LIVE NOW
+              </div>
+              
+              <div className="p-6 sm:p-8 lg:p-12 relative z-10">
+                <div className="text-center mb-6 sm:mb-8">
+                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4">
+                    <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
+                      Ready when you are
+                    </span>
+                  </h3>
+                  <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8">
+                    Your Full Time AI Landscaping Business Partner
+                  </p>
+                </div>
+
+                {/* Static Chat Interface Preview */}
+                <div className="bg-gradient-to-br from-black via-gray-950 to-black rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
+                  
+                  {/* Header */}
+                  <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
+                    <div className="px-4 py-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
+                            <ArrowLeft className="w-4 h-4 mr-1" />
+                            Back
+                          </button>
+                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1 flex items-center">
+                            <Menu className="w-4 h-4 mr-1" />
+                            Chats
+                          </button>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 cursor-pointer">
+                          <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                            <Leaf className="w-4 h-4 text-white" />
+                          </div>
+                          <div>
+                            <h1 className="text-sm font-bold text-white font-cursive">Dirt.i</h1>
+                            <p className="text-xs text-gray-300">Your Landscaping AI Sidekick</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1">
+                            Profile
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Welcome Message */}
+                  <div className="p-4 h-[340px] overflow-visible">
+                    {/* Enhanced Chat Bubble with Character Inside */}
+                    <div className="relative">
+                      {/* Clean Chat Bubble */}
+                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-6 py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
+                        
+                        {/* Character - Hidden on mobile, shown on desktop */}
+                        <div className="hidden lg:block absolute -left-8 top-0 z-10">
+                          <div className="relative">
+                            {/* Ground shadow under his boots */}
+                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80"></div>
+                            
+                            {/* Character - Much larger */}
+                            <img 
+                              src="/character.png?v=4" 
+                              alt="Dirt.i character"
+                              className="w-72 h-72 object-contain relative z-10"
+                              style={{ 
+                                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
+                              }}
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Text content with margin for bigger character */}
+                        <div className="ml-0 lg:ml-48">
+                        <div className="space-y-3 text-sm">
+                          <p className="text-base">
+                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Dirt.i</span>. Your strategic business sidekick.
+                          </p>
+                          
+                          <p className="text-gray-200 text-sm">
+                            Personalized to help you with:
+                          </p>
+                          
+                          <div className="space-y-1.5 ml-3">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Marketing ideas & content creation</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Upselling strategies</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Smarter pricing & seasonal trends</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Custom business planning</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-white text-sm">Scaling operations</span>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
+                            <div className="flex items-start space-x-2">
+                              <span className="text-emerald-300 text-base">💡</span>
+                              <div>
+                                <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
+                                <p className="text-white text-xs">Start with a current goal. Be Specific. Let's go.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Input Area */}
+                  <div className="border-t border-white/10 p-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1">
+                        <div className="relative">
+                          <textarea
+                            className="w-full bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl px-4 py-3 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+                            placeholder="Ask me anything about growing your landscaping business..."
+                            rows={2}
+                            disabled
+                          />
+                          <div className="absolute right-2 top-2 flex items-center space-x-1">
+                            <button className="p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
+                              <Paperclip className="w-4 h-4" />
+                            </button>
+                            <button className="p-1.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg transition-colors">
+                              <Send className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Features row */}
+                    <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
+                      <div className="flex items-center space-x-4">
+                        <span className="flex items-center space-x-1">
+                          <Globe className="w-3 h-3 text-blue-400" />
+                          <span>Web Search</span>
+                        </span>
+                        <span className="flex items-center space-x-1">
+                          <Upload className="w-3 h-3 text-emerald-400" />
+                          <span>File Upload</span>
+                        </span>
+                        <span className="flex items-center space-x-1 text-emerald-400">
+                          <Sparkles className="w-3 h-3" />
+                          <span>Tips</span>
+                        </span>
+                      </div>
+                      <span className="text-emerald-400">⚡ Advanced AI</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value Props Below Chat */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 sm:mt-8 mb-6 sm:mb-8">
+                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <h4 className="text-sm font-semibold text-white mb-1">Professional Interface</h4>
+                    <p className="text-xs text-gray-300">Built specifically for landscaping businesses</p>
+                  </div>
+                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <Sparkles className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <h4 className="text-sm font-semibold text-white mb-1">Expert AI Responses</h4>
+                    <p className="text-xs text-gray-300">Detailed, actionable business advice</p>
+                  </div>
+                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
+                    <TrendingUp className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                    <h4 className="text-sm font-semibold text-white mb-1">Real Results</h4>
+                    <p className="text-xs text-gray-300">Strategies that increase revenue</p>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold"
+                    onClick={() => (window.location.href = "/signup")}
+                  >
+                    <span className="block sm:inline">Start Free Trial - No Credit Card</span>
+                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
+                  </Button>
+                  <p className="text-center text-xs sm:text-sm text-emerald-300 mt-2 sm:mt-3 px-2">
+                    ✅ Instant access • 7-day free trial • Cancel anytime
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Idea Ticker Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden">
         <div className="text-center mb-8 sm:mb-12">
@@ -749,7 +987,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         id="features"
         className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black"
       >
-        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
@@ -793,8 +1031,26 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   key={index}
                   className="flex items-start space-x-6 group hover:scale-105 transition-all duration-300"
                 >
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl flex items-center justify-center backdrop-blur-xl border border-white/10 group-hover:shadow-blue-500/20 transition-all duration-300 shadow-lg">
-                    <feature.icon className="w-8 h-8 sm:w-9 sm:h-9 text-blue-400 stroke-2" />
+                  <div 
+                    className="bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl backdrop-blur-xl border border-white/10 group-hover:shadow-blue-500/20 transition-all duration-300 shadow-lg"
+                    style={{
+                      width: '64px',
+                      height: '64px',
+                      aspectRatio: '1 / 1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}
+                  >
+                    <feature.icon 
+                      className="text-blue-400 stroke-2" 
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        objectFit: 'contain'
+                      }}
+                    />
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl lg:text-2xl font-medium text-white mb-3">{feature.title}</h3>
@@ -916,7 +1172,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* Advanced AI Capabilities Section */}
       <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
-        <div className="max-w-7xl xl:max-w-none mx-auto relative">
+        <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="text-white">Real-Time</span>{" "}
@@ -1168,751 +1424,243 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
       </section>
 
-      {/* Products Section - AI Sidekicks */}
-      <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
-        <div className="max-w-7xl xl:max-w-none mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
-          <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Our <span className="font-cursive">AI Sidekicks</span>
+      {/* More AI Sidekicks - Coming Soon */}
+      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6">
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+                More <span className="font-cursive">AI Sidekicks</span>
               </span>
             </h2>
-            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
-              Specialized AI assistants built for specific trades. Each one trained to understand your industry inside
-              and out.
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+              We're building AI specialists for every trade. Join the waitlist to be the first to know when your industry launches.
             </p>
           </div>
 
-          {/* Available Now - Landscaping */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-blue-500/30 rounded-full px-6 py-3 text-blue-300 font-semibold">
-                <CheckCircle className="w-5 h-5" />
-                <span>Available Now</span>
-              </span>
-            </div>
-
-            <div className="group backdrop-blur-2xl bg-gray-800/60 border-emerald-500/30 shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 max-w-4xl mx-auto hover:bg-gray-800/80 relative rounded-2xl">
-              {/* Premium glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-              
-              {/* Live Badge - positioned outside card */}
-              <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
-                🟢 LIVE NOW
-              </div>
-              
-              <div className="p-6 sm:p-8 lg:p-12 relative z-10">
-                <div className="text-center mb-6 sm:mb-8">
-                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4">
-                    <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
-                      Ready when you are
-                    </span>
-                  </h3>
-                  <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8">
-                    Your professional landscaping business AI interface
-                  </p>
-                </div>
-
-                {/* Static Chat Interface Preview */}
-                <div className="bg-gradient-to-br from-black via-gray-950 to-black rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
+          {/* 3x2 Grid - Mobile: 1 column, Tablet: 2 columns, Desktop: 3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            
+            {/* Electrical AI */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-yellow-500/30 transition-all duration-300 h-80">
+                <div className="flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center">
+                      <Zap className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
                   
-                  {/* Header - Simplified */}
-                  <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
-                    <div className="px-4 py-3">
-                      <div className="flex items-center justify-center">
-                        <div className="flex items-center space-x-3 cursor-pointer">
-                          <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                            <Leaf className="w-6 h-6 text-white" />
-                          </div>
-                          <div>
-                            <h1 className="text-base font-bold text-white font-cursive">Dirt.i</h1>
-                            <p className="text-sm text-gray-300">Your AI Sidekick</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Welcome Message - Responsive */}
-                  <div className="p-2 sm:p-4 min-h-[200px] sm:h-[340px] overflow-visible">
-                    {/* Enhanced Chat Bubble with Character Inside */}
-                    <div className="relative">
-                      {/* Clean Chat Bubble - Responsive padding */}
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-4 py-4 sm:px-6 sm:py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
-                        
-                        {/* Character - Hidden on mobile, shown on desktop */}
-                        <div className="hidden lg:block absolute -left-8 top-0 z-10">
-                          <div className="relative">
-                            {/* Ground shadow under his boots */}
-                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80"></div>
-                            
-                            {/* Character - Much larger */}
-                            <img 
-                              src="/character.png?v=4" 
-                              alt="Dirt.i character"
-                              className="w-72 h-72 object-contain relative z-10"
-                              style={{ 
-                                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
-                              }}
-                            />
-                          </div>
-                        </div>
-                        
-                        {/* Text content - responsive margin and sizing */}
-                        <div className="ml-0 lg:ml-48">
-                        <div className="space-y-2 sm:space-y-3">
-                          <p className="text-base sm:text-lg">
-                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg sm:text-xl">Dirt.i</span>. Your strategic business sidekick.
-                          </p>
-                          
-                          <p className="text-gray-200 text-sm sm:text-base">
-                            Personalized to help you with:
-                          </p>
-                          
-                          {/* Simplified list for mobile */}
-                          <div className="space-y-1 sm:space-y-1.5 ml-2 sm:ml-3">
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                              <span className="text-white text-sm sm:text-base">Marketing & content creation</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                              <span className="text-white text-sm sm:text-base">Pricing & seasonal strategies</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                              <span className="text-white text-sm sm:text-base">Business growth planning</span>
-                            </div>
-                          </div>
-                          
-                          {/* Pro tip - hidden on mobile to save space */}
-                          <div className="hidden sm:block bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
-                            <div className="flex items-start space-x-2">
-                              <span className="text-emerald-300 text-base">💡</span>
-                              <div>
-                                <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
-                                <p className="text-white text-xs">Start with a current problem. Be specific. Let's fix it together.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Input Area */}
-                  <div className="border-t border-white/10 p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex-1">
-                        <div className="relative">
-                          <textarea
-                            className="w-full bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl px-4 py-3 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
-                            placeholder="Ask me anything..."
-                            rows={2}
-                            disabled
-                          />
-                          <div className="absolute right-2 top-2 flex items-center space-x-1">
-                            <button className="p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
-                              <Paperclip className="w-4 h-4" />
-                            </button>
-                            <button className="p-1.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg transition-colors">
-                              <Send className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-white mb-2">Electrical AI</h3>
+                    <p className="text-gray-300 text-sm mb-4">Code compliance, troubleshooting, and safety protocols for electrical contractors.</p>
                     
-                    {/* Features row */}
-                    <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
-                      <div className="flex items-center space-x-4">
-                        <span className="flex items-center space-x-1">
-                          <Globe className="w-3 h-3 text-blue-400" />
-                          <span>Web Search</span>
-                        </span>
-                        <span className="flex items-center space-x-1">
-                          <Upload className="w-3 h-3 text-emerald-400" />
-                          <span>File Upload</span>
-                        </span>
-                        <span className="flex items-center space-x-1 text-emerald-400">
-                          <Sparkles className="w-3 h-3" />
-                          <span>Tips</span>
-                        </span>
+                    {/* Mini Chat Preview */}
+                    <div className="bg-black/40 rounded-lg p-3 space-y-2">
+                      <div className="bg-yellow-500/20 rounded p-2 text-xs text-yellow-300">
+                        "What's the code requirement for GFCI outlets?"
                       </div>
-                      <span className="hidden sm:inline text-emerald-400">⚡ Advanced AI</span>
+                      <div className="bg-gray-700/50 rounded p-2 text-xs text-gray-300">
+                        NEC 210.8 requires GFCI protection for...
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Value Props Below Chat */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 sm:mt-8 mb-6 sm:mb-8">
-                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <h4 className="text-sm font-semibold text-white mb-1">Professional Interface</h4>
-                    <p className="text-xs text-gray-300">Built specifically for landscaping businesses</p>
-                  </div>
-                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                    <Sparkles className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <h4 className="text-sm font-semibold text-white mb-1">Expert AI Responses</h4>
-                    <p className="text-xs text-gray-300">Detailed, actionable business advice</p>
-                  </div>
-                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                    <TrendingUp className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <h4 className="text-sm font-semibold text-white mb-1">Real Results</h4>
-                    <p className="text-xs text-gray-300">Strategies that increase revenue</p>
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold"
-                    onClick={() => (window.location.href = "/signup")}
-                  >
-                    <span className="block sm:inline">Start Free Trial - No Credit Card</span>
-                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
-                  </Button>
-                  <p className="text-center text-xs sm:text-sm text-emerald-300 mt-2 sm:mt-3 px-2">
-                    ✅ Instant access • 7-day free trial • Cancel anytime
-                  </p>
+                
+                {/* Coming Soon Overlay */}
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Coming Soon
+                  </span>
                 </div>
               </div>
             </div>
+
+            {/* HVAC AI */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300 h-80">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                      <Target className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-white mb-2">HVAC AI</h3>
+                    <p className="text-gray-300 text-sm mb-4">System diagnostics, energy efficiency, and maintenance planning.</p>
+                    
+                    <div className="bg-black/40 rounded-lg p-3 space-y-2">
+                      <div className="bg-blue-500/20 rounded p-2 text-xs text-blue-300">
+                        "System running but not cooling properly"
+                      </div>
+                      <div className="bg-gray-700/50 rounded p-2 text-xs text-gray-300">
+                        Check refrigerant levels first...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Plumbing AI */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-cyan-500/30 transition-all duration-300 h-80">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-white mb-2">Plumbing AI</h3>
+                    <p className="text-gray-300 text-sm mb-4">Pipe calculations, diagnostics, and emergency procedures.</p>
+                    
+                    <div className="bg-black/40 rounded-lg p-3 space-y-2">
+                      <div className="bg-cyan-500/20 rounded p-2 text-xs text-cyan-300">
+                        "Water pressure issues throughout house"
+                      </div>
+                      <div className="bg-gray-700/50 rounded p-2 text-xs text-gray-300">
+                        Test main pressure first...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Roofing AI */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-orange-500/30 transition-all duration-300 h-80">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                      <BarChart3 className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-white mb-2">Roofing AI</h3>
+                    <p className="text-gray-300 text-sm mb-4">Material calculations, damage assessment, and weather protocols.</p>
+                    
+                    <div className="bg-black/40 rounded-lg p-3 space-y-2">
+                      <div className="bg-orange-500/20 rounded p-2 text-xs text-orange-300">
+                        "Estimate shingles for 2,000 sq ft roof"
+                      </div>
+                      <div className="bg-gray-700/50 rounded p-2 text-xs text-gray-300">
+                        For architectural shingles...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Pest Control AI */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-green-500/30 transition-all duration-300 h-80">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-white mb-2">Pest Control AI</h3>
+                    <p className="text-gray-300 text-sm mb-4">Species identification, treatment protocols, and safety procedures.</p>
+                    
+                    <div className="bg-black/40 rounded-lg p-3 space-y-2">
+                      <div className="bg-green-500/20 rounded p-2 text-xs text-green-300">
+                        "Small brown ants in kitchen"
+                      </div>
+                      <div className="bg-gray-700/50 rounded p-2 text-xs text-gray-300">
+                        Likely pharaoh ants. Use gel bait...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* General Contractor AI */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/30 transition-all duration-300 h-80">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                      <Star className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-white mb-2">Contractor AI</h3>
+                    <p className="text-gray-300 text-sm mb-4">Project management, permits, and building code compliance.</p>
+                    
+                    <div className="bg-black/40 rounded-lg p-3 space-y-2">
+                      <div className="bg-purple-500/20 rounded p-2 text-xs text-purple-300">
+                        "Need permit for deck addition"
+                      </div>
+                      <div className="bg-gray-700/50 rounded p-2 text-xs text-gray-300">
+                        Check local building department...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Coming Soon - AI Sidekicks */}
-          <div className="bg-gradient-to-br from-black via-gray-950 to-black py-16 sm:py-24 lg:py-32 relative">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)] pointer-events-none"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.1),transparent_50%)] pointer-events-none"></div>
-
-            <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative z-10">
-              <div className="text-center mb-16">
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-6 py-3 mb-8 hover:scale-105 transition-all duration-300">
-                  <Sparkles className="w-5 h-5 text-emerald-400" />
-                  <span className="text-emerald-300 font-medium">Coming Soon</span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-6">
-                  <span className="bg-gradient-to-r from-red-500 to-gray-600 bg-clip-text text-transparent">
-                    More <span className="font-cursive">AI Sidekicks</span>
-                  </span>
-                </h2>
-                <p className="text-lg sm:text-xl xl:text-2xl 2xl:text-3xl text-gray-300 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
-                  Specialized AI assistants for every trade, each trained with industry-specific expertise
-                </p>
-              </div>
-
-              {/* Trade Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
-                {/* Electricians AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Most Requested Badge */}
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-                    🔥 Most Requested
-                  </div>
-                  
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                        <span className="text-2xl">⚡</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
-                        <span className="font-cursive bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
-                          Electricians AI
-                        </span>
-                      </h3>
-                      <p className="text-gray-300 text-sm">Wiring, codes & safety expertise</p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-3 flex items-center justify-center space-x-2 bg-yellow-500/20 rounded-full px-3 py-1">
-                        <Sparkles className="w-3 h-3 text-yellow-400" />
-                        <span className="text-yellow-300 text-xs font-medium">Most requested by contractors</span>
-                      </div>
-                    </div>
-                    
-                    {/* Interactive Preview */}
-                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-yellow-500/20">
-                      <div className="text-xs text-yellow-300 mb-2 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        <span>AI Preview</span>
-                      </div>
-                      <div className="text-xs text-gray-300 italic">
-                        "Here's how to market smart home upgrades in your area - average job value increases from $800 to $3,200 when you position it right..."
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-6 flex-1">
-                      {[
-                        { text: "Smart home marketing", revenue: "+$2,400/job" },
-                        { text: "Service call optimization", revenue: "3x bookings" },
-                        { text: "Emergency rate positioning", revenue: "Premium pricing" },
-                        { text: "Customer education content", revenue: "Higher trust" }
-                      ].map((feature, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <CheckCircle className="w-4 h-4 text-yellow-400 flex-shrink-0" />
-                            <span className="text-gray-200 text-sm">{feature.text}</span>
-                          </div>
-                          <span className="text-yellow-300 text-xs font-medium">{feature.revenue}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-auto">
-                      {/* Progress Bar */}
-                      <div className="mb-4">
-                        <div className="flex justify-between text-xs text-gray-400 mb-1">
-                          <span>Development Progress</span>
-                          <span>78%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full" style={{width: '78%'}}></div>
-                        </div>
-                      </div>
-
-                      <Button
-                        className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-xl hover:shadow-yellow-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                        onClick={() => window.location.href = '/contact'}
-                      >
-                        🚀 Get First Access (Save 40%)
-                      </Button>
-                      
-                      <p className="text-center text-xs text-gray-400 mt-2">
-                        Est. launch: Q2 2025 • Early bird pricing
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Plumbers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-blue-500/30 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* High Demand Badge */}
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-400 to-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-                    💧 High Demand
-                  </div>
-                  
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                        <span className="text-2xl">🔧</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
-                        <span className="font-cursive bg-gradient-to-r from-blue-300 to-cyan-400 bg-clip-text text-transparent">
-                          Plumbers AI
-                        </span>
-                      </h3>
-                      <p className="text-gray-300 text-sm">Emergency services & pipe systems</p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-3 flex items-center justify-center space-x-2 bg-blue-500/20 rounded-full px-3 py-1">
-                        <Sparkles className="w-3 h-3 text-blue-400" />
-                        <span className="text-blue-300 text-xs font-medium">High demand from plumbers</span>
-                      </div>
-                    </div>
-                    
-                    {/* Interactive Preview */}
-                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-blue-500/20">
-                      <div className="text-xs text-blue-300 mb-2 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        <span>AI Preview</span>
-                      </div>
-                      <div className="text-xs text-gray-300 italic">
-                        "Market emergency services at premium rates - here's how to position maintenance plans that generate $200 recurring monthly revenue..."
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-6 flex-1">
-                      {[
-                        { text: "Emergency service marketing", revenue: "Premium rates" },
-                        { text: "Maintenance plan sales", revenue: "$200/month" },
-                        { text: "Seasonal preparation content", revenue: "Trust building" },
-                        { text: "Customer education campaigns", revenue: "Repeat business" }
-                      ].map((feature, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                            <span className="text-gray-200 text-sm">{feature.text}</span>
-                          </div>
-                          <span className="text-blue-300 text-xs font-medium">{feature.revenue}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-auto">
-                      {/* Progress Bar */}
-                      <div className="mb-4">
-                        <div className="flex justify-between text-xs text-gray-400 mb-1">
-                          <span>Development Progress</span>
-                          <span>65%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-gradient-to-r from-blue-400 to-cyan-500 h-2 rounded-full" style={{width: '65%'}}></div>
-                        </div>
-                      </div>
-
-                      <Button
-                        className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white shadow-xl hover:shadow-blue-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                        onClick={() => window.location.href = '/contact'}
-                      >
-                        🚀 Join Waitlist (Save 30%)
-                      </Button>
-                      
-                      <p className="text-center text-xs text-gray-400 mt-2">
-                        Est. launch: Q3 2025 • Priority access
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* HVAC AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-red-500/30 shadow-2xl hover:shadow-red-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Premium Badge */}
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-red-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-                    ❄️ Premium
-                  </div>
-                  
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                        <span className="text-2xl">🏠</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
-                        <span className="font-cursive bg-gradient-to-r from-red-300 to-orange-400 bg-clip-text text-transparent">
-                          HVAC AI
-                        </span>
-                      </h3>
-                      <p className="text-gray-300 text-sm">Climate systems & energy efficiency</p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-3 flex items-center justify-center space-x-2 bg-red-500/20 rounded-full px-3 py-1">
-                        <Sparkles className="w-3 h-3 text-red-400" />
-                        <span className="text-red-300 text-xs font-medium">Premium tier launching soon</span>
-                      </div>
-                    </div>
-                    
-                    {/* Interactive Preview */}
-                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-red-500/20">
-                      <div className="text-xs text-red-300 mb-2 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        <span>AI Preview</span>
-                      </div>
-                      <div className="text-xs text-gray-300 italic">
-                        "Position comfort consultations to sell $1,200 smart thermostat packages - here's the seasonal marketing strategy that works..."
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-6 flex-1">
-                      {[
-                        { text: "Comfort consultation sales", revenue: "+$1,200" },
-                        { text: "Maintenance contract marketing", revenue: "$600/visit" },
-                        { text: "Energy audit positioning", revenue: "$4K packages" },
-                        { text: "Air quality sales scripts", revenue: "+$800" }
-                      ].map((feature, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <CheckCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                            <span className="text-gray-200 text-sm">{feature.text}</span>
-                          </div>
-                          <span className="text-red-300 text-xs font-medium">{feature.revenue}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>Development Progress</span>
-                        <span>42%</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-red-400 to-orange-500 h-2 rounded-full" style={{width: '42%'}}></div>
-                      </div>
-                    </div>
-
-                    <Button
-                      className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/contact'}
-                    >
-                      🚀 Reserve Spot (Save 35%)
-                    </Button>
-                    
-                    <p className="text-center text-xs text-gray-400 mt-2">
-                      Est. launch: Q4 2025 • Premium pricing
-                    </p>
-                  </CardContent>
-                </Card>
-
-                {/* Roofers AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-stone-500/30 shadow-2xl hover:shadow-stone-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-stone-500/10 to-gray-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Weather Ready Badge */}
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-stone-400 to-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-                    ⛈️ Weather Ready
-                  </div>
-                  
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-stone-400 to-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                        <span className="text-2xl">🏗️</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
-                        <span className="font-cursive bg-gradient-to-r from-stone-300 to-gray-400 bg-clip-text text-transparent">
-                          Roofers AI
-                        </span>
-                      </h3>
-                      <p className="text-gray-300 text-sm">Materials, weather & insurance</p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-3 flex items-center justify-center space-x-2 bg-stone-500/20 rounded-full px-3 py-1">
-                        <Sparkles className="w-3 h-3 text-stone-400" />
-                        <span className="text-stone-300 text-xs font-medium">Weather-based alerts included</span>
-                      </div>
-                    </div>
-                    
-                    {/* Interactive Preview */}
-                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-stone-500/20">
-                      <div className="text-xs text-stone-300 mb-2 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        <span>AI Preview</span>
-                      </div>
-                      <div className="text-xs text-gray-300 italic">
-                        "Storm season marketing prep - here's how to position emergency services and maintenance plans for maximum bookings..."
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-6 flex-1">
-                      {[
-                        { text: "Storm response marketing", revenue: "Rapid bookings" },
-                        { text: "Preventive maintenance sales", revenue: "$300/month" },
-                        { text: "Material cost negotiations", revenue: "20% savings" },
-                        { text: "Seasonal business planning", revenue: "Year-round work" }
-                      ].map((feature, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <CheckCircle className="w-4 h-4 text-stone-400 flex-shrink-0" />
-                            <span className="text-gray-200 text-sm">{feature.text}</span>
-                          </div>
-                          <span className="text-stone-300 text-xs font-medium">{feature.revenue}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>Development Progress</span>
-                        <span>38%</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-stone-400 to-gray-600 h-2 rounded-full" style={{width: '38%'}}></div>
-                      </div>
-                    </div>
-
-                    <Button
-                      className="w-full bg-gradient-to-r from-stone-500 to-gray-600 hover:from-stone-400 hover:to-gray-500 text-white shadow-xl hover:shadow-stone-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/contact'}
-                    >
-                      🚀 Secure Early Access (Save 25%)
-                    </Button>
-                    
-                    <p className="text-center text-xs text-gray-400 mt-2">
-                      Est. launch: Q1 2026 • Weather alerts included
-                    </p>
-                  </CardContent>
-                </Card>
-
-                {/* Pest Control AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-green-500/30 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative cursor-pointer flex flex-col h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Recurring Revenue Badge */}
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-                    🔄 Recurring $$$
-                  </div>
-                  
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                        <span className="text-2xl">🐛</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
-                        <span className="font-cursive bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
-                          Pest Control AI
-                        </span>
-                      </h3>
-                      <p className="text-gray-300 text-sm">Treatment methods & prevention</p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-3 flex items-center justify-center space-x-2 bg-green-500/20 rounded-full px-3 py-1">
-                        <Sparkles className="w-3 h-3 text-green-400" />
-                        <span className="text-green-300 text-xs font-medium">Recurring revenue specialist</span>
-                      </div>
-                    </div>
-                    
-                    {/* Interactive Preview */}
-                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-green-500/20">
-                      <div className="text-xs text-green-300 mb-2 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        <span>AI Preview</span>
-                      </div>
-                      <div className="text-xs text-gray-300 italic">
-                        "Peak season marketing - position quarterly service plans at $89/month and seasonal add-ons for maximum customer lifetime value..."
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-6 flex-1">
-                      {[
-                        { text: "Contract sales strategies", revenue: "$89/month" },
-                        { text: "Seasonal upsell campaigns", revenue: "4x bookings" },
-                        { text: "Inspection service marketing", revenue: "+$400" },
-                        { text: "Customer retention programs", revenue: "95% renewal" }
-                      ].map((feature, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
-                            <span className="text-gray-200 text-sm">{feature.text}</span>
-                          </div>
-                          <span className="text-green-300 text-xs font-medium">{feature.revenue}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>Development Progress</span>
-                        <span>35%</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style={{width: '35%'}}></div>
-                      </div>
-                    </div>
-
-                    <Button
-                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white shadow-xl hover:shadow-green-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/contact'}
-                    >
-                      🚀 Lock In Early Rate (Save 20%)
-                    </Button>
-                    
-                    <p className="text-center text-xs text-gray-400 mt-2">
-                      Est. launch: Q2 2026 • Seasonal alerts included
-                    </p>
-                  </CardContent>
-                </Card>
-
-                {/* General Contractors AI Sidekick */}
-                <Card className="group backdrop-blur-2xl bg-gray-800/40 border border-purple-500/30 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 hover:scale-105 hover:bg-gray-800/60 relative md:col-span-2 lg:col-span-1 cursor-pointer flex flex-col h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Big Projects Badge */}
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-                    🏗️ Big Projects
-                  </div>
-                  
-                  <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10 flex-1 flex flex-col">
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                        <span className="text-2xl">🔨</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">
-                        <span className="font-cursive bg-gradient-to-r from-purple-300 to-pink-400 bg-clip-text text-transparent">
-                          Contractors AI
-                        </span>
-                      </h3>
-                      <p className="text-gray-300 text-sm">Project management & bidding</p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-3 flex items-center justify-center space-x-2 bg-purple-500/20 rounded-full px-3 py-1">
-                        <Sparkles className="w-3 h-3 text-purple-400" />
-                        <span className="text-purple-300 text-xs font-medium">Early bird access available</span>
-                      </div>
-                    </div>
-                    
-                    {/* Interactive Preview */}
-                    <div className="bg-black/30 rounded-lg p-4 mb-6 border border-purple-500/20">
-                      <div className="text-xs text-purple-300 mb-2 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        <span>AI Preview</span>
-                      </div>
-                      <div className="text-xs text-gray-300 italic">
-                        "Position project management value - here's how to structure bids that account for delays and increase profit margins by 15%..."
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-6 flex-1">
-                      {[
-                        { text: "Bid strategy optimization", revenue: "+15% margin" },
-                        { text: "Timeline communication", revenue: "Client trust" },
-                        { text: "Subcontractor coordination", revenue: "Efficiency" },
-                        { text: "Procurement negotiations", revenue: "Cost control" }
-                      ].map((feature, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <CheckCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                            <span className="text-gray-200 text-sm">{feature.text}</span>
-                          </div>
-                          <span className="text-purple-300 text-xs font-medium">{feature.revenue}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs text-gray-400 mb-1">
-                        <span>Development Progress</span>
-                        <span>25%</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-purple-400 to-pink-500 h-2 rounded-full" style={{width: '25%'}}></div>
-                      </div>
-                    </div>
-
-                    <Button
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 text-sm py-3 font-semibold"
-                      onClick={() => window.location.href = '/contact'}
-                    >
-                      🚀 Join Waitlist (Save 50%)
-                    </Button>
-                    
-                    <p className="text-center text-xs text-gray-400 mt-2">
-                      Est. launch: Q3 2026 • Early bird exclusive
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Call to Action */}
-              <div className="text-center">
-                <p className="text-gray-300 mb-6 text-sm sm:text-base">
-                  Be the first to know when your trade's AI sidekick launches
-                </p>
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-red-500 to-gray-600 hover:from-red-400 hover:to-gray-500 text-white shadow-xl hover:shadow-red-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
-                  onClick={() => window.location.href = '/contact'}
-                >
-                  Request Your Trade Next
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
-                </Button>
-              </div>
-            </div>
+          <div className="text-center">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white border border-purple-500 hover:border-purple-400 transition-all duration-300 text-base lg:text-lg px-8 py-4 font-semibold"
+              onClick={() => (window.location.href = "/contact")}
+            >
+              <span>Join the Waitlist</span>
+              <ArrowRight className="ml-2 w-5 h-5 inline" />
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
       <section id="pricing" className="py-16 md:py-32 bg-black">
-        <div className="mx-auto max-w-7xl xl:max-w-none px-6 xl:px-12 2xl:px-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 font-inter">
               <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
