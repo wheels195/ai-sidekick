@@ -496,8 +496,6 @@ export default function LandscapingChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [placeholderText, setPlaceholderText] = useState("")
-  const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
-  const [isTyping, setIsTyping] = useState(true)
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   
@@ -528,47 +526,55 @@ export default function LandscapingChat() {
     }
 
     let timeout: NodeJS.Timeout
+    let currentCharIndex = 0
+    let currentSuggestionIdx = 0
+    let isCurrentlyTyping = true
 
-    const typeText = () => {
-      const currentSuggestion = placeholderSuggestions[currentSuggestionIndex]
+    const startTypingAnimation = () => {
+      // Reset to completely empty state
+      setPlaceholderText("")
+      currentCharIndex = 0
+      currentSuggestionIdx = 0
+      isCurrentlyTyping = true
+      
+      // Start typing immediately
+      typeNextCharacter()
+    }
 
-      if (isTyping) {
-        // Typing phase - character by character
-        if (placeholderText.length < currentSuggestion.length) {
-          setPlaceholderText(currentSuggestion.substring(0, placeholderText.length + 1))
-          timeout = setTimeout(typeText, 40 + Math.random() * 20) // Natural typing speed 40-60ms
+    const typeNextCharacter = () => {
+      const currentSuggestion = placeholderSuggestions[currentSuggestionIdx]
+
+      if (isCurrentlyTyping) {
+        // Typing phase - add one character at a time
+        if (currentCharIndex < currentSuggestion.length) {
+          currentCharIndex++
+          setPlaceholderText(currentSuggestion.substring(0, currentCharIndex))
+          timeout = setTimeout(typeNextCharacter, 45 + Math.random() * 15) // 45-60ms natural typing
         } else {
-          // Finished typing, wait then start deleting
-          timeout = setTimeout(() => setIsTyping(false), 2000)
+          // Finished typing current suggestion, wait then start deleting
+          isCurrentlyTyping = false
+          timeout = setTimeout(typeNextCharacter, 2000)
         }
       } else {
-        // Deleting phase - character by character
-        if (placeholderText.length > 0) {
-          setPlaceholderText(placeholderText.substring(0, placeholderText.length - 1))
-          timeout = setTimeout(typeText, 25) // Faster deleting
+        // Deleting phase - remove one character at a time
+        if (currentCharIndex > 0) {
+          currentCharIndex--
+          setPlaceholderText(currentSuggestion.substring(0, currentCharIndex))
+          timeout = setTimeout(typeNextCharacter, 25) // Fast deleting
         } else {
           // Finished deleting, move to next suggestion
-          setCurrentSuggestionIndex((prev) => (prev + 1) % placeholderSuggestions.length)
-          setIsTyping(true)
-          timeout = setTimeout(typeText, 300) // Brief pause before next suggestion
+          currentSuggestionIdx = (currentSuggestionIdx + 1) % placeholderSuggestions.length
+          isCurrentlyTyping = true
+          timeout = setTimeout(typeNextCharacter, 300) // Brief pause before next
         }
       }
     }
 
-    // Start immediately - no initial delay
-    typeText()
+    // Start the animation immediately
+    startTypingAnimation()
 
     return () => clearTimeout(timeout)
-  }, [
-    isClient, // Add isClient dependency for hydration safety
-    placeholderText,
-    currentSuggestionIndex,
-    isTyping,
-    placeholderSuggestions,
-    isInputFocused,
-    input.length,
-    messages.length,
-  ])
+  }, [isClient, isInputFocused, input.length, messages.length]) // Remove internal state dependencies
 
   const scrollToBottom = () => {
     if (typeof document !== 'undefined') {
@@ -626,11 +632,6 @@ export default function LandscapingChat() {
       // Scroll to top when page loads
       window.scrollTo(0, 0)
     }
-    
-    // Reset placeholder animation state after hydration
-    setPlaceholderText("")
-    setCurrentSuggestionIndex(0)
-    setIsTyping(true)
   }, [])
 
   // Handle viewport changes and keyboard visibility
