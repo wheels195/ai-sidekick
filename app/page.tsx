@@ -847,7 +847,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               </div>
                               <div>
                                 <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
-                                <p className="text-white text-xs">Start with a current goal. Be Specific. Let's go.</p>
+                                <p className="text-white text-xs">Unsure where to start? Ask about a pricing, marketing, or growth goal — I'll help break it down.</p>
                               </div>
                             </div>
                           </div>
