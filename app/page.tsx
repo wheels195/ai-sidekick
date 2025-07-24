@@ -852,13 +852,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   <div className="border-t border-white/10 p-4">
                     {/* Sample Query Buttons */}
                     <div className="mb-3 flex flex-wrap gap-2">
-                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                      <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         How can I increase prices but keep existing clients happy?
                       </button>
                       <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         Write me some seasonal content for my website and a Facebook ad
                       </button>
-                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                      <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         How do I double my revenue based on my current customer base and pricing model?
                       </button>
                       <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
