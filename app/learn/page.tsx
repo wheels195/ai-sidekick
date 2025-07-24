@@ -1,8 +1,7 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
-import { ArrowLeft, Sparkles, TrendingUp, Users, Target, Zap, Star, DollarSign, Globe } from "lucide-react"
+import { Sparkles, TrendingUp, Users, Target, Zap, Star, DollarSign, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function LearnPage() {
@@ -239,17 +238,6 @@ export default function LearnPage() {
         <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             
-            {/* Back Button */}
-            <Link href="/">
-              <Button 
-                variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-gray-800/50 mb-8"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Home
-              </Button>
-            </Link>
-
             {/* Header */}
             <div className="text-center mb-12 sm:mb-16">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold text-white mb-4 sm:mb-6 px-2">
