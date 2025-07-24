@@ -718,12 +718,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
                 {/* Enhanced Static Chat Interface Preview */}
                 <div className="bg-gradient-to-br from-green-800/10 via-emerald-900/5 to-blue-900/5 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group animate-gradient">
-                  {/* Strategic floating accents */}
-                  <div className="absolute top-8 right-6 text-emerald-300 animate-sparkle delay-1000 opacity-40 z-10">✨</div>
+                  {/* Single subtle accent - bottom left only */}
                   <div className="absolute bottom-32 left-6 text-blue-300 animate-float delay-500 opacity-30 z-10">💫</div>
                   
-                  {/* Floating Tips Icon */}
-                  <div className="absolute top-4 right-4 z-20">
+                  {/* Floating Tips Icon - moved to avoid overlap */}
+                  <div className="absolute top-16 right-4 z-20">
                     <div className="bg-yellow-500/10 backdrop-blur border border-yellow-400/20 rounded-full p-2 hover:scale-110 transition-all duration-300 cursor-pointer">
                       <svg className="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
