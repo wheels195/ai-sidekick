@@ -472,7 +472,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       )}
 
       {/* Hero Section */}
-      <section className="pt-20 sm:pt-16 pb-16 sm:pb-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden w-full">
+      <section className="pt-20 sm:pt-16 pb-16 sm:pb-24 lg:py-32 relative overflow-hidden w-full">
         {/* Hero Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.08),transparent_70%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(20,184,166,0.06),transparent_60%)]"></div>
@@ -687,7 +687,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Our AI Sidekicks - Available Now */}
-      <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black w-full">
+      <section id="products" className="py-16 sm:py-24 lg:py-32 relative bg-black w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
@@ -1150,7 +1150,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* How It Works Section */}
       <section
         id="features"
-        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black w-full"
+        className="py-16 sm:py-24 lg:py-32 relative bg-black w-full"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
@@ -1336,7 +1336,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Advanced AI Capabilities Section */}
-      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative bg-gradient-to-br from-gray-950 via-black to-gray-900 w-full">
+      <section className="py-16 sm:py-24 lg:py-32 relative bg-gradient-to-br from-gray-950 via-black to-gray-900 w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
@@ -1503,7 +1503,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* More AI Sidekicks - Coming Soon */}
-      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black w-full">
+      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6">
@@ -1857,7 +1857,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* FAQ Section */}
       <section
         id="faq"
-        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-black w-full"
+        className="py-16 sm:py-24 lg:py-32 bg-black w-full"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-4xl sm:mx-auto xl:max-w-6xl 2xl:max-w-7xl">
           <div className="text-center mb-20">
@@ -1952,7 +1952,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Footer */}
-      <footer className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 border-t border-gray-600/30 bg-black relative overflow-hidden">
+      <footer className="py-16 sm:py-24 lg:py-32 border-t border-gray-600/30 bg-black relative overflow-hidden">
         {/* Footer Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)]"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-full blur-3xl animate-pulse"></div>
