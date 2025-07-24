@@ -685,13 +685,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 </div>
 
                 {/* Enhanced Static Chat Interface Preview */}
-                <div className="bg-gradient-to-br from-green-800/30 to-transparent rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group">
+                <div className="bg-gradient-to-br from-green-800/10 to-transparent rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group">
                   {/* Enhanced floating sparkles with subtle glow */}
-                  <div className="absolute top-4 left-4 text-emerald-300 animate-sparkle opacity-60">✨</div>
-                  <div className="absolute top-8 right-6 text-yellow-300 animate-pulse delay-1000 opacity-70">🌟</div>
-                  <div className="absolute bottom-20 left-8 text-blue-300 animate-bounce delay-500 opacity-50">💫</div>
-                  <div className="absolute top-1/2 right-4 text-purple-300 animate-float delay-300 opacity-40">✨</div>
-                  <div className="absolute bottom-32 right-12 text-emerald-200 animate-ping delay-700 opacity-30">🌟</div>
+                  <div className="absolute top-4 left-4 text-emerald-300 animate-sparkle opacity-60 z-10">✨</div>
+                  <div className="absolute top-8 right-6 text-yellow-300 animate-pulse delay-1000 opacity-70 z-10">🌟</div>
+                  <div className="absolute bottom-20 right-16 text-blue-300 animate-bounce delay-500 opacity-50 z-10">💫</div>
+                  <div className="absolute top-1/2 right-4 text-purple-300 animate-float delay-300 opacity-40 z-10">✨</div>
+                  <div className="absolute bottom-32 right-12 text-emerald-200 animate-ping delay-700 opacity-30 z-10">🌟</div>
                   
                   {/* Header */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
@@ -724,7 +724,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       <div className="bg-white/5 backdrop-blur border border-green-500/20 rounded-xl shadow text-slate-100 px-6 py-6 relative overflow-visible animate-fade-in">                        
                         
                         {/* Enhanced Character with Sparkles and Hover Effects */}
-                        <div className="hidden lg:block absolute -left-8 top-0 z-10 group cursor-help" title="That's Dirt.i — your AI sidekick.">
+                        <div className="hidden lg:block absolute -left-8 top-0 z-10 group">
                           <div className="relative transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] rounded-full">
                             {/* Floating sparkles around character */}
                             <div className="absolute -top-2 -left-2 text-yellow-300 animate-pulse">
@@ -830,15 +830,15 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     {/* Enhanced Features row with hover interactions */}
                     <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
                       <div className="flex items-center space-x-4">
-                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200 cursor-help" title="Use web search to ask about trends">
+                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200">
                           <Globe className="w-3 h-3 text-blue-400 hover:text-blue-300 transition-colors duration-200" />
                           <span>Web Search</span>
                         </span>
-                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200 cursor-help" title="Upload a document to analyze">
+                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200">
                           <Upload className="w-3 h-3 text-emerald-400 hover:text-emerald-300 transition-colors duration-200" />
                           <span>File Upload</span>
                         </span>
-                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200 cursor-help" title="Get helpful tips and suggestions">
+                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
                           <Zap className="w-3 h-3" />
                           <span>Tips</span>
                         </span>
