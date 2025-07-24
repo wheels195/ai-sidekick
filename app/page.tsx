@@ -857,47 +857,56 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         </div>
                         
                         {/* Desktop-only Background Watermark - Right Side */}
-                        <div className="hidden lg:block absolute right-4 top-8 bottom-8 w-72 pointer-events-none overflow-hidden">
-                          {/* Gears turning - spread apart */}
-                          <div className="absolute top-4 left-8 opacity-[0.12] animate-spin" style={{ animationDuration: '20s' }}>
+                        <div className="hidden lg:block absolute right-4 top-8 bottom-8 w-72 pointer-events-none overflow-hidden z-10">
+                          {/* Interlocking gears - touching like real gears */}
+                          <div className="absolute top-4 left-8 opacity-[0.35] animate-spin" style={{ animationDuration: '20s' }}>
                             <Settings className="w-16 h-16 text-gray-400" />
                           </div>
-                          <div className="absolute bottom-12 left-4 opacity-[0.08] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
+                          <div className="absolute top-12 left-16 opacity-[0.30] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
                             <Settings className="w-12 h-12 text-gray-500" />
                           </div>
                           
                           {/* Custom clipboard with 3 smaller checkmarks */}
-                          <div className="absolute top-12 left-20 opacity-[0.15]">
+                          <div className="absolute top-12 left-32 opacity-[0.40]">
                             <div className="relative w-20 h-24">
                               {/* Clipboard base */}
-                              <div className="w-16 h-20 bg-blue-400/60 rounded-lg border-2 border-blue-400/40"></div>
+                              <div className="w-16 h-20 bg-blue-400 rounded-lg border-2 border-blue-500"></div>
                               {/* Clip at top */}
-                              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-gray-400/60 rounded-sm"></div>
+                              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-gray-400 rounded-sm"></div>
                               {/* Three checkmarks */}
-                              <div className="absolute top-3 left-2 text-emerald-400/80 text-xs">✓</div>
-                              <div className="absolute top-6 left-2 text-emerald-400/80 text-xs">✓</div>
-                              <div className="absolute top-9 left-2 text-emerald-400/80 text-xs">✓</div>
+                              <div className="absolute top-3 left-2 text-emerald-400 text-sm font-bold">✓</div>
+                              <div className="absolute top-7 left-2 text-emerald-400 text-sm font-bold">✓</div>
+                              <div className="absolute top-11 left-2 text-emerald-400 text-sm font-bold">✓</div>
                             </div>
                           </div>
                           
-                          {/* Trowel and rake crossed - more visible and separated */}
-                          <div className="absolute bottom-16 left-32 opacity-[0.15]">
-                            <div className="relative w-18 h-18">
-                              {/* Trowel (thicker, more visible) */}
+                          {/* Trowel and rake crossed - properly designed rake */}
+                          <div className="absolute bottom-16 left-44 opacity-[0.35]">
+                            <div className="relative w-20 h-20">
+                              {/* Trowel */}
                               <div className="absolute inset-0 rotate-45 transform origin-center">
-                                <div className="w-2 h-16 bg-amber-600/80 rounded-full"></div>
-                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-4 bg-amber-700/80 rounded-t"></div>
+                                <div className="w-2 h-16 bg-amber-600 rounded-full"></div>
+                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-6 bg-amber-700 rounded-t"></div>
                               </div>
-                              {/* Rake (thicker, more visible) */}
+                              {/* Rake with proper tines */}
                               <div className="absolute inset-0 -rotate-45 transform origin-center">
-                                <div className="w-2 h-16 bg-amber-600/80 rounded-full"></div>
-                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-amber-700/80 rounded"></div>
+                                {/* Rake handle */}
+                                <div className="w-2 h-16 bg-amber-600 rounded-full"></div>
+                                {/* Rake head with tines */}
+                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+                                  <div className="w-6 h-1 bg-amber-700"></div>
+                                  <div className="absolute top-0 left-0 w-0.5 h-3 bg-amber-700"></div>
+                                  <div className="absolute top-0 left-1.5 w-0.5 h-3 bg-amber-700"></div>
+                                  <div className="absolute top-0 left-3 w-0.5 h-3 bg-amber-700"></div>
+                                  <div className="absolute top-0 left-4.5 w-0.5 h-3 bg-amber-700"></div>
+                                  <div className="absolute top-0 right-0 w-0.5 h-3 bg-amber-700"></div>
+                                </div>
                               </div>
                             </div>
                           </div>
                           
                           {/* Chat robot - much bigger and more prominent */}
-                          <div className="absolute top-16 right-8 opacity-[0.20]">
+                          <div className="absolute top-16 right-8 opacity-[0.45]">
                             <Bot className="w-24 h-24 text-emerald-500" />
                           </div>
                         </div>
