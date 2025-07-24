@@ -239,6 +239,28 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         .ticker-row:hover .animate-scroll-left {
           animation-play-state: paused;
         }
+        /* Enhanced chat UI animations */
+        @keyframes fade-in {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.8s ease-out forwards;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        .animate-sparkle {
+          animation: sparkle 2s ease-in-out infinite;
+        }
         /* Mobile touch - pause on active/focus states */
         @media (hover: none) and (pointer: coarse) {
           .ticker-row:active .animate-scroll-right,
@@ -251,6 +273,10 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           .ticker-card:active {
             transform: scale(0.98);
             background: rgba(55, 65, 81, 0.8);
+          }
+          /* Mobile-specific sparkle adjustments */
+          .animate-sparkle {
+            animation-duration: 3s;
           }
         }
       `}</style>
@@ -658,8 +684,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </p>
                 </div>
 
-                {/* Static Chat Interface Preview */}
-                <div className="bg-gradient-to-br from-black via-gray-950 to-black rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
+                {/* Enhanced Static Chat Interface Preview */}
+                <div className="bg-gradient-to-br from-green-800/30 to-transparent rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group">
+                  {/* Enhanced floating sparkles with subtle glow */}
+                  <div className="absolute top-4 left-4 text-emerald-300 animate-sparkle opacity-60">✨</div>
+                  <div className="absolute top-8 right-6 text-yellow-300 animate-pulse delay-1000 opacity-70">🌟</div>
+                  <div className="absolute bottom-20 left-8 text-blue-300 animate-bounce delay-500 opacity-50">💫</div>
+                  <div className="absolute top-1/2 right-4 text-purple-300 animate-float delay-300 opacity-40">✨</div>
+                  <div className="absolute bottom-32 right-12 text-emerald-200 animate-ping delay-700 opacity-30">🌟</div>
                   
                   {/* Header */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
@@ -685,23 +717,34 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
 
                   {/* Welcome Message */}
-                  <div className="p-4 h-[340px] overflow-visible">
+                  <div className="p-6 md:p-10 h-[340px] overflow-visible" style={{ paddingTop: 'max(24px, env(safe-area-inset-top))' }}>
                     {/* Enhanced Chat Bubble with Character Inside */}
                     <div className="relative">
-                      {/* Clean Chat Bubble */}
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl px-6 py-6 border border-emerald-500/30 shadow-lg relative overflow-visible">
+                      {/* Enhanced Chat Bubble with Glassmorphism */}
+                      <div className="bg-white/5 backdrop-blur border border-green-500/20 rounded-xl shadow text-slate-100 px-6 py-6 relative overflow-visible animate-fade-in">                        
                         
-                        {/* Character - Hidden on mobile, shown on desktop */}
-                        <div className="hidden lg:block absolute -left-8 top-0 z-10">
-                          <div className="relative">
-                            {/* Ground shadow under his boots */}
-                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80"></div>
+                        {/* Enhanced Character with Sparkles and Hover Effects */}
+                        <div className="hidden lg:block absolute -left-8 top-0 z-10 group cursor-help" title="That's Dirt.i — your AI sidekick.">
+                          <div className="relative transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] rounded-full">
+                            {/* Floating sparkles around character */}
+                            <div className="absolute -top-2 -left-2 text-yellow-300 animate-pulse">
+                              ✨
+                            </div>
+                            <div className="absolute top-8 -right-4 text-blue-300 animate-bounce delay-700">
+                              🌟
+                            </div>
+                            <div className="absolute bottom-12 -right-2 text-purple-300 animate-ping delay-1000">
+                              💫
+                            </div>
                             
-                            {/* Character - Much larger */}
+                            {/* Ground shadow under his boots */}
+                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            {/* Character with hover glow */}
                             <img 
                               src="/character.png?v=4" 
                               alt="Dirt.i character"
-                              className="w-72 h-72 object-contain relative z-10"
+                              className="w-72 h-72 object-contain relative z-10 transition-all duration-300 group-hover:scale-105"
                               style={{ 
                                 filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
                               }}
@@ -743,9 +786,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             </div>
                           </div>
                           
-                          <div className="hidden sm:block bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-2.5">
+                          {/* Enhanced Pro Tip Box with Glassmorphism */}
+                          <div className="hidden sm:block bg-white/5 backdrop-blur border border-green-500/20 rounded-xl shadow p-2.5 animate-fade-in delay-300">
                             <div className="flex items-start space-x-2">
-                              <span className="text-emerald-300 text-base">💡</span>
+                              <div className="text-emerald-400 text-base">
+                                🌱
+                              </div>
                               <div>
                                 <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
                                 <p className="text-white text-xs">Start with a current goal. Be Specific. Let's go.</p>
@@ -781,42 +827,42 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       </div>
                     </div>
                     
-                    {/* Features row */}
+                    {/* Enhanced Features row with hover interactions */}
                     <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
                       <div className="flex items-center space-x-4">
-                        <span className="flex items-center space-x-1">
-                          <Globe className="w-3 h-3 text-blue-400" />
+                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200 cursor-help" title="Use web search to ask about trends">
+                          <Globe className="w-3 h-3 text-blue-400 hover:text-blue-300 transition-colors duration-200" />
                           <span>Web Search</span>
                         </span>
-                        <span className="flex items-center space-x-1">
-                          <Upload className="w-3 h-3 text-emerald-400" />
+                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200 cursor-help" title="Upload a document to analyze">
+                          <Upload className="w-3 h-3 text-emerald-400 hover:text-emerald-300 transition-colors duration-200" />
                           <span>File Upload</span>
                         </span>
-                        <span className="flex items-center space-x-1 text-emerald-400">
+                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200 cursor-help" title="Get helpful tips and suggestions">
                           <Zap className="w-3 h-3" />
                           <span>Tips</span>
                         </span>
                       </div>
-                      <span className="text-emerald-400 hidden sm:inline">⚡ Advanced AI</span>
+                      <span className="text-emerald-400 hidden sm:inline animate-pulse">⚡ Advanced AI</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Value Props Below Chat */}
+                {/* Enhanced Value Props Below Chat */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 md:mt-12 mb-6 sm:mb-8">
-                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <h4 className="text-sm font-semibold text-white mb-1">Professional Interface</h4>
+                  <div className="text-center p-4 bg-white/5 backdrop-blur border border-emerald-400/20 rounded-xl hover:border-emerald-400/40 transition-all duration-300 hover:scale-105 group">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+                    <h4 className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-200 transition-colors duration-300">Professional Interface</h4>
                     <p className="text-xs text-gray-300">Built specifically for landscaping businesses</p>
                   </div>
-                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                    <Sparkles className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <h4 className="text-sm font-semibold text-white mb-1">Expert AI Responses</h4>
+                  <div className="text-center p-4 bg-white/5 backdrop-blur border border-emerald-400/20 rounded-xl hover:border-emerald-400/40 transition-all duration-300 hover:scale-105 group">
+                    <Sparkles className="w-6 h-6 text-emerald-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300 group-hover:animate-pulse" />
+                    <h4 className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-200 transition-colors duration-300">Expert AI Responses</h4>
                     <p className="text-xs text-gray-300">Detailed, actionable business advice</p>
                   </div>
-                  <div className="text-center p-4 bg-emerald-500/10 rounded-xl border border-emerald-400/20">
-                    <TrendingUp className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                    <h4 className="text-sm font-semibold text-white mb-1">Real Results</h4>
+                  <div className="text-center p-4 bg-white/5 backdrop-blur border border-emerald-400/20 rounded-xl hover:border-emerald-400/40 transition-all duration-300 hover:scale-105 group">
+                    <TrendingUp className="w-6 h-6 text-emerald-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+                    <h4 className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-200 transition-colors duration-300">Real Results</h4>
                     <p className="text-xs text-gray-300">Strategies that increase revenue</p>
                   </div>
                 </div>
