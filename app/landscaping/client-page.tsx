@@ -1833,7 +1833,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           />
           
           {/* Panel - Slide in from right */}
-          <div className="absolute right-0 top-0 h-full w-full sm:w-96 lg:w-[28rem] bg-gradient-to-br from-gray-900 via-gray-950 to-black border-l border-white/10 shadow-2xl overflow-y-auto transform transition-all duration-300 ease-out translate-x-0">
+          <div className="absolute right-0 top-14 sm:top-16 lg:top-20 h-[calc(100%-3.5rem)] sm:h-[calc(100%-4rem)] lg:h-[calc(100%-5rem)] w-full sm:w-96 lg:w-[28rem] bg-gradient-to-br from-gray-900 via-gray-950 to-black border-l border-white/10 shadow-2xl overflow-y-auto transform transition-all duration-300 ease-out translate-x-0">
             {/* Panel Header */}
             <div className="sticky top-0 bg-gray-900/95 backdrop-blur-xl border-b border-white/10 p-4 flex items-center justify-between">
               <div className="flex items-center space-x-3">
