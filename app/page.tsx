@@ -686,11 +686,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
                 {/* Enhanced Static Chat Interface Preview */}
                 <div className="bg-gradient-to-br from-green-800/10 to-transparent rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group">
-                  {/* Enhanced floating sparkles with subtle glow */}
-                  <div className="absolute top-8 right-6 text-yellow-300 animate-pulse delay-1000 opacity-70 z-10">🌟</div>
-                  <div className="absolute bottom-20 right-16 text-blue-300 animate-bounce delay-500 opacity-50 z-10">💫</div>
-                  <div className="absolute top-1/2 right-4 text-purple-300 animate-float delay-300 opacity-40 z-10">✨</div>
-                  <div className="absolute bottom-32 right-12 text-emerald-200 animate-ping delay-700 opacity-30 z-10">🌟</div>
+                  {/* Subtle floating accents */}
+                  <div className="absolute top-8 right-6 text-emerald-300 animate-pulse delay-1000 opacity-30 z-10">✨</div>
+                  <div className="absolute bottom-32 left-6 text-blue-300 animate-float delay-500 opacity-25 z-10">💫</div>
                   
                   {/* Header */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
