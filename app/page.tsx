@@ -472,14 +472,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       )}
 
       {/* Hero Section */}
-      <section className="pt-20 sm:pt-16 pb-16 sm:pb-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="pt-20 sm:pt-16 pb-16 sm:pb-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden w-full">
         {/* Hero Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.08),transparent_70%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(20,184,166,0.06),transparent_60%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(16,185,129,0.05),transparent_60%)]"></div>
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/08 to-teal-500/08 rounded-full blur-3xl"></div>
-        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto xl:max-w-none">
           <div className="text-center mb-20">
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-8 mt-8 sm:mt-0 hover:scale-105 transition-all duration-300">
               <Zap className="w-5 h-5 text-emerald-400" />
@@ -1150,9 +1150,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* How It Works Section */}
       <section
         id="features"
-        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black"
+        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black w-full"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
@@ -1336,8 +1336,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Advanced AI Capabilities Section */}
-      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative bg-gradient-to-br from-gray-950 via-black to-gray-900">
-        <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 relative bg-gradient-to-br from-gray-950 via-black to-gray-900 w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="text-white">You don't run a generic business — why use a generic search engine?</span>
@@ -1504,7 +1504,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* More AI Sidekicks - Coming Soon */}
       <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
@@ -1738,7 +1738,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* Pricing Section */}
       <section id="pricing" className="py-16 md:py-32 bg-black">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 font-inter">
               <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
@@ -1784,7 +1784,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           </div>
 
           {/* All Plans in a Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center items-stretch max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center items-stretch w-full sm:max-w-7xl sm:mx-auto">
             <ModernPricingCard
               planName="Free Trial"
               price="0"
@@ -1859,7 +1859,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         id="faq"
         className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-black"
       >
-        <div className="max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-4xl sm:mx-auto xl:max-w-6xl 2xl:max-w-7xl">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent">
