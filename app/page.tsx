@@ -333,11 +333,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </div>
             </div>
 
-            {/* Flexible spacer on desktop only */}
-            <div className="hidden md:flex flex-1"></div>
+            {/* Mobile spacer to push right elements to right */}
+            <div className="flex-1 md:hidden"></div>
             
-            {/* Navigation Links - Center */}
-            <div className="hidden md:flex">
+            {/* Desktop layout: spacer + navigation + spacer */}
+            <div className="hidden md:flex flex-1 justify-center">
               <div className="flex items-center space-x-8">
                 {[
                   { name: "Features", href: "#features" },
@@ -357,9 +357,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 ))}
               </div>
             </div>
-            
-            {/* Flexible spacer on desktop only */}
-            <div className="hidden md:flex flex-1"></div>
 
             {/* Sign In & CTA - Right Side */}
             <div className="flex items-center space-x-3">
