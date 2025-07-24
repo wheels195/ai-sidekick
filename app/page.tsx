@@ -859,15 +859,15 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         {/* Desktop-only Background Watermark - Right Side */}
                         <div className="hidden lg:block absolute right-4 top-8 bottom-8 w-72 pointer-events-none overflow-hidden z-10">
                           {/* Interlocking gears - touching like real gears */}
-                          <div className="absolute top-4 left-8 opacity-[0.35] animate-spin" style={{ animationDuration: '20s' }}>
+                          <div className="absolute top-4 left-8 opacity-[0.55] animate-spin" style={{ animationDuration: '20s' }}>
                             <Settings className="w-16 h-16 text-gray-400" />
                           </div>
-                          <div className="absolute top-12 left-16 opacity-[0.30] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
+                          <div className="absolute top-12 left-16 opacity-[0.50] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
                             <Settings className="w-12 h-12 text-gray-500" />
                           </div>
                           
                           {/* Custom clipboard with 3 smaller checkmarks */}
-                          <div className="absolute top-12 left-32 opacity-[0.40]">
+                          <div className="absolute top-20 left-36 opacity-[0.60]">
                             <div className="relative w-20 h-24">
                               {/* Clipboard base */}
                               <div className="w-16 h-20 bg-blue-400 rounded-lg border-2 border-blue-500"></div>
@@ -880,33 +880,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             </div>
                           </div>
                           
-                          {/* Trowel and rake crossed - properly designed rake */}
-                          <div className="absolute bottom-16 left-44 opacity-[0.35]">
-                            <div className="relative w-20 h-20">
-                              {/* Trowel */}
-                              <div className="absolute inset-0 rotate-45 transform origin-center">
-                                <div className="w-2 h-16 bg-amber-600 rounded-full"></div>
-                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-6 bg-amber-700 rounded-t"></div>
-                              </div>
-                              {/* Rake with proper tines */}
-                              <div className="absolute inset-0 -rotate-45 transform origin-center">
-                                {/* Rake handle */}
-                                <div className="w-2 h-16 bg-amber-600 rounded-full"></div>
-                                {/* Rake head with tines */}
-                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-                                  <div className="w-6 h-1 bg-amber-700"></div>
-                                  <div className="absolute top-0 left-0 w-0.5 h-3 bg-amber-700"></div>
-                                  <div className="absolute top-0 left-1.5 w-0.5 h-3 bg-amber-700"></div>
-                                  <div className="absolute top-0 left-3 w-0.5 h-3 bg-amber-700"></div>
-                                  <div className="absolute top-0 left-4.5 w-0.5 h-3 bg-amber-700"></div>
-                                  <div className="absolute top-0 right-0 w-0.5 h-3 bg-amber-700"></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          
                           {/* Chat robot - much bigger and more prominent */}
-                          <div className="absolute top-16 right-8 opacity-[0.45]">
+                          <div className="absolute bottom-12 right-8 opacity-[0.65]">
                             <Bot className="w-24 h-24 text-emerald-500" />
                           </div>
                         </div>
