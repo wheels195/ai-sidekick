@@ -777,9 +777,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             <div className="absolute -top-2 -left-2 text-yellow-300 animate-pulse">
                               ✨
                             </div>
-                            <div className="absolute top-8 -right-4 text-blue-300 animate-bounce delay-700">
-                              🌟
-                            </div>
                             <div className="absolute bottom-12 -right-2 text-purple-300 animate-ping delay-1000">
                               💫
                             </div>
