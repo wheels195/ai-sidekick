@@ -724,17 +724,19 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   
                   {/* Floating Tips Icon */}
                   <div className="absolute top-4 right-4 z-20">
-                    <div className="bg-yellow-500/20 backdrop-blur border border-yellow-400/30 rounded-full p-2 animate-pulse cursor-pointer hover:scale-110 transition-all duration-300" title="Quick Tips">
-                      <span className="text-yellow-300 text-sm">💡</span>
+                    <div className="bg-yellow-500/10 backdrop-blur border border-yellow-400/20 rounded-full p-2 hover:scale-110 transition-all duration-300 cursor-pointer">
+                      <svg className="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                      </svg>
                     </div>
                   </div>
                   
-                  {/* Floating Chat Bubble Pointer */}
+                  {/* Subtle Success Indicator */}
                   <div className="absolute bottom-16 right-8 z-10">
-                    <div className="bg-emerald-500/20 backdrop-blur border border-emerald-400/30 rounded-2xl px-3 py-2 animate-bubble">
+                    <div className="bg-emerald-500/10 backdrop-blur border border-emerald-400/20 rounded-2xl px-3 py-2 animate-float">
                       <div className="flex items-center space-x-2">
-                        <span className="text-emerald-300 text-xs">Try asking something!</span>
-                        <div className="text-emerald-300">👆</div>
+                        <span className="text-emerald-300 text-xs">AI Ready</span>
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
                       </div>
                     </div>
                   </div>
@@ -900,10 +902,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           <Upload className="w-3 h-3 text-emerald-400 hover:text-emerald-300 transition-colors duration-200" />
                           <span>File Upload</span>
                         </span>
-                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200 relative">
-                          <Zap className="w-3 h-3 animate-pulse" />
+                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                          </svg>
                           <span>Tips</span>
-                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                         </span>
                       </div>
                       <span className="text-emerald-400 hidden sm:inline animate-pulse">⚡ Advanced AI</span>
