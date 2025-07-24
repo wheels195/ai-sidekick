@@ -316,39 +316,46 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
-          <div className="flex justify-between items-center h-16 sm:h-20">
-            <div
-              className="flex items-center space-x-3 group cursor-pointer"
-              onClick={() => (window.location.href = "/")}
-            >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
-                <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+          <div className="flex items-center h-16 sm:h-20">
+            {/* Logo - Left Side */}
+            <div className="flex-shrink-0">
+              <div
+                className="flex items-center space-x-3 group cursor-pointer"
+                onClick={() => (window.location.href = "/")}
+              >
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-110">
+                  <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+                </div>
+                <span className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive">
+                  AI Sidekick
+                </span>
               </div>
-              <span className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent font-cursive">
-                AI Sidekick
-              </span>
             </div>
 
-            <div className="hidden md:flex items-center space-x-8">
-              {[
-                { name: "Features", href: "#features" },
-                { name: "Products", href: "#products" },
-                { name: "Pricing", href: "#pricing" },
-                { name: "FAQ", href: "#faq" },
-                { name: "Contact", href: "/contact" },
-              ].map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-200 hover:text-white transition-all duration-300 hover:scale-105 relative group"
-                >
-                  {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
-                </a>
-              ))}
+            {/* Navigation Links - Center */}
+            <div className="hidden md:flex flex-1 justify-center">
+              <div className="flex items-center space-x-8">
+                {[
+                  { name: "Features", href: "#features" },
+                  { name: "Products", href: "#products" },
+                  { name: "Pricing", href: "#pricing" },
+                  { name: "FAQ", href: "#faq" },
+                  { name: "Contact", href: "/contact" },
+                ].map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-gray-200 hover:text-white transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    {item.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+                  </a>
+                ))}
+              </div>
             </div>
 
+            {/* Sign In & CTA - Right Side */}
             <div className="flex items-center space-x-3">
               <Button
                 variant="ghost"
