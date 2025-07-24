@@ -261,6 +261,38 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         .animate-sparkle {
           animation: sparkle 2s ease-in-out infinite;
         }
+        @keyframes input-glow {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.2); }
+          50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.1); }
+        }
+        .animate-input-glow {
+          animation: input-glow 3s ease-in-out infinite;
+        }
+        @keyframes placeholder-cycle {
+          0%, 33% { opacity: 1; }
+          34%, 66% { opacity: 0; }
+          67%, 100% { opacity: 1; }
+        }
+        .animate-placeholder {
+          animation: placeholder-cycle 6s ease-in-out infinite;
+        }
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient-shift 8s ease-in-out infinite;
+        }
+        @keyframes bubble-float {
+          0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+          25% { transform: translateY(-15px) translateX(5px); opacity: 0.7; }
+          50% { transform: translateY(-25px) translateX(-3px); opacity: 1; }
+          75% { transform: translateY(-10px) translateX(8px); opacity: 0.6; }
+        }
+        .animate-bubble {
+          animation: bubble-float 4s ease-in-out infinite;
+        }
         /* Mobile touch - pause on active/focus states */
         @media (hover: none) and (pointer: coarse) {
           .ticker-row:active .animate-scroll-right,
@@ -685,10 +717,27 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 </div>
 
                 {/* Enhanced Static Chat Interface Preview */}
-                <div className="bg-gradient-to-br from-green-800/10 to-transparent rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group">
-                  {/* Subtle floating accents */}
-                  <div className="absolute top-8 right-6 text-emerald-300 animate-pulse delay-1000 opacity-30 z-10">✨</div>
-                  <div className="absolute bottom-32 left-6 text-blue-300 animate-float delay-500 opacity-25 z-10">💫</div>
+                <div className="bg-gradient-to-br from-green-800/10 via-emerald-900/5 to-blue-900/5 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group animate-gradient">
+                  {/* Strategic floating accents */}
+                  <div className="absolute top-8 right-6 text-emerald-300 animate-sparkle delay-1000 opacity-40 z-10">✨</div>
+                  <div className="absolute bottom-32 left-6 text-blue-300 animate-float delay-500 opacity-30 z-10">💫</div>
+                  
+                  {/* Floating Tips Icon */}
+                  <div className="absolute top-4 right-4 z-20">
+                    <div className="bg-yellow-500/20 backdrop-blur border border-yellow-400/30 rounded-full p-2 animate-pulse cursor-pointer hover:scale-110 transition-all duration-300" title="Quick Tips">
+                      <span className="text-yellow-300 text-sm">💡</span>
+                    </div>
+                  </div>
+                  
+                  {/* Floating Chat Bubble Pointer */}
+                  <div className="absolute bottom-16 right-8 z-10">
+                    <div className="bg-emerald-500/20 backdrop-blur border border-emerald-400/30 rounded-2xl px-3 py-2 animate-bubble">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-emerald-300 text-xs">Try asking something!</span>
+                        <div className="text-emerald-300">👆</div>
+                      </div>
+                    </div>
+                  </div>
                   
                   {/* Header */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
@@ -801,17 +850,33 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     </div>
                   </div>
 
-                  {/* Input Area */}
+                  {/* Enhanced Input Area */}
                   <div className="border-t border-white/10 p-4">
+                    {/* Sample Query Buttons */}
+                    <div className="mb-3 flex flex-wrap gap-2">
+                      <button className="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/30 rounded-full px-3 py-1 text-xs text-emerald-300 hover:text-emerald-200 transition-all duration-200 hover:scale-105">
+                        "How do I price spring cleanups?"
+                      </button>
+                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                        "Get me 10 new customers"
+                      </button>
+                    </div>
+                    
                     <div className="flex items-center space-x-2">
                       <div className="flex-1">
-                        <div className="relative">
+                        <div className="relative group">
                           <textarea
-                            className="w-full bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl px-4 py-3 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
-                            placeholder="Ask me anything..."
+                            className="w-full bg-white/5 border-2 border-white/20 hover:border-emerald-400/40 text-white placeholder-gray-400 rounded-xl px-4 py-4 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-base group-hover:animate-input-glow transition-all duration-300"
+                            placeholder="What can I help you with today?"
                             rows={2}
                             disabled
                           />
+                          {/* Animated placeholder suggestions */}
+                          <div className="absolute inset-0 px-4 py-4 pointer-events-none">
+                            <div className="text-gray-500 text-base animate-placeholder">
+                              <div className="opacity-0">How can I get more customers this month?</div>
+                            </div>
+                          </div>
                           <div className="absolute right-2 top-2 flex items-center space-x-1">
                             <button className="p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
                               <Paperclip className="w-4 h-4" />
@@ -835,9 +900,10 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           <Upload className="w-3 h-3 text-emerald-400 hover:text-emerald-300 transition-colors duration-200" />
                           <span>File Upload</span>
                         </span>
-                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
-                          <Zap className="w-3 h-3" />
+                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200 relative">
+                          <Zap className="w-3 h-3 animate-pulse" />
                           <span>Tips</span>
+                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                         </span>
                       </div>
                       <span className="text-emerald-400 hidden sm:inline animate-pulse">⚡ Advanced AI</span>
