@@ -850,43 +850,55 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               </div>
                               <div>
                                 <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
-                                <p className="text-white text-xs">Unsure where to start? Ask about a pricing, marketing, or growth goal — I'll help break it down.</p>
+                                <p className="text-white text-sm font-bold">Unsure where to start? Ask about a pricing, marketing, or growth goal — I'll help break it down.</p>
                               </div>
                             </div>
                           </div>
                         </div>
                         
                         {/* Desktop-only Background Watermark - Right Side */}
-                        <div className="hidden lg:block absolute right-8 top-4 bottom-4 w-52 pointer-events-none overflow-hidden">
-                          {/* Gears turning */}
-                          <div className="absolute top-12 right-12 opacity-[0.12] animate-spin" style={{ animationDuration: '20s' }}>
-                            <Settings className="w-20 h-20 text-gray-400" />
+                        <div className="hidden lg:block absolute right-4 top-8 bottom-8 w-72 pointer-events-none overflow-hidden">
+                          {/* Gears turning - spread apart */}
+                          <div className="absolute top-4 left-8 opacity-[0.12] animate-spin" style={{ animationDuration: '20s' }}>
+                            <Settings className="w-16 h-16 text-gray-400" />
                           </div>
-                          <div className="absolute top-28 right-24 opacity-[0.08] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
-                            <Settings className="w-16 h-16 text-gray-500" />
-                          </div>
-                          
-                          {/* Landscaping clipboard with checkmarks */}
-                          <div className="absolute top-16 right-20 opacity-[0.15]">
-                            <ClipboardCheck className="w-24 h-24 text-blue-400" />
+                          <div className="absolute bottom-12 left-4 opacity-[0.08] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
+                            <Settings className="w-12 h-12 text-gray-500" />
                           </div>
                           
-                          {/* Trowel and rake crossed (crest style) */}
-                          <div className="absolute bottom-20 right-20 opacity-[0.12]">
-                            <div className="relative w-20 h-20">
-                              {/* Crossed tools effect using rotation */}
+                          {/* Custom clipboard with 3 smaller checkmarks */}
+                          <div className="absolute top-12 left-20 opacity-[0.15]">
+                            <div className="relative w-20 h-24">
+                              {/* Clipboard base */}
+                              <div className="w-16 h-20 bg-blue-400/60 rounded-lg border-2 border-blue-400/40"></div>
+                              {/* Clip at top */}
+                              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-gray-400/60 rounded-sm"></div>
+                              {/* Three checkmarks */}
+                              <div className="absolute top-3 left-2 text-emerald-400/80 text-xs">✓</div>
+                              <div className="absolute top-6 left-2 text-emerald-400/80 text-xs">✓</div>
+                              <div className="absolute top-9 left-2 text-emerald-400/80 text-xs">✓</div>
+                            </div>
+                          </div>
+                          
+                          {/* Trowel and rake crossed - more visible and separated */}
+                          <div className="absolute bottom-16 left-32 opacity-[0.15]">
+                            <div className="relative w-18 h-18">
+                              {/* Trowel (thicker, more visible) */}
                               <div className="absolute inset-0 rotate-45 transform origin-center">
-                                <div className="w-1.5 h-20 bg-amber-600 rounded"></div>
+                                <div className="w-2 h-16 bg-amber-600/80 rounded-full"></div>
+                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-4 bg-amber-700/80 rounded-t"></div>
                               </div>
+                              {/* Rake (thicker, more visible) */}
                               <div className="absolute inset-0 -rotate-45 transform origin-center">
-                                <div className="w-1.5 h-20 bg-amber-600 rounded"></div>
+                                <div className="w-2 h-16 bg-amber-600/80 rounded-full"></div>
+                                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-amber-700/80 rounded"></div>
                               </div>
                             </div>
                           </div>
                           
-                          {/* Chat robot on top, slightly to the right */}
-                          <div className="absolute top-8 right-16 opacity-[0.18]">
-                            <Bot className="w-18 h-18 text-emerald-500" />
+                          {/* Chat robot - much bigger and more prominent */}
+                          <div className="absolute top-16 right-8 opacity-[0.20]">
+                            <Bot className="w-24 h-24 text-emerald-500" />
                           </div>
                         </div>
                         </div>
