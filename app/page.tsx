@@ -867,6 +867,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         I'm stuck. Why isn't my business growing faster?
                       </button>
+                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                        Help me find good workers
+                      </button>
                     </div>
                     
                     <div className="flex items-center space-x-2">
