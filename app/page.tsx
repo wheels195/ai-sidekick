@@ -853,7 +853,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     {/* Sample Query Buttons */}
                     <div className="mb-3 flex flex-wrap gap-2">
                       <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
-                        How can I increase prices but keep existing clients happy?
+                        How do I raise my prices without losing loyal customers?
                       </button>
                       <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         Write me some seasonal content for my website and a Facebook ad
@@ -863,6 +863,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       </button>
                       <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         Develop a 90 day plan to grow my customer base 25%
+                      </button>
+                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                        Why isn't my business growing faster?
                       </button>
                     </div>
                     
@@ -1086,7 +1089,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           <Button
             size="lg"
             className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 hover:from-purple-400 hover:via-indigo-400 hover:to-blue-400 text-white shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20 text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 font-semibold"
-            onClick={() => window.location.href = '/signup'}
+            onClick={() => window.location.href = '/learn'}
           >
             <span className="flex items-center space-x-2">
               <span>Learn More About AI Sidekick</span>
@@ -1094,7 +1097,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </span>
           </Button>
           <p className="text-center text-sm text-gray-400 mt-3 px-4">
-            See how our AI helps landscaping businesses grow revenue and win more customers
+            See how our AI Sidekicks help businesses grow revenue and win more customers
           </p>
         </div>
       </section>
