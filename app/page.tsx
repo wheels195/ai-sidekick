@@ -867,21 +867,21 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           </div>
                           
                           {/* Custom clipboard with 3 smaller checkmarks */}
-                          <div className="absolute top-20 left-36 opacity-[0.60]">
+                          <div className="absolute top-8 left-36 opacity-[0.60]">
                             <div className="relative w-20 h-24">
                               {/* Clipboard base */}
                               <div className="w-16 h-20 bg-blue-400 rounded-lg border-2 border-blue-500"></div>
                               {/* Clip at top */}
                               <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-gray-400 rounded-sm"></div>
                               {/* Three checkmarks */}
-                              <div className="absolute top-3 left-2 text-emerald-400 text-sm font-bold">✓</div>
-                              <div className="absolute top-7 left-2 text-emerald-400 text-sm font-bold">✓</div>
-                              <div className="absolute top-11 left-2 text-emerald-400 text-sm font-bold">✓</div>
+                              <div className="absolute top-3 left-2 text-white text-sm font-bold">✓</div>
+                              <div className="absolute top-7 left-2 text-white text-sm font-bold">✓</div>
+                              <div className="absolute top-11 left-2 text-white text-sm font-bold">✓</div>
                             </div>
                           </div>
                           
-                          {/* Chat robot - much bigger and more prominent */}
-                          <div className="absolute bottom-12 right-8 opacity-[0.65]">
+                          {/* Chat robot - centered between gears and clipboard at bottom */}
+                          <div className="absolute bottom-12 left-24 opacity-[0.65]">
                             <Bot className="w-24 h-24 text-emerald-500" />
                           </div>
                         </div>
