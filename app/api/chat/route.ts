@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
+import { moderateUserMessage } from '@/lib/moderation'
 
 // Initialize OpenAI client only when needed
 const getOpenAIClient = () => {
@@ -669,6 +670,36 @@ export async function POST(request: NextRequest) {
     // Handle web search if enabled and needed
     let searchResults = ''
     const currentUserMessage = messages[messages.length - 1]
+    
+    // Moderate user message for safety and policy compliance
+    if (currentUserMessage?.role === 'user' && user) {
+      try {
+        console.log('🛡️ Moderating user message...')
+        const moderationResult = await moderateUserMessage(
+          currentUserMessage.content,
+          user.id,
+          undefined, // session ID - we could add this later
+          request
+        )
+        
+        if (!moderationResult.allowed) {
+          console.log('🚫 User message blocked by moderation:', moderationResult.reason)
+          return NextResponse.json(
+            { 
+              error: moderationResult.userMessage || 'Your message cannot be processed due to content policy.',
+              errorType: 'CONTENT_MODERATION_BLOCKED',
+              categories: moderationResult.categories
+            },
+            { status: 400 }
+          )
+        }
+        
+        console.log('✅ User message passed moderation')
+      } catch (moderationError) {
+        console.error('❌ Moderation check failed:', moderationError)
+        // Continue processing - don't block users if moderation fails
+      }
+    }
     
     if (currentUserMessage?.role === 'user' && webSearchEnabled) {
       // Simple logic: Toggle ON = always search with Google Places

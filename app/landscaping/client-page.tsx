@@ -505,6 +505,15 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
   const [webSearchEnabled, setWebSearchEnabled] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [showImageGenerator, setShowImageGenerator] = useState(false)
+  const [imagePrompt, setImagePrompt] = useState("")
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false)
+  const [generatedImages, setGeneratedImages] = useState<Array<{
+    id: string
+    url: string
+    prompt: string
+    createdAt: string
+  }>>([])
   const [isSearching, setIsSearching] = useState(false)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const [currentModel, setCurrentModel] = useState<string>('')
@@ -848,6 +857,73 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         delete updated[messageId]
         return updated
       })
+    }
+  }
+
+  // Generate image with DALL-E
+  const handleImageGeneration = async () => {
+    if (!imagePrompt.trim() || isGeneratingImage) return
+
+    setIsGeneratingImage(true)
+    
+    try {
+      const response = await fetch('/api/images/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: imagePrompt.trim(),
+          model: 'dall-e-3',
+          size: '1024x1024',
+          quality: 'standard',
+          style: 'natural',
+          businessContext: true // Enhance with user business context
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        if (data.errorType === 'CONTENT_MODERATION_BLOCKED') {
+          alert(data.error || 'Image generation blocked due to content policy.')
+        } else if (data.errorType === 'GENERATION_LIMIT_EXCEEDED') {
+          alert(data.error || 'Generation limit exceeded.')
+        } else {
+          alert(data.error || 'Failed to generate image.')
+        }
+        return
+      }
+
+      // Add generated image to local state
+      const newImage = {
+        id: data.image.id || Date.now().toString(),
+        url: data.image.url,
+        prompt: data.image.originalPrompt,
+        createdAt: new Date().toISOString()
+      }
+      
+      setGeneratedImages(prev => [newImage, ...prev])
+      
+      // Add image as a message to the chat
+      const imageMessage: Message = {
+        id: Date.now().toString(),
+        role: "assistant",
+        content: `I generated an image for you based on your prompt: "${data.image.originalPrompt}"\n\nImage URL: ${data.image.url}`,
+        timestamp: new Date(),
+      }
+      
+      setMessages(prev => [...prev, imageMessage])
+      
+      // Clear the prompt and close modal
+      setImagePrompt("")
+      setShowImageGenerator(false)
+      
+    } catch (error) {
+      console.error('Image generation error:', error)
+      alert('Failed to generate image. Please try again.')
+    } finally {
+      setIsGeneratingImage(false)
     }
   }
 
@@ -1754,6 +1830,18 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             Tips
                           </span>
                         </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowImageGenerator(true)}
+                          className="group p-2 hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-colors flex items-center gap-1"
+                          disabled={isLoading}
+                          title="Generate marketing images with AI"
+                        >
+                          <ImageIcon className="w-4 h-4 text-purple-400" />
+                          <span className="text-xs text-purple-400">
+                            Generate Image
+                          </span>
+                        </button>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
@@ -1822,6 +1910,147 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
             </div>
         </div>
       </div>
+
+      {/* Image Generation Modal */}
+      {showImageGenerator && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setShowImageGenerator(false)}
+          />
+          
+          {/* Modal */}
+          <div className="relative w-full max-w-lg bg-gradient-to-br from-gray-900 via-gray-950 to-black border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-b border-white/10 p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                    <ImageIcon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">Generate Marketing Image</h2>
+                    <p className="text-sm text-purple-300">Create professional images with AI</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowImageGenerator(false)}
+                  className="text-gray-400 hover:text-white p-2"
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-6">
+              {/* Prompt Input */}
+              <div className="space-y-3">
+                <label className="text-sm font-medium text-white">
+                  Describe the image you want to create:
+                </label>
+                <textarea
+                  value={imagePrompt}
+                  onChange={(e) => setImagePrompt(e.target.value)}
+                  placeholder="e.g., Professional landscaping logo with green leaves and tools, modern logo for my lawn care business, before and after yard transformation..."
+                  className="w-full h-24 bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-500/50 focus:ring-purple-500/25 resize-none"
+                  maxLength={1000}
+                />
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-400">
+                    {imagePrompt.length}/1000 characters
+                  </span>
+                  <span className="text-purple-400">
+                    Enhanced with your business context
+                  </span>
+                </div>
+              </div>
+
+              {/* Example Prompts */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-medium text-white">Popular ideas:</h3>
+                <div className="grid grid-cols-1 gap-2">
+                  {[
+                    "Professional landscaping business logo",
+                    "Before and after lawn transformation",
+                    "Marketing flyer for spring cleanup services",
+                    "Team photo style image with landscaping tools",
+                    "Modern garden design inspiration",
+                    "Seasonal landscaping promotion banner"
+                  ].map((example, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setImagePrompt(example)}
+                      className="text-left text-xs bg-white/5 hover:bg-purple-500/10 border border-white/10 hover:border-purple-500/20 rounded-lg px-3 py-2 text-gray-300 hover:text-purple-300 transition-all duration-300"
+                    >
+                      {example}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Generation Settings */}
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <span className="text-sm font-medium text-white">AI Enhancement</span>
+                </div>
+                <p className="text-xs text-gray-300">
+                  Your prompt will be automatically enhanced with your business name, location, and services for better results.
+                </p>
+              </div>
+
+              {/* Generate Button */}
+              <Button
+                onClick={handleImageGeneration}
+                disabled={!imagePrompt.trim() || isGeneratingImage}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 py-3"
+              >
+                {isGeneratingImage ? (
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                    <span>Generating...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center space-x-2">
+                    <ImageIcon className="w-4 h-4" />
+                    <span>Generate Image ($0.04)</span>
+                  </div>
+                )}
+              </Button>
+
+              {/* Recent Images */}
+              {generatedImages.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-sm font-medium text-white">Recent generations:</h3>
+                  <div className="grid grid-cols-2 gap-3 max-h-32 overflow-y-auto">
+                    {generatedImages.slice(0, 4).map((image) => (
+                      <div key={image.id} className="relative group">
+                        <img
+                          src={image.url}
+                          alt={image.prompt}
+                          className="w-full h-16 object-cover rounded-lg border border-white/10"
+                        />
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                          <button
+                            onClick={() => window.open(image.url, '_blank')}
+                            className="text-white text-xs bg-purple-500/80 px-2 py-1 rounded"
+                          >
+                            View
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Help Panel - Slide out from right */}
       {showHelpPanel && (

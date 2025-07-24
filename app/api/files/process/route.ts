@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { moderateFileContent } from '@/lib/moderation'
 import OpenAI from 'openai'
 
 const openai = new OpenAI({
@@ -216,7 +217,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
     
-    const { files } = await request.json()
+    const { files, uploadToPersistentStorage } = await request.json()
     
     if (!files || files.length === 0) {
       return NextResponse.json({ error: 'No files provided' }, { status: 400 })
@@ -228,6 +229,24 @@ export async function POST(request: NextRequest) {
       try {
         // Extract content from file
         const extractedContent = await extractFileContent(file)
+        
+        // Moderate file content for safety
+        console.log('🛡️ Moderating file content...')
+        const moderationResult = await moderateFileContent(extractedContent, user.id, request)
+        
+        if (!moderationResult.allowed) {
+          console.log('🚫 File content blocked by moderation:', moderationResult.reason)
+          processedFiles.push({
+            name: file.name,
+            success: false,
+            error: moderationResult.userMessage || 'File content violates content policy',
+            errorType: 'CONTENT_MODERATION_BLOCKED',
+            categories: moderationResult.categories
+          })
+          continue // Skip processing this file
+        }
+        
+        console.log('✅ File content passed moderation')
         
         // Categorize content
         const metadata = categorizeContent(extractedContent, file.name)
