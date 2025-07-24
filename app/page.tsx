@@ -687,8 +687,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Our AI Sidekicks - Available Now */}
-      <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
-        <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+      <section id="products" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
@@ -710,7 +710,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </span>
             </div>
 
-            <div className="max-w-7xl mx-auto relative">
+            <div className="w-full sm:max-w-7xl sm:mx-auto relative">
               {/* Live Badge */}
               <div className="absolute -top-3 right-4 sm:right-6 lg:right-8 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
                 🟢 LIVE NOW
@@ -1503,7 +1503,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* More AI Sidekicks - Coming Soon */}
-      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black">
+      <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative bg-black w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6">
@@ -1737,7 +1737,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-16 md:py-32 bg-black">
+      <section id="pricing" className="py-16 md:py-32 bg-black w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 font-inter">
@@ -1857,7 +1857,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* FAQ Section */}
       <section
         id="faq"
-        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-black"
+        className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-black w-full"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-4xl sm:mx-auto xl:max-w-6xl 2xl:max-w-7xl">
           <div className="text-center mb-20">
@@ -1956,7 +1956,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         {/* Footer Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)]"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="max-w-7xl xl:max-w-none mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto xl:max-w-none">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div
               className="flex items-center space-x-3 mb-6 md:mb-0 group cursor-pointer"
