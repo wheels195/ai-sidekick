@@ -1845,7 +1845,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews */}
                       {uploadedFiles.length > 0 && (
-                        <div className="px-4 pt-3 pb-2">
+                        <div className="px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200">
                           <div className="flex flex-wrap gap-2">
                             {uploadedFiles.map((file, index) => {
                               const isImage = file.type.startsWith('image/')
@@ -1859,6 +1859,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                                         src={previewUrl}
                                         alt={file.name}
                                         className="h-16 w-16 object-cover rounded-lg border border-emerald-500/30"
+                                        loading="eager"
+                                        onLoad={() => {
+                                          // Ensure container recalculates after image loads
+                                          if (textareaRef.current) {
+                                            const event = new Event('input', { bubbles: true })
+                                            textareaRef.current.dispatchEvent(event)
+                                          }
+                                        }}
                                       />
                                       <button
                                         onClick={() => {
