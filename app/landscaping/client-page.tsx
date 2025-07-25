@@ -2538,9 +2538,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             className="px-2 py-1.5 text-xs bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-blue-500/50 focus:border-blue-500 focus:outline-none transition-colors appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             title="Select transcription language"
                           >
-                            <option value="auto">🌐 Auto</option>
-                            <option value="en">🇺🇸 English</option>
-                            <option value="es">🇪🇸 Español</option>
+                            <option value="auto">Auto</option>
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
                           </select>
                         </div>
 
@@ -2561,7 +2561,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                               ? "Stop recording" 
                               : isTranscribing 
                               ? "Transcribing..." 
-                              : `Start voice message (${transcriptionLanguage === 'auto' ? 'Auto-detect' : transcriptionLanguage === 'en' ? 'English' : 'Spanish'})`
+                              : `Start voice message (${transcriptionLanguage === 'auto' ? 'Auto' : transcriptionLanguage === 'en' ? 'English' : 'Spanish'})`
                           }
                         >
                           {isRecording ? (
