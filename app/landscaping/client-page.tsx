@@ -1321,8 +1321,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowSidebar(!showSidebar)}
-                className="hidden sm:inline-flex text-xs sm:text-sm bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30 hover:text-yellow-200 rounded-full transition-all duration-300 px-3 sm:px-4 py-1 sm:py-2"
+                className="hidden sm:inline-flex text-xs sm:text-sm bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 hover:text-emerald-200 rounded-full transition-all duration-300 px-3 sm:px-4 py-1 sm:py-2 items-center space-x-2"
               >
+                <MessageSquare className="w-4 h-4" />
                 <span>Chats</span>
               </Button>
             </div>
@@ -1425,9 +1426,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             setShowSidebar(true)
                             setShowUserMenu(false)
                           }}
-                          className="w-full text-left px-3 py-2 text-sm text-yellow-300 hover:text-yellow-200 hover:bg-yellow-500/10 rounded-md transition-colors duration-200 flex items-center space-x-2 sm:hidden"
+                          className="w-full text-left px-3 py-2 text-sm text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/10 rounded-md transition-colors duration-200 flex items-center space-x-2 sm:hidden"
                         >
-                          <History className="w-4 h-4" />
+                          <MessageSquare className="w-4 h-4" />
                           <span>Chats</span>
                         </button>
                         
