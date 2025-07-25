@@ -2237,7 +2237,17 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     
                     {/* Category Questions Dropdown */}
                     {showCategoryQuestions && activeCategory && (
-                      <div className="fixed inset-x-4 bottom-32 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 max-w-2xl mx-auto z-[999] max-h-[50vh] overflow-y-auto">
+                      <>
+                        {/* Backdrop */}
+                        <div 
+                          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[998]"
+                          onClick={() => {
+                            setShowCategoryQuestions(false)
+                            setActiveCategory(null)
+                          }}
+                        />
+                        {/* Modal */}
+                        <div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 w-[600px] max-w-[90vw] z-[999] max-h-[70vh] overflow-y-auto">
                         {(() => {
                           const category = BUSINESS_CATEGORIES.find(c => c.id === activeCategory)
                           if (!category) return null
@@ -2269,7 +2279,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             </>
                           )
                         })()}
-                      </div>
+                        </div>
+                      </>
                     )}
                   </div>
                 )}
