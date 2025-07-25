@@ -1618,7 +1618,25 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       console.log('Transcription API response status:', response.status)
       
-      const data = await response.json()
+      // Handle response more carefully - it might not be JSON
+      let data: any
+      const contentType = response.headers.get('content-type')
+      
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json()
+        } catch (jsonError) {
+          console.error('Failed to parse JSON response:', jsonError)
+          const textResponse = await response.text()
+          console.error('Raw response text:', textResponse)
+          throw new Error(`Server returned invalid JSON: ${textResponse}`)
+        }
+      } else {
+        const textResponse = await response.text()
+        console.error('Non-JSON response:', textResponse)
+        data = { error: textResponse || 'Empty response from server' }
+      }
+      
       console.log('Transcription API response:', data)
       
       if (!response.ok) {

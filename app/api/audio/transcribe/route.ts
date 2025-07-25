@@ -12,6 +12,11 @@ const getOpenAIClient = () => {
 }
 
 export async function POST(request: NextRequest) {
+  // Ensure we always return JSON responses
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  
   try {
     console.log('Transcription API called')
     
@@ -136,28 +141,17 @@ export async function POST(request: NextRequest) {
           throw new Error(`Failed to convert audio file to buffer: ${bufferError.message}`)
         }
         
-        // Create a File-like object with toFile method for OpenAI SDK v4
-        const fileForOpenAI = {
-          name: audioFile.name,
-          blob: async () => new Blob([buffer], { type: audioFile.type }),
-          stream: () => new ReadableStream({
-            start(controller) {
-              controller.enqueue(buffer)
-              controller.close()
-            }
-          }),
-          arrayBuffer: async () => buffer.buffer,
-          text: async () => buffer.toString(),
-          size: audioFile.size,
-          type: audioFile.type,
-          lastModified: Date.now(),
-          webkitRelativePath: '',
-          slice: () => new Blob([buffer], { type: audioFile.type })
-        }
+        // Simplify - create a File object from Buffer for OpenAI
+        // The toFile method creates a File-like object that OpenAI SDK can use
+        const file = await openai.files.toFile(
+          buffer, 
+          audioFile.name || 'audio.webm',
+          { type: audioFile.type || 'audio/webm' }
+        )
 
-        // Build transcription parameters with proper file format
+        // Build transcription parameters
         const transcriptionParams: any = {
-          file: await openai.files.toFile(buffer, audioFile.name, { type: audioFile.type }),
+          file: file,
           model: model,
           response_format: 'text',
           prompt: landscapingPrompt,
@@ -183,10 +177,33 @@ export async function POST(request: NextRequest) {
         })
 
         // Call OpenAI API with properly formatted file
-        transcription = await openai.audio.transcriptions.create(transcriptionParams)
-        usedModel = model
-        console.log('Transcription successful with model:', model)
-        break // Success! Exit the loop
+        try {
+          console.log('Calling OpenAI transcription API...')
+          const result = await openai.audio.transcriptions.create(transcriptionParams)
+          
+          // Handle different response types
+          if (typeof result === 'string') {
+            transcription = result
+          } else if (result && typeof result === 'object' && 'text' in result) {
+            transcription = result.text
+          } else {
+            console.error('Unexpected transcription result format:', result)
+            throw new Error('Unexpected response format from OpenAI')
+          }
+          
+          usedModel = model
+          console.log('Transcription successful with model:', model)
+          console.log('Transcription result:', transcription?.substring(0, 100))
+          break // Success! Exit the loop
+        } catch (openaiError: any) {
+          console.error('OpenAI API call failed:', {
+            error: openaiError,
+            message: openaiError?.message,
+            response: openaiError?.response,
+            data: openaiError?.response?.data
+          })
+          throw openaiError
+        }
         
       } catch (modelError: any) {
         console.error(`Model ${model} failed:`, {
@@ -216,7 +233,7 @@ export async function POST(request: NextRequest) {
       text: transcription,
       model: usedModel,
       message: `Audio transcribed successfully using ${usedModel}`
-    })
+    }, { headers })
 
   } catch (error: any) {
     console.error('Transcription error details:', {
@@ -310,7 +327,7 @@ export async function POST(request: NextRequest) {
           audioSize: audioFile?.size
         }
       },
-      { status: 500 }
+      { status: 500, headers }
     )
   }
 }
