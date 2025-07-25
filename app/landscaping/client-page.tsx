@@ -1445,13 +1445,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       console.log('Requesting microphone access...')
       
-      // Use simpler constraints for better mobile compatibility
+      // Use very basic constraints for mobile to avoid permission denial
       const constraints = {
-        audio: isMobile ? {
-          echoCancellation: true,
-          noiseSuppression: true,
-          // Remove sampleRate constraint for mobile compatibility
-        } : {
+        audio: isMobile ? true : {
           echoCancellation: true,
           noiseSuppression: true,
           sampleRate: 44100
@@ -1560,6 +1556,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const transcribeAudio = async (audioBlob: Blob) => {
     try {
       setIsTranscribing(true)
+      setRecordingError(null) // Clear any previous errors when starting transcription
       
       console.log('Starting transcription...', {
         size: audioBlob.size,
@@ -2048,12 +2045,12 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   scrollBehavior: 'auto',
                   height: 'calc(100dvh - 200px)', /* Match backend adjustment */
                   maxHeight: 'calc(100dvh - 200px)',
-                  paddingBottom: `max(180px, env(safe-area-inset-bottom))` /* Increased padding */
+                  paddingBottom: `max(220px, env(safe-area-inset-bottom))` /* Increased padding to prevent text behind input */
                 } : {
                   // Desktop: Use regular viewport height
                   scrollBehavior: 'smooth',
                   height: 'calc(100vh - 240px)',
-                  paddingBottom: '180px' /* Increased to prevent overlap */
+                  paddingBottom: '220px' /* Increased to prevent overlap with input */
                 }}
               >
                 <div className="w-full max-w-[900px] mx-auto">
