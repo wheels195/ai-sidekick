@@ -2123,7 +2123,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     {/* Message Content */}
                     <div className="max-w-[900px]">
                       <div
-                        className={`px-4 py-3 rounded-lg transition-all duration-200 ${
+                        className={`px-4 py-2.5 rounded-2xl transition-all duration-200 ${
                           message.role === "user"
                             ? "bg-blue-600 text-white"
                             : "bg-[#1a1a1a] text-gray-100"
@@ -2323,14 +2323,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
-                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-[60] safe-bottom sticky-input-area mobile-input-container bg-gray-950 rounded-t-xl"
+                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-[60] safe-bottom sticky-input-area mobile-input-container bg-gray-950 rounded-t-2xl"
                 style={{
                   paddingBottom: isMobile ? `max(32px, env(safe-area-inset-bottom))` : '16px',
                   minHeight: '120px' // Consistent height to prevent layout shifts
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative rounded-xl border-2 border-emerald-500/40 p-3">
+                  <div className="relative rounded-2xl border-2 border-emerald-500/40 p-3">
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
                       <div className="min-h-0" style={{ height: uploadedFiles.length > 0 ? 'auto' : '0px', overflow: uploadedFiles.length > 0 ? 'visible' : 'hidden' }}>
