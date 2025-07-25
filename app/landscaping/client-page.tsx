@@ -1445,14 +1445,21 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       console.log('Requesting microphone access...')
       
-      // Request microphone permission with constraints
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        audio: {
+      // Use simpler constraints for better mobile compatibility
+      const constraints = {
+        audio: isMobile ? {
+          echoCancellation: true,
+          noiseSuppression: true,
+          // Remove sampleRate constraint for mobile compatibility
+        } : {
           echoCancellation: true,
           noiseSuppression: true,
           sampleRate: 44100
         }
-      })
+      }
+      
+      // Request microphone permission
+      const stream = await navigator.mediaDevices.getUserMedia(constraints)
       
       console.log('Microphone access granted, creating MediaRecorder...')
       
@@ -1514,6 +1521,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       setMediaRecorder(recorder)
       setIsRecording(true)
       setAudioChunks(chunks)
+      
+      // Clear any previous errors since recording started successfully
+      setRecordingError(null)
       
       console.log('Recording started successfully')
       
@@ -1593,6 +1603,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       if (data.text && data.text.trim()) {
         console.log('Transcribed text:', data.text)
         setInput(prev => prev + (prev ? ' ' : '') + data.text.trim())
+        
+        // Clear any previous errors since transcription succeeded
+        setRecordingError(null)
+        
         // Focus the textarea after inserting text
         if (textareaRef.current) {
           textareaRef.current.focus()
@@ -1731,7 +1745,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: max(140px, env(safe-area-inset-bottom)) !important; /* Reduced from 180px */
+            padding-bottom: max(200px, env(safe-area-inset-bottom)) !important; /* Increased to prevent overlap */
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -2032,14 +2046,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 style={isMobile ? {
                   // Mobile: Use dynamic viewport height and visualViewport if available
                   scrollBehavior: 'auto',
-                  height: 'calc(100dvh - 280px)',
-                  maxHeight: 'calc(100dvh - 280px)',
-                  paddingBottom: `max(128px, env(safe-area-inset-bottom))`
+                  height: 'calc(100dvh - 200px)', /* Match backend adjustment */
+                  maxHeight: 'calc(100dvh - 200px)',
+                  paddingBottom: `max(180px, env(safe-area-inset-bottom))` /* Increased padding */
                 } : {
                   // Desktop: Use regular viewport height
                   scrollBehavior: 'smooth',
                   height: 'calc(100vh - 240px)',
-                  paddingBottom: '140px'
+                  paddingBottom: '180px' /* Increased to prevent overlap */
                 }}
               >
                 <div className="w-full max-w-[900px] mx-auto">
