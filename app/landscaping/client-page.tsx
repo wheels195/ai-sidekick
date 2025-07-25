@@ -27,6 +27,7 @@ import {
   Plus,
   Copy,
   Check,
+  Wrench,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -1813,44 +1814,23 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center gap-2">
-                        {/* Active Tool Indicators - Mobile Optimized */}
-                        {activeTool && (
-                          <div className="flex items-center gap-1">
-                            <div className="flex items-center gap-1 bg-emerald-500/20 text-emerald-300 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-[11px] border border-emerald-500/30">
-                              <div className="w-2 h-2 sm:w-1.5 sm:h-1.5 bg-emerald-400 rounded-full" />
-                              <span className="font-medium">
-                                {activeTool === 'web-search' && 'Web Search'}
-                                {activeTool === 'create-image' && 'Create Image'}
-                                {activeTool === 'attach-file' && 'Attach File'}
-                                {activeTool === 'analyze-website' && 'Analyze Website'}
-                              </span>
-                              <button
-                                onClick={() => {
-                                  setActiveTool(null)
-                                  setWebSearchEnabled(false)
-                                }}
-                                className="text-emerald-300 hover:text-white ml-1 p-1 -mr-1 rounded-full hover:bg-emerald-500/20 transition-colors"
-                                disabled={isLoading}
-                                title="Deactivate tool"
-                              >
-                                <X className="w-3 h-3 sm:w-2.5 sm:h-2.5" />
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                        
                         {/* Tools Dropdown */}
-                        <div className="relative">
+                        <div className="relative group">
                           <button
                             type="button"
                             onClick={() => setShowToolsDropdown(!showToolsDropdown)}
                             className="group p-2 hover:bg-blue-500/10 rounded-lg transition-colors flex items-center gap-1 text-blue-400"
                             disabled={isLoading}
                           >
-                            <Menu className="w-4 h-4" />
+                            <Wrench className="w-4 h-4" />
                             <span className="text-xs">Tools</span>
-                            <ChevronDown className={`w-3 h-3 transition-transform ${showToolsDropdown ? 'rotate-180' : ''}`} />
                           </button>
+                          
+                          {/* Custom Themed Tooltip */}
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                            Choose tool
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white/20"></div>
+                          </div>
                           
                           {/* Upward Opening Dropdown */}
                           {showToolsDropdown && (
@@ -1922,6 +1902,32 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             </div>
                           )}
                         </div>
+                        
+                        {/* Active Tool Indicators - Mobile Optimized - Positioned on Right */}
+                        {activeTool && (
+                          <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 bg-emerald-500/20 text-emerald-300 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-[11px] border border-emerald-500/30">
+                              <div className="w-2 h-2 sm:w-1.5 sm:h-1.5 bg-emerald-400 rounded-full" />
+                              <span className="font-medium">
+                                {activeTool === 'web-search' && 'Web Search'}
+                                {activeTool === 'create-image' && 'Create Image'}
+                                {activeTool === 'attach-file' && 'Attach File'}
+                                {activeTool === 'analyze-website' && 'Analyze Website'}
+                              </span>
+                              <button
+                                onClick={() => {
+                                  setActiveTool(null)
+                                  setWebSearchEnabled(false)
+                                }}
+                                className="text-emerald-300 hover:text-white ml-1 p-1 -mr-1 rounded-full hover:bg-emerald-500/20 transition-colors"
+                                disabled={isLoading}
+                                title="Deactivate tool"
+                              >
+                                <X className="w-3 h-3 sm:w-2.5 sm:h-2.5" />
+                              </button>
+                            </div>
+                          </div>
+                        )}
                         
                         <button
                           type="button"
