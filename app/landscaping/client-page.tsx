@@ -2211,22 +2211,32 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
                 {/* Business Category Buttons */}
                 {messages.length === 1 && (
-                  <div className={`category-container relative mt-4 transition-opacity duration-200 ${!hasMounted || isMobile ? 'opacity-0 pointer-events-none h-0 overflow-hidden' : 'opacity-100'}`}>
+                  <div className={`category-container relative mt-4 ${!hasMounted || isMobile ? 'pointer-events-none h-0 overflow-hidden' : ''}`}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
-                      {BUSINESS_CATEGORIES.map((category) => {
+                      {BUSINESS_CATEGORIES.map((category, index) => {
                         const IconComponent = category.icon
                         const isActive = activeCategory === category.id
+                        // Start from Financial Growth (reverse order) - Financial Growth is typically last in the array
+                        const reverseIndex = BUSINESS_CATEGORIES.length - 1 - index
+                        const animationDelay = reverseIndex * 100 // 100ms delay between each button
                         
                         return (
                           <button
                             key={category.id}
                             type="button"
                             onClick={() => handleCategorySelect(category.id)}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 ${
+                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 transform ${
+                              !hasMounted || isMobile 
+                                ? 'translate-x-[-50px] opacity-0' 
+                                : 'translate-x-0 opacity-100'
+                            } ${
                               isActive 
                                 ? 'bg-emerald-500/30 border-emerald-500/50 text-emerald-200' 
                                 : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300 hover:text-emerald-200'
                             }`}
+                            style={{
+                              transitionDelay: hasMounted && !isMobile ? `${animationDelay}ms` : '0ms'
+                            }}
                           >
                             <IconComponent className="w-4 h-4" />
                             <span className="text-xs font-medium">{category.name}</span>
@@ -2247,7 +2257,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           }}
                         />
                         {/* Modal */}
-                        <div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 w-[600px] max-w-[90vw] z-[999] max-h-[70vh] overflow-y-auto">
+                        <div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 md:p-4 space-y-2 w-[95vw] md:w-[85vw] lg:w-[700px] max-w-3xl z-[999] max-h-[85vh] md:max-h-[80vh] overflow-y-auto">
                         {(() => {
                           const category = BUSINESS_CATEGORIES.find(c => c.id === activeCategory)
                           if (!category) return null
