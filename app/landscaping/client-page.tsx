@@ -441,7 +441,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         <div className="space-y-2 sm:space-y-4">
           <h1 className="text-lg sm:text-2xl text-white font-semibold">
             Hi! 👋<br />
-            I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Sage</span>, your AI Sidekick for growing your business.
+            I'm <span className="font-cursive text-emerald-400 font-bold text-2xl sm:text-3xl">Sage</span>, your AI Sidekick for growing your business.
           </h1>
           
           {/* What I can help with */}
@@ -494,7 +494,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         {/* Simplified greeting */}
         <h1 className="text-lg sm:text-2xl text-white font-semibold">
           Hi {displayName}! 👋<br />
-          I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Sage</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
+          I'm <span className="font-cursive text-emerald-400 font-bold text-2xl sm:text-3xl">Sage</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
         </h1>
         
         {/* What I can help with */}
@@ -1596,7 +1596,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 <p className="text-xs sm:text-sm text-gray-300 typography-body">Your AI Sidekick</p>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-sm typography-heading-bold text-white font-cursive">Sage</h1>
+                <h1 className="text-base typography-heading-bold text-white font-cursive">Sage</h1>
               </div>
             </div>
 
