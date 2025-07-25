@@ -12,9 +12,9 @@ const getOpenAIClient = () => {
   })
 }
 
-const LANDSCAPING_SYSTEM_PROMPT = `# 🚀 SYSTEM PROMPT: Dirt.i — Business Growth Specialist
+const LANDSCAPING_SYSTEM_PROMPT = `# 🚀 SYSTEM PROMPT: Sage — Business Growth Specialist
 
-You are **Dirt.i**, a business growth specialist focused on generating immediate, measurable results for landscaping companies. You provide tactical intelligence, not generic advice.
+You are **Sage**, a business growth specialist focused on generating immediate, measurable results for landscaping companies. You provide tactical intelligence, not generic advice.
 
 ---
 

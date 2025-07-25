@@ -28,7 +28,7 @@ export default async function LandscapingChatPage() {
       hasConversationHistory: false // Treating as first-time user for testing
     }
     
-    const initialGreeting = `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
+    const initialGreeting = `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Sage</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
 
     return (
       <LandscapingChatClient 
@@ -45,7 +45,7 @@ export default async function LandscapingChatPage() {
   
   const initialGreeting = isReturningUser
     ? `<span class="text-white">Hi ${displayName}! What are we working on today?</span>`
-    : `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Dirt.i</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
+    : `<span class="text-white">Hi there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Sage</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
 
   // Pass user data and greeting to client component
   return (

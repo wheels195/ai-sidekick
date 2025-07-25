@@ -441,7 +441,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         <div className="space-y-2 sm:space-y-4">
           <h1 className="text-lg sm:text-2xl text-white font-semibold">
             Hi! 👋<br />
-            I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Dirt.i</span>, your AI Sidekick for growing your business.
+            I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Sage</span>, your AI Sidekick for growing your business.
           </h1>
           
           {/* What I can help with */}
@@ -494,7 +494,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         {/* Simplified greeting */}
         <h1 className="text-lg sm:text-2xl text-white font-semibold">
           Hi {displayName}! 👋<br />
-          I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Dirt.i</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
+          I'm <span className="font-cursive text-emerald-400 font-bold text-xl sm:text-3xl">Sage</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
         </h1>
         
         {/* What I can help with */}
@@ -526,11 +526,11 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
 // Simple greeting for chat messages (when welcome header is hidden)
 const generateSimpleGreeting = (user: any): string => {
   if (!user) {
-    return "Hi! I'm **Dirt.i**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business. What can I help you with today?"
+    return "Hi! I'm **Sage**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business. What can I help you with today?"
   }
   
   const displayName = user.firstName || 'there'
-  return `Hi, ${displayName}! I'm **Dirt.i**, your Landscaping AI Sidekick. How can we grow your business today?`
+  return `Hi, ${displayName}! I'm **Sage**, your Landscaping AI Sidekick. How can we grow your business today?`
 }
 
 interface LandscapingChatClientProps {
@@ -1491,11 +1491,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-cursive">Dirt.i</h1>
+                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-cursive">Sage</h1>
                 <p className="text-xs sm:text-sm text-gray-300 typography-body">Your AI Sidekick</p>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-sm typography-heading-bold text-white font-cursive">Dirt.i</h1>
+                <h1 className="text-sm typography-heading-bold text-white font-cursive">Sage</h1>
               </div>
             </div>
 
@@ -2369,7 +2369,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </div>
                 
                 <p className="text-gray-300 text-sm">
-                  The more context you provide, the better Dirt.i can help your landscaping business:
+                  The more context you provide, the better Sage can help your landscaping business:
                 </p>
 
                 <div className="space-y-3">

@@ -466,7 +466,7 @@ export default function LearnPage() {
                     </span>
                   </h2>
                   <p className="text-gray-300 text-base sm:text-lg">
-                    Real questions from successful landscaping business owners - organized by business area
+                    Real questions from real business owners. Ideas to get you started
                   </p>
                   <div className="bg-emerald-500/10 border border-emerald-400/30 rounded-xl p-4 mt-6 inline-block">
                     <p className="text-emerald-400 font-semibold flex items-center">
