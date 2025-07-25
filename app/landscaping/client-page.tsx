@@ -503,10 +503,12 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
-  const [webSearchEnabled, setWebSearchEnabled] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [activeTool, setActiveTool] = useState<string | null>(null) // 'web-search', 'create-image', 'attach-file', null
+  const [showToolsDropdown, setShowToolsDropdown] = useState(false)
+  const [webSearchEnabled, setWebSearchEnabled] = useState(false)
   const [showImageGenerator, setShowImageGenerator] = useState(false)
-  const [imagePrompt, setImagePrompt] = useState("")
+  const [imagePrompt, setImagePrompt] = useState('')
   const [isGeneratingImage, setIsGeneratingImage] = useState(false)
   const [generatedImages, setGeneratedImages] = useState<Array<{
     id: string
@@ -658,20 +660,27 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }, [])
 
-  // Close user menu when clicking outside
+  // Close user menu and tools dropdown when clicking outside
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as Element
+        
+        // Close user menu
         if (showUserMenu && !target.closest('.relative')) {
           setShowUserMenu(false)
+        }
+        
+        // Close tools dropdown
+        if (showToolsDropdown && !target.closest('.relative')) {
+          setShowToolsDropdown(false)
         }
       }
       
       document.addEventListener('mousedown', handleClickOutside)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [showUserMenu])
+  }, [showUserMenu, showToolsDropdown])
 
   // Scroll detection for scroll-to-bottom button
   useEffect(() => {
@@ -860,9 +869,21 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }
 
-  // Generate image with DALL-E
-  const handleImageGeneration = async () => {
-    if (!imagePrompt.trim() || isGeneratingImage) return
+  // Handle tool selection
+  const handleToolSelect = (tool: string) => {
+    if (tool === activeTool) {
+      // If same tool clicked, deactivate it
+      setActiveTool(null)
+    } else {
+      // Activate new tool
+      setActiveTool(tool)
+    }
+    setShowToolsDropdown(false)
+  }
+
+  // Generate image inline in chat (when create-image tool is active)
+  const handleInlineImageGeneration = async (prompt: string) => {
+    if (isGeneratingImage) return null
 
     setIsGeneratingImage(true)
     
@@ -873,29 +894,23 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: imagePrompt.trim(),
+          prompt: prompt.trim(),
           model: 'dall-e-3',
           size: '1024x1024',
           quality: 'standard',
           style: 'natural',
-          businessContext: true // Enhance with user business context
+          businessContext: true
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        if (data.errorType === 'CONTENT_MODERATION_BLOCKED') {
-          alert(data.error || 'Image generation blocked due to content policy.')
-        } else if (data.errorType === 'GENERATION_LIMIT_EXCEEDED') {
-          alert(data.error || 'Generation limit exceeded.')
-        } else {
-          alert(data.error || 'Failed to generate image.')
-        }
-        return
+        console.error('Image generation failed:', data)
+        return `I couldn't generate that image: ${data.error || 'Generation failed'}`
       }
 
-      // Add generated image to local state
+      // Add to generated images history
       const newImage = {
         id: data.image.id || Date.now().toString(),
         url: data.image.url,
@@ -905,26 +920,28 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       setGeneratedImages(prev => [newImage, ...prev])
       
-      // Add image as a message to the chat
-      const imageMessage: Message = {
-        id: Date.now().toString(),
-        role: "assistant",
-        content: `I generated an image for you based on your prompt: "${data.image.originalPrompt}"\n\nImage URL: ${data.image.url}`,
-        timestamp: new Date(),
-      }
-      
-      setMessages(prev => [...prev, imageMessage])
-      
-      // Clear the prompt and close modal
-      setImagePrompt("")
-      setShowImageGenerator(false)
+      return `I generated an image for you: "${data.image.originalPrompt}"\n\n![Generated Image](${data.image.url})`
       
     } catch (error) {
       console.error('Image generation error:', error)
-      alert('Failed to generate image. Please try again.')
+      return 'Sorry, I encountered an error generating that image. Please try again.'
     } finally {
       setIsGeneratingImage(false)
     }
+  }
+
+  // Detect if user is requesting image generation
+  const detectImageGenerationIntent = (message: string): boolean => {
+    if (activeTool !== 'create-image') return false
+    
+    const imageKeywords = [
+      'generate', 'create', 'make', 'design', 'draw', 'show me',
+      'logo', 'flyer', 'banner', 'image', 'picture', 'photo',
+      'before and after', 'transformation', 'marketing material'
+    ]
+    
+    const lowerMessage = message.toLowerCase()
+    return imageKeywords.some(keyword => lowerMessage.includes(keyword))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -952,6 +969,29 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       setIsFirstTimeUser(false)
     }
 
+    // Check for image generation intent first
+    if (detectImageGenerationIntent(input.trim())) {
+      console.log('🎨 Image generation detected, generating inline...')
+      const imageResult = await handleInlineImageGeneration(input.trim())
+      
+      if (imageResult) {
+        // Add AI response with generated image
+        setMessages(prev => [
+          ...prev.slice(0, -1), // Remove loading message
+          {
+            id: assistantId,
+            role: "assistant",
+            content: imageResult,
+            timestamp: new Date(),
+            modelUsed: 'dall-e-3'
+          }
+        ])
+      }
+      
+      setIsLoading(false)
+      return
+    }
+
     // Convert uploaded files to base64 for transmission
     let filesToSend: any[] = []
     if (uploadedFiles.length > 0) {
@@ -964,6 +1004,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
 
     // Determine which model will be used (matches backend logic)
+    const webSearchEnabled = activeTool === 'web-search'
     const modelToUse = webSearchEnabled ? 'gpt-4o' : 'gpt-4o-mini'
     setCurrentModel(modelToUse)
 
@@ -975,7 +1016,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       console.log('🔍 Setting isSearching to true')
     }
 
-    // ② Create assistant message placeholder for streaming
+    // ② Create assistant message placeholder for streaming (only for non-image requests)
     const assistantId = (Date.now() + 1).toString()
     setMessages(prev => [
       ...prev,
@@ -1772,53 +1813,116 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center gap-2">
-                        <label className="group p-2 hover:bg-emerald-500/10 rounded-lg transition-colors flex items-center gap-1 cursor-pointer">
-                          <Paperclip className="w-4 h-4 text-emerald-300" />
-                          <span className="text-xs text-emerald-400">
-                            Attach
-                          </span>
-                          <input
-                            type="file"
-                            accept="image/*,.pdf,.doc,.docx,.txt"
-                            multiple
-                            className="hidden"
-                            onChange={(e) => {
-                              const files = Array.from(e.target.files || [])
-                              setUploadedFiles(prev => [...prev, ...files])
-                            }}
-                            disabled={isLoading}
-                          />
-                        </label>
-                        <button
-                          type="button"
-                          onClick={() => setWebSearchEnabled(!webSearchEnabled)}
-                          className={`group p-2 rounded-lg transition-colors flex items-center gap-1 ${
-                            webSearchEnabled 
-                              ? 'bg-emerald-500/20 text-emerald-300' 
-                              : 'hover:bg-emerald-500/10 text-emerald-400'
-                          }`}
-                          disabled={isLoading}
-                          title={webSearchEnabled ? 'Web search enabled' : 'Web search disabled'}
-                        >
-                          <div className={`w-2 h-2 rounded-full ${webSearchEnabled ? 'bg-emerald-400' : 'bg-gray-500'}`} />
-                          <span className="text-xs">
-                            Web Search
-                          </span>
-                        </button>
-                        <button
-                          type="button"
-                          className="group p-2 rounded-lg transition-colors flex items-center gap-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 cursor-not-allowed relative"
-                          disabled={true}
-                          title="Website analysis coming soon! This will scan your website for SEO opportunities, content gaps, and local optimization improvements."
-                        >
-                          <div className="w-2 h-2 rounded-full bg-purple-400" />
-                          <span className="text-xs">
-                            Analyze Website
-                          </span>
-                          <div className="absolute -top-1 -right-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-medium">
-                            Soon
+                        {/* Active Tool Indicators - Mobile Optimized */}
+                        {activeTool && (
+                          <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 bg-emerald-500/20 text-emerald-300 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-[11px] border border-emerald-500/30">
+                              <div className="w-2 h-2 sm:w-1.5 sm:h-1.5 bg-emerald-400 rounded-full" />
+                              <span className="font-medium">
+                                {activeTool === 'web-search' && 'Web Search'}
+                                {activeTool === 'create-image' && 'Create Image'}
+                                {activeTool === 'attach-file' && 'Attach File'}
+                                {activeTool === 'analyze-website' && 'Analyze Website'}
+                              </span>
+                              <button
+                                onClick={() => {
+                                  setActiveTool(null)
+                                  setWebSearchEnabled(false)
+                                }}
+                                className="text-emerald-300 hover:text-white ml-1 p-1 -mr-1 rounded-full hover:bg-emerald-500/20 transition-colors"
+                                disabled={isLoading}
+                                title="Deactivate tool"
+                              >
+                                <X className="w-3 h-3 sm:w-2.5 sm:h-2.5" />
+                              </button>
+                            </div>
                           </div>
-                        </button>
+                        )}
+                        
+                        {/* Tools Dropdown */}
+                        <div className="relative">
+                          <button
+                            type="button"
+                            onClick={() => setShowToolsDropdown(!showToolsDropdown)}
+                            className="group p-2 hover:bg-blue-500/10 rounded-lg transition-colors flex items-center gap-1 text-blue-400"
+                            disabled={isLoading}
+                          >
+                            <Menu className="w-4 h-4" />
+                            <span className="text-xs">Tools</span>
+                            <ChevronDown className={`w-3 h-3 transition-transform ${showToolsDropdown ? 'rotate-180' : ''}`} />
+                          </button>
+                          
+                          {/* Upward Opening Dropdown */}
+                          {showToolsDropdown && (
+                            <div className="absolute bottom-full left-0 mb-2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-2 space-y-1 min-w-[160px] sm:min-w-40 z-50">
+                              <label className={`w-full text-left p-2 sm:p-3 rounded-lg transition-colors flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 cursor-pointer ${activeTool === 'attach-file' ? 'bg-blue-500/20' : ''}`}>
+                                <Paperclip className="w-4 h-4 sm:w-3 sm:h-3" />
+                                <span className="text-xs sm:text-[11px] font-medium">Attach File</span>
+                                <input
+                                  type="file"
+                                  accept="image/*,.pdf,.doc,.docx,.txt"
+                                  multiple
+                                  className="hidden"
+                                  onChange={(e) => {
+                                    const files = Array.from(e.target.files || [])
+                                    if (files.length > 0) {
+                                      setUploadedFiles(prev => [...prev, ...files])
+                                      setActiveTool('attach-file')
+                                      setShowToolsDropdown(false)
+                                    }
+                                  }}
+                                  disabled={isLoading}
+                                />
+                              </label>
+                              
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const newState = activeTool === 'web-search' ? null : 'web-search'
+                                  setActiveTool(newState)
+                                  setWebSearchEnabled(newState === 'web-search')
+                                  setShowToolsDropdown(false)
+                                }}
+                                className={`w-full text-left p-2 sm:p-3 rounded-lg transition-colors flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 ${activeTool === 'web-search' ? 'bg-blue-500/20' : ''}`}
+                                disabled={isLoading}
+                              >
+                                <div className="w-4 h-4 sm:w-3 sm:h-3 rounded-full border-2 border-current flex items-center justify-center">
+                                  <div className="w-2 h-2 sm:w-1.5 sm:h-1.5 bg-current rounded-full" />
+                                </div>
+                                <span className="text-xs sm:text-[11px] font-medium">Web Search</span>
+                              </button>
+                              
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setActiveTool(activeTool === 'create-image' ? null : 'create-image')
+                                  setShowToolsDropdown(false)
+                                }}
+                                className={`w-full text-left p-2 sm:p-3 rounded-lg transition-colors flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 ${activeTool === 'create-image' ? 'bg-blue-500/20' : ''}`}
+                                disabled={isLoading}
+                              >
+                                <ImageIcon className="w-4 h-4 sm:w-3 sm:h-3" />
+                                <span className="text-xs sm:text-[11px] font-medium">Create Image</span>
+                              </button>
+                              
+                              <button
+                                type="button"
+                                className="w-full text-left p-2 sm:p-3 rounded-lg transition-colors flex items-center gap-2 text-blue-400/50 cursor-not-allowed relative"
+                                disabled={true}
+                                title="Website analysis coming soon!"
+                              >
+                                <div className="w-4 h-4 sm:w-3 sm:h-3 rounded-full border-2 border-current flex items-center justify-center">
+                                  <div className="w-2 h-2 sm:w-1.5 sm:h-1.5 bg-current rounded-full" />
+                                </div>
+                                <span className="text-xs sm:text-[11px] font-medium">Analyze Website</span>
+                                <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[9px] px-1 py-0.5 rounded-full font-medium ml-auto">
+                                  Soon
+                                </div>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                        
                         <button
                           type="button"
                           onClick={() => setShowHelpPanel(true)}
@@ -1828,18 +1932,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           <Sparkles className="w-4 h-4 text-emerald-300" />
                           <span className="text-xs text-emerald-400">
                             Tips
-                          </span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setShowImageGenerator(true)}
-                          className="group p-2 hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-colors flex items-center gap-1"
-                          disabled={isLoading}
-                          title="Generate marketing images with AI"
-                        >
-                          <ImageIcon className="w-4 h-4 text-purple-400" />
-                          <span className="text-xs text-purple-400">
-                            Generate Image
                           </span>
                         </button>
                       </div>
@@ -1911,146 +2003,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         </div>
       </div>
 
-      {/* Image Generation Modal */}
-      {showImageGenerator && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={() => setShowImageGenerator(false)}
-          />
-          
-          {/* Modal */}
-          <div className="relative w-full max-w-lg bg-gradient-to-br from-gray-900 via-gray-950 to-black border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-            {/* Header */}
-            <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-b border-white/10 p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <ImageIcon className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">Generate Marketing Image</h2>
-                    <p className="text-sm text-purple-300">Create professional images with AI</p>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowImageGenerator(false)}
-                  className="text-gray-400 hover:text-white p-2"
-                >
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 space-y-6">
-              {/* Prompt Input */}
-              <div className="space-y-3">
-                <label className="text-sm font-medium text-white">
-                  Describe the image you want to create:
-                </label>
-                <textarea
-                  value={imagePrompt}
-                  onChange={(e) => setImagePrompt(e.target.value)}
-                  placeholder="e.g., Professional landscaping logo with green leaves and tools, modern logo for my lawn care business, before and after yard transformation..."
-                  className="w-full h-24 bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-500/50 focus:ring-purple-500/25 resize-none"
-                  maxLength={1000}
-                />
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-gray-400">
-                    {imagePrompt.length}/1000 characters
-                  </span>
-                  <span className="text-purple-400">
-                    Enhanced with your business context
-                  </span>
-                </div>
-              </div>
-
-              {/* Example Prompts */}
-              <div className="space-y-3">
-                <h3 className="text-sm font-medium text-white">Popular ideas:</h3>
-                <div className="grid grid-cols-1 gap-2">
-                  {[
-                    "Professional landscaping business logo",
-                    "Before and after lawn transformation",
-                    "Marketing flyer for spring cleanup services",
-                    "Team photo style image with landscaping tools",
-                    "Modern garden design inspiration",
-                    "Seasonal landscaping promotion banner"
-                  ].map((example, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setImagePrompt(example)}
-                      className="text-left text-xs bg-white/5 hover:bg-purple-500/10 border border-white/10 hover:border-purple-500/20 rounded-lg px-3 py-2 text-gray-300 hover:text-purple-300 transition-all duration-300"
-                    >
-                      {example}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Generation Settings */}
-              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                <div className="flex items-center space-x-2 mb-2">
-                  <Sparkles className="w-4 h-4 text-purple-400" />
-                  <span className="text-sm font-medium text-white">AI Enhancement</span>
-                </div>
-                <p className="text-xs text-gray-300">
-                  Your prompt will be automatically enhanced with your business name, location, and services for better results.
-                </p>
-              </div>
-
-              {/* Generate Button */}
-              <Button
-                onClick={handleImageGeneration}
-                disabled={!imagePrompt.trim() || isGeneratingImage}
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white shadow-xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 py-3"
-              >
-                {isGeneratingImage ? (
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                    <span>Generating...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center space-x-2">
-                    <ImageIcon className="w-4 h-4" />
-                    <span>Generate Image ($0.04)</span>
-                  </div>
-                )}
-              </Button>
-
-              {/* Recent Images */}
-              {generatedImages.length > 0 && (
-                <div className="space-y-3">
-                  <h3 className="text-sm font-medium text-white">Recent generations:</h3>
-                  <div className="grid grid-cols-2 gap-3 max-h-32 overflow-y-auto">
-                    {generatedImages.slice(0, 4).map((image) => (
-                      <div key={image.id} className="relative group">
-                        <img
-                          src={image.url}
-                          alt={image.prompt}
-                          className="w-full h-16 object-cover rounded-lg border border-white/10"
-                        />
-                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                          <button
-                            onClick={() => window.open(image.url, '_blank')}
-                            className="text-white text-xs bg-purple-500/80 px-2 py-1 rounded"
-                          >
-                            View
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Help Panel - Slide out from right */}
       {showHelpPanel && (
