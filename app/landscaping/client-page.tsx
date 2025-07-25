@@ -1512,7 +1512,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: max(180px, env(safe-area-inset-bottom)) !important;
+            padding-bottom: max(140px, env(safe-area-inset-bottom)) !important; /* Reduced from 180px */
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -1528,13 +1528,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
           /* Ensure input is always visible */
           .mobile-input-container {
-            min-height: 120px;
-            padding-bottom: max(32px, env(safe-area-inset-bottom));
+            min-height: 100px; /* Reduced from 120px */
+            padding-bottom: max(20px, env(safe-area-inset-bottom)); /* Reduced from 32px */
           }
           /* Dynamic viewport height containers */
           .mobile-messages-container {
-            height: calc(100dvh - 280px); /* Account for header + input + padding */
-            max-height: calc(100dvh - 280px);
+            height: calc(100dvh - 200px); /* Reduced from 280px to give more space to messages */
+            max-height: calc(100dvh - 200px);
           }
           /* Hide category buttons on mobile to prevent layout issues */
           .category-container {
@@ -2109,6 +2109,22 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         }}
                         onFocus={() => setIsInputFocused(true)}
                         onBlur={() => setIsInputFocused(false)}
+                        onTouchStart={(e) => {
+                          // Ensure proper touch handling on mobile
+                          if (isMobile && textareaRef.current) {
+                            e.preventDefault()
+                            textareaRef.current.focus()
+                          }
+                        }}
+                        onTouchEnd={(e) => {
+                          // Prevent double-tap zoom and ensure focus
+                          if (isMobile && textareaRef.current) {
+                            e.preventDefault()
+                            setTimeout(() => {
+                              textareaRef.current?.focus()
+                            }, 0)
+                          }
+                        }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' && !e.shiftKey) {
                             e.preventDefault()
@@ -2128,7 +2144,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           height: '48px',
                           minHeight: '48px',
                           // Enable smooth scrolling when content overflows
-                          scrollBehavior: 'smooth'
+                          scrollBehavior: 'smooth',
+                          // Improve mobile touch handling
+                          touchAction: isMobile ? 'manipulation' : 'auto'
                         }}
                         disabled={isLoading}
                       />
