@@ -2211,7 +2211,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
                 {/* Business Category Buttons */}
                 {messages.length === 1 && (
-                  <div className={`category-container relative mt-4 ${!hasMounted || isMobile ? 'pointer-events-none h-0 overflow-hidden' : ''}`}>
+                  <div className={`category-container relative mt-4 ${!hasMounted || isMobile ? 'pointer-events-none' : ''}`} style={{ height: isMobile ? '0px' : '60px', overflow: isMobile ? 'hidden' : 'visible' }}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category, index) => {
                         const IconComponent = category.icon
