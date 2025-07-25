@@ -33,6 +33,9 @@ import {
   Target,
   Camera,
   DollarSign,
+  Mic,
+  MicOff,
+  Square,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -610,6 +613,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [hasMounted, setHasMounted] = useState(false)
   const [buttonsAnimated, setButtonsAnimated] = useState(false)
   const [isLoadingComplete, setIsLoadingComplete] = useState(false)
+  
+  // Speech-to-text state
+  const [isRecording, setIsRecording] = useState(false)
+  const [isTranscribing, setIsTranscribing] = useState(false)
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
+  const [audioChunks, setAudioChunks] = useState<Blob[]>([])
+  const [recordingError, setRecordingError] = useState<string | null>(null)
   
   // Stable textarea ref without auto-resize to prevent layout shift
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -1415,6 +1425,113 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }
 
+  // Speech-to-text functions
+  const startRecording = async () => {
+    try {
+      setRecordingError(null)
+      
+      // Request microphone permission
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      
+      // Create MediaRecorder instance
+      const recorder = new MediaRecorder(stream, {
+        mimeType: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
+      })
+      
+      const chunks: Blob[] = []
+      
+      recorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunks.push(event.data)
+        }
+      }
+      
+      recorder.onstop = async () => {
+        const audioBlob = new Blob(chunks, { 
+          type: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4' 
+        })
+        
+        // Transcribe the audio
+        await transcribeAudio(audioBlob)
+        
+        // Clean up
+        stream.getTracks().forEach(track => track.stop())
+        setMediaRecorder(null)
+        setAudioChunks([])
+      }
+      
+      // Start recording
+      recorder.start()
+      setMediaRecorder(recorder)
+      setIsRecording(true)
+      setAudioChunks(chunks)
+      
+    } catch (error: any) {
+      console.error('Error starting recording:', error)
+      setRecordingError(
+        error.name === 'NotAllowedError' 
+          ? 'Microphone permission denied. Please allow microphone access and try again.'
+          : 'Failed to access microphone. Please check your device settings.'
+      )
+    }
+  }
+
+  const stopRecording = () => {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop()
+      setIsRecording(false)
+    }
+  }
+
+  const transcribeAudio = async (audioBlob: Blob) => {
+    try {
+      setIsTranscribing(true)
+      
+      // Create FormData to send audio file
+      const formData = new FormData()
+      formData.append('audio', audioBlob, 'recording.webm')
+      
+      // Send to our transcription API
+      const response = await fetch('/api/audio/transcribe', {
+        method: 'POST',
+        body: formData,
+      })
+      
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Transcription failed')
+      }
+      
+      // Insert transcribed text into the input
+      if (data.text && data.text.trim()) {
+        setInput(prev => prev + (prev ? ' ' : '') + data.text.trim())
+        // Focus the textarea after inserting text
+        if (textareaRef.current) {
+          textareaRef.current.focus()
+          // Adjust height to accommodate new text
+          setTimeout(() => adjustHeight(), 100)
+        }
+      }
+      
+    } catch (error: any) {
+      console.error('Transcription error:', error)
+      setRecordingError(
+        error.message || 'Failed to transcribe audio. Please try again.'
+      )
+    } finally {
+      setIsTranscribing(false)
+    }
+  }
+
+  const toggleRecording = () => {
+    if (isRecording) {
+      stopRecording()
+    } else {
+      startRecording()
+    }
+  }
+
   const suggestedQuestions = [
     "How can I rank higher for landscaping in my city?",
     "What should I blog about this season?",
@@ -2152,6 +2269,16 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                       />
                     </div>
 
+                    {/* Recording error display */}
+                    {recordingError && (
+                      <div className="mt-2 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
+                        <p className="text-red-400 text-xs flex items-center gap-2">
+                          <MicOff className="w-3 h-3" />
+                          {recordingError}
+                        </p>
+                      </div>
+                    )}
+
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center gap-2">
                         {/* Tools Dropdown */}
@@ -2286,6 +2413,38 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         </button>
                       </div>
                       <div className="flex items-center gap-2">
+                        {/* Speech-to-text button */}
+                        <button
+                          type="button"
+                          onClick={toggleRecording}
+                          disabled={isLoading || isTranscribing}
+                          className={`px-1.5 py-1.5 rounded-lg text-sm transition-all duration-300 border flex items-center justify-center ${
+                            isRecording
+                              ? "bg-red-500 text-white border-red-500 hover:bg-red-400 animate-pulse"
+                              : isTranscribing
+                              ? "bg-blue-500 text-white border-blue-500"
+                              : "text-gray-400 border-gray-700 hover:border-blue-500/50 hover:bg-blue-500/10 hover:text-blue-400"
+                          }`}
+                          title={
+                            isRecording 
+                              ? "Stop recording" 
+                              : isTranscribing 
+                              ? "Transcribing..." 
+                              : "Start voice message"
+                          }
+                        >
+                          {isRecording ? (
+                            <Square className="w-4 h-4" />
+                          ) : isTranscribing ? (
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <Mic className="w-4 h-4" />
+                          )}
+                          <span className="sr-only">
+                            {isRecording ? "Stop recording" : "Start voice message"}
+                          </span>
+                        </button>
+
                         <button
                           type="button"
                           className={`px-1.5 py-1.5 rounded-lg text-sm transition-all duration-300 border flex items-center justify-center ${
