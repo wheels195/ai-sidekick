@@ -1947,7 +1947,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
-                className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
+                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
                 style={isMobile ? {
                   paddingBottom: `max(32px, env(safe-area-inset-bottom))`,
                   minHeight: '140px' // Increased to accommodate potential file previews
@@ -1956,10 +1956,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div 
-                    className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300" 
-                    style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}
-                  >
+                  <div className="relative">
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
                       <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200' : 'h-0 overflow-hidden'}`}>
@@ -2211,7 +2208,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
                 {/* Business Category Buttons */}
                 {messages.length === 1 && (
-                  <div className={`category-container relative mt-4 ${!hasMounted || isMobile ? 'pointer-events-none' : ''}`} style={{ height: isMobile ? '0px' : '60px', overflow: isMobile ? 'hidden' : 'visible' }}>
+                  <div className={`category-container relative mt-4 ${!hasMounted || isMobile ? 'pointer-events-none' : ''}`} style={{ height: isMobile ? '0px' : '50px', overflow: isMobile ? 'hidden' : 'visible' }}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category, index) => {
                         const IconComponent = category.icon
