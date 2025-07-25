@@ -2123,7 +2123,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     {/* Message Content */}
                     <div className="max-w-[900px]">
                       <div
-                        className={`px-4 py-2.5 rounded-2xl transition-all duration-200 ${
+                        className={`px-4 py-2 rounded-2xl transition-all duration-200 ${
                           message.role === "user"
                             ? "bg-blue-600 text-white"
                             : "bg-[#1a1a1a] text-gray-100"
@@ -2134,13 +2134,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                       >
                         {message.role === "assistant" ? (
                           <div 
-                            className="text-gray-50 typography-chat leading-relaxed"
+                            className="text-gray-50 typography-chat leading-relaxed text-base"
                             dangerouslySetInnerHTML={{ 
                               __html: convertMarkdownToHtml(message.content) 
                             }}
                           />
                         ) : (
-                          <p className="text-white typography-chat whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                          <p className="text-white typography-chat whitespace-pre-wrap leading-relaxed text-base">{message.content}</p>
                         )}
                       </div>
                       
@@ -2424,11 +2424,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           }
                         }}
                         placeholder="Ask me anything about growing your landscaping business..."
-                        className="w-full px-0 py-0 resize-none bg-transparent border-none text-white focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 leading-relaxed"
+                        className="w-full px-0 py-0 resize-none bg-transparent border-none text-white focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 leading-relaxed text-base"
                         style={{
                           overflow: "hidden",
-                          // Use 16px on mobile to prevent zoom, smaller on desktop
-                          fontSize: isMobile ? '16px' : '14px',
                           // Set stable initial height to prevent layout shift
                           height: '48px',
                           minHeight: '48px',
@@ -2741,7 +2739,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   </div>
                 )}
 
-                <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
+                <p className="text-sm text-gray-500 mt-3 text-center leading-relaxed">
                   Powered by specialized AI trained for landscaping businesses
                 </p>
               </div>
