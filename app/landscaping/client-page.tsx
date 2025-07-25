@@ -607,6 +607,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
   
   // Stable textarea ref without auto-resize to prevent layout shift
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -619,7 +620,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     if (reset) {
       textarea.style.height = '48px' // min-height
     } else {
-      const maxHeight = isMobile ? 120 : 150
+      const maxHeight = isMobile ? Math.min(window.innerHeight * 0.3, 120) : 150
       textarea.style.height = 'auto'
       const newHeight = Math.min(textarea.scrollHeight, maxHeight)
       textarea.style.height = newHeight + 'px'
@@ -738,6 +739,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   // Set initial token usage from server data
   const [tokensUsedTrial, setTokensUsedTrial] = useState(initialUser.tokensUsedTrial)
   const [trialTokenLimit, setTrialTokenLimit] = useState(initialUser.trialTokenLimit)
+
+  // Set hasMounted to prevent hydration mismatches
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   // Focus input when component loads (no delay needed)
   useEffect(() => {
@@ -1945,12 +1951,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   <div 
                     className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300" 
                     style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}
-                    onClick={() => {
-                      // Ensure immediate focus on mobile - synchronous call
-                      if (textareaRef.current && !textareaRef.current.disabled) {
-                        textareaRef.current.focus()
-                      }
-                    }}
                   >
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
@@ -2064,7 +2064,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           
                           {/* Upward Opening Dropdown */}
                           {showToolsDropdown && (
-                            <div className="absolute bottom-full left-0 mb-2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-2 space-y-1 min-w-[160px] sm:min-w-40 z-50">
+                            <div className="absolute bottom-full left-0 mb-3 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-2 space-y-1 min-w-[160px] sm:min-w-40 z-[999]">
                               <label className={`w-full text-left p-2 sm:p-3 rounded-lg transition-colors flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 cursor-pointer ${activeTool === 'attach-file' ? 'bg-blue-500/20' : ''}`}>
                                 <Paperclip className="w-4 h-4 sm:w-3 sm:h-3" />
                                 <span className="text-xs sm:text-[11px] font-medium">Attach File</span>
@@ -2087,7 +2087,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                               
                               <button
                                 type="button"
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  e.preventDefault()
                                   const newState = activeTool === 'web-search' ? null : 'web-search'
                                   setActiveTool(newState)
                                   setWebSearchEnabled(newState === 'web-search')
@@ -2104,7 +2106,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                               
                               <button
                                 type="button"
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  e.preventDefault()
                                   setActiveTool(activeTool === 'create-image' ? null : 'create-image')
                                   setShowToolsDropdown(false)
                                 }}
@@ -2196,7 +2200,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </form>
 
                 {/* Business Category Buttons */}
-                {messages.length === 1 && (
+                {hasMounted && messages.length === 1 && !isMobile && (
                   <div className="category-container relative mt-4">
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category) => {
@@ -2223,7 +2227,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     
                     {/* Category Questions Dropdown */}
                     {showCategoryQuestions && activeCategory && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 min-w-[600px] z-50">
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 min-w-[600px] z-[999]">
                         {(() => {
                           const category = BUSINESS_CATEGORIES.find(c => c.id === activeCategory)
                           if (!category) return null
