@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { createServiceClient } from '@/lib/supabase/server'
+// Removed Supabase dependency for transcription API
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
@@ -37,24 +37,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check Supabase configuration
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      console.error('Supabase configuration missing:', {
-        url: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-        key: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      })
-      return NextResponse.json(
-        { error: 'Supabase configuration missing' },
-        { status: 500 }
-      )
-    }
-
-    // Check authentication using service client
-    const supabase = createServiceClient()
-    
-    // For transcription API, we'll skip user authentication for now and rely on rate limiting
-    // This allows the API to work without complex cookie handling
-    console.log('Skipping user authentication for transcription API')
+    // Skip Supabase entirely for transcription API - focus on core functionality
+    console.log('Transcription API running without user authentication for maximum compatibility')
     console.log('OpenAI API Key status:', process.env.OPENAI_API_KEY ? `Present (${process.env.OPENAI_API_KEY.substring(0, 10)}...)` : 'MISSING!')
 
     // Parse form data to get the audio file

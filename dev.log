@@ -66,3 +66,13 @@ Audio file received: { name: 'null', size: 0, type: 'application/octet-stream' }
 FormData received with entries: [ 'audio' ]
 Invalid file type: application/octet-stream
  POST /api/audio/transcribe 400 in 53ms
+ ✓ Compiled in 21ms
+ ✓ Compiled /api/audio/transcribe in 121ms (185 modules)
+Transcription API called
+Environment check: { openai: true, supabaseUrl: true, supabaseKey: true }
+Transcription API running without user authentication for maximum compatibility
+OpenAI API Key status: Present (sk-proj-IS...)
+Audio file received: { name: 'null', size: 0, type: 'application/octet-stream' }
+FormData received with entries: [ 'audio' ]
+Invalid file type: application/octet-stream
+ POST /api/audio/transcribe 400 in 181ms
