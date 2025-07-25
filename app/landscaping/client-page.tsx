@@ -1605,7 +1605,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       console.log('Sending audio to transcription API...', { language: transcriptionLanguage })
       
       // Build URL with language parameter
-      const apiUrl = new URL('/api/audio/transcribe', window.location.origin)
+      // TEMPORARILY using simple endpoint for debugging
+      const apiUrl = new URL('/api/audio/transcribe-simple', window.location.origin)
       if (transcriptionLanguage !== 'auto') {
         apiUrl.searchParams.set('language', transcriptionLanguage)
       }
