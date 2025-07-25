@@ -523,13 +523,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </Button>
             </div>
             
-            {/* Glass Button */}
+            {/* How to Use Button - Centered between main CTAs */}
             <div className="flex justify-center items-center mt-8">
               <Button
+                size="lg"
                 onClick={() => window.location.href = '/learn'}
-                className="bg-blue-500/20 backdrop-blur-xl border border-blue-400/30 text-white hover:bg-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105 text-sm lg:text-base px-6 py-3 rounded-xl shadow-lg hover:shadow-blue-500/25"
+                className="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 backdrop-blur-sm border border-white/20 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px] max-w-md mx-auto"
               >
-                <FileText className="w-4 h-4 mr-2" />
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-2" />
                 How to Use <span className="font-cursive">AI Sidekick</span>
               </Button>
             </div>
