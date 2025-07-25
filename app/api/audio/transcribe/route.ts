@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check authentication
-    const supabase = createClient()
+    const { supabase } = createClient(request)
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     
     if (authError || !user) {
@@ -266,6 +266,22 @@ export async function POST(request: NextRequest) {
       full: JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
     })
 
+    // Get audioFile from formData for error reporting (may be undefined)
+    let audioFileInfo = null
+    try {
+      const formData = await request.formData()
+      const audioFile = formData.get('audio') as File
+      if (audioFile) {
+        audioFileInfo = {
+          size: audioFile.size,
+          type: audioFile.type,
+          name: audioFile.name
+        }
+      }
+    } catch (e) {
+      // Ignore formData parsing errors in error handler
+    }
+
     // Create detailed error response for debugging
     const errorDetails = {
       message: error.message || 'Unknown error',
@@ -273,11 +289,7 @@ export async function POST(request: NextRequest) {
       type: error?.error?.type,
       apiKeyPresent: !!process.env.OPENAI_API_KEY,
       apiKeyPrefix: process.env.OPENAI_API_KEY?.substring(0, 10),
-      fileInfo: {
-        size: audioFile?.size,
-        type: audioFile?.type,
-        name: audioFile?.name
-      }
+      fileInfo: audioFileInfo
     }
 
     // Handle specific OpenAI errors
@@ -343,8 +355,8 @@ export async function POST(request: NextRequest) {
         debugInfo: {
           hasAPIKey: !!process.env.OPENAI_API_KEY,
           modelUsed: 'whisper-1',
-          audioFormat: audioFile?.type,
-          audioSize: audioFile?.size
+          audioFormat: audioFileInfo?.type,
+          audioSize: audioFileInfo?.size
         }
       },
       { status: 500, headers }

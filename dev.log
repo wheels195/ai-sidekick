@@ -2,10 +2,86 @@
 > my-v0-project@0.1.0 dev
 > next dev
 
+ ⚠ Port 3000 is in use, trying 3001 instead.
    ▲ Next.js 15.2.4
-   - Local:        http://localhost:3000
-   - Network:      http://10.255.255.254:3000
-   - Environments: .env.local
-
- ✓ Starting...
- ✓ Ready in 1453ms
+   - Local:        http://localhost:3001
+   - Network:      http://10.255.255.254:3001
+   - Environments: .en ○ Compiling /api/audio/transcribe ...
+ ✓ C ○ Compiling /api/audio/transcribe ...
+ ✓ Compiled /api/audio/transcribe in 708ms (569 mo ✓ Compiled in 16ms
+PI called
+Transcription error details: {
+  message: "Cannot read properties of undefined (reading 'headers')",
+  code: undefined,
+  type: undefined,
+  status: undefined,
+  stack: "TypeError: Cannot read properties of undefined (reading 'headers')\n" +
+    '    at createClient (webpack-internal:///(rsc)/./lib/supabase/server.ts:12:30)\n' +
+    '    at POST (webpack-internal:///(rsc)/./app/api/audio/transcribe/route.ts:46:92)\n' +
+    '    at AsyncLocalStorage.run (node:async_hooks:327:14)\n' +
+    '    at AppRouteRouteModule.do (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:33970)\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:43788\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:169:36\n' +
+    '    at NoopContextManager.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)\n' +
+    '    at ContextAPI.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)\n' +
+    '    at NoopTracer.startActiveSpan (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)\n' +
+    '    at ProxyTracer.startActiveSpan (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854)\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:151:103\n' +
+    '    at NoopContextManager.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)\n' +
+    '    at ContextAPI.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)\n' +
+    '    at NextTracerImpl.trace (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:151:28)\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:43649\n' +
+    '    at AsyncLocalStorage.run (node:async_hooks:338:14)\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41373\n' +
+    '    at AsyncLocalStorage.run (node:async_hooks:338:14)\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41330\n' +
+    '    at AsyncLocalStorage.run (node:async_hooks:338:14)\n' +
+    '    at AppRouteRouteModule.handle (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41284)\n' +
+    '    at doRender (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1513:60)\n' +
+    '    at responseGenerator (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1909:20)\n' +
+    '    at ResponseCache.get (/home/wheel/ai-sidekick/node_modules/next/dist/server/response-cache/index.js:49:20)\n' +
+    '    at DevServer.renderToResponseWithComponentsImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1915:53)\n' +
+    '    at /home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1113:121\n' +
+    '    at NextTracerImpl.trace (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:134:20)\n' +
+    '    at DevServer.renderToResponseWithComponents (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1113:41)\n' +
+    '    at DevServer.renderPageComponent (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:2393:35)\n' +
+    '    at async DevServer.renderToResponseImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:2430:32)\n' +
+    '    at async DevServer.pipeImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1003:25)\n' +
+    '    at async NextNodeServer.handleCatchallRenderRequest (/home/wheel/ai-sidekick/node_modules/next/dist/server/next-server.js:304:17)\n' +
+    '    at async DevServer.handleRequestImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:895:17)\n' +
+    '    at async /home/wheel/ai-sidekick/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+    '    at async Span.traceAsyncFn (/home/wheel/ai-sidekick/node_modules/next/dist/trace/trace.js:157:20)\n' +
+    '    at async DevServer.handleRequest (/home/wheel/ai-sidekick/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+    '    at async invokeRender (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/router-server.js:235:21)\n' +
+    '    at async handleRequest (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/router-server.js:426:24)\n' +
+    '    at async requestHandlerImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/router-server.js:450:13)\n' +
+    '    at async Server.requestListener (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/start-server.js:158:13)',
+  response: undefined,
+  full: '{\n' +
+    `  "stack": "TypeError: Cannot read properties of undefined (reading 'headers')\\n    at createClient (webpack-internal:///(rsc)/./lib/supabase/server.ts:12:30)\\n    at POST (webpack-internal:///(rsc)/./app/api/audio/transcribe/route.ts:46:92)\\n    at AsyncLocalStorage.run (node:async_hooks:327:14)\\n    at AppRouteRouteModule.do (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:33970)\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:43788\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:169:36\\n    at NoopContextManager.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)\\n    at ContextAPI.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)\\n    at NoopTracer.startActiveSpan (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)\\n    at ProxyTracer.startActiveSpan (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854)\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:151:103\\n    at NoopContextManager.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)\\n    at ContextAPI.with (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)\\n    at NextTracerImpl.trace (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:151:28)\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:43649\\n    at AsyncLocalStorage.run (node:async_hooks:338:14)\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41373\\n    at AsyncLocalStorage.run (node:async_hooks:338:14)\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41330\\n    at AsyncLocalStorage.run (node:async_hooks:338:14)\\n    at AppRouteRouteModule.handle (/home/wheel/ai-sidekick/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41284)\\n    at doRender (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1513:60)\\n    at responseGenerator (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1909:20)\\n    at ResponseCache.get (/home/wheel/ai-sidekick/node_modules/next/dist/server/response-cache/index.js:49:20)\\n    at DevServer.renderToResponseWithComponentsImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1915:53)\\n    at /home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1113:121\\n    at NextTracerImpl.trace (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/trace/tracer.js:134:20)\\n    at DevServer.renderToResponseWithComponents (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1113:41)\\n    at DevServer.renderPageComponent (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:2393:35)\\n    at async DevServer.renderToResponseImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:2430:32)\\n    at async DevServer.pipeImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:1003:25)\\n    at async NextNodeServer.handleCatchallRenderRequest (/home/wheel/ai-sidekick/node_modules/next/dist/server/next-server.js:304:17)\\n    at async DevServer.handleRequestImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/base-server.js:895:17)\\n    at async /home/wheel/ai-sidekick/node_modules/next/dist/server/dev/next-dev-server.js:371:20\\n    at async Span.traceAsyncFn (/home/wheel/ai-sidekick/node_modules/next/dist/trace/trace.js:157:20)\\n    at async DevServer.handleRequest (/home/wheel/ai-sidekick/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\\n    at async invokeRender (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/router-server.js:235:21)\\n    at async handleRequest (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/router-server.js:426:24)\\n    at async requestHandlerImpl (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/router-server.js:450:13)\\n    at async Server.requestListener (/home/wheel/ai-sidekick/node_modules/next/dist/server/lib/start-server.js:158:13)",\n` +
+    `  "message": "Cannot read properties of undefined (reading 'headers')"\n` +
+    '}'
+}
+ ⨯ ReferenceError: audioFile is not defined
+    at POST (app/api/audio/transcribe/route.ts:277:14)
+  275 |       apiKeyPrefix: process.env.OPENAI_API_KEY?.substring(0, 10),
+  276 |       fileInfo: {
+> 277 |         size: audioFile?.size,
+      |              ^
+  278 |         type: audioFile?.type,
+  279 |         name: audioFile?.name
+  280 |       }
+ ⨯ ReferenceError: audioFile is not defined
+    at POST (app/api/audio/transcribe/route.ts:277:14)
+  275 |       apiKeyPrefix: process.env.OPENAI_API_KEY?.substring(0, 10),
+  276 |       fileInfo: {
+> 277 |         size: audioFile?.size,
+      |              ^
+  278 |         type: audioFile?.type,
+  279 |         name: audioFile?.name
+  280 |       }
+ POST /api/audio/transcribe 500 in 1001ms
+ ✓ Compiled in 138ms (293 modules)
+ ✓ Compiled in 75ms (293 modules)
+ ✓ Compiled in 132ms (293 modules)
+ GET /api/audio/transcribe 405 in 84ms

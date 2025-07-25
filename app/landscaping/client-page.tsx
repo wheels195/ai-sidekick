@@ -1801,7 +1801,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: max(200px, env(safe-area-inset-bottom)) !important; /* Increased to prevent overlap */
+            padding-bottom: max(280px, env(safe-area-inset-bottom)) !important; /* Increased to prevent overlap */
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -2098,18 +2098,18 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container overflow-y-auto px-4 py-6 pb-32 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
+                className={`messages-scroll-container overflow-y-auto px-4 py-6 pb-40 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
                 style={isMobile ? {
                   // Mobile: Use dynamic viewport height and visualViewport if available
                   scrollBehavior: 'auto',
                   height: 'calc(100dvh - 200px)', /* Match backend adjustment */
                   maxHeight: 'calc(100dvh - 200px)',
-                  paddingBottom: `max(220px, env(safe-area-inset-bottom))` /* Increased padding to prevent text behind input */
+                  paddingBottom: `max(280px, env(safe-area-inset-bottom))` /* Increased padding to prevent text behind input */
                 } : {
                   // Desktop: Use regular viewport height
                   scrollBehavior: 'smooth',
                   height: 'calc(100vh - 240px)',
-                  paddingBottom: '220px' /* Increased to prevent overlap with input */
+                  paddingBottom: '280px' /* Increased to prevent overlap with input */
                 }}
               >
                 <div className="w-full max-w-[900px] mx-auto">
