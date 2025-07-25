@@ -564,27 +564,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }
 
-  // Auto-resize textarea when input changes - smooth and responsive
-  useEffect(() => {
-    if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-      const textarea = document.querySelector('textarea') as HTMLTextAreaElement
-      if (textarea && input) {
-        const maxHeight = window.innerWidth < 640 ? 120 : 150
-      textarea.style.height = 'auto'
-      const newHeight = Math.min(textarea.scrollHeight, maxHeight)
-      textarea.style.height = newHeight + 'px'
-      
-      // Manage overflow dynamically
-      if (textarea.scrollHeight > maxHeight) {
-        textarea.style.overflowY = 'auto'
-        textarea.classList.add('scrollbar-thin', 'scrollbar-track-transparent', 'scrollbar-thumb-emerald-500/20')
-      } else {
-        textarea.style.overflowY = 'hidden'
-        textarea.classList.remove('scrollbar-thin', 'scrollbar-track-transparent', 'scrollbar-thumb-emerald-500/20')
-      }
-      }
-    }
-  }, [input])
+  // Remove conflicting auto-resize logic to prevent layout shift
+  // The adjustHeight() function in onChange handles this instead
 
   useEffect(() => {
     // Set client state first to prevent hydration issues
@@ -1919,11 +1900,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           }
                         }}
                         placeholder="Ask me anything about growing your landscaping business..."
-                        className="w-full px-0 py-0 resize-none bg-transparent border-none text-white text-sm focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 placeholder:text-sm min-h-[48px] leading-relaxed"
+                        className="w-full px-0 py-0 resize-none bg-transparent border-none text-white focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 min-h-[48px] leading-relaxed"
                         style={{
                           overflow: "hidden",
-                          // Use 16px on mobile to prevent zoom on iOS
-                          fontSize: isClient && isMobile ? '16px' : undefined
+                          // Prevent iOS zoom without causing hydration mismatch
+                          fontSize: '16px'
                         }}
                         disabled={isLoading}
                       />
