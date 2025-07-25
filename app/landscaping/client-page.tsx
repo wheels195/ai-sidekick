@@ -533,12 +533,23 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
   
-  // Auto-resize textarea hook
-  const { textareaRef, adjustHeight } = useAutoResizeTextarea({
-    minHeight: 60,
-    maxHeight: 200,
-  })
+  // Stable textarea ref without auto-resize to prevent layout shift
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // Stable adjustHeight function that doesn't cause initial layout shift
+  const adjustHeight = useCallback((reset = false) => {
+    if (!hasMounted || !textareaRef.current) return
+    
+    const textarea = textareaRef.current
+    if (reset) {
+      textarea.style.height = '48px' // min-height
+    } else {
+      const maxHeight = isMobile ? 120 : 150
+      textarea.style.height = 'auto'
+      const newHeight = Math.min(textarea.scrollHeight, maxHeight)
+      textarea.style.height = newHeight + 'px'
+    }
+  }, [hasMounted, isMobile])
 
   const scrollToBottom = () => {
     if (typeof document !== 'undefined') {
@@ -1825,8 +1836,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/80 backdrop-blur-xl border-t border-gray-700/30 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
                 style={isMobile ? {
                   paddingBottom: `max(32px, env(safe-area-inset-bottom))`,
-                  minHeight: '120px'
-                } : undefined}
+                  minHeight: '140px' // Increased to accommodate potential file previews
+                } : {
+                  minHeight: '100px' // Stable minimum height on desktop
+                }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className={`relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 ${hasMounted ? 'transition-all duration-300' : ''}`} style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
@@ -1907,11 +1920,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           }
                         }}
                         placeholder="Ask me anything about growing your landscaping business..."
-                        className="w-full px-0 py-0 resize-none bg-transparent border-none text-white focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 min-h-[48px] leading-relaxed"
+                        className="w-full px-0 py-0 resize-none bg-transparent border-none text-white focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 leading-relaxed"
                         style={{
                           overflow: "hidden",
                           // Use 16px on mobile to prevent zoom, smaller on desktop
-                          fontSize: isMobile ? '16px' : '14px'
+                          fontSize: isMobile ? '16px' : '14px',
+                          // Set stable initial height to prevent layout shift
+                          height: '48px',
+                          minHeight: '48px'
                         }}
                         disabled={isLoading}
                       />
