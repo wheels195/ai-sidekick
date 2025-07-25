@@ -1418,6 +1418,15 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     "Help me write a service page for tree trimming",
   ]
 
+  // Don't render anything until client-side hydration is complete
+  if (!hasMounted) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-black via-gray-950 to-black">
+        <div className="text-emerald-400 text-lg">Loading...</div>
+      </div>
+    )
+  }
+
   return (
     <>
       <style>{`
@@ -2215,31 +2224,23 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </form>
 
                 {/* Business Category Buttons */}
-                {messages.length === 1 && hasMounted && !isMobile && (
-                  <div className="category-container relative mt-4" style={{ height: '50px' }}>
+                {messages.length === 1 && !isMobile && (
+                  <div className="category-container relative mt-4">
                     <div className="flex items-center justify-center gap-2 flex-wrap">
-                      {BUSINESS_CATEGORIES.map((category, index) => {
+                      {BUSINESS_CATEGORIES.map((category) => {
                         const IconComponent = category.icon
                         const isActive = activeCategory === category.id
-                        // Start from Financial Growth (reverse order) - Financial Growth is typically last in the array
-                        const reverseIndex = BUSINESS_CATEGORIES.length - 1 - index
-                        const animationDelay = reverseIndex * 100 // 100ms delay between each button
                         
                         return (
                           <button
                             key={category.id}
                             type="button"
                             onClick={() => handleCategorySelect(category.id)}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 transform ${
-                              buttonsAnimated ? 'translate-x-0 opacity-100' : 'translate-x-[-50px] opacity-0'
-                            } ${
+                            className={`flex items-center gap-2 px-3 py-2 rounded-full border hover:scale-105 ${
                               isActive 
                                 ? 'bg-emerald-500/30 border-emerald-500/50 text-emerald-200' 
                                 : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300 hover:text-emerald-200'
                             }`}
-                            style={{
-                              transitionDelay: `${animationDelay}ms`
-                            }}
                           >
                             <IconComponent className="w-4 h-4" />
                             <span className="text-xs font-medium">{category.name}</span>
