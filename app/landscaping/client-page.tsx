@@ -619,11 +619,19 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     const textarea = textareaRef.current
     if (reset) {
       textarea.style.height = '48px' // min-height
+      textarea.style.overflow = 'hidden'
     } else {
       const maxHeight = isMobile ? Math.min(window.innerHeight * 0.3, 120) : 150
       textarea.style.height = 'auto'
       const newHeight = Math.min(textarea.scrollHeight, maxHeight)
       textarea.style.height = newHeight + 'px'
+      
+      // Enable scroll if content exceeds max height
+      if (textarea.scrollHeight > maxHeight) {
+        textarea.style.overflow = 'auto'
+      } else {
+        textarea.style.overflow = 'hidden'
+      }
     }
   }, [isMobile])
 
@@ -2036,7 +2044,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           fontSize: isMobile ? '16px' : '14px',
                           // Set stable initial height to prevent layout shift
                           height: '48px',
-                          minHeight: '48px'
+                          minHeight: '48px',
+                          // Enable smooth scrolling when content overflows
+                          scrollBehavior: 'smooth'
                         }}
                         disabled={isLoading}
                       />
@@ -2200,8 +2210,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </form>
 
                 {/* Business Category Buttons */}
-                {hasMounted && messages.length === 1 && !isMobile && (
-                  <div className="category-container relative mt-4">
+                {messages.length === 1 && (
+                  <div className={`category-container relative mt-4 transition-opacity duration-200 ${!hasMounted || isMobile ? 'opacity-0 pointer-events-none h-0 overflow-hidden' : 'opacity-100'}`}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category) => {
                         const IconComponent = category.icon
