@@ -758,7 +758,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         }
         
         // Close tools dropdown
-        if (showToolsDropdown && !target.closest('.relative')) {
+        if (showToolsDropdown && !target.closest('.tools-dropdown-container')) {
           setShowToolsDropdown(false)
         }
         
@@ -770,7 +770,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       }
       
       document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
+      document.addEventListener('touchstart', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+        document.removeEventListener('touchstart', handleClickOutside)
+      }
     }
   }, [showUserMenu, showToolsDropdown, showCategoryQuestions])
 
@@ -2041,7 +2045,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center gap-2">
                         {/* Tools Dropdown */}
-                        <div className="relative group">
+                        <div className="relative group tools-dropdown-container">
                           <button
                             type="button"
                             onClick={() => setShowToolsDropdown(!showToolsDropdown)}
