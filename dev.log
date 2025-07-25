@@ -76,3 +76,6 @@ Audio file received: { name: 'null', size: 0, type: 'application/octet-stream' }
 FormData received with entries: [ 'audio' ]
 Invalid file type: application/octet-stream
  POST /api/audio/transcribe 400 in 181ms
+ ✓ Compiled in 20ms
+ ✓ Compiled /api/audio/transcribe in 96ms (185 modules)
+ POST /api/audio/transcribe 400 in 145ms
