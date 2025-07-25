@@ -22,30 +22,20 @@ npm run lint   # Code linting
 
 ## Recent Major Updates (January 2025)
 
-### ✅ Consolidated Tools Dropdown System
-- **Upward-opening Tools dropdown** with Wrench icon (replaced individual buttons)
-- **Green pill indicators** for active tools with X close buttons
-- **Custom themed tooltip** "Choose tool" matching app design
-- **Mobile-optimized** responsive design with touch-friendly targets
-- **Inline image generation** (removed modal-based approach)
-- **Smart state management** - only one tool active at a time
-- **Fixed React error #418** and API 500 errors
+### ✅ Core Platform Features
+- **Consolidated Tools Dropdown** - Upward-opening with Wrench icon, green pill indicators, themed tooltips
+- **Chat Interface** - Full-screen with auto-expanding textarea, inline image generation
+- **OpenAI Integration** - GPT-4o/GPT-4o-mini with smart model routing
+- **Vector Database** - 501-line landscaping knowledge + user file storage
+- **File Processing** - Multi-format upload (PDF, images, docs) with AI analysis
+- **Authentication & Analytics** - JWT + email verification, real-time cost tracking
+- **Business Intelligence** - 20 hardcoded challenges, mandatory signup data, professional email flow
 
-### ✅ Core Features Implemented
-1. **Chat Interface** - Full-screen experience with auto-expanding textarea
-2. **OpenAI Integration** - GPT-4o/GPT-4o-mini with smart model routing
-3. **Vector Database** - 501-line landscaping knowledge + user file storage
-4. **File Processing** - Multi-format upload (PDF, images, docs) with AI analysis
-5. **Web Search** - Google Places API for competitor research
-6. **Authentication** - JWT + email verification + protected routes
-7. **Cost Tracking** - Real-time API usage monitoring and analytics
-8. **Mobile Optimization** - Universal responsive design across devices
-
-### ✅ Business Intelligence System
-- **Hardcoded Challenges** - 20 landscaping industry challenges auto-applied
-- **Mandatory Signup Data** - Business profile, team size, services, priorities
-- **Professional Email Flow** - Verification → Welcome emails with personalized content
-- **Admin Analytics** - Real-time conversion tracking and user value monitoring
+### ✅ Recent Mobile UX Fixes (Latest Session)
+- **Double-tap input focus resolved** - Added synchronous focus handlers with preventDefault and onTouchStart
+- **Tools dropdown click-outside** - Fixed with specific .tools-dropdown-container selector and touch events
+- **Hero CTA button consistency** - Made all three buttons identical size on mobile/desktop with light-to-dark blue gradient
+- **Business category buttons** - 5-category system with upward dropdowns (mobile hidden to prevent flashing)
 
 ## Current Architecture
 
@@ -76,55 +66,34 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 ADMIN_API_KEY=...
 ```
 
-## Immediate Next Steps
+## 🚨 PRIORITY ISSUES & TODO (Next Session)
 
-### High Priority UX Improvements
-1. **Enhanced Tool Animations** - Smooth transitions for dropdown open/close
-2. **Tool Usage Analytics** - Track which tools users engage with most
-3. **Keyboard Shortcuts** - Power user shortcuts for tool activation
-4. **File Upload Progress** - Visual feedback during processing
-5. **Image Generation History** - Gallery view of user's generated images
+### Critical Mobile UX Issues
+1. **Mobile tools/tips viewport focus** - Clicking tools dropdown causes unwanted page centering, cutting off tools selection and tips visibility
+2. **Mobile category flashing** - Page load flashing still persists despite attempts to fix with conditional rendering
 
-### Business Growth Features
-1. **Competitor Analysis Templates** - Pre-built analysis frameworks
-2. **Seasonal Campaign Builder** - Automated marketing calendar generation
-3. **ROI Calculator Integration** - Business impact metrics for strategies
-4. **Team Collaboration Tools** - Share conversations and insights
-5. **Advanced Search Filters** - Filter vector knowledge by category/date
+### New Feature Requirements
+3. **Voice & Accessibility APIs**
+   - Text-to-speech integration for chat responses
+   - Voice mode for hands-free interaction
+   - Language toggle options for internationalization
 
-### Technical Optimizations
-1. **Performance Monitoring** - Add Sentry error tracking
-2. **A/B Testing Framework** - Test UI variations and messaging
-3. **Database Query Optimization** - Improve vector search performance
-4. **API Rate Limiting** - Protect against abuse and manage costs
-5. **Backup & Recovery** - Automated data protection systems
+### Mobile Layout Consistency
+4. **CTA button standardization** - Ensure ALL CTA buttons across site are full-width on mobile
+5. **Learn page mobile width** - Change /learn page container to full-width on mobile devices
 
-## Testing Priorities
-
-- **End-to-end user flow** - Signup → verification → tool usage → image generation
-- **Mobile experience** - All tools dropdown functionality on various devices
-- **File upload reliability** - Multi-format processing and error handling
-- **Cost tracking accuracy** - Verify token counting and model usage analytics
-
-## Market Launch Readiness
-
-The platform is production-ready with:
-- ✅ Professional domain and email system
-- ✅ Complete user authentication and data collection
-- ✅ Advanced AI capabilities with cost management
-- ✅ Mobile-optimized responsive design
-- ✅ Business intelligence and analytics systems
-
-**Target:** Ready for customer acquisition and growth optimization.
+### Technical Debt
+- **Performance monitoring** - Add Sentry error tracking
+- **A/B testing framework** - Test UI variations and messaging
+- **API rate limiting** - Protect against abuse and manage costs
 
 ## Development Guidelines
 
 - **Mobile-first design** - All new features must work perfectly on mobile
 - **Cost consciousness** - Monitor token usage and API costs for all features
-- **User feedback integration** - Use analytics to guide feature priorities
 - **Security focus** - All user data protected with proper authentication
 - **Performance optimization** - Fast loading and responsive interactions
 
 ---
 
-*Last updated: January 2025 - Consolidated Tools Dropdown Implementation*
+*Last updated: January 2025 - Mobile UX Fixes & Hero CTA Updates*
