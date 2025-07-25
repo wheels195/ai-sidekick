@@ -111,10 +111,8 @@ export async function POST(request: NextRequest) {
     // Create landscaping-specific prompt for better accuracy
     const landscapingPrompt = `This conversation is about landscaping business topics including: lawn care, landscape design, irrigation, hardscaping, tree services, seasonal maintenance, customer service, pricing, marketing, crew management, equipment, plant care, soil management, fertilization, pest control, commercial landscaping, residential landscaping, outdoor lighting, drainage systems, and business growth strategies.`
 
-    // Try newer models first, fallback to whisper-1 if unavailable
-    const models = useHighQuality 
-      ? ['gpt-4o-transcribe', 'whisper-1']
-      : ['gpt-4o-mini-transcribe', 'whisper-1']
+    // Use whisper-1 - it's the only available transcription model
+    const models = ['whisper-1']
     
     let transcription: string | undefined
     let usedModel = ''

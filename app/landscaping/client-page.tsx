@@ -1426,6 +1426,17 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }
 
+  // Helper function to set recording error with auto-deletion after 3 seconds
+  const setRecordingErrorWithTimeout = (errorMessage: string) => {
+    console.log('Setting recording error:', errorMessage)
+    setRecordingError(errorMessage)
+    
+    // Auto-delete error after 3 seconds
+    setTimeout(() => {
+      setRecordingError(null)
+    }, 3000)
+  }
+
   // Check microphone permission status
   const checkMicrophonePermission = async (): Promise<boolean> => {
     try {
@@ -1447,13 +1458,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       // Check if we're on HTTPS (required for mobile)
       if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
-        setRecordingError('Voice recording requires a secure connection (HTTPS).')
+        setRecordingErrorWithTimeout('Voice recording requires a secure connection (HTTPS).')
         return
       }
       
       // Check if MediaRecorder is supported
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        setRecordingError('Voice recording is not supported in this browser.')
+        setRecordingErrorWithTimeout('Voice recording is not supported in this browser.')
         return
       }
       
@@ -1514,7 +1525,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         if (audioBlob.size > 0) {
           await transcribeAudio(audioBlob)
         } else {
-          setRecordingError('No audio data recorded. Please try speaking louder.')
+          setRecordingErrorWithTimeout('No audio data recorded. Please try speaking louder.')
         }
         
         // Clean up
@@ -1525,7 +1536,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       recorder.onerror = (event: any) => {
         console.error('MediaRecorder error:', event.error)
-        setRecordingError('Recording failed: ' + event.error.message)
+        setRecordingErrorWithTimeout('Recording failed: ' + event.error.message)
       }
       
       // Start recording
@@ -1560,8 +1571,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         errorMessage += error.message || 'Unknown error occurred.'
       }
       
-      console.log('Setting recording error:', errorMessage)
-      setRecordingError(errorMessage)
+      setRecordingErrorWithTimeout(errorMessage)
     }
   }
 
@@ -1630,7 +1640,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           setTimeout(() => adjustHeight(), 100)
         }
       } else {
-        setRecordingError('No speech detected. Please try speaking more clearly.')
+        setRecordingErrorWithTimeout('No speech detected. Please try speaking more clearly.')
       }
       
     } catch (error: any) {
@@ -1650,7 +1660,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         errorMessage += error.message || 'Please try again.'
       }
       
-      setRecordingError(errorMessage)
+      setRecordingErrorWithTimeout(errorMessage)
     } finally {
       setIsTranscribing(false)
     }
