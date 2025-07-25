@@ -2198,16 +2198,26 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   </div>
                 </form>
 
-                {/* Business Category Buttons - Always render, hide with CSS on mobile */}
-                {messages.length === 1 && (
-                  <div className="category-container relative mt-4">
-                    <style jsx>{`
-                      @media (max-width: 640px) {
-                        .category-container {
-                          display: none !important;
-                        }
+                {/* Business Category Buttons - Always render, conditional visibility */}
+                <div className={`category-container relative mt-4 ${
+                  messages.length === 1 ? 'category-show' : 'category-hide'
+                }`}>
+                  <style>{`
+                    .category-container {
+                      display: block;
+                    }
+                    .category-hide {
+                      display: none !important;
+                    }
+                    .category-show {
+                      display: block;
+                    }
+                    @media (max-width: 640px) {
+                      .category-container {
+                        display: none !important;
                       }
-                    `}</style>
+                    }
+                  `}</style>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category) => {
                         const IconComponent = category.icon
@@ -2268,7 +2278,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                       </div>
                     )}
                   </div>
-                )}
+                </div>
 
                 <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
                   Powered by specialized AI trained for landscaping businesses
