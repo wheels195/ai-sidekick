@@ -2307,7 +2307,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* Scroll to Bottom Button - Centered Above Chat Input */}
               {showScrollToBottom && (
-                <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-40">
+                <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-[60]">
                   <button
                     onClick={() => {
                       scrollToBottom()
@@ -2323,7 +2323,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
-                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container bg-[#0a0a0a]/95 backdrop-blur-sm"
+                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
                 style={{
                   paddingBottom: isMobile ? `max(32px, env(safe-area-inset-bottom))` : '16px',
                   minHeight: '120px' // Consistent height to prevent layout shifts
@@ -2600,25 +2600,12 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           </select>
                         </div>
 
-                        {/* Speech-to-text button */}
-                        <button
-                          type="button"
-                          onClick={toggleRecording}
-                          onTouchStart={(e) => {
-                            // Ensure proper touch handling on mobile for microphone permissions
-                            if (isMobile) {
-                              e.preventDefault()
-                              e.currentTarget.focus()
-                            }
-                          }}
-                          onTouchEnd={(e) => {
-                            if (isMobile) {
-                              e.preventDefault()
-                              // Small delay to ensure touch gesture is registered
-                              setTimeout(() => toggleRecording(), 50)
-                            }
-                          }}
-                          disabled={isLoading || isTranscribing}
+                        {/* Speech-to-text button - Desktop only */}
+                        {!isMobile && (
+                          <button
+                            type="button"
+                            onClick={toggleRecording}
+                            disabled={isLoading || isTranscribing}
                           className={`px-1.5 py-1.5 rounded-lg text-sm transition-all duration-300 border flex items-center justify-center ${
                             isRecording
                               ? "bg-red-500 text-white border-red-500 hover:bg-red-400 animate-pulse"
@@ -2641,10 +2628,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           ) : (
                             <Mic className="w-4 h-4" />
                           )}
-                          <span className="sr-only">
-                            {isRecording ? "Stop recording" : "Start voice message"}
-                          </span>
-                        </button>
+                            <span className="sr-only">
+                              {isRecording ? "Stop recording" : "Start voice message"}
+                            </span>
+                          </button>
+                        )}
 
                         <button
                           type="button"
