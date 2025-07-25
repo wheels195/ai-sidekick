@@ -41,6 +41,11 @@ interface Message {
   timestamp: Date
   reaction?: string
   modelUsed?: string
+  images?: Array<{
+    url: string
+    name: string
+    type: 'uploaded' | 'generated'
+  }>
 }
 
 interface MessageReaction {
@@ -520,6 +525,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [isSearching, setIsSearching] = useState(false)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const [currentModel, setCurrentModel] = useState<string>('')
+  const [fullscreenImage, setFullscreenImage] = useState<{ url: string; name: string } | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const [isInputFocused, setIsInputFocused] = useState(false)
@@ -587,6 +594,19 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     if (typeof window !== 'undefined') {
       // Scroll to top when page loads
       window.scrollTo(0, 0)
+    }
+    
+    // Cleanup object URLs on unmount
+    return () => {
+      messages.forEach(msg => {
+        if (msg.images) {
+          msg.images.forEach(img => {
+            if (img.type === 'uploaded' && img.url.startsWith('blob:')) {
+              URL.revokeObjectURL(img.url)
+            }
+          })
+        }
+      })
     }
   }, [])
 
@@ -949,21 +969,34 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     e.preventDefault()
     if (!input.trim() || isLoading) return
 
-    // ① Add user message immediately
+    // Process uploaded files to extract image previews
+    const imageAttachments: Array<{ url: string; name: string; type: 'uploaded' | 'generated' }> = []
+    
+    // Create object URLs for image previews
+    for (const file of uploadedFiles) {
+      if (file.type.startsWith('image/')) {
+        const url = URL.createObjectURL(file)
+        imageAttachments.push({
+          url,
+          name: file.name,
+          type: 'uploaded'
+        })
+      }
+    }
+
+    // ① Add user message immediately with image attachments
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
       content: input.trim(),
       timestamp: new Date(),
+      images: imageAttachments.length > 0 ? imageAttachments : undefined
     }
 
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
     setMessageCount(prev => prev + 1)
-    
-    // Clear uploaded files after sending
-    setUploadedFiles([])
     
     // Mark as no longer first time user when sending first message
     if (isFirstTimeUser) {
@@ -973,20 +1006,43 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     // Check for image generation intent first
     if (detectImageGenerationIntent(input.trim())) {
       console.log('🎨 Image generation detected, generating inline...')
+      const assistantId = (Date.now() + 1).toString()
+      setMessages(prev => [
+        ...prev,
+        { id: assistantId, role: "assistant", content: "", timestamp: new Date() },
+      ])
+      
       const imageResult = await handleInlineImageGeneration(input.trim())
       
       if (imageResult) {
-        // Add AI response with generated image
-        setMessages(prev => [
-          ...prev.slice(0, -1), // Remove loading message
-          {
-            id: assistantId,
-            role: "assistant",
-            content: imageResult,
-            timestamp: new Date(),
-            modelUsed: 'dall-e-3'
-          }
-        ])
+        const data = await fetch('/api/images/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: input.trim(),
+            model: 'dall-e-3',
+            size: '1024x1024',
+            quality: 'standard',
+            style: 'natural',
+            businessContext: true
+          }),
+        }).then(res => res.json())
+        
+        // Add AI response with generated image using the new image system
+        setMessages(prev => prev.map(msg => 
+          msg.id === assistantId 
+            ? {
+                ...msg,
+                content: `I've generated an image based on your request: "${data.image?.originalPrompt || input.trim()}"`,
+                images: [{
+                  url: data.image?.url || '',
+                  name: `Generated: ${data.image?.originalPrompt || input.trim()}`,
+                  type: 'generated' as const
+                }],
+                modelUsed: 'dall-e-3'
+              }
+            : msg
+        ))
       }
       
       setIsLoading(false)
@@ -1003,6 +1059,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         console.error('Failed to process files:', error)
       }
     }
+    
+    // Clear uploaded files after processing
+    setUploadedFiles([])
 
     // Determine which model will be used (matches backend logic)
     const webSearchEnabled = activeTool === 'web-search'
@@ -1596,6 +1655,33 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         )}
                       </div>
                       
+                      {/* Image Attachments Display */}
+                      {message.images && message.images.length > 0 && (
+                        <div className={`mt-3 ${message.role === "user" ? "flex justify-end" : ""}`}>
+                          <div className={`grid ${message.images.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} gap-2 max-w-md`}>
+                            {message.images.map((img, index) => (
+                              <div 
+                                key={index} 
+                                className="relative group cursor-pointer overflow-hidden rounded-lg border border-gray-700 hover:border-emerald-500/50 transition-all duration-200"
+                                onClick={() => setFullscreenImage({ url: img.url, name: img.name })}
+                              >
+                                <img 
+                                  src={img.url} 
+                                  alt={img.name}
+                                  className="w-full h-auto max-h-48 object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                                  <div className="text-white text-center p-2">
+                                    <p className="text-xs font-medium truncate max-w-[150px]">{img.name}</p>
+                                    <p className="text-xs mt-1">Click to expand</p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
                       {/* Emoji Reactions and Copy Button - Only for assistant messages */}
                       {message.role === "assistant" && (
                         <div className="flex items-center justify-between mt-3">
@@ -1757,21 +1843,51 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
-                      {/* File Upload Display */}
+                      {/* File Upload Display with Image Previews */}
                       {uploadedFiles.length > 0 && (
                         <div className="px-4 pt-3 pb-2">
                           <div className="flex flex-wrap gap-2">
-                            {uploadedFiles.map((file, index) => (
-                              <div key={index} className="flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 rounded-lg px-3 py-1 text-xs">
-                                <span className="text-emerald-300">{file.name}</span>
-                                <button
-                                  onClick={() => setUploadedFiles(prev => prev.filter((_, i) => i !== index))}
-                                  className="text-emerald-400 hover:text-emerald-300"
-                                >
-                                  <X className="w-3 h-3" />
-                                </button>
-                              </div>
-                            ))}
+                            {uploadedFiles.map((file, index) => {
+                              const isImage = file.type.startsWith('image/')
+                              const previewUrl = isImage ? URL.createObjectURL(file) : null
+                              
+                              return (
+                                <div key={index} className="relative">
+                                  {isImage && previewUrl ? (
+                                    <div className="relative group">
+                                      <img 
+                                        src={previewUrl}
+                                        alt={file.name}
+                                        className="h-16 w-16 object-cover rounded-lg border border-emerald-500/30"
+                                      />
+                                      <button
+                                        onClick={() => {
+                                          setUploadedFiles(prev => prev.filter((_, i) => i !== index))
+                                          URL.revokeObjectURL(previewUrl)
+                                        }}
+                                        className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </button>
+                                      <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs px-1 py-0.5 rounded-b-lg truncate">
+                                        {file.name}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className="flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 rounded-lg px-3 py-1 text-xs">
+                                      <FileText className="w-3 h-3 text-emerald-300" />
+                                      <span className="text-emerald-300">{file.name}</span>
+                                      <button
+                                        onClick={() => setUploadedFiles(prev => prev.filter((_, i) => i !== index))}
+                                        className="text-emerald-400 hover:text-emerald-300"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              )
+                            })}
                           </div>
                         </div>
                       )}
@@ -2168,6 +2284,35 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Fullscreen Image Viewer Modal */}
+      {fullscreenImage && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setFullscreenImage(null)}
+        >
+          <div className="relative max-w-[90vw] max-h-[90vh]">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setFullscreenImage(null)
+              }}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <img 
+              src={fullscreenImage.url}
+              alt={fullscreenImage.name}
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <p className="absolute bottom-0 left-0 right-0 text-center text-white bg-black/70 py-2 rounded-b-lg">
+              {fullscreenImage.name}
+            </p>
           </div>
         </div>
       )}
