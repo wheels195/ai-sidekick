@@ -1842,7 +1842,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className={`relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 ${hasMounted ? 'transition-all duration-300' : ''}`} style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
+                  <div className={`relative rounded-xl border-2 border-emerald-500/40 ${hasMounted ? 'transition-all duration-300' : ''}`} style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
                       <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2' : 'h-0 overflow-hidden'} ${hasMounted && uploadedFiles.length > 0 ? 'animate-in slide-in-from-top-2 duration-200' : ''}`}>
