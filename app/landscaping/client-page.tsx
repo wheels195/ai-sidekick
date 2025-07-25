@@ -2307,7 +2307,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* Scroll to Bottom Button - Centered Above Chat Input */}
               {showScrollToBottom && (
-                <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-[60]">
+                <div className="absolute bottom-40 left-1/2 transform -translate-x-1/2 z-[70]">
                   <button
                     onClick={() => {
                       scrollToBottom()
@@ -2323,7 +2323,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
-                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-[60] safe-bottom sticky-input-area mobile-input-container bg-gray-950"
+                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-[60] safe-bottom sticky-input-area mobile-input-container bg-gray-950 rounded-t-xl"
                 style={{
                   paddingBottom: isMobile ? `max(32px, env(safe-area-inset-bottom))` : '16px',
                   minHeight: '120px' // Consistent height to prevent layout shifts
