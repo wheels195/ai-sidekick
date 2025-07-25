@@ -1801,7 +1801,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
           /* Ensure messages don't scroll under sticky input */
           .messages-scroll-container {
-            padding-bottom: max(280px, env(safe-area-inset-bottom)) !important; /* Increased to prevent overlap */
+            padding-bottom: max(320px, env(safe-area-inset-bottom)) !important; /* Further increased to prevent overlap */
           }
           /* Mobile-specific scroll optimizations */
           .mobile-scroll-container {
@@ -2104,12 +2104,12 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   scrollBehavior: 'auto',
                   height: 'calc(100dvh - 200px)', /* Match backend adjustment */
                   maxHeight: 'calc(100dvh - 200px)',
-                  paddingBottom: `max(280px, env(safe-area-inset-bottom))` /* Increased padding to prevent text behind input */
+                  paddingBottom: `max(320px, env(safe-area-inset-bottom))` /* Further increased padding to prevent text behind input */
                 } : {
                   // Desktop: Use regular viewport height
                   scrollBehavior: 'smooth',
                   height: 'calc(100vh - 240px)',
-                  paddingBottom: '280px' /* Increased to prevent overlap with input */
+                  paddingBottom: '320px' /* Further increased to prevent overlap with input */
                 }}
               >
                 <div className="w-full max-w-[900px] mx-auto">
@@ -2305,9 +2305,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </div>
               )}
 
-              {/* Scroll to Bottom Button - ChatGPT Style */}
+              {/* Scroll to Bottom Button - Centered Above Chat Input */}
               {showScrollToBottom && (
-                <div className="absolute bottom-24 right-4 sm:right-6 z-40">
+                <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-40">
                   <button
                     onClick={() => {
                       scrollToBottom()
@@ -2323,7 +2323,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
-                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
+                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container bg-[#0a0a0a]/95 backdrop-blur-sm"
                 style={{
                   paddingBottom: isMobile ? `max(32px, env(safe-area-inset-bottom))` : '16px',
                   minHeight: '120px' // Consistent height to prevent layout shifts
@@ -2604,6 +2604,20 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         <button
                           type="button"
                           onClick={toggleRecording}
+                          onTouchStart={(e) => {
+                            // Ensure proper touch handling on mobile for microphone permissions
+                            if (isMobile) {
+                              e.preventDefault()
+                              e.currentTarget.focus()
+                            }
+                          }}
+                          onTouchEnd={(e) => {
+                            if (isMobile) {
+                              e.preventDefault()
+                              // Small delay to ensure touch gesture is registered
+                              setTimeout(() => toggleRecording(), 50)
+                            }
+                          }}
                           disabled={isLoading || isTranscribing}
                           className={`px-1.5 py-1.5 rounded-lg text-sm transition-all duration-300 border flex items-center justify-center ${
                             isRecording
