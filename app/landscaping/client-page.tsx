@@ -620,6 +620,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
   const [audioChunks, setAudioChunks] = useState<Blob[]>([])
   const [recordingError, setRecordingError] = useState<string | null>(null)
+  const [transcriptionLanguage, setTranscriptionLanguage] = useState<'auto' | 'en' | 'es'>('en')
   
   // Stable textarea ref without auto-resize to prevent layout shift
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -1430,34 +1431,82 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     try {
       setRecordingError(null)
       
-      // Request microphone permission
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      // Check if we're on HTTPS (required for mobile)
+      if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+        setRecordingError('Voice recording requires a secure connection (HTTPS).')
+        return
+      }
+      
+      // Check if MediaRecorder is supported
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setRecordingError('Voice recording is not supported in this browser.')
+        return
+      }
+      
+      console.log('Requesting microphone access...')
+      
+      // Request microphone permission with constraints
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        }
+      })
+      
+      console.log('Microphone access granted, creating MediaRecorder...')
+      
+      // Check supported MIME types
+      const supportedTypes = [
+        'audio/webm;codecs=opus',
+        'audio/webm',
+        'audio/mp4',
+        'audio/ogg;codecs=opus'
+      ]
+      
+      let mimeType = 'audio/webm'
+      for (const type of supportedTypes) {
+        if (MediaRecorder.isTypeSupported(type)) {
+          mimeType = type
+          break
+        }
+      }
+      
+      console.log('Using MIME type:', mimeType)
       
       // Create MediaRecorder instance
-      const recorder = new MediaRecorder(stream, {
-        mimeType: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
-      })
+      const recorder = new MediaRecorder(stream, { mimeType })
       
       const chunks: Blob[] = []
       
       recorder.ondataavailable = (event) => {
+        console.log('Audio data available:', event.data.size, 'bytes')
         if (event.data.size > 0) {
           chunks.push(event.data)
         }
       }
       
       recorder.onstop = async () => {
-        const audioBlob = new Blob(chunks, { 
-          type: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4' 
-        })
+        console.log('Recording stopped, creating audio blob...')
+        const audioBlob = new Blob(chunks, { type: mimeType })
+        console.log('Audio blob created:', audioBlob.size, 'bytes, type:', audioBlob.type)
         
-        // Transcribe the audio
-        await transcribeAudio(audioBlob)
+        // Only transcribe if we have audio data
+        if (audioBlob.size > 0) {
+          await transcribeAudio(audioBlob)
+        } else {
+          setRecordingError('No audio data recorded. Please try speaking louder.')
+        }
         
         // Clean up
         stream.getTracks().forEach(track => track.stop())
         setMediaRecorder(null)
         setAudioChunks([])
+      }
+      
+      recorder.onerror = (event: any) => {
+        console.error('MediaRecorder error:', event.error)
+        setRecordingError('Recording failed: ' + event.error.message)
       }
       
       // Start recording
@@ -1466,13 +1515,28 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       setIsRecording(true)
       setAudioChunks(chunks)
       
+      console.log('Recording started successfully')
+      
     } catch (error: any) {
       console.error('Error starting recording:', error)
-      setRecordingError(
-        error.name === 'NotAllowedError' 
-          ? 'Microphone permission denied. Please allow microphone access and try again.'
-          : 'Failed to access microphone. Please check your device settings.'
-      )
+      
+      let errorMessage = 'Failed to access microphone. '
+      
+      if (error.name === 'NotAllowedError') {
+        errorMessage = 'Microphone permission denied. Please allow microphone access and try again.'
+      } else if (error.name === 'NotFoundError') {
+        errorMessage = 'No microphone found. Please check that a microphone is connected.'
+      } else if (error.name === 'NotReadableError') {
+        errorMessage = 'Microphone is already in use by another application.'
+      } else if (error.name === 'OverconstrainedError') {
+        errorMessage = 'Microphone constraints not supported by your device.'
+      } else if (error.name === 'SecurityError') {
+        errorMessage = 'Microphone access blocked by security policy. Try using HTTPS.'
+      } else {
+        errorMessage += error.message || 'Unknown error occurred.'
+      }
+      
+      setRecordingError(errorMessage)
     }
   }
 
@@ -1487,24 +1551,47 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     try {
       setIsTranscribing(true)
       
+      console.log('Starting transcription...', {
+        size: audioBlob.size,
+        type: audioBlob.type
+      })
+      
       // Create FormData to send audio file
       const formData = new FormData()
-      formData.append('audio', audioBlob, 'recording.webm')
+      
+      // Use appropriate filename based on blob type
+      const extension = audioBlob.type.includes('webm') ? 'webm' : 
+                       audioBlob.type.includes('mp4') ? 'mp4' :
+                       audioBlob.type.includes('ogg') ? 'ogg' : 'webm'
+      
+      formData.append('audio', audioBlob, `recording.${extension}`)
+      
+      console.log('Sending audio to transcription API...', { language: transcriptionLanguage })
+      
+      // Build URL with language parameter
+      const apiUrl = new URL('/api/audio/transcribe', window.location.origin)
+      if (transcriptionLanguage !== 'auto') {
+        apiUrl.searchParams.set('language', transcriptionLanguage)
+      }
       
       // Send to our transcription API
-      const response = await fetch('/api/audio/transcribe', {
+      const response = await fetch(apiUrl.toString(), {
         method: 'POST',
         body: formData,
       })
       
+      console.log('Transcription API response status:', response.status)
+      
       const data = await response.json()
+      console.log('Transcription API response:', data)
       
       if (!response.ok) {
-        throw new Error(data.error || 'Transcription failed')
+        throw new Error(data.error || `Server error: ${response.status}`)
       }
       
       // Insert transcribed text into the input
       if (data.text && data.text.trim()) {
+        console.log('Transcribed text:', data.text)
         setInput(prev => prev + (prev ? ' ' : '') + data.text.trim())
         // Focus the textarea after inserting text
         if (textareaRef.current) {
@@ -1512,13 +1599,28 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           // Adjust height to accommodate new text
           setTimeout(() => adjustHeight(), 100)
         }
+      } else {
+        setRecordingError('No speech detected. Please try speaking more clearly.')
       }
       
     } catch (error: any) {
       console.error('Transcription error:', error)
-      setRecordingError(
-        error.message || 'Failed to transcribe audio. Please try again.'
-      )
+      
+      let errorMessage = 'Failed to transcribe audio. '
+      
+      if (error.message.includes('Network')) {
+        errorMessage = 'Network error. Please check your internet connection.'
+      } else if (error.message.includes('401')) {
+        errorMessage = 'Authentication error. Please sign in again.'
+      } else if (error.message.includes('429')) {
+        errorMessage = 'Too many requests. Please wait a moment and try again.'
+      } else if (error.message.includes('413')) {
+        errorMessage = 'Audio file too large. Please record a shorter message.'
+      } else {
+        errorMessage += error.message || 'Please try again.'
+      }
+      
+      setRecordingError(errorMessage)
     } finally {
       setIsTranscribing(false)
     }
@@ -2413,6 +2515,21 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         </button>
                       </div>
                       <div className="flex items-center gap-2">
+                        {/* Language selector for speech-to-text */}
+                        <div className="relative group">
+                          <select
+                            value={transcriptionLanguage}
+                            onChange={(e) => setTranscriptionLanguage(e.target.value as 'auto' | 'en' | 'es')}
+                            disabled={isLoading || isRecording || isTranscribing}
+                            className="px-2 py-1.5 text-xs bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-blue-500/50 focus:border-blue-500 focus:outline-none transition-colors appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            title="Select transcription language"
+                          >
+                            <option value="auto">🌐 Auto</option>
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                          </select>
+                        </div>
+
                         {/* Speech-to-text button */}
                         <button
                           type="button"
@@ -2430,7 +2547,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                               ? "Stop recording" 
                               : isTranscribing 
                               ? "Transcribing..." 
-                              : "Start voice message"
+                              : `Start voice message (${transcriptionLanguage === 'auto' ? 'Auto-detect' : transcriptionLanguage === 'en' ? 'English' : 'Spanish'})`
                           }
                         >
                           {isRecording ? (
