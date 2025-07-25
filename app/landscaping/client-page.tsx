@@ -609,6 +609,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
   const [buttonsAnimated, setButtonsAnimated] = useState(false)
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false)
   
   // Stable textarea ref without auto-resize to prevent layout shift
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -756,10 +757,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   // Set hasMounted to prevent hydration mismatches
   useEffect(() => {
     setHasMounted(true)
-    // Trigger button animation after mount
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setButtonsAnimated(true))
-    })
+    // Small delay to show loading skeleton, then complete loading
+    setTimeout(() => {
+      setIsLoadingComplete(true)
+      // Trigger button animation after loading completes
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setButtonsAnimated(true))
+      })
+    }, 800) // 800ms to show loading state
   }, [])
 
   // Focus input when component loads (no delay needed)
@@ -1419,10 +1424,63 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   ]
 
   // Don't render anything until client-side hydration is complete
-  if (!hasMounted) {
+  if (!hasMounted || !isLoadingComplete) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-black via-gray-950 to-black">
-        <div className="text-emerald-400 text-lg">Loading...</div>
+      <div className="flex flex-col h-screen bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden">
+        {/* Loading Header Skeleton */}
+        <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
+          <div className="w-full px-2 sm:px-4 lg:px-8">
+            <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+              <div className="flex items-center space-x-2">
+                <div className="w-12 h-8 bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="hidden sm:block w-16 h-8 bg-emerald-500/20 rounded-full animate-pulse"></div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gray-700/50 rounded-full animate-pulse"></div>
+                <div className="w-20 h-8 bg-blue-500/20 rounded animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Loading Chat Interface Skeleton */}
+        <div className="flex-1 pt-16 sm:pt-20 relative">
+          <div className="h-full flex flex-col">
+            {/* Loading Messages Area */}
+            <div className="flex-1 px-4 py-6 space-y-4">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-emerald-500/30 rounded-full animate-pulse"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="w-3/4 h-4 bg-gray-700/50 rounded animate-pulse"></div>
+                  <div className="w-1/2 h-4 bg-gray-700/50 rounded animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Loading Input Area */}
+            <div className="flex-shrink-0 px-4 pb-6">
+              <div className="bg-gray-800/50 rounded-2xl p-4 border border-gray-700/50">
+                <div className="flex items-end space-x-3">
+                  <div className="flex-1 h-12 bg-gray-700/50 rounded-xl animate-pulse"></div>
+                  <div className="w-12 h-12 bg-emerald-500/30 rounded-xl animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Loading Spinner Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="relative">
+                <div className="w-12 h-12 border-4 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin"></div>
+                <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-t-emerald-300 rounded-full animate-spin" style={{ animationDelay: '0.5s', animationDirection: 'reverse' }}></div>
+              </div>
+              <div className="text-emerald-400 text-lg font-medium animate-pulse">
+                Loading Sage...
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -1433,6 +1491,16 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         
         .font-cursive {
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
+        }
+        
+        /* Smooth loading transition */
+        .loading-fade-out {
+          opacity: 1;
+          transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-fade-out.fade-out {
+          opacity: 0;
         }
         /* Mobile keyboard handling and safe areas */
         @media (max-width: 640px) {
@@ -2225,22 +2293,30 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
                 {/* Business Category Buttons */}
                 {messages.length === 1 && !isMobile && (
-                  <div className="category-container relative mt-4">
+                  <div className="category-container relative mt-4" style={{ height: '50px' }}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
-                      {BUSINESS_CATEGORIES.map((category) => {
+                      {BUSINESS_CATEGORIES.map((category, index) => {
                         const IconComponent = category.icon
                         const isActive = activeCategory === category.id
+                        // Start from Financial Growth (reverse order) - Financial Growth is typically last in the array
+                        const reverseIndex = BUSINESS_CATEGORIES.length - 1 - index
+                        const animationDelay = reverseIndex * 100 // 100ms delay between each button
                         
                         return (
                           <button
                             key={category.id}
                             type="button"
                             onClick={() => handleCategorySelect(category.id)}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-full border hover:scale-105 ${
+                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 transform ${
+                              buttonsAnimated ? 'translate-x-0 opacity-100' : 'translate-x-[-50px] opacity-0'
+                            } ${
                               isActive 
                                 ? 'bg-emerald-500/30 border-emerald-500/50 text-emerald-200' 
                                 : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300 hover:text-emerald-200'
                             }`}
+                            style={{
+                              transitionDelay: `${animationDelay}ms`
+                            }}
                           >
                             <IconComponent className="w-4 h-4" />
                             <span className="text-xs font-medium">{category.name}</span>
