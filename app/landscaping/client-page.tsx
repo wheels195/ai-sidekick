@@ -1941,17 +1941,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   <div 
                     className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300" 
                     style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}
-                    onClick={(e) => {
-                      // Fix double-tap issue: immediate synchronous focus without delays
-                      e.preventDefault()
+                    onClick={() => {
+                      // Ensure immediate focus on mobile - synchronous call
                       if (textareaRef.current && !textareaRef.current.disabled) {
-                        textareaRef.current.focus({ preventScroll: false })
-                      }
-                    }}
-                    onTouchStart={(e) => {
-                      // Additional mobile tap handler for immediate focus
-                      if (textareaRef.current && !textareaRef.current.disabled) {
-                        textareaRef.current.focus({ preventScroll: false })
+                        textareaRef.current.focus()
                       }
                     }}
                   >
@@ -2198,26 +2191,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   </div>
                 </form>
 
-                {/* Business Category Buttons - Always render, conditional visibility */}
-                <div className={`category-container relative mt-4 ${
-                  messages.length === 1 ? 'category-show' : 'category-hide'
-                }`}>
-                  <style>{`
-                    .category-container {
-                      display: block;
-                    }
-                    .category-hide {
-                      display: none !important;
-                    }
-                    .category-show {
-                      display: block;
-                    }
-                    @media (max-width: 640px) {
-                      .category-container {
-                        display: none !important;
-                      }
-                    }
-                  `}</style>
+                {/* Business Category Buttons */}
+                {messages.length === 1 && (
+                  <div className="category-container relative mt-4">
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category) => {
                         const IconComponent = category.icon
@@ -2278,7 +2254,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                       </div>
                     )}
                   </div>
-                </div>
+                )}
 
                 <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
                   Powered by specialized AI trained for landscaping businesses
