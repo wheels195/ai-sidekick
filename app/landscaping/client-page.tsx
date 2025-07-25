@@ -1306,7 +1306,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
       {/* Fixed Header - Always Visible */}
       <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="w-full px-2 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
             <div className="flex items-center space-x-2">
               <Button
