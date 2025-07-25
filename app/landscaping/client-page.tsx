@@ -608,6 +608,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   const [hasMounted, setHasMounted] = useState(false)
+  const [buttonsAnimated, setButtonsAnimated] = useState(false)
   
   // Stable textarea ref without auto-resize to prevent layout shift
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -751,6 +752,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   // Set hasMounted to prevent hydration mismatches
   useEffect(() => {
     setHasMounted(true)
+    // Trigger button animation after mount
+    setTimeout(() => setButtonsAnimated(true), 100)
   }, [])
 
   // Focus input when component loads (no delay needed)
@@ -1956,7 +1959,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative">
+                  <div className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300 p-3">
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
                       <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200' : 'h-0 overflow-hidden'}`}>
@@ -2207,8 +2210,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </form>
 
                 {/* Business Category Buttons */}
-                {messages.length === 1 && (
-                  <div className={`category-container relative mt-4 ${!hasMounted || isMobile ? 'pointer-events-none' : ''}`} style={{ height: isMobile ? '0px' : '50px', overflow: isMobile ? 'hidden' : 'visible' }}>
+                {messages.length === 1 && hasMounted && !isMobile && (
+                  <div className="category-container relative mt-4" style={{ height: '50px' }}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category, index) => {
                         const IconComponent = category.icon
@@ -2223,16 +2226,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             type="button"
                             onClick={() => handleCategorySelect(category.id)}
                             className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 transform ${
-                              !hasMounted || isMobile 
-                                ? 'translate-x-[-50px] opacity-0' 
-                                : 'translate-x-0 opacity-100'
+                              buttonsAnimated ? 'translate-x-0 opacity-100' : 'translate-x-[-50px] opacity-0'
                             } ${
                               isActive 
                                 ? 'bg-emerald-500/30 border-emerald-500/50 text-emerald-200' 
                                 : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300 hover:text-emerald-200'
                             }`}
                             style={{
-                              transitionDelay: hasMounted && !isMobile ? `${animationDelay}ms` : '0ms'
+                              transitionDelay: `${animationDelay}ms`
                             }}
                           >
                             <IconComponent className="w-4 h-4" />
