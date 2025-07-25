@@ -1501,8 +1501,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         }
       `}</style>
       <div className="flex flex-col mobile-chat-container bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden h-screen">
-        {hasMounted ? (
-          <>
+
       {/* Fixed Header - Always Visible */}
       <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
         <div className="w-full px-2 sm:px-4 lg:px-8">
@@ -2521,13 +2520,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           </div>
         </div>
       )}
-          </>
-        ) : (
-          <div className="flex items-center justify-center h-screen">
-            <div className="text-emerald-400">Loading...</div>
-          </div>
-        )}
-      </div>
+        </div>
       </div>
     </>
   )
