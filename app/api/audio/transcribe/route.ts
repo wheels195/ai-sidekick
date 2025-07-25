@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
+import fs from 'fs'
+import path from 'path'
+import os from 'os'
 
 // Initialize OpenAI client only when needed
 const getOpenAIClient = () => {
@@ -141,68 +144,85 @@ export async function POST(request: NextRequest) {
           throw new Error(`Failed to convert audio file to buffer: ${bufferError.message}`)
         }
         
-        // Simplify - create a File object from Buffer for OpenAI
-        // The toFile method creates a File-like object that OpenAI SDK can use
-        const file = await openai.files.toFile(
-          buffer, 
-          audioFile.name || 'audio.webm',
-          { type: audioFile.type || 'audio/webm' }
-        )
-
-        // Build transcription parameters
-        const transcriptionParams: any = {
-          file: file,
-          model: model,
-          response_format: 'text',
-          prompt: landscapingPrompt,
-        }
-
-        // Add language parameter if specified (don't set for auto-detection)
-        if (preferredLanguage !== 'auto') {
-          transcriptionParams.language = preferredLanguage
-        }
-
-        // For whisper-1, add temperature parameter
-        if (model === 'whisper-1') {
-          transcriptionParams.temperature = 0.2
-        }
-
-        console.log('Sending to OpenAI:', {
-          model: model,
-          language: preferredLanguage,
-          fileSize: audioFile.size,
-          fileType: audioFile.type,
-          fileName: audioFile.name,
-          bufferSize: buffer.length
-        })
-
-        // Call OpenAI API with properly formatted file
+        // Use file stream approach (compatible with OpenAI SDK v5)
+        const tempDir = os.tmpdir()
+        const tempFilePath = path.join(tempDir, `audio-${Date.now()}.webm`)
+        
         try {
-          console.log('Calling OpenAI transcription API...')
-          const result = await openai.audio.transcriptions.create(transcriptionParams)
+          // Write buffer to temp file
+          await fs.promises.writeFile(tempFilePath, buffer)
+          console.log('Temp file created:', tempFilePath)
           
-          // Handle different response types
-          if (typeof result === 'string') {
-            transcription = result
-          } else if (result && typeof result === 'object' && 'text' in result) {
-            transcription = result.text
-          } else {
-            console.error('Unexpected transcription result format:', result)
-            throw new Error('Unexpected response format from OpenAI')
+          // Create read stream for OpenAI
+          const fileStream = fs.createReadStream(tempFilePath)
+
+          // Build transcription parameters
+          const transcriptionParams: any = {
+            file: fileStream as any,
+            model: model,
+            response_format: 'text',
+            prompt: landscapingPrompt,
+          }
+
+          // Add language parameter if specified (don't set for auto-detection)
+          if (preferredLanguage !== 'auto') {
+            transcriptionParams.language = preferredLanguage
+          }
+
+          // For whisper-1, add temperature parameter
+          if (model === 'whisper-1') {
+            transcriptionParams.temperature = 0.2
+          }
+
+          console.log('Sending to OpenAI:', {
+            model: model,
+            language: preferredLanguage,
+            fileSize: audioFile.size,
+            fileType: audioFile.type,
+            fileName: audioFile.name,
+            bufferSize: buffer.length
+          })
+
+          // Call OpenAI API with file stream
+          try {
+            console.log('Calling OpenAI transcription API...')
+            const result = await openai.audio.transcriptions.create(transcriptionParams)
+            
+            // Handle different response types
+            if (typeof result === 'string') {
+              transcription = result
+            } else if (result && typeof result === 'object' && 'text' in result) {
+              transcription = result.text
+            } else {
+              console.error('Unexpected transcription result format:', result)
+              throw new Error('Unexpected response format from OpenAI')
+            }
+            
+            usedModel = model
+            console.log('Transcription successful with model:', model)
+            console.log('Transcription result:', transcription?.substring(0, 100))
+            break // Success! Exit the loop
+          } catch (openaiError: any) {
+            console.error('OpenAI API call failed:', {
+              error: openaiError,
+              message: openaiError?.message,
+              response: openaiError?.response,
+              data: openaiError?.response?.data
+            })
+            throw openaiError
+          } finally {
+            // Clean up temp file
+            try {
+              await fs.promises.unlink(tempFilePath)
+              console.log('Temp file deleted')
+            } catch (e) {
+              console.error('Failed to delete temp file:', e)
+            }
           }
           
-          usedModel = model
-          console.log('Transcription successful with model:', model)
-          console.log('Transcription result:', transcription?.substring(0, 100))
-          break // Success! Exit the loop
-        } catch (openaiError: any) {
-          console.error('OpenAI API call failed:', {
-            error: openaiError,
-            message: openaiError?.message,
-            response: openaiError?.response,
-            data: openaiError?.response?.data
-          })
-          throw openaiError
+        } catch (fileError: any) {
+          console.error('File operation error:', fileError)
+          throw fileError
         }
         
       } catch (modelError: any) {

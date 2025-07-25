@@ -1481,6 +1481,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       console.log('Requesting getUserMedia with constraints:', constraints)
       
+      // On mobile, add a small delay to ensure user gesture is properly registered
+      if (isMobile) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
+      
       // Request microphone permission with explicit user gesture
       const stream = await navigator.mediaDevices.getUserMedia(constraints)
       
@@ -1557,7 +1562,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       
       if (error.name === 'NotAllowedError') {
         errorMessage = isMobile 
-          ? 'Microphone permission denied. Please tap "Allow" when prompted and try again.'
+          ? 'Microphone permission denied. Please tap "Allow" when your browser prompts you, then try the microphone button again.'
           : 'Microphone permission denied. Please allow microphone access and try again.'
       } else if (error.name === 'NotFoundError') {
         errorMessage = 'No microphone found. Please check that a microphone is connected.'
@@ -1605,8 +1610,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       console.log('Sending audio to transcription API...', { language: transcriptionLanguage })
       
       // Build URL with language parameter
-      // TEMPORARILY using simple endpoint for debugging
-      const apiUrl = new URL('/api/audio/transcribe-simple', window.location.origin)
+      const apiUrl = new URL('/api/audio/transcribe', window.location.origin)
       if (transcriptionLanguage !== 'auto') {
         apiUrl.searchParams.set('language', transcriptionLanguage)
       }
@@ -2652,7 +2656,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </form>
 
                 {/* Business Category Buttons */}
-                {messages.length === 1 && !isMobile && (
+                {!isMobile && (
                   <div className="category-container relative mt-4" style={{ height: '50px' }}>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category, index) => {
