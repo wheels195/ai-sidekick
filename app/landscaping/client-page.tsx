@@ -1941,10 +1941,17 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   <div 
                     className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300" 
                     style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}
-                    onClick={() => {
-                      // Ensure immediate focus on mobile - synchronous call
+                    onClick={(e) => {
+                      // Fix double-tap issue: immediate synchronous focus without delays
+                      e.preventDefault()
                       if (textareaRef.current && !textareaRef.current.disabled) {
-                        textareaRef.current.focus()
+                        textareaRef.current.focus({ preventScroll: false })
+                      }
+                    }}
+                    onTouchStart={(e) => {
+                      // Additional mobile tap handler for immediate focus
+                      if (textareaRef.current && !textareaRef.current.disabled) {
+                        textareaRef.current.focus({ preventScroll: false })
                       }
                     }}
                   >
@@ -2191,9 +2198,16 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   </div>
                 </form>
 
-                {/* Business Category Buttons */}
+                {/* Business Category Buttons - Always render, hide with CSS on mobile */}
                 {messages.length === 1 && (
                   <div className="category-container relative mt-4">
+                    <style jsx>{`
+                      @media (max-width: 640px) {
+                        .category-container {
+                          display: none !important;
+                        }
+                      }
+                    `}</style>
                     <div className="flex items-center justify-center gap-2 flex-wrap">
                       {BUSINESS_CATEGORIES.map((category) => {
                         const IconComponent = category.icon
