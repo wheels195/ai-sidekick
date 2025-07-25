@@ -1477,7 +1477,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
         }
       `}</style>
-      <div className="flex flex-col mobile-chat-container bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden" style={{ height: isMobile ? '100dvh' : '100vh' }}>
+      <div className="flex flex-col mobile-chat-container bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden h-screen">
 
       {/* Fixed Header - Always Visible */}
       <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
@@ -1951,11 +1951,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
                 className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-50 safe-bottom sticky-input-area mobile-input-container"
-                style={isMobile ? {
-                  paddingBottom: `max(32px, env(safe-area-inset-bottom))`,
-                  minHeight: '140px' // Increased to accommodate potential file previews
-                } : {
-                  minHeight: '100px' // Stable minimum height on desktop
+                style={{
+                  paddingBottom: isMobile ? `max(32px, env(safe-area-inset-bottom))` : '16px',
+                  minHeight: '120px' // Consistent height to prevent layout shifts
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">

@@ -68,6 +68,17 @@ body {
     min-height: 100vh;
   }
   
+  /* Dynamic viewport height without flicker */
+  .h-screen {
+    height: 100vh;
+  }
+  
+  @supports (height: 100dvh) {
+    .h-screen {
+      height: 100dvh;
+    }
+  }
+  
   /* Custom scrollbar styles for chat interface */
   .scrollbar-thin {
     scrollbar-width: thin;
