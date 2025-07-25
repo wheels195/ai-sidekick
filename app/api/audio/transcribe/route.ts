@@ -123,7 +123,18 @@ export async function POST(request: NextRequest) {
         console.log('Trying model:', model, 'with language:', preferredLanguage)
         
         // Convert File to Buffer for OpenAI SDK
-        const buffer = Buffer.from(await audioFile.arrayBuffer())
+        let buffer: Buffer
+        try {
+          buffer = Buffer.from(await audioFile.arrayBuffer())
+          console.log('Buffer conversion successful:', {
+            bufferSize: buffer.length,
+            originalSize: audioFile.size,
+            isBuffer: Buffer.isBuffer(buffer)
+          })
+        } catch (bufferError: any) {
+          console.error('Buffer conversion failed:', bufferError)
+          throw new Error(`Failed to convert audio file to buffer: ${bufferError.message}`)
+        }
         
         // Create a File-like object with toFile method for OpenAI SDK v4
         const fileForOpenAI = {
@@ -213,27 +224,53 @@ export async function POST(request: NextRequest) {
       code: error?.error?.code,
       type: error?.error?.type,
       status: error?.status,
-      full: error
+      stack: error?.stack,
+      response: error?.response,
+      full: JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
     })
+
+    // Create detailed error response for debugging
+    const errorDetails = {
+      message: error.message || 'Unknown error',
+      code: error?.error?.code,
+      type: error?.error?.type,
+      apiKeyPresent: !!process.env.OPENAI_API_KEY,
+      apiKeyPrefix: process.env.OPENAI_API_KEY?.substring(0, 10),
+      fileInfo: {
+        size: audioFile?.size,
+        type: audioFile?.type,
+        name: audioFile?.name
+      }
+    }
 
     // Handle specific OpenAI errors
     if (error?.error?.code === 'invalid_api_key') {
       return NextResponse.json(
-        { error: 'OpenAI API configuration error' },
+        { 
+          error: 'OpenAI API configuration error',
+          details: 'API key is invalid or not properly configured',
+          errorDetails 
+        },
         { status: 500 }
       )
     }
 
     if (error?.error?.code === 'rate_limit_exceeded') {
       return NextResponse.json(
-        { error: 'Rate limit exceeded. Please try again in a moment.' },
+        { 
+          error: 'Rate limit exceeded. Please try again in a moment.',
+          errorDetails 
+        },
         { status: 429 }
       )
     }
 
     if (error?.error?.type === 'invalid_request_error') {
       return NextResponse.json(
-        { error: 'Invalid audio file format or corrupted file' },
+        { 
+          error: 'Invalid audio file format or corrupted file',
+          errorDetails 
+        },
         { status: 400 }
       )
     }
@@ -241,7 +278,10 @@ export async function POST(request: NextRequest) {
     // Handle network/connection errors
     if (error.message?.includes('fetch') || error.message?.includes('network')) {
       return NextResponse.json(
-        { error: 'Network error connecting to OpenAI. Please try again.' },
+        { 
+          error: 'Network error connecting to OpenAI. Please try again.',
+          errorDetails 
+        },
         { status: 503 }
       )
     }
@@ -249,16 +289,26 @@ export async function POST(request: NextRequest) {
     // Handle timeout errors
     if (error.message?.includes('timeout')) {
       return NextResponse.json(
-        { error: 'Request timeout. Please try with a shorter audio clip.' },
+        { 
+          error: 'Request timeout. Please try with a shorter audio clip.',
+          errorDetails 
+        },
         { status: 408 }
       )
     }
 
-    // Generic error response with more context
+    // Generic error response with full debugging info
     return NextResponse.json(
       { 
         error: 'Failed to transcribe audio. Please try again.',
-        details: error.message
+        details: error.message,
+        errorDetails,
+        debugInfo: {
+          hasAPIKey: !!process.env.OPENAI_API_KEY,
+          modelUsed: 'whisper-1',
+          audioFormat: audioFile?.type,
+          audioSize: audioFile?.size
+        }
       },
       { status: 500 }
     )

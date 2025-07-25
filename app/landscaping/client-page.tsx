@@ -1622,6 +1622,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       console.log('Transcription API response:', data)
       
       if (!response.ok) {
+        console.error('Transcription API error details:', {
+          status: response.status,
+          error: data.error,
+          details: data.details,
+          errorDetails: data.errorDetails,
+          debugInfo: data.debugInfo
+        })
         throw new Error(data.error || `Server error: ${response.status}`)
       }
       
