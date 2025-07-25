@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('User authenticated:', user.email)
+    console.log('OpenAI API Key status:', process.env.OPENAI_API_KEY ? `Present (${process.env.OPENAI_API_KEY.substring(0, 10)}...)` : 'MISSING!')
 
     // Parse form data to get the audio file
     const formData = await request.formData()
@@ -121,9 +122,31 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Trying model:', model, 'with language:', preferredLanguage)
         
-        // Build transcription parameters - File object should work directly with OpenAI SDK
+        // Convert File to Buffer for OpenAI SDK
+        const buffer = Buffer.from(await audioFile.arrayBuffer())
+        
+        // Create a File-like object with toFile method for OpenAI SDK v4
+        const fileForOpenAI = {
+          name: audioFile.name,
+          blob: async () => new Blob([buffer], { type: audioFile.type }),
+          stream: () => new ReadableStream({
+            start(controller) {
+              controller.enqueue(buffer)
+              controller.close()
+            }
+          }),
+          arrayBuffer: async () => buffer.buffer,
+          text: async () => buffer.toString(),
+          size: audioFile.size,
+          type: audioFile.type,
+          lastModified: Date.now(),
+          webkitRelativePath: '',
+          slice: () => new Blob([buffer], { type: audioFile.type })
+        }
+
+        // Build transcription parameters with proper file format
         const transcriptionParams: any = {
-          file: audioFile, // File object from FormData
+          file: await openai.files.toFile(buffer, audioFile.name, { type: audioFile.type }),
           model: model,
           response_format: 'text',
           prompt: landscapingPrompt,
@@ -144,10 +167,11 @@ export async function POST(request: NextRequest) {
           language: preferredLanguage,
           fileSize: audioFile.size,
           fileType: audioFile.type,
-          fileName: audioFile.name
+          fileName: audioFile.name,
+          bufferSize: buffer.length
         })
 
-        // Call OpenAI API with File object
+        // Call OpenAI API with properly formatted file
         transcription = await openai.audio.transcriptions.create(transcriptionParams)
         usedModel = model
         console.log('Transcription successful with model:', model)
@@ -160,7 +184,9 @@ export async function POST(request: NextRequest) {
           code: modelError?.error?.code,
           type: modelError?.error?.type,
           details: modelError?.error?.message,
-          fullError: modelError
+          response: modelError?.response?.data,
+          headers: modelError?.response?.headers,
+          fullError: JSON.stringify(modelError, null, 2)
         })
         
         // If this is the last model, we'll throw the error
