@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import fs from 'fs'
+import path from 'path'
+import os from 'os'
 
 export async function POST(request: NextRequest) {
   console.log('Simple transcribe endpoint called')
@@ -36,42 +39,67 @@ export async function POST(request: NextRequest) {
     
     console.log('Buffer created, size:', buffer.length)
     
-    // 5. Create file for OpenAI
-    const file = await openai.files.toFile(buffer, audioFile.name || 'audio.webm')
+    // 5. Write to temporary file (OpenAI SDK v4+ needs a file path or stream)
+    const tempDir = os.tmpdir()
+    const tempFilePath = path.join(tempDir, `audio-${Date.now()}.webm`)
     
-    console.log('Calling OpenAI Whisper...')
-    
-    // 6. Call Whisper
     try {
-      const transcription = await openai.audio.transcriptions.create({
-        file: file,
-        model: 'whisper-1',
-        language: 'en',
-        response_format: 'text',
-      })
+      // Write buffer to temp file
+      await fs.promises.writeFile(tempFilePath, buffer)
+      console.log('Temp file created:', tempFilePath)
       
-      console.log('Transcription success!')
+      // Create a read stream from the file
+      const fileStream = fs.createReadStream(tempFilePath)
       
-      // Return the transcription
+      console.log('Calling OpenAI Whisper...')
+      
+      // 6. Call Whisper with the file stream
+      try {
+        const transcription = await openai.audio.transcriptions.create({
+          file: fileStream as any,
+          model: 'whisper-1',
+          language: 'en',
+          response_format: 'text',
+        })
+        
+        console.log('Transcription success!')
+        
+        // Return the transcription
+        return NextResponse.json({
+          success: true,
+          text: transcription,
+          message: 'Transcribed successfully'
+        })
+        
+      } catch (openaiError: any) {
+        console.error('OpenAI error:', {
+          message: openaiError.message,
+          error: openaiError.error,
+          status: openaiError.status,
+          code: openaiError.code
+        })
+        
+        return NextResponse.json({
+          error: 'OpenAI transcription failed',
+          details: openaiError.message,
+          code: openaiError.error?.code,
+          apiKeyValid: openaiError.error?.code !== 'invalid_api_key'
+        }, { status: 500 })
+      } finally {
+        // Clean up temp file
+        try {
+          await fs.promises.unlink(tempFilePath)
+          console.log('Temp file deleted')
+        } catch (e) {
+          console.error('Failed to delete temp file:', e)
+        }
+      }
+      
+    } catch (fileError: any) {
+      console.error('File operation error:', fileError)
       return NextResponse.json({
-        success: true,
-        text: transcription,
-        message: 'Transcribed successfully'
-      })
-      
-    } catch (openaiError: any) {
-      console.error('OpenAI error:', {
-        message: openaiError.message,
-        error: openaiError.error,
-        status: openaiError.status,
-        code: openaiError.code
-      })
-      
-      return NextResponse.json({
-        error: 'OpenAI transcription failed',
-        details: openaiError.message,
-        code: openaiError.error?.code,
-        apiKeyValid: openaiError.error?.code !== 'invalid_api_key'
+        error: 'File processing failed',
+        message: fileError.message
       }, { status: 500 })
     }
     
