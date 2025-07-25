@@ -103,26 +103,52 @@ export async function POST(request: NextRequest) {
     // Create landscaping-specific prompt for better accuracy
     const landscapingPrompt = `This conversation is about landscaping business topics including: lawn care, landscape design, irrigation, hardscaping, tree services, seasonal maintenance, customer service, pricing, marketing, crew management, equipment, plant care, soil management, fertilization, pest control, commercial landscaping, residential landscaping, outdoor lighting, drainage systems, and business growth strategies.`
 
-    // Use newer, higher-quality model
-    const model = useHighQuality ? 'gpt-4o-transcribe' : 'gpt-4o-mini-transcribe'
+    // Try newer models first, fallback to whisper-1 if unavailable
+    const models = useHighQuality 
+      ? ['gpt-4o-transcribe', 'whisper-1']
+      : ['gpt-4o-mini-transcribe', 'whisper-1']
     
-    // Build transcription parameters
-    const transcriptionParams: any = {
-      file: audioFile,
-      model: model,
-      response_format: 'text',
-      prompt: landscapingPrompt,
+    let transcription: string | undefined
+    let usedModel = ''
+    
+    for (const model of models) {
+      try {
+        console.log('Trying model:', model, 'with language:', preferredLanguage)
+        
+        // Build transcription parameters
+        const transcriptionParams: any = {
+          file: audioFile,
+          model: model,
+          response_format: 'text',
+          prompt: landscapingPrompt,
+        }
+
+        // Add language parameter if specified (don't set for auto-detection)
+        if (preferredLanguage !== 'auto') {
+          transcriptionParams.language = preferredLanguage
+        }
+
+        // For whisper-1, add temperature parameter
+        if (model === 'whisper-1') {
+          transcriptionParams.temperature = 0.2
+        }
+
+        // Convert File to the format expected by OpenAI
+        transcription = await openai.audio.transcriptions.create(transcriptionParams)
+        usedModel = model
+        console.log('Transcription successful with model:', model)
+        break // Success! Exit the loop
+        
+      } catch (modelError: any) {
+        console.log(`Model ${model} failed:`, modelError.message)
+        
+        // If this is the last model, we'll throw the error
+        if (model === models[models.length - 1]) {
+          throw modelError
+        }
+        // Otherwise, continue to next model
+      }
     }
-
-    // Add language parameter if specified (don't set for auto-detection)
-    if (preferredLanguage !== 'auto') {
-      transcriptionParams.language = preferredLanguage
-    }
-
-    console.log('Using model:', model, 'with language:', preferredLanguage)
-
-    // Convert File to the format expected by OpenAI
-    const transcription = await openai.audio.transcriptions.create(transcriptionParams)
 
     console.log('Transcription successful:', transcription?.substring(0, 100))
 
@@ -130,7 +156,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       text: transcription,
-      message: 'Audio transcribed successfully'
+      model: usedModel,
+      message: `Audio transcribed successfully using ${usedModel}`
     })
 
   } catch (error: any) {
