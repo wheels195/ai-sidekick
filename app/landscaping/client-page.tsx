@@ -1421,22 +1421,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   return (
     <>
       <style>{`
-        /* DEBUG: Add outlines to identify moving elements */
-        .mobile-chat-container {
-          outline: 3px solid red !important;
-        }
-        .sticky-input-area {
-          outline: 3px solid blue !important;
-        }
-        .messages-scroll-container {
-          outline: 3px solid green !important;
-        }
-        form {
-          outline: 2px solid yellow !important;
-        }
-        .category-container {
-          outline: 2px solid purple !important;
-        }
         
         .font-cursive {
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
@@ -1983,9 +1967,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   <div className="relative rounded-xl border-2 border-emerald-500/40 p-3">
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
-                      <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200' : 'h-0 overflow-hidden'}`}>
+                      <div className="min-h-0" style={{ height: uploadedFiles.length > 0 ? 'auto' : '0px', overflow: uploadedFiles.length > 0 ? 'visible' : 'hidden' }}>
                         {uploadedFiles.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-2 px-4 pt-3 pb-2">
                             {uploadedFiles.map((file, index) => {
                               const isImage = file.type.startsWith('image/')
                               const previewUrl = isImage ? URL.createObjectURL(file) : null
@@ -2044,7 +2028,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         value={input}
                         onChange={(e) => {
                           setInput(e.target.value)
-                          adjustHeight()
+                          if (hasMounted) adjustHeight()
                         }}
                         onFocus={() => setIsInputFocused(true)}
                         onBlur={() => setIsInputFocused(false)}
@@ -2053,7 +2037,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             e.preventDefault()
                             if (input.trim()) {
                               handleSubmit(e as any)
-                              adjustHeight(true)
+                              if (hasMounted) adjustHeight(true)
                             }
                           }
                         }}
