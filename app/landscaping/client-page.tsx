@@ -578,7 +578,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [showHelpPanel, setShowHelpPanel] = useState(false)
   // Mobile detection hook for runtime behavior
   const isMobile = useIsMobile()
-  const [isClient, setIsClient] = useState(false)
+  const [isClient, setIsClient] = useState(true)
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
@@ -607,14 +607,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
-  const [hasMounted, setHasMounted] = useState(false)
   
   // Stable textarea ref without auto-resize to prevent layout shift
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Stable adjustHeight function that doesn't cause initial layout shift
   const adjustHeight = useCallback((reset = false) => {
-    if (!hasMounted || !textareaRef.current) return
+    if (!textareaRef.current) return
     
     const textarea = textareaRef.current
     if (reset) {
@@ -625,7 +624,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       const newHeight = Math.min(textarea.scrollHeight, maxHeight)
       textarea.style.height = newHeight + 'px'
     }
-  }, [hasMounted, isMobile])
+  }, [isMobile])
 
   const scrollToBottom = () => {
     if (typeof document !== 'undefined') {
@@ -656,23 +655,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   // The adjustHeight() function in onChange handles this instead
 
   useEffect(() => {
-    // Set client state first to prevent hydration issues
-    setIsClient(true)
-    
-    // Only run on client side after hydration
+    // Client is ready - no delays needed
     if (typeof window !== 'undefined') {
       // Scroll to top when page loads
       window.scrollTo(0, 0)
     }
     
-    // Enable smooth transitions after mount to prevent initial layout shift
-    const timer = setTimeout(() => {
-      setHasMounted(true)
-    }, 100)
-    
     // Cleanup object URLs on unmount
     return () => {
-      clearTimeout(timer)
       messages.forEach(msg => {
         if (msg.images) {
           msg.images.forEach(img => {
@@ -1948,10 +1938,19 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className={`relative rounded-xl border-2 border-emerald-500/40 ${hasMounted ? 'transition-all duration-300' : ''}`} style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
+                  <div 
+                    className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300" 
+                    style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}
+                    onClick={() => {
+                      // Ensure immediate focus on mobile - synchronous call
+                      if (textareaRef.current && !textareaRef.current.disabled) {
+                        textareaRef.current.focus()
+                      }
+                    }}
+                  >
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
-                      <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2' : 'h-0 overflow-hidden'} ${hasMounted && uploadedFiles.length > 0 ? 'animate-in slide-in-from-top-2 duration-200' : ''}`}>
+                      <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200' : 'h-0 overflow-hidden'}`}>
                         {uploadedFiles.length > 0 && (
                           <div className="flex flex-wrap gap-2">
                             {uploadedFiles.map((file, index) => {
