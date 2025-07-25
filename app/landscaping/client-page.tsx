@@ -725,9 +725,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
 
     // Multiple calculations to handle viewport stabilization
-    setTimeout(handleResize, 100)
-    setTimeout(handleResize, 300)
-    setTimeout(handleResize, 600) // Final calculation after full viewport stabilization
+    requestAnimationFrame(() => {
+      handleResize()
+      requestAnimationFrame(() => {
+        handleResize()
+        requestAnimationFrame(() => handleResize())
+      })
+    })
 
     return () => {
       window.removeEventListener('resize', handleResize)
@@ -753,7 +757,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   useEffect(() => {
     setHasMounted(true)
     // Trigger button animation after mount
-    setTimeout(() => setButtonsAnimated(true), 100)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setButtonsAnimated(true))
+    })
   }, [])
 
   // Focus input when component loads (no delay needed)
@@ -1415,6 +1421,23 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   return (
     <>
       <style>{`
+        /* DEBUG: Add outlines to identify moving elements */
+        .mobile-chat-container {
+          outline: 3px solid red !important;
+        }
+        .sticky-input-area {
+          outline: 3px solid blue !important;
+        }
+        .messages-scroll-container {
+          outline: 3px solid green !important;
+        }
+        form {
+          outline: 2px solid yellow !important;
+        }
+        .category-container {
+          outline: 2px solid purple !important;
+        }
+        
         .font-cursive {
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
         }
@@ -1478,7 +1501,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         }
       `}</style>
       <div className="flex flex-col mobile-chat-container bg-gradient-to-br from-black via-gray-950 to-black relative overflow-hidden h-screen">
-
+        {hasMounted ? (
+          <>
       {/* Fixed Header - Always Visible */}
       <header className="fixed top-0 left-0 right-0 flex-shrink-0 backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl z-50">
         <div className="w-full px-2 sm:px-4 lg:px-8">
@@ -1957,7 +1981,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative rounded-xl border-2 border-emerald-500/40 transition-all duration-300 p-3">
+                  <div className="relative rounded-xl border-2 border-emerald-500/40 p-3">
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
                       <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200' : 'h-0 overflow-hidden'}`}>
@@ -2497,7 +2521,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           </div>
         </div>
       )}
-        </div>
+          </>
+        ) : (
+          <div className="flex items-center justify-center h-screen">
+            <div className="text-emerald-400">Loading...</div>
+          </div>
+        )}
+      </div>
       </div>
     </>
   )
