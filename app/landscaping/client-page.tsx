@@ -531,6 +531,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
   
   // Auto-resize textarea hook
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
@@ -577,8 +578,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       window.scrollTo(0, 0)
     }
     
+    // Enable smooth transitions after mount to prevent initial layout shift
+    const timer = setTimeout(() => {
+      setHasMounted(true)
+    }, 100)
+    
     // Cleanup object URLs on unmount
     return () => {
+      clearTimeout(timer)
       messages.forEach(msg => {
         if (msg.images) {
           msg.images.forEach(img => {
@@ -1822,11 +1829,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 } : undefined}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 transition-all duration-300" style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
+                  <div className={`relative rounded-xl border border-emerald-500/20 hover:border-emerald-500/30 focus-within:border-emerald-500/40 ${hasMounted ? 'transition-all duration-300' : ''}`} style={{ padding: '12px 16px', borderRadius: '12px', boxShadow: 'none' }}>
                     <div className="overflow-hidden">
-                      {/* File Upload Display with Image Previews */}
-                      {uploadedFiles.length > 0 && (
-                        <div className="px-4 pt-3 pb-2 animate-in slide-in-from-top-2 duration-200">
+                      {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
+                      <div className={`${uploadedFiles.length > 0 ? 'px-4 pt-3 pb-2' : 'h-0 overflow-hidden'} ${hasMounted && uploadedFiles.length > 0 ? 'animate-in slide-in-from-top-2 duration-200' : ''}`}>
+                        {uploadedFiles.length > 0 && (
                           <div className="flex flex-wrap gap-2">
                             {uploadedFiles.map((file, index) => {
                               const isImage = file.type.startsWith('image/')
@@ -1878,8 +1885,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                               )
                             })}
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                       
                       <Textarea
                         ref={textareaRef}
@@ -1903,8 +1910,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         className="w-full px-0 py-0 resize-none bg-transparent border-none text-white focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 min-h-[48px] leading-relaxed"
                         style={{
                           overflow: "hidden",
-                          // Prevent iOS zoom without causing hydration mismatch
-                          fontSize: '16px'
+                          // Use 16px on mobile to prevent zoom, smaller on desktop
+                          fontSize: isMobile ? '16px' : '14px'
                         }}
                         disabled={isLoading}
                       />
