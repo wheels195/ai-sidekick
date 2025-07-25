@@ -1426,6 +1426,20 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }
 
+  // Check microphone permission status
+  const checkMicrophonePermission = async (): Promise<boolean> => {
+    try {
+      if (navigator.permissions) {
+        const permission = await navigator.permissions.query({ name: 'microphone' as PermissionName })
+        console.log('Microphone permission status:', permission.state)
+        return permission.state === 'granted'
+      }
+    } catch (error) {
+      console.log('Permission API not supported, will request directly')
+    }
+    return false
+  }
+
   // Speech-to-text functions
   const startRecording = async () => {
     try {
@@ -1444,17 +1458,19 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       }
       
       console.log('Requesting microphone access...')
+
+      // Check permission first (especially important for mobile)
+      const hasPermission = await checkMicrophonePermission()
+      console.log('Pre-check permission result:', hasPermission)
       
-      // Use very basic constraints for mobile to avoid permission denial
+      // Use very basic constraints - especially important for mobile
       const constraints = {
-        audio: isMobile ? true : {
-          echoCancellation: true,
-          noiseSuppression: true,
-          sampleRate: 44100
-        }
+        audio: true // Most basic request to avoid mobile issues
       }
       
-      // Request microphone permission
+      console.log('Requesting getUserMedia with constraints:', constraints)
+      
+      // Request microphone permission with explicit user gesture
       const stream = await navigator.mediaDevices.getUserMedia(constraints)
       
       console.log('Microphone access granted, creating MediaRecorder...')
@@ -1529,7 +1545,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       let errorMessage = 'Failed to access microphone. '
       
       if (error.name === 'NotAllowedError') {
-        errorMessage = 'Microphone permission denied. Please allow microphone access and try again.'
+        errorMessage = isMobile 
+          ? 'Microphone permission denied. Please tap "Allow" when prompted and try again.'
+          : 'Microphone permission denied. Please allow microphone access and try again.'
       } else if (error.name === 'NotFoundError') {
         errorMessage = 'No microphone found. Please check that a microphone is connected.'
       } else if (error.name === 'NotReadableError') {
@@ -1542,6 +1560,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         errorMessage += error.message || 'Unknown error occurred.'
       }
       
+      console.log('Setting recording error:', errorMessage)
       setRecordingError(errorMessage)
     }
   }

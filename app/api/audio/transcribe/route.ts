@@ -56,6 +56,14 @@ export async function POST(request: NextRequest) {
       type: audioFile.type
     })
 
+    // Debug: Log FormData contents
+    console.log('FormData entries:', [...formData.entries()].map(([key, value]) => {
+      if (value instanceof File) {
+        return [key, `File(${value.name}, ${value.size} bytes, ${value.type})`]
+      }
+      return [key, value]
+    }))
+
     // Validate file size (max 25MB as per OpenAI limits)
     const maxSize = 25 * 1024 * 1024 // 25MB
     if (audioFile.size > maxSize) {
@@ -115,9 +123,9 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Trying model:', model, 'with language:', preferredLanguage)
         
-        // Build transcription parameters
+        // Build transcription parameters - File object should work directly with OpenAI SDK
         const transcriptionParams: any = {
-          file: audioFile,
+          file: audioFile, // File object from FormData
           model: model,
           response_format: 'text',
           prompt: landscapingPrompt,
@@ -133,14 +141,29 @@ export async function POST(request: NextRequest) {
           transcriptionParams.temperature = 0.2
         }
 
-        // Convert File to the format expected by OpenAI
+        console.log('Sending to OpenAI:', {
+          model: model,
+          language: preferredLanguage,
+          fileSize: audioFile.size,
+          fileType: audioFile.type,
+          fileName: audioFile.name
+        })
+
+        // Call OpenAI API with File object
         transcription = await openai.audio.transcriptions.create(transcriptionParams)
         usedModel = model
         console.log('Transcription successful with model:', model)
         break // Success! Exit the loop
         
       } catch (modelError: any) {
-        console.log(`Model ${model} failed:`, modelError.message)
+        console.error(`Model ${model} failed:`, {
+          message: modelError.message,
+          status: modelError.status,
+          code: modelError?.error?.code,
+          type: modelError?.error?.type,
+          details: modelError?.error?.message,
+          fullError: modelError
+        })
         
         // If this is the last model, we'll throw the error
         if (model === models[models.length - 1]) {
