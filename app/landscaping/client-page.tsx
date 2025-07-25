@@ -2237,7 +2237,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     
                     {/* Category Questions Dropdown */}
                     {showCategoryQuestions && activeCategory && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 min-w-[600px] z-[999]">
+                      <div className="fixed inset-x-4 bottom-32 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 max-w-2xl mx-auto z-[999] max-h-[50vh] overflow-y-auto">
                         {(() => {
                           const category = BUSINESS_CATEGORIES.find(c => c.id === activeCategory)
                           if (!category) return null
