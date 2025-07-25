@@ -1315,28 +1315,25 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 onClick={() => (window.location.href = "/")}
                 className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
               >
-                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
-                <span className="hidden xs:inline">Back to Home</span>
-                <span className="xs:hidden">Back</span>
+                <span>Home</span>
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowSidebar(!showSidebar)}
-                className="text-xs sm:text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 px-2 sm:px-3 py-1 sm:py-2"
+                className="hidden sm:inline-flex text-xs sm:text-sm bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30 hover:text-yellow-200 rounded-full transition-all duration-300 px-3 sm:px-4 py-1 sm:py-2"
               >
-                <Menu className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
-                <span className="hidden xs:inline">Chats</span>
+                <span>Chats</span>
               </Button>
             </div>
 
-            <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-cursive">Dirt.i</h1>
-                <p className="text-xs sm:text-sm text-gray-300 typography-body">Your Landscaping AI Sidekick</p>
+                <p className="text-xs sm:text-sm text-gray-300 typography-body">Your AI Sidekick</p>
               </div>
               <div className="sm:hidden">
                 <h1 className="text-sm typography-heading-bold text-white font-cursive">Dirt.i</h1>
@@ -1371,11 +1368,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   </div>
                 </div>
               )}
-              
-              <div className="hidden md:flex items-center space-x-2 bg-emerald-500/10 backdrop-blur-xl border border-emerald-500/20 rounded-full px-4 py-2">
-                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span className="text-emerald-300 text-sm font-medium">Online</span>
-              </div>
 
               {/* Enhanced User Profile Dropdown - All Screen Sizes */}
               {user && (
@@ -1422,7 +1414,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             setShowHelpPanel(true)
                             setShowUserMenu(false)
                           }}
-                          className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors duration-200 flex items-center space-x-2"
+                          className="w-full text-left px-3 py-2 text-sm text-green-300 hover:text-green-200 hover:bg-green-500/10 rounded-md transition-colors duration-200 flex items-center space-x-2"
                         >
                           <Sparkles className="w-4 h-4" />
                           <span>Tips & Help</span>
@@ -1430,13 +1422,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         
                         <button
                           onClick={() => {
-                            window.location.href = '/'
+                            setShowSidebar(true)
                             setShowUserMenu(false)
                           }}
-                          className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors duration-200 flex items-center space-x-2"
+                          className="w-full text-left px-3 py-2 text-sm text-yellow-300 hover:text-yellow-200 hover:bg-yellow-500/10 rounded-md transition-colors duration-200 flex items-center space-x-2 sm:hidden"
                         >
-                          <ArrowLeft className="w-4 h-4" />
-                          <span>Back to Home</span>
+                          <History className="w-4 h-4" />
+                          <span>Chats</span>
                         </button>
                         
                         <div className="border-t border-gray-600/30 my-2"></div>
