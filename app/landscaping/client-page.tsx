@@ -28,6 +28,11 @@ import {
   Copy,
   Check,
   Wrench,
+  Search,
+  Users,
+  Target,
+  Camera,
+  DollarSign,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -67,6 +72,74 @@ const EMOJI_REACTIONS = [
   { emoji: '💡', label: 'Lightbulb - Very helpful insight!' },
   { emoji: '👍', label: 'Thumbs up - Good advice' },
   { emoji: '😕', label: 'Confused - Not quite what I needed' }
+]
+
+const BUSINESS_CATEGORIES = [
+  {
+    id: 'search-rankings',
+    name: 'Search Rankings',
+    icon: TrendingUp,
+    questions: [
+      "What local SEO strategies will help me rank #1 in my area?",
+      "How do I get 50+ Google reviews from happy customers?",
+      "What's the best way to showcase before/after transformations?",
+      "Analyze my competitor's website – what are they doing better?",
+      "How do I build a reputation as the local landscaping expert?"
+    ]
+  },
+  {
+    id: 'customer-growth',
+    name: 'Customer Growth',
+    icon: Users,
+    questions: [
+      "Generate a 30-day plan to get 10 new high-value customers",
+      "Write a compelling Nextdoor post that generates landscape leads",
+      "Create a door-to-door script for neighborhoods with dead lawns",
+      "What's the best way to approach new construction builders?",
+      "How do I turn one-time customers into recurring maintenance clients?"
+    ]
+  },
+  {
+    id: 'business-strategy',
+    name: 'Business Strategy',
+    icon: Target,
+    questions: [
+      "Create a unique selling proposition that sets me apart completely",
+      "How do I position myself as the premium option in my market?",
+      "What high-margin services should I add to double my profit?",
+      "Should I expand into irrigation? Pros and cons for my market",
+      "What services are my competitors NOT offering that I should?"
+    ]
+  },
+  {
+    id: 'images',
+    name: 'Images',
+    icon: Camera,
+    questions: [
+      "Here's a photo of a dead front yard — give me a makeover idea to attract premium buyers",
+      "Suggest three before-and-after transformations for this backyard photo",
+      "What landscaping upgrades would make this patio look high-end?",
+      "Turn this basic lawn into a luxurious outdoor space — what should I add?",
+      "Show me a design idea using pavers and lighting based on this image"
+    ]
+  },
+  {
+    id: 'financial-growth',
+    name: 'Financial Growth',
+    icon: DollarSign,
+    questions: [
+      "How do I upsell lawn care customers into full landscape design?",
+      "Design a maintenance package that maximizes monthly recurring revenue",
+      "How do I justify premium pricing to price-sensitive customers?",
+      "Create a pricing strategy that eliminates lowball competitors",
+      "What seasonal services can I offer to increase winter revenue?",
+      "How do I scale from solo operator to managing 3+ crews?",
+      "What's the best way to finance new equipment for growth?",
+      "What should I do now if I want to sell my landscaping business in 12 months?",
+      "Should I buy out a smaller landscaping company in my area?",
+      "What loan or financing options (like SBA) are available for growing my business?"
+    ]
+  }
 ]
 
 // Enhanced markdown-to-HTML converter with checklist support and table support
@@ -523,6 +596,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     createdAt: string
   }>>([])
   const [isSearching, setIsSearching] = useState(false)
+  // Category dropdown state
+  const [showCategoryQuestions, setShowCategoryQuestions] = useState(false)
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const [currentModel, setCurrentModel] = useState<string>('')
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; name: string } | null>(null)
@@ -680,7 +756,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }, [])
 
-  // Close user menu and tools dropdown when clicking outside
+  // Close user menu, tools dropdown, and category dropdown when clicking outside
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const handleClickOutside = (event: MouseEvent) => {
@@ -695,12 +771,18 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         if (showToolsDropdown && !target.closest('.relative')) {
           setShowToolsDropdown(false)
         }
+        
+        // Close category dropdown
+        if (showCategoryQuestions && !target.closest('.category-container')) {
+          setShowCategoryQuestions(false)
+          setActiveCategory(null)
+        }
       }
       
       document.addEventListener('mousedown', handleClickOutside)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [showUserMenu, showToolsDropdown])
+  }, [showUserMenu, showToolsDropdown, showCategoryQuestions])
 
   // Scroll detection for scroll-to-bottom button
   useEffect(() => {
@@ -962,6 +1044,26 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     
     const lowerMessage = message.toLowerCase()
     return imageKeywords.some(keyword => lowerMessage.includes(keyword))
+  }
+
+  // Category handlers
+  const handleCategorySelect = (categoryId: string) => {
+    if (activeCategory === categoryId) {
+      setShowCategoryQuestions(false)
+      setActiveCategory(null)
+    } else {
+      setActiveCategory(categoryId)
+      setShowCategoryQuestions(true)
+    }
+  }
+
+  const handleQuestionSelect = (question: string) => {
+    setInput(question)
+    setShowCategoryQuestions(false)
+    setActiveCategory(null)
+    if (textareaRef.current) {
+      textareaRef.current.focus()
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -1338,6 +1440,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           .mobile-messages-container {
             height: calc(100dvh - 280px); /* Account for header + input + padding */
             max-height: calc(100dvh - 280px);
+          }
+          /* Hide category buttons on mobile to prevent layout issues */
+          .category-container {
+            display: none !important;
           }
         }
         /* Desktop centered layout */
@@ -2086,39 +2192,68 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   </div>
                 </form>
 
-                {/* Quick Action Suggestions for Landscaping */}
+                {/* Business Category Buttons */}
                 {messages.length === 1 && (
-                  <div className="hidden sm:flex items-center justify-center gap-2 mt-4 flex-wrap">
-                    <ActionButton
-                      icon={<TrendingUp className="w-4 h-4" />}
-                      label="Local SEO Tips"
-                      onClick={() => {
-                        setInput("How can I improve my local SEO for landscaping?")
-                        if (textareaRef.current) {
-                          textareaRef.current.focus()
-                        }
-                      }}
-                    />
-                    <ActionButton
-                      icon={<Leaf className="w-4 h-4" />}
-                      label="Seasonal Services"
-                      onClick={() => {
-                        setInput("What services should I offer this season?")
-                        if (textareaRef.current) {
-                          textareaRef.current.focus()
-                        }
-                      }}
-                    />
-                    <ActionButton
-                      icon={<MessageSquare className="w-4 h-4" />}
-                      label="Content Ideas"
-                      onClick={() => {
-                        setInput("Help me create content for my landscaping business")
-                        if (textareaRef.current) {
-                          textareaRef.current.focus()
-                        }
-                      }}
-                    />
+                  <div className="category-container relative mt-4">
+                    <div className="flex items-center justify-center gap-2 flex-wrap">
+                      {BUSINESS_CATEGORIES.map((category) => {
+                        const IconComponent = category.icon
+                        const isActive = activeCategory === category.id
+                        
+                        return (
+                          <button
+                            key={category.id}
+                            type="button"
+                            onClick={() => handleCategorySelect(category.id)}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 ${
+                              isActive 
+                                ? 'bg-emerald-500/30 border-emerald-500/50 text-emerald-200' 
+                                : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-300 hover:text-emerald-200'
+                            }`}
+                          >
+                            <IconComponent className="w-4 h-4" />
+                            <span className="text-xs font-medium">{category.name}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                    
+                    {/* Category Questions Dropdown */}
+                    {showCategoryQuestions && activeCategory && (
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-3 space-y-2 min-w-[600px] z-50">
+                        {(() => {
+                          const category = BUSINESS_CATEGORIES.find(c => c.id === activeCategory)
+                          if (!category) return null
+                          
+                          return (
+                            <>
+                              <div className="text-emerald-300 font-medium text-sm flex items-center gap-2 mb-3">
+                                <category.icon className="w-4 h-4" />
+                                {category.id === 'images' ? (
+                                  <div className="flex items-center gap-2">
+                                    <span>Images / Visual Ideas</span>
+                                    <span className="bg-yellow-400/20 border border-yellow-400/30 text-yellow-300 px-2 py-1 rounded-full text-xs font-medium">
+                                      Upload Image
+                                    </span>
+                                  </div>
+                                ) : (
+                                  category.name
+                                )}
+                              </div>
+                              {category.questions.map((question, index) => (
+                                <button
+                                  key={index}
+                                  onClick={() => handleQuestionSelect(question)}
+                                  className="w-full text-left p-3 rounded-lg transition-colors hover:bg-emerald-500/10 text-gray-300 hover:text-white text-sm border border-transparent hover:border-emerald-500/20"
+                                >
+                                  {question}
+                                </button>
+                              ))}
+                            </>
+                          )
+                        })()}
+                      </div>
+                    )}
                   </div>
                 )}
 
