@@ -1023,12 +1023,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm px-8 py-4 font-semibold h-12"
                         onClick={() => (window.location.href = "/signup")}
                       >
+                        <Zap className="mr-2 w-4 h-4" />
                         <span>Try for Free</span>
-                        <ArrowRight className="ml-2 w-4 h-4 inline" />
                       </Button>
                       <div className="flex items-center justify-center space-x-2 text-xs text-emerald-300">
-                        <Shield className="w-3 h-3" />
-                        <span>Instant access • 7-day free trial • Cancel anytime</span>
+                        <Shield className="w-3 h-3 flex-shrink-0" />
+                        <span>Instant access • 7-day free trial</span>
                       </div>
                     </div>
                     <div className="text-center space-y-3">
@@ -1056,12 +1056,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-base px-8 py-4 font-semibold h-14"
                           onClick={() => (window.location.href = "/signup")}
                         >
+                          <Zap className="mr-2 w-5 h-5" />
                           <span>Try for Free</span>
-                          <ArrowRight className="ml-2 w-5 h-5 inline" />
                         </Button>
                         <div className="flex items-center justify-center space-x-2 text-sm text-emerald-300">
-                          <Shield className="w-4 h-4" />
-                          <span>Instant access • 7-day free trial • Cancel anytime</span>
+                          <Shield className="w-4 h-4 flex-shrink-0" />
+                          <span>Instant access • 7-day free trial</span>
                         </div>
                       </div>
                       <div className="text-center space-y-3 flex-1 max-w-xs">
