@@ -31,11 +31,13 @@ npm run lint   # Code linting
 - **Authentication & Analytics** - JWT + email verification, real-time cost tracking
 - **Business Intelligence** - 20 hardcoded challenges, mandatory signup data, professional email flow
 
-### ✅ Recent Mobile UX Fixes (Latest Session)
-- **Double-tap input focus resolved** - Added synchronous focus handlers with preventDefault and onTouchStart
-- **Tools dropdown click-outside** - Fixed with specific .tools-dropdown-container selector and touch events
-- **Hero CTA button consistency** - Made all three buttons identical size on mobile/desktop with light-to-dark blue gradient
-- **Business category buttons** - 5-category system with upward dropdowns (mobile hidden to prevent flashing)
+### ✅ Recent Mobile UX Fixes (Latest Sessions)
+- **Speech-to-text functionality** - Fixed transcription API with file streams, microphone hidden on mobile (use iOS keyboard mic)
+- **Text formatting consistency** - Unified all AI response formats (web search, vector, files, regular chat) with consistent markdown styling
+- **ChatGPT-style design updates** - Rounded-2xl corners, 16px font sizing, "Hey there!" greeting, emerald green headers
+- **Chat UI improvements** - Fixed text transparency with solid background, centered scroll button above input
+- **Tools dropdown fixes** - Click-outside functionality, category buttons persistent on desktop
+- **Hero CTA standardization** - Consistent button sizing across mobile/desktop with gradient styling
 
 ## Current Architecture
 

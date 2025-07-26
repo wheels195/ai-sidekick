@@ -206,6 +206,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
     return htmlLines.join('\n')
   }
 
+  // Main component return
   return (
     <div>
       <style>{`
@@ -743,15 +744,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     </div>
                   </div>
                   
-                  {/* Subtle Success Indicator */}
-                  <div className="absolute bottom-16 right-8 z-10">
-                    <div className="bg-emerald-500/10 backdrop-blur border border-emerald-400/20 rounded-2xl px-3 py-2 animate-float">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-emerald-300 text-xs">AI Ready</span>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-                      </div>
-                    </div>
-                  </div>
                   
                   {/* Header */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
@@ -809,39 +801,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           </div>
                         </div>
                         
-                        {/* Text content with margin for bigger character */}
-                        <div className="ml-0 lg:ml-48">
-                        <div className="space-y-3 text-sm">
-                          <p className="text-base">
-                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Sage</span>. Your strategic business sidekick.
-                          </p>
-                          
-                          <p className="text-gray-200 text-sm">
-                            Personalized to help you with:
-                          </p>
-                          
-                          <div className="space-y-1.5 ml-3">
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Marketing ideas & content creation</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Upselling strategies</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Smarter pricing & seasonal trends</span>
-                            </div>
-                            <div className="hidden sm:flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Custom business planning</span>
-                            </div>
-                            <div className="hidden sm:flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Scaling operations</span>
-                            </div>
+                        {/* Clean empty chat area */}
+                        <div className="ml-0 lg:ml-48 flex items-center justify-center h-32">
+                          <div className="text-gray-500 text-sm">
+                            {/* Empty chat state */}
                           </div>
+                        </div>
                           
                           {/* Enhanced Pro Tip Box with Glassmorphism */}
                           <div className="hidden sm:block bg-white/5 backdrop-blur border border-green-500/20 rounded-xl shadow p-2.5 animate-fade-in delay-300">

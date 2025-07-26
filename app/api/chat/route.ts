@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { moderateUserMessage } from '@/lib/moderation'
+import {
+  getImageAnalysisPrompt,
+  performCachedGooglePlacesSearch,
+  enhanceSystemPromptWithEnforcement,
+  createFileContextConfirmation,
+  enhanceFileContext,
+  detectHighValueQuery,
+  detectQuestionIntent,
+  extractMessageCategory
+} from '@/lib/chat-enhancements'
 
 // Initialize OpenAI client only when needed
 const getOpenAIClient = () => {
@@ -12,7 +22,7 @@ const getOpenAIClient = () => {
   })
 }
 
-const LANDSCAPING_SYSTEM_PROMPT = `# 🚀 SYSTEM PROMPT: Sage — Business Growth Specialist
+const BASE_LANDSCAPING_SYSTEM_PROMPT = `# 🚀 SYSTEM PROMPT: Sage — Business Growth Specialist
 
 You are **Sage**, a business growth specialist focused on generating immediate, measurable results for landscaping companies. You provide tactical intelligence, not generic advice.
 
@@ -226,7 +236,7 @@ Remember: You are a business growth specialist, not a content creator. Focus on 
 
 
 // File processing function for images and documents
-async function processUploadedFiles(files: any[]): Promise<string> {
+async function processUploadedFiles(files: any[], userMessage = ''): Promise<string> {
   if (!files || files.length === 0) {
     return ''
   }
@@ -238,8 +248,9 @@ async function processUploadedFiles(files: any[]): Promise<string> {
     
     try {
       if (type.startsWith('image/')) {
-        // For images, we'll use OpenAI's vision capabilities
+        // For images, we'll use OpenAI's vision capabilities with dynamic prompts
         const openai = getOpenAIClient()
+        const dynamicPrompt = getImageAnalysisPrompt({ name, type, content }, userMessage)
         const response = await openai.chat.completions.create({
           model: 'gpt-4o',
           messages: [
@@ -248,7 +259,7 @@ async function processUploadedFiles(files: any[]): Promise<string> {
               content: [
                 {
                   type: 'text',
-                  text: 'Analyze this image for landscaping business insights. Extract any text, pricing information, service details, or business-relevant data. Focus on actionable information for a landscaping business owner.'
+                  text: dynamicPrompt
                 },
                 {
                   type: 'image_url',
@@ -357,92 +368,7 @@ function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls
   }
 }
 
-// Detect high-value queries that benefit from GPT-4o's advanced reasoning
-function detectHighValueQuery(userMessage: string, userProfile: any): boolean {
-  const message = userMessage.toLowerCase()
-  
-  // Complex business strategy queries
-  if (message.includes('strategy') || message.includes('plan') || message.includes('approach')) {
-    return true
-  }
-  
-  // Multi-step implementation requests
-  if (message.includes('how to') && (message.includes('step') || message.includes('process') || message.includes('implement'))) {
-    return true
-  }
-  
-  // Revenue optimization and pricing analysis
-  if ((message.includes('revenue') || message.includes('profit') || message.includes('money')) && 
-      (message.includes('increase') || message.includes('optimize') || message.includes('improve'))) {
-    return true
-  }
-  
-  // Complex competitive analysis
-  if (message.includes('competitor') && (message.includes('analysis') || message.includes('beat') || message.includes('advantage'))) {
-    return true
-  }
-  
-  // Business scaling and growth planning
-  if ((message.includes('scale') || message.includes('grow') || message.includes('expand')) && 
-      (message.includes('business') || message.includes('team') || message.includes('operation'))) {
-    return true
-  }
-  
-  // Complex client acquisition strategies
-  if (message.includes('client') && message.match(/\d+/)) { // Contains numbers (e.g., "10 clients")
-    return true
-  }
-  
-  // Marketing campaigns and multi-channel strategies
-  if (message.includes('campaign') || (message.includes('marketing') && message.includes('channel'))) {
-    return true
-  }
-  
-  // Long-form content requests
-  if (message.length > 100) { // Detailed, complex queries
-    return true
-  }
-  
-  return false
-}
-
-// Detect question intent and enhance vector search queries
-function detectQuestionIntent(userMessage: string, userProfile: any): string {
-  const message = userMessage.toLowerCase()
-  
-  // Client acquisition intent
-  if (message.includes('client') || message.includes('customer') || message.includes('lead')) {
-    return `${userMessage} client acquisition lead generation ${userProfile?.target_customers || 'residential'}`
-  }
-  
-  // Pricing and revenue intent
-  if (message.includes('pric') || message.includes('money') || message.includes('revenue') || message.includes('profit')) {
-    return `${userMessage} pricing strategies revenue optimization ${userProfile?.services?.join(' ') || 'landscaping services'}`
-  }
-  
-  // Marketing and SEO intent
-  if (message.includes('market') || message.includes('seo') || message.includes('advertis') || message.includes('online')) {
-    return `${userMessage} marketing SEO digital advertising ${userProfile?.zip_code || 'local market'}`
-  }
-  
-  // Seasonal and operations intent
-  if (message.includes('season') || message.includes('winter') || message.includes('spring') || message.includes('summer') || message.includes('fall')) {
-    return `${userMessage} seasonal business planning operations ${userProfile?.services?.join(' ') || 'landscaping'}`
-  }
-  
-  // Competition intent
-  if (message.includes('compet') || message.includes('beat') || message.includes('against')) {
-    return `${userMessage} competitive strategy market positioning ${userProfile?.location || 'local market'}`
-  }
-  
-  // Team and scaling intent
-  if (message.includes('team') || message.includes('grow') || message.includes('scale') || message.includes('hire')) {
-    return `${userMessage} team management business growth scaling operations`
-  }
-  
-  // Default: enhance with user context
-  return `${userMessage} ${userProfile?.trade || 'landscaping'} ${userProfile?.services?.join(' ') || ''} business advice`
-}
+// These functions are now imported from @/lib/chat-enhancements
 
 // Convert user intent to intelligent search queries
 function convertUserIntentToSearch(userMessage: string, userProfile: any): string {
@@ -667,7 +593,7 @@ export async function POST(request: NextRequest) {
     let fileContext = ''
     if (files && files.length > 0) {
       console.log('📁 Processing uploaded files:', files.length)
-      fileContext = await processUploadedFiles(files)
+      fileContext = await processUploadedFiles(files, currentUserMessage.content)
       console.log('📁 File context generated:', fileContext.substring(0, 200))
       
       // Store files in user knowledge base if user is authenticated
@@ -742,7 +668,7 @@ export async function POST(request: NextRequest) {
         // Intelligent query conversion based on user intent
         const intelligentQuery = convertUserIntentToSearch(currentUserMessage.content, userProfile)
         console.log('🔍 Converted query:', { original: currentUserMessage.content, intelligent: intelligentQuery })
-        searchResults = await performGooglePlacesSearch(intelligentQuery, location)
+        searchResults = await performCachedGooglePlacesSearch(intelligentQuery, location, userProfile, request)
         console.log('🔍 Google Places search returned:', { 
           searchResults: searchResults.substring(0, 200), 
           length: searchResults.length,
@@ -755,7 +681,7 @@ export async function POST(request: NextRequest) {
         if (searchResults.includes('No local businesses found') && userProfile?.zip_code && userProfile.zip_code !== 'Your ZIP') {
           console.log('🔍 No results found, attempting smart retry with adjacent areas...')
           const adjacentLocation = `${userProfile.zip_code} surrounding areas`
-          const retryResults = await performGooglePlacesSearch(intelligentQuery, adjacentLocation)
+          const retryResults = await performCachedGooglePlacesSearch(intelligentQuery, adjacentLocation, userProfile, request)
           if (retryResults && !retryResults.includes('No local businesses found')) {
             searchResults = retryResults
             console.log('🔍 Smart retry successful with adjacent areas')
@@ -831,7 +757,7 @@ export async function POST(request: NextRequest) {
     ]
 
     // Enhance system prompt with user context and web search status
-    let enhancedSystemPrompt = LANDSCAPING_SYSTEM_PROMPT
+    let enhancedSystemPrompt = enhanceSystemPromptWithEnforcement(BASE_LANDSCAPING_SYSTEM_PROMPT)
     
     if (userProfile) {
       const userName = userProfile.first_name ? ` ${userProfile.first_name}` : ''
@@ -1142,17 +1068,17 @@ I notice some competitors are located in different areas/zip codes than your bus
 
     // Add file context if files were uploaded (preserve markdown formatting)
     if (fileContext) {
+      const enhancedFileContext = enhanceFileContext(fileContext, currentUserMessage.content)
       chatMessages.push({
         role: 'system' as const,
-        content: `${fileContext}
-
-IMPORTANT FILE ANALYSIS INSTRUCTIONS:
-- Focus on landscaping business applications and insights
-- Provide specific, actionable recommendations
-- If analyzing images: Look for plant health, landscape design opportunities, maintenance needs
-- If analyzing documents: Review for business improvement opportunities, pricing strategies, marketing effectiveness
-- Always end with concrete next steps the business owner can implement immediately`
+        content: enhancedFileContext
       })
+      
+      // Add file context confirmation message
+      const confirmationMessage = createFileContextConfirmation(true)
+      if (confirmationMessage) {
+        chatMessages.push(confirmationMessage)
+      }
     }
 
     // Store user message if authenticated and Supabase is available
@@ -1367,25 +1293,7 @@ IMPORTANT FILE ANALYSIS INSTRUCTIONS:
 }
 
 // Helper functions for learning system
-function extractMessageCategory(message: string): string {
-  const lowerMessage = message.toLowerCase()
-  
-  if (lowerMessage.includes('seo') || lowerMessage.includes('google') || lowerMessage.includes('rank')) {
-    return 'seo'
-  } else if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('charge')) {
-    return 'pricing'
-  } else if (lowerMessage.includes('market') || lowerMessage.includes('advertis') || lowerMessage.includes('social media')) {
-    return 'marketing'
-  } else if (lowerMessage.includes('upsell') || lowerMessage.includes('service') || lowerMessage.includes('offer')) {
-    return 'services'
-  } else if (lowerMessage.includes('customer') || lowerMessage.includes('client') || lowerMessage.includes('review')) {
-    return 'customer_relations'
-  } else if (lowerMessage.includes('season') || lowerMessage.includes('winter') || lowerMessage.includes('spring') || lowerMessage.includes('summer') || lowerMessage.includes('fall')) {
-    return 'seasonal'
-  } else {
-    return 'general'
-  }
-}
+// extractMessageCategory function now imported from @/lib/chat-enhancements
 
 function extractResponsePattern(response: string): string {
   // Extract key patterns from successful responses for learning
