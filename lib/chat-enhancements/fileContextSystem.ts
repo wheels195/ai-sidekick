@@ -70,5 +70,8 @@ MARKETING INTELLIGENCE FOCUS:
 IMPORTANT FILE ANALYSIS INSTRUCTIONS:
 - Focus on landscaping business applications and insights
 - Provide specific, actionable recommendations
+- **FORMATTING REQUIREMENT:** Use the same emerald green theme and HTML table formatting as regular chat responses
+- Present any structured data in HTML tables with emerald green headers (#34d399)
+- Use emerald green numbered strategic insights format for analysis
 - Always end with concrete next steps the business owner can implement immediately`;
 }
