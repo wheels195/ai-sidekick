@@ -166,6 +166,32 @@ Remember: You are a business growth specialist, not a content creator. Focus on 
 
 ---
 
+## 📝 CONSISTENT FORMATTING REQUIREMENTS
+
+**CRITICAL:** Use consistent markdown formatting for ALL responses regardless of data source (web search, vector database, file uploads, or regular chat):
+
+### Headings Structure:
+- **H1**: Major sections - 24px emerald green
+- **H2**: Sub-sections - 20px emerald green  
+- **H3**: Categories - 18px emerald green
+- **H4**: Items - 16px emerald green
+
+### Text Formatting:
+- **Bold text**: Use double asterisks for emphasis
+- **Lists**: Use dashes for bullet points, numbers for ordered lists
+- **Base text**: All regular text should be 16px and readable
+- **Links**: Format as markdown links or use HTML links for web results
+
+### Color Scheme:
+- Primary text: White (#ffffff)
+- Headings: Emerald green shades (#34d399, #10b981)
+- Emphasis: Emerald green for important points
+- Links: Blue (#60a5fa) for clickability
+
+**NEVER show raw markdown symbols in the final output. Always convert to proper formatting.**
+
+---
+
 ## 🧠 SMART RESPONSE FORMAT SELECTION
 
 **Choose the appropriate response format based on query type:**
@@ -889,11 +915,9 @@ Your output should feel like it was written just for them — because it was.
 "*This is a demo response with generic examples. Real users receive personalized advice based on their actual business location, services, and profile data.*"`
     }
 
-    // Add vector knowledge to system prompt (clean markdown formatting)
+    // Add vector knowledge to system prompt (preserve markdown formatting)
     if (vectorKnowledge) {
-      // Remove markdown formatting from vector knowledge to prevent double-processing
-      const cleanKnowledge = vectorKnowledge.replace(/\*\*([^*]+)\*\*/g, '$1')
-      enhancedSystemPrompt += `\n\n${cleanKnowledge}`
+      enhancedSystemPrompt += `\n\n${vectorKnowledge}`
     }
 
     if (webSearchEnabled && searchResults && !['error', 'not available', 'not configured'].some(term => searchResults.includes(term))) {
@@ -1045,26 +1069,26 @@ For competitive analysis tables, include these columns in this order:
 
 When user asks for local businesses, competitors, commercial properties, or any location-based results with 3 or more businesses, format as a professional HTML table with emerald styling:
 
-<div style="overflow-x: auto; margin: 20px 0;">
-<table style="width: 100%; min-width: 600px; border-collapse: collapse; font-family: Arial, sans-serif;">
+<div style="overflow-x: auto; margin: 20px 0; border-radius: 12px; background-color: #1a1a1a;">
+<table style="width: 100%; min-width: 600px; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: #1a1a1a; border-radius: 12px; overflow: hidden;">
 <thead>
-<tr style="background-color: #34d399; color: #000000;">
-<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Business Name</th>
-<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Phone</th>
-<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Location</th>
-<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Rating</th>
-<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Website</th>
-<th style="border: 1px solid #10b981; padding: 8px 12px; text-align: left; font-weight: 700; font-size: 14px;">Services</th>
+<tr style="background-color: #1a1a1a;">
+<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Business Name</th>
+<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Phone</th>
+<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Location</th>
+<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Rating</th>
+<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Website</th>
+<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Services</th>
 </tr>
 </thead>
 <tbody>
-<tr style="background-color: #ecfdf5;">
-<td style="border: 1px solid #10b981; padding: 8px 10px; font-weight: 600; color: #000000; font-size: 13px;">[Business Name]</td>
-<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; white-space: nowrap;">[Phone Number]</td>
-<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; max-width: 150px;">[Full Address]</td>
-<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; white-space: nowrap;">[Rating]⭐ ([Review Count])</td>
-<td style="border: 1px solid #10b981; padding: 8px 10px;"><a href="[Website]" target="_blank" style="color: #059669; text-decoration: underline; font-weight: 600; font-size: 13px;">[Domain]</a></td>
-<td style="border: 1px solid #10b981; padding: 8px 10px; color: #000000; font-size: 13px; max-width: 120px;">[Services List]</td>
+<tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">  
+<td style="border: none; padding: 12px 16px; font-weight: 500; color: #ffffff; font-size: 16px;">[Business Name]</td>
+<td style="border: none; padding: 12px 16px; color: #d1d5db; font-size: 16px; white-space: nowrap;">[Phone Number]</td>
+<td style="border: none; padding: 12px 16px; color: #d1d5db; font-size: 16px; max-width: 150px;">[Full Address]</td>
+<td style="border: none; padding: 12px 16px; color: #fbbf24; font-size: 16px; white-space: nowrap;">[Rating]⭐ ([Review Count])</td>
+<td style="border: none; padding: 12px 16px;"><a href="[Website]" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 500; font-size: 16px; border-bottom: 1px solid #60a5fa;">[Website URL]</a></td>
+<td style="border: none; padding: 12px 16px; color: #d1d5db; font-size: 16px; max-width: 120px;">[Services List]</td>
 </tr>
 </tbody>
 </table>
@@ -1077,7 +1101,7 @@ For single business results, use the standard format:
 - Location: (from ADDRESS field - show zip code or full address)
 - Rating: (from RATING field)
 - Reviews: (from review count field)
-- Website: (clickable HTML link with emerald styling or "Not available")
+- Website: Create clickable links showing the full URL (e.g., "https://www.example.com") that actually links to the website
 - Key Services: (infer landscaping services from business name/context, ignore generic "general_contractor" labels)
 
 **STRATEGIC ANALYSIS REQUIREMENTS:**
@@ -1116,13 +1140,11 @@ I notice some competitors are located in different areas/zip codes than your bus
       })
     }
 
-    // Add file context if files were uploaded (clean markdown formatting)
+    // Add file context if files were uploaded (preserve markdown formatting)
     if (fileContext) {
-      // Remove markdown formatting from file content to prevent double-processing
-      const cleanFileContext = fileContext.replace(/\*\*([^*]+)\*\*/g, '$1')
       chatMessages.push({
         role: 'system' as const,
-        content: `${cleanFileContext}
+        content: `${fileContext}
 
 IMPORTANT FILE ANALYSIS INSTRUCTIONS:
 - Focus on landscaping business applications and insights
