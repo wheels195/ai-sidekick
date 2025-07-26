@@ -688,9 +688,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Our AI Sidekicks - Available Now */}
-      <section id="products" className="min-h-screen py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center">
+      <section id="products" className="min-h-screen sm:min-h-0 py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center sm:block">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
-          <div className="text-center mb-20">
+          <div className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Our <span className="font-cursive">AI Sidekicks</span>
@@ -768,7 +768,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
 
                   {/* Welcome Message */}
-                  <div className="p-4 sm:p-6 md:p-10 h-[400px] sm:h-[450px] md:h-[500px] overflow-visible" style={{ paddingTop: 'max(24px, env(safe-area-inset-top))' }}>
+                  <div className="p-4 sm:p-6 md:p-10 h-[400px] sm:h-[340px] overflow-visible" style={{ paddingTop: 'max(24px, env(safe-area-inset-top))' }}>
                     {/* Enhanced Chat Bubble with Character Inside */}
                     <div className="relative">
                       {/* Chat Bubble - Matches Real /landscaping Interface */}
@@ -909,7 +909,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     <div className="w-full">
                         <div className="relative group">
                           <textarea
-                            className="w-full bg-white/5 border-2 border-emerald-400/60 text-white placeholder-gray-400 rounded-xl px-4 py-4 pr-20 pb-12 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-base transition-all duration-300"
+                            className="w-full bg-white/5 border-2 border-emerald-400/60 text-white placeholder-gray-400 rounded-xl px-4 py-4 pr-20 pb-12 sm:pr-32 sm:pb-16 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-base transition-all duration-300"
                             placeholder="What can I help you with today?"
                             rows={4}
                             disabled
@@ -921,17 +921,48 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             </div>
                           </div>
                           
-                          {/* Tools Button - Bottom Left */}
-                          <div className="absolute bottom-3 left-3">
-                            <div className="bg-blue-500/10 border border-blue-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-blue-500/25 hover:border-blue-400/50 transition-all duration-200 cursor-pointer">
-                              <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                              </svg>
-                              <span className="text-blue-300 text-xs font-medium">Tools</span>
+                          {/* Mobile: Tools and Tips Text - Desktop: Feature Pills */}
+                          <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4">
+                            {/* Mobile Only: Tools and Tips Text */}
+                            <div className="sm:hidden flex items-center space-x-4">
+                              <div className="flex items-center space-x-1.5 cursor-pointer">
+                                <svg className="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M18.5 8.5a1 1 0 00-1.414-1.414L14 10.172V6a1 1 0 00-2 0v4.172l-3.086-3.086a1 1 0 00-1.414 1.414L10.586 11.5H6a1 1 0 000 2h4.586L7.5 16.586a1 1 0 001.414 1.414L12 15.414V19a1 1 0 002 0v-3.586l3.086 3.086a1 1 0 001.414-1.414L15.414 13.5H19a1 1 0 000-2h-3.586L18.5 8.5z"/>
+                                </svg>
+                                <span className="text-blue-400 text-sm font-medium">Tools</span>
+                              </div>
+                              <div className="flex items-center space-x-1.5 cursor-pointer">
+                                <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                                </svg>
+                                <span className="text-emerald-400 text-sm font-medium">Tips</span>
+                              </div>
+                            </div>
+                            
+                            {/* Desktop: Original Green Feature Pills */}
+                            <div className="hidden sm:flex items-center space-x-3">
+                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                                <Globe className="w-3 h-3 text-emerald-400" />
+                                <span className="text-emerald-300 text-xs font-medium">Web Search</span>
+                              </div>
+                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                                <Upload className="w-3 h-3 text-emerald-400" />
+                                <span className="text-emerald-300 text-xs font-medium">File Upload</span>
+                              </div>
+                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                                <svg className="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                                </svg>
+                                <span className="text-emerald-300 text-xs font-medium">Tips</span>
+                              </div>
                             </div>
                           </div>
                           
-                          <div className="absolute right-3 bottom-3 flex items-center space-x-2">
+                          <div className="absolute right-3 bottom-3 sm:right-4 sm:bottom-4 flex items-center space-x-2">
+                            {/* Language Selector - Desktop Only */}
+                            <div className="hidden sm:block bg-gray-700/50 backdrop-blur border border-gray-600/30 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-600/50 transition-colors">
+                              <span className="text-gray-300 text-xs">English</span>
+                            </div>
                             {/* Microphone with Recording Indicator */}
                             <button className="relative p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
