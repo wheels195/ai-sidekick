@@ -120,7 +120,7 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
       },
       body: JSON.stringify({
         textQuery: `${query} near ${location}`,
-        maxResultCount: 8,
+        maxResultCount: 15, // Increased from 8 to get more results
         languageCode: 'en',
         regionCode: 'US'
       })
@@ -132,11 +132,17 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
     }
 
     const data = await response.json()
-    console.log('🔍 Google Places results:', { resultCount: data.places?.length, hasResults: !!data.places })
+    console.log('🔍 Google Places API response:', { 
+      resultCount: data.places?.length, 
+      hasResults: !!data.places,
+      query: `${query} near ${location}`,
+      actualResults: data.places?.length || 0 
+    })
     
     if (data.places && data.places.length > 0) {      
+      console.log('🔍 Processing', data.places.length, 'results from Google Places API')
       const formattedResults = data.places
-        .slice(0, 6)
+        .slice(0, 10) // Increased from 6 to 10 results for more comprehensive analysis
         .map((place: any, index: number) => {
           const name = place.displayName?.text || 'Business Name Not Available'
           const address = place.formattedAddress || 'Address not available'
