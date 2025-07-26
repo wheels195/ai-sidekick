@@ -824,6 +824,10 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                               <span className="text-gray-50 typography-chat leading-relaxed text-sm">Smarter pricing & seasonal trends</span>
                             </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Supports 50+ Languages</span>
+                            </div>
                             <div className="hidden sm:flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                               <span className="text-gray-50 typography-chat leading-relaxed text-sm">Custom business planning</span>
@@ -933,7 +937,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               </div>
                               <div className="flex items-center space-x-1.5 cursor-pointer">
                                 <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                 </svg>
                                 <span className="text-emerald-400 text-sm font-medium">Tips</span>
                               </div>
@@ -951,17 +955,23 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               </div>
                               <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
                                 <svg className="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                 </svg>
                                 <span className="text-emerald-300 text-xs font-medium">Tips</span>
+                              </div>
+                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                                <svg className="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd"/>
+                                </svg>
+                                <span className="text-emerald-300 text-xs font-medium">Generate Image</span>
                               </div>
                             </div>
                           </div>
                           
                           <div className="absolute right-3 bottom-3 sm:right-4 sm:bottom-4 flex items-center space-x-2">
-                            {/* Language Selector - Desktop Only */}
+                            {/* Language Support - Desktop Only */}
                             <div className="hidden sm:block bg-gray-700/50 backdrop-blur border border-gray-600/30 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-600/50 transition-colors">
-                              <span className="text-gray-300 text-xs">English</span>
+                              <span className="text-gray-300 text-xs">Supports 50+ Languages</span>
                             </div>
                             {/* Microphone with Recording Indicator */}
                             <button className="relative p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">

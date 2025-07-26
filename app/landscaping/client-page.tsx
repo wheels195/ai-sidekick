@@ -2323,7 +2323,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* ChatGPT-style Input Bar - Always Visible */}
               <div 
-                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-[60] safe-bottom sticky-input-area mobile-input-container bg-gray-950 rounded-t-2xl"
+                className="sticky bottom-0 left-0 right-0 px-4 py-4 flex-shrink-0 z-10 safe-bottom sticky-input-area mobile-input-container bg-gray-950 rounded-t-2xl"
                 style={{
                   paddingBottom: isMobile ? `max(32px, env(safe-area-inset-bottom))` : '16px',
                   minHeight: '120px' // Consistent height to prevent layout shifts
@@ -2471,7 +2471,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                           
                           {/* Upward Opening Dropdown */}
                           {showToolsDropdown && (
-                            <div className="absolute bottom-full left-0 mb-3 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-2 space-y-1 min-w-[160px] sm:min-w-40 z-[999]">
+                            <div className="absolute bottom-full left-0 mb-3 bg-gray-900/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl p-2 space-y-1 min-w-[160px] sm:min-w-40 z-[9999]">
                               <label className={`w-full text-left p-2 sm:p-3 rounded-lg transition-colors flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 cursor-pointer ${activeTool === 'attach-file' ? 'bg-blue-500/20' : ''}`}>
                                 <Paperclip className="w-4 h-4 sm:w-3 sm:h-3" />
                                 <span className="text-xs sm:text-[11px] font-medium">Attach File</span>
