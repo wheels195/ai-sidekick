@@ -780,8 +780,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   <div className="p-6 md:p-10 h-[340px] overflow-visible" style={{ paddingTop: 'max(24px, env(safe-area-inset-top))' }}>
                     {/* Enhanced Chat Bubble with Character Inside */}
                     <div className="relative">
-                      {/* Enhanced Chat Bubble with Glassmorphism */}
-                      <div className="bg-white/5 backdrop-blur border border-green-500/20 rounded-xl shadow text-slate-100 px-6 py-6 relative overflow-visible animate-fade-in">                        
+                      {/* Chat Bubble - Matches Real /landscaping Interface */}
+                      <div className="bg-[#1a1a1a] text-gray-100 px-4 py-2 rounded-2xl relative overflow-visible animate-fade-in">                        
                         
                         {/* Enhanced Character with Sparkles and Hover Effects */}
                         <div className="hidden lg:block absolute -left-8 top-0 z-10 group">
@@ -811,35 +811,35 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         
                         {/* Text content with margin for bigger character */}
                         <div className="ml-0 lg:ml-48">
-                        <div className="space-y-3 text-sm">
-                          <p className="text-base">
-                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Sage</span>. Your strategic business sidekick.
+                        <div className="space-y-3">
+                          <p className="text-gray-50 typography-chat leading-relaxed text-base">
+                            Hey there — I'm <span className="font-cursive text-emerald-400 font-semibold text-lg">Sage</span>. Your strategic business sidekick.
                           </p>
                           
-                          <p className="text-gray-200 text-sm">
+                          <p className="text-gray-50 typography-chat leading-relaxed text-sm">
                             Personalized to help you with:
                           </p>
                           
                           <div className="space-y-1.5 ml-3">
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Marketing ideas & content creation</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Marketing ideas & content creation</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Upselling strategies</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Upselling strategies</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Smarter pricing & seasonal trends</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Smarter pricing & seasonal trends</span>
                             </div>
                             <div className="hidden sm:flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Custom business planning</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Custom business planning</span>
                             </div>
                             <div className="hidden sm:flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-white text-sm">Scaling operations</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Scaling operations</span>
                             </div>
                           </div>
                           
