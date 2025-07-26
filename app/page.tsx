@@ -814,7 +814,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           <div className="space-y-1.5 ml-3">
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Marketing ideas & content creation</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Marketing ideas and content creation</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
@@ -822,19 +822,32 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Smarter pricing & seasonal trends</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Smarter pricing and seasonal trends</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Supports 50+ Languages</span>
-                            </div>
-                            <div className="hidden sm:flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                               <span className="text-gray-50 typography-chat leading-relaxed text-sm">Custom business planning</span>
                             </div>
-                            <div className="hidden sm:flex items-center space-x-2">
+                            <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Scaling operations</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Scale and grow operations</span>
+                            </div>
+                          </div>
+                          
+                          {/* Language Support Section - Mobile Only */}
+                          <div className="sm:hidden mt-4">
+                            <p className="text-gray-50 typography-chat leading-relaxed text-sm mb-2">
+                              Supports 50+ Languages:
+                            </p>
+                            <div className="space-y-1.5 ml-3">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                                <span className="text-gray-50 typography-chat leading-relaxed text-sm">Speech to text</span>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                                <span className="text-gray-50 typography-chat leading-relaxed text-sm">Text to text</span>
+                              </div>
                             </div>
                           </div>
                           
@@ -893,13 +906,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         How do I raise my prices without losing loyal customers?
                       </button>
-                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105 w-full sm:w-auto h-8 sm:h-auto flex items-center justify-center">
                         Write me a seasonal blog post and a Facebook ad
                       </button>
                       <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
                         How do I realistically double my revenue this year?
                       </button>
-                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
+                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105 w-full sm:w-auto h-8 sm:h-auto flex items-center justify-center">
                         Develop a 90 day plan to grow my revenue by >25%
                       </button>
                       <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
