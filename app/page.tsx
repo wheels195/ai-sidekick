@@ -906,13 +906,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       </button>
                     </div>
                     
-                    <div className="flex items-center space-x-2">
-                      <div className="flex-1">
+                    <div className="w-full">
                         <div className="relative group">
                           <textarea
-                            className="w-full bg-white/5 border-2 border-white/20 hover:border-emerald-400/40 text-white placeholder-gray-400 rounded-xl px-4 py-4 pr-20 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-base group-hover:animate-input-glow transition-all duration-300"
+                            className="w-full bg-white/5 border-2 border-emerald-400/60 text-white placeholder-gray-400 rounded-xl px-4 py-4 pr-32 pb-16 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-base transition-all duration-300"
                             placeholder="What can I help you with today?"
-                            rows={2}
+                            rows={3}
                             disabled
                           />
                           {/* Animated placeholder suggestions */}
@@ -921,7 +920,26 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               <div className="opacity-0">How can I get more customers this month?</div>
                             </div>
                           </div>
-                          <div className="absolute right-2 top-2 flex items-center space-x-2">
+                          
+                          {/* Green Feature Pills - Bottom Left */}
+                          <div className="absolute bottom-4 left-4 flex items-center space-x-3">
+                            <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                              <Globe className="w-3 h-3 text-emerald-400" />
+                              <span className="text-emerald-300 text-xs font-medium">Web Search</span>
+                            </div>
+                            <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                              <Upload className="w-3 h-3 text-emerald-400" />
+                              <span className="text-emerald-300 text-xs font-medium">File Upload</span>
+                            </div>
+                            <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
+                              <svg className="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
+                              </svg>
+                              <span className="text-emerald-300 text-xs font-medium">Tips</span>
+                            </div>
+                          </div>
+                          
+                          <div className="absolute right-4 bottom-4 flex items-center space-x-2">
                             {/* Language Selector */}
                             <div className="bg-gray-700/50 backdrop-blur border border-gray-600/30 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-600/50 transition-colors">
                               <span className="text-gray-300 text-xs">English</span>
@@ -939,27 +957,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             </button>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    
-                    {/* Enhanced Features row with hover interactions */}
-                    <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
-                      <div className="flex items-center space-x-4">
-                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200">
-                          <Globe className="w-3 h-3 text-blue-400 hover:text-blue-300 transition-colors duration-200" />
-                          <span>Web Search</span>
-                        </span>
-                        <span className="flex items-center space-x-1 hover:text-green-400 transition-colors duration-200">
-                          <Upload className="w-3 h-3 text-emerald-400 hover:text-emerald-300 transition-colors duration-200" />
-                          <span>File Upload</span>
-                        </span>
-                        <span className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
-                          </svg>
-                          <span>Tips</span>
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </div>
