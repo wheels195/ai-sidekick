@@ -743,15 +743,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     </div>
                   </div>
                   
-                  {/* Subtle Success Indicator */}
-                  <div className="absolute bottom-16 right-8 z-10">
-                    <div className="bg-emerald-500/10 backdrop-blur border border-emerald-400/20 rounded-2xl px-3 py-2 animate-float">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-emerald-300 text-xs">AI Ready</span>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-                      </div>
-                    </div>
-                  </div>
                   
                   {/* Header */}
                   <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
@@ -930,9 +921,18 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                               <div className="opacity-0">How can I get more customers this month?</div>
                             </div>
                           </div>
-                          <div className="absolute right-2 top-2 flex items-center space-x-1">
-                            <button className="p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
-                              <Paperclip className="w-4 h-4" />
+                          <div className="absolute right-2 top-2 flex items-center space-x-2">
+                            {/* Language Selector */}
+                            <div className="bg-gray-700/50 backdrop-blur border border-gray-600/30 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-600/50 transition-colors">
+                              <span className="text-gray-300 text-xs">English</span>
+                            </div>
+                            {/* Microphone with Recording Indicator */}
+                            <button className="relative p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
+                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
+                              </svg>
+                              {/* Red Recording Indicator */}
+                              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                             </button>
                             <button className="p-1.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg transition-colors">
                               <Send className="w-4 h-4" />
@@ -960,7 +960,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           <span>Tips</span>
                         </span>
                       </div>
-                      <span className="text-emerald-400 hidden sm:inline animate-pulse">⚡ Advanced AI</span>
                     </div>
                   </div>
                 </div>
