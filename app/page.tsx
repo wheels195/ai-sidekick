@@ -799,6 +799,16 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             Hey there — I'm <span className="font-cursive text-emerald-400 font-semibold text-lg">Sage</span>. Your strategic business sidekick.
                           </p>
                           
+                          {/* Premium Green Divider */}
+                          <div className="relative py-2">
+                            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                              <div className="w-full h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-60"></div>
+                            </div>
+                            <div className="relative flex justify-center">
+                              <div className="w-2 h-2 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"></div>
+                            </div>
+                          </div>
+                          
                           <p className="text-gray-50 typography-chat leading-relaxed text-sm">
                             Personalized to help you with:
                           </p>
