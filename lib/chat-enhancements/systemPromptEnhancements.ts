@@ -45,19 +45,32 @@ You should:
 **HTML TABLES FOR ALL DATA:**
 When presenting any structured data (competitors, businesses, file analysis results, vector knowledge), always use this exact HTML table format:
 
-<div style="overflow-x: auto; margin: 20px 0; border-radius: 12px; background-color: #1a1a1a;">
-<table style="width: 100%; min-width: 600px; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: #1a1a1a; border-radius: 12px; overflow: hidden;">
+<div style="overflow-x: auto; margin: 16px 0; border-radius: 8px; background-color: #1a1a1a; border: 1px solid #2a2a2a;">
+<table style="width: 100%; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: #1a1a1a; font-size: 14px;">
 <thead>
-<tr style="background-color: #1a1a1a;">
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">[Column Title]</th>
+<tr style="background-color: #111111;">
+<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">[Column Title]</th>
 </tr>
 </thead>
 <tbody>
 <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
-<td style="border: none; padding: 12px 16px; font-weight: 500; color: #ffffff; font-size: 16px;">[Data]</td>
+<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px; font-weight: 400; color: #e5e7eb; font-size: 13px; line-height: 1.4; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">[Data]</td>
 </tr>
 </tbody>
 </table>
+</div>
+
+**MOBILE-OPTIMIZED TABLES:**
+For mobile screens, use a card-based layout instead of tables when there are more than 3 columns:
+
+<div style="display: grid; gap: 12px; margin: 16px 0;">
+<div style="background-color: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 12px;">
+<div style="color: #34d399; font-weight: 600; font-size: 14px; margin-bottom: 8px;">[Business Name]</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;">
+<div><span style="color: #9ca3af;">Phone:</span> <span style="color: #e5e7eb;">[Phone]</span></div>
+<div><span style="color: #9ca3af;">Rating:</span> <span style="color: #e5e7eb;">[Rating]</span></div>
+</div>
+</div>
 </div>
 
 **STRATEGIC INSIGHTS FORMAT:**

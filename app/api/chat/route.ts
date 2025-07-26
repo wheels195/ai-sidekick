@@ -995,26 +995,26 @@ For competitive analysis tables, include these columns in this order:
 
 When user asks for local businesses, competitors, commercial properties, or any location-based results with 3 or more businesses, format as a professional HTML table with emerald styling:
 
-<div style="overflow-x: auto; margin: 20px 0; border-radius: 12px; background-color: #1a1a1a;">
-<table style="width: 100%; min-width: 600px; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: #1a1a1a; border-radius: 12px; overflow: hidden;">
+<div style="overflow-x: auto; margin: 16px 0; border-radius: 8px; background-color: #1a1a1a; border: 1px solid #2a2a2a;">
+<table style="width: 100%; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: #1a1a1a; font-size: 14px;">
 <thead>
-<tr style="background-color: #1a1a1a;">
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Business Name</th>
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Phone</th>
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Location</th>
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Rating</th>
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Website</th>
-<th style="border: none; border-bottom: 2px solid #34d399; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 16px; color: #34d399;">Services</th>
+<tr style="background-color: #111111;">
+<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">Business Name</th>
+<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">Phone</th>
+<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">Location</th>
+<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">Rating</th>
+<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">Website</th>
+<th style="border-bottom: 2px solid #34d399; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">Services</th>
 </tr>
 </thead>
 <tbody>
 <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">  
-<td style="border: none; padding: 12px 16px; font-weight: 500; color: #ffffff; font-size: 16px;">[Business Name]</td>
-<td style="border: none; padding: 12px 16px; color: #d1d5db; font-size: 16px; white-space: nowrap;">[Phone Number]</td>
-<td style="border: none; padding: 12px 16px; color: #d1d5db; font-size: 16px; max-width: 150px;">[Full Address]</td>
-<td style="border: none; padding: 12px 16px; color: #fbbf24; font-size: 16px; white-space: nowrap;">[Rating]⭐ ([Review Count])</td>
-<td style="border: none; padding: 12px 16px;"><a href="[Website]" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 500; font-size: 16px; border-bottom: 1px solid #60a5fa;">[Website URL]</a></td>
-<td style="border: none; padding: 12px 16px; color: #d1d5db; font-size: 16px; max-width: 120px;">[Services List]</td>
+<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px; font-weight: 500; color: #ffffff; font-size: 13px; line-height: 1.4; max-width: 180px; overflow: hidden; text-overflow: ellipsis;">[Business Name]</td>
+<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px; color: #e5e7eb; font-size: 13px; white-space: nowrap;">[Phone Number]</td>
+<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px; color: #e5e7eb; font-size: 13px; line-height: 1.4; max-width: 160px; overflow: hidden; text-overflow: ellipsis;">[Full Address]</td>
+<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px; color: #fbbf24; font-size: 13px; white-space: nowrap;">[Rating]⭐ ([Review Count])</td>
+<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px;"><a href="[Website]" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 500; font-size: 13px; border-bottom: 1px solid #60a5fa; max-width: 120px; overflow: hidden; text-overflow: ellipsis; display: block;">[Website URL]</a></td>
+<td style="padding: 8px 12px; color: #e5e7eb; font-size: 13px; line-height: 1.4; max-width: 140px; overflow: hidden; text-overflow: ellipsis;">[Services List]</td>
 </tr>
 </tbody>
 </table>
