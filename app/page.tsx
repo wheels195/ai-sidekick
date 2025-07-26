@@ -27,6 +27,9 @@ import {
   Settings,
   ClipboardCheck,
   Bot,
+  Shield,
+  BookOpen,
+  Lightbulb,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
@@ -1011,32 +1014,71 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </div>
 
-                <div className="text-center space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold"
-                      onClick={() => (window.location.href = "/signup")}
-                    >
-                      <span className="block sm:inline">Start Free Trial - No Credit Card</span>
-                      <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
-                    </Button>
-                    <Button
-                      size="lg"
-                      onClick={() => window.location.href = '/learn'}
-                      className="w-full sm:w-auto bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold backdrop-blur-sm border border-white/20"
-                    >
-                      <FileText className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      How to Use <span className="font-cursive">AI Sidekick</span>
-                    </Button>
+                <div className="space-y-6">
+                  {/* Mobile: Stacked Layout */}
+                  <div className="block sm:hidden space-y-6">
+                    <div className="text-center space-y-3">
+                      <Button
+                        size="lg"
+                        className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm px-8 py-4 font-semibold h-12"
+                        onClick={() => (window.location.href = "/signup")}
+                      >
+                        <span>Try for Free</span>
+                        <ArrowRight className="ml-2 w-4 h-4 inline" />
+                      </Button>
+                      <div className="flex items-center justify-center space-x-2 text-xs text-emerald-300">
+                        <Shield className="w-3 h-3" />
+                        <span>Instant access • 7-day free trial • Cancel anytime</span>
+                      </div>
+                    </div>
+                    <div className="text-center space-y-3">
+                      <Button
+                        size="lg"
+                        onClick={() => window.location.href = '/learn'}
+                        className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-sm px-8 py-4 font-semibold backdrop-blur-sm border border-white/20 h-12"
+                      >
+                        <BookOpen className="w-4 h-4 mr-2" />
+                        <span>How to Use AI Sidekick</span>
+                      </Button>
+                      <div className="flex items-center justify-center space-x-2 text-xs text-blue-300">
+                        <Lightbulb className="w-3 h-3" />
+                        <span>Best Practices • Our Suggestions</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-center text-xs sm:text-sm text-emerald-300 px-2">
-                      ✅ Instant access • 7-day free trial • Cancel anytime
-                    </p>
-                    <p className="text-center text-xs sm:text-sm text-blue-300 px-2">
-                      📚 Best Practices • Our Suggestions
-                    </p>
+
+                  {/* Desktop: Side-by-side Layout */}
+                  <div className="hidden sm:block">
+                    <div className="flex gap-8 justify-center items-start">
+                      <div className="text-center space-y-3 flex-1 max-w-xs">
+                        <Button
+                          size="lg"
+                          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-base px-8 py-4 font-semibold h-14"
+                          onClick={() => (window.location.href = "/signup")}
+                        >
+                          <span>Try for Free</span>
+                          <ArrowRight className="ml-2 w-5 h-5 inline" />
+                        </Button>
+                        <div className="flex items-center justify-center space-x-2 text-sm text-emerald-300">
+                          <Shield className="w-4 h-4" />
+                          <span>Instant access • 7-day free trial • Cancel anytime</span>
+                        </div>
+                      </div>
+                      <div className="text-center space-y-3 flex-1 max-w-xs">
+                        <Button
+                          size="lg"
+                          onClick={() => window.location.href = '/learn'}
+                          className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-base px-8 py-4 font-semibold backdrop-blur-sm border border-white/20 h-14"
+                        >
+                          <BookOpen className="w-5 h-5 mr-2" />
+                          <span>How to Use AI Sidekick</span>
+                        </Button>
+                        <div className="flex items-center justify-center space-x-2 text-sm text-blue-300">
+                          <Lightbulb className="w-4 h-4" />
+                          <span>Best Practices • Our Suggestions</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
