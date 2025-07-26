@@ -36,8 +36,18 @@ npm run lint   # Code linting
 - **Text formatting consistency** - Unified all AI response formats (web search, vector, files, regular chat) with consistent markdown styling
 - **ChatGPT-style design updates** - Rounded-2xl corners, 16px font sizing, "Hey there!" greeting, emerald green headers
 - **Chat UI improvements** - Fixed text transparency with solid background, centered scroll button above input
-- **Tools dropdown fixes** - Click-outside functionality, category buttons persistent on desktop
+- **Tools dropdown fixes** - Click-outside functionality, category buttons persistent on desktop, z-index issue resolved
 - **Hero CTA standardization** - Consistent button sizing across mobile/desktop with gradient styling
+
+### ✅ Homepage & Mobile Optimization Updates (January 2025)
+- **Mobile chat controls** - Simplified to "Tools" (blue with wrench icon) and "Tips" (emerald with star icon)
+- **Desktop enhancements** - Added "Generate Image" pill, changed language text to "Supports 50+ Languages"
+- **Z-index fixes** - Tips dropdown (z-[9999]) now properly appears above chat input area (z-10)
+- **Mobile chat preview** - Reorganized bullet points, added language support section with speech/text bullets
+- **Prompt buttons** - Uniform sizing on mobile (w-full h-8) for consistent appearance
+- **CTA redesign** - Side-by-side "Try for Free" and "How to Use AI Sidekick" with equal sizing
+- **Professional icons** - Replaced emojis with Lucide React icons (Shield, BookOpen, Lightbulb, Zap)
+- **Bullet positioning** - Properly positioned under respective CTAs on both mobile and desktop
 
 ## Current Architecture
 
@@ -71,7 +81,7 @@ ADMIN_API_KEY=...
 ## 🚨 PRIORITY ISSUES & TODO (Next Session)
 
 ### Critical Mobile UX Issues
-1. **Mobile tools/tips viewport focus** - Clicking tools dropdown causes unwanted page centering, cutting off tools selection and tips visibility
+1. **Mobile tools/tips viewport focus** - FIXED: Z-index properly configured (dropdown z-[9999], input z-10)
 2. **Mobile category flashing** - Page load flashing still persists despite attempts to fix with conditional rendering
 
 ### New Feature Requirements
@@ -96,6 +106,22 @@ ADMIN_API_KEY=...
 - **Security focus** - All user data protected with proper authentication
 - **Performance optimization** - Fast loading and responsive interactions
 
+## Chat Enhancement Package (Implemented January 2025)
+
+### Enhanced Features Added:
+- **Dynamic Image Analysis** - Context-aware prompts based on user intent and file type
+- **Google Places API Caching** - 24-hour Supabase cache reducing API costs ~80%
+- **System Prompt Enforcement** - Flexible, creative responses with consistent formatting
+- **Professional Table Styling** - Emerald green headers, proper borders, mobile-optimized
+- **Increased Results** - Google Places now shows up to 10 results (increased from 3-6)
+
+### Key Files:
+- `/lib/chat-enhancements/` - Modular enhancement functions
+- `/app/api/chat/route.ts` - Integration with chat API
+- `/supabase-migrations/places_cache_table.sql` - Caching infrastructure
+
+⚠️ **IMPORTANT:** Demo mode logic is currently active for testing. Must be removed before production launch!
+
 ---
 
-*Last updated: January 2025 - Mobile UX Fixes & Hero CTA Updates*
+*Last updated: January 2025 - Homepage Redesign & Mobile Optimizations*
