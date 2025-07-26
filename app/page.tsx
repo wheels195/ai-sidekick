@@ -523,17 +523,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </Button>
             </div>
             
-            {/* How to Use Button - Centered between main CTAs */}
-            <div className="flex justify-center items-center mt-8 w-full max-w-md sm:max-w-none mx-auto px-4">
-              <Button
-                size="lg"
-                onClick={() => window.location.href = '/learn'}
-                className="w-full sm:w-auto bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 backdrop-blur-sm border border-white/20 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
-              >
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-2" />
-                How to Use <span className="font-cursive">AI Sidekick</span>
-              </Button>
-            </div>
           </div>
 
           {/* Value Propositions */}
@@ -1022,18 +1011,33 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </div>
 
-                <div className="text-center">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold"
-                    onClick={() => (window.location.href = "/signup")}
-                  >
-                    <span className="block sm:inline">Start Free Trial - No Credit Card</span>
-                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
-                  </Button>
-                  <p className="text-center text-xs sm:text-sm text-emerald-300 mt-2 sm:mt-3 px-2">
-                    ✅ Instant access • 7-day free trial • Cancel anytime
-                  </p>
+                <div className="text-center space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold"
+                      onClick={() => (window.location.href = "/signup")}
+                    >
+                      <span className="block sm:inline">Start Free Trial - No Credit Card</span>
+                      <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 inline" />
+                    </Button>
+                    <Button
+                      size="lg"
+                      onClick={() => window.location.href = '/learn'}
+                      className="w-full sm:w-auto bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-300 hover:to-blue-500 text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold backdrop-blur-sm border border-white/20"
+                    >
+                      <FileText className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      How to Use <span className="font-cursive">AI Sidekick</span>
+                    </Button>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-center text-xs sm:text-sm text-emerald-300 px-2">
+                      ✅ Instant access • 7-day free trial • Cancel anytime
+                    </p>
+                    <p className="text-center text-xs sm:text-sm text-blue-300 px-2">
+                      📚 Best Practices • Our Suggestions
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
