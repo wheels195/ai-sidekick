@@ -147,7 +147,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
   // Convert markdown to HTML with emerald headings (similar to chat interface)
   const convertMarkdownToHtml = (markdown: string): string => {
     const lines = markdown.split('\n')
-    const htmlLines = []
+    const htmlLines: string[] = []
     let inList = false
     
     for (let i = 0; i < lines.length; i++) {
@@ -206,7 +206,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
     return htmlLines.join('\n')
   }
 
-  // Main component return
   return (
     <div>
       <style>{`
