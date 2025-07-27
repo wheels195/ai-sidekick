@@ -85,10 +85,10 @@ export async function POST(request: NextRequest) {
     // Check if this is an admin email
     const isAdmin = profileData.email === 'admin@ai-sidekick.io'
     
-    // Create a new user profile (OAuth users)
+    // Create or update user profile (OAuth users)
     const { data, error } = await supabase
       .from('user_profiles')
-      .insert({
+      .upsert({
         id: profileData.id,
         email: profileData.email,
         first_name: profileData.first_name,
