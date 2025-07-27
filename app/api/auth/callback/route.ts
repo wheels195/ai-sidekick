@@ -11,7 +11,8 @@ export async function GET(request: NextRequest) {
     code: !!code, 
     redirect,
     allParams: Object.fromEntries(requestUrl.searchParams.entries()),
-    fullUrl: request.url
+    fullUrl: request.url,
+    timestamp: new Date().toISOString()
   })
 
   if (code) {
