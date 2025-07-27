@@ -19,92 +19,136 @@ export default function TermsPage() {
               Back to Home
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-4">Terms of Use</h1>
-          <p className="text-gray-400">Effective Date: January 11, 2025</p>
-          <p className="text-gray-400">Last Updated: January 27, 2025</p>
+          <h1 className="text-4xl font-bold text-white mb-4">Terms of Service</h1>
+          <p className="text-gray-400">Effective Date: July 26, 2025</p>
         </div>
 
         <div className="prose prose-invert max-w-none">
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">1. Overview</h2>
-            <p className="text-gray-300 mb-4">
-              AI Sidekick is a software-as-a-service (SaaS) platform that provides AI-generated business assistance for landscaping and trades-based businesses. By using the service, you agree to these terms.
-            </p>
-          </section>
+          <p className="text-gray-300 mb-6">
+            These Terms of Service ("Terms") govern your access to and use of the AI-Sidekick platform ("the Service"), owned and operated by AI-Sidekick. By accessing or using the Service, you agree to these Terms.
+          </p>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">2. Trial Use Only</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">1. Eligibility & Use</h2>
             <p className="text-gray-300 mb-4">
-              AI Sidekick offers a 7-day free trial. After the trial expires, continued access requires a paid subscription.
+              You must be at least 18 years old to use the Service. You agree to use it only for lawful business purposes and to avoid uploading or requesting harmful, illegal, or offensive content.
             </p>
             <p className="text-gray-300 mb-4">
-              We may modify or suspend features at any time during the trial.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">3. User Responsibilities</h2>
-            <p className="text-gray-300 mb-4">
-              You agree to:
+              You may not:
             </p>
             <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
-              <li>Use AI Sidekick only for lawful business purposes</li>
-              <li>Provide accurate business information during profile completion</li>
-              <li>Not share your login credentials or account access</li>
-              <li>Not use the AI for harmful, misleading, or illegal purposes</li>
-              <li>Not attempt to reverse engineer or misuse the service</li>
+              <li>Resell, reverse-engineer, or tamper with the Service</li>
+              <li>Submit prompts or files that violate these Terms</li>
+              <li>Misuse any AI-generated content</li>
             </ul>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">4. AI Disclaimer</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">2. User Content & Input</h2>
             <p className="text-gray-300 mb-4">
-              AI Sidekick uses artificial intelligence to generate suggestions. While we aim for helpful, relevant responses, we do not guarantee accuracy, legal compliance, or business results. Use your own judgment when applying any advice provided.
+              You are responsible for any text, data, or files you upload. By submitting content, you grant us a limited license to process it solely for providing AI responses and recommendations.
+            </p>
+            <p className="text-gray-300 mb-4">
+              You may not submit content that is illegal, infringing, abusive, or violates any third-party rights.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">5. Data Use and Retention</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">3. AI Output Disclaimer</h2>
             <p className="text-gray-300 mb-4">
-              We store your business profile, chat messages, uploaded files, and feedback to provide personalized AI assistance. This data is not sold or shared externally and is deleted automatically if your account is inactive for more than 30 days after trial expiration.
+              The Service uses artificial intelligence to generate content (text, images, suggestions, scripts, etc.). While we aim for relevance and accuracy, results may be imperfect, generic, or unsuitable for your specific use case.
+            </p>
+            <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
+              <li>Use generated content at your own discretion.</li>
+              <li>You are solely responsible for reviewing, validating, and applying any AI-generated content.</li>
+              <li>We are not liable for business losses, misuse, or damages resulting from reliance on AI output.</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">4. AI-Generated Images</h2>
+            <p className="text-gray-300 mb-4">
+              If you use image generation features:
+            </p>
+            <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
+              <li>You are responsible for the prompts and resulting content.</li>
+              <li>You must not request or use offensive, explicit, deceptive, or infringing imagery.</li>
+              <li>Generated images are for illustrative and non-commercial use unless otherwise permitted.</li>
+              <li>We reserve the right to restrict access to this feature at any time.</li>
+            </ul>
+            <p className="text-gray-300 mb-4">
+              AI-Sidekick is not responsible for the legal accuracy or usability of AI-generated visual content.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">6. Intellectual Property</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">5. Content Moderation</h2>
             <p className="text-gray-300 mb-4">
-              All content generated by the AI is yours to use for your business. The platform, models, and underlying code remain the intellectual property of AI Sidekick and its partners.
+              We use automated tools to detect and block:
+            </p>
+            <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
+              <li>Offensive or inappropriate prompts</li>
+              <li>Fraudulent or abusive behavior</li>
+              <li>Attempts to misuse the Service</li>
+            </ul>
+            <p className="text-gray-300 mb-4">
+              We may restrict or suspend accounts found in violation of these standards.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">7. Termination</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">6. Subscriptions & Billing</h2>
             <p className="text-gray-300 mb-4">
-              You may stop using the product at any time. We may suspend or terminate access at our discretion if terms are violated or for misuse of the system.
+              Some features may require a paid subscription. You agree to the pricing, billing cycle, and auto-renewal terms presented at the time of sign-up.
+            </p>
+            <p className="text-gray-300 mb-4">
+              Payments are non-refundable except where required by law.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">8. Limitation of Liability</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">7. Account Termination</h2>
             <p className="text-gray-300 mb-4">
-              We are not liable for any damages, business losses, or decisions made based on AI-generated content. The service is offered "as is" without warranties of any kind.
+              You may cancel your account or subscription at any time. We reserve the right to suspend or terminate access if you violate these Terms.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">9. Governing Law</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">8. Intellectual Property</h2>
             <p className="text-gray-300 mb-4">
-              These terms are governed by the laws of the State of Texas. Any disputes will be handled in state or federal courts located in Texas.
+              All platform code, models, logic, branding, and AI tools remain the property of AI-Sidekick or its licensors. You may not reproduce, repurpose, or redistribute any part of the platform without prior permission.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">10. Contact</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">9. Limitation of Liability</h2>
             <p className="text-gray-300 mb-4">
-              Have questions about the terms?
+              To the fullest extent allowed by law:
             </p>
-            <p className="text-gray-300">
-              Email: admin@ai-sidekick.io
+            <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
+              <li>We are not liable for indirect, incidental, or consequential damages.</li>
+              <li>Our total liability is limited to the amount you paid (if any) in the 12 months prior to a claim.</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">10. Governing Law</h2>
+            <p className="text-gray-300 mb-4">
+              These Terms are governed by the laws of the State of Texas, USA, without regard to conflict of law principles.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">11. Changes to Terms</h2>
+            <p className="text-gray-300 mb-4">
+              We may update these Terms at any time. Continued use of the Service constitutes your agreement to any new or revised terms.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">📬 Questions or Concerns?</h2>
+            <p className="text-gray-300 mb-4">
+              Contact us at legal@ai-sidekick.io with any questions related to your account, data, or these policies.
             </p>
           </section>
         </div>
