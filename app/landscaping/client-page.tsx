@@ -569,6 +569,15 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const router = useRouter()
   const [user, setUser] = useState(initialUser)
   const [showUserMenu, setShowUserMenu] = useState(false)
+  
+  // Debug: log the greeting logic
+  console.log('🎯 Greeting Debug:', {
+    isReturningUser,
+    hasConversationHistory: initialUser.hasConversationHistory,
+    firstName: initialUser.firstName,
+    initialGreeting: initialGreeting.substring(0, 50) + '...'
+  })
+  
   const [messages, setMessages] = useState<Message[]>([{
     id: 'welcome-ready',
     role: 'assistant',
