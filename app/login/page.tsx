@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Sparkles, ArrowLeft, Eye, EyeOff, LogIn } from "lucide-react"
-import { supabase } from '@/lib/supabase/client'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 function LoginForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const supabase = createClientComponentClient()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
