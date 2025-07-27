@@ -580,7 +580,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [reactions, setReactions] = useState<Record<string, string>>({})
-  const [conversationStartTime] = useState(new Date('2024-01-01'))
+  const [conversationStartTime] = useState(new Date('2025-01-01'))
   const [messageCount, setMessageCount] = useState(1)
   const [showRatingPrompt, setShowRatingPrompt] = useState(false)
   const [hasRatedConversation, setHasRatedConversation] = useState(false)

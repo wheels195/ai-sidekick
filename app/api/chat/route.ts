@@ -268,7 +268,7 @@ async function processUploadedFiles(files: any[], userMessage = ''): Promise<str
 
 // Calculate API costs based on actual usage
 function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls = 0, hasFiles = false }) {
-  // OpenAI pricing per 1M tokens (as of 2024)
+  // OpenAI pricing per 1M tokens (as of 2025)
   const pricing = {
     'gpt-4o': { input: 2.50, output: 10.00 },           // $2.50/$10.00 per 1M tokens
     'gpt-4o-mini': { input: 0.15, output: 0.60 }        // $0.15/$0.60 per 1M tokens

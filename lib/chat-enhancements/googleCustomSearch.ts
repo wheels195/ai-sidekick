@@ -99,7 +99,7 @@ export async function performCachedGoogleCustomSearch(
 function detectSearchType(query: string): string {
   const queryLower = query.toLowerCase()
   
-  if (queryLower.includes('trend') || queryLower.includes('2024') || queryLower.includes('2025') || queryLower.includes('latest')) {
+  if (queryLower.includes('trend') || queryLower.includes('2025') || queryLower.includes('2026') || queryLower.includes('latest')) {
     return 'trends'
   }
   
@@ -269,7 +269,7 @@ export function shouldTriggerWebSearch(query: string): boolean {
   // Keywords that indicate need for current/up-to-date information
   const webSearchTriggers = [
     // Time-sensitive queries
-    'latest', 'recent', 'current', 'new', 'trend', '2024', '2025', 'this year',
+    'latest', 'recent', 'current', 'new', 'trend', '2025', '2026', 'this year',
     
     // Market research queries  
     'market', 'industry report', 'statistics', 'data', 'study', 'research',
