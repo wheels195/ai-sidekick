@@ -41,6 +41,8 @@ function LoginForm() {
     // Handle OAuth callback with hash fragment
     const handleOAuthCallback = async () => {
       console.log('Checking for OAuth callback, hash:', window.location.hash)
+      console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
+      console.log('Supabase Key exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
       
       if (window.location.hash) {
         console.log('Hash fragment found, processing OAuth callback...')
