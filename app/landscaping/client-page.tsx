@@ -108,7 +108,7 @@ const BUSINESS_CATEGORIES = [
     icon: Target,
     questions: [
       "Create a unique selling proposition that sets me apart completely",
-      "How do I position myself as the premium option in my market?",
+      "How can I beat the top landscaping companies in my area?",
       "What high-margin services should I add to double my profit?",
       "Should I expand into irrigation? Pros and cons for my market",
       "What services are my competitors NOT offering that I should?"
@@ -147,7 +147,13 @@ const BUSINESS_CATEGORIES = [
 
 // Enhanced markdown-to-HTML converter with checklist support and table support
 const convertMarkdownToHtml = (markdown: string): string => {
-  const lines = markdown.split('\n')
+  // CRITICAL FIX: First, ensure all double asterisks are properly handled
+  // Replace any escaped asterisks or variations
+  let processedMarkdown = markdown
+    .replace(/\\\*/g, '*') // Replace escaped asterisks
+    .replace(/\*\s+\*/g, '**') // Fix spaced asterisks
+  
+  const lines = processedMarkdown.split('\n')
   const htmlLines = []
   let inNumberedList = false
   let inBulletList = false

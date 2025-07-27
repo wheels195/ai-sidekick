@@ -313,37 +313,42 @@ function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls
 function convertUserIntentToSearch(userMessage: string, userProfile: any): string {
   const message = userMessage.toLowerCase()
   
-  // Client acquisition requests
-  if (message.includes('get') && (message.includes('client') || message.includes('customer') || message.includes('lead'))) {
-    // Prioritize commercial vs residential based on user profile
-    if (userProfile?.target_customers?.includes('commercial') || message.includes('commercial')) {
-      return 'office buildings commercial properties'
-    }
-    return 'residential neighborhoods subdivisions'
+  // CRITICAL FIX: Market positioning and competitive analysis should ALWAYS search for landscaping competitors
+  const competitorKeywords = ['position', 'leader', 'market', 'competitor', 'competition', 'beat', 'against', 'vs', 'stand out', 'differentiate']
+  const landscapingKeywords = ['landscaping', 'lawn', 'irrigation', 'garden', 'yard', 'grass', 'tree', 'landscape']
+  
+  // Check if it's about positioning or competitors - ALWAYS return landscaping competitors
+  if (competitorKeywords.some(keyword => message.includes(keyword))) {
+    return 'landscaping companies lawn care services landscape contractors near me'
   }
   
-  // Commercial client requests - find actual businesses that need landscaping
-  if (message.includes('commercial') || message.includes('business') && (message.includes('client') || message.includes('property'))) {
-    return 'hotels restaurants retail stores office buildings medical centers shopping centers apartment complexes'
-  }
-  
-  // Competitor analysis requests  
-  if (message.includes('competitor') || message.includes('competition') || message.includes('landscaping companies')) {
+  // If message mentions landscaping-related terms, search for landscaping businesses
+  if (landscapingKeywords.some(keyword => message.includes(keyword))) {
     return 'landscaping companies lawn care services'
   }
   
-  // Supplier/vendor requests
-  if (message.includes('supplier') || message.includes('vendor') || message.includes('nursery') || message.includes('materials')) {
-    return 'nurseries garden centers landscaping supplies'
+  // Client acquisition requests - search for POTENTIAL CLIENTS not competitors
+  if (message.includes('get') && (message.includes('client') || message.includes('customer') || message.includes('lead'))) {
+    // For commercial clients, find businesses that NEED landscaping services
+    if (userProfile?.target_customers?.includes('commercial') || message.includes('commercial')) {
+      return 'office buildings hotels restaurants shopping centers medical facilities property management companies'
+    }
+    // For residential, find neighborhoods/communities
+    return 'residential neighborhoods HOA homeowners associations property developments'
   }
   
-  // Default: look for potential customers based on their services
-  if (userProfile?.services?.includes('Irrigation')) {
-    return 'office buildings retail centers residential properties'
+  // Supplier/vendor/materials requests
+  if (message.includes('supplier') || message.includes('vendor') || message.includes('nursery') || message.includes('material') || message.includes('equipment')) {
+    return 'landscaping supplies nurseries garden centers mulch stone equipment dealers'
   }
   
-  // Fallback to original query if no intent detected
-  return userMessage
+  // Networking and partnerships
+  if (message.includes('partner') || message.includes('network') || message.includes('referral')) {
+    return 'real estate agents home builders property managers general contractors'
+  }
+  
+  // Default fallback: ALWAYS search for landscaping competitors if no other clear intent
+  return 'landscaping companies lawn care services landscape contractors'
 }
 
 // Google Places API search function
