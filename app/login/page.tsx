@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Sparkles, ArrowLeft, Eye, EyeOff, LogIn } from "lucide-react"
 import { supabase } from '@/lib/supabase/client'
 
@@ -15,6 +16,7 @@ function LoginForm() {
     email: '',
     password: ''
   })
+  const [rememberMe, setRememberMe] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
@@ -25,6 +27,15 @@ function LoginForm() {
     // Check if user just verified their email
     if (searchParams.get('verified') === 'true') {
       setSuccessMessage('Email verified successfully! You can now log in.')
+    }
+
+    // Load remembered email if available
+    const rememberedEmail = localStorage.getItem('rememberedEmail')
+    const isRemembered = localStorage.getItem('rememberMe') === 'true'
+    
+    if (rememberedEmail && isRemembered) {
+      setFormData(prev => ({ ...prev, email: rememberedEmail }))
+      setRememberMe(true)
     }
 
     // Handle OAuth callback with hash fragment
@@ -119,6 +130,15 @@ function LoginForm() {
     setIsLoading(true)
 
     try {
+      // Store remember me preference
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', 'true')
+        localStorage.setItem('rememberedEmail', formData.email)
+      } else {
+        localStorage.removeItem('rememberMe')
+        localStorage.removeItem('rememberedEmail')
+      }
+
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -126,7 +146,8 @@ function LoginForm() {
         },
         body: JSON.stringify({
           email: formData.email,
-          password: formData.password
+          password: formData.password,
+          rememberMe: rememberMe
         }),
       })
 
@@ -149,6 +170,11 @@ function LoginForm() {
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true)
     setErrors({})
+
+    // Store remember me preference for OAuth flow
+    if (rememberMe) {
+      localStorage.setItem('rememberMe', 'true')
+    }
 
     try {
       console.log('Starting Google OAuth with redirect:', `${window.location.origin}/api/auth/callback?redirect=${searchParams.get('redirect') || '/landscaping'}`)
@@ -292,6 +318,7 @@ function LoginForm() {
                     onChange={handleInputChange}
                     className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25"
                     disabled={isLoading || isGoogleLoading}
+                    suppressHydrationWarning
                   />
                   {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
                 </div>
@@ -305,6 +332,7 @@ function LoginForm() {
                     onChange={handleInputChange}
                     className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/25 pr-10"
                     disabled={isLoading || isGoogleLoading}
+                    suppressHydrationWarning
                   />
                   <button
                     type="button"
@@ -314,6 +342,22 @@ function LoginForm() {
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                   {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+                </div>
+
+                {/* Remember Me Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="remember-me"
+                    checked={rememberMe}
+                    onCheckedChange={setRememberMe}
+                    className="border-white/20 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
+                  />
+                  <label 
+                    htmlFor="remember-me" 
+                    className="text-sm text-gray-300 cursor-pointer select-none"
+                  >
+                    Keep me signed in for 30 days
+                  </label>
                 </div>
 
                 {errors.submit && (

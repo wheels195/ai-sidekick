@@ -11,7 +11,7 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secr
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json()
+    const { email, password, rememberMe = false } = await request.json()
 
     if (!email || !password) {
       return NextResponse.json(
@@ -57,15 +57,17 @@ export async function POST(request: NextRequest) {
       .update({ last_login_at: new Date().toISOString() })
       .eq('id', user.id)
 
-    // Create JWT token
+    // Create JWT token with extended expiration if remember me is checked
+    const expirationTime = rememberMe ? '30d' : '7d'
     const token = await new SignJWT({ 
       userId: user.id, 
       email: user.email,
-      trade: user.trade 
+      trade: user.trade,
+      rememberMe: rememberMe
     })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setExpirationTime('7d')
+      .setExpirationTime(expirationTime)
       .sign(JWT_SECRET)
 
     // Create response with user data
@@ -81,12 +83,13 @@ export async function POST(request: NextRequest) {
       message: 'Login successful'
     })
 
-    // Set HTTP-only cookie
+    // Set HTTP-only cookie with extended expiration if remember me is checked
+    const cookieMaxAge = rememberMe ? 30 * 24 * 60 * 60 : 7 * 24 * 60 * 60 // 30 days or 7 days
     response.cookies.set('auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+      maxAge: cookieMaxAge,
       path: '/'
     })
 
