@@ -2040,7 +2040,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         {/* Footer Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)]"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto xl:max-w-none">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto xl:max-w-none relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div
               className="flex items-center space-x-3 mb-6 md:mb-0 group cursor-pointer"
@@ -2054,14 +2054,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </span>
             </div>
 
-            <div className="flex space-x-8 text-gray-300">
-              <a href="/terms" className="hover:text-white transition-all duration-300 hover:scale-105">
+            <div className="flex space-x-8 text-gray-300 relative z-10">
+              <a href="/terms" className="hover:text-white transition-all duration-300 hover:scale-105 inline-block">
                 Terms
               </a>
-              <a href="/privacy" className="hover:text-white transition-all duration-300 hover:scale-105">
+              <a href="/privacy" className="hover:text-white transition-all duration-300 hover:scale-105 inline-block">
                 Privacy
               </a>
-              <a href="/contact" className="hover:text-white transition-all duration-300 hover:scale-105">
+              <a href="/contact" className="hover:text-white transition-all duration-300 hover:scale-105 inline-block">
                 Contact
               </a>
             </div>
