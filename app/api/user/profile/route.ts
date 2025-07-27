@@ -81,6 +81,12 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const profileData = await request.json()
+    console.log('Profile creation request:', { 
+      email: profileData.email, 
+      id: profileData.id,
+      hasId: !!profileData.id,
+      fields: Object.keys(profileData)
+    })
 
     // Check if this is an admin email
     const isAdmin = profileData.email === 'admin@ai-sidekick.io'
@@ -116,9 +122,15 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('Profile creation error:', error)
+      console.error('Profile creation error:', { 
+        error, 
+        code: error.code, 
+        message: error.message, 
+        details: error.details,
+        hint: error.hint 
+      })
       return NextResponse.json(
-        { error: 'Failed to create profile' },
+        { error: 'Failed to create profile', details: error.message },
         { status: 500 }
       )
     }
