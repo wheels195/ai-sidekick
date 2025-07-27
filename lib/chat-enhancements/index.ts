@@ -13,6 +13,13 @@ export {
 } from './googlePlacesCache';
 
 export {
+  getCachedSearchResult,
+  cacheSearchResult,
+  performCachedGoogleCustomSearch,
+  shouldTriggerWebSearch
+} from './googleCustomSearch';
+
+export {
   SYSTEM_PROMPT_ENFORCEMENT_BLOCK,
   enhanceSystemPromptWithEnforcement,
   extractMessageCategory

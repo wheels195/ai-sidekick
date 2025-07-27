@@ -6,6 +6,8 @@ import { moderateUserMessage } from '@/lib/moderation'
 import {
   getImageAnalysisPrompt,
   performCachedGooglePlacesSearch,
+  performCachedGoogleCustomSearch,
+  shouldTriggerWebSearch,
   enhanceSystemPromptWithEnforcement,
   createFileContextConfirmation,
   enhanceFileContext,
@@ -580,46 +582,82 @@ export async function POST(request: NextRequest) {
     }
     
     if (currentUserMessage?.role === 'user' && webSearchEnabled) {
-      // Simple logic: Toggle ON = always search with Google Places
-      console.log('🔍 Google Places search enabled - searching for current business data')
+      // Enhanced search: Google Places for local businesses + Google Custom Search for general web data
+      console.log('🔍 Web search enabled - performing intelligent search routing')
       
       const location = userProfile?.location || userProfile?.zip_code || 'Dallas, TX'
+      let placesResults = ''
+      let webResults = ''
       
-      console.log('🔍 Performing Google Places search...', { 
-        originalQuery: currentUserMessage.content, 
+      // Check if query should trigger web search for current information
+      const needsWebSearch = shouldTriggerWebSearch(currentUserMessage.content)
+      
+      console.log('🔍 Search analysis:', { 
+        originalQuery: currentUserMessage.content,
+        needsWebSearch,
         location 
       })
       
       try {
-        // Intelligent query conversion based on user intent
+        // 1. Google Places search for local business data (existing functionality)
+        console.log('🔍 Performing Google Places search...')
         const intelligentQuery = convertUserIntentToSearch(currentUserMessage.content, userProfile)
-        console.log('🔍 Converted query:', { original: currentUserMessage.content, intelligent: intelligentQuery })
-        searchResults = await performCachedGooglePlacesSearch(intelligentQuery, location, userProfile, request)
+        console.log('🔍 Converted Places query:', { original: currentUserMessage.content, intelligent: intelligentQuery })
+        
+        placesResults = await performCachedGooglePlacesSearch(intelligentQuery, location, userProfile, request)
         console.log('🔍 Google Places search returned:', { 
-          searchResults: searchResults.substring(0, 200), 
-          length: searchResults.length,
-          hasError: searchResults.includes('error'),
-          hasNotAvailable: searchResults.includes('not available'),
-          hasNotConfigured: searchResults.includes('not configured')
+          length: placesResults.length,
+          hasError: placesResults.includes('error'),
+          hasNotAvailable: placesResults.includes('not available'),
+          hasNotConfigured: placesResults.includes('not configured')
         })
         
-        // Smart retry logic: if no results, try adjacent areas
-        if (searchResults.includes('No local businesses found') && userProfile?.zip_code && userProfile.zip_code !== 'Your ZIP') {
-          console.log('🔍 No results found, attempting smart retry with adjacent areas...')
+        // Smart retry logic for Places: if no results, try adjacent areas
+        if (placesResults.includes('No local businesses found') && userProfile?.zip_code && userProfile.zip_code !== 'Your ZIP') {
+          console.log('🔍 No Places results found, attempting smart retry with adjacent areas...')
           const adjacentLocation = `${userProfile.zip_code} surrounding areas`
           const retryResults = await performCachedGooglePlacesSearch(intelligentQuery, adjacentLocation, userProfile, request)
           if (retryResults && !retryResults.includes('No local businesses found')) {
-            searchResults = retryResults
+            placesResults = retryResults
             console.log('🔍 Smart retry successful with adjacent areas')
           }
         }
         
+        // 2. Google Custom Search for up-to-date web information (NEW)
+        if (needsWebSearch) {
+          console.log('🔍 Performing Google Custom Search for current information...')
+          webResults = await performCachedGoogleCustomSearch(currentUserMessage.content, userProfile, request)
+          console.log('🔍 Google Custom Search returned:', { 
+            length: webResults.length,
+            hasError: webResults.includes('error'),
+            hasNotAvailable: webResults.includes('not available')
+          })
+        }
+        
+        // Combine search results
+        const searchParts = []
+        if (placesResults && !['error', 'not available', 'not configured'].some(term => placesResults.includes(term))) {
+          searchParts.push(placesResults)
+        }
+        if (webResults && !['error', 'not available', 'not configured'].some(term => webResults.includes(term))) {
+          searchParts.push(webResults)
+        }
+        
+        searchResults = searchParts.join('\n\n---\n\n')
+        
+        console.log('🔍 Combined search results:', {
+          hasPlaces: !!placesResults && !placesResults.includes('error'),
+          hasWeb: !!webResults && !webResults.includes('error'),
+          totalLength: searchResults.length
+        })
+        
       } catch (searchError) {
-        console.error('❌ Google Places search failed with exception:', searchError)
+        console.error('❌ Search failed with exception:', searchError)
         console.error('❌ Search error details:', {
           message: searchError instanceof Error ? searchError.message : 'Unknown error',
           stack: searchError instanceof Error ? searchError.stack : undefined,
-          apiKey: process.env.GOOGLE_PLACES_API_KEY ? 'Present' : 'Missing',
+          placesApiKey: process.env.GOOGLE_PLACES_API_KEY ? 'Present' : 'Missing',
+          customSearchApiKey: process.env.GOOGLE_CUSTOM_SEARCH_API_KEY ? 'Present' : 'Missing',
           query: currentUserMessage.content,
           location
         })
@@ -737,10 +775,22 @@ ${vectorKnowledge.substring(0, 800)}${vectorKnowledge.length > 800 ? '...' : ''}
 
     // Add web search context (conditional based on results)
     if (webSearchEnabled && searchResults && !['error', 'not available', 'not configured'].some(term => searchResults.includes(term))) {
+      const hasPlacesData = searchResults.includes('Google Places')
+      const hasWebData = searchResults.includes('Google Custom Search') || searchResults.includes('web search results')
+      
+      let searchInstructions = '## 🌐 Live Data Available\n'
+      
+      if (hasPlacesData && hasWebData) {
+        searchInstructions += 'You have access to both local business data (Google Places) and current web information (Google Custom Search). Use the business data for specific competitive intelligence and the web data for industry trends, best practices, and current information.'
+      } else if (hasPlacesData) {
+        searchInstructions += 'Use the Google Places search results to provide specific business intelligence with real names, addresses, phone numbers, and ratings. Transform this data into actionable competitive strategies.'
+      } else if (hasWebData) {
+        searchInstructions += 'Use the current web search results to provide up-to-date information, industry trends, and best practices. Reference specific sources and dates when available.'
+      }
+      
       enhancedSystemPrompt += `
 
-## 🌐 Live Business Data Available
-Use the Google Places search results to provide specific business intelligence with real names, addresses, phone numbers, and ratings. Transform this data into actionable competitive strategies.`
+${searchInstructions}`
     } else if (webSearchEnabled) {
       enhancedSystemPrompt += `
 

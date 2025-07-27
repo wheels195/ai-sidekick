@@ -38,7 +38,8 @@
       "Bash(PORT=3001 npm run dev)",
       "Bash(cat:*)",
       "Bash(PORT=8080 npm run dev)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx supabase:*)"
     ],
     "deny": []
   }
