@@ -66,26 +66,16 @@ export default function PrivacyPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">3. AI Technology & Infrastructure</h2>
+            <h2 className="text-2xl font-semibold text-emerald-400 mb-4">3. How We Protect Your Data</h2>
             <p className="text-gray-300 mb-4">
-              We use the following services to run AI Sidekick:
+              We use industry-standard security measures to protect your information:
             </p>
-            
-            <p className="text-gray-300 mb-2">
-              <strong>OpenAI</strong> – To generate AI responses. Conversations are processed securely, and we do not allow OpenAI to use your data to train their models.
-            </p>
-            
-            <p className="text-gray-300 mb-2">
-              <strong>Google OAuth</strong> – For secure sign-in and account creation. We only access your email and name.
-            </p>
-
-            <p className="text-gray-300 mb-2">
-              <strong>Supabase</strong> – To store your business profile, chat history, and feedback securely.
-            </p>
-
-            <p className="text-gray-300 mb-4">
-              <strong>Resend</strong> – To send trial-related and system emails.
-            </p>
+            <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
+              <li>All data is encrypted in transit and at rest</li>
+              <li>We use secure authentication protocols</li>
+              <li>Your conversations are processed securely and not used for AI model training</li>
+              <li>We regularly review and update our security practices</li>
+            </ul>
           </section>
 
           <section className="mb-8">
