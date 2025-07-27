@@ -41,58 +41,50 @@ function LoginForm() {
     // Handle OAuth callback with hash fragment
     const handleOAuthCallback = async () => {
       console.log('Checking for OAuth callback, hash:', window.location.hash)
-      console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
-      console.log('Supabase Key exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
       
       if (window.location.hash) {
         console.log('Hash fragment found, processing OAuth callback...')
         
         try {
-          // Parse the hash fragment for access_token
-          const hashParams = new URLSearchParams(window.location.hash.substring(1))
-          const accessToken = hashParams.get('access_token')
-          const refreshToken = hashParams.get('refresh_token')
+          // Let Supabase handle the OAuth callback automatically
+          const { data, error } = await supabase.auth.getSession()
           
-          console.log('Found tokens:', { accessToken: !!accessToken, refreshToken: !!refreshToken })
+          console.log('Get session result:', data, 'Error:', error)
           
-          if (accessToken) {
-            // Set the session manually
-            const { data, error } = await supabase.auth.setSession({
-              access_token: accessToken,
-              refresh_token: refreshToken || ''
-            })
+          if (data.session && !error) {
+            console.log('User authenticated:', data.session.user.email)
             
-            console.log('Set session result:', data, 'Error:', error)
+            // Clear the hash from URL
+            window.history.replaceState({}, document.title, window.location.pathname)
             
-            if (data.session && !error) {
-              console.log('User authenticated:', data.session.user.email)
-              
-              // Clear the hash from URL
-              window.history.replaceState({}, document.title, window.location.pathname)
-              
-              // User is authenticated, check if they have a profile
-              const { data: profile, error: profileError } = await supabase
-                .from('user_profiles')
-                .select('*')
-                .eq('id', data.session.user.id)
-                .single()
+            // User is authenticated, check if they have a profile
+            const { data: profile, error: profileError } = await supabase
+              .from('user_profiles')
+              .select('*')
+              .eq('id', data.session.user.id)
+              .single()
 
-              console.log('Profile check:', { profile, profileError })
+            console.log('Profile check:', { profile, profileError })
 
-              if (!profile) {
-                console.log('No profile found, redirecting to profile completion')
-                // New user - redirect to profile completion
-                router.push(`/signup/complete?email=${data.session.user.email}`)
-              } else {
-                console.log('Profile found, redirecting to chat')
-                // Existing user - redirect to chat
-                router.push('/landscaping')
-              }
+            if (!profile) {
+              console.log('No profile found, redirecting to profile completion')
+              // New user - redirect to profile completion
+              router.push(`/signup/complete?email=${data.session.user.email}`)
             } else {
-              console.log('Set session error:', error)
+              console.log('Profile found, redirecting to chat')
+              // Existing user - redirect to chat
+              router.push('/landscaping')
             }
           } else {
-            console.log('No access token found in hash')
+            console.log('No session found or error:', error)
+            // If no session, try to refresh the page once to let Supabase auto-handle
+            if (!localStorage.getItem('oauth_retry')) {
+              localStorage.setItem('oauth_retry', 'true')
+              window.location.reload()
+            } else {
+              localStorage.removeItem('oauth_retry')
+              console.log('OAuth callback failed after retry')
+            }
           }
         } catch (err) {
           console.error('OAuth callback processing error:', err)
