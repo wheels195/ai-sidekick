@@ -101,8 +101,6 @@ export async function POST(request: NextRequest) {
         last_name: profileData.last_name,
         business_name: profileData.business_name,
         location: `${profileData.city}, ${profileData.state}`,
-        city: profileData.city,
-        state: profileData.state,
         zip_code: profileData.zip_code,
         trade: profileData.trade,
         selected_plan: isAdmin ? 'Admin' : 'Free Trial',
