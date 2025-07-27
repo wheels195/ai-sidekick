@@ -42,48 +42,40 @@ function LoginForm() {
     const handleOAuthCallback = async () => {
       console.log('Checking for OAuth callback, hash:', window.location.hash)
       
-      if (window.location.hash) {
+      if (window.location.hash && window.location.hash.includes('access_token')) {
         console.log('Hash fragment found, processing OAuth callback...')
         
         try {
-          // Let Supabase handle the OAuth callback automatically
-          const { data, error } = await supabase.auth.getSession()
+          // Parse the hash fragment manually to extract user info
+          const hashParams = new URLSearchParams(window.location.hash.substring(1))
+          const accessToken = hashParams.get('access_token')
           
-          console.log('Get session result:', data, 'Error:', error)
-          
-          if (data.session && !error) {
-            console.log('User authenticated:', data.session.user.email)
+          if (accessToken) {
+            // Decode the JWT to get user info
+            const tokenParts = accessToken.split('.')
+            const payload = JSON.parse(atob(tokenParts[1]))
+            console.log('Token payload:', payload)
             
             // Clear the hash from URL
             window.history.replaceState({}, document.title, window.location.pathname)
             
-            // User is authenticated, check if they have a profile
+            // Check if user has a profile using the email from the token
             const { data: profile, error: profileError } = await supabase
               .from('user_profiles')
               .select('*')
-              .eq('id', data.session.user.id)
+              .eq('email', payload.email)
               .single()
 
             console.log('Profile check:', { profile, profileError })
 
-            if (!profile) {
+            if (!profile || profileError) {
               console.log('No profile found, redirecting to profile completion')
               // New user - redirect to profile completion
-              router.push(`/signup/complete?email=${data.session.user.email}`)
+              router.push(`/signup/complete?email=${payload.email}`)
             } else {
               console.log('Profile found, redirecting to chat')
               // Existing user - redirect to chat
               router.push('/landscaping')
-            }
-          } else {
-            console.log('No session found or error:', error)
-            // If no session, try to refresh the page once to let Supabase auto-handle
-            if (!localStorage.getItem('oauth_retry')) {
-              localStorage.setItem('oauth_retry', 'true')
-              window.location.reload()
-            } else {
-              localStorage.removeItem('oauth_retry')
-              console.log('OAuth callback failed after retry')
             }
           }
         } catch (err) {
