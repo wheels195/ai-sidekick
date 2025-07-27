@@ -765,6 +765,48 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [tokensUsedTrial, setTokensUsedTrial] = useState(initialUser.tokensUsedTrial)
   const [trialTokenLimit, setTrialTokenLimit] = useState(initialUser.trialTokenLimit)
 
+  // Load conversation history for returning users
+  useEffect(() => {
+    const loadConversationHistory = async () => {
+      if (isReturningUser && user) {
+        try {
+          const response = await fetch('/api/conversations?limit=20')
+          if (response.ok) {
+            const data = await response.json()
+            
+            // Get the most recent conversation session
+            if (data.sessions && data.sessions.length > 0) {
+              const latestSession = data.sessions[0]
+              
+              // Convert to the format expected by the frontend
+              const historyMessages: Message[] = latestSession.messages.map((msg: any) => ({
+                id: msg.id,
+                role: msg.role,
+                content: msg.content,
+                timestamp: new Date(msg.timestamp),
+                modelUsed: msg.modelUsed
+              }))
+              
+              // Only load if there are actual messages (not just the welcome message)
+              if (historyMessages.length > 0) {
+                // Keep the initial greeting and add history
+                setMessages(prevMessages => [
+                  prevMessages[0], // Keep the welcome message
+                  ...historyMessages
+                ])
+              }
+            }
+          }
+        } catch (error) {
+          console.log('Could not load conversation history:', error)
+          // Silently continue - no need to show error to user
+        }
+      }
+    }
+    
+    loadConversationHistory()
+  }, [isReturningUser, user])
+
   // Set hasMounted to prevent hydration mismatches
   useEffect(() => {
     setHasMounted(true)
