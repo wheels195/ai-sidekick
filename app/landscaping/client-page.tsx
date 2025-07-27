@@ -1942,22 +1942,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </Button>
               )}
 
-              {/* Token Usage Meter - Desktop Only */}
-              {user && (
-                <div className="hidden md:flex items-center space-x-2 bg-blue-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-3 py-2">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 bg-gray-700 rounded-full h-1.5 overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-300"
-                        style={{ width: `${Math.min((tokensUsedTrial / trialTokenLimit) * 100, 100)}%` }}
-                      />
-                    </div>
-                    <span className="text-blue-300 text-xs font-medium min-w-fit">
-                      {(tokensUsedTrial / 1000).toFixed(0)}k / {(trialTokenLimit / 1000)}k
-                    </span>
-                  </div>
-                </div>
-              )}
 
               {/* Enhanced User Profile Dropdown - All Screen Sizes */}
               {user && (
@@ -1982,19 +1966,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         <p className="text-sm text-white typography-heading truncate">{user?.businessName || 'Test User Business'}</p>
                         <p className="text-xs text-gray-400 truncate">{user?.email || 'test@example.com'}</p>
                         
-                        {/* Mobile Token Usage */}
-                        <div className="md:hidden mt-3 pt-3 border-t border-gray-600/30">
-                          <div className="flex items-center justify-between text-xs text-blue-300 mb-2">
-                            <span>Trial Usage</span>
-                            <span>{(tokensUsedTrial / 1000).toFixed(0)}k / {(trialTokenLimit / 1000)}k</span>
-                          </div>
-                          <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
-                            <div 
-                              className="h-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-300"
-                              style={{ width: `${Math.min((tokensUsedTrial / trialTokenLimit) * 100, 100)}%` }}
-                            />
-                          </div>
-                        </div>
                       </div>
                       
                       {/* Chat Actions */}
