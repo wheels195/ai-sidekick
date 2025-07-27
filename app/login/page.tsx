@@ -26,7 +26,69 @@ function LoginForm() {
     if (searchParams.get('verified') === 'true') {
       setSuccessMessage('Email verified successfully! You can now log in.')
     }
-  }, [searchParams])
+
+    // Handle OAuth callback with hash fragment
+    const handleOAuthCallback = async () => {
+      console.log('Checking for OAuth callback, hash:', window.location.hash)
+      
+      if (window.location.hash) {
+        console.log('Hash fragment found, processing OAuth callback...')
+        
+        try {
+          // Parse the hash fragment for access_token
+          const hashParams = new URLSearchParams(window.location.hash.substring(1))
+          const accessToken = hashParams.get('access_token')
+          const refreshToken = hashParams.get('refresh_token')
+          
+          console.log('Found tokens:', { accessToken: !!accessToken, refreshToken: !!refreshToken })
+          
+          if (accessToken) {
+            // Set the session manually
+            const { data, error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken || ''
+            })
+            
+            console.log('Set session result:', data, 'Error:', error)
+            
+            if (data.session && !error) {
+              console.log('User authenticated:', data.session.user.email)
+              
+              // Clear the hash from URL
+              window.history.replaceState({}, document.title, window.location.pathname)
+              
+              // User is authenticated, check if they have a profile
+              const { data: profile, error: profileError } = await supabase
+                .from('user_profiles')
+                .select('*')
+                .eq('id', data.session.user.id)
+                .single()
+
+              console.log('Profile check:', { profile, profileError })
+
+              if (!profile) {
+                console.log('No profile found, redirecting to profile completion')
+                // New user - redirect to profile completion
+                router.push(`/signup/complete?email=${data.session.user.email}`)
+              } else {
+                console.log('Profile found, redirecting to chat')
+                // Existing user - redirect to chat
+                router.push('/landscaping')
+              }
+            } else {
+              console.log('Set session error:', error)
+            }
+          } else {
+            console.log('No access token found in hash')
+          }
+        } catch (err) {
+          console.error('OAuth callback processing error:', err)
+        }
+      }
+    }
+
+    handleOAuthCallback()
+  }, [searchParams, router])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -94,7 +156,7 @@ function LoginForm() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/api/auth/callback?redirect=${searchParams.get('redirect') || '/landscaping'}`
+          redirectTo: `${window.location.origin}/login`
         }
       })
 

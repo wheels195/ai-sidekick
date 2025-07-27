@@ -77,6 +77,77 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function POST(request: NextRequest) {
+  try {
+    const profileData = await request.json()
+
+    // Create a new user profile (OAuth users)
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .insert({
+        id: profileData.id,
+        email: profileData.email,
+        first_name: profileData.first_name,
+        last_name: profileData.last_name,
+        business_name: profileData.business_name,
+        location: `${profileData.city}, ${profileData.state}`,
+        city: profileData.city,
+        state: profileData.state,
+        zip_code: profileData.zip_code,
+        trade: profileData.trade,
+        selected_plan: 'Free Trial', // Auto-assigned
+        services: profileData.services,
+        team_size: profileData.team_size,
+        target_customers: profileData.target_customers,
+        years_in_business: profileData.years_in_business,
+        business_priorities: profileData.business_priorities,
+        trial_started_at: new Date().toISOString(),
+        trial_expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
+        trial_token_limit: 250000,
+        tokens_used_trial: 0,
+        created_at: new Date().toISOString()
+      })
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Profile creation error:', error)
+      return NextResponse.json(
+        { error: 'Failed to create profile' },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      user: {
+        id: data.id,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        businessName: data.business_name,
+        trade: data.trade,
+        selectedPlan: data.selected_plan,
+        location: data.location,
+        zipCode: data.zip_code,
+        services: data.services || [],
+        teamSize: data.team_size,
+        targetCustomers: data.target_customers,
+        yearsInBusiness: data.years_in_business,
+        businessPriorities: data.business_priorities || []
+      },
+      message: 'Profile created successfully'
+    })
+
+  } catch (error) {
+    console.error('Profile creation error:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+
 export async function PUT(request: NextRequest) {
   try {
     const user = await getUser(request)

@@ -10,16 +10,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { supabase } from '@/lib/supabase/client'
 
-// Multi-Select Dropdown Component (same as signup page)
+// Multi-Select Dropdown Component
 interface MultiSelectProps {
   options: string[]
   value: string[]
   onChange: (value: string[]) => void
   placeholder: string
   disabled?: boolean
+  openUpward?: boolean
 }
 
-function MultiSelect({ options, value, onChange, placeholder, disabled }: MultiSelectProps) {
+function MultiSelect({ options, value, onChange, placeholder, disabled, openUpward = false }: MultiSelectProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -79,7 +80,7 @@ function MultiSelect({ options, value, onChange, placeholder, disabled }: MultiS
       </div>
       
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-gray-800 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-y-auto">
+        <div className={`absolute z-50 w-full ${openUpward ? 'bottom-full mb-1' : 'top-full mt-1'} bg-gray-800 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-y-auto`}>
           {options.map((option) => (
             <div
               key={option}
@@ -102,6 +103,106 @@ function MultiSelect({ options, value, onChange, placeholder, disabled }: MultiS
   )
 }
 
+// Grouped Multi-Select Component
+interface GroupedMultiSelectProps {
+  groups: Record<string, string[]>
+  value: string[]
+  onChange: (value: string[]) => void
+  placeholder: string
+  disabled?: boolean
+  openUpward?: boolean
+}
+
+function GroupedMultiSelect({ groups, value, onChange, placeholder, disabled, openUpward = false }: GroupedMultiSelectProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (!target.closest('.multi-select-container')) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
+
+  const handleToggleOption = (option: string) => {
+    if (value.includes(option)) {
+      onChange(value.filter(v => v !== option))
+    } else {
+      onChange([...value, option])
+    }
+  }
+
+  const handleRemoveOption = (option: string) => {
+    onChange(value.filter(v => v !== option))
+  }
+
+  return (
+    <div className="relative multi-select-container">
+      <div
+        className="bg-white/5 border border-white/20 text-emerald-300 focus:border-emerald-500/50 hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all duration-300 rounded-md px-3 py-2 cursor-pointer flex items-center justify-between min-h-10"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+      >
+        <div className="flex flex-wrap gap-1 flex-1">
+          {value.length === 0 ? (
+            <span className="text-gray-400">{placeholder}</span>
+          ) : (
+            value.map((item) => (
+              <span
+                key={item}
+                className="bg-emerald-500/20 text-emerald-200 px-2 py-1 rounded text-xs flex items-center gap-1"
+              >
+                {item}
+                <X
+                  className="w-3 h-3 cursor-pointer hover:text-white"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleRemoveOption(item)
+                  }}
+                />
+              </span>
+            ))
+          )}
+        </div>
+        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </div>
+      
+      {isOpen && (
+        <div className={`absolute z-50 w-full ${openUpward ? 'bottom-full mb-1' : 'top-full mt-1'} bg-gray-800 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-y-auto`}>
+          {Object.entries(groups).map(([groupName, options]) => (
+            <div key={groupName}>
+              <div className="px-3 py-2 bg-gray-700 text-emerald-300 font-semibold text-sm border-b border-gray-600">
+                {groupName}
+              </div>
+              {options.map((option) => (
+                <div
+                  key={option}
+                  className={`px-3 py-2 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                    value.includes(option)
+                      ? 'bg-emerald-700 text-emerald-200'
+                      : 'text-white hover:bg-emerald-700 hover:text-emerald-200'
+                  }`}
+                  onClick={() => handleToggleOption(option)}
+                >
+                  <span>{option}</span>
+                  {value.includes(option) && (
+                    <CheckCircle className="w-4 h-4 text-emerald-200" />
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // States array
 const states = [
   "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -111,35 +212,71 @@ const states = [
   "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
 ]
 
-// Services options for landscaping
+// Services options for landscaping (alphabetical order)
 const landscapingServices = [
-  "Lawn Mowing & Maintenance",
-  "Landscape Design",
-  "Tree & Shrub Care",
-  "Irrigation Installation",
-  "Hardscaping",
-  "Snow Removal",
-  "Garden Design",
-  "Fertilization Programs",
-  "Pest Control",
-  "Outdoor Lighting",
+  "Commercial Maintenance",
   "Drainage Solutions",
-  "Sod Installation",
+  "Fertilization Programs",
+  "Garden Design",
+  "Hardscaping",
+  "Irrigation Installation",
+  "Landscape Design",
+  "Lawn Mowing & Maintenance",
   "Mulching Services",
+  "Outdoor Lighting",
+  "Pest Control",
   "Seasonal Cleanups",
-  "Commercial Maintenance"
+  "Snow Removal",
+  "Sod Installation",
+  "Tree & Shrub Care"
 ]
 
-// Business priorities options
+// Business priorities options (grouped with headers)
+const businessPriorityGroups = {
+  "Operations": [
+    "Charge the right price",
+    "Hire and keep good workers", 
+    "Improve cash flow",
+    "Keep customers happy",
+    "Make money year-round",
+    "Prepare for slow season",
+    "Reduce no-shows & cancellations",
+    "Run jobs efficiently",
+    "Stay better organized"
+  ],
+  "Marketing & Growth": [
+    "Build brand & stand out from competitors",
+    "Create local content & blogs",
+    "Get more clients",
+    "Get more reviews", 
+    "Post before/after photos",
+    "Run local ads",
+    "Show up on Google",
+    "Target nearby neighborhoods",
+    "Upsell more services"
+  ]
+}
+
+// Flattened list for the current MultiSelect component (alphabetical)
 const businessPriorities = [
-  "Get More Customers",
-  "Increase Prices",
-  "Improve Operations",
-  "Expand Service Area",
-  "Add New Services",
-  "Hire & Train Staff",
-  "Build Online Presence",
-  "Improve Customer Service"
+  "Build brand & stand out from competitors",
+  "Charge the right price", 
+  "Create local content & blogs",
+  "Get more clients",
+  "Get more reviews",
+  "Hire and keep good workers",
+  "Improve cash flow",
+  "Keep customers happy",
+  "Make money year-round",
+  "Post before/after photos",
+  "Prepare for slow season",
+  "Reduce no-shows & cancellations",
+  "Run jobs efficiently",
+  "Run local ads",
+  "Show up on Google",
+  "Stay better organized",
+  "Target nearby neighborhoods",
+  "Upsell more services"
 ]
 
 function ProfileCompletionForm() {
@@ -310,10 +447,40 @@ function ProfileCompletionForm() {
               <CardTitle className="text-xl text-white text-center">Business Information</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
+              {/* Auto-Selected Plan & Trade */}
+              <div className="space-y-4 mb-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Your Plan & Specialization</h3>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Plan Selection */}
+                  <div className="border border-emerald-500 bg-emerald-500/10 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-emerald-300 font-semibold">Free Trial</h4>
+                        <p className="text-gray-300 text-sm">7 days full access</p>
+                      </div>
+                      <CheckCircle className="w-6 h-6 text-emerald-400" />
+                    </div>
+                  </div>
+                  
+                  {/* Trade Selection */}
+                  <div className="border border-emerald-500 bg-emerald-500/10 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-emerald-300 font-semibold">Landscaping AI</h4>
+                        <p className="text-gray-300 text-sm">Specialized for your trade</p>
+                      </div>
+                      <CheckCircle className="w-6 h-6 text-emerald-400" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Personal Info */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
+                    <label className="text-white text-sm font-medium mb-2 block">First Name <span className="text-red-400">*</span></label>
                     <Input
                       type="text"
                       name="firstName"
@@ -322,10 +489,13 @@ function ProfileCompletionForm() {
                       onChange={handleInputChange}
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50"
                       disabled={isLoading}
+                      required
+                      suppressHydrationWarning
                     />
                     {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
                   </div>
                   <div>
+                    <label className="text-white text-sm font-medium mb-2 block">Last Name <span className="text-red-400">*</span></label>
                     <Input
                       type="text"
                       name="lastName"
@@ -334,6 +504,8 @@ function ProfileCompletionForm() {
                       onChange={handleInputChange}
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50"
                       disabled={isLoading}
+                      required
+                      suppressHydrationWarning
                     />
                     {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
                   </div>
@@ -341,6 +513,7 @@ function ProfileCompletionForm() {
 
                 {/* Business Info */}
                 <div>
+                  <label className="text-white text-sm font-medium mb-2 block">Business Name <span className="text-red-400">*</span></label>
                   <Input
                     type="text"
                     name="businessName"
@@ -349,13 +522,16 @@ function ProfileCompletionForm() {
                     onChange={handleInputChange}
                     className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50"
                     disabled={isLoading}
+                    required
+                    suppressHydrationWarning
                   />
                   {errors.businessName && <p className="text-red-400 text-sm mt-1">{errors.businessName}</p>}
                 </div>
 
                 {/* Location */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
+                    <label className="text-white text-sm font-medium mb-2 block">City <span className="text-red-400">*</span></label>
                     <Input
                       type="text"
                       name="city"
@@ -364,10 +540,13 @@ function ProfileCompletionForm() {
                       onChange={handleInputChange}
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50"
                       disabled={isLoading}
+                      required
+                      suppressHydrationWarning
                     />
                     {errors.city && <p className="text-red-400 text-sm mt-1">{errors.city}</p>}
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-white text-sm font-medium mb-2 block">State <span className="text-red-400">*</span></label>
                     <Select 
                       value={formData.state} 
                       onValueChange={(value) => setFormData(prev => ({ ...prev, state: value }))}
@@ -384,8 +563,10 @@ function ProfileCompletionForm() {
                         ))}
                       </SelectContent>
                     </Select>
-                    {errors.state && <p className="text-red-400 text-sm mt-1 col-span-2">{errors.state}</p>}
-                    
+                    {errors.state && <p className="text-red-400 text-sm mt-1">{errors.state}</p>}
+                  </div>
+                  <div>
+                    <label className="text-white text-sm font-medium mb-2 block">ZIP Code <span className="text-red-400">*</span></label>
                     <Input
                       type="text"
                       name="zipCode"
@@ -394,14 +575,16 @@ function ProfileCompletionForm() {
                       onChange={handleInputChange}
                       className="bg-white/5 border-white/20 text-white placeholder-gray-400 focus:border-emerald-500/50"
                       disabled={isLoading}
+                      required
+                      suppressHydrationWarning
                     />
+                    {errors.zipCode && <p className="text-red-400 text-sm mt-1">{errors.zipCode}</p>}
                   </div>
                 </div>
-                {errors.zipCode && <p className="text-red-400 text-sm mt-1">{errors.zipCode}</p>}
 
                 {/* Services */}
                 <div>
-                  <label className="text-white text-sm font-medium mb-2 block">Services You Offer</label>
+                  <label className="text-white text-sm font-medium mb-2 block">Services You Offer <span className="text-red-400">*</span></label>
                   <MultiSelect
                     options={landscapingServices}
                     value={formData.services}
@@ -414,7 +597,7 @@ function ProfileCompletionForm() {
 
                 {/* Team Size */}
                 <div>
-                  <label className="text-white text-sm font-medium mb-2 block">Team Size</label>
+                  <label className="text-white text-sm font-medium mb-2 block">Team Size <span className="text-red-400">*</span></label>
                   <Select 
                     value={formData.teamSize} 
                     onValueChange={(value) => setFormData(prev => ({ ...prev, teamSize: value }))}
@@ -436,7 +619,7 @@ function ProfileCompletionForm() {
 
                 {/* Target Customers */}
                 <div>
-                  <label className="text-white text-sm font-medium mb-2 block">Target Customers</label>
+                  <label className="text-white text-sm font-medium mb-2 block">Target Customers <span className="text-red-400">*</span></label>
                   <Select 
                     value={formData.targetCustomers} 
                     onValueChange={(value) => setFormData(prev => ({ ...prev, targetCustomers: value }))}
@@ -456,7 +639,7 @@ function ProfileCompletionForm() {
 
                 {/* Years in Business */}
                 <div>
-                  <label className="text-white text-sm font-medium mb-2 block">Years in Business</label>
+                  <label className="text-white text-sm font-medium mb-2 block">Years in Business <span className="text-red-400">*</span></label>
                   <Select 
                     value={formData.yearsInBusiness} 
                     onValueChange={(value) => setFormData(prev => ({ ...prev, yearsInBusiness: value }))}
@@ -478,13 +661,14 @@ function ProfileCompletionForm() {
 
                 {/* Business Priorities */}
                 <div>
-                  <label className="text-white text-sm font-medium mb-2 block">Business Priorities</label>
-                  <MultiSelect
-                    options={businessPriorities}
+                  <label className="text-white text-sm font-medium mb-2 block">Business Priorities <span className="text-red-400">*</span></label>
+                  <GroupedMultiSelect
+                    groups={businessPriorityGroups}
                     value={formData.businessPriorities}
                     onChange={(value) => setFormData(prev => ({ ...prev, businessPriorities: value }))}
                     placeholder="Select your top priorities"
                     disabled={isLoading}
+                    openUpward={true}
                   />
                   {errors.businessPriorities && <p className="text-red-400 text-sm mt-1">{errors.businessPriorities}</p>}
                 </div>
