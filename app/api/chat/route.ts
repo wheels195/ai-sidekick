@@ -572,21 +572,10 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // If no authenticated user, use mock profile for testing
+    // Require authenticated user
     if (!userProfile) {
-      console.log('No authenticated user, using mock test profile for web search context')
-      userProfile = {
-        business_name: "Demo Landscaping Business",
-        location: 'Dallas, TX',
-        zip_code: '75201',
-        trade: 'landscaping',
-        services: ['Lawn Care', 'Tree Trimming', 'Garden Design', 'Irrigation'],
-        team_size: 3,
-        target_customers: 'residential homeowners',
-        years_in_business: 5,
-        business_priorities: ['Generate more qualified leads', 'Improve customer retention'],
-        is_demo_profile: true
-      }
+      console.log('No authenticated user found - authentication required')
+      return new Response('Authentication required', { status: 401 })
     }
 
     // Handle file processing if files are uploaded
@@ -818,28 +807,13 @@ Your output should feel like it was written just for them — because it was.
 
 ## 🚫 Do Not
 - Repeat the user's profile back to them  
-  (e.g. Don't say "You have a 4-person crew in 75201" — they already know that)  
+  (e.g. Don't say "You have a 4-person crew in your area" — they already know that)  
 - Use fake company names or general market advice  
 - Recommend services they don't offer  
 - Ignore their ZIP when giving local strategies${userName ? ` Address the user as ${userProfile.first_name} when appropriate.` : ''}`
     }
 
-    // Add test data disclaimer for demo profiles
-    if (userProfile?.is_demo_profile) {
-      enhancedSystemPrompt += `\n\n## ⚠️ DEMO MODE ACTIVE
-      
-**IMPORTANT:** You are currently responding to a demo user with placeholder business data. 
-
-**Demo Guidelines:**
-- Use realistic but generic examples 
-- Avoid specific location references like "Dallas" or "75201"
-- Use placeholder language: "your area," "your ZIP code," "your market"
-- Focus on universal strategies that work in any location
-- Include a note that real users get personalized, ZIP-specific advice
-
-**At the end of responses, add:**
-"*This is a demo response with generic examples. Real users receive personalized advice based on their actual business location, services, and profile data.*"`
-    }
+    // Demo mode removed - all users now have real authenticated profiles
 
     // Add vector knowledge to system prompt (preserve markdown formatting)
     if (vectorKnowledge) {
@@ -888,8 +862,11 @@ For this conversation, focus on general business strategy and expertise.
 
 "💡 **Want live competitor data?** Turn on **Web Search** in the chat controls below to get real ratings, reviews, phone numbers, and current business information for landscaping companies in your area. This will give you much more accurate competitive analysis!"
 
-Then provide SPECIFIC, ACTIONABLE competitive strategies based on common Dallas landscaping market patterns. Use concrete examples, real pricing insights, and tactical advice. Avoid generic lists - give professional business intelligence.`;
+Then provide SPECIFIC, ACTIONABLE competitive strategies based on common landscaping market patterns in their region. Use concrete examples, real pricing insights, and tactical advice. Avoid generic lists - give professional business intelligence.`;
     }
+
+    // Replace business name placeholder in system prompt
+    enhancedSystemPrompt = enhancedSystemPrompt.replace(/\{businessName\}/g, userProfile.business_name || 'Your Business')
 
     // Prepare messages with enhanced system prompt and message trimming for cost optimization
     const systemMessage = {
@@ -1033,7 +1010,7 @@ For single business results, use the standard format:
 **STRATEGIC ANALYSIS REQUIREMENTS:**
 After the table, provide a comprehensive competitive analysis with emerald green numbered formatting:
 
-### Strategic Insights for Johnson's Landscaping
+### Strategic Insights for {businessName}
 
 <span style="color: #34d399; font-weight: 600;">1. Market Gaps:</span> Identify 2-3 specific services missing from actual competitors analyzed
 <span style="color: #34d399; font-weight: 600;">2. Pricing Opportunities:</span> Analyze actual price points and suggest competitive positioning  
