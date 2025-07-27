@@ -802,10 +802,31 @@ ${searchInstructions}`
 ## 🌐 Search Enabled - No Results
 Provide expert advice based on your training. Do not mention the failed search attempt.`
     } else {
-      enhancedSystemPrompt += `
+      // Check if this query would benefit from web search
+      const wouldBenefitFromWebSearch = currentUserMessage?.role === 'user' && shouldTriggerWebSearch(currentUserMessage.content)
+      
+      if (wouldBenefitFromWebSearch) {
+        enhancedSystemPrompt += `
+
+## 🌐 Web Search Suggestion
+The user's query would greatly benefit from current web data. Analyze their query and provide a specific suggestion:
+
+For trend/market queries: "Great question! For the most current 2025 landscaping trends and market data, I recommend enabling Web Search. This will give me access to latest industry reports, current equipment prices, and recent market studies."
+
+For equipment/technology queries: "For the most up-to-date equipment prices and technology reviews, enabling Web Search would give me access to current dealer pricing, recent product launches, and expert reviews from industry publications."
+
+For regulation/business queries: "To get you the most current regulations and business requirements, Web Search would help me find the latest legal updates, permit requirements, and compliance guidelines in your area."
+
+For pricing/rate queries: "For current market rates and pricing data, Web Search would give me access to 2025 industry surveys, regional pricing studies, and current market analysis."
+
+Then provide your best answer from training data and end with: "Enable Web Search for the most current information!"`
+      } else {
+        enhancedSystemPrompt += `
 
 ## 🌐 Search Disabled  
-If user asks about competitors, suggest enabling Web Search for live business data.`
+If user asks about competitors or local businesses, suggest enabling Web Search for live data.
+For other queries, provide comprehensive answers from your training.`
+      }
     }
 
     // Replace business name placeholder in system prompt
