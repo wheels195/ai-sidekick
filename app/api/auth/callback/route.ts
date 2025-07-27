@@ -6,18 +6,24 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const redirect = requestUrl.searchParams.get('redirect') || '/landscaping'
 
+  console.log('OAuth callback received:', { code: !!code, redirect })
+
   if (code) {
     const { supabase } = createClient(request)
     
     const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code)
     
+    console.log('OAuth exchange result:', { hasSession: !!session, error: error?.message })
+    
     if (!error && session) {
       // Check if user has a profile
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('id', session.user.id)
         .single()
+
+      console.log('Profile check:', { hasProfile: !!profile, profileError: profileError?.message })
 
       // If no profile exists, redirect to profile completion
       if (!profile) {
@@ -30,5 +36,6 @@ export async function GET(request: NextRequest) {
   }
 
   // Return to login with error
+  console.log('OAuth callback failed, redirecting to login')
   return NextResponse.redirect(new URL('/login?error=auth_failed', requestUrl.origin))
 }

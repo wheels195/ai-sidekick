@@ -89,18 +89,24 @@ function LoginForm() {
     setErrors({})
 
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      console.log('Starting Google OAuth with redirect:', `${window.location.origin}/api/auth/callback?redirect=${searchParams.get('redirect') || '/landscaping'}`)
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/api/auth/callback?redirect=${searchParams.get('redirect') || '/landscaping'}`
         }
       })
 
+      console.log('OAuth response:', { data, error })
+
       if (error) {
+        console.error('OAuth error:', error)
         setErrors({ submit: error.message })
         setIsGoogleLoading(false)
       }
     } catch (error) {
+      console.error('OAuth catch error:', error)
       setErrors({ submit: 'Failed to sign in with Google' })
       setIsGoogleLoading(false)
     }
