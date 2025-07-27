@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Fetch user profile from database
     const { data: profile, error } = await supabase
       .from('user_profiles')
-      .select('id, first_name, last_name, email, business_name, trade, selected_plan, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
+      .select('id, first_name, last_name, email, business_name, trade, selected_plan, user_role, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
       .eq('id', user.userId)
       .single()
 
@@ -50,6 +50,7 @@ export async function GET(request: NextRequest) {
         businessName: profile.business_name,
         trade: profile.trade,
         selectedPlan: profile.selected_plan,
+        userRole: profile.user_role,
         createdAt: profile.created_at,
         location: profile.location,
         zipCode: profile.zip_code,
@@ -60,7 +61,7 @@ export async function GET(request: NextRequest) {
         businessPriorities: profile.business_priorities || [],
         // Trial token information
         tokensUsedTrial: profile.tokens_used_trial || 0,
-        trialTokenLimit: profile.trial_token_limit || 250000,
+        trialTokenLimit: profile.trial_token_limit,
         trialStartedAt: profile.trial_started_at,
         trialExpiresAt: profile.trial_expires_at,
         // Conversation history for welcome message logic
@@ -81,6 +82,9 @@ export async function POST(request: NextRequest) {
   try {
     const profileData = await request.json()
 
+    // Check if this is an admin email
+    const isAdmin = profileData.email === 'admin@ai-sidekick.io'
+    
     // Create a new user profile (OAuth users)
     const { data, error } = await supabase
       .from('user_profiles')
@@ -95,15 +99,16 @@ export async function POST(request: NextRequest) {
         state: profileData.state,
         zip_code: profileData.zip_code,
         trade: profileData.trade,
-        selected_plan: 'Free Trial', // Auto-assigned
+        selected_plan: isAdmin ? 'Admin' : 'Free Trial',
+        user_role: isAdmin ? 'admin' : 'user',
         services: profileData.services,
         team_size: profileData.team_size,
         target_customers: profileData.target_customers,
         years_in_business: profileData.years_in_business,
         business_priorities: profileData.business_priorities,
         trial_started_at: new Date().toISOString(),
-        trial_expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
-        trial_token_limit: 250000,
+        trial_expires_at: isAdmin ? null : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        trial_token_limit: isAdmin ? null : 250000,
         tokens_used_trial: 0,
         created_at: new Date().toISOString()
       })

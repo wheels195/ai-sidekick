@@ -535,8 +535,8 @@ export async function POST(request: NextRequest) {
             .single()
           userProfile = profile
           
-          // Check trial limits for authenticated users
-          if (profile) {
+          // Check trial limits for authenticated users (skip for admin)
+          if (profile && profile.user_role !== 'admin') {
             const now = new Date()
             const trialExpires = profile.trial_expires_at ? new Date(profile.trial_expires_at) : null
             const tokensUsed = profile.tokens_used_trial || 0
@@ -554,7 +554,7 @@ export async function POST(request: NextRequest) {
             }
             
             // Check if token limit exceeded
-            if (tokensUsed >= tokenLimit) {
+            if (tokenLimit && tokensUsed >= tokenLimit) {
               return NextResponse.json(
                 { 
                   error: `You've reached your trial limit of ${(tokenLimit/1000)}k tokens. Please upgrade to continue using AI Sidekick.`,
