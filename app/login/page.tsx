@@ -177,12 +177,14 @@ function LoginForm() {
     }
 
     try {
-      console.log('Starting Google OAuth with redirect:', `${window.location.origin}/api/auth/callback?redirect=${searchParams.get('redirect') || '/landscaping'}`)
+      // Use window.location.origin to ensure we redirect to the same domain we're on
+      const redirectUrl = `${window.location.origin}/login`
+      console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/login`
+          redirectTo: redirectUrl
         }
       })
 

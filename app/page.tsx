@@ -92,12 +92,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       if (window.location.hash && window.location.hash.includes('access_token')) {
         console.log('OAuth callback detected on homepage, redirecting to login for processing...')
         // Redirect to login page with the hash fragment intact
-        window.location.href = `/login${window.location.hash}`
+        router.push(`/login${window.location.hash}`)
       }
     }
     
     handleOAuthCallback()
-  }, [])
+  }, [router])
 
   useEffect(() => {
     const startDemo = () => {
