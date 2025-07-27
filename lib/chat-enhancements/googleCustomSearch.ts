@@ -201,6 +201,10 @@ async function performGoogleCustomSearch(
     searchUrl.searchParams.set('num', '8') // Get top 8 results
     searchUrl.searchParams.set('dateRestrict', 'y1') // Results from last year only
     
+    // PERFORMANCE OPTIMIZATION: Request only the fields we actually need
+    // This reduces bandwidth, parsing time, and improves response speed
+    searchUrl.searchParams.set('fields', 'items(title,link,snippet,displayLink)')
+    
     // Add domain filtering for quality results
     const domainFilters = getDomainFilters(searchType, userProfile)
     if (domainFilters.length > 0) {
@@ -211,7 +215,9 @@ async function performGoogleCustomSearch(
     const response = await fetch(searchUrl.toString(), {
       method: 'GET',
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Accept-Encoding': 'gzip',  // Enable gzip compression for faster responses
+        'User-Agent': 'AI-Sidekick-Search (gzip)'  // Required for gzip to work
       }
     })
 
