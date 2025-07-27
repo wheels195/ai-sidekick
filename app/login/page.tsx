@@ -38,53 +38,7 @@ function LoginForm() {
       setRememberMe(true)
     }
 
-    // Handle OAuth callback with hash fragment
-    const handleOAuthCallback = async () => {
-      console.log('Checking for OAuth callback, hash:', window.location.hash)
-      
-      if (window.location.hash && window.location.hash.includes('access_token')) {
-        console.log('Hash fragment found, processing OAuth callback...')
-        
-        try {
-          // Parse the hash fragment manually to extract user info
-          const hashParams = new URLSearchParams(window.location.hash.substring(1))
-          const accessToken = hashParams.get('access_token')
-          
-          if (accessToken) {
-            // Decode the JWT to get user info
-            const tokenParts = accessToken.split('.')
-            const payload = JSON.parse(atob(tokenParts[1]))
-            console.log('Token payload:', payload)
-            
-            // Clear the hash from URL
-            window.history.replaceState({}, document.title, window.location.pathname)
-            
-            // Check if user has a profile using the email from the token
-            const { data: profile, error: profileError } = await supabase
-              .from('user_profiles')
-              .select('*')
-              .eq('email', payload.email)
-              .single()
-
-            console.log('Profile check:', { profile, profileError })
-
-            if (!profile || profileError) {
-              console.log('No profile found, redirecting to profile completion')
-              // New user - redirect to profile completion
-              router.push(`/signup/complete?email=${payload.email}`)
-            } else {
-              console.log('Profile found, redirecting to chat')
-              // Existing user - redirect to chat
-              router.push('/landscaping')
-            }
-          }
-        } catch (err) {
-          console.error('OAuth callback processing error:', err)
-        }
-      }
-    }
-
-    handleOAuthCallback()
+    // No need for manual OAuth callback handling - using proper API route
   }, [searchParams, router])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,8 +117,8 @@ function LoginForm() {
     }
 
     try {
-      // Use window.location.origin to ensure we redirect to the same domain we're on
-      const redirectUrl = `${window.location.origin}/login`
+      // Use the proper OAuth callback route
+      const redirectUrl = `${window.location.origin}/api/auth/callback`
       console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
