@@ -1,10 +1,6 @@
 import { cookies } from 'next/headers'
-import jwt from 'jsonwebtoken'
-import { createClient } from '@supabase/supabase-js'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 interface UserProfile {
   id: string
@@ -28,22 +24,20 @@ interface UserProfile {
 
 export async function getServerUserProfile(): Promise<UserProfile | null> {
   try {
-    const cookieStore = cookies()
-    const token = cookieStore.get('auth-token')?.value
-
-    if (!token) {
+    const supabase = createServerComponentClient({ cookies })
+    
+    // Get the current user from Supabase Auth
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
       return null
     }
-
-    // Verify JWT token
-    const jwtSecret = process.env.JWT_SECRET!
-    const decoded = jwt.verify(token, jwtSecret) as { userId: string, email: string }
 
     // Fetch user profile from database
     const { data: profile, error } = await supabase
       .from('user_profiles')
       .select('id, first_name, last_name, email, business_name, trade, selected_plan, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
-      .eq('id', decoded.userId)
+      .eq('id', user.id)
       .single()
 
     if (error || !profile) {
@@ -54,7 +48,7 @@ export async function getServerUserProfile(): Promise<UserProfile | null> {
     const { data: conversations, error: convError } = await supabase
       .from('user_conversations')
       .select('id')
-      .eq('user_id', decoded.userId)
+      .eq('user_id', user.id)
       .limit(1)
 
     const hasConversationHistory = conversations && conversations.length > 0
