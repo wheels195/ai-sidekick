@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { createClient } from '@/lib/supabase/server'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { moderateUserMessage } from '@/lib/moderation'
 import {
   getImageAnalysisPrompt,
@@ -520,7 +521,7 @@ export async function POST(request: NextRequest) {
     
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       try {
-        const { supabase } = createClient(request)
+        const supabase = createRouteHandlerClient({ cookies })
         
         // Get authenticated user (optional - chat works without auth but no storage)
         const { data: authData, error: userError } = await supabase.auth.getUser()
