@@ -21,7 +21,7 @@ export default function PrivacyPage() {
           </Link>
           <h1 className="text-4xl font-bold text-white mb-4">Privacy Policy</h1>
           <p className="text-gray-400">Effective Date: January 11, 2025</p>
-          <p className="text-gray-400">Last Updated: July 10, 2025</p>
+          <p className="text-gray-400">Last Updated: January 27, 2025</p>
         </div>
 
         <div className="prose prose-invert max-w-none">
@@ -33,9 +33,11 @@ export default function PrivacyPage() {
             
             <h3 className="text-xl font-medium text-white mb-3">Information You Provide:</h3>
             <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
-              <li>Email address and basic account info</li>
-              <li>Business details (trade type, location, team size, services offered)</li>
+              <li>Email address and basic account info (including Google OAuth profile data)</li>
+              <li>Business details (name, location, services, team size, years in business)</li>
+              <li>Business priorities and target customers</li>
               <li>Chat conversations and questions you ask the AI</li>
+              <li>Uploaded files (PDFs, images, documents) for AI analysis</li>
               <li>Feedback on AI responses (emoji reactions, ratings)</li>
             </ul>
 
@@ -70,7 +72,11 @@ export default function PrivacyPage() {
             </p>
             
             <p className="text-gray-300 mb-2">
-              <strong>OpenAI (GPT-4o-mini)</strong> – To generate responses from the chatbot. Conversations are processed securely, and we do not allow OpenAI to use your data to train their models.
+              <strong>OpenAI</strong> – To generate AI responses. Conversations are processed securely, and we do not allow OpenAI to use your data to train their models.
+            </p>
+            
+            <p className="text-gray-300 mb-2">
+              <strong>Google OAuth</strong> – For secure sign-in and account creation. We only access your email and name.
             </p>
 
             <p className="text-gray-300 mb-2">
@@ -90,7 +96,7 @@ export default function PrivacyPage() {
             <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
               <li>Encrypted data transmission (HTTPS)</li>
               <li>Secure storage with row-level security (RLS) in Supabase</li>
-              <li>Strong password hashing and token-based authentication</li>
+              <li>Strong password hashing and OAuth 2.0 authentication</li>
               <li>No ad tracking, no third-party analytics</li>
             </ul>
           </section>
@@ -121,7 +127,7 @@ export default function PrivacyPage() {
               <li>Ask questions about how your data is used</li>
             </ul>
             <p className="text-gray-300 mb-4">
-              Contact us at hello@aisidekick.com for any privacy-related request.
+              Contact us at admin@ai-sidekick.io for any privacy-related request.
             </p>
           </section>
 
@@ -138,7 +144,7 @@ export default function PrivacyPage() {
               For privacy concerns or questions:
             </p>
             <p className="text-gray-300 mb-2">
-              Email: hello@aisidekick.com
+              Email: admin@ai-sidekick.io
             </p>
             <p className="text-gray-300">
               We respond to privacy-related inquiries within 48 hours.

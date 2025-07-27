@@ -21,21 +21,21 @@ export default function TermsPage() {
           </Link>
           <h1 className="text-4xl font-bold text-white mb-4">Terms of Use</h1>
           <p className="text-gray-400">Effective Date: January 11, 2025</p>
-          <p className="text-gray-400">Last Updated: July 10, 2025</p>
+          <p className="text-gray-400">Last Updated: January 27, 2025</p>
         </div>
 
         <div className="prose prose-invert max-w-none">
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-emerald-400 mb-4">1. Overview</h2>
             <p className="text-gray-300 mb-4">
-              AI Sidekick is a limited early-access software tool that provides AI-generated business assistance for trades-based businesses. By using the service, you agree to these terms.
+              AI Sidekick is a software-as-a-service (SaaS) platform that provides AI-generated business assistance for landscaping and trades-based businesses. By using the service, you agree to these terms.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-emerald-400 mb-4">2. Trial Use Only</h2>
             <p className="text-gray-300 mb-4">
-              The current version of AI Sidekick is available as a free trial for 7 days. After that, continued access may require a paid subscription.
+              AI Sidekick offers a 7-day free trial. After the trial expires, continued access requires a paid subscription.
             </p>
             <p className="text-gray-300 mb-4">
               We may modify or suspend features at any time during the trial.
@@ -49,7 +49,8 @@ export default function TermsPage() {
             </p>
             <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2">
               <li>Use AI Sidekick only for lawful business purposes</li>
-              <li>Provide accurate business info when creating your profile</li>
+              <li>Provide accurate business information during profile completion</li>
+              <li>Not share your login credentials or account access</li>
               <li>Not use the AI for harmful, misleading, or illegal purposes</li>
               <li>Not attempt to reverse engineer or misuse the service</li>
             </ul>
@@ -65,7 +66,7 @@ export default function TermsPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-emerald-400 mb-4">5. Data Use and Retention</h2>
             <p className="text-gray-300 mb-4">
-              During your trial, we may store your business profile, chat messages, and feedback for the purpose of improving the experience. This data is not sold or shared externally and is deleted automatically if your account is inactive for more than 30 days.
+              We store your business profile, chat messages, uploaded files, and feedback to provide personalized AI assistance. This data is not sold or shared externally and is deleted automatically if your account is inactive for more than 30 days after trial expiration.
             </p>
           </section>
 
@@ -103,7 +104,7 @@ export default function TermsPage() {
               Have questions about the terms?
             </p>
             <p className="text-gray-300">
-              Email: hello@aisidekick.com
+              Email: admin@ai-sidekick.io
             </p>
           </section>
         </div>
