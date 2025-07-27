@@ -6,7 +6,12 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const redirect = requestUrl.searchParams.get('redirect') || '/landscaping'
 
-  console.log('OAuth callback received:', { code: !!code, redirect })
+  console.log('OAuth callback received:', { 
+    code: !!code, 
+    redirect,
+    allParams: Object.fromEntries(requestUrl.searchParams.entries()),
+    fullUrl: request.url
+  })
 
   if (code) {
     const { supabase } = createClient(request)
