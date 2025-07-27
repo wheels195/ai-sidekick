@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import { useRouter } from 'next/navigation'
 import {
   ArrowRight,
   CheckCircle,
@@ -36,8 +37,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import DisplayCards from "@/components/ui/display-cards"
+import { supabase } from '@/lib/supabase/client'
 
 export default function LandingPage() {
+  const router = useRouter()
   const [demoStep, setDemoStep] = useState(0)
   const [userMessage, setUserMessage] = useState("")
   const [aiMessage, setAiMessage] = useState("")
@@ -82,6 +85,19 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 - Referral program ROI: Low investment with high return potential
 
 **Want me to write the exact text messages to send your past customers today?**`
+
+  // Handle OAuth callback on homepage
+  useEffect(() => {
+    const handleOAuthCallback = async () => {
+      if (window.location.hash && window.location.hash.includes('access_token')) {
+        console.log('OAuth callback detected on homepage, redirecting to login for processing...')
+        // Redirect to login page with the hash fragment intact
+        window.location.href = `/login${window.location.hash}`
+      }
+    }
+    
+    handleOAuthCallback()
+  }, [])
 
   useEffect(() => {
     const startDemo = () => {
