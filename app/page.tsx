@@ -642,7 +642,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     }`}></div>
                   </div>
                   
-                  <h3 className="text-xl sm:text-2xl lg:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
+                  <h3 className="text-2xl sm:text-3xl lg:text-3xl font-bold mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
                     <span className={`font-cursive bg-gradient-to-r bg-clip-text text-transparent ${
                       value.color === 'blue' ? 'from-blue-300 to-blue-500' :
                       value.color === 'emerald' ? 'from-emerald-300 to-emerald-500' :
@@ -654,7 +654,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       {value.title}
                     </span>
                   </h3>
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 group-hover:text-gray-200 transition-colors duration-300">
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 group-hover:text-gray-200 transition-colors duration-300 uppercase">
                     {value.desc}
                   </p>
                   
@@ -1564,9 +1564,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
             >
               <span className="truncate">
-                → Explore <span className="font-cursive">Sage</span>
+                Explore <span className="font-cursive text-xl sm:text-2xl lg:text-3xl xl:text-4xl">Sage</span>
               </span>
-              <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 flex-shrink-0" />
             </Button>
             
             <div className="mt-8 lg:mt-10 flex flex-wrap justify-center gap-4 lg:gap-6 xl:gap-8 text-sm lg:text-base xl:text-lg text-gray-300">
