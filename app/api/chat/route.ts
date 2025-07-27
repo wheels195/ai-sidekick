@@ -702,7 +702,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Detect query type for conditional template injection
-    const currentUserMessage = messages[messages.length - 1]
     const queryContent = currentUserMessage?.content?.toLowerCase() || ''
     
     const isStrategicQuery = queryContent.includes('plan') || queryContent.includes('strategy') || 
