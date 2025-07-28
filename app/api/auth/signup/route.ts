@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function POST(request: NextRequest) {
   try {
-    const { firstName, lastName, email, password, selectedPlan, businessProfile } = await request.json()
+    const { firstName, lastName, email, password } = await request.json()
 
     if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
@@ -52,16 +52,7 @@ export async function POST(request: NextRequest) {
         email_verified: false,
         email_verification_token: verificationToken,
         email_verification_token_created_at: new Date().toISOString(),
-        selected_plan: selectedPlan || 'Free Trial',
-        business_name: businessProfile?.business_name,
-        location: businessProfile?.location,
-        zip_code: businessProfile?.zip_code,
-        trade: businessProfile?.trade,
-        services: businessProfile?.services || [],
-        team_size: businessProfile?.team_size,
-        target_customers: businessProfile?.target_customers,
-        years_in_business: businessProfile?.years_in_business,
-        business_priorities: businessProfile?.business_priorities || [],
+        selected_plan: 'Free Trial',
         // Initialize 7-day trial with 250k tokens
         tokens_used_trial: 0,
         trial_token_limit: 250000,
