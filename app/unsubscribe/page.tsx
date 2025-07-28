@@ -62,8 +62,8 @@ function UnsubscribeForm() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black flex items-center justify-center p-4">
         <div className="max-w-md w-full">
-          <div className="backdrop-blur-2xl bg-emerald-900/20 border border-emerald-500/30 rounded-2xl shadow-2xl p-8 text-center">
-            <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="backdrop-blur-2xl bg-gradient-to-br from-emerald-900/20 via-emerald-800/10 to-emerald-900/20 border border-emerald-500/30 rounded-2xl shadow-2xl p-8 text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-8 h-8 text-emerald-400" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-4">You're unsubscribed</h1>
@@ -75,10 +75,10 @@ function UnsubscribeForm() {
             </p>
             <Button
               onClick={() => window.location.href = '/'}
-              className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold"
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 border border-white/20"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to AI Sidekick
+              Back to <span className="font-cursive">AI Sidekick</span>
             </Button>
           </div>
         </div>
@@ -89,12 +89,12 @@ function UnsubscribeForm() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="backdrop-blur-2xl bg-gray-800/40 border border-gray-600/30 rounded-2xl shadow-2xl p-8">
+        <div className="backdrop-blur-2xl bg-gradient-to-br from-gray-900/60 via-gray-800/40 to-gray-900/60 border border-gray-600/30 rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-red-500/30 to-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <Mail className="w-8 h-8 text-red-400" />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">Unsubscribe</h1>
+            <h1 className="text-2xl font-bold text-white mb-2">Unsubscribe from <span className="font-cursive text-emerald-400">AI Sidekick</span></h1>
             <p className="text-gray-300">
               We're sorry to see you go. Enter your email to unsubscribe from our mailing list.
             </p>
@@ -124,7 +124,7 @@ function UnsubscribeForm() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold"
+              className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-white font-semibold shadow-lg hover:shadow-red-500/25 transition-all duration-300 hover:scale-105 border border-white/20"
             >
               {isLoading ? 'Unsubscribing...' : 'Unsubscribe'}
             </Button>
@@ -134,10 +134,10 @@ function UnsubscribeForm() {
             <Button
               variant="ghost"
               onClick={() => window.location.href = '/'}
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-emerald-400 transition-colors duration-300"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Never mind, take me back
+              Never mind, take me back to <span className="font-cursive">AI Sidekick</span>
             </Button>
           </div>
         </div>
@@ -150,7 +150,10 @@ export default function UnsubscribePage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black flex items-center justify-center p-4">
-        <div className="text-white">Loading...</div>
+        <div className="text-white flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-400 mr-3"></div>
+          Loading...
+        </div>
       </div>
     }>
       <UnsubscribeForm />
