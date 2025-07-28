@@ -199,17 +199,17 @@ const convertMarkdownToHtml = (markdown: string): string => {
         
         tableHeaders = cells
         htmlLines.push('<div class="overflow-x-auto my-6">')
-        htmlLines.push('<table class="min-w-full bg-gray-800/50 border border-gray-600 rounded-lg">')
-        htmlLines.push('<thead class="bg-gray-700/50">')
+        htmlLines.push('<table class="min-w-full backdrop-blur-xl bg-gradient-to-br from-gray-800/60 via-gray-900/40 to-black/20 border border-emerald-500/20 rounded-2xl shadow-2xl shadow-emerald-500/10">')
+        htmlLines.push('<thead class="bg-gradient-to-r from-emerald-600/20 via-emerald-700/30 to-emerald-800/20 backdrop-blur-sm">')
         htmlLines.push('<tr>')
         
         cells.forEach(header => {
-          htmlLines.push(`<th class="px-4 py-3 text-left text-emerald-400 font-semibold border-b border-gray-600">${header}</th>`)
+          htmlLines.push(`<th class="px-3 sm:px-4 py-4 text-left text-emerald-300 font-bold text-sm sm:text-base border-b border-emerald-500/30 backdrop-blur-sm">${header}</th>`)
         })
         
         htmlLines.push('</tr>')
         htmlLines.push('</thead>')
-        htmlLines.push('<tbody>')
+        htmlLines.push('<tbody class="backdrop-blur-sm">')
         inTable = true
       } else {
         // Skip separator line (contains dashes)
@@ -218,15 +218,15 @@ const convertMarkdownToHtml = (markdown: string): string => {
         }
         
         // Add table row
-        htmlLines.push('<tr class="border-b border-gray-700 hover:bg-gray-700/30">')
+        htmlLines.push('<tr class="border-b border-emerald-500/10 hover:bg-gradient-to-r hover:from-emerald-500/5 hover:to-transparent transition-all duration-300 backdrop-blur-sm">')
         
         cells.forEach((cell, index) => {
           // Handle bold text in cells - enhanced processing
-          let processedCell = cell.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+          let processedCell = cell.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-emerald-200">$1</strong>')
           // Handle links in cells
-          processedCell = processedCell.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+          processedCell = processedCell.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200">$1</a>')
           
-          htmlLines.push(`<td class="px-4 py-3 text-white">${processedCell}</td>`)
+          htmlLines.push(`<td class="px-3 sm:px-4 py-3 text-gray-100 text-sm sm:text-base">${processedCell}</td>`)
         })
         
         htmlLines.push('</tr>')
@@ -608,6 +608,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [showSidebar, setShowSidebar] = useState(false)
   const [savedConversations, setSavedConversations] = useState<SavedConversation[]>([])
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
+  const [currentSessionId, setCurrentSessionId] = useState<string>(() => crypto.randomUUID())
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [activeTool, setActiveTool] = useState<string | null>(null) // 'web-search', 'create-image', 'attach-file', null
   const [showToolsDropdown, setShowToolsDropdown] = useState(false)
@@ -1323,6 +1324,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
             role: msg.role,
             content: msg.content
           })),
+          sessionId: currentSessionId,
           webSearchEnabled: webSearchEnabled,
           files: filesToSend
         }),

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { moderateUserMessage } from '@/lib/moderation'
 import {
@@ -398,7 +398,7 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
       
       // Format results for AI consumption with rich business data
       const formattedResults = data.places
-        .slice(0, 6) // Top 6 results for comprehensive analysis
+        .slice(0, 8) // Top 8 results for comprehensive competitive analysis
         .map((place: any, index: number) => {
           const name = place.displayName?.text || 'Business Name Not Available'
           const address = place.formattedAddress || 'Address not available'
@@ -407,7 +407,17 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
           const reviewCount = place.userRatingCount ? `${place.userRatingCount} reviews` : 'No reviews'
           const priceLevel = place.priceLevel ? '$'.repeat(place.priceLevel) : 'Price level unknown'
           const website = place.websiteUri || 'Website not available'
-          const businessTypes = place.types ? place.types.join(', ') : 'Services not specified'
+          // Extract meaningful business types, filtering out generic ones
+          const meaningfulTypes = place.types?.filter((type: string) => 
+            !['establishment', 'point_of_interest', 'place_of_worship', 'local_government_office'].includes(type)
+          ) || []
+          
+          // Convert snake_case to readable format
+          const businessTypes = meaningfulTypes.length > 0 
+            ? meaningfulTypes.map((type: string) => 
+                type.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())
+              ).join(', ')
+            : 'Services not specified'
           const summary = place.editorialSummary?.text || 'No summary available'
           const status = place.businessStatus || 'Status unknown'
           
@@ -465,7 +475,7 @@ export async function POST(request: NextRequest) {
     
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       try {
-        const supabase = createRouteHandlerClient({ cookies })
+        const { supabase } = createClient(request)
         
         // Get authenticated user (optional - chat works without auth but no storage)
         const { data: authData, error: userError } = await supabase.auth.getUser()
@@ -903,7 +913,13 @@ Query: "${currentUserMessage.content}" in ${localContext}
 
 ${searchResults}
 
-**Instructions:** Use ONLY the real business data above. Never create fake competitors. Format competitive analysis as tables when 3+ businesses are found.`
+**Table Formatting Instructions:** 
+- When presenting competitive analysis, create tables with these columns: Business Name, Phone, Rating (Reviews), Address, Price Level, Services, Website
+- Show ALL available businesses (minimum 5 when possible)
+- Use real business types/services from the data, NOT "General Contractor"
+- Include review count with ratings (e.g., "4.9⭐ (127 reviews)")
+- Show actual price levels using $ symbols
+- Never create fake competitors - only use the real data above`
       })
     }
 

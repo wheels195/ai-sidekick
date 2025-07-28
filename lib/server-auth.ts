@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 
 
 interface UserProfile {
@@ -24,7 +24,18 @@ interface UserProfile {
 
 export async function getServerUserProfile(): Promise<UserProfile | null> {
   try {
-    const supabase = createServerComponentClient({ cookies })
+    const cookieStore = cookies()
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value
+          },
+        },
+      }
+    )
     
     // Get the current user from Supabase Auth
     const { data: { user }, error: authError } = await supabase.auth.getUser()
