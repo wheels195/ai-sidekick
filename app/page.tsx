@@ -31,6 +31,11 @@ import {
   Shield,
   BookOpen,
   Lightbulb,
+  Calculator,
+  UserPlus,
+  Megaphone,
+  Brain,
+  ChevronUp,
 } from "lucide-react"
 import { ModernPricingCard } from "@/components/ui/modern-pricing"
 import { Button } from "@/components/ui/button"
@@ -50,8 +55,75 @@ export default function LandingPage() {
   const [demoComplete, setDemoComplete] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [isAnnual, setIsAnnual] = useState(true) // Default to annual for savings
+  const [activeIdeasCategory, setActiveIdeasCategory] = useState<string | null>(null)
 
   const fullUserMessage = "Help me get 10 more clients in the next 30 days."
+  
+  // Ideas categories data
+  const ideasCategories = {
+    'pricing': {
+      name: 'Pricing & Services',
+      icon: Calculator,
+      questions: [
+        'How much should I charge for lawn care in my area right now?',
+        'Should I offer seasonal packages or stick to per-visit pricing?',
+        'What services could I upsell during fall and winter to keep revenue steady?'
+      ]
+    },
+    'growth': {
+      name: 'Growth Strategy',
+      icon: TrendingUp,
+      questions: [
+        'How can I grow my business without hiring more people yet?',
+        'What would a smart 90-day growth plan look like for me?',
+        'What are 3 things I could do this week to get more high-paying jobs?'
+      ]
+    },
+    'hiring': {
+      name: 'Hiring & Team',
+      icon: UserPlus,
+      questions: [
+        'How do I find and keep good workers without overpaying?',
+        "What's the best way to structure pay or bonuses to keep my crew motivated?"
+      ]
+    },
+    'marketing': {
+      name: 'Marketing & Ads',
+      icon: Megaphone,
+      questions: [
+        'What should I post on Facebook this month to get new leads?',
+        'How do I run a Google ad that actually brings in local customers?',
+        'How do I ask for reviews in a way that actually works?'
+      ]
+    },
+    'mindset': {
+      name: 'Mindset & Decisions',
+      icon: Brain,
+      questions: [
+        "Why do I feel like I'm working harder but not making more?",
+        'Am I leaving money on the table with the way I quote jobs?',
+        'What do other landscapers in my area charge — and how do I compare?'
+      ]
+    }
+  }
+
+  // Categories for mobile (only show 3)
+  const mobileCategories = ['pricing', 'growth', 'hiring']
+
+  // Click outside to close functionality
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (!target.closest('.ideas-container')) {
+        setActiveIdeasCategory(null)
+      }
+    }
+
+    if (activeIdeasCategory) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [activeIdeasCategory])
   
   const fullAiMessage = `I'll create a 30-day client acquisition plan tailored to your local market. Let me analyze your competition and identify the fastest opportunities...
 
@@ -738,17 +810,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
                 {/* Enhanced Static Chat Interface Preview */}
                 <div className="bg-gradient-to-br from-green-800/10 via-emerald-900/5 to-blue-900/5 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group animate-gradient">
-                  {/* Single subtle accent - bottom left only */}
-                  <div className="absolute bottom-32 left-6 text-blue-300 animate-float delay-500 opacity-30 z-10">💫</div>
                   
-                  {/* Floating Tips Icon - moved to avoid overlap */}
-                  <div className="absolute top-16 right-4 z-20">
-                    <div className="bg-yellow-500/10 backdrop-blur border border-yellow-400/20 rounded-full p-2 hover:scale-110 transition-all duration-300 cursor-pointer">
-                      <svg className="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 6.343a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"/>
-                      </svg>
-                    </div>
-                  </div>
                   
                   
                   {/* Header */}
@@ -760,8 +822,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             <Leaf className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h1 className="text-sm font-bold text-white font-cursive">Scout</h1>
-                            <p className="text-xs text-gray-300">Personal Business Strategist</p>
+                            <h1 className="text-sm text-white">
+                              <span className="font-cursive text-base font-bold">Scout</span> | Personal Business Strategist
+                            </h1>
                           </div>
                         </div>
                         
@@ -781,17 +844,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       {/* Chat Bubble - Matches Real /landscaping Interface */}
                       <div className="bg-[#1a1a1a] text-gray-100 px-4 py-2 rounded-2xl relative overflow-visible animate-fade-in">                        
                         
-                        {/* Enhanced Character with Sparkles and Hover Effects */}
+                        {/* Character */}
                         <div className="hidden lg:block absolute -left-8 top-0 z-10 group">
                           <div className="relative transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] rounded-full">
-                            {/* Floating sparkles around character */}
-                            <div className="absolute -top-2 -left-2 text-yellow-300 animate-pulse">
-                              ✨
-                            </div>
-                            <div className="absolute bottom-12 -right-2 text-purple-300 animate-ping delay-1000">
-                              💫
-                            </div>
-                            
                             {/* Ground shadow under his boots */}
                             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
@@ -908,26 +963,109 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
                   {/* Enhanced Input Area */}
                   <div className="border-t border-white/10 p-4">
-                    {/* Sample Query Buttons */}
-                    <div className="mb-3 flex flex-wrap gap-2">
-                      <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
-                        How do I raise my prices without losing loyal customers?
-                      </button>
-                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105 w-full sm:w-auto h-8 sm:h-auto flex items-center justify-center">
-                        Write me a seasonal blog post and a Facebook ad
-                      </button>
-                      <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
-                        How do I realistically double my revenue this year?
-                      </button>
-                      <button className="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105 w-full sm:w-auto h-8 sm:h-auto flex items-center justify-center">
-                        Develop a 90 day plan to grow my revenue by >25%
-                      </button>
-                      <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
-                        I'm stuck. Why isn't my business growing faster?
-                      </button>
-                      <button className="hidden sm:block bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105">
-                        Help me find good workers
-                      </button>
+                    {/* Ideas Categories */}
+                    <div className="mb-3 ideas-container relative">
+                      <div className="mb-2">
+                        <h4 className="text-sm font-normal text-blue-300 mb-2 flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" />
+                          Ideas to get started
+                        </h4>
+                      </div>
+                      
+                      {/* Desktop Categories - All 5 */}
+                      <div className="hidden sm:flex flex-wrap gap-2 mb-2">
+                        {Object.entries(ideasCategories).map(([key, category]) => {
+                          const IconComponent = category.icon
+                          const isActive = activeIdeasCategory === key
+                          return (
+                            <div key={key} className="relative">
+                              <button
+                                className={`bg-gradient-to-r from-blue-600/20 to-indigo-600/20 hover:from-blue-500/30 hover:to-indigo-500/30 border border-blue-400/40 rounded-lg px-3 py-2 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105 flex items-center gap-2 ${
+                                  isActive ? 'from-blue-500/40 to-indigo-500/40 border-blue-300/60' : ''
+                                }`}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  setActiveIdeasCategory(isActive ? null : key)
+                                }}
+                              >
+                                <IconComponent className="w-3 h-3" />
+                                {category.name}
+                                <ChevronUp className={`w-3 h-3 transition-transform duration-200 ${isActive ? '' : 'rotate-180'}`} />
+                              </button>
+                              
+                              {/* Questions Dropdown - Opens Upward */}
+                              {isActive && (
+                                <div className="absolute bottom-full left-0 mb-2 w-72 bg-gray-800/95 backdrop-blur-xl border border-blue-400/30 rounded-lg shadow-2xl p-3 z-50">
+                                  <div className="space-y-2">
+                                    {category.questions.map((question, idx) => (
+                                      <button
+                                        key={idx}
+                                        className="w-full text-left text-xs text-gray-200 hover:text-blue-200 hover:bg-blue-500/10 rounded px-2 py-2 transition-all duration-200"
+                                        onClick={() => {
+                                          // Handle question click here
+                                          setActiveIdeasCategory(null)
+                                        }}
+                                      >
+                                        {question}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+
+                      {/* Mobile Categories - Only 3 */}
+                      <div className="sm:hidden flex flex-col gap-2">
+                        {mobileCategories.map((key) => {
+                          const category = ideasCategories[key]
+                          const IconComponent = category.icon
+                          const isActive = activeIdeasCategory === key
+                          return (
+                            <div key={key} className="relative">
+                              <button
+                                className={`w-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 hover:from-blue-500/30 hover:to-indigo-500/30 border border-blue-400/40 rounded-lg px-3 py-2 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 flex items-center justify-between ${
+                                  isActive ? 'from-blue-500/40 to-indigo-500/40 border-blue-300/60' : ''
+                                }`}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  setActiveIdeasCategory(isActive ? null : key)
+                                }}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <IconComponent className="w-3 h-3" />
+                                  {category.name}
+                                </div>
+                                <ChevronUp className={`w-3 h-3 transition-transform duration-200 ${isActive ? '' : 'rotate-180'}`} />
+                              </button>
+                              
+                              {/* Questions Dropdown - Opens Upward on Mobile */}
+                              {isActive && (
+                                <div className="absolute bottom-full left-0 right-0 mb-2 bg-gray-800/95 backdrop-blur-xl border border-blue-400/30 rounded-lg shadow-2xl p-3 z-50">
+                                  <div className="space-y-2">
+                                    {category.questions.map((question, idx) => (
+                                      <button
+                                        key={idx}
+                                        className="w-full text-left text-xs text-gray-200 hover:text-blue-200 hover:bg-blue-500/10 rounded px-2 py-2 transition-all duration-200"
+                                        onClick={() => {
+                                          // Handle question click here
+                                          setActiveIdeasCategory(null)
+                                        }}
+                                      >
+                                        {question}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
                     </div>
                     
                     <div className="w-full">
