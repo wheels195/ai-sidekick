@@ -492,22 +492,23 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
       .sort((a, b) => b.users - a.users)
       .slice(0, 10) // Top 10 locations
 
-    // Website analytics (mock data - would come from Google Analytics)
+    // Website analytics (placeholder - real data comes from Google Analytics)
+    // Note: These are placeholder values. Real GA data requires server-side GA API integration
     const websiteAnalytics = {
-      sessions: 1250,
-      users: 890,
-      pageviews: 3450,
-      bounceRate: 35.2,
-      avgSessionDuration: 145, // seconds
-      conversionRate: totalUsers > 0 ? (totalUsers / 890) * 100 : 0
+      sessions: 0, // Will be populated from Google Analytics Reporting API
+      users: 0,    // Will be populated from Google Analytics Reporting API
+      pageviews: 0, // Will be populated from Google Analytics Reporting API
+      bounceRate: 0, // Will be populated from Google Analytics Reporting API
+      avgSessionDuration: 0, // Will be populated from Google Analytics Reporting API
+      conversionRate: 0 // Will be calculated from real GA data
     }
 
-    // Conversion funnel
+    // Conversion funnel (using app data until GA API is integrated)
     const conversionFunnel = {
-      visitorToSignup: websiteAnalytics.users > 0 ? (totalUsers / websiteAnalytics.users) * 100 : 0,
+      visitorToSignup: 0, // Will calculate from GA data: (totalUsers / GA_users) * 100
       signupToActive: totalUsers > 0 ? (activeUsersWeek / totalUsers) * 100 : 0,
       activeToPaid: activeUsersWeek > 0 ? (upgradeCandidates.length / activeUsersWeek) * 100 : 0,
-      overallConversion: websiteAnalytics.users > 0 ? (upgradeCandidates.length / websiteAnalytics.users) * 100 : 0
+      overallConversion: 0 // Will calculate from GA data: (upgradeCandidates / GA_users) * 100
     }
 
     // Business insights generation
