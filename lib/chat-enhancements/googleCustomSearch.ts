@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 import { NextRequest } from 'next/server'
 
 interface CachedSearchData {
@@ -49,7 +50,8 @@ export async function cacheSearchResult(
   request: NextRequest
 ): Promise<void> {
   try {
-    const { supabase } = createClient(request)
+    // Use service role for cache writes to bypass RLS
+    const supabase = createServiceClient()
     
     const { error } = await supabase
       .from('web_search_cache')

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 import { NextRequest } from 'next/server'
 
 interface CachedPlacesData {
@@ -49,7 +50,8 @@ export async function cachePlacesResult(
   request: NextRequest
 ): Promise<void> {
   try {
-    const { supabase } = createClient(request)
+    // Use service role for cache writes to bypass RLS
+    const supabase = createServiceClient()
     
     const { error } = await supabase
       .from('places_cache')
