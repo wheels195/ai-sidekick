@@ -205,98 +205,108 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
             
             body {
               font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-              background: linear-gradient(135deg, #000000 0%, #030712 25%, #0f0f23 50%, #030712 75%, #000000 100%);
+              background: linear-gradient(135deg, #000000 0%, #0f172a 25%, #1e293b 50%, #0f172a 75%, #000000 100%);
               margin: 0;
               padding: 20px;
               color: #e5e7eb;
+              min-height: 100vh;
             }
             
             .email-container {
               max-width: 600px;
               margin: 0 auto;
-              background: linear-gradient(135deg, #000000 0%, #030712 25%, #0f0f23 50%, #030712 75%, #000000 100%);
+              backdrop-filter: blur(20px);
+              background: rgba(0, 0, 0, 0.4);
               border-radius: 24px;
-              border: 1px solid rgba(52, 211, 153, 0.3);
-              box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
               overflow: hidden;
             }
             
             .header {
-              background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #14b8a6 100%);
               padding: 40px 30px;
               text-align: center;
-              position: relative;
-            }
-            
-            .header::before {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
-              pointer-events: none;
+              background: transparent;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
             
             .logo-text {
               font-family: 'Dancing Script', cursive;
-              color: #000000;
-              font-size: 36px;
+              color: #ffffff;
+              font-size: 48px;
               font-weight: 700;
               margin: 0;
-              text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-              position: relative;
-              z-index: 1;
+              background: linear-gradient(135deg, #ffffff 0%, #e5e7eb 50%, #ffffff 100%);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
             }
             
             .content {
               padding: 40px 30px;
-              background: rgba(0, 0, 0, 0.4);
+              backdrop-filter: blur(10px);
+              background: rgba(0, 0, 0, 0.2);
             }
             
             .greeting {
-              font-size: 18px;
+              font-size: 24px;
               font-weight: 600;
               color: #ffffff;
               margin-bottom: 20px;
+              text-align: center;
             }
             
             .message {
               font-size: 16px;
               color: #e5e7eb;
-              margin-bottom: 25px;
+              margin-bottom: 30px;
               line-height: 1.7;
+              text-align: center;
+            }
+            
+            .ai-sidekick-text {
+              font-family: 'Dancing Script', cursive;
+              background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #14b8a6 100%);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-weight: 600;
+              font-size: 18px;
             }
             
             .cta-button {
               display: inline-block;
               background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #14b8a6 100%);
-              color: #000000;
+              color: #000000 !important;
               text-decoration: none;
               font-weight: 600;
-              font-size: 16px;
+              font-size: 18px;
               padding: 16px 32px;
               border-radius: 16px;
-              margin: 20px 0;
-              box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
+              margin: 30px 0;
+              box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25);
               border: 1px solid rgba(255, 255, 255, 0.2);
               transition: all 0.3s ease;
+              backdrop-filter: blur(10px);
             }
             
             .features {
-              background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
-              border: 1px solid rgba(52, 211, 153, 0.2);
+              backdrop-filter: blur(20px);
+              background: rgba(0, 0, 0, 0.4);
+              border: 1px solid rgba(255, 255, 255, 0.1);
               border-radius: 16px;
-              padding: 25px;
-              margin: 25px 0;
+              padding: 30px;
+              margin: 30px 0;
+              box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             }
             
             .features h3 {
-              color: #34d399;
-              font-size: 18px;
+              color: #ffffff;
+              font-size: 20px;
               font-weight: 600;
-              margin-bottom: 15px;
+              margin-bottom: 20px;
+              text-align: center;
             }
             
             .features ul {
@@ -307,8 +317,11 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
             
             .features li {
               color: #e5e7eb;
-              padding: 8px 0;
-              border-bottom: 1px solid rgba(52, 211, 153, 0.1);
+              padding: 12px 0;
+              font-size: 16px;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+              display: flex;
+              align-items: center;
             }
             
             .features li:last-child {
@@ -319,28 +332,32 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
               content: "✓";
               color: #34d399;
               font-weight: bold;
-              margin-right: 10px;
+              margin-right: 15px;
+              font-size: 18px;
             }
             
             .highlight-box {
-              background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
-              border: 1px solid rgba(52, 211, 153, 0.2);
-              border-radius: 12px;
-              padding: 20px;
-              margin: 25px 0;
+              backdrop-filter: blur(20px);
+              background: rgba(16, 185, 129, 0.1);
+              border: 1px solid rgba(52, 211, 153, 0.3);
+              border-radius: 16px;
+              padding: 25px;
+              margin: 30px 0;
+              box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
             }
             
             .footer {
               padding: 30px;
               text-align: center;
-              background: linear-gradient(135deg, #000000 0%, #030712 100%);
-              border-top: 1px solid rgba(52, 211, 153, 0.2);
+              backdrop-filter: blur(10px);
+              background: rgba(0, 0, 0, 0.3);
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
             
             .footer p {
               color: #9ca3af;
               font-size: 14px;
-              margin: 5px 0;
+              margin: 8px 0;
               line-height: 1.5;
             }
             
@@ -355,7 +372,7 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
             }
             
             .unsubscribe-link {
-              color: #6b7280;
+              color: #6b7280 !important;
               text-decoration: underline;
               font-size: 12px;
               margin-top: 15px;
@@ -364,7 +381,7 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
             }
             
             .unsubscribe-link:hover {
-              color: #34d399;
+              color: #34d399 !important;
             }
           </style>
         </head>
@@ -375,9 +392,9 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
             </div>
             
             <div class="content">
-              <div class="greeting">Hi ${firstName}! Welcome aboard</div>
+              <div class="greeting">Hi ${firstName}! Welcome aboard 👋</div>
               <div class="message">
-                You're locked and loaded. Your <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span> has instant access to tactical growth strategies for ${businessName}.
+                You're locked and loaded. Your <span class="ai-sidekick-text">AI Sidekick</span> has instant access to tactical growth strategies for ${businessName}.
               </div>
               
               <div class="features">
@@ -393,24 +410,24 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
               </div>
               
               <div class="highlight-box">
-                <p style="color: #ffffff; margin: 0; line-height: 1.5; font-weight: 500;">
-                  Your <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span> is ready. Just ask, "How can I double my ${trade} leads in [your ZIP]?" — and watch it work.
+                <p style="color: #ffffff; margin: 0; line-height: 1.6; font-weight: 500; text-align: center; font-size: 16px;">
+                  Your <span class="ai-sidekick-text">AI Sidekick</span> is ready. Just ask, "How can I double my ${trade} leads in [your ZIP]?" — and watch it work.
                 </p>
               </div>
               
               <div style="text-align: center; margin: 30px 0;">
                 <a href="${process.env.NEXT_PUBLIC_SITE_URL}/landscaping" class="cta-button">
-                  Start Growing Now
+                  🚀 Start Growing Now
                 </a>
               </div>
               
-              <div style="color: #9ca3af; font-size: 13px; margin: 20px 0 0 0; text-align: center;">
-                Questions? Just reply to this email — we're here to help!
+              <div style="color: #9ca3af; font-size: 14px; margin: 20px 0 0 0; text-align: center;">
+                Questions? Just reply to this email — we're here to help! 💪
               </div>
             </div>
             
             <div class="footer">
-              <p>© 2025 <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span>. All rights reserved.</p>
+              <p>© 2025 <span class="ai-sidekick-text">AI Sidekick</span>. All rights reserved.</p>
               <p>
                 <a href="${process.env.NEXT_PUBLIC_SITE_URL}/terms">Terms</a> | 
                 <a href="${process.env.NEXT_PUBLIC_SITE_URL}/privacy">Privacy</a>
