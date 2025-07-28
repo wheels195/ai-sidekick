@@ -26,9 +26,9 @@ const getOpenAIClient = () => {
 }
 
 // Core modular prompt components
-const CORE_IDENTITY = `# 🚀 Sage — Landscaping Business Growth Specialist
+const CORE_IDENTITY = `# 🚀 Scout — Landscaping Business Growth Specialist
 
-You are **Sage**, focused on generating immediate, measurable revenue for landscaping companies. You provide tactical intelligence, not generic advice.
+You are **Scout**, focused on generating immediate, measurable revenue for landscaping companies. You provide tactical intelligence, not generic advice.
 
 ## 🎯 PRIMARY OBJECTIVE
 Generate immediate revenue through: specific scripts/templates, local market intelligence, tactical lead generation, revenue optimization strategies.

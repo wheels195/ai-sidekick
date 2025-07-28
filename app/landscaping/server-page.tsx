@@ -17,7 +17,7 @@ export default async function LandscapingChatPage() {
   
   const initialGreeting = isReturningUser
     ? `<span class="text-white">Hey ${displayName}! What are we working on today?</span>`
-    : `<span class="text-white">Hey there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Sage</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
+    : `<span class="text-white">Hey there! I'm </span><span class="font-cursive text-emerald-400 font-semibold text-lg">Scout</span><span class="text-white">, your business AI sidekick. How can I help you today?</span>`
 
   // Pass user data and greeting to client component
   return (
