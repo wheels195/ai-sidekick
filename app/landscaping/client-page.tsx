@@ -238,28 +238,36 @@ const convertMarkdownToHtml = (markdown: string): string => {
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
-      htmlLines.push(`<h4 class="text-base font-semibold text-emerald-300 mt-4 mb-2">${line.substring(5)}</h4>`)
+      // Remove ** from header text since headers are already bold
+      const headerText = line.substring(5).replace(/\*\*/g, '')
+      htmlLines.push(`<h4 class="text-base font-semibold text-emerald-300 mt-4 mb-2">${headerText}</h4>`)
     }
     else if (line.startsWith('### ')) {
       if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
-      htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${line.substring(4)}</h3>`)
+      // Remove ** from header text since headers are already bold
+      const headerText = line.substring(4).replace(/\*\*/g, '')
+      htmlLines.push(`<h3 class="text-lg font-semibold text-emerald-400 mt-5 mb-2">${headerText}</h3>`)
     }
     else if (line.startsWith('## ')) {
       if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
-      htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${line.substring(3)}</h2>`)
+      // Remove ** from header text since headers are already bold
+      const headerText = line.substring(3).replace(/\*\*/g, '')
+      htmlLines.push(`<h2 class="text-xl font-bold text-emerald-300 mt-6 mb-3">${headerText}</h2>`)
     }
     else if (line.startsWith('# ')) {
       if (inNumberedList) { htmlLines.push('</div>'); inNumberedList = false; }
       if (inBulletList) { htmlLines.push('</ul>'); inBulletList = false; }
       if (inCheckList) { htmlLines.push('</ul>'); inCheckList = false; }
       if (inTable) { htmlLines.push('</tbody></table></div>'); inTable = false; tableHeaders = []; }
-      htmlLines.push(`<h1 class="text-2xl font-bold text-emerald-200 mt-6 mb-4">${line.substring(2)}</h1>`)
+      // Remove ** from header text since headers are already bold
+      const headerText = line.substring(2).replace(/\*\*/g, '')
+      htmlLines.push(`<h1 class="text-2xl font-bold text-emerald-200 mt-6 mb-4">${headerText}</h1>`)
     }
     // Checklist items with emerald checkmarks
     else if (line.match(/^[-*]\s*\[[ x]\]/)) {

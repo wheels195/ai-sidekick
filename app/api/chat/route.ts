@@ -157,9 +157,10 @@ For 3+ businesses, use HTML table format:
 const BASIC_FORMATTING = `
 **FORMATTING GUIDELINES:**
 - Use emerald green (#34d399) for headings and emphasis
-- Bold text with ** for important points
+- Use ### for section headers (never ### **Title** - just ### Title)
+- Use **text** only for emphasis within content, not for headers
 - Lists with - for bullets, numbers for sequences
-- Never show raw markdown symbols
+- Format consistently whether web search is on or off
 - End responses with actionable follow-up questions`
 
 // Build base prompt from modular components  
