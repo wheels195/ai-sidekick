@@ -866,33 +866,29 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         <div className="ml-0 lg:ml-48">
                         <div className="space-y-3">
                           <p className="text-gray-50 typography-chat leading-relaxed text-base">
-                            Hey there — I'm <span className="font-cursive text-emerald-400 font-semibold text-lg">Scout</span>. Your strategic business sidekick.
+                            Hey there — I'm <span className="font-cursive text-emerald-400 font-semibold text-lg">Scout</span>. Your AI sidekick for growing a smarter, more profitable business.
                           </p>
                           
-                          <p className="text-gray-50 typography-chat leading-relaxed text-sm">
-                            Personalized to help you with:
+                          <p className="text-gray-50 typography-chat leading-relaxed text-sm font-medium">
+                            Built to help you:
                           </p>
                           
                           <div className="space-y-1.5 ml-3">
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Marketing ideas and content creation</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Attract better customers with tailored marketing ideas</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Upselling strategies</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Create upsells that boost job size and lifetime value</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Smarter pricing and seasonal trends</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Price confidently using seasonal and local trends</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Custom business planning</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Scale and grow operations</span>
+                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Plan smarter, scale faster, and stay ahead of competitors</span>
                             </div>
                           </div>
                           
