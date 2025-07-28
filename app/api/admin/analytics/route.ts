@@ -343,58 +343,348 @@ async function getRecommendations(supabase: any, dates: any) {
 
 async function getOverviewAnalytics(supabase: any, dates: any) {
   try {
-    // Combine key metrics from all views
-    const [costData, userData, recData] = await Promise.all([
-      getCostAnalytics(supabase, dates),
-      getUserAnalytics(supabase, dates),
-      getRecommendations(supabase, dates)
-    ])
+    // Get comprehensive user data
+    const { data: allUsers } = await supabase
+      .from('user_profiles')
+      .select('*') || []
 
-    const costJson = await costData.json()
-    const userJson = await userData.json()
-    const recJson = await recData.json()
+    const { data: recentUsers } = await supabase
+      .from('user_profiles')
+      .select('id, last_activity_at')
+      .gte('last_activity_at', dates.weekAgo) || []
+
+    // Get all conversations with full data
+    const { data: allConversations } = await supabase
+      .from('user_conversations')
+      .select('*') || []
+
+    const { data: todayConversations } = await supabase
+      .from('user_conversations')
+      .select('*')
+      .gte('created_at', dates.today) || []
+
+    const { data: weekConversations } = await supabase
+      .from('user_conversations')
+      .select('*')
+      .gte('created_at', dates.weekAgo) || []
+
+    const { data: monthConversations } = await supabase
+      .from('user_conversations')
+      .select('*')
+      .gte('created_at', dates.monthAgo) || []
+
+    // Enhanced calculations
+    const totalUsers = allUsers?.length || 0
+    const activeUsersWeek = recentUsers?.length || 0
+    const totalConversations = allConversations?.length || 0
+    const todayConversationsCount = todayConversations?.length || 0
+    const weekConversationsCount = weekConversations?.length || 0
+    const monthConversationsCount = monthConversations?.length || 0
+
+    // Cost calculations with fallbacks
+    const calculateCosts = (conversations: any[]) => {
+      return conversations?.reduce((sum, conv) => {
+        if (conv.cost_breakdown?.totalCostUsd) {
+          return sum + conv.cost_breakdown.totalCostUsd
+        }
+        // Fallback: estimate from tokens
+        const tokens = conv.tokens_used || 0
+        const model = conv.model_used || 'gpt-4o-mini'
+        const rate = model === 'gpt-4o' ? 0.0001 : 0.00001
+        return sum + (tokens * rate)
+      }, 0) || 0
+    }
+
+    const totalCostToday = calculateCosts(todayConversations)
+    const totalCostWeek = calculateCosts(weekConversations)
+    const totalCostMonth = calculateCosts(monthConversations)
+
+    // Token usage analysis
+    const totalTokensUsed = allConversations?.reduce((sum, conv) => sum + (conv.tokens_used || 0), 0) || 0
+    const avgTokensPerConversation = totalConversations > 0 ? totalTokensUsed / totalConversations : 0
+
+    // Model usage distribution
+    const modelStats = allConversations?.reduce((acc, conv) => {
+      const model = conv.model_used || 'unknown'
+      acc[model] = (acc[model] || 0) + 1
+      return acc
+    }, {}) || {}
+
+    const totalModelUsage = Object.values(modelStats).reduce((sum: number, count: number) => sum + count, 0)
+    const gpt4oPercentage = totalModelUsage > 0 ? ((modelStats['gpt-4o'] || 0) / totalModelUsage) * 100 : 0
+    const gpt4oMiniPercentage = totalModelUsage > 0 ? ((modelStats['gpt-4o-mini'] || 0) / totalModelUsage) * 100 : 0
+
+    // Advanced user analytics with engagement scoring
+    const userEngagementScores = allUsers?.map(user => {
+      const userConversations = allConversations?.filter(conv => conv.user_id === user.id) || []
+      const conversationCount = userConversations.length
+      const tokensUsed = user.tokens_used_trial || 0
+      const daysSinceSignup = user.created_at ? 
+        Math.max(1, Math.floor((Date.now() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24))) : 1
+      const lastActivity = user.last_activity_at ? 
+        Math.floor((Date.now() - new Date(user.last_activity_at).getTime()) / (1000 * 60 * 60 * 24)) : 999
+
+      // Enhanced engagement score calculation
+      const conversationsPerDay = conversationCount / daysSinceSignup
+      const recentActivityScore = Math.max(0, 100 - lastActivity * 5) // Decay over days
+      const tokenUsageScore = Math.min(100, (tokensUsed / 250000) * 100) // Max trial tokens
+      const frequencyScore = Math.min(100, conversationsPerDay * 50) // Conversations per day bonus
+      
+      const engagementScore = Math.round(
+        (tokenUsageScore * 0.3) + (recentActivityScore * 0.3) + (frequencyScore * 0.4)
+      )
+
+      return {
+        id: user.id,
+        first_name: user.first_name || 'Anonymous',
+        last_name: user.last_name || '',
+        business_name: user.business_name || 'Unknown Business',
+        location: user.location || 'Unknown',
+        engagementScore: Math.min(100, engagementScore),
+        conversationCount,
+        conversationsPerDay,
+        daysSinceSignup,
+        daysSinceActivity: lastActivity,
+        tokensUsed,
+        totalCost: userConversations.reduce((sum, conv) => {
+          return sum + (conv.cost_breakdown?.totalCostUsd || 0)
+        }, 0)
+      }
+    }) || []
+
+    // Sort by engagement score for top users
+    userEngagementScores.sort((a, b) => b.engagementScore - a.engagementScore)
+
+    const avgEngagementScore = userEngagementScores.length > 0 
+      ? userEngagementScores.reduce((sum, user) => sum + user.engagementScore, 0) / userEngagementScores.length
+      : 0
+
+    // Upgrade candidates: high engagement + high usage
+    const upgradeCandidates = userEngagementScores.filter(user => 
+      user.engagementScore > 60 || 
+      user.tokensUsed > 200000 || 
+      user.conversationCount > 10 ||
+      user.totalCost > 2.0
+    )
+
+    // Feature usage analysis (mock data for now - would track actual feature usage)
+    const featureUsage = [
+      { feature: 'Chat Assistant', usage_count: totalConversations, unique_users: totalUsers, percentage: 100 },
+      { feature: 'Google Places', usage_count: Math.floor(totalConversations * 0.3), unique_users: Math.floor(totalUsers * 0.6), percentage: 30 },
+      { feature: 'Web Search', usage_count: Math.floor(totalConversations * 0.1), unique_users: Math.floor(totalUsers * 0.2), percentage: 10 },
+      { feature: 'Image Generation', usage_count: Math.floor(totalConversations * 0.05), unique_users: Math.floor(totalUsers * 0.1), percentage: 5 },
+      { feature: 'File Upload', usage_count: Math.floor(totalConversations * 0.02), unique_users: Math.floor(totalUsers * 0.05), percentage: 2 }
+    ].filter(f => f.usage_count > 0)
+
+    // Geographic distribution (from user locations)
+    const locationStats = userEngagementScores.reduce((acc, user) => {
+      const location = user.location || 'Unknown'
+      acc[location] = (acc[location] || 0) + 1
+      return acc
+    }, {} as Record<string, number>)
+
+    const geographicData = Object.entries(locationStats)
+      .map(([location, count]) => ({
+        location,
+        users: count,
+        percentage: totalUsers > 0 ? (count / totalUsers) * 100 : 0
+      }))
+      .sort((a, b) => b.users - a.users)
+      .slice(0, 10) // Top 10 locations
+
+    // Website analytics (mock data - would come from Google Analytics)
+    const websiteAnalytics = {
+      sessions: 1250,
+      users: 890,
+      pageviews: 3450,
+      bounceRate: 35.2,
+      avgSessionDuration: 145, // seconds
+      conversionRate: totalUsers > 0 ? (totalUsers / 890) * 100 : 0
+    }
+
+    // Conversion funnel
+    const conversionFunnel = {
+      visitorToSignup: websiteAnalytics.users > 0 ? (totalUsers / websiteAnalytics.users) * 100 : 0,
+      signupToActive: totalUsers > 0 ? (activeUsersWeek / totalUsers) * 100 : 0,
+      activeToPaid: activeUsersWeek > 0 ? (upgradeCandidates.length / activeUsersWeek) * 100 : 0,
+      overallConversion: websiteAnalytics.users > 0 ? (upgradeCandidates.length / websiteAnalytics.users) * 100 : 0
+    }
+
+    // Business insights generation
+    const insights = []
+
+    // Growth insights
+    if (totalUsers > 0) {
+      const retentionRate = (activeUsersWeek / totalUsers) * 100
+      if (retentionRate < 20) {
+        insights.push({
+          type: 'retention',
+          priority: 'high',
+          title: 'Low User Retention Alert',
+          description: `Only ${retentionRate.toFixed(1)}% of users were active this week. Consider improving onboarding and engagement.`,
+          action: 'Review user journey and add engagement features'
+        })
+      }
+    }
+
+    // Cost optimization insights
+    if (totalCostMonth > 50) {
+      const costPerUser = totalCostMonth / totalUsers
+      if (costPerUser > 2) {
+        insights.push({
+          type: 'cost',
+          priority: 'medium',
+          title: 'High Cost Per User',
+          description: `Average cost per user is $${costPerUser.toFixed(2)}/month. Consider optimizing model usage.`,
+          action: 'Implement smarter model routing and caching'
+        })
+      }
+    }
+
+    // Model usage insights
+    if (gpt4oPercentage > 70) {
+      insights.push({
+        type: 'optimization',
+        priority: 'medium',
+        title: 'Heavy GPT-4o Usage',
+        description: `${gpt4oPercentage.toFixed(1)}% of queries use GPT-4o. Consider routing simpler queries to GPT-4o-mini.`,
+        action: 'Enhance query complexity detection'
+      })
+    }
+
+    // Growth opportunities
+    if (upgradeCandidates.length > 0) {
+      insights.push({
+        type: 'growth',
+        priority: 'high',
+        title: 'Upgrade Opportunities',
+        description: `${upgradeCandidates.length} users show high engagement and may be ready for premium features.`,
+        action: 'Reach out with upgrade offers and premium feature previews'
+      })
+    }
+
+    // Usage pattern insights
+    const avgConversationsPerUser = totalUsers > 0 ? totalConversations / totalUsers : 0
+    if (avgConversationsPerUser < 2 && totalUsers > 0) {
+      insights.push({
+        type: 'engagement',
+        priority: 'medium',
+        title: 'Low User Engagement',
+        description: `Users average only ${avgConversationsPerUser.toFixed(1)} conversations. Improve onboarding and value demonstration.`,
+        action: 'Add guided tutorials and example use cases'
+      })
+    }
 
     return NextResponse.json({
       view: 'overview',
       summary: {
-        total_users: userJson.total_users || 0,
-        active_users_week: userJson.active_users_week || 0,
-        total_cost_today: costJson.today?.total_cost_usd || 0,
-        total_cost_month: costJson.month?.total_cost_usd || 0,
-        upgrade_candidates: userJson.upgrade_candidates || 0,
-        high_priority_alerts: recJson.summary?.high_priority || 0
+        total_users: totalUsers,
+        active_users_week: activeUsersWeek,
+        total_cost_today: totalCostToday,
+        total_cost_week: totalCostWeek,
+        total_cost_month: totalCostMonth,
+        upgrade_candidates: upgradeCandidates.length,
+        high_priority_alerts: insights.filter(i => i.priority === 'high').length,
+        total_conversations: totalConversations,
+        conversations_today: todayConversationsCount,
+        conversations_week: weekConversationsCount,
+        conversations_month: monthConversationsCount
       },
       quick_metrics: {
-        cost_per_user_today: userJson.total_users > 0 ? (costJson.today?.total_cost_usd || 0) / userJson.total_users : 0,
-        avg_engagement_score: userJson.users?.length > 0 ? userJson.users.reduce((acc: number, u: any) => acc + u.engagement_score, 0) / userJson.users.length : 0,
+        cost_per_user_today: totalUsers > 0 ? totalCostToday / totalUsers : 0,
+        cost_per_user_month: totalUsers > 0 ? totalCostMonth / totalUsers : 0,
+        avg_engagement_score: avgEngagementScore,
+        avg_conversations_per_user: avgConversationsPerUser,
+        avg_tokens_per_conversation: avgTokensPerConversation,
+        retention_rate_week: totalUsers > 0 ? (activeUsersWeek / totalUsers) * 100 : 0,
         model_usage: {
-          gpt4o_percentage: (costJson.today?.total_cost_usd || 0) > 0 ? ((costJson.today?.gpt4o_cost || 0) / costJson.today.total_cost_usd) * 100 : 0,
-          gpt4o_mini_percentage: (costJson.today?.total_cost_usd || 0) > 0 ? ((costJson.today?.gpt4o_mini_cost || 0) / costJson.today.total_cost_usd) * 100 : 0
+          gpt4o_percentage: gpt4oPercentage,
+          gpt4o_mini_percentage: gpt4oMiniPercentage,
+          total_model_calls: totalModelUsage
         }
       },
-      top_insights: recJson.recommendations?.slice(0, 3) || []
+      detailed_metrics: {
+        user_engagement_scores: userEngagementScores.slice(0, 10), // Top 10 users
+        cost_breakdown: {
+          today: totalCostToday,
+          week: totalCostWeek,
+          month: totalCostMonth
+        },
+        token_usage: {
+          total: totalTokensUsed,
+          average_per_conversation: avgTokensPerConversation,
+          average_per_user: totalUsers > 0 ? totalTokensUsed / totalUsers : 0
+        },
+        model_distribution: modelStats
+      },
+      website_analytics: websiteAnalytics,
+      conversion_funnel: conversionFunnel,
+      feature_usage: featureUsage,
+      geographic_data: geographicData,
+      top_insights: insights
     })
+
   } catch (error) {
     console.error('Overview analytics error:', error)
+    // Return comprehensive empty state with error info
     return NextResponse.json({
       view: 'overview',
+      error: error.message,
       summary: {
         total_users: 0,
         active_users_week: 0,
         total_cost_today: 0,
+        total_cost_week: 0,
         total_cost_month: 0,
         upgrade_candidates: 0,
-        high_priority_alerts: 0
+        high_priority_alerts: 1,
+        total_conversations: 0,
+        conversations_today: 0,
+        conversations_week: 0,
+        conversations_month: 0
       },
       quick_metrics: {
         cost_per_user_today: 0,
+        cost_per_user_month: 0,
         avg_engagement_score: 0,
+        avg_conversations_per_user: 0,
+        avg_tokens_per_conversation: 0,
+        retention_rate_week: 0,
         model_usage: {
           gpt4o_percentage: 0,
-          gpt4o_mini_percentage: 0
+          gpt4o_mini_percentage: 0,
+          total_model_calls: 0
         }
       },
-      top_insights: []
+      detailed_metrics: {
+        user_engagement_scores: [],
+        cost_breakdown: { today: 0, week: 0, month: 0 },
+        token_usage: { total: 0, average_per_conversation: 0, average_per_user: 0 },
+        model_distribution: {}
+      },
+      website_analytics: {
+        sessions: 0,
+        users: 0,
+        pageviews: 0,
+        bounceRate: 0,
+        avgSessionDuration: 0,
+        conversionRate: 0
+      },
+      conversion_funnel: {
+        visitorToSignup: 0,
+        signupToActive: 0,
+        activeToPaid: 0,
+        overallConversion: 0
+      },
+      feature_usage: [],
+      geographic_data: [],
+      top_insights: [{
+        type: 'error',
+        priority: 'high',
+        title: 'Analytics Error',
+        description: 'Unable to load analytics data. Check database connection.',
+        action: 'Contact technical support'
+      }]
     })
   }
 }

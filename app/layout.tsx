@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Dancing_Script } from 'next/font/google'
 import './globals.css'
 import 'highlight.js/styles/github-dark.css'
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-cursive' })
@@ -54,7 +55,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${dancingScript.variable}`}>{children}</body>
+      <body className={`${inter.className} ${dancingScript.variable}`}>
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
+        {children}
+      </body>
     </html>
   )
 }
