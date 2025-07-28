@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { getUser } from '@/lib/auth'
+import { sendWelcomeEmail } from '@/lib/email'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -131,6 +132,23 @@ export async function POST(request: NextRequest) {
         { error: 'Failed to create profile', details: error.message },
         { status: 500 }
       )
+    }
+
+    // Send welcome email after successful profile creation (OAuth flow)
+    if (!isAdmin) { // Don't send welcome email to admin accounts
+      const welcomeEmailResult = await sendWelcomeEmail(
+        data.email,
+        data.first_name,
+        data.business_name || 'Your Business',
+        data.trade || 'landscaping'
+      )
+      
+      if (!welcomeEmailResult.success) {
+        console.error('Failed to send welcome email to OAuth user:', welcomeEmailResult.error)
+        // Don't fail profile creation if welcome email fails
+      } else {
+        console.log('Welcome email sent successfully to OAuth user:', data.email)
+      }
     }
 
     return NextResponse.json({
