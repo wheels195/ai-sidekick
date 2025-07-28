@@ -467,13 +467,15 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
       user.totalCost > 2.0
     )
 
-    // Feature usage analysis (mock data for now - would track actual feature usage)
+    // Feature usage analysis - will be populated with real usage tracking data
     const featureUsage = [
-      { feature: 'Chat Assistant', usage_count: totalConversations, unique_users: totalUsers, percentage: 100 },
-      { feature: 'Google Places', usage_count: Math.floor(totalConversations * 0.3), unique_users: Math.floor(totalUsers * 0.6), percentage: 30 },
-      { feature: 'Web Search', usage_count: Math.floor(totalConversations * 0.1), unique_users: Math.floor(totalUsers * 0.2), percentage: 10 },
-      { feature: 'Image Generation', usage_count: Math.floor(totalConversations * 0.05), unique_users: Math.floor(totalUsers * 0.1), percentage: 5 },
-      { feature: 'File Upload', usage_count: Math.floor(totalConversations * 0.02), unique_users: Math.floor(totalUsers * 0.05), percentage: 2 }
+      { 
+        feature: 'Chat Assistant', 
+        usage_count: totalConversations, 
+        unique_users: totalUsers, 
+        percentage: totalConversations > 0 ? 100 : 0 
+      }
+      // Additional features will be tracked with real usage data
     ].filter(f => f.usage_count > 0)
 
     // Geographic distribution (from user locations)
@@ -492,23 +494,50 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
       .sort((a, b) => b.users - a.users)
       .slice(0, 10) // Top 10 locations
 
-    // Website analytics (placeholder - real data comes from Google Analytics)
-    // Note: These are placeholder values. Real GA data requires server-side GA API integration
-    const websiteAnalytics = {
-      sessions: 0, // Will be populated from Google Analytics Reporting API
-      users: 0,    // Will be populated from Google Analytics Reporting API
-      pageviews: 0, // Will be populated from Google Analytics Reporting API
-      bounceRate: 0, // Will be populated from Google Analytics Reporting API
-      avgSessionDuration: 0, // Will be populated from Google Analytics Reporting API
-      conversionRate: 0 // Will be calculated from real GA data
+    // Enhanced Daily/Weekly/Monthly Analytics with Real Data
+    const dailyAnalytics = {
+      users_active: activeUsersWeek, // Users active in last 7 days (closest to daily active)
+      conversations: todayConversationsCount,
+      total_cost: totalCostToday,
+      new_signups: allUsers?.filter(user => {
+        const signupDate = new Date(user.created_at)
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return signupDate >= today
+      }).length || 0
     }
 
-    // Conversion funnel (using app data until GA API is integrated)
+    const weeklyAnalytics = {
+      users_active: activeUsersWeek,
+      conversations: weekConversationsCount,
+      total_cost: totalCostWeek,
+      new_signups: allUsers?.filter(user => {
+        const signupDate = new Date(user.created_at)
+        const weekAgo = new Date(dates.weekAgo)
+        return signupDate >= weekAgo
+      }).length || 0
+    }
+
+    const monthlyAnalytics = {
+      users_active: allUsers?.filter(user => {
+        const lastActivity = user.last_activity_at ? new Date(user.last_activity_at) : null
+        const monthAgo = new Date(dates.monthAgo)
+        return lastActivity && lastActivity >= monthAgo
+      }).length || 0,
+      conversations: monthConversationsCount,
+      total_cost: totalCostMonth,
+      new_signups: allUsers?.filter(user => {
+        const signupDate = new Date(user.created_at)
+        const monthAgo = new Date(dates.monthAgo)
+        return signupDate >= monthAgo
+      }).length || 0
+    }
+
+    // App conversion funnel (based on real user data)
     const conversionFunnel = {
-      visitorToSignup: 0, // Will calculate from GA data: (totalUsers / GA_users) * 100
       signupToActive: totalUsers > 0 ? (activeUsersWeek / totalUsers) * 100 : 0,
       activeToPaid: activeUsersWeek > 0 ? (upgradeCandidates.length / activeUsersWeek) * 100 : 0,
-      overallConversion: 0 // Will calculate from GA data: (upgradeCandidates / GA_users) * 100
+      newUserRetention: dailyAnalytics.new_signups > 0 ? (dailyAnalytics.users_active / Math.max(1, totalUsers)) * 100 : 0
     }
 
     // Business insights generation
@@ -618,7 +647,9 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
         },
         model_distribution: modelStats
       },
-      website_analytics: websiteAnalytics,
+      daily_analytics: dailyAnalytics,
+      weekly_analytics: weeklyAnalytics,
+      monthly_analytics: monthlyAnalytics,
       conversion_funnel: conversionFunnel,
       feature_usage: featureUsage,
       geographic_data: geographicData,

@@ -56,19 +56,28 @@ interface AnalyticsData {
     }
     model_distribution: Record<string, number>
   }
-  website_analytics?: {
-    sessions: number
-    users: number
-    pageviews: number
-    bounceRate: number
-    avgSessionDuration: number
-    conversionRate: number
+  daily_analytics?: {
+    users_active: number
+    conversations: number
+    total_cost: number
+    new_signups: number
+  }
+  weekly_analytics?: {
+    users_active: number
+    conversations: number
+    total_cost: number
+    new_signups: number
+  }
+  monthly_analytics?: {
+    users_active: number
+    conversations: number
+    total_cost: number
+    new_signups: number
   }
   conversion_funnel?: {
-    visitorToSignup: number
     signupToActive: number
     activeToPaid: number
-    overallConversion: number
+    newUserRetention: number
   }
   feature_usage?: Array<{
     feature: string
@@ -299,94 +308,98 @@ export default function AdminAnalyticsPage() {
             </Card>
           </div>
 
-          {/* Website Analytics Section */}
-          {data.website_analytics && (
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              <Card className="backdrop-blur-2xl bg-indigo-900/40 border-indigo-500/30 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-indigo-300 text-sm font-medium">Website Sessions</p>
-                      <p className="text-2xl font-bold text-white">{data.website_analytics.sessions.toLocaleString()}</p>
-                    </div>
-                    <div className="w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center">
-                      <Globe className="w-5 h-5 text-indigo-400" />
-                    </div>
+          {/* Daily/Weekly/Monthly Analytics Trackers */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Daily Analytics */}
+            {data.daily_analytics && (
+              <Card className="backdrop-blur-2xl bg-blue-900/40 border-blue-500/30 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Daily Analytics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-300">Active Users</span>
+                    <span className="text-white font-semibold">{data.daily_analytics.users_active}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-300">Conversations</span>
+                    <span className="text-white font-semibold">{data.daily_analytics.conversations}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-300">Total Cost</span>
+                    <span className="text-white font-semibold">${data.daily_analytics.total_cost.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-300">New Signups</span>
+                    <span className="text-white font-semibold">{data.daily_analytics.new_signups}</span>
                   </div>
                 </CardContent>
               </Card>
+            )}
 
-              <Card className="backdrop-blur-2xl bg-pink-900/40 border-pink-500/30 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-pink-300 text-sm font-medium">Website Users</p>
-                      <p className="text-2xl font-bold text-white">{data.website_analytics.users.toLocaleString()}</p>
-                    </div>
-                    <div className="w-10 h-10 bg-pink-500/20 rounded-lg flex items-center justify-center">
-                      <Users className="w-5 h-5 text-pink-400" />
-                    </div>
+            {/* Weekly Analytics */}
+            {data.weekly_analytics && (
+              <Card className="backdrop-blur-2xl bg-emerald-900/40 border-emerald-500/30 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <TrendingUp className="w-5 h-5 mr-2" />
+                    Weekly Analytics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-emerald-300">Active Users</span>
+                    <span className="text-white font-semibold">{data.weekly_analytics.users_active}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-emerald-300">Conversations</span>
+                    <span className="text-white font-semibold">{data.weekly_analytics.conversations}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-emerald-300">Total Cost</span>
+                    <span className="text-white font-semibold">${data.weekly_analytics.total_cost.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-emerald-300">New Signups</span>
+                    <span className="text-white font-semibold">{data.weekly_analytics.new_signups}</span>
                   </div>
                 </CardContent>
               </Card>
+            )}
 
-              <Card className="backdrop-blur-2xl bg-orange-900/40 border-orange-500/30 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-orange-300 text-sm font-medium">Page Views</p>
-                      <p className="text-2xl font-bold text-white">{data.website_analytics.pageviews.toLocaleString()}</p>
-                    </div>
-                    <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
-                      <Eye className="w-5 h-5 text-orange-400" />
-                    </div>
+            {/* Monthly Analytics */}
+            {data.monthly_analytics && (
+              <Card className="backdrop-blur-2xl bg-purple-900/40 border-purple-500/30 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <BarChart3 className="w-5 h-5 mr-2" />
+                    Monthly Analytics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-purple-300">Active Users</span>
+                    <span className="text-white font-semibold">{data.monthly_analytics.users_active}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-purple-300">Conversations</span>
+                    <span className="text-white font-semibold">{data.monthly_analytics.conversations}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-purple-300">Total Cost</span>
+                    <span className="text-white font-semibold">${data.monthly_analytics.total_cost.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-purple-300">New Signups</span>
+                    <span className="text-white font-semibold">{data.monthly_analytics.new_signups}</span>
                   </div>
                 </CardContent>
               </Card>
-
-              <Card className="backdrop-blur-2xl bg-teal-900/40 border-teal-500/30 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-teal-300 text-sm font-medium">Bounce Rate</p>
-                      <p className="text-2xl font-bold text-white">{data.website_analytics.bounceRate.toFixed(1)}%</p>
-                    </div>
-                    <div className="w-10 h-10 bg-teal-500/20 rounded-lg flex items-center justify-center">
-                      <MousePointer className="w-5 h-5 text-teal-400" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="backdrop-blur-2xl bg-lime-900/40 border-lime-500/30 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-lime-300 text-sm font-medium">Avg Session</p>
-                      <p className="text-2xl font-bold text-white">{Math.round(data.website_analytics.avgSessionDuration / 60)}m</p>
-                    </div>
-                    <div className="w-10 h-10 bg-lime-500/20 rounded-lg flex items-center justify-center">
-                      <Clock className="w-5 h-5 text-lime-400" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="backdrop-blur-2xl bg-rose-900/40 border-rose-500/30 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-rose-300 text-sm font-medium">Conversion Rate</p>
-                      <p className="text-2xl font-bold text-white">{data.website_analytics.conversionRate.toFixed(2)}%</p>
-                    </div>
-                    <div className="w-10 h-10 bg-rose-500/20 rounded-lg flex items-center justify-center">
-                      <Target className="w-5 h-5 text-rose-400" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Conversion Funnel */}
           {data.conversion_funnel && (
@@ -398,22 +411,18 @@ export default function AdminAnalyticsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-400">{data.conversion_funnel.visitorToSignup.toFixed(1)}%</div>
-                    <div className="text-sm text-gray-300">Visitor → Signup</div>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-emerald-400">{data.conversion_funnel.signupToActive.toFixed(1)}%</div>
                     <div className="text-sm text-gray-300">Signup → Active</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-purple-400">{data.conversion_funnel.activeToPaid.toFixed(1)}%</div>
-                    <div className="text-sm text-gray-300">Active → Paid</div>
+                    <div className="text-sm text-gray-300">Active → Upgrade Candidate</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-400">{data.conversion_funnel.overallConversion.toFixed(2)}%</div>
-                    <div className="text-sm text-gray-300">Overall Conversion</div>
+                    <div className="text-2xl font-bold text-amber-400">{data.conversion_funnel.newUserRetention.toFixed(1)}%</div>
+                    <div className="text-sm text-gray-300">New User Retention</div>
                   </div>
                 </div>
               </CardContent>
