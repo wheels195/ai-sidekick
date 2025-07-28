@@ -797,8 +797,34 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           if (response.ok) {
             const data = await response.json()
             
-            // Get the most recent conversation session
+            // Load saved conversations for sidebar
             if (data.sessions && data.sessions.length > 0) {
+              const conversations: SavedConversation[] = data.sessions.map((session: any) => ({
+                id: session.sessionId,
+                title: session.title,
+                messages: session.messages.map((msg: any) => ({
+                  id: msg.id,
+                  role: msg.role,
+                  content: msg.content,
+                  timestamp: new Date(msg.timestamp),
+                  modelUsed: msg.modelUsed
+                })),
+                createdAt: new Date(session.createdAt),
+                updatedAt: new Date(session.updatedAt)
+              }))
+              
+              setSavedConversations(conversations)
+              
+              // Update welcome message for returning users with conversations
+              if (conversations.length > 0 && messages[0]?.role === 'assistant') {
+                const updatedGreeting = `<span class="text-white">Hey ${user.firstName || 'there'}! What are we working on today?</span>`
+                setMessages(prevMessages => [
+                  { ...prevMessages[0], content: updatedGreeting },
+                  ...prevMessages.slice(1)
+                ])
+              }
+              
+              // Get the most recent conversation session for current chat
               const latestSession = data.sessions[0]
               
               // Convert to the format expected by the frontend
