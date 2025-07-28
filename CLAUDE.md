@@ -123,18 +123,23 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 
 #### Critical Launch Items
 1. ✅ **Production Domain Setup** - Environment variables already point to ai-sidekick.io
-2. **Error Monitoring** - Add Sentry or similar for production error tracking  
-3. **API Rate Limiting** - Implement usage limits to prevent abuse
+2. **🚨 URGENT: Email Templates & Flow Redesign** - Current email UI doesn't match website glassmorphism/branding
+   - Welcome and verification emails need complete UI overhaul
+   - Must match exact website styling: proper glassmorphism, cursive "AI Sidekick" font, gradient buttons
+   - User reported emails look "terrible" and don't match website UI whatsoever
+   - Unsubscribe page also needs styling fixes
+3. **Error Monitoring** - Add Sentry or similar for production error tracking  
+4. **API Rate Limiting** - Implement usage limits to prevent abuse
 
 #### Polish & Performance  
-4. ✅ **Mobile category flashing** - Fixed page load flashing on chat tools
-5. ✅ **Learn page mobile width** - Optimized /learn page for mobile devices
-6. **Performance audit** - Optional: Lighthouse optimization and Core Web Vitals (can be done post-launch)
+5. ✅ **Mobile category flashing** - Fixed page load flashing on chat tools
+6. ✅ **Learn page mobile width** - Optimized /learn page for mobile devices
+7. **Performance audit** - Optional: Lighthouse optimization and Core Web Vitals (can be done post-launch)
 
 #### Growth & Monetization
-7. **Pricing tiers** - Implement subscription plans and upgrade flows
-8. **Payment integration** - Stripe or similar for billing
-9. **User onboarding** - Guided tutorial for new users
+8. **Pricing tiers** - Implement subscription plans and upgrade flows
+9. **Payment integration** - Stripe or similar for billing
+10. **User onboarding** - Guided tutorial for new users
 
 ### 🔮 FUTURE ENHANCEMENTS (Post-Launch)
 
