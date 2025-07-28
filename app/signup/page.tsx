@@ -963,6 +963,20 @@ export default function SignupPage() {
                       </div>
                     )}
                   </Button>
+                  
+                  {/* Email consent disclaimer */}
+                  {!isUpgradeMode && (
+                    <p className="text-xs text-gray-400 mt-3 leading-relaxed">
+                      By creating an account, you agree to receive occasional product updates, tips, and newsletters. 
+                      You can <button 
+                        type="button" 
+                        onClick={() => window.open('/unsubscribe', '_blank')} 
+                        className="text-emerald-400 hover:text-emerald-300 underline"
+                      >
+                        unsubscribe anytime
+                      </button>.
+                    </p>
+                  )}
                 </div>
 
                 <div className="text-center">

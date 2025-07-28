@@ -9,49 +9,54 @@ export async function sendVerificationEmail(email: string, verificationToken: st
     const { data, error } = await resend.emails.send({
       from: 'AI Sidekick <no-reply@ai-sidekick.io>',
       to: [email],
-      subject: 'Verify your email address - AI Sidekick',
+      subject: '✅ Let\'s unlock your Sidekick - AI Sidekick',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #10b981, #0891b2); padding: 40px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>!</h1>
-            <p style="color: white; margin: 10px 0 0 0; opacity: 0.9;">Your specialized landscaping business assistant</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0b0b0b;">
+          <!-- Header with dark theme and gradient accent -->
+          <div style="background: #0b0b0b; border-bottom: 3px solid; border-image: linear-gradient(to right, #8b5cf6, #60a5fa) 1; padding: 30px 20px; text-align: center;">
+            <h1 style="font-size: 28px; font-weight: 700; color: white; margin: 0;">🌱 Welcome to <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span>!</h1>
+            <p style="color: #34d399; margin: 8px 0 0 0; font-weight: 500;">Your full-time landscaping business partner</p>
           </div>
           
-          <div style="padding: 40px 20px; background: #f9fafb;">
-            <h2 style="color: #1f2937; margin-bottom: 20px;">Verify your email address</h2>
-            <p style="color: #4b5563; line-height: 1.6; margin-bottom: 30px;">
-              Thanks for signing up! Please click the button below to verify your email and unlock expert tools to grow your landscaping business.
+          <!-- Main content with dark background -->
+          <div style="padding: 30px 20px; background: #111111; color: #ffffff;">
+            <h2 style="color: #34d399; margin: 0 0 16px 0; font-size: 22px; font-weight: 600;">✅ Let's unlock your Sidekick</h2>
+            <p style="color: #ffffff; line-height: 1.5; margin: 0 0 24px 0; font-size: 16px;">
+              One quick step and you'll have instant access to expert insights, local market intelligence, and tactical growth strategies.
             </p>
             
-            <div style="text-align: center; margin: 30px 0;">
+            <!-- Bold CTA Button -->
+            <div style="text-align: center; margin: 24px 0;">
               <a href="${verificationUrl}" 
-                 style="background: linear-gradient(135deg, #10b981, #0891b2); 
-                        color: white; 
-                        padding: 15px 30px; 
+                 style="background-color: #34d399; 
+                        color: #0b0b0b; 
+                        padding: 12px 24px; 
                         text-decoration: none; 
                         border-radius: 8px; 
-                        font-weight: bold;
-                        display: inline-block;">
-                ✅ Verify Email Address
+                        font-weight: 600;
+                        font-size: 16px;
+                        display: inline-block;
+                        min-width: 160px;">
+                ✅ Verify My Email
               </a>
             </div>
             
-            <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
-              If the button doesn't work, copy and paste this link into your browser:<br>
-              <a href="${verificationUrl}" style="color: #10b981;">${verificationUrl}</a>
-            </p>
+            <!-- Backup link with better styling -->
+            <div style="background: #1a1a1a; padding: 16px; border-radius: 6px; margin: 24px 0; border-left: 3px solid #34d399;">
+              <p style="color: #999999; font-size: 13px; margin: 0 0 8px 0;">Button not working? Copy this link:</p>
+              <a href="${verificationUrl}" style="color: #34d399; word-break: break-all; font-size: 13px;">${verificationUrl}</a>
+            </div>
             
-            <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
-              This link expires in 24 hours.<br>
-              Didn't sign up? You can safely ignore this email.
+            <p style="color: #999999; font-size: 13px; margin: 20px 0 0 0;">
+              ⏰ This link expires in 24 hours • Didn't sign up? You can safely ignore this email.
             </p>
           </div>
           
-          <div style="background: #1f2937; padding: 20px; text-align: center;">
-            <p style="color: #9ca3af; margin: 0; font-size: 14px;">
-              © 2025 <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>. All rights reserved.
-            </p>
-          </div>
+          <!-- Dark footer with links -->
+          <footer style="background: #0b0b0b; color: #999999; padding: 20px; text-align: center; font-size: 12px;">
+            © 2025 <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span>. All rights reserved.<br/>
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/terms" style="color:#34d399; text-decoration: none;">Terms</a> | <a href="${process.env.NEXT_PUBLIC_SITE_URL}/privacy" style="color:#34d399; text-decoration: none;">Privacy</a>
+          </footer>
         </div>
       `,
     });
@@ -73,59 +78,68 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
     const { data, error } = await resend.emails.send({
       from: 'AI Sidekick <no-reply@ai-sidekick.io>',
       to: [email],
-      subject: `Welcome to AI Sidekick, ${businessName}! 🌱`,
+      subject: `🌱 ${businessName}, your Sidekick is ready to work`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #10b981, #0891b2); padding: 40px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>!</h1>
-            <p style="color: white; margin: 10px 0 0 0; opacity: 0.9;">Your ${trade} business growth partner</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0b0b0b;">
+          <!-- Header with dark theme and gradient accent -->
+          <div style="background: #0b0b0b; border-bottom: 3px solid; border-image: linear-gradient(to right, #8b5cf6, #60a5fa) 1; padding: 30px 20px; text-align: center;">
+            <h1 style="font-size: 28px; font-weight: 700; color: white; margin: 0;">🌱 Welcome to <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span>!</h1>
+            <p style="color: #34d399; margin: 8px 0 0 0; font-weight: 500;">Your full-time ${trade} business partner</p>
           </div>
           
-          <div style="padding: 40px 20px; background: #f9fafb;">
-            <h2 style="color: #1f2937; margin-bottom: 20px;">Hi ${firstName}! 👋</h2>
-            <p style="color: #4b5563; line-height: 1.6; margin-bottom: 30px;">
-              You're all set up — your <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span> is ready to help you grow with expert insights and time-saving tools, including:
+          <!-- Main content with dark background -->
+          <div style="padding: 30px 20px; background: #111111; color: #ffffff;">
+            <h2 style="color: #ffffff; margin: 0 0 16px 0; font-size: 22px; font-weight: 600;">Hi ${firstName}! 👋</h2>
+            <p style="color: #ffffff; line-height: 1.5; margin: 0 0 20px 0; font-size: 16px;">
+              You're locked and loaded. Your <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span> has instant access to tactical growth strategies:
             </p>
             
-            <ul style="color: #4b5563; line-height: 1.8; margin-bottom: 30px;">
-              <li>🚀 Local SEO & Google ranking strategies</li>
-              <li>💰 Pricing and upselling recommendations</li>
-              <li>📝 Website and social media content creation</li>
-              <li>⭐ Getting more 5-star reviews</li>
-              <li>📈 Seasonal planning for consistent revenue</li>
-              <li>📊 Competitive insights and local market analysis</li>
+            <!-- Feature list with emojis and tighter spacing -->
+            <ul style="color: #ffffff; line-height: 1.4; margin: 0 0 24px 0; padding-left: 20px; list-style: none;">
+              <li style="margin: 0 0 8px 0;">📈 Pricing & upsell strategies</li>
+              <li style="margin: 0 0 8px 0;">📍 Local SEO & Google rankings</li>
+              <li style="margin: 0 0 8px 0;">🧠 Smart business suggestions</li>
+              <li style="margin: 0 0 8px 0;">📸 AI-powered image ideas</li>
+              <li style="margin: 0 0 8px 0;">⭐ Review generation tactics</li>
+              <li style="margin: 0 0 8px 0;">🎯 Competitive intelligence</li>
             </ul>
             
-            <div style="text-align: center; margin: 30px 0;">
+            <!-- Magic line -->
+            <div style="background: #1a1a1a; padding: 16px; border-radius: 6px; margin: 24px 0; border-left: 3px solid #34d399;">
+              <p style="color: #ffffff; margin: 0; line-height: 1.4; font-weight: 500;">
+                Your <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span> is ready. Just ask, "How can I double my landscaping leads in [your ZIP]?" — and watch it work.
+              </p>
+            </div>
+            
+            <!-- Bold CTA Button -->
+            <div style="text-align: center; margin: 24px 0;">
               <a href="${process.env.NEXT_PUBLIC_SITE_URL}/landscaping" 
-                 style="background: linear-gradient(135deg, #10b981, #0891b2); 
-                        color: white; 
-                        padding: 15px 30px; 
+                 style="background-color: #34d399; 
+                        color: #0b0b0b; 
+                        padding: 14px 28px; 
                         text-decoration: none; 
                         border-radius: 8px; 
-                        font-weight: bold;
-                        display: inline-block;">
-                ✅ Start Chatting Now
+                        font-weight: 600;
+                        font-size: 16px;
+                        display: inline-block;
+                        min-width: 180px;">
+                🚀 Start Growing Now
               </a>
             </div>
             
-            <div style="background: #e5f3ff; padding: 20px; border-radius: 8px; margin: 30px 0;">
-              <h3 style="color: #1f2937; margin: 0 0 10px 0;">💡 Pro Tip:</h3>
-              <p style="color: #4b5563; margin: 0; line-height: 1.6; font-style: italic;">
-                Ask: "What are 3 things I should fix right now to get more landscaping leads in [your city]?"<br>
-                The more local detail you give, the better your Sidekick can guide you.
-              </p>
-            </div>
+            <p style="color: #999999; font-size: 13px; margin: 20px 0 0 0; text-align: center;">
+              Questions? Just reply to this email — we're here to help! 💪
+            </p>
           </div>
           
-          <div style="background: #1f2937; padding: 20px; text-align: center;">
-            <p style="color: #9ca3af; margin: 0 0 10px 0; font-size: 14px;">
-              Have questions? Just reply to this email — we're here to help!
+          <!-- Dark footer with links -->
+          <footer style="background: #0b0b0b; color: #999999; padding: 20px; text-align: center; font-size: 12px;">
+            © 2025 <span style="font-family: 'Dancing Script', cursive; color: #34d399;">AI Sidekick</span>. All rights reserved.<br/>
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/terms" style="color:#34d399; text-decoration: none;">Terms</a> | <a href="${process.env.NEXT_PUBLIC_SITE_URL}/privacy" style="color:#34d399; text-decoration: none;">Privacy</a><br/>
+            <p style="font-size: 12px; color: #999999; margin: 8px 0 0 0;">
+              Want fewer emails? <a href="${process.env.NEXT_PUBLIC_SITE_URL}/unsubscribe?email=${encodeURIComponent(email)}" style="color:#34d399; text-decoration: none;">Unsubscribe here</a>.
             </p>
-            <p style="color: #9ca3af; margin: 0; font-size: 14px;">
-              © 2025 <span style="font-family: 'Dancing Script', cursive;">AI Sidekick</span>. All rights reserved.
-            </p>
-          </div>
+          </footer>
         </div>
       `,
     });
