@@ -28,9 +28,15 @@ function AuthCallbackContent() {
         const pkceVerifier = localStorage.getItem('supabase.auth.verifier') || localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token')
         console.log('PKCE verifier in localStorage:', pkceVerifier ? 'EXISTS' : 'MISSING')
         
-        // Check all localStorage keys
+        // Check all localStorage keys and log their values
         const storageKeys = Object.keys(localStorage).filter(key => key.includes('supabase') || key.includes('sb-'))
         console.log('Supabase localStorage keys:', storageKeys)
+        
+        // Log all localStorage values to find the exact verifier key
+        storageKeys.forEach(key => {
+          const value = localStorage.getItem(key)
+          console.log(`localStorage[${key}]:`, value ? value.substring(0, 50) + '...' : 'null')
+        })
         
         // Get URL params
         const urlParams = new URLSearchParams(window.location.search)
@@ -71,10 +77,9 @@ function AuthCallbackContent() {
           return
         }
         
-        const { data, error } = await supabase.auth.exchangeCodeForSession({
-          auth_code: code,
-          code_verifier: codeVerifier
-        })
+        // Try the correct Supabase method signature - just pass the code string
+        // Supabase should automatically find the verifier from localStorage
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
         
         console.log('Exchange result:', { 
           hasSession: !!data.session, 
