@@ -30,6 +30,20 @@ function LoginForm() {
       setSuccessMessage('Email verified successfully! You can now log in.')
     }
 
+    // Check for OAuth errors
+    const error = searchParams.get('error')
+    const message = searchParams.get('message')
+    if (error) {
+      const errorMessages = {
+        'auth_failed': 'Authentication failed. Please try again.',
+        'oauth_error': message || 'OAuth authentication failed.',
+        'session_exchange_failed': `Session creation failed: ${message || 'Unknown error'}`,
+        'no_auth_code': 'No authentication code received from Google.',
+        'callback_exception': `Authentication error: ${message || 'Unknown error'}`
+      }
+      setErrors({ submit: errorMessages[error as keyof typeof errorMessages] || `Authentication error: ${error}` })
+    }
+
     // Load remembered email if available
     const rememberedEmail = localStorage.getItem('rememberedEmail')
     const isRemembered = localStorage.getItem('rememberMe') === 'true'
