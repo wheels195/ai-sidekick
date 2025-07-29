@@ -132,9 +132,9 @@ function LoginForm() {
     }
 
     try {
-      // Use the server-side callback (matches current Supabase setting)
+      // Use direct client callback - Supabase built-in OAuth handler
       const intendedRedirect = searchParams.get('redirect') || '/landscaping'
-      const redirectUrl = `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
+      const redirectUrl = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
       console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({

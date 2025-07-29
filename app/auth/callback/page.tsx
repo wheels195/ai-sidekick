@@ -47,64 +47,26 @@ function AuthCallbackContent() {
           return
         }
 
-        let sessionData = null
-
-        if (code) {
-          // Manual code exchange with client-side verifier
-          console.log('Performing manual PKCE exchange with client verifier...')
-          
-          try {
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-            
-            console.log('Manual exchange result:', { 
-              hasSession: !!data.session, 
-              error: error?.message,
-              user: data.session?.user?.email 
-            })
-            
-            if (error) {
-              console.error('Manual exchange error:', error)
-              setError(error.message)
-              setStatus('error')
-              setTimeout(() => router.push('/login?error=manual_exchange_failed'), 2000)
-              return
-            }
-            
-            sessionData = data
-          } catch (error) {
-            console.error('Manual exchange exception:', error)
-            setError('Code exchange failed')
-            setStatus('error')
-            setTimeout(() => router.push('/login?error=exchange_exception'), 2000)
-            return
-          }
-        } else {
-          // Let Supabase automatically handle the callback
-          console.log('No code param - waiting for Supabase auto-process...')
-          
-          // Multiple attempts to get session
-          let attempts = 0
-          
-          while (attempts < 3 && !sessionData?.session) {
-            attempts++
-            console.log(`Session attempt ${attempts}...`)
-            
-            await new Promise(resolve => setTimeout(resolve, 1000))
-            
-            const { data, error } = await supabase.auth.getSession()
-            sessionData = data
-            
-            console.log(`Attempt ${attempts} result:`, { 
-              hasSession: !!data.session, 
-              error: error?.message,
-              user: data.session?.user?.email 
-            })
-            
-            if (error) {
-              console.error(`Attempt ${attempts} error:`, error)
-            }
-          }
+        // Use Supabase's built-in OAuth handler - this includes the code verifier!
+        console.log('Using Supabase getSessionFromUrl() - includes code verifier...')
+        
+        const { data, error } = await supabase.auth.getSessionFromUrl()
+        
+        console.log('getSessionFromUrl result:', { 
+          hasSession: !!data.session, 
+          error: error?.message,
+          user: data.session?.user?.email 
+        })
+        
+        if (error) {
+          console.error('OAuth session error:', error)
+          setError(error.message)
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=session_from_url_failed'), 2000)
+          return
         }
+        
+        const sessionData = data
         
         // Handle final result
         if (sessionData?.session) {
