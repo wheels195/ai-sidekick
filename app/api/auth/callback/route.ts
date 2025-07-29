@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
   if (code) {
     console.log('Code parameter found, attempting to exchange for session')
-    const supabase = createRouteHandlerClient({ cookies })
+    const { supabase } = createClient(request)
     
     const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code)
     

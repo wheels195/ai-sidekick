@@ -7,12 +7,12 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Sparkles, ArrowLeft, Eye, EyeOff, LogIn } from "lucide-react"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '@/lib/supabase/client'
 
 function LoginForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const supabase = createClientComponentClient()
+  // supabase is imported from our configured client
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -118,8 +118,9 @@ function LoginForm() {
     }
 
     try {
-      // Use the proper OAuth callback route
-      const redirectUrl = `${window.location.origin}/api/auth/callback`
+      // Use the proper OAuth callback route with redirect parameter
+      const intendedRedirect = searchParams.get('redirect') || '/landscaping'
+      const redirectUrl = `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
       console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
