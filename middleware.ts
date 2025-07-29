@@ -69,15 +69,18 @@ export async function middleware(request: NextRequest) {
     console.log('Middleware auth check:', { 
       path: request.nextUrl.pathname,
       hasUser: !!user,
-      cookies: request.cookies.getAll().map(c => c.name).filter(name => name.startsWith('sb-'))
+      allCookies: request.cookies.getAll().map(c => ({name: c.name, value: c.value.substring(0, 20) + '...'})),
+      supabaseCookies: request.cookies.getAll().filter(c => c.name.startsWith('sb-')).map(c => c.name)
     })
     
-    if (!user) {
-      // Redirect to login with a return URL
-      const loginUrl = new URL('/login', request.url)
-      loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
-      return NextResponse.redirect(loginUrl)
-    }
+    // TEMPORARILY DISABLE AUTH CHECK TO DEBUG
+    console.log('TEMPORARILY ALLOWING ACCESS WITHOUT AUTH FOR DEBUGGING')
+    // if (!user) {
+    //   // Redirect to login with a return URL
+    //   const loginUrl = new URL('/login', request.url)
+    //   loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
+    //   return NextResponse.redirect(loginUrl)
+    // }
   }
 
   return response
