@@ -16,7 +16,7 @@ function verifyAdminAccess(request: NextRequest) {
 
 // Define admin user emails to exclude from regular analytics
 const ADMIN_EMAILS = [
-  'wheelsjoseph@gmail.com', // Your email
+  'admin@ai-sidekick.io', // Your email
   // Add other admin emails here if needed
 ]
 
