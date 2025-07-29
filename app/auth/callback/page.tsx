@@ -38,6 +38,38 @@ function AuthCallbackContent() {
           console.log(`localStorage[${key}]:`, value ? value.substring(0, 50) + '...' : 'null')
         })
         
+        // First check if we already have a valid session
+        console.log('Checking for existing session...')
+        const { data: existingSession, error: sessionError } = await supabase.auth.getSession()
+        
+        if (existingSession?.session && !sessionError) {
+          console.log('Valid session already exists, proceeding with redirect')
+          const sessionData = existingSession
+          
+          // Check if user has a profile
+          const { data: profile, error: profileError } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('id', sessionData.session.user.id)
+            .single()
+
+          if (profileError && profileError.code !== 'PGRST116') {
+            console.error('Profile check error:', profileError)
+          }
+
+          setStatus('success')
+          
+          // Immediate redirect without timeout
+          if (!profile) {
+            console.log('No profile found, redirecting to profile completion')
+            window.location.href = `/signup/complete?email=${sessionData.session.user.email}`
+          } else {
+            console.log('Profile found, redirecting to:', redirect)
+            window.location.href = redirect
+          }
+          return
+        }
+
         // Get URL params
         const urlParams = new URLSearchParams(window.location.search)
         const code = urlParams.get('code')
@@ -52,9 +84,6 @@ function AuthCallbackContent() {
           setTimeout(() => router.push('/login?error=oauth_error'), 2000)
           return
         }
-
-        // Manual exchange using the code verifier we found in localStorage
-        console.log('Performing manual exchange with found verifier...')
         
         if (!code) {
           setError('No OAuth code received')
