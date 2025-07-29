@@ -38,58 +38,6 @@ function AuthCallbackContent() {
           console.log(`localStorage[${key}]:`, value ? value.substring(0, 50) + '...' : 'null')
         })
         
-        // First check if we already have a valid session
-        console.log('Checking for existing session...')
-        const { data: existingSession, error: sessionError } = await supabase.auth.getSession()
-        
-        if (existingSession?.session && !sessionError) {
-          console.log('Valid session already exists, ensuring cookies are set...')
-          const sessionData = existingSession
-          
-          // Force session refresh to ensure cookies are set properly
-          console.log('Refreshing session to set cookies...')
-          await supabase.auth.refreshSession()
-          
-          // Make a server request to ensure session is recognized server-side
-          console.log('Making server request to verify session...')
-          try {
-            const response = await fetch('/api/auth/verify-session', {
-              method: 'POST',
-              credentials: 'include',
-              headers: {
-                'Content-Type': 'application/json',
-              }
-            })
-            const result = await response.json()
-            console.log('Server session verification:', result)
-          } catch (error) {
-            console.error('Session verification error:', error)
-          }
-          
-          // Check if user has a profile
-          const { data: profile, error: profileError } = await supabase
-            .from('user_profiles')
-            .select('*')
-            .eq('id', sessionData.session.user.id)
-            .single()
-
-          if (profileError && profileError.code !== 'PGRST116') {
-            console.error('Profile check error:', profileError)
-          }
-
-          setStatus('success')
-          
-          // Use Next.js router for proper session handling
-          if (!profile) {
-            console.log('No profile found, redirecting to profile completion')
-            router.push(`/signup/complete?email=${sessionData.session.user.email}`)
-          } else {
-            console.log('Profile found, redirecting to:', redirect)
-            router.push(redirect)
-          }
-          return
-        }
-
         // Get URL params
         const urlParams = new URLSearchParams(window.location.search)
         const code = urlParams.get('code')
@@ -112,7 +60,7 @@ function AuthCallbackContent() {
           return
         }
         
-        // Redirect to server-side callback for proper session handling
+        // Always redirect to server-side handler for proper cookie management
         console.log('Redirecting to server-side callback for proper session handling...')
         
         const serverCallbackUrl = `/api/auth/callback?code=${code}&redirect=${encodeURIComponent(redirect)}`
