@@ -19,32 +19,71 @@ function AuthCallbackContent() {
         // Get the redirect parameter
         const redirect = searchParams.get('redirect') || '/landscaping'
         
-        // Let Supabase automatically handle the callback - it has the verifier in localStorage
-        console.log('Letting Supabase handle PKCE callback automatically...')
+        // Detailed debugging for PKCE flow
+        console.log('=== DEBUGGING OAUTH CALLBACK ===')
+        console.log('URL search params:', window.location.search)
+        console.log('URL hash:', window.location.hash)
         
-        // Wait for Supabase to process the callback
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        // Check localStorage for PKCE verifier
+        const pkceVerifier = localStorage.getItem('supabase.auth.verifier') || localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token')
+        console.log('PKCE verifier in localStorage:', pkceVerifier ? 'EXISTS' : 'MISSING')
         
-        const { data, error } = await supabase.auth.getSession()
+        // Check all localStorage keys
+        const storageKeys = Object.keys(localStorage).filter(key => key.includes('supabase') || key.includes('sb-'))
+        console.log('Supabase localStorage keys:', storageKeys)
         
-        console.log('Session check after callback:', { hasSession: !!data.session, error: error?.message })
+        // Get URL params
+        const urlParams = new URLSearchParams(window.location.search)
+        const code = urlParams.get('code')
+        const error_param = urlParams.get('error')
         
-        if (error) {
-          console.error('Session retrieval error:', error)
-          setError(error.message)
+        console.log('OAuth code received:', code ? code.substring(0, 10) + '...' : 'NONE')
+        console.log('OAuth error:', error_param || 'NONE')
+        
+        if (error_param) {
+          setError(error_param)
           setStatus('error')
-          setTimeout(() => router.push('/login?error=auth_callback_failed'), 2000)
+          setTimeout(() => router.push('/login?error=oauth_error'), 2000)
           return
         }
-
-        if (data.session) {
-          console.log('Session found, checking user profile')
+        
+        // Let Supabase automatically handle the callback
+        console.log('Waiting for Supabase to auto-process callback...')
+        
+        // Multiple attempts to get session
+        let attempts = 0
+        let sessionData = null
+        
+        while (attempts < 5 && !sessionData?.session) {
+          attempts++
+          console.log(`Session attempt ${attempts}...`)
+          
+          await new Promise(resolve => setTimeout(resolve, 500))
+          
+          const { data, error } = await supabase.auth.getSession()
+          sessionData = data
+          
+          console.log(`Attempt ${attempts} result:`, { 
+            hasSession: !!data.session, 
+            error: error?.message,
+            user: data.session?.user?.email 
+          })
+          
+          if (error) {
+            console.error(`Attempt ${attempts} error:`, error)
+          }
+        }
+        
+        // Handle final result
+        if (sessionData?.session) {
+          console.log('=== SUCCESS: Session established ===')
+          console.log('User:', sessionData.session.user.email)
           
           // Check if user has a profile
           const { data: profile, error: profileError } = await supabase
             .from('user_profiles')
             .select('*')
-            .eq('id', data.session.user.id)
+            .eq('id', sessionData.session.user.id)
             .single()
 
           if (profileError && profileError.code !== 'PGRST116') {
@@ -53,11 +92,11 @@ function AuthCallbackContent() {
 
           setStatus('success')
           
-          // Immediately do a full page redirect to bypass client/server cookie sync issues
+          // Immediate redirect
           if (!profile) {
             console.log('No profile found, redirecting to profile completion')
             setTimeout(() => {
-              window.location.href = `/signup/complete?email=${data.session.user.email}`
+              window.location.href = `/signup/complete?email=${sessionData.session.user.email}`
             }, 100)
           } else {
             console.log('Profile found, doing immediate redirect to:', redirect)
@@ -66,8 +105,8 @@ function AuthCallbackContent() {
             }, 100)
           }
         } else {
-          console.log('No session found after callback')
-          setError('No session found')
+          console.log('=== FAILURE: No session after all attempts ===')
+          setError('Could not establish session')
           setStatus('error')
           setTimeout(() => router.push('/login?error=no_session'), 2000)
         }
