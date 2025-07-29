@@ -14,6 +14,17 @@ function verifyAdminAccess(request: NextRequest) {
   return adminKey === expectedKey
 }
 
+// Define admin user emails to exclude from regular analytics
+const ADMIN_EMAILS = [
+  'wheelsjoseph@gmail.com', // Your email
+  // Add other admin emails here if needed
+]
+
+// Helper function to check if user is admin
+function isAdminUser(email: string) {
+  return ADMIN_EMAILS.includes(email.toLowerCase())
+}
+
 // Calculate date ranges
 function getDateRanges() {
   const now = new Date()
@@ -53,6 +64,8 @@ export async function GET(request: NextRequest) {
         return await getUserAnalytics(supabase, dates)
       case 'recommendations':
         return await getRecommendations(supabase, dates)
+      case 'admin':
+        return await getAdminAnalytics(supabase, dates)
       default:
         return await getOverviewAnalytics(supabase, dates)
     }
@@ -68,26 +81,38 @@ export async function GET(request: NextRequest) {
 
 async function getCostAnalytics(supabase: any, dates: any) {
   try {
-    // Get cost breakdown by time period - gracefully handle errors
+    // Get admin user IDs to exclude
+    const { data: adminUsers } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .in('email', ADMIN_EMAILS) || []
+    
+    const adminUserIds = adminUsers?.map(u => u.id) || []
+
+    // Get cost breakdown by time period - excluding admin users
     const { data: todayCosts } = await supabase
       .from('user_conversations')
-      .select('cost_breakdown, model_used, created_at, tokens_used')
-      .gte('created_at', dates.today) || []
+      .select('cost_breakdown, model_used, created_at, tokens_used, user_id')
+      .gte('created_at', dates.today)
+      .not('user_id', 'in', `(${adminUserIds.join(',')})`) || []
 
     const { data: weekCosts } = await supabase
       .from('user_conversations')
-      .select('cost_breakdown, model_used, created_at, tokens_used')
-      .gte('created_at', dates.weekAgo) || []
+      .select('cost_breakdown, model_used, created_at, tokens_used, user_id')
+      .gte('created_at', dates.weekAgo)
+      .not('user_id', 'in', `(${adminUserIds.join(',')})`) || []
 
     const { data: monthCosts } = await supabase
       .from('user_conversations')
-      .select('cost_breakdown, model_used, created_at, tokens_used')
-      .gte('created_at', dates.monthAgo) || []
+      .select('cost_breakdown, model_used, created_at, tokens_used, user_id')
+      .gte('created_at', dates.monthAgo)
+      .not('user_id', 'in', `(${adminUserIds.join(',')})`) || []
 
-    // Get user cost ranking - gracefully handle errors
+    // Get user cost ranking - excluding admin users
     const { data: userCosts } = await supabase
       .from('user_profiles')
-      .select('id, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at')
+      .select('id, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at, email')
+      .not('email', 'in', `(${ADMIN_EMAILS.map(e => `"${e}"`).join(',')})`)
       .order('tokens_used_trial', { ascending: false })
       .limit(50) || []
 
@@ -186,21 +211,31 @@ async function getCostAnalytics(supabase: any, dates: any) {
 
 async function getUserAnalytics(supabase: any, dates: any) {
   try {
-    // Get user engagement metrics - with fallback for missing columns
+    // Get user engagement metrics - excluding admin users
     const { data: users } = await supabase
       .from('user_profiles')
       .select(`
         id, first_name, last_name, business_name, created_at, 
         tokens_used_trial, total_cost_trial, last_activity_at,
-        trade, team_size, target_customers
+        trade, team_size, target_customers, email
       `)
+      .not('email', 'in', `(${ADMIN_EMAILS.map(e => `"${e}"`).join(',')})`)
       .order('created_at', { ascending: false }) || []
 
-    // Get conversation counts per user
+    // Get admin user IDs to exclude from conversations
+    const { data: adminUsers } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .in('email', ADMIN_EMAILS) || []
+    
+    const adminUserIds = adminUsers?.map(u => u.id) || []
+
+    // Get conversation counts per user - excluding admin users
     const { data: conversationCounts } = await supabase
       .from('user_conversations')
       .select('user_id')
-      .gte('created_at', dates.monthAgo) || []
+      .gte('created_at', dates.monthAgo)
+      .not('user_id', 'in', `(${adminUserIds.join(',')})`) || []
 
   const userConversationMap = conversationCounts?.reduce((acc: any, conv: any) => {
     acc[conv.user_id] = (acc[conv.user_id] || 0) + 1
@@ -726,4 +761,135 @@ function getValueSegment(engagementScore: number, totalCost: number) {
   if (engagementScore > 70 && totalCost <= 1.0) return 'High Value / Low Cost'
   if (engagementScore <= 70 && totalCost > 1.0) return 'Low Value / High Cost'
   return 'Low Value / Low Cost'
+}
+
+async function getAdminAnalytics(supabase: any, dates: any) {
+  try {
+    // Get admin user data only
+    const { data: adminUsers } = await supabase
+      .from('user_profiles')
+      .select('id, email, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at')
+      .in('email', ADMIN_EMAILS) || []
+
+    const adminUserIds = adminUsers?.map(u => u.id) || []
+
+    // Get admin conversations with cost breakdown
+    const { data: adminConversations } = await supabase
+      .from('user_conversations')
+      .select('cost_breakdown, model_used, created_at, tokens_used, user_id')
+      .in('user_id', adminUserIds)
+      .gte('created_at', dates.monthAgo)
+      .order('created_at', { ascending: false }) || []
+
+    // Calculate admin costs by time period
+    const calculateAdminCosts = (conversations: any[], startDate: string) => {
+      const filtered = conversations?.filter(conv => 
+        new Date(conv.created_at) >= new Date(startDate)
+      ) || []
+      
+      return filtered.reduce((acc, conv) => {
+        const breakdown = conv.cost_breakdown
+        const cost = breakdown?.totalCostUsd || (conv.tokens_used || 0) * 0.0001
+        
+        return {
+          total_cost: acc.total_cost + cost,
+          conversation_count: acc.conversation_count + 1,
+          tokens_used: acc.tokens_used + (conv.tokens_used || 0),
+          gpt4o_calls: acc.gpt4o_calls + (conv.model_used === 'gpt-4o' ? 1 : 0),
+          gpt4o_mini_calls: acc.gpt4o_mini_calls + (conv.model_used === 'gpt-4o-mini' ? 1 : 0)
+        }
+      }, {
+        total_cost: 0,
+        conversation_count: 0,
+        tokens_used: 0,
+        gpt4o_calls: 0,
+        gpt4o_mini_calls: 0
+      })
+    }
+
+    const todayStats = calculateAdminCosts(adminConversations, dates.today)
+    const weekStats = calculateAdminCosts(adminConversations, dates.weekAgo)
+    const monthStats = calculateAdminCosts(adminConversations, dates.monthAgo)
+
+    // Group conversations by day for trending
+    const dailyStats = adminConversations?.reduce((acc: any, conv) => {
+      const date = new Date(conv.created_at).toISOString().split('T')[0]
+      if (!acc[date]) {
+        acc[date] = { cost: 0, conversations: 0, tokens: 0 }
+      }
+      const cost = conv.cost_breakdown?.totalCostUsd || (conv.tokens_used || 0) * 0.0001
+      acc[date].cost += cost
+      acc[date].conversations += 1
+      acc[date].tokens += conv.tokens_used || 0
+      return acc
+    }, {}) || {}
+
+    return NextResponse.json({
+      view: 'admin',
+      admin_summary: {
+        admin_users: adminUsers?.length || 0,
+        total_cost_today: todayStats.total_cost,
+        total_cost_week: weekStats.total_cost,
+        total_cost_month: monthStats.total_cost,
+        conversations_today: todayStats.conversation_count,
+        conversations_week: weekStats.conversation_count,
+        conversations_month: monthStats.conversation_count,
+        tokens_today: todayStats.tokens_used,
+        tokens_week: weekStats.tokens_used,
+        tokens_month: monthStats.tokens_used
+      },
+      admin_users: adminUsers?.map(user => ({
+        id: user.id,
+        email: user.email,
+        name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Admin User',
+        business_name: user.business_name,
+        total_cost: user.total_cost_trial || 0,
+        tokens_used: user.tokens_used_trial || 0,
+        member_since: new Date(user.created_at).toLocaleDateString()
+      })) || [],
+      daily_trends: Object.entries(dailyStats).map(([date, stats]: [string, any]) => ({
+        date,
+        cost: stats.cost,
+        conversations: stats.conversations,
+        tokens: stats.tokens
+      })).sort((a, b) => a.date.localeCompare(b.date)),
+      model_breakdown: {
+        gpt4o_usage: {
+          today: todayStats.gpt4o_calls,
+          week: weekStats.gpt4o_calls,
+          month: monthStats.gpt4o_calls
+        },
+        gpt4o_mini_usage: {
+          today: todayStats.gpt4o_mini_calls,
+          week: weekStats.gpt4o_mini_calls,
+          month: monthStats.gpt4o_mini_calls
+        }
+      }
+    })
+
+  } catch (error) {
+    console.error('Admin analytics error:', error)
+    return NextResponse.json({
+      view: 'admin',
+      admin_summary: {
+        admin_users: 0,
+        total_cost_today: 0,
+        total_cost_week: 0,
+        total_cost_month: 0,
+        conversations_today: 0,
+        conversations_week: 0,
+        conversations_month: 0,
+        tokens_today: 0,
+        tokens_week: 0,
+        tokens_month: 0
+      },
+      admin_users: [],
+      daily_trends: [],
+      model_breakdown: {
+        gpt4o_usage: { today: 0, week: 0, month: 0 },
+        gpt4o_mini_usage: { today: 0, week: 0, month: 0 }
+      },
+      error: 'Failed to load admin analytics'
+    })
+  }
 }
