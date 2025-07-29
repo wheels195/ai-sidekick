@@ -1,28 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { getUser } from '@/lib/auth'
+import { createClient as createServerClient } from '@/lib/supabase/server'
 import { sendWelcomeEmail } from '@/lib/email'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
+const serviceSupabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await getUser(request)
+    // Use Supabase auth instead of JWT
+    const { supabase } = createServerClient(request)
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
     
-    if (!user) {
+    if (!user || authError) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       )
     }
 
-    // Fetch user profile from database
-    const { data: profile, error } = await supabase
+    // Fetch user profile from database using service role for full access
+    const { data: profile, error } = await serviceSupabase
       .from('user_profiles')
       .select('id, first_name, last_name, email, business_name, trade, selected_plan, user_role, created_at, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities, tokens_used_trial, trial_token_limit, trial_started_at, trial_expires_at')
-      .eq('id', user.userId)
+      .eq('id', user.id)
       .single()
 
     if (error || !profile) {
@@ -33,10 +35,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Check if user has any previous conversations to determine if they're a returning user
-    const { data: conversations, error: convError } = await supabase
+    const { data: conversations, error: convError } = await serviceSupabase
       .from('user_conversations')
       .select('id')
-      .eq('user_id', user.userId)
+      .eq('user_id', user.id)
       .limit(1)
 
     const hasConversationHistory = conversations && conversations.length > 0
@@ -93,7 +95,7 @@ export async function POST(request: NextRequest) {
     const isAdmin = profileData.email === 'admin@ai-sidekick.io'
     
     // Create or update user profile (OAuth users)
-    const { data, error } = await supabase
+    const { data, error } = await serviceSupabase
       .from('user_profiles')
       .upsert({
         id: profileData.id,
@@ -183,10 +185,12 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const user = await getUser(request)
+    // Use Supabase auth instead of JWT
+    const { supabase } = createServerClient(request)
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
     const profileData = await request.json()
 
-    if (!user) {
+    if (!user || authError) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -212,10 +216,10 @@ export async function PUT(request: NextRequest) {
     if (profileData.yearsInBusiness !== undefined) updateData.years_in_business = profileData.yearsInBusiness
     if (profileData.businessPriorities !== undefined) updateData.business_priorities = profileData.businessPriorities
 
-    const { data, error } = await supabase
+    const { data, error } = await serviceSupabase
       .from('user_profiles')
       .update(updateData)
-      .eq('id', user.userId)
+      .eq('id', user.id)
       .select('id, first_name, last_name, email, business_name, trade, selected_plan, location, zip_code, services, team_size, target_customers, years_in_business, business_priorities')
       .single()
 
