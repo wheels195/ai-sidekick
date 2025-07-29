@@ -50,7 +50,6 @@ function AuthCallbackContent() {
         // Manual exchange using the code verifier we found in localStorage
         console.log('Performing manual exchange with found verifier...')
         
-        const code = urlParams.get('code')
         if (!code) {
           setError('No OAuth code received')
           setStatus('error')
