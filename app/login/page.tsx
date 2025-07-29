@@ -132,9 +132,9 @@ function LoginForm() {
     }
 
     try {
-      // Use server-side callback for proper cookie handling
+      // Use the configured OAuth callback URL
       const intendedRedirect = searchParams.get('redirect') || '/landscaping'
-      const redirectUrl = `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
+      const redirectUrl = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
       console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({

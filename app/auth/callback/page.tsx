@@ -92,67 +92,12 @@ function AuthCallbackContent() {
           return
         }
         
-        // Let Supabase handle the OAuth callback with proper session exchange
-        console.log('Processing OAuth callback with session exchange...')
+        // Redirect to server-side callback for proper session handling
+        console.log('Redirecting to server-side callback for proper session handling...')
         
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-        
-        console.log('Exchange result:', { 
-          hasSession: !!data.session, 
-          error: error?.message,
-          user: data.session?.user?.email 
-        })
-        
-        if (error) {
-          console.error('OAuth session error:', error)
-          setError(error.message)
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=exchange_failed'), 2000)
-          return
-        }
-        
-        if (!data.session) {
-          console.error('No session returned from code exchange')
-          setError('Failed to create session')
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=no_session'), 2000)
-          return
-        }
-        
-        const sessionData = data
-        
-        // Handle final result
-        if (sessionData?.session) {
-          console.log('=== SUCCESS: Session established ===')
-          console.log('User:', sessionData.session.user.email)
-          
-          // Check if user has a profile
-          const { data: profile, error: profileError } = await supabase
-            .from('user_profiles')
-            .select('*')
-            .eq('id', sessionData.session.user.id)
-            .single()
-
-          if (profileError && profileError.code !== 'PGRST116') {
-            console.error('Profile check error:', profileError)
-          }
-
-          setStatus('success')
-          
-          // Use Next.js router for proper session handling
-          if (!profile) {
-            console.log('No profile found, redirecting to profile completion')
-            router.push(`/signup/complete?email=${sessionData.session.user.email}`)
-          } else {
-            console.log('Profile found, redirecting to:', redirect)
-            router.push(redirect)
-          }
-        } else {
-          console.log('=== FAILURE: No session after all attempts ===')
-          setError('Could not establish session')
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=no_session'), 2000)
-        }
+        const serverCallbackUrl = `/api/auth/callback?code=${code}&redirect=${encodeURIComponent(redirect)}`
+        window.location.href = serverCallbackUrl
+        return
       } catch (error) {
         console.error('Auth callback error:', error)
         setError(error instanceof Error ? error.message : 'Unknown error')
