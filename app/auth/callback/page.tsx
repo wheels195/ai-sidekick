@@ -43,8 +43,28 @@ function AuthCallbackContent() {
         const { data: existingSession, error: sessionError } = await supabase.auth.getSession()
         
         if (existingSession?.session && !sessionError) {
-          console.log('Valid session already exists, proceeding with redirect')
+          console.log('Valid session already exists, ensuring cookies are set...')
           const sessionData = existingSession
+          
+          // Force session refresh to ensure cookies are set properly
+          console.log('Refreshing session to set cookies...')
+          await supabase.auth.refreshSession()
+          
+          // Make a server request to ensure session is recognized server-side
+          console.log('Making server request to verify session...')
+          try {
+            const response = await fetch('/api/auth/verify-session', {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            const result = await response.json()
+            console.log('Server session verification:', result)
+          } catch (error) {
+            console.error('Session verification error:', error)
+          }
           
           // Check if user has a profile
           const { data: profile, error: profileError } = await supabase
