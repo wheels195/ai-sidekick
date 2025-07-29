@@ -19,33 +19,15 @@ function AuthCallbackContent() {
         // Get the redirect parameter
         const redirect = searchParams.get('redirect') || '/landscaping'
         
-        // For PKCE flow, we need to exchange the code for a session
-        console.log('Processing PKCE auth callback...')
+        // Let Supabase automatically handle the callback - it has the verifier in localStorage
+        console.log('Letting Supabase handle PKCE callback automatically...')
         
-        const urlParams = new URLSearchParams(window.location.search)
-        const code = urlParams.get('code')
-        const error_param = urlParams.get('error')
+        // Wait for Supabase to process the callback
+        await new Promise(resolve => setTimeout(resolve, 1000))
         
-        if (error_param) {
-          console.error('OAuth error:', error_param)
-          setError(error_param)
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=oauth_error'), 2000)
-          return
-        }
+        const { data, error } = await supabase.auth.getSession()
         
-        if (!code) {
-          console.error('No authorization code received')
-          setError('No authorization code received')
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=no_auth_code'), 2000)
-          return
-        }
-        
-        console.log('Exchanging code for session...')
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-        
-        console.log('Code exchange result:', { hasSession: !!data.session, error: error?.message })
+        console.log('Session check after callback:', { hasSession: !!data.session, error: error?.message })
         
         if (error) {
           console.error('Session retrieval error:', error)
