@@ -1051,6 +1051,23 @@ ${searchResults}
               console.log('🔑 Service role key available:', !!supabaseServiceKey, 'First 20 chars:', supabaseServiceKey?.substring(0, 20))
               const serviceSupabase = createServiceClient(supabaseUrl, supabaseServiceKey)
               
+              // Calculate accurate token usage and costs first
+              const currentUserMessage = messages[messages.length - 1]
+              
+              // Use actual OpenAI token counts if available, otherwise estimate
+              const inputTokens = actualTokenUsage?.prompt_tokens || Math.ceil((currentUserMessage?.content?.length || 0) / 4)
+              const outputTokens = actualTokenUsage?.completion_tokens || Math.ceil(fullResponse.length / 4)
+              const totalTokens = actualTokenUsage?.total_tokens || (inputTokens + outputTokens)
+              
+              // Calculate costs based on model and actual usage
+              const costs = calculateApiCosts({
+                model: modelToUse,
+                inputTokens,
+                outputTokens,
+                googlePlacesCalls: webSearchEnabled && searchResults ? 1 : 0,
+                hasFiles: files?.length > 0
+              })
+
               console.log('💾 Saving assistant message:', {
                 userId: user.id,
                 sessionId: sessionId,
@@ -1080,7 +1097,7 @@ ${searchResults}
                   cost_breakdown: costs,
                   model_used: modelToUse
                 })
-                .select('id')
+                .select('id, message_content')
                 .single()
 
               if (insertError) {
@@ -1102,23 +1119,6 @@ ${searchResults}
                 savedContent: data?.message_content?.substring(0, 100) + '...'
               })
 
-              // Calculate accurate token usage and costs
-              const currentUserMessage = messages[messages.length - 1]
-              
-              // Use actual OpenAI token counts if available, otherwise estimate
-              const inputTokens = actualTokenUsage?.prompt_tokens || Math.ceil((currentUserMessage?.content?.length || 0) / 4)
-              const outputTokens = actualTokenUsage?.completion_tokens || Math.ceil(fullResponse.length / 4)
-              const totalTokens = actualTokenUsage?.total_tokens || (inputTokens + outputTokens)
-              
-              // Calculate costs based on model and actual usage
-              const costs = calculateApiCosts({
-                model: modelToUse,
-                inputTokens,
-                outputTokens,
-                googlePlacesCalls: webSearchEnabled && searchResults ? 1 : 0,
-                hasFiles: files?.length > 0
-              })
-              
               console.log(`💰 Actual token usage: Input: ${inputTokens}, Output: ${outputTokens}, Total: ${totalTokens}`)
               console.log(`💰 Estimated cost: $${costs.totalCostUsd.toFixed(4)} (${modelToUse})`)
               console.log(`💰 Breakdown: GPT: $${costs.gptCostUsd.toFixed(4)}, Places: $${costs.placesCostUsd.toFixed(4)}, Files: $${costs.filesCostUsd.toFixed(4)}`)
