@@ -836,6 +836,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   prevMessages[0], // Keep the welcome message
                   ...historyMessages
                 ])
+                
+                // Update current session ID to continue the conversation
+                console.log('🔗 Loading conversation history, updating session ID:', {
+                  oldSessionId: currentSessionId,
+                  newSessionId: latestSession.sessionId
+                })
+                setCurrentSessionId(latestSession.sessionId)
               }
             }
           }
@@ -1306,6 +1313,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 90000) // 90 second timeout
       
+      console.log('📤 Sending chat request with session ID:', {
+        currentSessionId: currentSessionId,
+        messageCount: [...messages, userMessage].length
+      })
+      
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -1449,6 +1461,15 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         }
         return updated
       })
+
+      // ⑥ Update currentSessionId to maintain conversation continuity
+      if (sessionId && sessionId !== currentSessionId) {
+        console.log('🔗 Updating session ID for conversation continuity:', {
+          oldSessionId: currentSessionId,
+          newSessionId: sessionId
+        })
+        setCurrentSessionId(sessionId)
+      }
 
       // Token usage is now tracked in the backend and database
       // Refresh user token usage from database
