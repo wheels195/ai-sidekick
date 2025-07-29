@@ -2,7 +2,13 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { supabase } from '@/lib/supabase/client'
+import { createClient } from '@supabase/supabase-js'
+
+// Create a simple client for this callback only
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 function AuthCallbackContent() {
   const router = useRouter()
@@ -13,144 +19,74 @@ function AuthCallbackContent() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
-        console.log('Auth callback page - handling OAuth callback')
-        console.log('Current URL:', window.location.href)
+        console.log('=== SIMPLE OAUTH CALLBACK ===')
         
         // Get the redirect parameter
         const redirect = searchParams.get('redirect') || '/landscaping'
         
-        // Detailed debugging for PKCE flow
-        console.log('=== DEBUGGING OAUTH CALLBACK ===')
-        console.log('URL search params:', window.location.search)
-        console.log('URL hash:', window.location.hash)
+        // Let Supabase handle the URL automatically
+        const { data, error } = await supabase.auth.getSession()
         
-        // Check localStorage for PKCE verifier
-        const pkceVerifier = localStorage.getItem('supabase.auth.verifier') || localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token')
-        console.log('PKCE verifier in localStorage:', pkceVerifier ? 'EXISTS' : 'MISSING')
-        
-        // Check all localStorage keys and log their values
-        const storageKeys = Object.keys(localStorage).filter(key => key.includes('supabase') || key.includes('sb-'))
-        console.log('Supabase localStorage keys:', storageKeys)
-        
-        // Log all localStorage values to find the exact verifier key
-        storageKeys.forEach(key => {
-          const value = localStorage.getItem(key)
-          console.log(`localStorage[${key}]:`, value ? value.substring(0, 50) + '...' : 'null')
-        })
-        
-        // Get URL params
-        const urlParams = new URLSearchParams(window.location.search)
-        const code = urlParams.get('code')
-        const error_param = urlParams.get('error')
-        
-        console.log('OAuth code received:', code ? code.substring(0, 10) + '...' : 'NONE')
-        console.log('OAuth error:', error_param || 'NONE')
-        
-        if (error_param) {
-          setError(error_param)
+        if (error) {
+          console.error('Session error:', error)
+          setError(error.message)
           setStatus('error')
-          setTimeout(() => router.push('/login?error=oauth_error'), 2000)
+          setTimeout(() => router.push('/login?error=session_error'), 2000)
           return
         }
         
-        if (!code) {
-          setError('No OAuth code received')
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=no_code'), 2000)
-          return
-        }
-        
-        // Get the PKCE code verifier from localStorage - try all possible locations
-        console.log('=== SEARCHING FOR CODE VERIFIER ===')
-        
-        // Check all localStorage keys to find where the verifier might be stored
-        const allKeys = Object.keys(localStorage)
-        console.log('All localStorage keys:', allKeys)
-        
-        // Try multiple possible verifier locations
-        let codeVerifier = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token-code-verifier') || 
-                          localStorage.getItem('supabase.auth.verifier') ||
-                          localStorage.getItem('supabase.auth.code_verifier') ||
-                          localStorage.getItem('sb-code-verifier')
-        
-        // If not found, check if it might be inside the auth token object
-        if (!codeVerifier) {
-          const authToken = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token')
-          if (authToken) {
-            try {
-              const tokenData = JSON.parse(authToken)
-              console.log('Auth token object keys:', Object.keys(tokenData))
-              codeVerifier = tokenData.code_verifier || tokenData.codeVerifier || tokenData.verifier
-            } catch (e) {
-              console.error('Failed to parse auth token:', e)
-            }
-          }
-        }
-        
-        console.log('Code verifier found:', codeVerifier ? 'YES' : 'NO')
-        console.log('Code verifier source:', codeVerifier ? 'Found in storage' : 'NOT FOUND')
-        
-        if (!codeVerifier) {
-          console.error('No PKCE code verifier found, falling back to client-side exchange...')
+        if (data.session) {
+          console.log('Session found:', data.session.user.email)
           
-          try {
-            // Try client-side exchange as fallback
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-            
-            if (error) {
-              console.error('Client-side exchange failed:', error)
-              setError('Authentication failed')
-              setStatus('error')
-              setTimeout(() => router.push('/login?error=exchange_failed'), 2000)
-              return
-            }
-            
-            if (data.session) {
-              console.log('Client-side exchange successful, making server request to set cookies...')
-              
-              // Make a server request to ensure cookies are set
-              try {
-                const response = await fetch('/api/auth/verify-session', {
-                  method: 'POST',
-                  credentials: 'include'
-                })
-                const result = await response.json()
-                console.log('Server session verification after client exchange:', result)
-              } catch (e) {
-                console.error('Failed to verify server session:', e)
-              }
-              
-              // Check profile and redirect
-              const { data: profile } = await supabase
-                .from('user_profiles')
-                .select('*')
-                .eq('id', data.session.user.id)
-                .single()
+          // Check if user has a profile
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('id', data.session.user.id)
+            .single()
 
-              setStatus('success')
-              
-              if (!profile) {
-                router.push(`/signup/complete?email=${data.session.user.email}`)
-              } else {
-                router.push(redirect)
-              }
-              return
-            }
-          } catch (error) {
-            console.error('Fallback exchange failed:', error)
-            setError('Authentication setup error')
+          setStatus('success')
+          
+          // Force page reload to ensure session cookies are set
+          if (!profile) {
+            window.location.href = `/signup/complete?email=${data.session.user.email}`
+          } else {
+            window.location.href = redirect
+          }
+          return
+        }
+        
+        // No session yet, wait and try again
+        console.log('No session found, waiting for Supabase to process...')
+        setTimeout(async () => {
+          const { data: retryData, error: retryError } = await supabase.auth.getSession()
+          
+          if (retryError || !retryData.session) {
+            console.error('Retry failed:', retryError)
+            setError('Authentication failed')
             setStatus('error')
-            setTimeout(() => router.push('/login?error=no_verifier'), 2000)
+            setTimeout(() => router.push('/login?error=auth_failed'), 2000)
             return
           }
-        }
+          
+          console.log('Retry successful:', retryData.session.user.email)
+          
+          // Check profile and redirect
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('id', retryData.session.user.id)
+            .single()
+
+          setStatus('success')
+          
+          if (!profile) {
+            window.location.href = `/signup/complete?email=${retryData.session.user.email}`
+          } else {
+            window.location.href = redirect
+          }
+        }, 2000)
         
-        // Redirect to server-side handler with code verifier
-        console.log('Redirecting to server-side callback with code verifier...')
-        
-        const serverCallbackUrl = `/api/auth/callback?code=${code}&redirect=${encodeURIComponent(redirect)}&codeVerifier=${encodeURIComponent(codeVerifier)}`
-        window.location.href = serverCallbackUrl
-        return
       } catch (error) {
         console.error('Auth callback error:', error)
         setError(error instanceof Error ? error.message : 'Unknown error')

@@ -132,24 +132,10 @@ function LoginForm() {
     }
 
     try {
-      // Clear any existing auth state to prevent conflicts
-      console.log('Clearing existing auth state...')
-      await supabase.auth.signOut()
-      
-      // Clear localStorage items that might interfere
-      const authKeys = Object.keys(localStorage).filter(key => key.startsWith('sb-') || key.includes('supabase'))
-      authKeys.forEach(key => {
-        console.log('Removing:', key)
-        localStorage.removeItem(key)
-      })
-      
-      // Wait a moment for cleanup
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      // Use the configured OAuth callback URL
+      // Simple OAuth - no state clearing
       const intendedRedirect = searchParams.get('redirect') || '/landscaping'
       const redirectUrl = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
-      console.log('Starting fresh Google OAuth with redirect:', redirectUrl)
+      console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
