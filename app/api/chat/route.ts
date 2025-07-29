@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { moderateUserMessage } from '@/lib/moderation'
 import {
@@ -1036,7 +1037,10 @@ ${searchResults}
               sessionId: sessionId
             })
             try {
-              const { supabase } = createClient(request)
+              // Use service role for assistant message insertion to bypass RLS
+              const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+              const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+              const serviceSupabase = createServiceClient(supabaseUrl, supabaseServiceKey)
               
               console.log('💾 Saving assistant message:', {
                 userId: user.id,
@@ -1047,7 +1051,7 @@ ${searchResults}
                 totalCost: costs?.totalCostUsd
               })
 
-              const { data, error: insertError } = await supabase
+              const { data, error: insertError } = await serviceSupabase
                 .from('user_conversations')
                 .insert({
                   user_id: user.id,
@@ -1097,7 +1101,7 @@ ${searchResults}
               console.log(`💰 Breakdown: GPT: $${costs.gptCostUsd.toFixed(4)}, Places: $${costs.placesCostUsd.toFixed(4)}, Files: $${costs.filesCostUsd.toFixed(4)}`)
               
               // Update user profile with token usage and cost tracking
-              await supabase
+              await serviceSupabase
                 .from('user_profiles')
                 .update({
                   tokens_used_trial: (userProfile?.tokens_used_trial || 0) + totalTokens,
@@ -1107,7 +1111,7 @@ ${searchResults}
                 .eq('id', user.id)
 
               // Store anonymized data for global learning
-              await supabase
+              await serviceSupabase
                 .from('global_conversations')
                 .insert({
                   business_type: 'landscaping',
