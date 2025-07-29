@@ -165,6 +165,15 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 - **Security focus** - All user data protected with proper authentication
 - **Performance optimization** - Fast loading and responsive interactions
 
+## 🏆 CODE QUALITY STANDARDS
+
+**CRITICAL: Professional Engineering Standards Only**
+
+- **NEVER provide "good enough" solutions** - All implementations must follow industry best practices
+- **No shortcuts or workarounds** - Every solution must be production-ready and maintainable
+- **Best practices mandatory** - Use latest patterns, proper error handling, and optimal architecture
+- **Professional software engineering only** - Treat every change as production code for enterprise clients
+
 ## Chat Enhancement Package (Implemented July 2025)
 
 ### Enhanced Features Added:
