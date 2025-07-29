@@ -62,22 +62,26 @@ export async function middleware(request: NextRequest) {
   )
 
   // This call handles token refresh automatically
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user }, error } = await supabase.auth.getUser()
   
   // Protect the /landscaping route
   if (request.nextUrl.pathname.startsWith('/landscaping')) {
-    console.log('Middleware auth check:', { 
-      path: request.nextUrl.pathname,
-      hasUser: !!user,
-      allCookies: request.cookies.getAll().map(c => ({name: c.name, value: c.value.substring(0, 20) + '...'})),
-      supabaseCookies: request.cookies.getAll().filter(c => c.name.startsWith('sb-')).map(c => c.name)
-    })
+    console.log('=== MIDDLEWARE AUTH CHECK ===')
+    console.log('Path:', request.nextUrl.pathname)
+    console.log('User:', user ? user.email : 'NONE')
+    console.log('Auth Error:', error?.message || 'NONE')
+    console.log('All cookies:', request.cookies.getAll().map(c => `${c.name}=${c.value.substring(0, 30)}...`))
+    console.log('Supabase cookies:', request.cookies.getAll().filter(c => c.name.startsWith('sb-')).map(c => `${c.name}=${c.value.substring(0, 50)}...`))
+    console.log('Auth token cookies:', request.cookies.getAll().filter(c => c.name.includes('auth-token')).map(c => `${c.name}=${c.value.substring(0, 50)}...`))
     
     if (!user) {
+      console.log('❌ No user found, redirecting to login')
       // Redirect to login with a return URL
       const loginUrl = new URL('/login', request.url)
       loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
       return NextResponse.redirect(loginUrl)
+    } else {
+      console.log('✅ User authenticated, allowing access')
     }
   }
 

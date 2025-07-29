@@ -7,8 +7,10 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const redirect = requestUrl.searchParams.get('redirect') || '/landscaping'
 
+  console.log('=== SERVER OAUTH CALLBACK ===')
   console.log('Server callback received code:', code ? 'YES' : 'NO')
   console.log('Redirect parameter:', redirect)
+  console.log('Full URL:', requestUrl.href)
 
   if (code) {
     const cookieStore = cookies()
