@@ -14,12 +14,35 @@ export default function AuthCallback() {
     const handleAuthCallback = async () => {
       try {
         console.log('Auth callback page - handling OAuth callback')
+        console.log('Current URL:', window.location.href)
         
         // Get the redirect parameter
         const redirect = searchParams.get('redirect') || '/landscaping'
         
-        // Handle the OAuth callback with PKCE
+        // Handle the OAuth callback - let Supabase automatically process the URL
+        // This will detect and process any auth tokens/codes in the URL
         const { data, error } = await supabase.auth.getSession()
+        
+        console.log('Session retrieval result:', { hasSession: !!data.session, error: error?.message })
+        
+        // If no session yet, wait a moment and try again
+        if (!data.session && !error) {
+          console.log('No session yet, waiting for Supabase to process callback...')
+          await new Promise(resolve => setTimeout(resolve, 1000))
+          const { data: retryData, error: retryError } = await supabase.auth.getSession()
+          console.log('Retry session result:', { hasSession: !!retryData.session, error: retryError?.message })
+          
+          if (retryError) {
+            setError(retryError.message)
+            setStatus('error')
+            setTimeout(() => router.push('/login?error=auth_retry_failed'), 2000)
+            return
+          }
+          
+          if (retryData.session) {
+            data.session = retryData.session
+          }
+        }
         
         if (error) {
           console.error('Session retrieval error:', error)
