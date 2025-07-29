@@ -499,35 +499,55 @@ async function getRecommendations(supabase: any, dates: any) {
 
 async function getOverviewAnalytics(supabase: any, dates: any) {
   try {
-    // Get comprehensive user data
+    // Get admin user IDs to exclude
+    const { data: adminUsers } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .in('email', ADMIN_EMAILS) || []
+    
+    const adminUserIds = adminUsers?.map(u => u.id) || []
+
+    // Get comprehensive user data EXCLUDING ADMINS
     const { data: allUsers } = await supabase
       .from('user_profiles')
-      .select('*') || []
+      .select('*')
+      .not('email', 'in', `(${ADMIN_EMAILS.map(e => `"${e}"`).join(',')})`) || []
 
     const { data: recentUsers } = await supabase
       .from('user_profiles')
       .select('id, last_activity_at')
-      .gte('last_activity_at', dates.weekAgo) || []
+      .gte('last_activity_at', dates.weekAgo)
+      .not('email', 'in', `(${ADMIN_EMAILS.map(e => `"${e}"`).join(',')})`) || []
 
-    // Get all conversations with full data
-    const { data: allConversations } = await supabase
-      .from('user_conversations')
-      .select('*') || []
-
-    const { data: todayConversations } = await supabase
+    // Get all conversations with full data EXCLUDING ADMINS
+    let conversationQuery = supabase
       .from('user_conversations')
       .select('*')
-      .gte('created_at', dates.today) || []
+    
+    if (adminUserIds.length > 0) {
+      conversationQuery = conversationQuery.not('user_id', 'in', `(${adminUserIds.join(',')})`)
+    }
+    
+    const { data: allConversations } = await conversationQuery || []
 
-    const { data: weekConversations } = await supabase
-      .from('user_conversations')
-      .select('*')
-      .gte('created_at', dates.weekAgo) || []
+    // Apply same filtering for time-based queries
+    const getFilteredConversations = async (startDate: string) => {
+      let query = supabase
+        .from('user_conversations')
+        .select('*')
+        .gte('created_at', startDate)
+      
+      if (adminUserIds.length > 0) {
+        query = query.not('user_id', 'in', `(${adminUserIds.join(',')})`)
+      }
+      
+      const { data } = await query || []
+      return data || []
+    }
 
-    const { data: monthConversations } = await supabase
-      .from('user_conversations')
-      .select('*')
-      .gte('created_at', dates.monthAgo) || []
+    const todayConversations = await getFilteredConversations(dates.today)
+    const weekConversations = await getFilteredConversations(dates.weekAgo)
+    const monthConversations = await getFilteredConversations(dates.monthAgo)
 
     // Enhanced calculations
     const totalUsers = allUsers?.length || 0
@@ -570,7 +590,7 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
     const gpt4oPercentage = totalModelUsage > 0 ? ((modelStats['gpt-4o'] || 0) / totalModelUsage) * 100 : 0
     const gpt4oMiniPercentage = totalModelUsage > 0 ? ((modelStats['gpt-4o-mini'] || 0) / totalModelUsage) * 100 : 0
 
-    // Advanced user analytics with engagement scoring
+    // Advanced user analytics with engagement scoring (already filtered for non-admin users)
     const userEngagementScores = allUsers?.map(user => {
       const userConversations = allConversations?.filter(conv => conv.user_id === user.id) || []
       const conversationCount = userConversations.length

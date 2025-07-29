@@ -491,7 +491,7 @@ export default function AdminAnalyticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-blue-300 text-sm font-medium">Total Users</p>
-                    <p className="text-3xl font-bold text-white">{data.summary.total_users}</p>
+                    <p className="text-3xl font-bold text-white">{data?.summary?.total_users || 0}</p>
                   </div>
                   <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
                     <Users className="w-6 h-6 text-blue-400" />
@@ -505,7 +505,7 @@ export default function AdminAnalyticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-emerald-300 text-sm font-medium">Active This Week</p>
-                    <p className="text-3xl font-bold text-white">{data.summary.active_users_week}</p>
+                    <p className="text-3xl font-bold text-white">{data?.summary?.active_users_week || 0}</p>
                   </div>
                   <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-emerald-400" />
@@ -533,7 +533,7 @@ export default function AdminAnalyticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-green-300 text-sm font-medium">Upgrade Candidates</p>
-                    <p className="text-3xl font-bold text-white">{data.summary.upgrade_candidates}</p>
+                    <p className="text-3xl font-bold text-white">{data?.summary?.upgrade_candidates || 0}</p>
                   </div>
                   <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
                     <Target className="w-6 h-6 text-green-400" />
@@ -547,7 +547,7 @@ export default function AdminAnalyticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-amber-300 text-sm font-medium">Total Conversations</p>
-                    <p className="text-3xl font-bold text-white">{data.summary.total_conversations}</p>
+                    <p className="text-3xl font-bold text-white">{data?.summary?.total_conversations || 0}</p>
                   </div>
                   <div className="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center">
                     <Activity className="w-6 h-6 text-amber-400" />
@@ -585,11 +585,11 @@ export default function AdminAnalyticsPage() {
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-blue-300">Active Users</span>
-                    <span className="text-white font-semibold">{data.daily_analytics.users_active}</span>
+                    <span className="text-white font-semibold">{data.daily_analytics?.users_active || 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-blue-300">Conversations</span>
-                    <span className="text-white font-semibold">{data.daily_analytics.conversations}</span>
+                    <span className="text-white font-semibold">{data.daily_analytics?.conversations || 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-blue-300">Total Cost</span>
@@ -597,7 +597,7 @@ export default function AdminAnalyticsPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-blue-300">New Signups</span>
-                    <span className="text-white font-semibold">{data.daily_analytics.new_signups}</span>
+                    <span className="text-white font-semibold">{data.daily_analytics?.new_signups || 0}</span>
                   </div>
                 </CardContent>
               </Card>
@@ -615,11 +615,11 @@ export default function AdminAnalyticsPage() {
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-emerald-300">Active Users</span>
-                    <span className="text-white font-semibold">{data.weekly_analytics.users_active}</span>
+                    <span className="text-white font-semibold">{data.weekly_analytics?.users_active || 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-emerald-300">Conversations</span>
-                    <span className="text-white font-semibold">{data.weekly_analytics.conversations}</span>
+                    <span className="text-white font-semibold">{data.weekly_analytics?.conversations || 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-emerald-300">Total Cost</span>
@@ -645,11 +645,11 @@ export default function AdminAnalyticsPage() {
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-purple-300">Active Users</span>
-                    <span className="text-white font-semibold">{data.monthly_analytics.users_active}</span>
+                    <span className="text-white font-semibold">{data.monthly_analytics?.users_active || 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-purple-300">Conversations</span>
-                    <span className="text-white font-semibold">{data.monthly_analytics.conversations}</span>
+                    <span className="text-white font-semibold">{data.monthly_analytics?.conversations || 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-purple-300">Total Cost</span>
@@ -793,7 +793,7 @@ export default function AdminAnalyticsPage() {
           </div>
 
           {/* Feature Usage Analysis */}
-          {data.feature_usage && data.feature_usage.length > 0 && (
+          {data?.feature_usage && data.feature_usage.length > 0 && (
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
@@ -867,7 +867,7 @@ export default function AdminAnalyticsPage() {
           )}
 
           {/* Geographic Distribution */}
-          {data.geographic_data && data.geographic_data.length > 0 && (
+          {data?.geographic_data && data.geographic_data.length > 0 && (
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
@@ -894,7 +894,7 @@ export default function AdminAnalyticsPage() {
           )}
 
           {/* Business Insights */}
-          {data.top_insights.length > 0 && (
+          {data?.top_insights && data.top_insights.length > 0 && (
             <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-white">Business Insights & Recommendations</CardTitle>
