@@ -25,6 +25,127 @@ function isAdminUser(email: string) {
   return ADMIN_EMAILS.includes(email.toLowerCase())
 }
 
+// Get detailed admin usage statistics
+async function getAdminUsageAnalytics(supabase: any, dates: any) {
+  try {
+    // Get admin user IDs
+    const { data: adminUsers } = await supabase
+      .from('user_profiles')
+      .select('id, first_name, last_name, email, tokens_used_trial, total_cost_trial')
+      .in('email', ADMIN_EMAILS) || []
+    
+    if (!adminUsers || adminUsers.length === 0) {
+      return {
+        total_cost_today: 0,
+        total_cost_week: 0,
+        total_cost_month: 0,
+        model_breakdown: [],
+        api_breakdown: [],
+        conversation_count: 0,
+        token_usage: 0
+      }
+    }
+    
+    const adminUserIds = adminUsers.map(u => u.id)
+    
+    // Get admin conversations with full data
+    const { data: adminConversations } = await supabase
+      .from('user_conversations')
+      .select('*')
+      .in('user_id', adminUserIds)
+      .gte('created_at', dates.monthAgo) || []
+    
+    // Filter by time periods
+    const todayConversations = adminConversations.filter(c => new Date(c.created_at) >= new Date(dates.today))
+    const weekConversations = adminConversations.filter(c => new Date(c.created_at) >= new Date(dates.weekAgo))
+    const monthConversations = adminConversations
+    
+    // Calculate costs and breakdowns
+    const calculateDetailedBreakdown = (conversations: any[]) => {
+      const modelBreakdown: any = {}
+      const apiBreakdown = {
+        gpt_tokens: 0,
+        gpt_cost: 0,
+        google_places_calls: 0,
+        google_places_cost: 0,
+        file_processing_cost: 0,
+        total_cost: 0
+      }
+      
+      conversations.forEach(conv => {
+        const model = conv.model_used || 'unknown'
+        const tokens = conv.tokens_used || 0
+        const cost = conv.cost_breakdown?.totalCostUsd || 0
+        
+        // Model breakdown
+        if (!modelBreakdown[model]) {
+          modelBreakdown[model] = {
+            model: model,
+            conversations: 0,
+            tokens: 0,
+            cost: 0
+          }
+        }
+        modelBreakdown[model].conversations += 1
+        modelBreakdown[model].tokens += tokens
+        modelBreakdown[model].cost += conv.cost_breakdown?.gptCostUsd || 0
+        
+        // API breakdown
+        apiBreakdown.gpt_tokens += tokens
+        apiBreakdown.gpt_cost += conv.cost_breakdown?.gptCostUsd || 0
+        apiBreakdown.google_places_calls += conv.cost_breakdown?.googlePlacesCalls || 0
+        apiBreakdown.google_places_cost += conv.cost_breakdown?.placesCostUsd || 0
+        apiBreakdown.file_processing_cost += conv.cost_breakdown?.filesCostUsd || 0
+        apiBreakdown.total_cost += cost
+      })
+      
+      return {
+        modelBreakdown: Object.values(modelBreakdown),
+        apiBreakdown
+      }
+    }
+    
+    const todayBreakdown = calculateDetailedBreakdown(todayConversations)
+    const weekBreakdown = calculateDetailedBreakdown(weekConversations)
+    const monthBreakdown = calculateDetailedBreakdown(monthConversations)
+    
+    return {
+      admin_users: adminUsers.map(u => ({
+        email: u.email,
+        name: `${u.first_name || ''} ${u.last_name || ''}`.trim(),
+        total_tokens: u.tokens_used_trial || 0,
+        total_cost: u.total_cost_trial || 0
+      })),
+      today: {
+        total_cost: todayBreakdown.apiBreakdown.total_cost,
+        conversation_count: todayConversations.length,
+        model_breakdown: todayBreakdown.modelBreakdown,
+        api_breakdown: todayBreakdown.apiBreakdown
+      },
+      week: {
+        total_cost: weekBreakdown.apiBreakdown.total_cost,
+        conversation_count: weekConversations.length,
+        model_breakdown: weekBreakdown.modelBreakdown,
+        api_breakdown: weekBreakdown.apiBreakdown
+      },
+      month: {
+        total_cost: monthBreakdown.apiBreakdown.total_cost,
+        conversation_count: monthConversations.length,
+        model_breakdown: monthBreakdown.modelBreakdown,
+        api_breakdown: monthBreakdown.apiBreakdown
+      }
+    }
+  } catch (error) {
+    console.error('Admin usage analytics error:', error)
+    return {
+      admin_users: [],
+      today: { total_cost: 0, conversation_count: 0, model_breakdown: [], api_breakdown: {} },
+      week: { total_cost: 0, conversation_count: 0, model_breakdown: [], api_breakdown: {} },
+      month: { total_cost: 0, conversation_count: 0, model_breakdown: [], api_breakdown: {} }
+    }
+  }
+}
+
 // Calculate date ranges
 function getDateRanges() {
   const now = new Date()
@@ -765,108 +886,24 @@ function getValueSegment(engagementScore: number, totalCost: number) {
 
 async function getAdminAnalytics(supabase: any, dates: any) {
   try {
-    // Get admin user data only
-    const { data: adminUsers } = await supabase
-      .from('user_profiles')
-      .select('id, email, first_name, last_name, business_name, total_cost_trial, tokens_used_trial, created_at')
-      .in('email', ADMIN_EMAILS) || []
-
-    const adminUserIds = adminUsers?.map(u => u.id) || []
-
-    // Get admin conversations with cost breakdown
-    const { data: adminConversations } = await supabase
-      .from('user_conversations')
-      .select('cost_breakdown, model_used, created_at, tokens_used, user_id')
-      .in('user_id', adminUserIds)
-      .gte('created_at', dates.monthAgo)
-      .order('created_at', { ascending: false }) || []
-
-    // Calculate admin costs by time period
-    const calculateAdminCosts = (conversations: any[], startDate: string) => {
-      const filtered = conversations?.filter(conv => 
-        new Date(conv.created_at) >= new Date(startDate)
-      ) || []
-      
-      return filtered.reduce((acc, conv) => {
-        const breakdown = conv.cost_breakdown
-        const cost = breakdown?.totalCostUsd || (conv.tokens_used || 0) * 0.0001
-        
-        return {
-          total_cost: acc.total_cost + cost,
-          conversation_count: acc.conversation_count + 1,
-          tokens_used: acc.tokens_used + (conv.tokens_used || 0),
-          gpt4o_calls: acc.gpt4o_calls + (conv.model_used === 'gpt-4o' ? 1 : 0),
-          gpt4o_mini_calls: acc.gpt4o_mini_calls + (conv.model_used === 'gpt-4o-mini' ? 1 : 0)
-        }
-      }, {
-        total_cost: 0,
-        conversation_count: 0,
-        tokens_used: 0,
-        gpt4o_calls: 0,
-        gpt4o_mini_calls: 0
-      })
-    }
-
-    const todayStats = calculateAdminCosts(adminConversations, dates.today)
-    const weekStats = calculateAdminCosts(adminConversations, dates.weekAgo)
-    const monthStats = calculateAdminCosts(adminConversations, dates.monthAgo)
-
-    // Group conversations by day for trending
-    const dailyStats = adminConversations?.reduce((acc: any, conv) => {
-      const date = new Date(conv.created_at).toISOString().split('T')[0]
-      if (!acc[date]) {
-        acc[date] = { cost: 0, conversations: 0, tokens: 0 }
-      }
-      const cost = conv.cost_breakdown?.totalCostUsd || (conv.tokens_used || 0) * 0.0001
-      acc[date].cost += cost
-      acc[date].conversations += 1
-      acc[date].tokens += conv.tokens_used || 0
-      return acc
-    }, {}) || {}
-
+    const adminUsage = await getAdminUsageAnalytics(supabase, dates)
+    
     return NextResponse.json({
       view: 'admin',
       admin_summary: {
-        admin_users: adminUsers?.length || 0,
-        total_cost_today: todayStats.total_cost,
-        total_cost_week: weekStats.total_cost,
-        total_cost_month: monthStats.total_cost,
-        conversations_today: todayStats.conversation_count,
-        conversations_week: weekStats.conversation_count,
-        conversations_month: monthStats.conversation_count,
-        tokens_today: todayStats.tokens_used,
-        tokens_week: weekStats.tokens_used,
-        tokens_month: monthStats.tokens_used
+        admin_users: adminUsage.admin_users.length,
+        total_cost_today: adminUsage.today.total_cost,
+        total_cost_week: adminUsage.week.total_cost,
+        total_cost_month: adminUsage.month.total_cost,
+        conversations_today: adminUsage.today.conversation_count,
+        conversations_week: adminUsage.week.conversation_count,
+        conversations_month: adminUsage.month.conversation_count
       },
-      admin_users: adminUsers?.map(user => ({
-        id: user.id,
-        email: user.email,
-        name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Admin User',
-        business_name: user.business_name,
-        total_cost: user.total_cost_trial || 0,
-        tokens_used: user.tokens_used_trial || 0,
-        member_since: new Date(user.created_at).toLocaleDateString()
-      })) || [],
-      daily_trends: Object.entries(dailyStats).map(([date, stats]: [string, any]) => ({
-        date,
-        cost: stats.cost,
-        conversations: stats.conversations,
-        tokens: stats.tokens
-      })).sort((a, b) => a.date.localeCompare(b.date)),
-      model_breakdown: {
-        gpt4o_usage: {
-          today: todayStats.gpt4o_calls,
-          week: weekStats.gpt4o_calls,
-          month: monthStats.gpt4o_calls
-        },
-        gpt4o_mini_usage: {
-          today: todayStats.gpt4o_mini_calls,
-          week: weekStats.gpt4o_mini_calls,
-          month: monthStats.gpt4o_mini_calls
-        }
-      }
+      admin_users: adminUsage.admin_users,
+      today: adminUsage.today,
+      week: adminUsage.week,
+      month: adminUsage.month
     })
-
   } catch (error) {
     console.error('Admin analytics error:', error)
     return NextResponse.json({
@@ -878,17 +915,12 @@ async function getAdminAnalytics(supabase: any, dates: any) {
         total_cost_month: 0,
         conversations_today: 0,
         conversations_week: 0,
-        conversations_month: 0,
-        tokens_today: 0,
-        tokens_week: 0,
-        tokens_month: 0
+        conversations_month: 0
       },
       admin_users: [],
-      daily_trends: [],
-      model_breakdown: {
-        gpt4o_usage: { today: 0, week: 0, month: 0 },
-        gpt4o_mini_usage: { today: 0, week: 0, month: 0 }
-      },
+      today: { total_cost: 0, conversation_count: 0, model_breakdown: [], api_breakdown: {} },
+      week: { total_cost: 0, conversation_count: 0, model_breakdown: [], api_breakdown: {} },
+      month: { total_cost: 0, conversation_count: 0, model_breakdown: [], api_breakdown: {} },
       error: 'Failed to load admin analytics'
     })
   }

@@ -305,8 +305,8 @@ export default function AdminAnalyticsPage() {
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-orange-300 text-sm font-medium">Tokens Used Month</p>
-                            <p className="text-3xl font-bold text-white">{data.admin_summary.tokens_month.toLocaleString()}</p>
+                            <p className="text-orange-300 text-sm font-medium">Conversations Month</p>
+                            <p className="text-3xl font-bold text-white">{(data.admin_summary.conversations_month || 0).toLocaleString()}</p>
                           </div>
                           <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
                             <Zap className="w-6 h-6 text-orange-400" />
@@ -333,21 +333,19 @@ export default function AdminAnalyticsPage() {
                               <th className="text-left py-3 px-4 font-medium text-emerald-300">Email</th>
                               <th className="text-left py-3 px-4 font-medium text-emerald-300">Total Cost</th>
                               <th className="text-left py-3 px-4 font-medium text-emerald-300">Tokens Used</th>
-                              <th className="text-left py-3 px-4 font-medium text-emerald-300">Member Since</th>
                             </tr>
                           </thead>
                           <tbody>
                             {data.admin_users?.map((user: any, index: number) => (
-                              <tr key={user.id} className={index % 2 === 0 ? 'bg-gray-700/20' : ''}>
-                                <td className="py-3 px-4 text-white">{user.name}</td>
+                              <tr key={user.email} className={index % 2 === 0 ? 'bg-gray-700/20' : ''}>
+                                <td className="py-3 px-4 text-white">{user.name || 'Admin'}</td>
                                 <td className="py-3 px-4 text-gray-300">{user.email}</td>
-                                <td className="py-3 px-4 text-emerald-400 font-mono">${user.total_cost.toFixed(4)}</td>
-                                <td className="py-3 px-4 text-blue-400 font-mono">{user.tokens_used.toLocaleString()}</td>
-                                <td className="py-3 px-4 text-gray-400">{user.member_since}</td>
+                                <td className="py-3 px-4 text-emerald-400 font-mono">${(user.total_cost || 0).toFixed(4)}</td>
+                                <td className="py-3 px-4 text-blue-400 font-mono">{(user.total_tokens || 0).toLocaleString()}</td>
                               </tr>
                             )) || (
                               <tr>
-                                <td colSpan={5} className="py-8 px-4 text-center text-gray-400">
+                                <td colSpan={4} className="py-8 px-4 text-center text-gray-400">
                                   No admin users found
                                 </td>
                               </tr>
@@ -357,6 +355,129 @@ export default function AdminAnalyticsPage() {
                       </div>
                     </CardContent>
                   </Card>
+
+                  {/* Detailed API Breakdown */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Today's Breakdown */}
+                    <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                      <CardHeader>
+                        <CardTitle className="text-white text-lg">Today's Usage</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {/* Model Breakdown */}
+                        <div>
+                          <h4 className="text-sm font-medium text-emerald-300 mb-2">Model Usage</h4>
+                          {data.today?.model_breakdown?.map((model: any) => (
+                            <div key={model.model} className="flex justify-between items-center py-1">
+                              <span className="text-gray-300 text-sm">{model.model}</span>
+                              <div className="text-right">
+                                <span className="text-white text-sm font-mono">${(model.cost || 0).toFixed(4)}</span>
+                                <span className="text-gray-400 text-xs ml-2">({model.conversations} calls)</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        {/* API Breakdown */}
+                        <div className="border-t border-gray-600/30 pt-3">
+                          <h4 className="text-sm font-medium text-blue-300 mb-2">API Costs</h4>
+                          <div className="space-y-1 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">GPT API</span>
+                              <span className="text-white font-mono">${(data.today?.api_breakdown?.gpt_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Google Places</span>
+                              <span className="text-white font-mono">${(data.today?.api_breakdown?.google_places_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">File Processing</span>
+                              <span className="text-white font-mono">${(data.today?.api_breakdown?.file_processing_cost || 0).toFixed(4)}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Week's Breakdown */}
+                    <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                      <CardHeader>
+                        <CardTitle className="text-white text-lg">This Week's Usage</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {/* Model Breakdown */}
+                        <div>
+                          <h4 className="text-sm font-medium text-emerald-300 mb-2">Model Usage</h4>
+                          {data.week?.model_breakdown?.map((model: any) => (
+                            <div key={model.model} className="flex justify-between items-center py-1">
+                              <span className="text-gray-300 text-sm">{model.model}</span>
+                              <div className="text-right">
+                                <span className="text-white text-sm font-mono">${(model.cost || 0).toFixed(4)}</span>
+                                <span className="text-gray-400 text-xs ml-2">({model.conversations} calls)</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        {/* API Breakdown */}
+                        <div className="border-t border-gray-600/30 pt-3">
+                          <h4 className="text-sm font-medium text-blue-300 mb-2">API Costs</h4>
+                          <div className="space-y-1 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">GPT API</span>
+                              <span className="text-white font-mono">${(data.week?.api_breakdown?.gpt_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Google Places</span>
+                              <span className="text-white font-mono">${(data.week?.api_breakdown?.google_places_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">File Processing</span>
+                              <span className="text-white font-mono">${(data.week?.api_breakdown?.file_processing_cost || 0).toFixed(4)}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Month's Breakdown */}
+                    <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                      <CardHeader>
+                        <CardTitle className="text-white text-lg">This Month's Usage</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {/* Model Breakdown */}
+                        <div>
+                          <h4 className="text-sm font-medium text-emerald-300 mb-2">Model Usage</h4>
+                          {data.month?.model_breakdown?.map((model: any) => (
+                            <div key={model.model} className="flex justify-between items-center py-1">
+                              <span className="text-gray-300 text-sm">{model.model}</span>
+                              <div className="text-right">
+                                <span className="text-white text-sm font-mono">${(model.cost || 0).toFixed(4)}</span>
+                                <span className="text-gray-400 text-xs ml-2">({model.conversations} calls)</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        {/* API Breakdown */}
+                        <div className="border-t border-gray-600/30 pt-3">
+                          <h4 className="text-sm font-medium text-blue-300 mb-2">API Costs</h4>
+                          <div className="space-y-1 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">GPT API</span>
+                              <span className="text-white font-mono">${(data.month?.api_breakdown?.gpt_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Google Places</span>
+                              <span className="text-white font-mono">${(data.month?.api_breakdown?.google_places_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">File Processing</span>
+                              <span className="text-white font-mono">${(data.month?.api_breakdown?.file_processing_cost || 0).toFixed(4)}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </>
               )}
             </div>
@@ -398,7 +519,7 @@ export default function AdminAnalyticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-purple-300 text-sm font-medium">Cost Today</p>
-                    <p className="text-3xl font-bold text-white">${data.summary.total_cost_today.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-white">${(data.summary?.total_cost_today || 0).toFixed(2)}</p>
                   </div>
                   <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
                     <DollarSign className="w-6 h-6 text-purple-400" />
@@ -440,7 +561,7 @@ export default function AdminAnalyticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-cyan-300 text-sm font-medium">Retention Rate</p>
-                    <p className="text-3xl font-bold text-white">{data.quick_metrics.retention_rate_week.toFixed(1)}%</p>
+                    <p className="text-3xl font-bold text-white">{(data.quick_metrics?.retention_rate_week || 0).toFixed(1)}%</p>
                   </div>
                   <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-cyan-400" />
@@ -472,7 +593,7 @@ export default function AdminAnalyticsPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-blue-300">Total Cost</span>
-                    <span className="text-white font-semibold">${data.daily_analytics.total_cost.toFixed(2)}</span>
+                    <span className="text-white font-semibold">${(data.daily_analytics?.total_cost || 0).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-blue-300">New Signups</span>
@@ -502,7 +623,7 @@ export default function AdminAnalyticsPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-emerald-300">Total Cost</span>
-                    <span className="text-white font-semibold">${data.weekly_analytics.total_cost.toFixed(2)}</span>
+                    <span className="text-white font-semibold">${(data.weekly_analytics?.total_cost || 0).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-emerald-300">New Signups</span>
@@ -532,7 +653,7 @@ export default function AdminAnalyticsPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-purple-300">Total Cost</span>
-                    <span className="text-white font-semibold">${data.monthly_analytics.total_cost.toFixed(2)}</span>
+                    <span className="text-white font-semibold">${(data.monthly_analytics?.total_cost || 0).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-purple-300">New Signups</span>
@@ -555,15 +676,15 @@ export default function AdminAnalyticsPage() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-400">{data.conversion_funnel.signupToActive.toFixed(1)}%</div>
+                    <div className="text-2xl font-bold text-emerald-400">{(data.conversion_funnel?.signupToActive || 0).toFixed(1)}%</div>
                     <div className="text-sm text-gray-300">Signup → Active</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-400">{data.conversion_funnel.activeToPaid.toFixed(1)}%</div>
+                    <div className="text-2xl font-bold text-purple-400">{(data.conversion_funnel?.activeToPaid || 0).toFixed(1)}%</div>
                     <div className="text-sm text-gray-300">Active → Upgrade Candidate</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-400">{data.conversion_funnel.newUserRetention.toFixed(1)}%</div>
+                    <div className="text-2xl font-bold text-amber-400">{(data.conversion_funnel?.newUserRetention || 0).toFixed(1)}%</div>
                     <div className="text-sm text-gray-300">New User Retention</div>
                   </div>
                 </div>
@@ -585,19 +706,19 @@ export default function AdminAnalyticsPage() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Cost Per User Today</span>
-                  <span className="text-white font-semibold">${data.quick_metrics.cost_per_user_today.toFixed(3)}</span>
+                  <span className="text-white font-semibold">${(data.quick_metrics?.cost_per_user_today || 0).toFixed(3)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Cost Per User Month</span>
-                  <span className="text-white font-semibold">${data.quick_metrics.cost_per_user_month.toFixed(2)}</span>
+                  <span className="text-white font-semibold">${(data.quick_metrics?.cost_per_user_month || 0).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Weekly Total</span>
-                  <span className="text-white font-semibold">${data.summary.total_cost_week.toFixed(2)}</span>
+                  <span className="text-white font-semibold">${(data.summary?.total_cost_week || 0).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Monthly Total</span>
-                  <span className="text-white font-semibold">${data.summary.total_cost_month.toFixed(2)}</span>
+                  <span className="text-white font-semibold">${(data.summary?.total_cost_month || 0).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Avg Tokens/Conv</span>
@@ -617,11 +738,11 @@ export default function AdminAnalyticsPage() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">GPT-4o Usage</span>
-                  <span className="text-white font-semibold">{data.quick_metrics.model_usage.gpt4o_percentage.toFixed(1)}%</span>
+                  <span className="text-white font-semibold">{(data.quick_metrics?.model_usage?.gpt4o_percentage || 0).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">GPT-4o-mini Usage</span>
-                  <span className="text-white font-semibold">{data.quick_metrics.model_usage.gpt4o_mini_percentage.toFixed(1)}%</span>
+                  <span className="text-white font-semibold">{(data.quick_metrics?.model_usage?.gpt4o_mini_percentage || 0).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Total Model Calls</span>
@@ -629,11 +750,11 @@ export default function AdminAnalyticsPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Avg Engagement Score</span>
-                  <span className="text-white font-semibold">{data.quick_metrics.avg_engagement_score.toFixed(0)}/100</span>
+                  <span className="text-white font-semibold">{(data.quick_metrics?.avg_engagement_score || 0).toFixed(0)}/100</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Conversations/User</span>
-                  <span className="text-white font-semibold">{data.quick_metrics.avg_conversations_per_user.toFixed(1)}</span>
+                  <span className="text-white font-semibold">{(data.quick_metrics?.avg_conversations_per_user || 0).toFixed(1)}</span>
                 </div>
               </CardContent>
             </Card>
@@ -649,19 +770,19 @@ export default function AdminAnalyticsPage() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Total Tokens Used</span>
-                  <span className="text-white font-semibold">{data.detailed_metrics.token_usage.total.toLocaleString()}</span>
+                  <span className="text-white font-semibold">{(data.detailed_metrics?.token_usage?.total || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Avg Per Conversation</span>
-                  <span className="text-white font-semibold">{Math.round(data.detailed_metrics.token_usage.average_per_conversation).toLocaleString()}</span>
+                  <span className="text-white font-semibold">{Math.round(data.detailed_metrics?.token_usage?.average_per_conversation || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Avg Per User</span>
-                  <span className="text-white font-semibold">{Math.round(data.detailed_metrics.token_usage.average_per_user).toLocaleString()}</span>
+                  <span className="text-white font-semibold">{Math.round(data.detailed_metrics?.token_usage?.average_per_user || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Weekly Retention</span>
-                  <span className="text-white font-semibold">{data.quick_metrics.retention_rate_week.toFixed(1)}%</span>
+                  <span className="text-white font-semibold">{(data.quick_metrics?.retention_rate_week || 0).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">High Priority Alerts</span>
@@ -686,7 +807,7 @@ export default function AdminAnalyticsPage() {
                     <div key={index} className="p-4 rounded-lg bg-gray-700/50 border border-gray-600/30">
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-white font-medium">{feature.feature}</span>
-                        <span className="text-emerald-400 font-semibold">{feature.percentage.toFixed(1)}%</span>
+                        <span className="text-emerald-400 font-semibold">{(feature.percentage || 0).toFixed(1)}%</span>
                       </div>
                       <div className="text-sm text-gray-300">
                         {feature.usage_count} uses by {feature.unique_users} users
@@ -722,7 +843,7 @@ export default function AdminAnalyticsPage() {
                           {user.first_name} - {user.business_name}
                         </div>
                         <div className="text-sm text-gray-300">
-                          {user.conversationCount} conversations • {user.conversationsPerDay.toFixed(1)}/day • 
+                          {user.conversationCount} conversations • {(user.conversationsPerDay || 0).toFixed(1)}/day • 
                           {user.daysSinceActivity === 0 ? ' Active today' : ` ${user.daysSinceActivity}d ago`}
                         </div>
                       </div>
@@ -763,7 +884,7 @@ export default function AdminAnalyticsPage() {
                         <div className="text-sm text-gray-300">{location.users} users</div>
                       </div>
                       <div className="text-emerald-400 font-semibold">
-                        {location.percentage.toFixed(1)}%
+                        {(location.percentage || 0).toFixed(1)}%
                       </div>
                     </div>
                   ))}
