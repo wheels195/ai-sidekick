@@ -8,7 +8,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true, // Let client handle the callback
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
     flowType: 'pkce',
     debug: process.env.NODE_ENV === 'development'
   }

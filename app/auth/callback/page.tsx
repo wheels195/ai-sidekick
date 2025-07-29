@@ -59,13 +59,13 @@ function AuthCallbackContent() {
 
           setStatus('success')
           
-          // Immediate redirect without timeout
+          // Use Next.js router for proper session handling
           if (!profile) {
             console.log('No profile found, redirecting to profile completion')
-            window.location.href = `/signup/complete?email=${sessionData.session.user.email}`
+            router.push(`/signup/complete?email=${sessionData.session.user.email}`)
           } else {
             console.log('Profile found, redirecting to:', redirect)
-            window.location.href = redirect
+            router.push(redirect)
           }
           return
         }
@@ -139,13 +139,13 @@ function AuthCallbackContent() {
 
           setStatus('success')
           
-          // Immediate redirect without timeout
+          // Use Next.js router for proper session handling
           if (!profile) {
             console.log('No profile found, redirecting to profile completion')
-            window.location.href = `/signup/complete?email=${sessionData.session.user.email}`
+            router.push(`/signup/complete?email=${sessionData.session.user.email}`)
           } else {
             console.log('Profile found, redirecting to:', redirect)
-            window.location.href = redirect
+            router.push(redirect)
           }
         } else {
           console.log('=== FAILURE: No session after all attempts ===')
