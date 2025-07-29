@@ -1028,6 +1028,13 @@ ${searchResults}
 
           // Store assistant response if authenticated and Supabase is available
           if (user && fullResponse && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+            console.log('🔍 Attempting to save conversation:', {
+              hasUser: !!user,
+              hasResponse: !!fullResponse,
+              responseLength: fullResponse?.length,
+              hasDatabase: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+              sessionId: sessionId
+            })
             try {
               const { supabase } = createClient(request)
               
