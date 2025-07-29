@@ -60,10 +60,24 @@ function AuthCallbackContent() {
           return
         }
         
-        // Always redirect to server-side handler for proper cookie management
-        console.log('Redirecting to server-side callback for proper session handling...')
+        // Get the PKCE code verifier from localStorage
+        const codeVerifier = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token-code-verifier') || 
+                            localStorage.getItem('supabase.auth.verifier')
         
-        const serverCallbackUrl = `/api/auth/callback?code=${code}&redirect=${encodeURIComponent(redirect)}`
+        console.log('Code verifier found:', codeVerifier ? 'YES' : 'NO')
+        
+        if (!codeVerifier) {
+          console.error('No PKCE code verifier found in localStorage')
+          setError('Authentication setup error')
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=no_verifier'), 2000)
+          return
+        }
+        
+        // Redirect to server-side handler with code verifier
+        console.log('Redirecting to server-side callback with code verifier...')
+        
+        const serverCallbackUrl = `/api/auth/callback?code=${code}&redirect=${encodeURIComponent(redirect)}&codeVerifier=${encodeURIComponent(codeVerifier)}`
         window.location.href = serverCallbackUrl
         return
       } catch (error) {
