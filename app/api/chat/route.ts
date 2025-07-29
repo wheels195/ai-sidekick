@@ -1031,7 +1031,16 @@ ${searchResults}
             try {
               const { supabase } = createClient(request)
               
-              const { data } = await supabase
+              console.log('💾 Saving assistant message:', {
+                userId: user.id,
+                sessionId: sessionId,
+                messageLength: fullResponse?.length,
+                modelUsed: modelToUse,
+                totalTokens: totalTokens,
+                totalCost: costs?.totalCostUsd
+              })
+
+              const { data, error: insertError } = await supabase
                 .from('user_conversations')
                 .insert({
                   user_id: user.id,
@@ -1051,6 +1060,13 @@ ${searchResults}
                 })
                 .select('id')
                 .single()
+
+              if (insertError) {
+                console.error('❌ Assistant message insert failed:', insertError)
+                throw insertError
+              }
+
+              console.log('✅ Assistant message saved successfully:', data?.id)
 
               // Calculate accurate token usage and costs
               const currentUserMessage = messages[messages.length - 1]
@@ -1102,7 +1118,14 @@ ${searchResults}
               // Send completion signal with metadata
               controller.enqueue(encoder.encode(`data: [DONE:${data?.id || 'null'}:${sessionId || crypto.randomUUID()}]\n\n`))
             } catch (error) {
-              console.log('Could not store conversation data:', error.message)
+              console.error('❌ CRITICAL: Failed to store conversation data:', {
+                error: error.message,
+                stack: error.stack,
+                userId: user.id,
+                sessionId: sessionId,
+                messageLength: fullResponse?.length,
+                userProfile: !!userProfile
+              })
               controller.enqueue(encoder.encode(`data: [DONE:null:${sessionId || crypto.randomUUID()}]\n\n`))
             }
           } else {
