@@ -60,18 +60,89 @@ function AuthCallbackContent() {
           return
         }
         
-        // Get the PKCE code verifier from localStorage
-        const codeVerifier = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token-code-verifier') || 
-                            localStorage.getItem('supabase.auth.verifier')
+        // Get the PKCE code verifier from localStorage - try all possible locations
+        console.log('=== SEARCHING FOR CODE VERIFIER ===')
+        
+        // Check all localStorage keys to find where the verifier might be stored
+        const allKeys = Object.keys(localStorage)
+        console.log('All localStorage keys:', allKeys)
+        
+        // Try multiple possible verifier locations
+        let codeVerifier = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token-code-verifier') || 
+                          localStorage.getItem('supabase.auth.verifier') ||
+                          localStorage.getItem('supabase.auth.code_verifier') ||
+                          localStorage.getItem('sb-code-verifier')
+        
+        // If not found, check if it might be inside the auth token object
+        if (!codeVerifier) {
+          const authToken = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token')
+          if (authToken) {
+            try {
+              const tokenData = JSON.parse(authToken)
+              console.log('Auth token object keys:', Object.keys(tokenData))
+              codeVerifier = tokenData.code_verifier || tokenData.codeVerifier || tokenData.verifier
+            } catch (e) {
+              console.error('Failed to parse auth token:', e)
+            }
+          }
+        }
         
         console.log('Code verifier found:', codeVerifier ? 'YES' : 'NO')
+        console.log('Code verifier source:', codeVerifier ? 'Found in storage' : 'NOT FOUND')
         
         if (!codeVerifier) {
-          console.error('No PKCE code verifier found in localStorage')
-          setError('Authentication setup error')
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=no_verifier'), 2000)
-          return
+          console.error('No PKCE code verifier found, falling back to client-side exchange...')
+          
+          try {
+            // Try client-side exchange as fallback
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            
+            if (error) {
+              console.error('Client-side exchange failed:', error)
+              setError('Authentication failed')
+              setStatus('error')
+              setTimeout(() => router.push('/login?error=exchange_failed'), 2000)
+              return
+            }
+            
+            if (data.session) {
+              console.log('Client-side exchange successful, making server request to set cookies...')
+              
+              // Make a server request to ensure cookies are set
+              try {
+                const response = await fetch('/api/auth/verify-session', {
+                  method: 'POST',
+                  credentials: 'include'
+                })
+                const result = await response.json()
+                console.log('Server session verification after client exchange:', result)
+              } catch (e) {
+                console.error('Failed to verify server session:', e)
+              }
+              
+              // Check profile and redirect
+              const { data: profile } = await supabase
+                .from('user_profiles')
+                .select('*')
+                .eq('id', data.session.user.id)
+                .single()
+
+              setStatus('success')
+              
+              if (!profile) {
+                router.push(`/signup/complete?email=${data.session.user.email}`)
+              } else {
+                router.push(redirect)
+              }
+              return
+            }
+          } catch (error) {
+            console.error('Fallback exchange failed:', error)
+            setError('Authentication setup error')
+            setStatus('error')
+            setTimeout(() => router.push('/login?error=no_verifier'), 2000)
+            return
+          }
         }
         
         // Redirect to server-side handler with code verifier
