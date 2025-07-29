@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
+  // Skip middleware for auth callback
+  if (request.nextUrl.pathname === '/auth/callback') {
+    return NextResponse.next()
+  }
+  
   // Update session for all requests (this handles token refresh)
   const response = await updateSession(request)
   
@@ -10,6 +15,7 @@ export async function middleware(request: NextRequest) {
     // Import here to avoid build issues
     const { createServerClient } = await import('@supabase/ssr')
     
+    // Create supabase client with the response from updateSession
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -37,6 +43,12 @@ export async function middleware(request: NextRequest) {
     )
     
     const { data: { user } } = await supabase.auth.getUser()
+    
+    console.log('Middleware auth check:', { 
+      path: request.nextUrl.pathname,
+      hasUser: !!user,
+      cookies: request.cookies.getAll().map(c => c.name)
+    })
     
     if (!user) {
       // Redirect to login with a return URL

@@ -19,16 +19,25 @@ function AuthCallbackContent() {
         // Get the redirect parameter
         const redirect = searchParams.get('redirect') || '/landscaping'
         
-        // Handle the OAuth callback - let Supabase automatically process the URL
-        // This will detect and process any auth tokens/codes in the URL
+        // First, let Supabase process any auth tokens in the URL
+        // This is important for implicit flow where tokens are in the hash fragment
+        console.log('Processing auth callback...')
+        
+        // For implicit flow, we need to ensure Supabase processes the hash fragment
+        if (window.location.hash) {
+          console.log('Hash fragment detected, processing tokens...')
+        }
+        
+        // Get the current session after Supabase processes the URL
         const { data, error } = await supabase.auth.getSession()
         
-        console.log('Session retrieval result:', { hasSession: !!data.session, error: error?.message })
+        console.log('Initial session check:', { hasSession: !!data.session, error: error?.message })
         
-        // If no session yet, wait a moment and try again
+        // If no session yet, wait a moment for Supabase to process the tokens
         if (!data.session && !error) {
-          console.log('No session yet, waiting for Supabase to process callback...')
-          await new Promise(resolve => setTimeout(resolve, 1000))
+          console.log('No session yet, waiting for token processing...')
+          await new Promise(resolve => setTimeout(resolve, 1500))
+          
           const { data: retryData, error: retryError } = await supabase.auth.getSession()
           console.log('Retry session result:', { hasSession: !!retryData.session, error: retryError?.message })
           
@@ -41,6 +50,14 @@ function AuthCallbackContent() {
           
           if (retryData.session) {
             data.session = retryData.session
+          } else {
+            // Final attempt - refresh the session
+            const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession()
+            console.log('Refresh attempt:', { hasSession: !!refreshData.session, error: refreshError?.message })
+            
+            if (refreshData.session) {
+              data.session = refreshData.session
+            }
           }
         }
         
@@ -67,6 +84,9 @@ function AuthCallbackContent() {
           }
 
           setStatus('success')
+          
+          // Small delay to ensure cookies are properly set
+          await new Promise(resolve => setTimeout(resolve, 500))
           
           // Redirect based on profile existence
           if (!profile) {
