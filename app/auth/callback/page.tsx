@@ -63,14 +63,10 @@ function AuthCallbackContent() {
           return
         }
         
-        // Just let Supabase handle everything automatically - detectSessionInUrl is enabled
-        console.log('Letting Supabase auto-detect and process session from URL...')
+        // Let Supabase handle the OAuth callback with proper session exchange
+        console.log('Processing OAuth callback with session exchange...')
         
-        // Wait for Supabase to automatically process the URL
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        
-        // Now check for the session
-        const { data, error } = await supabase.auth.getSession()
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
         
         console.log('Exchange result:', { 
           hasSession: !!data.session, 
@@ -83,6 +79,14 @@ function AuthCallbackContent() {
           setError(error.message)
           setStatus('error')
           setTimeout(() => router.push('/login?error=exchange_failed'), 2000)
+          return
+        }
+        
+        if (!data.session) {
+          console.error('No session returned from code exchange')
+          setError('Failed to create session')
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=no_session'), 2000)
           return
         }
         
@@ -106,17 +110,13 @@ function AuthCallbackContent() {
 
           setStatus('success')
           
-          // Immediate redirect
+          // Immediate redirect without timeout
           if (!profile) {
             console.log('No profile found, redirecting to profile completion')
-            setTimeout(() => {
-              window.location.href = `/signup/complete?email=${sessionData.session.user.email}`
-            }, 100)
+            window.location.href = `/signup/complete?email=${sessionData.session.user.email}`
           } else {
-            console.log('Profile found, doing immediate redirect to:', redirect)
-            setTimeout(() => {
-              window.location.href = redirect
-            }, 100)
+            console.log('Profile found, redirecting to:', redirect)
+            window.location.href = redirect
           }
         } else {
           console.log('=== FAILURE: No session after all attempts ===')
