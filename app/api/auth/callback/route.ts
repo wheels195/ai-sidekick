@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const redirect = searchParams.get('redirect') || '/landscaping'
 
   if (code) {
-    const supabase = createClient()
+    const { supabase, response } = createClient(request)
     
     try {
       const { data, error } = await supabase.auth.exchangeCodeForSession(code)
@@ -19,7 +19,15 @@ export async function GET(request: NextRequest) {
 
       if (data.session) {
         console.log('Server-side auth exchange successful')
-        return NextResponse.redirect(`${origin}${redirect}`)
+        // Use the response from createClient to ensure cookies are set
+        const redirectResponse = NextResponse.redirect(`${origin}${redirect}`)
+        
+        // Copy cookies from the supabase response to our redirect response
+        response.cookies.getAll().forEach(cookie => {
+          redirectResponse.cookies.set(cookie.name, cookie.value)
+        })
+        
+        return redirectResponse
       }
     } catch (error) {
       console.error('Server-side auth exchange exception:', error)
