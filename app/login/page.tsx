@@ -132,9 +132,9 @@ function LoginForm() {
     }
 
     try {
-      // Use the proper OAuth callback route with redirect parameter
+      // Use the client-side callback page for proper PKCE handling
       const intendedRedirect = searchParams.get('redirect') || '/landscaping'
-      const redirectUrl = `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
+      const redirectUrl = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
       console.log('Starting Google OAuth with redirect:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
