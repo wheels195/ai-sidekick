@@ -19,47 +19,33 @@ function AuthCallbackContent() {
         // Get the redirect parameter
         const redirect = searchParams.get('redirect') || '/landscaping'
         
-        // First, let Supabase process any auth tokens in the URL
-        // This is important for implicit flow where tokens are in the hash fragment
-        console.log('Processing auth callback...')
+        // For PKCE flow, we need to exchange the code for a session
+        console.log('Processing PKCE auth callback...')
         
-        // For implicit flow, we need to ensure Supabase processes the hash fragment
-        if (window.location.hash) {
-          console.log('Hash fragment detected, processing tokens...')
+        const urlParams = new URLSearchParams(window.location.search)
+        const code = urlParams.get('code')
+        const error_param = urlParams.get('error')
+        
+        if (error_param) {
+          console.error('OAuth error:', error_param)
+          setError(error_param)
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=oauth_error'), 2000)
+          return
         }
         
-        // Get the current session after Supabase processes the URL
-        const { data, error } = await supabase.auth.getSession()
-        
-        console.log('Initial session check:', { hasSession: !!data.session, error: error?.message })
-        
-        // If no session yet, wait a moment for Supabase to process the tokens
-        if (!data.session && !error) {
-          console.log('No session yet, waiting for token processing...')
-          await new Promise(resolve => setTimeout(resolve, 1500))
-          
-          const { data: retryData, error: retryError } = await supabase.auth.getSession()
-          console.log('Retry session result:', { hasSession: !!retryData.session, error: retryError?.message })
-          
-          if (retryError) {
-            setError(retryError.message)
-            setStatus('error')
-            setTimeout(() => router.push('/login?error=auth_retry_failed'), 2000)
-            return
-          }
-          
-          if (retryData.session) {
-            data.session = retryData.session
-          } else {
-            // Final attempt - refresh the session
-            const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession()
-            console.log('Refresh attempt:', { hasSession: !!refreshData.session, error: refreshError?.message })
-            
-            if (refreshData.session) {
-              data.session = refreshData.session
-            }
-          }
+        if (!code) {
+          console.error('No authorization code received')
+          setError('No authorization code received')
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=no_auth_code'), 2000)
+          return
         }
+        
+        console.log('Exchanging code for session...')
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+        
+        console.log('Code exchange result:', { hasSession: !!data.session, error: error?.message })
         
         if (error) {
           console.error('Session retrieval error:', error)
