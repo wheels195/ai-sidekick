@@ -85,8 +85,16 @@ function AuthCallbackContent() {
 
           setStatus('success')
           
-          // Small delay to ensure cookies are properly set
-          await new Promise(resolve => setTimeout(resolve, 500))
+          // Force a session refresh to ensure cookies are properly synchronized
+          console.log('Refreshing session to ensure proper cookie sync...')
+          await supabase.auth.refreshSession()
+          
+          // Longer delay to ensure cookies are properly set and middleware can read them
+          await new Promise(resolve => setTimeout(resolve, 1500))
+          
+          // Verify session is still valid before redirect
+          const { data: finalSession } = await supabase.auth.getSession()
+          console.log('Final session check before redirect:', { hasSession: !!finalSession.session })
           
           // Redirect based on profile existence
           if (!profile) {
@@ -94,7 +102,8 @@ function AuthCallbackContent() {
             router.push(`/signup/complete?email=${data.session.user.email}`)
           } else {
             console.log('Profile found, redirecting to:', redirect)
-            router.push(redirect)
+            // Use window.location.href for a hard redirect to ensure middleware sees the session
+            window.location.href = redirect
           }
         } else {
           console.log('No session found after callback')
