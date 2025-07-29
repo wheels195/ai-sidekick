@@ -72,8 +72,8 @@ function AuthCallbackContent() {
         }
         
         const { data, error } = await supabase.auth.exchangeCodeForSession({
-          authCode: code,
-          codeVerifier: codeVerifier
+          auth_code: code,
+          code_verifier: codeVerifier
         })
         
         console.log('Exchange result:', { 
