@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
   // Skip middleware for auth callback
@@ -7,47 +6,70 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
   
-  // Update session for all requests (this handles token refresh)
-  const response = await updateSession(request)
+  // Create a single supabase client instance for this request
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
+
+  const { createServerClient } = await import('@supabase/ssr')
+  
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: any) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+        },
+        remove(name: string, options: any) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+        },
+      },
+    }
+  )
+
+  // This call handles token refresh automatically
+  const { data: { user } } = await supabase.auth.getUser()
   
   // Protect the /landscaping route
   if (request.nextUrl.pathname.startsWith('/landscaping')) {
-    // Import here to avoid build issues
-    const { createServerClient } = await import('@supabase/ssr')
-    
-    // Create supabase client with the response from updateSession
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return request.cookies.get(name)?.value
-          },
-          set(name: string, value: string, options: any) {
-            response.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-          },
-          remove(name: string, options: any) {
-            response.cookies.set({
-              name,
-              value: '',
-              ...options,
-            })
-          },
-        },
-      }
-    )
-    
-    const { data: { user } } = await supabase.auth.getUser()
-    
     console.log('Middleware auth check:', { 
       path: request.nextUrl.pathname,
       hasUser: !!user,
-      cookies: request.cookies.getAll().map(c => c.name)
+      cookies: request.cookies.getAll().map(c => c.name).filter(name => name.startsWith('sb-'))
     })
     
     if (!user) {
