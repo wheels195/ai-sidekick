@@ -46,31 +46,63 @@ function AuthCallbackContent() {
           setTimeout(() => router.push('/login?error=oauth_error'), 2000)
           return
         }
-        
-        // Let Supabase automatically handle the callback
-        console.log('Waiting for Supabase to auto-process callback...')
-        
-        // Multiple attempts to get session
-        let attempts = 0
+
         let sessionData = null
-        
-        while (attempts < 5 && !sessionData?.session) {
-          attempts++
-          console.log(`Session attempt ${attempts}...`)
+
+        if (code) {
+          // Manual code exchange with client-side verifier
+          console.log('Performing manual PKCE exchange with client verifier...')
           
-          await new Promise(resolve => setTimeout(resolve, 500))
+          try {
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            
+            console.log('Manual exchange result:', { 
+              hasSession: !!data.session, 
+              error: error?.message,
+              user: data.session?.user?.email 
+            })
+            
+            if (error) {
+              console.error('Manual exchange error:', error)
+              setError(error.message)
+              setStatus('error')
+              setTimeout(() => router.push('/login?error=manual_exchange_failed'), 2000)
+              return
+            }
+            
+            sessionData = data
+          } catch (error) {
+            console.error('Manual exchange exception:', error)
+            setError('Code exchange failed')
+            setStatus('error')
+            setTimeout(() => router.push('/login?error=exchange_exception'), 2000)
+            return
+          }
+        } else {
+          // Let Supabase automatically handle the callback
+          console.log('No code param - waiting for Supabase auto-process...')
           
-          const { data, error } = await supabase.auth.getSession()
-          sessionData = data
+          // Multiple attempts to get session
+          let attempts = 0
           
-          console.log(`Attempt ${attempts} result:`, { 
-            hasSession: !!data.session, 
-            error: error?.message,
-            user: data.session?.user?.email 
-          })
-          
-          if (error) {
-            console.error(`Attempt ${attempts} error:`, error)
+          while (attempts < 3 && !sessionData?.session) {
+            attempts++
+            console.log(`Session attempt ${attempts}...`)
+            
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            const { data, error } = await supabase.auth.getSession()
+            sessionData = data
+            
+            console.log(`Attempt ${attempts} result:`, { 
+              hasSession: !!data.session, 
+              error: error?.message,
+              user: data.session?.user?.email 
+            })
+            
+            if (error) {
+              console.error(`Attempt ${attempts} error:`, error)
+            }
           }
         }
         
