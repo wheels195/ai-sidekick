@@ -30,8 +30,9 @@ export async function GET(request: NextRequest) {
 
     if (code) {
       console.log('Code parameter found, attempting to exchange for session')
-      const { supabase } = createClient(request)
+      const { supabase, response } = createClient(request)
       
+      // Handle PKCE code exchange properly  
       const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code)
       
       console.log('OAuth exchange result:', { hasSession: !!session, error: error?.message, errorDetails: error })
@@ -54,9 +55,12 @@ export async function GET(request: NextRequest) {
           return NextResponse.redirect(new URL(`/signup/complete?email=${session.user.email}`, requestUrl.origin))
         }
 
-        // If profile exists, redirect to intended destination
+        // If profile exists, redirect to intended destination  
         console.log('Profile found, redirecting to:', redirect)
-        return NextResponse.redirect(new URL(redirect, requestUrl.origin))
+        
+        // Return the response with proper cookies
+        const redirectResponse = NextResponse.redirect(new URL(redirect, requestUrl.origin))
+        return redirectResponse
       } else {
         console.error('Session exchange failed:', error)
         return NextResponse.redirect(new URL(`/login?error=session_exchange_failed&message=${encodeURIComponent(error?.message || 'Unknown error')}`, requestUrl.origin))
