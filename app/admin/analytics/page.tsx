@@ -104,13 +104,14 @@ export default function AdminAnalyticsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
+  const [activeView, setActiveView] = useState<string>('overview')
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = async (view: string = 'overview') => {
     setLoading(true)
     setError(null)
     
     try {
-      const response = await fetch('/api/admin/analytics', {
+      const response = await fetch(`/api/admin/analytics?view=${view}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -130,6 +131,11 @@ export default function AdminAnalyticsPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleViewChange = (view: string) => {
+    setActiveView(view)
+    fetchAnalytics(view)
   }
 
   useEffect(() => {
@@ -221,8 +227,144 @@ export default function AdminAnalyticsPage() {
       <main className="relative z-10 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-8">
           
-          {/* Overview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* View Navigation Tabs */}
+          <div className="flex flex-wrap gap-2 bg-gray-800/40 backdrop-blur-xl border border-gray-600/30 rounded-xl p-2">
+            {[
+              { id: 'overview', label: 'Overview', icon: BarChart3 },
+              { id: 'users', label: 'Users', icon: Users },
+              { id: 'costs', label: 'Costs', icon: DollarSign },
+              { id: 'admin', label: 'Admin Usage', icon: Eye },
+              { id: 'recommendations', label: 'Insights', icon: Target }
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => handleViewChange(id)}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
+                  activeView === id
+                    ? 'bg-blue-500 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="font-medium">{label}</span>
+              </button>
+            ))}
+          </div>
+          
+          {/* Render content based on active view */}
+          {activeView === 'admin' ? (
+            // Admin Usage View
+            <div className="space-y-8">
+              {data?.admin_summary && (
+                <>
+                  {/* Admin Summary Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <Card className="backdrop-blur-2xl bg-emerald-900/40 border-emerald-500/30 shadow-2xl">
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-emerald-300 text-sm font-medium">Admin Cost Today</p>
+                            <p className="text-3xl font-bold text-white">${data.admin_summary.total_cost_today.toFixed(4)}</p>
+                          </div>
+                          <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                            <DollarSign className="w-6 h-6 text-emerald-400" />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="backdrop-blur-2xl bg-blue-900/40 border-blue-500/30 shadow-2xl">
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-blue-300 text-sm font-medium">Admin Cost Week</p>
+                            <p className="text-3xl font-bold text-white">${data.admin_summary.total_cost_week.toFixed(4)}</p>
+                          </div>
+                          <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                            <TrendingUp className="w-6 h-6 text-blue-400" />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="backdrop-blur-2xl bg-purple-900/40 border-purple-500/30 shadow-2xl">
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-purple-300 text-sm font-medium">Admin Cost Month</p>
+                            <p className="text-3xl font-bold text-white">${data.admin_summary.total_cost_month.toFixed(4)}</p>
+                          </div>
+                          <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                            <Activity className="w-6 h-6 text-purple-400" />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="backdrop-blur-2xl bg-orange-900/40 border-orange-500/30 shadow-2xl">
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-orange-300 text-sm font-medium">Tokens Used Month</p>
+                            <p className="text-3xl font-bold text-white">{data.admin_summary.tokens_month.toLocaleString()}</p>
+                          </div>
+                          <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                            <Zap className="w-6 h-6 text-orange-400" />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Admin Users Table */}
+                  <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center">
+                        <Eye className="w-5 h-5 mr-2" />
+                        Admin Users ({data.admin_users?.length || 0})
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-gray-600/30">
+                              <th className="text-left py-3 px-4 font-medium text-emerald-300">User</th>
+                              <th className="text-left py-3 px-4 font-medium text-emerald-300">Email</th>
+                              <th className="text-left py-3 px-4 font-medium text-emerald-300">Total Cost</th>
+                              <th className="text-left py-3 px-4 font-medium text-emerald-300">Tokens Used</th>
+                              <th className="text-left py-3 px-4 font-medium text-emerald-300">Member Since</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {data.admin_users?.map((user: any, index: number) => (
+                              <tr key={user.id} className={index % 2 === 0 ? 'bg-gray-700/20' : ''}>
+                                <td className="py-3 px-4 text-white">{user.name}</td>
+                                <td className="py-3 px-4 text-gray-300">{user.email}</td>
+                                <td className="py-3 px-4 text-emerald-400 font-mono">${user.total_cost.toFixed(4)}</td>
+                                <td className="py-3 px-4 text-blue-400 font-mono">{user.tokens_used.toLocaleString()}</td>
+                                <td className="py-3 px-4 text-gray-400">{user.member_since}</td>
+                              </tr>
+                            )) || (
+                              <tr>
+                                <td colSpan={5} className="py-8 px-4 text-center text-gray-400">
+                                  No admin users found
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </>
+              )}
+            </div>
+          ) : (
+            // Regular Analytics Views
+            <>
+              {/* Overview Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="backdrop-blur-2xl bg-blue-900/40 border-blue-500/30 shadow-2xl">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
@@ -661,6 +803,8 @@ export default function AdminAnalyticsPage() {
                 </div>
               </CardContent>
             </Card>
+          )}
+            </>
           )}
 
         </div>
