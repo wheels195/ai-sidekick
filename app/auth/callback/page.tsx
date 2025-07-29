@@ -63,23 +63,14 @@ function AuthCallbackContent() {
           return
         }
         
-        // Get the code verifier from localStorage (we confirmed it exists)
-        const codeVerifier = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token-code-verifier') || 
-                            localStorage.getItem('supabase.auth.verifier') ||
-                            localStorage.getItem('sb-' + process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0] + '-auth-token-code-verifier')
+        // Just let Supabase handle everything automatically - detectSessionInUrl is enabled
+        console.log('Letting Supabase auto-detect and process session from URL...')
         
-        console.log('Code verifier found:', codeVerifier ? 'YES' : 'NO')
+        // Wait for Supabase to automatically process the URL
+        await new Promise(resolve => setTimeout(resolve, 2000))
         
-        if (!codeVerifier) {
-          setError('Code verifier missing from localStorage')
-          setStatus('error')
-          setTimeout(() => router.push('/login?error=no_verifier'), 2000)
-          return
-        }
-        
-        // Try the correct Supabase method signature - just pass the code string
-        // Supabase should automatically find the verifier from localStorage
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+        // Now check for the session
+        const { data, error } = await supabase.auth.getSession()
         
         console.log('Exchange result:', { 
           hasSession: !!data.session, 
