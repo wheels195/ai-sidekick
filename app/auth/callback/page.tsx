@@ -47,12 +47,34 @@ function AuthCallbackContent() {
           return
         }
 
-        // Use Supabase's built-in OAuth handler - this includes the code verifier!
-        console.log('Using Supabase getSessionFromUrl() - includes code verifier...')
+        // Manual exchange using the code verifier we found in localStorage
+        console.log('Performing manual exchange with found verifier...')
         
-        const { data, error } = await supabase.auth.getSessionFromUrl()
+        const code = urlParams.get('code')
+        if (!code) {
+          setError('No OAuth code received')
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=no_code'), 2000)
+          return
+        }
         
-        console.log('getSessionFromUrl result:', { 
+        // Get the code verifier from localStorage (we confirmed it exists)
+        const codeVerifier = localStorage.getItem('sb-tgrwtbtyfznebqrwenji-auth-token-code-verifier') || 
+                            localStorage.getItem('supabase.auth.verifier') ||
+                            localStorage.getItem('sb-' + process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0] + '-auth-token-code-verifier')
+        
+        console.log('Code verifier found:', codeVerifier ? 'YES' : 'NO')
+        
+        if (!codeVerifier) {
+          setError('Code verifier missing from localStorage')
+          setStatus('error')
+          setTimeout(() => router.push('/login?error=no_verifier'), 2000)
+          return
+        }
+        
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+        
+        console.log('Exchange result:', { 
           hasSession: !!data.session, 
           error: error?.message,
           user: data.session?.user?.email 
@@ -62,7 +84,7 @@ function AuthCallbackContent() {
           console.error('OAuth session error:', error)
           setError(error.message)
           setStatus('error')
-          setTimeout(() => router.push('/login?error=session_from_url_failed'), 2000)
+          setTimeout(() => router.push('/login?error=exchange_failed'), 2000)
           return
         }
         
