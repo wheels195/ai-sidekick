@@ -73,14 +73,12 @@ export async function middleware(request: NextRequest) {
       supabaseCookies: request.cookies.getAll().filter(c => c.name.startsWith('sb-')).map(c => c.name)
     })
     
-    // TEMPORARILY DISABLE AUTH CHECK TO DEBUG
-    console.log('TEMPORARILY ALLOWING ACCESS WITHOUT AUTH FOR DEBUGGING')
-    // if (!user) {
-    //   // Redirect to login with a return URL
-    //   const loginUrl = new URL('/login', request.url)
-    //   loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
-    //   return NextResponse.redirect(loginUrl)
-    // }
+    if (!user) {
+      // Redirect to login with a return URL
+      const loginUrl = new URL('/login', request.url)
+      loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
+      return NextResponse.redirect(loginUrl)
+    }
   }
 
   return response
