@@ -1026,6 +1026,14 @@ ${searchResults}
 
           const responseTime = Date.now() - startTime
 
+          console.log('🚀 Stream completed. Checking if we should save assistant message:', {
+            hasUser: !!user,
+            userEmail: user?.email,
+            hasFullResponse: !!fullResponse,
+            responseLength: fullResponse?.length,
+            hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+            hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY
+          })
 
           // Store assistant response if authenticated and Supabase is available
           if (user && fullResponse && process.env.NEXT_PUBLIC_SUPABASE_URL) {
@@ -1040,6 +1048,7 @@ ${searchResults}
               // Use service role for assistant message insertion to bypass RLS
               const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
               const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+              console.log('🔑 Service role key available:', !!supabaseServiceKey, 'First 20 chars:', supabaseServiceKey?.substring(0, 20))
               const serviceSupabase = createServiceClient(supabaseUrl, supabaseServiceKey)
               
               console.log('💾 Saving assistant message:', {
@@ -1050,6 +1059,8 @@ ${searchResults}
                 totalTokens: totalTokens,
                 totalCost: costs?.totalCostUsd
               })
+              
+              console.log('📝 Full assistant message content preview:', fullResponse?.substring(0, 200) + '...')
 
               const { data, error: insertError } = await serviceSupabase
                 .from('user_conversations')
@@ -1073,11 +1084,23 @@ ${searchResults}
                 .single()
 
               if (insertError) {
-                console.error('❌ Assistant message insert failed:', insertError)
+                console.error('❌ Assistant message insert failed:', {
+                  error: insertError,
+                  code: insertError.code,
+                  message: insertError.message,
+                  details: insertError.details,
+                  hint: insertError.hint
+                })
                 throw insertError
               }
 
-              console.log('✅ Assistant message saved successfully:', data?.id)
+              console.log('✅ Assistant message saved successfully:', {
+                messageId: data?.id,
+                userId: user.id,
+                sessionId: sessionId,
+                messageRole: 'assistant',
+                savedContent: data?.message_content?.substring(0, 100) + '...'
+              })
 
               // Calculate accurate token usage and costs
               const currentUserMessage = messages[messages.length - 1]
