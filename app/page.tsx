@@ -42,6 +42,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import DisplayCards from "@/components/ui/display-cards"
+import TestimonialCarousel from "@/components/TestimonialCarousel"
 import { supabase } from '@/lib/supabase/client'
 
 export default function LandingPage() {
@@ -1234,6 +1235,21 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Testimonial Carousel Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-black">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-4">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              Success Stories
+            </span>
+          </h2>
+          <p className="text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto">
+            See how landscaping pros are transforming their businesses with AI-Sidekick
+          </p>
+        </div>
+        <TestimonialCarousel />
       </section>
 
       {/* Idea Ticker Section */}
