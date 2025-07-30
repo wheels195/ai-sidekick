@@ -19,7 +19,11 @@ import {
   Globe,
   ClipboardCheck,
   Briefcase,
-  Target
+  Target,
+  Zap,
+  Shield,
+  ListChecks,
+  Brain
 } from 'lucide-react'
 
 interface TestimonialStat {
@@ -84,6 +88,28 @@ const placeholderTestimonials: Testimonial[] = [
       { icon: <Target className="w-5 h-5 text-emerald-400" />, text: 'Stay focused on growth by automating research and customer prep' }
     ],
     footer: 'Growth-focused | Commercial & residential | Multi-state operations'
+  },
+  {
+    imageSrc: '/testimonial-5.jpg',
+    headline: 'No Tech Skills? No Problem. AI That Works for Everyone.',
+    subheadline: 'AI-Sidekick was built for landscapers — not coders. Even first-time users are seeing big results:',
+    stats: [
+      { icon: <Zap className="w-5 h-5 text-emerald-400" />, text: 'Up and running in minutes — no learning curve, no headaches' },
+      { icon: <Users className="w-5 h-5 text-emerald-400" />, text: 'Helps the whole crew get more done, no matter their tech skills' },
+      { icon: <Shield className="w-5 h-5 text-emerald-400" />, text: 'Makes your team look smarter, faster, and more professional' }
+    ],
+    footer: 'User-friendly | All skill levels | Instant productivity'
+  },
+  {
+    imageSrc: '/testimonial-6.jpg',
+    headline: 'Real Answers. Real Fast. No More Guesswork.',
+    subheadline: 'Most landscapers don\'t have time to dig through forums or outdated YouTube tutorials. AI-Sidekick gives you:',
+    stats: [
+      { icon: <ListChecks className="w-5 h-5 text-emerald-400" />, text: 'Clear, step-by-step solutions tailored to your exact job' },
+      { icon: <Search className="w-5 h-5 text-emerald-400" />, text: 'Expert-level guidance without the endless search' },
+      { icon: <Brain className="w-5 h-5 text-emerald-400" />, text: 'Smarter decisions on pricing, services, and upgrades — instantly' }
+    ],
+    footer: 'Time-saving | Expert knowledge | Instant results'
   }
 ]
 
