@@ -17,7 +17,9 @@ import {
   MessageCircle,
   GraduationCap,
   Globe,
-  ClipboardCheck
+  ClipboardCheck,
+  Briefcase,
+  Target
 } from 'lucide-react'
 
 interface TestimonialStat {
@@ -71,6 +73,17 @@ const placeholderTestimonials: Testimonial[] = [
       { icon: <ClipboardCheck className="w-5 h-5 text-emerald-400" />, text: 'Showing up more prepared, with AI-generated daily prep checklists' }
     ],
     footer: 'Enterprise solution | Multi-crew operations | Nationwide'
+  },
+  {
+    imageSrc: '/testimonial-4.jpg',
+    headline: 'Bigger Deals, Better Growth',
+    subheadline: 'Whether you\'re solo or scaling, AI-Sidekick helps landscaping pros:',
+    stats: [
+      { icon: <Briefcase className="w-5 h-5 text-emerald-400" />, text: 'Win more commercial contracts with AI-powered pitch ideas and templates' },
+      { icon: <Lightbulb className="w-5 h-5 text-emerald-400" />, text: 'Diversify service offerings with smart suggestions based on local demand' },
+      { icon: <Target className="w-5 h-5 text-emerald-400" />, text: 'Stay focused on growth by automating research and customer prep' }
+    ],
+    footer: 'Growth-focused | Commercial & residential | Multi-state operations'
   }
 ]
 
@@ -94,7 +107,7 @@ export default function TestimonialCarousel({ testimonials = placeholderTestimon
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 6000) // 6 seconds
+    }, 10000) // 10 seconds
 
     return () => clearInterval(interval)
   }, [isAutoPlaying, testimonials.length])
