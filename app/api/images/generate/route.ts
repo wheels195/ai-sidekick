@@ -163,9 +163,12 @@ function calculateCost(model: string, size: string, quality: string): number {
 
 export async function POST(request: NextRequest) {
   try {
-    const { supabase, user } = await createClient(request)
+    const { supabase } = createClient(request)
+    
+    // Get the authenticated user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    if (!user) {
+    if (authError || !user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 
@@ -356,9 +359,12 @@ export async function POST(request: NextRequest) {
 // GET - Get user's generation history and usage
 export async function GET(request: NextRequest) {
   try {
-    const { supabase, user } = await createClient(request)
+    const { supabase } = createClient(request)
+    
+    // Get the authenticated user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    if (!user) {
+    if (authError || !user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 

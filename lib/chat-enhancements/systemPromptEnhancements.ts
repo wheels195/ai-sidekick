@@ -43,18 +43,18 @@ You should:
 - Call-to-actions: Bold emerald green formatting
 
 **HTML TABLES FOR ALL DATA:**
-When presenting any structured data (competitors, businesses, file analysis results, vector knowledge), always use this exact HTML table format:
+When presenting any structured data (competitors, businesses, file analysis results, vector knowledge), always use this exact HTML table format with glassmorphism effects:
 
-<div style="overflow-x: auto; margin: 16px 0; border-radius: 8px; background-color: #1a1a1a; border: 1px solid #2a2a2a;">
-<table style="width: 100%; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: #1a1a1a; font-size: 14px;">
+<div style="overflow-x: auto; margin: 20px 0; border-radius: 12px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);">
+<table style="width: 100%; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: transparent; font-size: 14px;">
 <thead>
-<tr style="background-color: #111111;">
-<th style="border-bottom: 2px solid #34d399; border-right: 1px solid #2a2a2a; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; white-space: nowrap;">[Column Title]</th>
+<tr style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15) 0%, rgba(52, 211, 153, 0.1) 100%); backdrop-filter: blur(5px);">
+<th style="border-bottom: 2px solid rgba(52, 211, 153, 0.5); border-right: 1px solid rgba(52, 211, 153, 0.2); padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); letter-spacing: 0.5px;">[Column Title]</th>
 </tr>
 </thead>
 <tbody>
-<tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
-<td style="border-right: 1px solid #2a2a2a; padding: 8px 12px; font-weight: 400; color: #e5e7eb; font-size: 13px; line-height: 1.4; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">[Data]</td>
+<tr style="background-color: rgba(26, 26, 26, 0.3); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(52, 211, 153, 0.15); transition: all 0.2s ease;">
+<td style="border-right: 1px solid rgba(52, 211, 153, 0.15); padding: 12px 16px; font-weight: 400; color: #f3f4f6; font-size: 13px; line-height: 1.5; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">[Data]</td>
 </tr>
 </tbody>
 </table>
@@ -63,12 +63,12 @@ When presenting any structured data (competitors, businesses, file analysis resu
 **MOBILE-OPTIMIZED TABLES:**
 For mobile screens, use a card-based layout instead of tables when there are more than 3 columns:
 
-<div style="display: grid; gap: 12px; margin: 16px 0;">
-<div style="background-color: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 12px;">
-<div style="color: #34d399; font-weight: 600; font-size: 14px; margin-bottom: 8px;">[Business Name]</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;">
-<div><span style="color: #9ca3af;">Phone:</span> <span style="color: #e5e7eb;">[Phone]</span></div>
-<div><span style="color: #9ca3af;">Rating:</span> <span style="color: #e5e7eb;">[Rating]</span></div>
+<div style="display: grid; gap: 16px; margin: 20px 0;">
+<div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(52, 211, 153, 0.04) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(52, 211, 153, 0.25); border-radius: 12px; padding: 16px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.3s ease;">
+<div style="color: #34d399; font-weight: 600; font-size: 15px; margin-bottom: 10px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">[Business Name]</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
+<div><span style="color: #9ca3af; font-weight: 500;">Phone:</span> <span style="color: #f3f4f6;">[Phone]</span></div>
+<div><span style="color: #9ca3af; font-weight: 500;">Rating:</span> <span style="color: #f3f4f6;">[Rating]</span></div>
 </div>
 </div>
 </div>
