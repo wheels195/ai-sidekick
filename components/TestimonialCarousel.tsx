@@ -120,6 +120,24 @@ export default function TestimonialCarousel({ testimonials = placeholderTestimon
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [isAnimating, setIsAnimating] = useState(false)
 
+  // Scroll animation observer
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-visible')
+        }
+      })
+    }, { threshold: 0.1 })
+
+    const elementsToAnimate = document.querySelectorAll('.fade-left, .fade-right')
+    elementsToAnimate.forEach((el) => observer.observe(el))
+
+    return () => {
+      elementsToAnimate.forEach((el) => observer.unobserve(el))
+    }
+  }, [])
+
   // Trigger animation on index change
   useEffect(() => {
     setIsAnimating(true)
@@ -175,7 +193,30 @@ export default function TestimonialCarousel({ testimonials = placeholderTestimon
   const currentTestimonial = testimonials[currentIndex]
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+    <>
+      <style>{`
+        .fade-left {
+          opacity: 0;
+          transform: translateX(-50px);
+          transition: all 1s ease-out;
+        }
+        
+        .fade-right {
+          opacity: 0;
+          transform: translateX(50px);
+          transition: all 1s ease-out;
+        }
+        
+        .fade-left.animate-visible,
+        .fade-right.animate-visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        
+        .fade-left.delay-400 { transition-delay: 400ms; }
+        .fade-right.delay-600 { transition-delay: 600ms; }
+      `}</style>
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
       {/* Main carousel container */}
       <div 
         className="relative overflow-hidden rounded-xl lg:rounded-2xl"
@@ -187,7 +228,7 @@ export default function TestimonialCarousel({ testimonials = placeholderTestimon
         <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 p-6 sm:p-8 lg:p-12">
           
           {/* Left side - Testimonial Image */}
-          <div className="flex-shrink-0 w-full lg:w-auto order-1 lg:order-1">
+          <div className="flex-shrink-0 w-full lg:w-auto order-1 lg:order-1 fade-left delay-400">
             <img
               src={currentTestimonial.imageSrc}
               alt={`Testimonial ${currentIndex + 1}`}
@@ -198,7 +239,7 @@ export default function TestimonialCarousel({ testimonials = placeholderTestimon
           </div>
 
           {/* Right side - Dynamic Value Card */}
-          <div className="flex-1 w-full order-2 lg:order-2">
+          <div className="flex-1 w-full order-2 lg:order-2 fade-right delay-600">
             <div className={`bg-gradient-to-br from-emerald-900/20 via-emerald-800/15 to-emerald-700/10 backdrop-blur-xl rounded-xl lg:rounded-2xl p-4 sm:p-6 lg:p-10 shadow-2xl border border-emerald-400/30 transition-all duration-600 ease-out relative overflow-hidden ${
               isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'
             }`}>
@@ -278,6 +319,7 @@ export default function TestimonialCarousel({ testimonials = placeholderTestimon
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

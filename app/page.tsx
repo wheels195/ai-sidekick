@@ -362,6 +362,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         .fade-left.delay-1000 { transition-delay: 1000ms; }
         .fade-left.delay-1200 { transition-delay: 1200ms; }
         .fade-left.delay-1400 { transition-delay: 1400ms; }
+        .fade-left.delay-1600 { transition-delay: 1600ms; }
+        .fade-left.delay-1800 { transition-delay: 1800ms; }
+        .fade-left.delay-2000 { transition-delay: 2000ms; }
         @keyframes scroll-right {
           0% { transform: translateX(-50%); }
           100% { transform: translateX(0%); }
@@ -1285,14 +1288,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </div>
 
       {/* Testimonial Carousel Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-black scroll-animate">
+      <section className="py-12 sm:py-16 lg:py-20 bg-black">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white mb-4 fade-left delay-0">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
               Success Stories
             </span>
           </h2>
-          <p className="text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto">
+          <p className="text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto fade-left delay-200">
             See how landscaping pros are transforming their businesses with AI-Sidekick
           </p>
         </div>
@@ -1300,20 +1303,20 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Idea Ticker Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden scroll-animate">
+      <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4 fade-left delay-0">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
               Get Inspired
             </span>
           </h2>
-          <p className="text-gray-300 text-lg">
+          <p className="text-gray-300 text-lg fade-left delay-200">
             Real questions from successful landscaping business owners
           </p>
         </div>
 
         {/* Ticker Row 1 - Scrolling Right */}
-        <div className="relative mb-4 ticker-row">
+        <div className="relative mb-4 ticker-row fade-left delay-400">
           <div className="flex animate-scroll-right space-x-4">
             {[
               { category: "Customer Acquisition", question: "Generate a 30-day plan to get 10 new high-value customers", color: "from-emerald-500 to-teal-500" },
@@ -1351,7 +1354,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
 
         {/* Ticker Row 2 - Scrolling Left */}
-        <div className="relative mb-4 ticker-row">
+        <div className="relative mb-4 ticker-row fade-left delay-600">
           <div className="flex animate-scroll-left space-x-4">
             {[
               { category: "Pricing Strategy", question: "Create a pricing strategy that eliminates lowball competitors", color: "from-yellow-500 to-orange-500" },
@@ -1389,7 +1392,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
 
         {/* Ticker Row 3 - Scrolling Right */}
-        <div className="relative ticker-row">
+        <div className="relative ticker-row fade-left delay-800">
           <div className="flex animate-scroll-right space-x-4">
             {[
               { category: "Business Management", question: "What software tools will help me manage my growing business?", color: "from-purple-500 to-pink-500" },
@@ -1427,7 +1430,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
         
         {/* Learn More Button */}
-        <div className="text-center mt-12 mb-8">
+        <div className="text-center mt-12 mb-8 fade-left delay-1000">
           <Button
             size="lg"
             className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 hover:from-purple-400 hover:via-indigo-400 hover:to-blue-400 text-white shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20 text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 font-semibold"
