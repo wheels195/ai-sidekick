@@ -550,6 +550,44 @@ const generateSimpleGreeting = (user: any): string => {
   return `Hi, ${displayName}! I'm **Scout**, your Landscaping AI Sidekick. How can we grow your business today?`
 }
 
+// Generate better responses for image creation
+const generateImageSuccessResponse = (prompt: string): string => {
+  const responses = [
+    `✨ I've created a custom landscaping image for you based on: "${prompt}"
+
+**What you can do with this image:**
+- Share it on social media to showcase your vision
+- Use it in proposals or presentations
+- Add it to your portfolio
+- Show clients different design possibilities
+
+Need any adjustments or want to create another variation? Just let me know!`,
+    
+    `🎨 Here's your landscaping visualization for: "${prompt}"
+
+**Pro tip:** This image can help you:
+- Communicate design ideas with clients
+- Create before/after comparisons
+- Build your online portfolio
+- Generate social media content
+
+Want to explore different angles or styles? I'm here to help!`,
+    
+    `📸 Your custom image is ready: "${prompt}"
+
+**Business uses:**
+- Client presentations and proposals
+- Marketing materials and flyers
+- Website galleries
+- Social media posts
+
+I can create variations or entirely new concepts - just describe what you need!`
+  ]
+  
+  // Randomly select a response for variety
+  return responses[Math.floor(Math.random() * responses.length)]
+}
+
 interface LandscapingChatClientProps {
   user: {
     id: string
@@ -1231,6 +1269,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     // Check for image generation intent first
     if (detectImageGenerationIntent(input.trim())) {
       console.log('🎨 Image generation detected, generating inline...')
+      setIsGeneratingImage(true)
       const assistantId = (Date.now() + 1).toString()
       setMessages(prev => [
         ...prev,
@@ -1258,7 +1297,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           msg.id === assistantId 
             ? {
                 ...msg,
-                content: `I've generated an image based on your request: "${data.image?.originalPrompt || input.trim()}"`,
+                content: generateImageSuccessResponse(data.image?.originalPrompt || input.trim()),
                 images: [{
                   url: data.image?.url || '',
                   name: `Generated: ${data.image?.originalPrompt || input.trim()}`,
@@ -1271,6 +1310,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       }
       
       setIsLoading(false)
+      setIsGeneratingImage(false)
       return
     }
 
@@ -2332,18 +2372,38 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   <div className="flex justify-start mb-4">
                     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-4 py-3 max-w-[900px]">
                       <div className="flex items-center space-x-3">
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                          <div
-                            className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.1s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-emerald-300 font-medium">AI is thinking...</span>
+                        {isGeneratingImage ? (
+                          <>
+                            <div className="relative w-5 h-5">
+                              <div className="absolute inset-0 rounded-full bg-emerald-400/20 animate-ping"></div>
+                              <div className="relative w-5 h-5 rounded-full bg-emerald-400/40 flex items-center justify-center">
+                                <svg className="w-3 h-3 text-emerald-400 animate-spin" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                              </div>
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-sm text-emerald-300 font-medium">✨ Creating your image...</span>
+                              <span className="text-xs text-gray-400">This may take 10-15 seconds</span>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex space-x-1">
+                              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+                              <div
+                                className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
+                                style={{ animationDelay: "0.1s" }}
+                              ></div>
+                              <div
+                                className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"
+                                style={{ animationDelay: "0.2s" }}
+                              ></div>
+                            </div>
+                            <span className="text-sm text-emerald-300 font-medium">AI is thinking...</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
