@@ -643,7 +643,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 title: "Instant Local Expertise",
                 desc: "Get specific advice for ranking in your city, not generic SEO tips",
                 metric: "Rank #1 locally",
-                color: "blue",
                 tag: "AI-Powered",
               },
               {
@@ -651,7 +650,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 title: "Pricing Confidence",
                 desc: "Stop undercharging - know exactly what to charge in your market",
                 metric: "Boost profits 35%",
-                color: "emerald",
                 tag: "Market Data",
               },
               {
@@ -659,7 +657,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 title: "Upsell Opportunities",
                 desc: "Discover profitable add-ons you can offer every customer",
                 metric: "3x more revenue",
-                color: "purple",
                 tag: "Proven Strategy",
               },
               {
@@ -667,7 +664,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 title: "Content That Converts",
                 desc: "Get social media posts and website copy that actually brings in leads",
                 metric: "5x engagement",
-                color: "orange",
                 tag: "Real-Time",
               },
               {
@@ -675,7 +671,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 title: "Reputation Builder",
                 desc: "Turn happy customers into 5-star reviews that build trust and attract new business",
                 metric: "90% more reviews",
-                color: "yellow",
                 tag: "Automated",
               },
               {
@@ -683,99 +678,46 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 title: "Smart Business Insights",
                 desc: "Get clear, AI-driven advice on what to fix, improve, or double down on in your business",
                 metric: "Save 15+ hrs/week",
-                color: "pink",
                 tag: "Intelligence",
               },
             ].map((value, index) => (
               <Card
                 key={index}
-                className="relative backdrop-blur-2xl bg-black/40 border border-white/10 shadow-2xl hover:shadow-2xl transition-all duration-500 hover:scale-105 group overflow-hidden"
+                className="relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] animate-fade-in-left"
+                style={{
+                  animationDelay: `${index * 200}ms`,
+                  animationFillMode: 'backwards'
+                }}
               >
-                {/* Animated border glow */}
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                     style={{
-                       background: value.color === 'blue' ? 'linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1))' :
-                                  value.color === 'emerald' ? 'linear-gradient(45deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1))' :
-                                  value.color === 'purple' ? 'linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))' :
-                                  value.color === 'orange' ? 'linear-gradient(45deg, rgba(249, 115, 22, 0.1), rgba(234, 179, 8, 0.1))' :
-                                  value.color === 'yellow' ? 'linear-gradient(45deg, rgba(234, 179, 8, 0.1), rgba(16, 185, 129, 0.1))' :
-                                  'linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1))'
-                     }}>
-                </div>
+                {/* Subtle gradient highlight - always visible */}
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
                 
                 {/* Feature tag */}
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${
-                    value.color === 'blue' ? 'bg-blue-500/20 text-blue-300 border-blue-400/30' :
-                    value.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30' :
-                    value.color === 'purple' ? 'bg-purple-500/20 text-purple-300 border-purple-400/30' :
-                    value.color === 'orange' ? 'bg-orange-500/20 text-orange-300 border-orange-400/30' :
-                    value.color === 'yellow' ? 'bg-yellow-500/20 text-yellow-300 border-yellow-400/30' :
-                    'bg-pink-500/20 text-pink-300 border-pink-400/30'
-                  }`}>
+                <div className="absolute top-4 right-4">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     {value.tag}
                   </span>
                 </div>
                 
-                <CardContent className="p-4 sm:p-6 lg:p-8 text-center relative z-10">
-                  {/* Enhanced icon container */}
-                  <div className="relative mb-4 mx-auto w-fit">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 backdrop-blur-sm border ${
-                      value.color === 'blue' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/30 border-blue-400/30 group-hover:shadow-blue-500/25' :
-                      value.color === 'emerald' ? 'bg-gradient-to-br from-emerald-500/20 to-emerald-600/30 border-emerald-400/30 group-hover:shadow-emerald-500/25' :
-                      value.color === 'purple' ? 'bg-gradient-to-br from-purple-500/20 to-purple-600/30 border-purple-400/30 group-hover:shadow-purple-500/25' :
-                      value.color === 'orange' ? 'bg-gradient-to-br from-orange-500/20 to-orange-600/30 border-orange-400/30 group-hover:shadow-orange-500/25' :
-                      value.color === 'yellow' ? 'bg-gradient-to-br from-yellow-500/20 to-yellow-600/30 border-yellow-400/30 group-hover:shadow-yellow-500/25' :
-                      'bg-gradient-to-br from-pink-500/20 to-pink-600/30 border-pink-400/30 group-hover:shadow-pink-500/25'
-                    } group-hover:shadow-lg`}>
-                      <value.icon className={`w-7 h-7 transition-colors duration-300 ${
-                        value.color === 'blue' ? 'text-blue-400 group-hover:text-blue-300' :
-                        value.color === 'emerald' ? 'text-emerald-400 group-hover:text-emerald-300' :
-                        value.color === 'purple' ? 'text-purple-400 group-hover:text-purple-300' :
-                        value.color === 'orange' ? 'text-orange-400 group-hover:text-orange-300' :
-                        value.color === 'yellow' ? 'text-yellow-400 group-hover:text-yellow-300' :
-                        'text-pink-400 group-hover:text-pink-300'
-                      }`} />
+                <CardContent className="p-6 sm:p-8 text-left relative z-10">
+                  {/* Icon with subtle pulse animation */}
+                  <div className="relative mb-4 w-fit">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center transition-all duration-300 group-hover:bg-emerald-500/15 animate-icon-pulse">
+                      <value.icon className="w-6 h-6 text-emerald-400" />
                     </div>
-                    
-                    {/* Animated ring */}
-                    <div className={`absolute inset-0 rounded-2xl border-2 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500 ${
-                      value.color === 'blue' ? 'border-blue-400/50' :
-                      value.color === 'emerald' ? 'border-emerald-400/50' :
-                      value.color === 'purple' ? 'border-purple-400/50' :
-                      value.color === 'orange' ? 'border-orange-400/50' :
-                      value.color === 'yellow' ? 'border-yellow-400/50' :
-                      'border-pink-400/50'
-                    }`}></div>
                   </div>
                   
-                  <h3 className="text-2xl sm:text-3xl lg:text-3xl font-bold mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
-                    <span className={`font-cursive bg-gradient-to-r bg-clip-text text-transparent ${
-                      value.color === 'blue' ? 'from-blue-300 to-blue-500' :
-                      value.color === 'emerald' ? 'from-emerald-300 to-emerald-500' :
-                      value.color === 'purple' ? 'from-purple-300 to-purple-500' :
-                      value.color === 'orange' ? 'from-orange-300 to-orange-500' :
-                      value.color === 'yellow' ? 'from-yellow-300 to-yellow-500' :
-                      'from-pink-300 to-pink-500'
-                    }`}>
-                      {value.title}
-                    </span>
+                  <h3 className="text-xl sm:text-2xl font-medium mb-3 text-white font-sans">
+                    {value.title}
                   </h3>
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 group-hover:text-gray-200 transition-colors duration-300 uppercase">
+                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 font-normal">
                     {value.desc}
                   </p>
                   
-                  {/* Success metric */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                    <span className={`inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-semibold ${
-                      value.color === 'blue' ? 'bg-blue-500/10 text-blue-300 border border-blue-400/20' :
-                      value.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/20' :
-                      value.color === 'purple' ? 'bg-purple-500/10 text-purple-300 border border-purple-400/20' :
-                      value.color === 'orange' ? 'bg-orange-500/10 text-orange-300 border border-orange-400/20' :
-                      value.color === 'yellow' ? 'bg-yellow-500/10 text-yellow-300 border border-yellow-400/20' :
-                      'bg-pink-500/10 text-pink-300 border border-pink-400/20'
-                    }`}>
-                      <Sparkles className="w-3 h-3 mr-1" />
+                  {/* Success metric - always visible */}
+                  <div className="mt-auto">
+                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/[0.03] text-gray-200 border border-white/10">
+                      <Sparkles className="w-4 h-4 mr-2 text-emerald-400" />
                       {value.metric}
                     </span>
                   </div>
@@ -783,6 +725,38 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </Card>
             ))}
           </div>
+          
+          <style jsx>{`
+            @keyframes fade-in-left {
+              from {
+                opacity: 0;
+                transform: translateX(-30px);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
+            }
+            
+            @keyframes icon-pulse {
+              0%, 100% {
+                opacity: 1;
+              }
+              50% {
+                opacity: 0.8;
+              }
+            }
+            
+            .animate-fade-in-left {
+              opacity: 0;
+              transform: translateX(-30px);
+              animation: fade-in-left 0.8s ease-out forwards;
+            }
+            
+            .animate-icon-pulse {
+              animation: icon-pulse 6s ease-in-out infinite;
+            }
+          `}</style>
         </div>
       </section>
 
