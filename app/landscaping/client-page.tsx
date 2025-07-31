@@ -855,33 +855,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 ])
               }
               
-              // Get the most recent conversation session for current chat
-              const latestSession = data.sessions[0]
-              
-              // Convert to the format expected by the frontend
-              const historyMessages: Message[] = latestSession.messages.map((msg: any) => ({
-                id: msg.id,
-                role: msg.role,
-                content: msg.content,
-                timestamp: new Date(msg.timestamp),
-                modelUsed: msg.modelUsed
-              }))
-              
-              // Only load if there are actual messages (not just the welcome message)
-              if (historyMessages.length > 0) {
-                // Keep the initial greeting and add history
-                setMessages(prevMessages => [
-                  prevMessages[0], // Keep the welcome message
-                  ...historyMessages
-                ])
-                
-                // Update current session ID to continue the conversation
-                console.log('🔗 Loading conversation history, updating session ID:', {
-                  oldSessionId: currentSessionId,
-                  newSessionId: latestSession.sessionId
-                })
-                setCurrentSessionId(latestSession.sessionId)
-              }
+              // Don't auto-load the last conversation - start fresh each time
+              // Users can still access their history via the sidebar if needed
             }
           }
         } catch (error) {
