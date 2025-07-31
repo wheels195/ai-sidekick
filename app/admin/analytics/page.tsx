@@ -390,6 +390,18 @@ export default function AdminAnalyticsPage() {
                               <span className="text-white font-mono">${(data.today?.api_breakdown?.google_places_cost || 0).toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between">
+                              <span className="text-gray-300">Google Search</span>
+                              <span className="text-white font-mono">${(data.today?.api_breakdown?.google_search_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">DALL-E Images</span>
+                              <span className="text-white font-mono">${(data.today?.api_breakdown?.dalle_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Whisper Audio</span>
+                              <span className="text-white font-mono">${(data.today?.api_breakdown?.whisper_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
                               <span className="text-gray-300">File Processing</span>
                               <span className="text-white font-mono">${(data.today?.api_breakdown?.file_processing_cost || 0).toFixed(4)}</span>
                             </div>
@@ -428,6 +440,18 @@ export default function AdminAnalyticsPage() {
                             <div className="flex justify-between">
                               <span className="text-gray-300">Google Places</span>
                               <span className="text-white font-mono">${(data.week?.api_breakdown?.google_places_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Google Search</span>
+                              <span className="text-white font-mono">${(data.week?.api_breakdown?.google_search_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">DALL-E Images</span>
+                              <span className="text-white font-mono">${(data.week?.api_breakdown?.dalle_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Whisper Audio</span>
+                              <span className="text-white font-mono">${(data.week?.api_breakdown?.whisper_cost || 0).toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-gray-300">File Processing</span>
@@ -470,6 +494,18 @@ export default function AdminAnalyticsPage() {
                               <span className="text-white font-mono">${(data.month?.api_breakdown?.google_places_cost || 0).toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between">
+                              <span className="text-gray-300">Google Search</span>
+                              <span className="text-white font-mono">${(data.month?.api_breakdown?.google_search_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">DALL-E Images</span>
+                              <span className="text-white font-mono">${(data.month?.api_breakdown?.dalle_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-300">Whisper Audio</span>
+                              <span className="text-white font-mono">${(data.month?.api_breakdown?.whisper_cost || 0).toFixed(4)}</span>
+                            </div>
+                            <div className="flex justify-between">
                               <span className="text-gray-300">File Processing</span>
                               <span className="text-white font-mono">${(data.month?.api_breakdown?.file_processing_cost || 0).toFixed(4)}</span>
                             </div>
@@ -481,8 +517,228 @@ export default function AdminAnalyticsPage() {
                 </>
               )}
             </div>
+          ) : activeView === 'costs' && data?.view === 'costs' ? (
+            // Costs View
+            <div className="space-y-8">
+              {/* Cost Summary Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Card className="backdrop-blur-2xl bg-emerald-900/40 border-emerald-500/30 shadow-2xl">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-emerald-300 text-sm font-medium">Total Cost Today</p>
+                        <p className="text-3xl font-bold text-white">${((data as any)?.today?.total_cost_usd || 0).toFixed(2)}</p>
+                      </div>
+                      <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                        <DollarSign className="w-6 h-6 text-emerald-400" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="backdrop-blur-2xl bg-blue-900/40 border-blue-500/30 shadow-2xl">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-blue-300 text-sm font-medium">Total Cost This Week</p>
+                        <p className="text-3xl font-bold text-white">${((data as any)?.week?.total_cost_usd || 0).toFixed(2)}</p>
+                      </div>
+                      <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <TrendingUp className="w-6 h-6 text-blue-400" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="backdrop-blur-2xl bg-purple-900/40 border-purple-500/30 shadow-2xl">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-purple-300 text-sm font-medium">Total Cost This Month</p>
+                        <p className="text-3xl font-bold text-white">${((data as any)?.month?.total_cost_usd || 0).toFixed(2)}</p>
+                      </div>
+                      <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                        <Calendar className="w-6 h-6 text-purple-400" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="backdrop-blur-2xl bg-orange-900/40 border-orange-500/30 shadow-2xl">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-orange-300 text-sm font-medium">Cost per Conversation</p>
+                        <p className="text-3xl font-bold text-white">${((data as any)?.month?.cost_per_conversation || 0).toFixed(4)}</p>
+                      </div>
+                      <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                        <Activity className="w-6 h-6 text-orange-400" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Detailed Cost Breakdown */}
+              <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-white text-xl">API Cost Breakdown</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Today */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-emerald-300 mb-4">Today</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">GPT-4o</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.gpt4o_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">GPT-4o-mini</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.gpt4o_mini_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Google Places</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.google_places_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Google Search</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.google_search_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">DALL-E Images</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.dalle_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Whisper Audio</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.whisper_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">File Processing</span>
+                          <span className="text-white font-mono">${((data as any)?.today?.files_cost || 0).toFixed(4)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Week */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-blue-300 mb-4">This Week</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">GPT-4o</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.gpt4o_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">GPT-4o-mini</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.gpt4o_mini_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Google Places</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.google_places_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Google Search</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.google_search_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">DALL-E Images</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.dalle_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Whisper Audio</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.whisper_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">File Processing</span>
+                          <span className="text-white font-mono">${((data as any)?.week?.files_cost || 0).toFixed(4)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Month */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-purple-300 mb-4">This Month</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">GPT-4o</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.gpt4o_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">GPT-4o-mini</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.gpt4o_mini_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Google Places</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.google_places_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Google Search</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.google_search_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">DALL-E Images</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.dalle_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">Whisper Audio</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.whisper_cost || 0).toFixed(4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-300">File Processing</span>
+                          <span className="text-white font-mono">${((data as any)?.month?.files_cost || 0).toFixed(4)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Top Users by Cost */}
+              {(data as any)?.top_users_by_cost && (
+                <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                  <CardHeader>
+                    <CardTitle className="text-white text-xl">Top Users by Cost</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-gray-600/30">
+                            <th className="text-left py-3 px-4 font-medium text-emerald-300">User</th>
+                            <th className="text-left py-3 px-4 font-medium text-emerald-300">Business</th>
+                            <th className="text-left py-3 px-4 font-medium text-emerald-300">Total Cost</th>
+                            <th className="text-left py-3 px-4 font-medium text-emerald-300">Tokens</th>
+                            <th className="text-left py-3 px-4 font-medium text-emerald-300">Recommended Tier</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(data as any).top_users_by_cost.slice(0, 10).map((user: any, index: number) => (
+                            <tr key={user.user_id} className={index % 2 === 0 ? 'bg-gray-700/20' : ''}>
+                              <td className="py-3 px-4 text-white">{user.name}</td>
+                              <td className="py-3 px-4 text-gray-300">{user.business || 'N/A'}</td>
+                              <td className="py-3 px-4 text-emerald-400 font-mono">${user.total_cost.toFixed(4)}</td>
+                              <td className="py-3 px-4 text-blue-400 font-mono">{user.total_tokens.toLocaleString()}</td>
+                              <td className="py-3 px-4">
+                                <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                  user.tier_recommended === 'Business' ? 'bg-purple-500/20 text-purple-300' :
+                                  user.tier_recommended === 'Pro' ? 'bg-blue-500/20 text-blue-300' :
+                                  'bg-gray-500/20 text-gray-300'
+                                }`}>
+                                  {user.tier_recommended}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           ) : (
-            // Regular Analytics Views
+            // Default to Overview for all other views
             <>
               {/* Overview Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
