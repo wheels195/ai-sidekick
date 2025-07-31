@@ -685,8 +685,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 key={index}
                 className="relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] animate-fade-in-left"
                 style={{
-                  animationDelay: `${index * 200}ms`,
-                  animationFillMode: 'backwards'
+                  animationDelay: `${index * 200}ms`
                 }}
               >
                 {/* Subtle gradient highlight - always visible */}

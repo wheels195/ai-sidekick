@@ -73,6 +73,7 @@ body {
     opacity: 0;
     transform: translateX(-30px);
     animation: fade-in-left 0.8s ease-out forwards;
+    animation-fill-mode: both;
   }
   
   .animate-icon-pulse {
