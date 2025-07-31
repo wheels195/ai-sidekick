@@ -3,6 +3,7 @@ import OpenAI from 'openai'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import { createClient } from '@/lib/supabase/server'
 
 // Initialize OpenAI client
 const getOpenAIClient = () => {
@@ -20,6 +21,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'OpenAI API key not configured' },
         { status: 500 }
+      )
+    }
+
+    // Get authenticated user
+    const { supabase } = createClient(request)
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
       )
     }
 
@@ -101,11 +113,45 @@ export async function POST(request: NextRequest) {
       // Handle response format
       const text = typeof transcription === 'string' ? transcription : transcription.text
 
+      // Calculate cost and duration for tracking
+      // Estimate duration from file size (rough approximation: 1MB ≈ 1 minute for compressed audio)
+      const estimatedDurationMinutes = Math.max(0.1, audioFile.size / (1024 * 1024)) // Minimum 0.1 minutes
+      const whisperCostUsd = estimatedDurationMinutes * 0.006 // $0.006 per minute
+
+      console.log(`🎙️ Whisper transcription completed:`, {
+        fileSize: audioFile.size,
+        estimatedMinutes: estimatedDurationMinutes,
+        cost: whisperCostUsd,
+        textLength: text.length
+      })
+
+      // Track API usage in database
+      await supabase.from('api_usage_tracking').insert({
+        user_id: user.id,
+        api_type: 'whisper',
+        endpoint: '/api/audio/transcribe',
+        model_used: 'whisper-1',
+        audio_minutes: estimatedDurationMinutes,
+        cost_usd: whisperCostUsd,
+        cost_breakdown: {
+          model: 'whisper-1',
+          duration_minutes: estimatedDurationMinutes,
+          file_size_mb: audioFile.size / (1024 * 1024),
+          text_length: text.length
+        }
+      })
+
+      console.log('💾 Whisper API usage tracked')
+
       // Return the transcribed text
       return NextResponse.json({
         success: true,
         text: text,
-        message: 'Audio transcribed successfully'
+        message: 'Audio transcribed successfully',
+        usage: {
+          duration_minutes: Math.round(estimatedDurationMinutes * 100) / 100,
+          cost_usd: Math.round(whisperCostUsd * 10000) / 10000
+        }
       })
       
     } catch (openaiError: any) {

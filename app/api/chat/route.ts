@@ -269,7 +269,7 @@ async function processUploadedFiles(files: any[], userMessage = ''): Promise<str
 
 
 // Calculate API costs based on actual usage
-function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls = 0, hasFiles = false }) {
+function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls = 0, googleSearchCalls = 0, hasFiles = false }) {
   // OpenAI pricing per 1M tokens (as of 2025)
   const pricing = {
     'gpt-4o': { input: 2.50, output: 10.00 },           // $2.50/$10.00 per 1M tokens
@@ -286,10 +286,13 @@ function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls
   // Google Places API cost ($0.017 per Text Search request)
   const placesCostUsd = googlePlacesCalls * 0.017
   
+  // Google Custom Search API cost ($5.00 per 1000 queries = $0.005 per query)
+  const googleSearchCostUsd = googleSearchCalls * 0.005
+  
   // File processing cost (estimate additional 20% for vision/PDF processing)
   const filesCostUsd = hasFiles ? gptCostUsd * 0.20 : 0
   
-  const totalCostUsd = gptCostUsd + placesCostUsd + filesCostUsd
+  const totalCostUsd = gptCostUsd + placesCostUsd + googleSearchCostUsd + filesCostUsd
   
   return {
     inputTokens,
@@ -298,12 +301,14 @@ function calculateApiCosts({ model, inputTokens, outputTokens, googlePlacesCalls
     model,
     gptCostUsd,
     placesCostUsd,
+    googleSearchCostUsd,
     filesCostUsd,
     totalCostUsd,
     breakdown: {
       inputCostUsd,
       outputCostUsd,
       googlePlacesCalls,
+      googleSearchCalls,
       hasFiles
     }
   }
@@ -1064,7 +1069,8 @@ ${searchResults}
                 model: modelToUse,
                 inputTokens,
                 outputTokens,
-                googlePlacesCalls: webSearchEnabled && searchResults ? 1 : 0,
+                googlePlacesCalls: webSearchEnabled && placesResults && !['error', 'not available', 'not configured'].some(term => placesResults.includes(term)) ? 1 : 0,
+                googleSearchCalls: needsWebSearch && webResults && !['error', 'not available', 'not configured'].some(term => webResults.includes(term)) ? 1 : 0,
                 hasFiles: files?.length > 0
               })
 
@@ -1121,7 +1127,7 @@ ${searchResults}
 
               console.log(`💰 Actual token usage: Input: ${inputTokens}, Output: ${outputTokens}, Total: ${totalTokens}`)
               console.log(`💰 Estimated cost: $${costs.totalCostUsd.toFixed(4)} (${modelToUse})`)
-              console.log(`💰 Breakdown: GPT: $${costs.gptCostUsd.toFixed(4)}, Places: $${costs.placesCostUsd.toFixed(4)}, Files: $${costs.filesCostUsd.toFixed(4)}`)
+              console.log(`💰 Breakdown: GPT: $${costs.gptCostUsd.toFixed(4)}, Places: $${costs.placesCostUsd.toFixed(4)}, Search: $${costs.googleSearchCostUsd.toFixed(4)}, Files: $${costs.filesCostUsd.toFixed(4)}`)
               
               // Update user profile with token usage and cost tracking
               await serviceSupabase

@@ -25,6 +25,35 @@ function isAdminUser(email: string) {
   return ADMIN_EMAILS.includes(email.toLowerCase())
 }
 
+// Get API usage tracking data for complete analytics
+async function getApiUsageData(supabase: any, dates: any, excludeAdminUsers: boolean = true) {
+  try {
+    let query = supabase
+      .from('api_usage_tracking')
+      .select('*')
+      .gte('created_at', dates.monthAgo)
+    
+    if (excludeAdminUsers) {
+      // Get admin user IDs to exclude
+      const { data: adminUsers } = await supabase
+        .from('user_profiles')
+        .select('id')
+        .in('email', ADMIN_EMAILS) || []
+      
+      const adminUserIds = adminUsers?.map(u => u.id) || []
+      if (adminUserIds.length > 0) {
+        query = query.not('user_id', 'in', `(${adminUserIds.join(',')})`)
+      }
+    }
+    
+    const { data: apiUsageData } = await query || []
+    return apiUsageData || []
+  } catch (error) {
+    console.error('Error fetching API usage data:', error)
+    return []
+  }
+}
+
 // Get detailed admin usage statistics
 async function getAdminUsageAnalytics(supabase: any, dates: any) {
   try {
@@ -68,6 +97,12 @@ async function getAdminUsageAnalytics(supabase: any, dates: any) {
         gpt_cost: 0,
         google_places_calls: 0,
         google_places_cost: 0,
+        google_search_calls: 0,
+        google_search_cost: 0,
+        dalle_images: 0,
+        dalle_cost: 0,
+        whisper_minutes: 0,
+        whisper_cost: 0,
         file_processing_cost: 0,
         total_cost: 0
       }
@@ -95,6 +130,12 @@ async function getAdminUsageAnalytics(supabase: any, dates: any) {
         apiBreakdown.gpt_cost += conv.cost_breakdown?.gptCostUsd || 0
         apiBreakdown.google_places_calls += conv.cost_breakdown?.googlePlacesCalls || 0
         apiBreakdown.google_places_cost += conv.cost_breakdown?.placesCostUsd || 0
+        apiBreakdown.google_search_calls += conv.cost_breakdown?.googleSearchCalls || 0
+        apiBreakdown.google_search_cost += conv.cost_breakdown?.googleSearchCostUsd || 0
+        apiBreakdown.dalle_images += conv.cost_breakdown?.dalleImages || 0
+        apiBreakdown.dalle_cost += conv.cost_breakdown?.dalleCostUsd || 0
+        apiBreakdown.whisper_minutes += conv.cost_breakdown?.whisperMinutes || 0
+        apiBreakdown.whisper_cost += conv.cost_breakdown?.whisperCostUsd || 0
         apiBreakdown.file_processing_cost += conv.cost_breakdown?.filesCostUsd || 0
         apiBreakdown.total_cost += cost
       })
@@ -229,6 +270,14 @@ async function getCostAnalytics(supabase: any, dates: any) {
       .gte('created_at', dates.monthAgo)
       .not('user_id', 'in', `(${adminUserIds.join(',')})`) || []
 
+    // Get API usage data for DALL-E and Whisper - excluding admin users
+    const apiUsageData = await getApiUsageData(supabase, dates, true)
+    
+    // Filter API usage by time periods
+    const todayApiUsage = apiUsageData.filter(a => new Date(a.created_at) >= new Date(dates.today))
+    const weekApiUsage = apiUsageData.filter(a => new Date(a.created_at) >= new Date(dates.weekAgo))
+    const monthApiUsage = apiUsageData
+
     // Get user cost ranking - excluding admin users
     const { data: userCosts } = await supabase
       .from('user_profiles')
@@ -238,7 +287,7 @@ async function getCostAnalytics(supabase: any, dates: any) {
       .limit(50) || []
 
   // Calculate aggregated costs - with fallback for missing cost_breakdown
-  const calculatePeriodCosts = (costs: any[]) => {
+  const calculatePeriodCosts = (costs: any[], apiUsage: any[] = []) => {
     return costs?.reduce((acc, conv) => {
       const breakdown = conv.cost_breakdown
       
@@ -249,6 +298,9 @@ async function getCostAnalytics(supabase: any, dates: any) {
           gpt4o_cost: acc.gpt4o_cost + (breakdown.model === 'gpt-4o' ? breakdown.gptCostUsd : 0),
           gpt4o_mini_cost: acc.gpt4o_mini_cost + (breakdown.model === 'gpt-4o-mini' ? breakdown.gptCostUsd : 0),
           google_places_cost: acc.google_places_cost + (breakdown.placesCostUsd || 0),
+          google_search_cost: acc.google_search_cost + (breakdown.googleSearchCostUsd || 0),
+          dalle_cost: acc.dalle_cost + (breakdown.dalleCostUsd || 0),
+          whisper_cost: acc.whisper_cost + (breakdown.whisperCostUsd || 0),
           files_cost: acc.files_cost + (breakdown.filesCostUsd || 0),
           conversation_count: acc.conversation_count + 1
         }
@@ -263,6 +315,9 @@ async function getCostAnalytics(supabase: any, dates: any) {
         gpt4o_cost: acc.gpt4o_cost + (conv.model_used === 'gpt-4o' ? estimatedCost : 0),
         gpt4o_mini_cost: acc.gpt4o_mini_cost + (conv.model_used === 'gpt-4o-mini' ? estimatedCost : 0),
         google_places_cost: acc.google_places_cost,
+        google_search_cost: acc.google_search_cost,
+        dalle_cost: acc.dalle_cost,
+        whisper_cost: acc.whisper_cost,
         files_cost: acc.files_cost,
         conversation_count: acc.conversation_count + 1
       }
@@ -271,6 +326,9 @@ async function getCostAnalytics(supabase: any, dates: any) {
       gpt4o_cost: 0,
       gpt4o_mini_cost: 0,
       google_places_cost: 0,
+      google_search_cost: 0,
+      dalle_cost: 0,
+      whisper_cost: 0,
       files_cost: 0,
       conversation_count: 0
     }) || {
@@ -278,14 +336,90 @@ async function getCostAnalytics(supabase: any, dates: any) {
       gpt4o_cost: 0,
       gpt4o_mini_cost: 0,
       google_places_cost: 0,
+      google_search_cost: 0,
+      dalle_cost: 0,
+      whisper_cost: 0,
       files_cost: 0,
       conversation_count: 0
     }
+    
+    // Add API usage costs from separate tracking table
+    const convResult = costs?.reduce((acc, conv) => {
+      const breakdown = conv.cost_breakdown
+      
+      // If we have cost breakdown, use it
+      if (breakdown && breakdown.totalCostUsd) {
+        return {
+          total_cost_usd: acc.total_cost_usd + (breakdown.totalCostUsd || 0),
+          gpt4o_cost: acc.gpt4o_cost + (breakdown.model === 'gpt-4o' ? breakdown.gptCostUsd : 0),
+          gpt4o_mini_cost: acc.gpt4o_mini_cost + (breakdown.model === 'gpt-4o-mini' ? breakdown.gptCostUsd : 0),
+          google_places_cost: acc.google_places_cost + (breakdown.placesCostUsd || 0),
+          google_search_cost: acc.google_search_cost + (breakdown.googleSearchCostUsd || 0),
+          dalle_cost: acc.dalle_cost + (breakdown.dalleCostUsd || 0),
+          whisper_cost: acc.whisper_cost + (breakdown.whisperCostUsd || 0),
+          files_cost: acc.files_cost + (breakdown.filesCostUsd || 0),
+          conversation_count: acc.conversation_count + 1
+        }
+      }
+      
+      // Fallback: estimate cost from tokens (if no cost breakdown yet)
+      const tokens = conv.tokens_used || 0
+      const estimatedCost = tokens * 0.0001 // Rough estimate $0.0001 per token
+      
+      return {
+        total_cost_usd: acc.total_cost_usd + estimatedCost,
+        gpt4o_cost: acc.gpt4o_cost + (conv.model_used === 'gpt-4o' ? estimatedCost : 0),
+        gpt4o_mini_cost: acc.gpt4o_mini_cost + (conv.model_used === 'gpt-4o-mini' ? estimatedCost : 0),
+        google_places_cost: acc.google_places_cost,
+        google_search_cost: acc.google_search_cost,
+        dalle_cost: acc.dalle_cost,
+        whisper_cost: acc.whisper_cost,
+        files_cost: acc.files_cost,
+        conversation_count: acc.conversation_count + 1
+      }
+    }, {
+      total_cost_usd: 0,
+      gpt4o_cost: 0,
+      gpt4o_mini_cost: 0,
+      google_places_cost: 0,
+      google_search_cost: 0,
+      dalle_cost: 0,
+      whisper_cost: 0,
+      files_cost: 0,
+      conversation_count: 0
+    }) || {
+      total_cost_usd: 0,
+      gpt4o_cost: 0,
+      gpt4o_mini_cost: 0,
+      google_places_cost: 0,
+      google_search_cost: 0,
+      dalle_cost: 0,
+      whisper_cost: 0,
+      files_cost: 0,
+      conversation_count: 0
+    }
+    
+    // Add API usage costs from separate tracking table  
+    return apiUsage?.reduce((acc, usage) => {
+      const cost = usage.cost_usd || 0
+      
+      // Add to total cost
+      acc.total_cost_usd += cost
+      
+      // Categorize by API type
+      if (usage.api_type === 'dall-e') {
+        acc.dalle_cost += cost
+      } else if (usage.api_type === 'whisper') {
+        acc.whisper_cost += cost
+      }
+      
+      return acc
+    }, convResult) || convResult"}
   }
 
-  const todayStats = calculatePeriodCosts(todayCosts)
-  const weekStats = calculatePeriodCosts(weekCosts)
-  const monthStats = calculatePeriodCosts(monthCosts)
+  const todayStats = calculatePeriodCosts(todayCosts, todayApiUsage)
+  const weekStats = calculatePeriodCosts(weekCosts, weekApiUsage)
+  const monthStats = calculatePeriodCosts(monthCosts, monthApiUsage)
 
   // Calculate cost per user averages
   todayStats.cost_per_conversation = todayStats.conversation_count > 0 
@@ -321,9 +455,9 @@ async function getCostAnalytics(supabase: any, dates: any) {
     // Return empty data structure instead of error
     return NextResponse.json({
       view: 'costs',
-      today: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, files_cost: 0 },
-      week: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, files_cost: 0 },
-      month: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, files_cost: 0 },
+      today: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, google_search_cost: 0, dalle_cost: 0, whisper_cost: 0, files_cost: 0 },
+      week: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, google_search_cost: 0, dalle_cost: 0, whisper_cost: 0, files_cost: 0 },
+      month: { total_cost_usd: 0, conversation_count: 0, cost_per_conversation: 0, gpt4o_cost: 0, gpt4o_mini_cost: 0, google_places_cost: 0, google_search_cost: 0, dalle_cost: 0, whisper_cost: 0, files_cost: 0 },
       top_users_by_cost: [],
       alerts: { high_cost_users: 0, daily_cost_high: false, unusual_usage: false }
     })
@@ -549,6 +683,14 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
     const weekConversations = await getFilteredConversations(dates.weekAgo)
     const monthConversations = await getFilteredConversations(dates.monthAgo)
 
+    // Get API usage data for comprehensive cost tracking
+    const apiUsageData = await getApiUsageData(supabase, dates, true)
+    
+    // Filter API usage by time periods
+    const todayApiUsage = apiUsageData.filter(a => new Date(a.created_at) >= new Date(dates.today))
+    const weekApiUsage = apiUsageData.filter(a => new Date(a.created_at) >= new Date(dates.weekAgo))
+    const monthApiUsage = apiUsageData
+
     // Enhanced calculations
     const totalUsers = allUsers?.length || 0
     const activeUsersWeek = recentUsers?.length || 0
@@ -557,9 +699,10 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
     const weekConversationsCount = weekConversations?.length || 0
     const monthConversationsCount = monthConversations?.length || 0
 
-    // Cost calculations with fallbacks
-    const calculateCosts = (conversations: any[]) => {
-      return conversations?.reduce((sum, conv) => {
+    // Enhanced cost calculations with API usage integration
+    const calculateDetailedCosts = (conversations: any[], apiUsage: any[] = []) => {
+      // First get conversation costs
+      const convCosts = conversations?.reduce((sum, conv) => {
         if (conv.cost_breakdown?.totalCostUsd) {
           return sum + conv.cost_breakdown.totalCostUsd
         }
@@ -569,11 +712,18 @@ async function getOverviewAnalytics(supabase: any, dates: any) {
         const rate = model === 'gpt-4o' ? 0.0001 : 0.00001
         return sum + (tokens * rate)
       }, 0) || 0
+      
+      // Add API usage costs
+      const apiCosts = apiUsage?.reduce((sum, usage) => {
+        return sum + (usage.cost_usd || 0)
+      }, 0) || 0
+      
+      return convCosts + apiCosts
     }
 
-    const totalCostToday = calculateCosts(todayConversations)
-    const totalCostWeek = calculateCosts(weekConversations)
-    const totalCostMonth = calculateCosts(monthConversations)
+    const totalCostToday = calculateDetailedCosts(todayConversations, todayApiUsage)
+    const totalCostWeek = calculateDetailedCosts(weekConversations, weekApiUsage)
+    const totalCostMonth = calculateDetailedCosts(monthConversations, monthApiUsage)
 
     // Token usage analysis
     const totalTokensUsed = allConversations?.reduce((sum, conv) => sum + (conv.tokens_used || 0), 0) || 0
