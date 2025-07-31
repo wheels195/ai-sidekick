@@ -765,8 +765,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         const inputHeight = 160 // Approximate input area height
         const newHeight = Math.max(300, viewportHeight - headerHeight - inputHeight)
         
-        messagesContainer.style.height = `${newHeight}px`
-        messagesContainer.style.maxHeight = `${newHeight}px`
+        // Remove forced height to allow natural flex layout
+        messagesContainer.style.removeProperty('height')
+        messagesContainer.style.removeProperty('maxHeight')
       }
     }
 
@@ -1943,8 +1944,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           }
           /* Dynamic viewport height containers */
           .mobile-messages-container {
-            height: calc(100dvh - 200px); /* Reduced from 280px to give more space to messages */
-            max-height: calc(100dvh - 200px);
+            /* Use flex-1 instead of fixed height to prevent unnecessary scrolling */
           }
           /* Hide category buttons on mobile to prevent layout issues */
           .category-container {
@@ -2189,18 +2189,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container overflow-y-auto px-4 py-6 pb-40 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
-                style={isMobile ? {
-                  // Mobile: Use dynamic viewport height and visualViewport if available
-                  scrollBehavior: 'auto',
-                  height: 'calc(100dvh - 200px)', /* Match backend adjustment */
-                  maxHeight: 'calc(100dvh - 200px)',
-                  paddingBottom: `max(320px, env(safe-area-inset-bottom))` /* Further increased padding to prevent text behind input */
-                } : {
-                  // Desktop: Use regular viewport height
-                  scrollBehavior: 'smooth',
-                  height: 'calc(100vh - 240px)',
-                  paddingBottom: '320px' /* Further increased to prevent overlap with input */
+                className={`messages-scroll-container flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
+                style={{
+                  scrollBehavior: isMobile ? 'auto' : 'smooth',
+                  paddingBottom: isMobile ? `max(320px, env(safe-area-inset-bottom))` : '320px',
+                  overscrollBehavior: 'contain'
                 }}
               >
                 <div className="w-full max-w-[900px] mx-auto">
