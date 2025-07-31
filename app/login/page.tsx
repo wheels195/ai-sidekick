@@ -23,8 +23,26 @@ function LoginForm() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [successMessage, setSuccessMessage] = useState('')
+  const [isCheckingSession, setIsCheckingSession] = useState(true)
 
   useEffect(() => {
+    // Check for existing session first
+    const checkExistingSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session) {
+          // User is already authenticated, redirect to intended page
+          const redirectUrl = searchParams.get('redirect') || '/landscaping'
+          router.push(redirectUrl)
+          return
+        }
+      } finally {
+        setIsCheckingSession(false)
+      }
+    }
+    
+    checkExistingSession()
+    
     // Check if user just verified their email
     if (searchParams.get('verified') === 'true') {
       setSuccessMessage('Email verified successfully! You can now log in.')
@@ -162,6 +180,18 @@ function LoginForm() {
     }
   }
 
+  // Show loading state while checking session
+  if (isCheckingSession) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black flex items-center justify-center">
+        <div className="backdrop-blur-2xl bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md text-center">
+          <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-white mb-2">Checking authentication...</h2>
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black relative">
       {/* Background Elements */}
