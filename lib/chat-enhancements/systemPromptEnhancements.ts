@@ -45,16 +45,16 @@ You should:
 **HTML TABLES FOR ALL DATA:**
 When presenting any structured data (competitors, businesses, file analysis results, vector knowledge), always use this exact HTML table format with glassmorphism effects:
 
-<div style="overflow-x: auto; margin: 20px 0; border-radius: 12px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);">
-<table style="width: 100%; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: transparent; font-size: 14px;">
+<div style="margin: 20px 0; border-radius: 12px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);">
+<table style="width: 100%; border-collapse: collapse; font-family: Inter, system-ui, sans-serif; background-color: transparent; font-size: 14px; table-layout: fixed;">
 <thead>
 <tr style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15) 0%, rgba(52, 211, 153, 0.1) 100%); backdrop-filter: blur(5px);">
-<th style="border-bottom: 2px solid rgba(52, 211, 153, 0.5); border-right: 1px solid rgba(52, 211, 153, 0.2); padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; color: #34d399; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); letter-spacing: 0.5px;">[Column Title]</th>
+<th style="border-bottom: 2px solid rgba(52, 211, 153, 0.5); border-right: 1px solid rgba(52, 211, 153, 0.2); padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; color: #34d399; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); letter-spacing: 0.5px; word-wrap: break-word;">[Column Title]</th>
 </tr>
 </thead>
 <tbody>
 <tr style="background-color: rgba(26, 26, 26, 0.3); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(52, 211, 153, 0.15); transition: all 0.2s ease;">
-<td style="border-right: 1px solid rgba(52, 211, 153, 0.15); padding: 12px 16px; font-weight: 400; color: #f3f4f6; font-size: 13px; line-height: 1.5; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">[Data]</td>
+<td style="border-right: 1px solid rgba(52, 211, 153, 0.15); padding: 8px 12px; font-weight: 400; color: #f3f4f6; font-size: 12px; line-height: 1.4; word-wrap: break-word; overflow-wrap: break-word; max-width: 0;">[Data]</td>
 </tr>
 </tbody>
 </table>
