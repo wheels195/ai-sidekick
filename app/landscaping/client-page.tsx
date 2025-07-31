@@ -913,7 +913,6 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       })
       // Show welcome message with fade-in after loading completes
       setTimeout(() => {
-        console.log('🎯 Setting welcome message visible:', { showWelcomeMessage: true, messagesLength: 0 })
         setWelcomeMessageVisible(true)
       }, 200)
     }, 800) // 800ms to show loading state
@@ -2228,26 +2227,17 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           <div className="flex-1 min-h-0 pt-14 sm:pt-16 lg:pt-20">
             <div className="h-full flex flex-col">
               
-              {/* ChatGPT-style Welcome Message - Above Messages */}
-              {(() => {
-                console.log('🎯 Welcome message render check:', { 
-                  showWelcomeMessage, 
-                  messagesLength: messages.length, 
-                  welcomeMessageVisible,
-                  shouldShow: showWelcomeMessage && messages.length === 0 
-                })
-                return showWelcomeMessage && messages.length === 0
-              })() && (
-                <div 
-                  className={`text-center px-4 py-8 transition-all duration-800 ease-out flex-shrink-0 ${
-                    welcomeMessageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                  }`}
-                  style={{
-                    animation: welcomeMessageVisible ? 'fadeInUp 800ms ease-out' : undefined,
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Temporary debug background
-                    border: '1px solid red' // Temporary debug border
-                  }}
-                >
+              {/* ChatGPT-style Welcome Message - Centered */}
+              {showWelcomeMessage && messages.length === 0 && (
+                <div className="flex-1 flex items-center justify-center min-h-0">
+                  <div 
+                    className={`text-center px-4 py-8 transition-all duration-800 ease-out ${
+                      welcomeMessageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                    }`}
+                    style={{
+                      animation: welcomeMessageVisible ? 'fadeInUp 800ms ease-out' : undefined
+                    }}
+                  >
                   <style jsx>{`
                     @keyframes fadeInUp {
                       from {
@@ -2260,9 +2250,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                       }
                     }
                   `}</style>
-                  <h2 className="text-2xl sm:text-3xl font-medium text-white leading-relaxed max-w-2xl mx-auto">
-                    {getDailyWelcomeMessage()}
-                  </h2>
+                    <h2 className="text-2xl sm:text-3xl font-normal text-white leading-relaxed max-w-2xl mx-auto">
+                      {getDailyWelcomeMessage()}
+                    </h2>
+                  </div>
                 </div>
               )}
 
