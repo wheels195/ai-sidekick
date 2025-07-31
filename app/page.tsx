@@ -60,33 +60,22 @@ export default function LandingPage() {
   const [activeIdeasCategory, setActiveIdeasCategory] = useState<string | null>(null)
 
   // Scroll animation hook
-  const useScrollAnimation = () => {
-    useEffect(() => {
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      }
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-visible')
+        }
+      })
+    }, { threshold: 0.1 })
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in')
-            entry.target.classList.remove('animate-out')
-          }
-        })
-      }, observerOptions)
+    const elementsToAnimate = document.querySelectorAll('.fade-left, .fade-right')
+    elementsToAnimate.forEach((el) => observer.observe(el))
 
-      // Observe all sections with scroll-animate class
-      const animatedElements = document.querySelectorAll('.scroll-animate')
-      animatedElements.forEach((el) => observer.observe(el))
-
-      return () => {
-        animatedElements.forEach((el) => observer.unobserve(el))
-      }
-    }, [])
-  }
-
-  useScrollAnimation()
+    return () => {
+      elementsToAnimate.forEach((el) => observer.unobserve(el))
+    }
+  }, [])
 
   const fullUserMessage = "Help me get 10 more clients in the next 30 days."
   
@@ -345,56 +334,34 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
         }
         
-        /* Scroll Animation Styles */
-        .scroll-animate {
+        /* Working Scroll Animations */
+        .fade-left {
           opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .scroll-animate.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .scroll-animate.animate-out {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        
-        /* Staggered Animation Delays */
-        .scroll-animate:nth-child(1) { transition-delay: 0ms; }
-        .scroll-animate:nth-child(2) { transition-delay: 100ms; }
-        .scroll-animate:nth-child(3) { transition-delay: 200ms; }
-        .scroll-animate:nth-child(4) { transition-delay: 300ms; }
-        .scroll-animate:nth-child(5) { transition-delay: 400ms; }
-        .scroll-animate:nth-child(6) { transition-delay: 500ms; }
-        .scroll-animate:nth-child(7) { transition-delay: 600ms; }
-        .scroll-animate:nth-child(8) { transition-delay: 700ms; }
-        
-        /* Alternative animation types */
-        .scroll-animate.fade-up {
-          transform: translateY(50px);
-        }
-        
-        .scroll-animate.fade-left {
           transform: translateX(-50px);
+          transition: all 1s ease-out;
         }
         
-        .scroll-animate.fade-right {
+        .fade-right {
+          opacity: 0;
           transform: translateX(50px);
+          transition: all 1s ease-out;
         }
         
-        .scroll-animate.scale-up {
-          transform: translateY(20px) scale(0.95);
+        .fade-left.animate-visible,
+        .fade-right.animate-visible {
+          opacity: 1;
+          transform: translateX(0);
         }
         
-        .scroll-animate.fade-up.animate-in,
-        .scroll-animate.fade-left.animate-in,
-        .scroll-animate.fade-right.animate-in,
-        .scroll-animate.scale-up.animate-in {
-          transform: translateY(0) translateX(0) scale(1);
-        }
+        /* Staggered delays for individual elements */
+        .fade-left.delay-0 { transition-delay: 0ms; }
+        .fade-left.delay-200 { transition-delay: 200ms; }
+        .fade-left.delay-400 { transition-delay: 400ms; }
+        .fade-left.delay-600 { transition-delay: 600ms; }
+        .fade-left.delay-800 { transition-delay: 800ms; }
+        .fade-left.delay-1000 { transition-delay: 1000ms; }
+        .fade-left.delay-1200 { transition-delay: 1200ms; }
+        .fade-left.delay-1400 { transition-delay: 1400ms; }
         @keyframes scroll-right {
           0% { transform: translateX(-50%); }
           100% { transform: translateX(0%); }
@@ -808,15 +775,15 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Our AI Sidekicks - Available Now */}
-      <section id="products" className="min-h-screen sm:min-h-0 py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center sm:block scroll-animate">
+      <section id="products" className="min-h-screen sm:min-h-0 py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center sm:block">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-8 sm:mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 fade-left delay-0">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Our <span className="font-cursive">AI Sidekicks</span>
               </span>
             </h2>
-            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto fade-left delay-200">
               Specialized AI assistants built for specific trades. Each one trained to understand your industry inside
               and out.
             </p>
@@ -825,7 +792,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           {/* Available Now - Landscaping */}
           <div className="mb-8 sm:mb-12 lg:mb-20">
             <div className="text-center mb-6 sm:mb-8 lg:mb-12">
-              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-blue-500/30 rounded-full px-6 py-3 text-blue-300 font-semibold">
+              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-blue-500/30 rounded-full px-6 py-3 text-blue-300 font-semibold fade-left delay-400">
                 <CheckCircle className="w-5 h-5" />
                 <span>Available Now</span>
               </span>
@@ -839,18 +806,18 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               
               <div className="px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-6 sm:mb-8">
-                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4">
+                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4 fade-left delay-600">
                     <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
                       Ready when you are
                     </span>
                   </h3>
-                  <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8">
+                  <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8 fade-left delay-800">
                     Your Full Time AI Landscaping Business Partner
                   </p>
                 </div>
 
                 {/* Enhanced Static Chat Interface Preview */}
-                <div className="bg-gradient-to-br from-green-800/10 via-emerald-900/5 to-blue-900/5 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group animate-gradient">
+                <div className="bg-gradient-to-br from-green-800/10 via-emerald-900/5 to-blue-900/5 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group animate-gradient fade-left delay-1000">
                   
                   
                   
@@ -1186,7 +1153,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 </div>
 
                 {/* Enhanced Value Props Below Chat */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 md:mt-12 mb-6 sm:mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 md:mt-12 mb-6 sm:mb-8 fade-left delay-1200">
                   <div className="text-center p-4 bg-white/5 backdrop-blur border border-emerald-400/20 rounded-xl hover:border-emerald-400/40 transition-all duration-300 hover:scale-105 group">
                     <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
                     <h4 className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-200 transition-colors duration-300">Professional Interface</h4>
@@ -1204,7 +1171,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-6 fade-left delay-1400">
                   {/* Mobile: Stacked Layout */}
                   <div className="block sm:hidden space-y-6">
                     <div className="text-center space-y-3">
@@ -1279,7 +1246,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* Demo Video */}
       <div className="py-8 sm:py-12 bg-black">
-        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto fade-right">
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
             <video 
               ref={(video) => {
@@ -1298,7 +1265,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         }
                       });
                     },
-                    { threshold: 0.5 }
+                    { threshold: 0.75 }
                   );
                   observer.observe(video);
                   return () => observer.unobserve(video);
