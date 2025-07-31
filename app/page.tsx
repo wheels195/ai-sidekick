@@ -59,6 +59,35 @@ export default function LandingPage() {
   const [isAnnual, setIsAnnual] = useState(true) // Default to annual for savings
   const [activeIdeasCategory, setActiveIdeasCategory] = useState<string | null>(null)
 
+  // Scroll animation hook
+  const useScrollAnimation = () => {
+    useEffect(() => {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in')
+            entry.target.classList.remove('animate-out')
+          }
+        })
+      }, observerOptions)
+
+      // Observe all sections with scroll-animate class
+      const animatedElements = document.querySelectorAll('.scroll-animate')
+      animatedElements.forEach((el) => observer.observe(el))
+
+      return () => {
+        animatedElements.forEach((el) => observer.unobserve(el))
+      }
+    }, [])
+  }
+
+  useScrollAnimation()
+
   const fullUserMessage = "Help me get 10 more clients in the next 30 days."
   
   // Ideas categories data
@@ -314,6 +343,57 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         }
         .font-cursive {
           font-family: var(--font-cursive), 'Brush Script MT', cursive;
+        }
+        
+        /* Scroll Animation Styles */
+        .scroll-animate {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-animate.animate-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .scroll-animate.animate-out {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        /* Staggered Animation Delays */
+        .scroll-animate:nth-child(1) { transition-delay: 0ms; }
+        .scroll-animate:nth-child(2) { transition-delay: 100ms; }
+        .scroll-animate:nth-child(3) { transition-delay: 200ms; }
+        .scroll-animate:nth-child(4) { transition-delay: 300ms; }
+        .scroll-animate:nth-child(5) { transition-delay: 400ms; }
+        .scroll-animate:nth-child(6) { transition-delay: 500ms; }
+        .scroll-animate:nth-child(7) { transition-delay: 600ms; }
+        .scroll-animate:nth-child(8) { transition-delay: 700ms; }
+        
+        /* Alternative animation types */
+        .scroll-animate.fade-up {
+          transform: translateY(50px);
+        }
+        
+        .scroll-animate.fade-left {
+          transform: translateX(-50px);
+        }
+        
+        .scroll-animate.fade-right {
+          transform: translateX(50px);
+        }
+        
+        .scroll-animate.scale-up {
+          transform: translateY(20px) scale(0.95);
+        }
+        
+        .scroll-animate.fade-up.animate-in,
+        .scroll-animate.fade-left.animate-in,
+        .scroll-animate.fade-right.animate-in,
+        .scroll-animate.scale-up.animate-in {
+          transform: translateY(0) translateX(0) scale(1);
         }
         @keyframes scroll-right {
           0% { transform: translateX(-50%); }
@@ -583,7 +663,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       )}
 
       {/* Hero Section */}
-      <section className="pt-20 sm:pt-16 pb-16 sm:pb-24 lg:py-32 relative overflow-hidden w-full">
+      <section className="pt-20 sm:pt-16 pb-16 sm:pb-24 lg:py-32 relative overflow-hidden w-full scroll-animate">
         {/* Hero Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.08),transparent_70%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(20,184,166,0.06),transparent_60%)]"></div>
@@ -597,7 +677,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <span className="text-blue-300 font-medium">AI-Powered Business Growth</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-semibold mb-6 sm:mb-8 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-medium mb-6 sm:mb-8 leading-tight">
               <div className="mb-2">
                 <span className="word-animate bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent" style={{animationDelay: '0.2s'}}>Specialized</span>{' '}
                 <span className="word-animate bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent" style={{animationDelay: '0.4s'}}>AI</span>
@@ -728,7 +808,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Our AI Sidekicks - Available Now */}
-      <section id="products" className="min-h-screen sm:min-h-0 py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center sm:block">
+      <section id="products" className="min-h-screen sm:min-h-0 py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center sm:block scroll-animate">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
@@ -1238,7 +1318,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </div>
 
       {/* Testimonial Carousel Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-black">
+      <section className="py-12 sm:py-16 lg:py-20 bg-black scroll-animate">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-4">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
@@ -1253,7 +1333,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Idea Ticker Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden">
+      <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden scroll-animate">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
@@ -1400,7 +1480,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* How It Works Section */}
       <section
         id="features"
-        className="py-16 sm:py-24 lg:py-32 relative bg-black w-full"
+        className="py-16 sm:py-24 lg:py-32 relative bg-black w-full scroll-animate fade-up"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
@@ -1586,7 +1666,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Advanced AI Capabilities Section */}
-      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full">
+      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full scroll-animate">
         <div className="w-full px-8 sm:px-12 lg:px-16 xl:px-20">
           <div className="text-center mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-medium mb-4 sm:mb-6">
@@ -1663,7 +1743,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* More AI Sidekicks - Coming Soon */}
-      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full">
+      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full scroll-animate">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6">
@@ -1897,7 +1977,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-16 md:py-32 bg-black w-full">
+      <section id="pricing" className="py-16 md:py-32 bg-black w-full scroll-animate scale-up">
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 font-inter">
@@ -2017,7 +2097,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* FAQ Section */}
       <section
         id="faq"
-        className="py-16 sm:py-24 lg:py-32 bg-black w-full"
+        className="py-16 sm:py-24 lg:py-32 bg-black w-full scroll-animate"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-4xl sm:mx-auto xl:max-w-6xl 2xl:max-w-7xl">
           <div className="text-center mb-20">
