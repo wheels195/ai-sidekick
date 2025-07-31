@@ -1237,6 +1237,46 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
       </section>
 
+      {/* Demo Video */}
+      <div className="py-8 sm:py-12 bg-black">
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
+            <video 
+              ref={(video) => {
+                if (video) {
+                  const observer = new IntersectionObserver(
+                    (entries) => {
+                      entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                          video.play().catch(() => {
+                            // Fallback for browsers that require user interaction
+                            video.muted = true;
+                            video.play();
+                          });
+                        } else {
+                          video.pause();
+                        }
+                      });
+                    },
+                    { threshold: 0.5 }
+                  );
+                  observer.observe(video);
+                  return () => observer.unobserve(video);
+                }
+              }}
+              className="w-full h-full object-cover"
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            >
+              <source src="/ai-sidekick-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+
       {/* Testimonial Carousel Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-black">
         <div className="text-center mb-8 sm:mb-12">
