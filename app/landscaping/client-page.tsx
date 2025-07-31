@@ -588,6 +588,41 @@ I can create variations or entirely new concepts - just describe what you need!`
   return responses[Math.floor(Math.random() * responses.length)]
 }
 
+// Rotating welcome messages system
+const WELCOME_MESSAGES = [
+  "How can I help grow your landscaping business today?",
+  "What's on your business agenda today?",
+  "Ready to tackle today's landscaping challenges?",
+  "Let's make your business bloom today",
+  "What can Scout help you accomplish today?",
+  "How can we elevate your landscaping business?",
+  "What's your biggest business priority right now?",
+  "Let's turn your landscaping goals into reality",
+  "Ready to outgrow your competition?",
+  "What business wins are we chasing today?"
+]
+
+const getDailyWelcomeMessage = (): string => {
+  // Calculate days since epoch at 9am EST
+  const now = new Date()
+  const est = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}))
+  
+  // Get date at 9am EST
+  const rotationDate = new Date(est)
+  if (est.getHours() < 9) {
+    // If before 9am, use previous day's message
+    rotationDate.setDate(rotationDate.getDate() - 1)
+  }
+  rotationDate.setHours(9, 0, 0, 0)
+  
+  // Calculate days since epoch
+  const epochStart = new Date('1970-01-01')
+  const daysSinceEpoch = Math.floor((rotationDate.getTime() - epochStart.getTime()) / (24 * 60 * 60 * 1000))
+  
+  // Use modulo to cycle through messages
+  return WELCOME_MESSAGES[daysSinceEpoch % WELCOME_MESSAGES.length]
+}
+
 interface LandscapingChatClientProps {
   user: {
     id: string
@@ -616,12 +651,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [user, setUser] = useState(initialUser)
   const [showUserMenu, setShowUserMenu] = useState(false)
   
-  const [messages, setMessages] = useState<Message[]>([{
-    id: 'welcome-ready',
-    role: 'assistant',
-    content: initialGreeting,
-    timestamp: new Date()
-  }])
+  const [messages, setMessages] = useState<Message[]>([])
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(!isReturningUser)
   const [hasShownWelcome, setHasShownWelcome] = useState(true)
   const [input, setInput] = useState("")
@@ -667,6 +697,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [hasMounted, setHasMounted] = useState(false)
   const [buttonsAnimated, setButtonsAnimated] = useState(false)
   const [isLoadingComplete, setIsLoadingComplete] = useState(false)
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true)
+  const [welcomeMessageVisible, setWelcomeMessageVisible] = useState(false)
   
   // Speech-to-text state
   const [isRecording, setIsRecording] = useState(false)
@@ -765,9 +797,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
         const inputHeight = 160 // Approximate input area height
         const newHeight = Math.max(300, viewportHeight - headerHeight - inputHeight)
         
-        // Remove forced height to allow natural flex layout
-        messagesContainer.style.removeProperty('height')
-        messagesContainer.style.removeProperty('maxHeight')
+        messagesContainer.style.height = `${newHeight}px`
+        messagesContainer.style.maxHeight = `${newHeight}px`
       }
     }
 
@@ -880,6 +911,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setButtonsAnimated(true))
       })
+      // Show welcome message with fade-in after loading completes
+      setTimeout(() => {
+        setWelcomeMessageVisible(true)
+      }, 200)
     }, 800) // 800ms to show loading state
   }, [])
 
@@ -1240,6 +1275,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     // Mark as no longer first time user when sending first message
     if (isFirstTimeUser) {
       setIsFirstTimeUser(false)
+    }
+    
+    // Hide welcome message when user sends first message
+    if (showWelcomeMessage) {
+      setShowWelcomeMessage(false)
     }
 
     // Check for image generation intent first
@@ -2189,10 +2229,17 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
               
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
-                style={{
-                  scrollBehavior: isMobile ? 'auto' : 'smooth',
-                  paddingBottom: isMobile ? `max(320px, env(safe-area-inset-bottom))` : '320px',
+                className={`messages-scroll-container overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
+                style={isMobile ? {
+                  scrollBehavior: 'auto',
+                  height: 'calc(100dvh - 200px)',
+                  maxHeight: 'calc(100dvh - 200px)',
+                  paddingBottom: `max(320px, env(safe-area-inset-bottom))`,
+                  overscrollBehavior: 'contain'
+                } : {
+                  scrollBehavior: 'smooth',
+                  height: 'calc(100vh - 240px)',
+                  paddingBottom: '320px',
                   overscrollBehavior: 'contain'
                 }}
               >
@@ -2422,6 +2469,34 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                   >
                     <ArrowUpIcon className="w-4 h-4 text-gray-300 rotate-180" />
                   </button>
+                </div>
+              )}
+
+              {/* ChatGPT-style Welcome Message - Above Input */}
+              {showWelcomeMessage && (
+                <div 
+                  className={`text-center px-4 py-6 transition-all duration-800 ease-out ${
+                    welcomeMessageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                  }`}
+                  style={{
+                    animation: welcomeMessageVisible ? 'fadeInUp 800ms ease-out' : undefined
+                  }}
+                >
+                  <style jsx>{`
+                    @keyframes fadeInUp {
+                      from {
+                        opacity: 0;
+                        transform: translateY(10px);
+                      }
+                      to {
+                        opacity: 1;
+                        transform: translateY(0);
+                      }
+                    }
+                  `}</style>
+                  <h2 className="text-2xl sm:text-3xl font-medium text-white leading-relaxed max-w-2xl mx-auto">
+                    {getDailyWelcomeMessage()}
+                  </h2>
                 </div>
               )}
 
