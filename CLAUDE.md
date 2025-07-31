@@ -88,6 +88,19 @@ npm run lint   # Code linting
 - **Always-visible Success Metrics** - Removed hover-only effects for consistent professional look
 - **Subtle Icon Pulse Animation** - Icons pulse every 6 seconds for subtle engagement
 
+### ✅ Marketing & Social Proof Enhancements (July 2025)
+- **Demo Video Integration** - Auto-playing product demo video positioned above testimonials section
+- **Testimonial Carousel** - New rotating testimonials section showcasing landscaping business success stories
+- **Video UX Optimization** - Intersection Observer API for auto-play/pause, muted autoplay for mobile compatibility
+- **Social Proof Positioning** - Strategic placement between hero and features for maximum conversion impact
+
+### ✅ Google OAuth Authentication Finalization (July 2025)
+- **OAuth 2.0 PKCE Flow** - Fully implemented with proper code verifier and challenge
+- **Supabase Integration** - Complete Google OAuth setup with detectSessionInUrl auto-handling
+- **Security Compliance** - PKCE (Proof Key for Code Exchange) for enhanced security
+- **Session Management** - Automatic callback URL handling and user session persistence
+- **Production Ready** - Google OAuth fully tested and deployed for ai-sidekick.io domain
+
 ## Current Architecture
 
 ```
@@ -130,11 +143,11 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 
 ### ✅ PRODUCTION READY FEATURES
 - **Core Platform** - Chat, tools, authentication, file processing 
-- **Google Integrations** - Places API + Custom Search with caching
+- **Google Integrations** - Places API + Custom Search with caching + OAuth 2.0 authentication
 - **Complete Analytics** - Real-time business intelligence with comprehensive API cost tracking
-- **Professional UI** - Hero section redesigned for business trust and credibility
-- **Security** - RLS enabled, authentication isolation, data protection
-- **Mobile Optimization** - Responsive design, touch interactions
+- **Professional UI** - Hero section redesigned with demo video and testimonials for business trust
+- **Security** - RLS enabled, authentication isolation, PKCE OAuth, data protection
+- **Mobile Optimization** - Responsive design, touch interactions, video auto-play optimization
 - **Cost Optimization** - Smart caching, model routing, complete token tracking
 
 ### 🎯 PRE-LAUNCH CHECKLIST (Final Items)
