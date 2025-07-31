@@ -2484,11 +2484,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 return showWelcomeMessage && messages.length === 0
               })() && (
                 <div 
-                  className={`text-center px-4 py-6 transition-all duration-800 ease-out ${
+                  className={`text-center px-4 py-6 transition-all duration-800 ease-out relative z-20 ${
                     welcomeMessageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
                   }`}
                   style={{
-                    animation: welcomeMessageVisible ? 'fadeInUp 800ms ease-out' : undefined
+                    animation: welcomeMessageVisible ? 'fadeInUp 800ms ease-out' : undefined,
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Temporary debug background
+                    border: '1px solid red' // Temporary debug border
                   }}
                 >
                   <style jsx>{`
