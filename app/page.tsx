@@ -1586,11 +1586,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Advanced AI Capabilities Section */}
-      <section className="py-16 sm:py-24 lg:py-32 relative bg-gradient-to-br from-gray-950 via-black to-gray-900 w-full">
+      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full">
         <div className="w-full px-8 sm:px-12 lg:px-16 xl:px-20">
           <div className="text-center mb-16 lg:mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
-              <span className="text-white">You don't run a generic business — why use a generic search engine?</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-medium mb-4 sm:mb-6">
+              <span className="text-white">Please. Don't use generic search anymore.</span>
             </h2>
             <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-4xl xl:max-w-6xl mx-auto mb-16 lg:mb-20">
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive text-2xl xl:text-3xl 2xl:text-4xl">AI Sidekicks</span> are built for your trade — with answers tailored to how your business actually works.
