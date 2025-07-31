@@ -365,6 +365,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         .fade-left.delay-1600 { transition-delay: 1600ms; }
         .fade-left.delay-1800 { transition-delay: 1800ms; }
         .fade-left.delay-2000 { transition-delay: 2000ms; }
+        .fade-right.delay-400 { transition-delay: 400ms; }
+        .fade-right.delay-600 { transition-delay: 600ms; }
+        .fade-right.delay-800 { transition-delay: 800ms; }
+        .fade-right.delay-1000 { transition-delay: 1000ms; }
+        .fade-right.delay-1200 { transition-delay: 1200ms; }
+        .fade-right.delay-1400 { transition-delay: 1400ms; }
         @keyframes scroll-right {
           0% { transform: translateX(-50%); }
           100% { transform: translateX(0%); }
@@ -1636,7 +1642,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       </section>
 
       {/* Advanced AI Capabilities Section */}
-      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full scroll-animate">
+      <section className="py-16 sm:py-24 lg:py-32 relative bg-black w-full">
         <div className="w-full px-8 sm:px-12 lg:px-16 xl:px-20">
           <div className="text-center mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-medium mb-4 sm:mb-6 fade-left delay-0">
@@ -1660,9 +1666,28 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </div>
               
               {/* Right - Video */}
-              <div className="flex justify-center fade-right delay-1000">
+              <div className="flex justify-center fade-right delay-1200">
                 <video 
-                  autoPlay 
+                  ref={(video) => {
+                    if (video) {
+                      const observer = new IntersectionObserver(
+                        (entries) => {
+                          entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                              video.play().catch(() => {
+                                // Fallback for browsers that require user interaction
+                              })
+                            } else {
+                              video.pause()
+                            }
+                          })
+                        },
+                        { threshold: 0.5 } // 50% visibility
+                      )
+                      observer.observe(video)
+                      return () => observer.disconnect()
+                    }
+                  }}
                   loop 
                   muted 
                   playsInline
