@@ -913,6 +913,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       })
       // Show welcome message with fade-in after loading completes
       setTimeout(() => {
+        console.log('🎯 Setting welcome message visible:', { showWelcomeMessage: true, messagesLength: 0 })
         setWelcomeMessageVisible(true)
       }, 200)
     }, 800) // 800ms to show loading state
@@ -1277,8 +1278,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       setIsFirstTimeUser(false)
     }
     
-    // Hide welcome message when user sends first message
-    if (showWelcomeMessage) {
+    // Hide welcome message when user sends first message  
+    if (showWelcomeMessage && messages.length === 0) {
       setShowWelcomeMessage(false)
     }
 
@@ -2473,7 +2474,15 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
               )}
 
               {/* ChatGPT-style Welcome Message - Above Input */}
-              {showWelcomeMessage && (
+              {(() => {
+                console.log('🎯 Welcome message render check:', { 
+                  showWelcomeMessage, 
+                  messagesLength: messages.length, 
+                  welcomeMessageVisible,
+                  shouldShow: showWelcomeMessage && messages.length === 0 
+                })
+                return showWelcomeMessage && messages.length === 0
+              })() && (
                 <div 
                   className={`text-center px-4 py-6 transition-all duration-800 ease-out ${
                     welcomeMessageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
