@@ -414,7 +414,7 @@ async function getCostAnalytics(supabase: any, dates: any) {
       }
       
       return acc
-    }, convResult) || convResult"}
+    }, convResult) || convResult
   }
 
   const todayStats = calculatePeriodCosts(todayCosts, todayApiUsage)
