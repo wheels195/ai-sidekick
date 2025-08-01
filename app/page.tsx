@@ -695,11 +695,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-16 sm:mb-20">
             {[
               {
-                icon: Target,
-                title: "Instant Local Expertise",
-                desc: "Get specific advice for ranking in your city, not generic SEO tips",
-                metric: "Rank #1 locally",
-                tag: "AI-Powered",
+                icon: BarChart3,
+                title: "Smart Business Insights",
+                desc: "Get clear, AI-driven advice on what to fix, improve, or double down on in your business",
+                metric: "Save 15+ hrs/week",
+                tag: "Intelligence",
               },
               {
                 icon: DollarSign,
@@ -730,16 +730,16 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 tag: "Automated",
               },
               {
-                icon: BarChart3,
-                title: "Smart Business Insights",
-                desc: "Get clear, AI-driven advice on what to fix, improve, or double down on in your business",
-                metric: "Save 15+ hrs/week",
-                tag: "Intelligence",
+                icon: Target,
+                title: "Instant Local Expertise",
+                desc: "Get specific advice for ranking in your city, not generic SEO tips",
+                metric: "Rank #1 locally",
+                tag: "AI-Powered",
               },
             ].map((value, index) => (
               <Card
                 key={index}
-                className="relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] animate-fade-in-left"
+                className="relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] fade-left"
                 style={{
                   animationDelay: `${index * 200}ms`
                 }}
