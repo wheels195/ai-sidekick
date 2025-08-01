@@ -808,11 +808,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </div>
 
             <div className="w-full relative">
-              {/* Live Badge */}
-              <div className="absolute -top-3 right-4 sm:right-6 lg:right-8 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
-                🟢 LIVE NOW
-              </div>
-              
               <div className="relative z-10">
                 {/* Text Content with padding */}
                 <div className="px-4 sm:px-6 lg:px-8">
@@ -831,6 +826,10 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 {/* Demo Video - Near Full Width (outside padded container) */}
                 <div className="mb-12 fade-left delay-1000">
                   <div className="relative w-full max-w-7xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
+                    {/* Live Badge - Now positioned relative to video container */}
+                    <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
+                      🟢 LIVE NOW
+                    </div>
                     <video 
                       ref={(video) => {
                         if (video) {
