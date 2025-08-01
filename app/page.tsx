@@ -1458,7 +1458,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         id="features"
         className="py-16 sm:py-24 lg:py-32 relative bg-black w-full scroll-animate fade-up"
       >
-        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
+        <div className="w-full px-8 sm:px-12 lg:px-16 xl:px-20">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
@@ -1531,111 +1531,38 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               ))}
             </div>
 
-            {/* Enhanced Chat Interface */}
-            <div id="chat-demo" className="relative mt-8 lg:mt-0">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-2xl lg:rounded-3xl blur-xl"></div>
-              <div className="relative backdrop-blur-2xl bg-gray-800/60 rounded-2xl lg:rounded-3xl border border-gray-600/40 shadow-2xl p-4 sm:p-6 lg:p-8 hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105">
-                <div className="flex items-center space-x-4 pb-6 border-b border-white/20">
-                  <div className="flex space-x-2">
-                    <div className="w-4 h-4 bg-red-400 rounded-full"></div>
-                    <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
-                    <div className="w-4 h-4 bg-green-400 rounded-full"></div>
-                  </div>
-                  <span className="text-gray-200 font-medium">Trade AI Sidekick</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span className="text-emerald-300 text-sm">Live Demo</span>
-                  </div>
-                </div>
-
-                <div className="space-y-6 mt-6 max-h-96 overflow-y-auto">
-                  {/* User Message - Always show */}
-                  <div className="flex justify-end">
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-md shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
-                      <p className="text-sm font-medium">
-                        {demoStep >= 1 ? userMessage : fullUserMessage}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* AI Thinking Indicator */}
-                  {isTyping && (
-                    <div className="flex justify-start items-center space-x-2 pl-4">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                      </div>
-                      <span className="text-emerald-300 text-xs">AI is thinking...</span>
-                    </div>
-                  )}
-
-                  {/* Web Search Loading */}
-                  {isSearching && (
-                    <div className="flex justify-start items-center space-x-3 pl-4">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center animate-spin">
-                          <Search className="w-3 h-3 text-white" />
-                        </div>
-                        <div className="flex space-x-1">
-                          <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse"></div>
-                          <div className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                        </div>
-                      </div>
-                      <span className="text-blue-300 text-xs font-medium">Searching Google Places for local businesses...</span>
-                    </div>
-                  )}
-
-                  {/* AI Response - Only show when typing or complete */}
-                  {demoStep >= 4 && (
-                    <div className="flex justify-start">
-                      <div className="bg-white/10 backdrop-blur-xl text-slate-100 rounded-2xl rounded-bl-md px-4 py-3 max-w-2xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300">
-                        <div className="space-y-3 text-sm leading-relaxed">
-                          <div 
-                            dangerouslySetInnerHTML={{ 
-                              __html: convertMarkdownToHtml(aiMessage) 
-                            }}
-                          />
-                          {demoStep === 4 && aiMessage.length > 0 && !aiMessage.includes('Ready to dominate') && (
-                            <span className="animate-pulse text-emerald-400">|</span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Default state - show when demo hasn't started */}
-                  {demoStep === 0 && !demoStarted && (
-                    <div className="flex items-center justify-center py-8">
-                      <div className="text-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                          <Sparkles className="w-6 h-6 text-white" />
-                        </div>
-                        <p className="text-emerald-300 font-medium">Scroll to see live demo</p>
-                        <p className="text-gray-400 text-sm mt-1">Watch a real conversation unfold</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              {/* CTA Button */}
-              <div className="text-center mt-8">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-10 py-3 sm:py-4 backdrop-blur-sm border border-white/20"
-                  onClick={() => window.location.href = '/signup?plan=free-trial'}
-                >
-                  Try For Free
-                  <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                </Button>
-              </div>
-              
-              {/* Subtle Divider */}
-              <div className="mt-16 flex justify-center">
-                <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-              </div>
+            {/* Demo Video */}
+            <div className="relative mt-8 lg:mt-0 fade-right delay-600">
+              <video 
+                ref={(video) => {
+                  if (video) {
+                    const observer = new IntersectionObserver(
+                      (entries) => {
+                        entries.forEach((entry) => {
+                          if (entry.isIntersecting) {
+                            video.play().catch(() => {
+                              // Fallback for browsers that require user interaction
+                            })
+                          } else {
+                            video.pause()
+                          }
+                        })
+                      },
+                      { threshold: 0.5 } // 50% visibility
+                    )
+                    observer.observe(video)
+                    return () => observer.disconnect()
+                  }
+                }}
+                controls
+                loop
+                muted
+                playsInline
+                className="w-full h-auto rounded-2xl shadow-2xl border border-emerald-500/20"
+              >
+                <source src="/demo-video-get-started.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>
@@ -1691,7 +1618,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   loop 
                   muted 
                   playsInline
-                  className="w-full h-auto rounded-2xl shadow-2xl"
+                  className="w-full h-auto rounded-2xl shadow-2xl border border-emerald-500/20"
                 >
                   <source src="/google-search-compare-new.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
