@@ -824,12 +824,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 </div>
 
                 {/* Demo Video - Near Full Width (outside padded container) */}
-                <div className="mb-12 fade-left delay-1000">
+                <div className="mb-12 fade-left delay-1000 relative">
+                  {/* Live Badge - Positioned outside container but relative to it */}
+                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
+                    🟢 LIVE NOW
+                  </div>
                   <div className="relative w-full max-w-7xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
-                    {/* Live Badge - Now positioned relative to video container */}
-                    <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
-                      🟢 LIVE NOW
-                    </div>
                     <video 
                       ref={(video) => {
                         if (video) {
