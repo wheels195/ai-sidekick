@@ -189,6 +189,14 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 - **Image analysis** - Advanced plant/property recognition
 - **Workflow automation** - AI-powered business process automation
 
+#### Asset Optimization & Video Hosting
+- **Video Hosting Migration** - Currently storing 56MB+ videos in git repo (demo-video-get-started.mp4)
+  - **Recommended: Cloudflare R2** - Free tier covers 10GB monthly, fast global CDN
+  - **Alternative: AWS S3** - Very cheap (~$0.023 per GB), industry standard
+  - **Current status:** Working fine in repo but causes large git clone/deployment times
+  - **Action needed:** Move video assets to cloud storage when convenient
+- **Image Optimization** - Consider cloud storage for large marketing images and comparison screenshots
+
 ## Development Guidelines
 
 - **Mobile-first design** - All new features must work perfectly on mobile

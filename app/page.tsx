@@ -1274,7 +1274,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         }
                       });
                     },
-                    { threshold: 0.75 }
+                    { threshold: 0.9 }
                   );
                   observer.observe(video);
                   return () => observer.unobserve(video);
@@ -1360,7 +1360,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         </div>
 
         {/* Ticker Row 2 - Scrolling Left */}
-        <div className="relative mb-4 ticker-row fade-left delay-600">
+        <div className="relative mb-4 ticker-row fade-right delay-600">
           <div className="flex animate-scroll-left space-x-4">
             {[
               { category: "Pricing Strategy", question: "Create a pricing strategy that eliminates lowball competitors", color: "from-yellow-500 to-orange-500" },
@@ -1548,13 +1548,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                           }
                         })
                       },
-                      { threshold: 0.5 } // 50% visibility
+                      { threshold: 0.75 } // 75% visibility
                     )
                     observer.observe(video)
                     return () => observer.disconnect()
                   }
                 }}
-                controls
                 loop
                 muted
                 playsInline
