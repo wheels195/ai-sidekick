@@ -785,8 +785,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
       {/* Our AI Sidekicks - Available Now */}
       <section id="products" className="min-h-screen sm:min-h-0 py-8 sm:py-16 md:py-24 lg:py-32 relative bg-black w-full flex flex-col justify-center sm:block">
-        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto">
-          <div className="text-center mb-8 sm:mb-20">
+        <div className="w-full">
+          <div className="text-center mb-8 sm:mb-20 px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 fade-left delay-0">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Our <span className="font-cursive">AI Sidekicks</span>
@@ -807,362 +807,69 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </span>
             </div>
 
-            <div className="w-full sm:max-w-7xl sm:mx-auto relative">
+            <div className="w-full relative">
               {/* Live Badge */}
               <div className="absolute -top-3 right-4 sm:right-6 lg:right-8 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
                 🟢 LIVE NOW
               </div>
               
-              <div className="px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-6 sm:mb-8">
-                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4 fade-left delay-600">
-                    <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
-                      Ready when you are
-                    </span>
-                  </h3>
-                  <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8 fade-left delay-800">
-                    Your Full Time AI Landscaping Business Partner
-                  </p>
-                </div>
-
-                {/* Enhanced Static Chat Interface Preview */}
-                <div className="bg-gradient-to-br from-green-800/10 via-emerald-900/5 to-blue-900/5 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group animate-gradient fade-left delay-1000">
-                  
-                  
-                  
-                  {/* Header */}
-                  <div className="backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl">
-                    <div className="px-4 py-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2 cursor-pointer">
-                          <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                            <Leaf className="w-5 h-5 text-white" />
-                          </div>
-                          <div>
-                            <h1 className="text-sm text-white">
-                              <span className="font-cursive text-base font-bold">Scout</span> | Personal Business Strategist
-                            </h1>
-                          </div>
-                        </div>
-                        
-                        <div className="hidden sm:flex items-center space-x-2">
-                          <button className="text-gray-200 hover:text-white text-sm px-2 py-1">
-                            Profile
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Welcome Message */}
-                  <div className="p-4 sm:p-6 md:p-10 h-[400px] sm:h-[340px] overflow-visible" style={{ paddingTop: 'max(24px, env(safe-area-inset-top))' }}>
-                    {/* Enhanced Chat Bubble with Character Inside */}
-                    <div className="relative">
-                      {/* Chat Bubble - Matches Real /landscaping Interface */}
-                      <div className="bg-[#1a1a1a] text-gray-100 px-4 py-2 rounded-2xl relative overflow-visible animate-fade-in">                        
-                        
-                        {/* Character */}
-                        <div className="hidden lg:block absolute -left-8 top-0 z-10 group">
-                          <div className="relative transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] rounded-full">
-                            {/* Ground shadow under his boots */}
-                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black/30 rounded-full blur-md opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            {/* Character with hover glow */}
-                            <img 
-                              src="/character.png?v=4" 
-                              alt="Scout character"
-                              className="w-72 h-72 object-contain relative z-10 transition-all duration-300 group-hover:scale-105"
-                              style={{ 
-                                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
-                              }}
-                            />
-                          </div>
-                        </div>
-                        
-                        {/* Text content with margin for bigger character */}
-                        <div className="ml-0 lg:ml-48">
-                        <div className="space-y-3">
-                          <p className="text-gray-50 typography-chat leading-relaxed text-base">
-                            Hey there — I'm <span className="font-cursive text-emerald-400 font-semibold text-lg">Scout</span>. Your AI sidekick for growing a smarter, more profitable business.
-                          </p>
-                          
-                          <p className="text-gray-50 typography-chat leading-relaxed text-sm font-medium">
-                            Built to help you:
-                          </p>
-                          
-                          <div className="space-y-1.5 ml-3">
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Attract better customers with tailored marketing ideas</span>
-                            </div>
-                            <div className="flex items-center space-x-2 hidden sm:flex">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Create upsells that boost job size and lifetime value</span>
-                            </div>
-                            <div className="flex items-center space-x-2 hidden sm:flex">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Price confidently using seasonal and local trends</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                              <span className="text-gray-50 typography-chat leading-relaxed text-sm">Plan smarter, scale faster, and stay ahead of competitors</span>
-                            </div>
-                          </div>
-                          
-                          {/* Language Support Section - Mobile Only */}
-                          <div className="sm:hidden mt-4">
-                            <p className="text-gray-50 typography-chat leading-relaxed text-sm mb-2">
-                              Supports 50+ Languages:
-                            </p>
-                            <div className="space-y-1.5 ml-3">
-                              <div className="flex items-center space-x-2">
-                                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                                <span className="text-gray-50 typography-chat leading-relaxed text-sm">Speech to text</span>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                                <span className="text-gray-50 typography-chat leading-relaxed text-sm">Text to text</span>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          {/* Enhanced Pro Tip Box with Glassmorphism */}
-                          <div className="hidden sm:block bg-white/5 backdrop-blur border border-green-500/20 rounded-xl shadow p-2.5 animate-fade-in delay-300">
-                            <div className="flex items-start space-x-2">
-                              <div className="text-emerald-400 text-base">
-                                🌱
-                              </div>
-                              <div>
-                                <p className="text-emerald-300 font-medium text-xs uppercase tracking-wide">Pro Tip</p>
-                                <p className="text-white text-sm font-bold">Unsure where to start? Ask about a pricing, marketing, or growth goal — I'll help break it down.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Desktop-only Background Watermark - Right Side */}
-                        <div className="hidden lg:block absolute right-4 top-8 bottom-8 w-72 pointer-events-none overflow-hidden z-10">
-                          {/* Interlocking gears - touching like real gears */}
-                          <div className="absolute top-4 left-8 opacity-[0.55] animate-spin" style={{ animationDuration: '20s' }}>
-                            <Settings className="w-16 h-16 text-gray-400" />
-                          </div>
-                          <div className="absolute top-12 left-16 opacity-[0.50] animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }}>
-                            <Settings className="w-12 h-12 text-gray-500" />
-                          </div>
-                          
-                          {/* Custom clipboard with 3 smaller checkmarks */}
-                          <div className="absolute top-8 left-36 opacity-[0.60]">
-                            <div className="relative w-20 h-24">
-                              {/* Clipboard base */}
-                              <div className="w-16 h-20 bg-blue-400 rounded-lg border-2 border-blue-500"></div>
-                              {/* Clip at top */}
-                              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-gray-400 rounded-sm"></div>
-                              {/* Three checkmarks */}
-                              <div className="absolute top-3 left-2 text-white text-sm font-bold">✓</div>
-                              <div className="absolute top-7 left-2 text-white text-sm font-bold">✓</div>
-                              <div className="absolute top-11 left-2 text-white text-sm font-bold">✓</div>
-                            </div>
-                          </div>
-                          
-                          {/* Chat robot - centered between gears and clipboard at bottom */}
-                          <div className="absolute bottom-12 left-24 opacity-[0.65]">
-                            <Bot className="w-24 h-24 text-emerald-500" />
-                          </div>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Enhanced Input Area */}
-                  <div className="border-t border-white/10 p-4">
-                    {/* Ideas Categories */}
-                    <div className="mb-3 ideas-container relative">
-                      <div className="mb-2">
-                        <h4 className="text-sm font-normal text-blue-300 mb-2 flex items-center gap-1">
-                          <Sparkles className="w-3 h-3" />
-                          Ideas to get started
-                        </h4>
-                      </div>
-                      
-                      {/* Desktop Categories - All 5 */}
-                      <div className="hidden sm:flex flex-wrap gap-2 mb-2">
-                        {Object.entries(ideasCategories).map(([key, category]) => {
-                          const IconComponent = category.icon
-                          const isActive = activeIdeasCategory === key
-                          return (
-                            <div key={key} className="relative">
-                              <button
-                                className={`bg-gradient-to-r from-blue-600/20 to-indigo-600/20 hover:from-blue-500/30 hover:to-indigo-500/30 border border-blue-400/40 rounded-lg px-3 py-2 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 hover:scale-105 flex items-center gap-2 ${
-                                  isActive ? 'from-blue-500/40 to-indigo-500/40 border-blue-300/60' : ''
-                                }`}
-                                onClick={(e) => {
-                                  e.preventDefault()
-                                  e.stopPropagation()
-                                  setActiveIdeasCategory(isActive ? null : key)
-                                }}
-                              >
-                                <IconComponent className="w-3 h-3" />
-                                {category.name}
-                                <ChevronUp className={`w-3 h-3 transition-transform duration-200 ${isActive ? '' : 'rotate-180'}`} />
-                              </button>
-                              
-                              {/* Questions Dropdown - Opens Upward */}
-                              {isActive && (
-                                <div className="absolute bottom-full left-0 mb-2 w-72 bg-gray-800/95 backdrop-blur-xl border border-blue-400/30 rounded-lg shadow-2xl p-3 z-50">
-                                  <div className="space-y-2">
-                                    {category.questions.map((question, idx) => (
-                                      <button
-                                        key={idx}
-                                        className="w-full text-left text-xs text-gray-200 hover:text-blue-200 hover:bg-blue-500/10 rounded px-2 py-2 transition-all duration-200"
-                                        onClick={() => {
-                                          // Handle question click here
-                                          setActiveIdeasCategory(null)
-                                        }}
-                                      >
-                                        {question}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )
-                        })}
-                      </div>
-
-                      {/* Mobile Categories - Only 3 */}
-                      <div className="sm:hidden flex flex-col gap-2">
-                        {mobileCategories.map((key) => {
-                          const category = ideasCategories[key]
-                          const IconComponent = category.icon
-                          const isActive = activeIdeasCategory === key
-                          return (
-                            <div key={key} className="relative">
-                              <button
-                                className={`w-full bg-gradient-to-r from-blue-600/20 to-indigo-600/20 hover:from-blue-500/30 hover:to-indigo-500/30 border border-blue-400/40 rounded-lg px-3 py-2 text-xs text-blue-300 hover:text-blue-200 transition-all duration-200 flex items-center justify-between ${
-                                  isActive ? 'from-blue-500/40 to-indigo-500/40 border-blue-300/60' : ''
-                                }`}
-                                onClick={(e) => {
-                                  e.preventDefault()
-                                  e.stopPropagation()
-                                  setActiveIdeasCategory(isActive ? null : key)
-                                }}
-                              >
-                                <div className="flex items-center gap-2">
-                                  <IconComponent className="w-3 h-3" />
-                                  {category.name}
-                                </div>
-                                <ChevronUp className={`w-3 h-3 transition-transform duration-200 ${isActive ? '' : 'rotate-180'}`} />
-                              </button>
-                              
-                              {/* Questions Dropdown - Opens Upward on Mobile */}
-                              {isActive && (
-                                <div className="absolute bottom-full left-0 right-0 mb-2 bg-gray-800/95 backdrop-blur-xl border border-blue-400/30 rounded-lg shadow-2xl p-3 z-50">
-                                  <div className="space-y-2">
-                                    {category.questions.map((question, idx) => (
-                                      <button
-                                        key={idx}
-                                        className="w-full text-left text-xs text-gray-200 hover:text-blue-200 hover:bg-blue-500/10 rounded px-2 py-2 transition-all duration-200"
-                                        onClick={() => {
-                                          // Handle question click here
-                                          setActiveIdeasCategory(null)
-                                        }}
-                                      >
-                                        {question}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div>
-                    
-                    <div className="w-full">
-                        <div className="relative group">
-                          <textarea
-                            className="w-full bg-white/5 border-2 border-emerald-400/60 text-white placeholder-gray-400 rounded-xl px-4 py-4 pr-20 pb-12 sm:pr-32 sm:pb-16 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-base transition-all duration-300"
-                            placeholder="What can I help you with today?"
-                            rows={4}
-                            disabled
-                          />
-                          {/* Animated placeholder suggestions */}
-                          <div className="absolute inset-0 px-4 py-4 pointer-events-none">
-                            <div className="text-gray-500 text-base animate-placeholder">
-                              <div className="opacity-0">How can I get more customers this month?</div>
-                            </div>
-                          </div>
-                          
-                          {/* Mobile: Tools and Tips Text - Desktop: Feature Pills */}
-                          <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4">
-                            {/* Mobile Only: Tools and Tips Text */}
-                            <div className="sm:hidden flex items-center space-x-4">
-                              <div className="flex items-center space-x-1.5 cursor-pointer">
-                                <svg className="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M18.5 8.5a1 1 0 00-1.414-1.414L14 10.172V6a1 1 0 00-2 0v4.172l-3.086-3.086a1 1 0 00-1.414 1.414L10.586 11.5H6a1 1 0 000 2h4.586L7.5 16.586a1 1 0 001.414 1.414L12 15.414V19a1 1 0 002 0v-3.586l3.086 3.086a1 1 0 001.414-1.414L15.414 13.5H19a1 1 0 000-2h-3.586L18.5 8.5z"/>
-                                </svg>
-                                <span className="text-blue-400 text-sm font-medium">Tools</span>
-                              </div>
-                              <div className="flex items-center space-x-1.5 cursor-pointer">
-                                <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                </svg>
-                                <span className="text-emerald-400 text-sm font-medium">Tips</span>
-                              </div>
-                            </div>
-                            
-                            {/* Desktop: Original Green Feature Pills */}
-                            <div className="hidden sm:flex items-center space-x-3">
-                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
-                                <Globe className="w-3 h-3 text-emerald-400" />
-                                <span className="text-emerald-300 text-xs font-medium">Web Search</span>
-                              </div>
-                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
-                                <Upload className="w-3 h-3 text-emerald-400" />
-                                <span className="text-emerald-300 text-xs font-medium">File Upload</span>
-                              </div>
-                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
-                                <svg className="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                </svg>
-                                <span className="text-emerald-300 text-xs font-medium">Tips</span>
-                              </div>
-                              <div className="bg-emerald-500/10 border border-emerald-400/20 rounded-full px-3 py-1.5 flex items-center space-x-1.5 hover:bg-emerald-500/25 hover:border-emerald-400/50 transition-all duration-200 cursor-pointer">
-                                <svg className="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd"/>
-                                </svg>
-                                <span className="text-emerald-300 text-xs font-medium">Generate Image</span>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div className="absolute right-3 bottom-3 sm:right-4 sm:bottom-4 flex items-center space-x-2">
-                            {/* Language Support - Desktop Only */}
-                            <div className="hidden sm:block bg-gray-700/50 backdrop-blur border border-gray-600/30 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-600/50 transition-colors">
-                              <span className="text-gray-300 text-xs">Supports 50+ Languages</span>
-                            </div>
-                            {/* Microphone with Recording Indicator */}
-                            <button className="relative p-1.5 text-gray-400 hover:text-emerald-400 transition-colors">
-                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
-                              </svg>
-                              {/* Red Recording Indicator */}
-                              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                            </button>
-                            <button className="p-1.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg transition-colors">
-                              <Send className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-                    </div>
+              <div className="relative z-10">
+                {/* Text Content with padding */}
+                <div className="px-4 sm:px-6 lg:px-8">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <h3 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-3 sm:mb-4 fade-left delay-600">
+                      <span className="bg-gradient-to-r from-emerald-500 to-green-700 bg-clip-text text-transparent font-cursive">
+                        Ready when you are
+                      </span>
+                    </h3>
+                    <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8 fade-left delay-800">
+                      Your Full Time AI Landscaping Business Partner
+                    </p>
                   </div>
                 </div>
 
-                {/* Enhanced Value Props Below Chat */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 md:mt-12 mb-6 sm:mb-8 fade-left delay-1200">
+                {/* Demo Video - Full Width (outside padded container) */}
+                <div className="mb-12 fade-left delay-1000">
+                  <div className="relative w-full aspect-video overflow-hidden shadow-2xl">
+                    <video 
+                      ref={(video) => {
+                        if (video) {
+                          const observer = new IntersectionObserver(
+                            (entries) => {
+                              entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                  video.play().catch(() => {
+                                    // Fallback for browsers that require user interaction
+                                    video.muted = true;
+                                    video.play();
+                                  });
+                                } else {
+                                  video.pause();
+                                }
+                              });
+                            },
+                            { threshold: 0.75 }
+                          );
+                          observer.observe(video);
+                          return () => observer.unobserve(video);
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    >
+                      <source src="/ai-sidekick-demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </div>
+
+                {/* Enhanced Value Props Below Video */}
+                <div className="px-4 sm:px-6 lg:px-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 md:mt-12 mb-6 sm:mb-8 fade-left delay-1200">
                   <div className="text-center p-4 bg-white/5 backdrop-blur border border-emerald-400/20 rounded-xl hover:border-emerald-400/40 transition-all duration-300 hover:scale-105 group">
                     <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
                     <h4 className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-200 transition-colors duration-300">Professional Interface</h4>
@@ -1180,7 +887,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </div>
 
-                <div className="space-y-6 fade-left delay-1400">
+                <div className="px-4 sm:px-6 lg:px-8">
+                  <div className="space-y-6 fade-left delay-1400">
                   {/* Mobile: Stacked Layout */}
                   <div className="block sm:hidden space-y-6">
                     <div className="text-center space-y-3">
@@ -1247,51 +955,14 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                     </div>
                   </div>
                 </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        </div>
       </section>
 
-      {/* Demo Video */}
-      <div className="py-8 sm:py-12 bg-black">
-        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto fade-right">
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
-            <video 
-              ref={(video) => {
-                if (video) {
-                  const observer = new IntersectionObserver(
-                    (entries) => {
-                      entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                          video.play().catch(() => {
-                            // Fallback for browsers that require user interaction
-                            video.muted = true;
-                            video.play();
-                          });
-                        } else {
-                          video.pause();
-                        }
-                      });
-                    },
-                    { threshold: 0.9 }
-                  );
-                  observer.observe(video);
-                  return () => observer.unobserve(video);
-                }
-              }}
-              className="w-full h-full object-cover"
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            >
-              <source src="/ai-sidekick-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-      </div>
 
       {/* Testimonial Carousel Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-black">
