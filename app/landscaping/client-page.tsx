@@ -2042,10 +2042,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-cursive">Scout | Your AI Sidekick</h1>
+                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-bold">Scout | Your AI Sidekick</h1>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-base typography-heading-bold text-white font-cursive">Scout | Your AI Sidekick</h1>
+                <h1 className="text-base typography-heading-bold text-white font-bold">Scout | Your AI Sidekick</h1>
               </div>
             </div>
 
