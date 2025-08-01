@@ -828,34 +828,45 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </div>
 
-                {/* Demo Video - Full Width (outside padded container) */}
+                {/* Demo Video - Near Full Width (outside padded container) */}
                 <div className="mb-12 fade-left delay-1000">
-                  <div className="relative w-full aspect-video overflow-hidden shadow-2xl">
+                  <div className="relative w-full max-w-7xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
                     <video 
                       ref={(video) => {
                         if (video) {
+                          let playTimeout: NodeJS.Timeout;
                           const observer = new IntersectionObserver(
                             (entries) => {
                               entries.forEach((entry) => {
                                 if (entry.isIntersecting) {
-                                  video.play().catch(() => {
-                                    // Fallback for browsers that require user interaction
-                                    video.muted = true;
-                                    video.play();
-                                  });
+                                  // Debounce play calls to prevent rapid toggling
+                                  clearTimeout(playTimeout);
+                                  playTimeout = setTimeout(() => {
+                                    video.play().catch(() => {
+                                      // Fallback for browsers that require user interaction
+                                      video.muted = true;
+                                      video.play();
+                                    });
+                                  }, 500); // Increased delay to 500ms for less aggressive autoplay
                                 } else {
+                                  clearTimeout(playTimeout);
                                   video.pause();
                                 }
                               });
                             },
-                            { threshold: 0.75 }
+                            { 
+                              threshold: 0.3, // Much lower threshold - video stays playing when 30% visible
+                              rootMargin: '0px 0px -100px 0px' // Add some margin so it doesn't pause too early
+                            }
                           );
                           observer.observe(video);
-                          return () => observer.unobserve(video);
+                          return () => {
+                            clearTimeout(playTimeout);
+                            observer.unobserve(video);
+                          };
                         }
                       }}
                       className="w-full h-full object-cover"
-                      autoPlay
                       muted
                       loop
                       playsInline
