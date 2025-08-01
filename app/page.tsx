@@ -830,7 +830,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
 
                 {/* Demo Video - Near Full Width (outside padded container) */}
                 <div className="mb-12 fade-left delay-1000">
-                  <div className="relative w-full max-w-7xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
+                  <div className="relative w-full max-w-7xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
                     <video 
                       ref={(video) => {
                         if (video) {
