@@ -3,7 +3,61 @@ import { createBrowserClient } from '@supabase/ssr'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
+// Custom storage adapter with localStorage backup for mobile compatibility
+const customStorageAdapter = {
+  getItem: (key: string) => {
+    if (typeof window === 'undefined') return null
+    
+    try {
+      // Try localStorage first
+      const value = localStorage.getItem(key)
+      if (value) return value
+      
+      // Fallback to cookies for cross-tab compatibility
+      const cookies = document.cookie.split(';')
+      const cookie = cookies.find(c => c.trim().startsWith(`${key}=`))
+      return cookie?.split('=')[1] || null
+    } catch (e) {
+      console.warn('Storage getItem failed:', e)
+      return null
+    }
+  },
+  setItem: (key: string, value: string) => {
+    if (typeof window === 'undefined') return
+    
+    try {
+      // Store in localStorage
+      localStorage.setItem(key, value)
+      
+      // Also store in cookies as backup
+      const expires = new Date()
+      expires.setDate(expires.getDate() + 7) // 7 days for auth tokens
+      document.cookie = `${key}=${value}; expires=${expires.toUTCString()}; path=/; secure; samesite=lax`
+    } catch (e) {
+      console.warn('Storage setItem failed:', e)
+    }
+  },
+  removeItem: (key: string) => {
+    if (typeof window === 'undefined') return
+    
+    try {
+      localStorage.removeItem(key)
+      document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
+    } catch (e) {
+      console.warn('Storage removeItem failed:', e)
+    }
+  }
+}
+
 export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    // Enable PKCE flow and auto-detection for OAuth callbacks
+    detectSessionInUrl: true,
+    flowType: 'pkce',
+    storage: customStorageAdapter,
+    autoRefreshToken: true,
+    persistSession: true
+  },
   cookies: {
     // Enhanced cookie handling with localStorage backup
     get: (name: string) => {
