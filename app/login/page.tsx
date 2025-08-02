@@ -29,12 +29,13 @@ function LoginForm() {
     // Check for existing session first, but not if there's an OAuth error or if we're on mobile
     const checkExistingSession = async () => {
       try {
-        // If there's an OAuth error, don't redirect - show the error instead
+        // If there's an OAuth error, logout, or callback redirect, don't auto-redirect
         const hasOAuthError = searchParams.get('error')
         const isFromCallback = searchParams.get('from') === 'callback'
+        const isFromLogout = searchParams.get('logout') === 'true'
         
-        if (hasOAuthError || isFromCallback) {
-          console.log('OAuth error or callback redirect detected, staying on login page')
+        if (hasOAuthError || isFromCallback || isFromLogout) {
+          console.log('OAuth error, logout, or callback redirect detected, staying on login page')
           setIsCheckingSession(false)
           return
         }

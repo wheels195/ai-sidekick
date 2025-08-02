@@ -19,6 +19,7 @@ import {
   ImageIcon,
   X,
   LogOut,
+  Settings,
   ChevronDown,
   ArrowUpIcon,
   Paperclip,
@@ -988,11 +989,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' })
-      router.push('/login')
+      router.push('/login?logout=true')
     } catch (error) {
       console.error('Logout failed:', error)
       // Force redirect even if API fails
-      router.push('/login')
+      router.push('/login?logout=true')
     }
   }
 
@@ -2109,6 +2110,17 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         >
                           <MessageSquare className="w-4 h-4" />
                           <span>Chats</span>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            setShowUserMenu(false)
+                            router.push('/account/settings')
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm text-blue-300 hover:text-blue-200 hover:bg-blue-500/10 rounded-md transition-colors duration-200 flex items-center space-x-2"
+                        >
+                          <Settings className="w-4 h-4" />
+                          <span>Account Settings</span>
                         </button>
                         
                         <div className="border-t border-gray-600/30 my-2"></div>
