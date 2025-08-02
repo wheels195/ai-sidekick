@@ -127,7 +127,7 @@ function AuthCallbackContent() {
         }
         
         setTimeout(() => {
-          router.push(`/login?error=oauth_error&message=${encodeURIComponent(sessionError?.message || 'OAuth failed')}`)
+          router.push(`/login?error=oauth_error&from=callback&message=${encodeURIComponent(sessionError?.message || 'OAuth failed')}`)
         }, 3000)
         
       } catch (error) {
@@ -141,7 +141,7 @@ function AuthCallbackContent() {
           console.warn('Failed to clear session:', e)
         }
         
-        setTimeout(() => router.push('/login?error=callback_exception'), 3000)
+        setTimeout(() => router.push('/login?error=callback_exception&from=callback'), 3000)
       }
     }
 

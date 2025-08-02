@@ -26,24 +26,41 @@ function LoginForm() {
   const [isCheckingSession, setIsCheckingSession] = useState(true)
 
   useEffect(() => {
-    // Check for existing session first, but not if there's an OAuth error
+    // Check for existing session first, but not if there's an OAuth error or if we're on mobile
     const checkExistingSession = async () => {
       try {
         // If there's an OAuth error, don't redirect - show the error instead
         const hasOAuthError = searchParams.get('error')
-        if (hasOAuthError) {
-          console.log('OAuth error detected, staying on login page')
+        const isFromCallback = searchParams.get('from') === 'callback'
+        
+        if (hasOAuthError || isFromCallback) {
+          console.log('OAuth error or callback redirect detected, staying on login page')
           setIsCheckingSession(false)
           return
         }
         
-        const { data: { session } } = await supabase.auth.getSession()
-        if (session) {
+        // Add a small delay to prevent race conditions with OAuth callback processing
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+        
+        if (sessionError) {
+          console.warn('Session check error:', sessionError)
+          setIsCheckingSession(false)
+          return
+        }
+        
+        if (session && session.user) {
+          console.log('Valid session found, redirecting to:', searchParams.get('redirect') || '/landscaping')
           // User is already authenticated, redirect to intended page
           const redirectUrl = searchParams.get('redirect') || '/landscaping'
           router.push(redirectUrl)
           return
         }
+        
+        console.log('No valid session found, staying on login page')
+      } catch (error) {
+        console.error('Session check error:', error)
       } finally {
         setIsCheckingSession(false)
       }
