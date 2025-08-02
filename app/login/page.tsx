@@ -359,7 +359,7 @@ function LoginForm() {
                 {errors.submit && (
                   <div className="text-red-400 text-sm text-center bg-red-400/10 border border-red-400/20 rounded-lg p-4">
                     <p className="mb-3">{errors.submit}</p>
-                    {(error === 'auth_failed' || error === 'oauth_error') && (
+                    {(searchParams.get('error') === 'auth_failed' || searchParams.get('error') === 'oauth_error') && (
                       <Button
                         type="button"
                         onClick={() => {

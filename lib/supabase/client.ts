@@ -3,15 +3,9 @@ import { createBrowserClient } from '@supabase/ssr'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-// Mobile detection helper
-const isMobile = () => {
-  if (typeof window === 'undefined') return false
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-}
-
 export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
   cookies: {
-    // Set cookie options for 30-day persistence with mobile compatibility
+    // Simplified cookie handling for better compatibility
     get: (name: string) => {
       if (typeof document !== 'undefined') {
         const cookies = document.cookie.split(';')
@@ -24,9 +18,6 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
       if (typeof document !== 'undefined') {
         let cookieStr = `${name}=${value}`
         
-        // Mobile-specific cookie settings for better compatibility
-        const mobile = isMobile()
-        
         // Force 30-day expiry for auth cookies if "remember me" is set
         const rememberMe = localStorage.getItem('rememberMe') === 'true'
         if (name.includes('auth-token') && rememberMe) {
@@ -37,20 +28,12 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
           cookieStr += `; max-age=${options.maxAge}`
         }
         
-        // Mobile browser compatibility settings
-        if (mobile) {
-          // iOS Safari requires SameSite=None for cross-site OAuth
-          cookieStr += `; path=${options.path || '/'}`
-          cookieStr += `; samesite=None`
-          cookieStr += `; secure`
-        } else {
-          if (options.path) cookieStr += `; path=${options.path}`
-          if (options.domain) cookieStr += `; domain=${options.domain}`
-          if (options.sameSite) cookieStr += `; samesite=${options.sameSite}`
-          if (options.secure) cookieStr += `; secure`
-        }
+        // Standard cookie options
+        if (options.path) cookieStr += `; path=${options.path}`
+        if (options.domain) cookieStr += `; domain=${options.domain}`
+        if (options.sameSite) cookieStr += `; samesite=${options.sameSite}`
+        if (options.secure) cookieStr += `; secure`
         
-        console.log(`[${mobile ? 'MOBILE' : 'DESKTOP'}] Setting cookie:`, name, cookieStr)
         document.cookie = cookieStr
       }
     },
