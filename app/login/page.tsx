@@ -162,10 +162,10 @@ function LoginForm() {
     }
 
     try {
-      // Use client-side OAuth callback to properly handle PKCE
+      // Use server-side OAuth callback (same as working signup)
       const intendedRedirect = searchParams.get('redirect') || '/landscaping'
-      const redirectUrl = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
-      console.log('Starting Google OAuth with client callback for PKCE:', redirectUrl)
+      const redirectUrl = `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
+      console.log('Starting Google OAuth with server callback:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
