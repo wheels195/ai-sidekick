@@ -5,12 +5,20 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
   cookies: {
-    // Simplified cookie handling for better compatibility
+    // Enhanced cookie handling with localStorage backup
     get: (name: string) => {
       if (typeof document !== 'undefined') {
         const cookies = document.cookie.split(';')
         const cookie = cookies.find(c => c.trim().startsWith(`${name}=`))
-        return cookie?.split('=')[1]
+        const cookieValue = cookie?.split('=')[1]
+        
+        // If cookie not found, try localStorage backup
+        if (!cookieValue && typeof window !== 'undefined') {
+          const backupKey = `sb_backup_${name}`
+          return localStorage.getItem(backupKey) || undefined
+        }
+        
+        return cookieValue
       }
       return undefined
     },
@@ -35,6 +43,16 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
         if (options.secure) cookieStr += `; secure`
         
         document.cookie = cookieStr
+        
+        // Store backup in localStorage for cases where cookies are blocked
+        if (typeof window !== 'undefined') {
+          const backupKey = `sb_backup_${name}`
+          try {
+            localStorage.setItem(backupKey, value)
+          } catch (e) {
+            console.warn('localStorage backup failed:', e)
+          }
+        }
       }
     },
     remove: (name: string, options: any) => {
@@ -43,7 +61,50 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
         if (options.path) cookieStr += `; path=${options.path}`
         if (options.domain) cookieStr += `; domain=${options.domain}`
         document.cookie = cookieStr
+        
+        // Remove localStorage backup too
+        if (typeof window !== 'undefined') {
+          const backupKey = `sb_backup_${name}`
+          try {
+            localStorage.removeItem(backupKey)
+          } catch (e) {
+            console.warn('localStorage backup removal failed:', e)
+          }
+        }
       }
     }
   }
 })
+
+// Set up auth state change listener for proper session rehydration
+if (typeof window !== 'undefined') {
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log('Auth state change:', event, session?.user?.email)
+    
+    // Store session info in localStorage for rehydration
+    if (session) {
+      try {
+        localStorage.setItem('sb_session_user', JSON.stringify({
+          id: session.user.id,
+          email: session.user.email,
+          timestamp: Date.now()
+        }))
+      } catch (e) {
+        console.warn('Session backup failed:', e)
+      }
+    } else {
+      // Clear session backup on logout
+      try {
+        localStorage.removeItem('sb_session_user')
+        // Clear all sb backup keys
+        Object.keys(localStorage).forEach(key => {
+          if (key.startsWith('sb_backup_')) {
+            localStorage.removeItem(key)
+          }
+        })
+      } catch (e) {
+        console.warn('Session cleanup failed:', e)
+      }
+    }
+  })
+}

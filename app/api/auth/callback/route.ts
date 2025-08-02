@@ -5,30 +5,21 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
-  const codeVerifier = requestUrl.searchParams.get('codeVerifier')
   const redirect = requestUrl.searchParams.get('redirect') || '/landscaping'
 
   console.log('=== SERVER OAUTH CALLBACK ===')
   console.log('Server callback received code:', code ? 'YES' : 'NO')
-  console.log('Code verifier received:', codeVerifier ? 'YES' : 'NO')
   console.log('Redirect parameter:', redirect)
   console.log('Full URL:', requestUrl.href)
 
   if (code) {
-    if (!codeVerifier) {
-      console.error('Missing code verifier for PKCE flow')
-      return NextResponse.redirect(`${requestUrl.origin}/login?error=missing_verifier&message=${encodeURIComponent('PKCE code verifier not provided')}`)
-    }
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
     
     try {
-      console.log('Attempting server-side code exchange with verifier...')
-      // Try to use the code verifier - check if exchangeCodeForSession accepts it
-      const { data, error } = await supabase.auth.exchangeCodeForSession({
-        authCode: code,
-        codeVerifier: codeVerifier
-      })
+      console.log('Attempting server-side code exchange...')
+      // Modern Supabase handles PKCE automatically
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
       
       if (error) {
         console.error('OAuth callback error:', error)

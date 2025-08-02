@@ -154,10 +154,10 @@ function LoginForm() {
     }
 
     try {
-      // Simple OAuth - no state clearing
+      // Use proper server-side OAuth callback (same as signup)
       const intendedRedirect = searchParams.get('redirect') || '/landscaping'
-      const redirectUrl = `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
-      console.log('Starting Google OAuth with redirect:', redirectUrl)
+      const redirectUrl = `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(intendedRedirect)}`
+      console.log('Starting Google OAuth with proper server callback:', redirectUrl)
       
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
