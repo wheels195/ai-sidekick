@@ -48,12 +48,16 @@ function LoginForm() {
       setSuccessMessage('Email verified successfully! You can now log in.')
     }
 
-    // Check for OAuth errors
+    // Check for OAuth errors with mobile-specific handling
     const error = searchParams.get('error')
     const message = searchParams.get('message')
+    const isMobile = searchParams.get('mobile') === 'true'
+    
     if (error) {
       const errorMessages = {
-        'auth_failed': 'Authentication failed. Please try again.',
+        'auth_failed': isMobile 
+          ? 'Mobile authentication timed out. Try the "Retry Google Sign In" button below.'
+          : 'Authentication failed. Please try again.',
         'oauth_error': message || 'OAuth authentication failed.',
         'session_exchange_failed': `Session creation failed: ${message || 'Unknown error'}`,
         'no_auth_code': 'No authentication code received from Google.',
@@ -353,8 +357,21 @@ function LoginForm() {
                 </div>
 
                 {errors.submit && (
-                  <div className="text-red-400 text-sm text-center bg-red-400/10 border border-red-400/20 rounded-lg p-3">
-                    {errors.submit}
+                  <div className="text-red-400 text-sm text-center bg-red-400/10 border border-red-400/20 rounded-lg p-4">
+                    <p className="mb-3">{errors.submit}</p>
+                    {(error === 'auth_failed' || error === 'oauth_error') && (
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          setErrors({})
+                          handleGoogleSignIn()
+                        }}
+                        size="sm"
+                        className="bg-emerald-500 hover:bg-emerald-400 text-white"
+                      >
+                        🔄 Retry Google Sign In
+                      </Button>
+                    )}
                   </div>
                 )}
 
