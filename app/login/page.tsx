@@ -26,9 +26,17 @@ function LoginForm() {
   const [isCheckingSession, setIsCheckingSession] = useState(true)
 
   useEffect(() => {
-    // Check for existing session first
+    // Check for existing session first, but not if there's an OAuth error
     const checkExistingSession = async () => {
       try {
+        // If there's an OAuth error, don't redirect - show the error instead
+        const hasOAuthError = searchParams.get('error')
+        if (hasOAuthError) {
+          console.log('OAuth error detected, staying on login page')
+          setIsCheckingSession(false)
+          return
+        }
+        
         const { data: { session } } = await supabase.auth.getSession()
         if (session) {
           // User is already authenticated, redirect to intended page

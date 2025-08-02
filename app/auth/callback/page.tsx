@@ -28,6 +28,14 @@ function AuthCallbackContent() {
           console.error('OAuth callback error:', error)
           setError(error.message)
           setStatus('error')
+          
+          // Clear any invalid session before redirecting
+          try {
+            await supabase.auth.signOut()
+          } catch (e) {
+            console.warn('Failed to clear invalid session:', e)
+          }
+          
           setTimeout(() => router.push(`/login?error=oauth_error&message=${encodeURIComponent(error.message)}`), 3000)
           return
         }
@@ -68,12 +76,28 @@ function AuthCallbackContent() {
         console.error('No session found after OAuth callback')
         setError('Authentication failed. No session was created.')
         setStatus('error')
+        
+        // Clear any invalid session before redirecting
+        try {
+          await supabase.auth.signOut()
+        } catch (e) {
+          console.warn('Failed to clear invalid session:', e)
+        }
+        
         setTimeout(() => router.push('/login?error=no_session'), 3000)
         
       } catch (error) {
         console.error('Auth callback exception:', error)
         setError(error instanceof Error ? error.message : 'Unknown error')
         setStatus('error')
+        
+        // Clear any invalid session before redirecting
+        try {
+          await supabase.auth.signOut()
+        } catch (e) {
+          console.warn('Failed to clear invalid session:', e)
+        }
+        
         setTimeout(() => router.push('/login?error=callback_exception'), 3000)
       }
     }
