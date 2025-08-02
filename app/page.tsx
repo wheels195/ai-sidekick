@@ -48,7 +48,6 @@ import { supabase } from '@/lib/supabase/client'
 export default function LandingPage() {
   const router = useRouter()
   const [demoStep, setDemoStep] = useState(0)
-  const [isCheckingAuth, setIsCheckingAuth] = useState(false)
   const [userMessage, setUserMessage] = useState("")
   const [aiMessage, setAiMessage] = useState("")
   const [isTyping, setIsTyping] = useState(false)
@@ -515,19 +514,9 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <Button
                 variant="ghost"
                 className="text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 text-sm px-4 py-2"
-                onClick={async () => {
-                  setIsCheckingAuth(true)
-                  const { data: { session } } = await supabase.auth.getSession()
-                  if (session) {
-                    router.push('/landscaping')
-                  } else {
-                    router.push('/login')
-                  }
-                  setIsCheckingAuth(false)
-                }}
-                disabled={isCheckingAuth}
+                onClick={() => router.push('/login')}
               >
-                {isCheckingAuth ? 'Checking...' : 'Sign In'}
+                Sign In
               </Button>
               
               <Button
@@ -606,20 +595,12 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <Button
                 variant="ghost"
                 className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0"
-                onClick={async () => {
+                onClick={() => {
                   setShowMobileMenu(false)
-                  setIsCheckingAuth(true)
-                  const { data: { session } } = await supabase.auth.getSession()
-                  if (session) {
-                    router.push('/landscaping')
-                  } else {
-                    router.push('/login')
-                  }
-                  setIsCheckingAuth(false)
+                  router.push('/login')
                 }}
-                disabled={isCheckingAuth}
               >
-                {isCheckingAuth ? 'Checking...' : 'Sign In'}
+                Sign In
               </Button>
               
               {/* Get Access Button */}
