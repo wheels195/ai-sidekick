@@ -2846,14 +2846,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                         const isActive = activeCategory === category.id
                         // Start from Financial Growth (reverse order) - Financial Growth is typically last in the array
                         const reverseIndex = BUSINESS_CATEGORIES.length - 1 - index
-                        const animationDelay = reverseIndex * 100 // 100ms delay between each button
+                        const animationDelay = reverseIndex * 150 // 150ms delay between each button
                         
                         return (
                           <button
                             key={category.id}
                             type="button"
                             onClick={() => handleCategorySelect(category.id)}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 hover:scale-105 transform ${
+                            className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-500 hover:scale-105 transform ${
                               buttonsAnimated ? 'translate-x-0 opacity-100' : 'translate-x-[-50px] opacity-0'
                             } ${
                               isActive 
