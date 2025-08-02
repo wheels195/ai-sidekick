@@ -72,6 +72,11 @@ function LoginForm() {
     if (searchParams.get('verified') === 'true') {
       setSuccessMessage('Email verified successfully! You can now log in.')
     }
+    
+    // Check if user just created a password
+    if (searchParams.get('message') === 'password-created') {
+      setSuccessMessage('Password created successfully! You can now sign in with Google or your new password.')
+    }
 
     // Check for OAuth errors with mobile-specific handling
     const error = searchParams.get('error')
@@ -433,14 +438,27 @@ function LoginForm() {
                   </p>
                 </div>
 
-                <div className="text-center">
-                  <button
-                    type="button"
-                    onClick={() => alert('Password reset feature coming soon!')}
-                    className="text-gray-400 hover:text-gray-300 text-sm transition-colors duration-300"
-                  >
-                    Forgot your password?
-                  </button>
+                <div className="text-center space-y-2">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
+                    <button
+                      type="button"
+                      onClick={() => window.location.href = '/auth/forgot-password'}
+                      className="text-gray-400 hover:text-gray-300 text-sm transition-colors duration-300"
+                    >
+                      Forgot Password?
+                    </button>
+                    <span className="hidden sm:inline text-gray-600 text-sm">•</span>
+                    <button
+                      type="button"
+                      onClick={() => window.location.href = '/auth/create-password'}
+                      className="text-blue-400 hover:text-blue-300 text-sm transition-colors duration-300"
+                    >
+                      Create Password
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Use "Create Password" if you signed up with Google and want to add email/password login
+                  </p>
                 </div>
               </form>
             </CardContent>
