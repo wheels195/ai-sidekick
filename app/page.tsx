@@ -514,7 +514,19 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <Button
                 variant="ghost"
                 className="text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 text-sm px-4 py-2"
-                onClick={() => router.push('/login')}
+                onClick={async () => {
+                  try {
+                    const { data: { user } } = await supabase.auth.getUser()
+                    if (user) {
+                      router.push('/landscaping')
+                    } else {
+                      router.push('/login')
+                    }
+                  } catch (error) {
+                    console.warn('Auth check failed, redirecting to login:', error)
+                    router.push('/login')
+                  }
+                }}
               >
                 Sign In
               </Button>
@@ -595,9 +607,19 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <Button
                 variant="ghost"
                 className="justify-start text-lg text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-0"
-                onClick={() => {
+                onClick={async () => {
                   setShowMobileMenu(false)
-                  router.push('/login')
+                  try {
+                    const { data: { user } } = await supabase.auth.getUser()
+                    if (user) {
+                      router.push('/landscaping')
+                    } else {
+                      router.push('/login')
+                    }
+                  } catch (error) {
+                    console.warn('Auth check failed, redirecting to login:', error)
+                    router.push('/login')
+                  }
                 }}
               >
                 Sign In

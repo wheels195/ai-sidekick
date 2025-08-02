@@ -39,10 +39,9 @@ function LoginForm() {
           return
         }
         
-        // Add a small delay to prevent race conditions with OAuth callback processing
-        await new Promise(resolve => setTimeout(resolve, 500))
-        
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+        // Use getUser() instead of getSession() as per Supabase best practices
+        // getUser() revalidates the auth token on the server
+        const { data: { user }, error: sessionError } = await supabase.auth.getUser()
         
         if (sessionError) {
           console.warn('Session check error:', sessionError)
@@ -50,15 +49,15 @@ function LoginForm() {
           return
         }
         
-        if (session && session.user) {
-          console.log('Valid session found, redirecting to:', searchParams.get('redirect') || '/landscaping')
+        if (user) {
+          console.log('Valid user found, redirecting to:', searchParams.get('redirect') || '/landscaping')
           // User is already authenticated, redirect to intended page
           const redirectUrl = searchParams.get('redirect') || '/landscaping'
           router.push(redirectUrl)
           return
         }
         
-        console.log('No valid session found, staying on login page')
+        console.log('No valid user found, staying on login page')
       } catch (error) {
         console.error('Session check error:', error)
       } finally {
