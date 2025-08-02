@@ -1212,37 +1212,39 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               ))}
             </div>
 
-            {/* Demo Video */}
+            {/* Demo Video - Competitive Intelligence */}
             <div className="relative mt-8 lg:mt-0 fade-right delay-600">
-              <video 
-                ref={(video) => {
-                  if (video) {
-                    const observer = new IntersectionObserver(
-                      (entries) => {
-                        entries.forEach((entry) => {
-                          if (entry.isIntersecting) {
-                            video.play().catch(() => {
-                              // Fallback for browsers that require user interaction
-                            })
-                          } else {
-                            video.pause()
-                          }
-                        })
-                      },
-                      { threshold: 0.75 } // 75% visibility
-                    )
-                    observer.observe(video)
-                    return () => observer.disconnect()
-                  }
-                }}
-                loop
-                muted
-                playsInline
-                className="w-full h-auto rounded-2xl shadow-2xl border border-emerald-500/20"
-              >
-                <source src="/demo-video-get-started.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <div className="w-full max-w-4xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
+                <video 
+                  ref={(video) => {
+                    if (video) {
+                      const observer = new IntersectionObserver(
+                        (entries) => {
+                          entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                              video.play().catch(() => {
+                                // Fallback for browsers that require user interaction
+                              })
+                            } else {
+                              video.pause()
+                            }
+                          })
+                        },
+                        { threshold: 0.75 } // 75% visibility
+                      )
+                      observer.observe(video)
+                      return () => observer.disconnect()
+                    }
+                  }}
+                  className="w-full h-full object-cover"
+                  loop
+                  muted
+                  playsInline
+                >
+                  <source src="/demo-video-get-started.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </div>
           </div>
         </div>
