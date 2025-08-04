@@ -40,13 +40,16 @@ export const getEmailStyles = () => `
   }
   
   .logo {
-    font-size: 42px;
+    font-size: 48px;
     font-weight: 700;
     color: #ffffff;
     margin: 0;
+    font-family: 'Brush Script MT', 'Lucida Handwriting', 'Apple Chancery', cursive;
     font-style: italic;
-    letter-spacing: -1px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: -2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    transform: rotate(-2deg);
+    display: inline-block;
   }
   
   .tagline {

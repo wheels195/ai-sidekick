@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       
       try {
         await resend.emails.send({
-          from: 'AI Sidekick <noreply@ai-sidekick.io>',
+          from: 'AI Sidekick <support@ai-sidekick.io>',
           to: user.email!,
           subject: 'Set Your Account Password - AI Sidekick',
           html: `

@@ -12,7 +12,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
   
   try {
     const { data, error } = await resend.emails.send({
-      from: 'AI Sidekick <noreply@ai-sidekick.io>',
+      from: 'AI Sidekick <support@ai-sidekick.io>',
       to: [email],
       subject: 'Verify your email - AI Sidekick',
       html: getVerificationEmailTemplate(verificationUrl)
@@ -33,7 +33,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
 export async function sendWelcomeEmail(email: string, firstName: string, businessName: string, trade: string) {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'AI Sidekick <noreply@ai-sidekick.io>',
+      from: 'AI Sidekick <support@ai-sidekick.io>',
       to: [email],
       subject: `Welcome to AI Sidekick, ${firstName}!`,
       html: getWelcomeEmailTemplate(firstName, businessName, trade, email)
@@ -56,7 +56,7 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
   
   try {
     const { data, error } = await resend.emails.send({
-      from: 'AI Sidekick <noreply@ai-sidekick.io>',
+      from: 'AI Sidekick <support@ai-sidekick.io>',
       to: [email],
       subject: 'Reset your password - AI Sidekick',
       html: getPasswordResetEmailTemplate(resetUrl)
