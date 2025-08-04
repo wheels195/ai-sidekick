@@ -7,8 +7,8 @@ export const getEmailStyles = () => `
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
-    color: #333333;
-    background-color: #000000;
+    color: #1f2937;
+    background-color: #ffffff;
   }
   
   table {
@@ -19,18 +19,19 @@ export const getEmailStyles = () => `
   .wrapper {
     width: 100%;
     table-layout: fixed;
-    background-color: #000000;
+    background-color: #f9fafb;
     padding: 40px 0;
   }
   
   .main {
-    background-color: #0a0a0a;
+    background-color: #ffffff;
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
-    border: 1px solid #1a1a1a;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
   .header {
@@ -44,7 +45,7 @@ export const getEmailStyles = () => `
     font-weight: 700;
     color: #ffffff;
     margin: 0;
-    font-family: 'Brush Script MT', 'Lucida Handwriting', 'Apple Chancery', cursive;
+    font-family: 'Dancing Script', 'Brush Script MT', cursive;
     font-style: italic;
     letter-spacing: -2px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -53,26 +54,27 @@ export const getEmailStyles = () => `
   }
   
   .tagline {
-    color: #d1fae5;
+    color: #ffffff;
     font-size: 14px;
     margin-top: 8px;
+    opacity: 0.9;
   }
   
   .content {
     padding: 40px 30px;
-    background-color: #0a0a0a;
+    background-color: #ffffff;
   }
   
   .greeting {
     font-size: 24px;
     font-weight: 600;
-    color: #ffffff;
+    color: #111827;
     margin-bottom: 20px;
   }
   
   .message {
     font-size: 16px;
-    color: #d1d5db;
+    color: #4b5563;
     margin-bottom: 25px;
     line-height: 1.7;
   }
@@ -85,25 +87,25 @@ export const getEmailStyles = () => `
   .button {
     display: inline-block;
     padding: 16px 40px;
-    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
     color: #ffffff !important;
     text-decoration: none;
     font-weight: 600;
     font-size: 16px;
     border-radius: 8px;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
   }
   
   .feature-box {
-    background-color: #111111;
-    border: 1px solid #1f2937;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     padding: 25px;
     margin: 30px 0;
   }
   
   .feature-title {
-    color: #10b981;
+    color: #059669;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 15px;
@@ -116,14 +118,14 @@ export const getEmailStyles = () => `
   }
   
   .feature-item {
-    color: #d1d5db;
+    color: #4b5563;
     padding: 8px 0;
     padding-left: 25px;
     position: relative;
   }
   
   .checkmark {
-    color: #10b981;
+    color: #059669;
     position: absolute;
     left: 0;
     font-weight: bold;
@@ -131,15 +133,15 @@ export const getEmailStyles = () => `
   
   .divider {
     height: 1px;
-    background-color: #1f2937;
+    background-color: #e5e7eb;
     margin: 30px 0;
   }
   
   .footer {
-    background-color: #050505;
+    background-color: #f9fafb;
     padding: 30px;
     text-align: center;
-    border-top: 1px solid #1f2937;
+    border-top: 1px solid #e5e7eb;
   }
   
   .footer-text {
@@ -153,14 +155,14 @@ export const getEmailStyles = () => `
   }
   
   .footer-link {
-    color: #10b981 !important;
+    color: #059669 !important;
     text-decoration: none;
     margin: 0 10px;
     font-size: 14px;
   }
   
   .unsubscribe {
-    color: #4b5563 !important;
+    color: #9ca3af !important;
     font-size: 12px;
     margin-top: 20px;
   }
@@ -236,7 +238,7 @@ export const getVerificationEmailTemplate = (verificationUrl: string) => `
                   <p style="color: #6b7280; font-size: 13px; margin: 0;">
                     <strong>Can't click the button?</strong> Copy and paste this link into your browser:
                   </p>
-                  <p style="color: #10b981; font-size: 12px; word-break: break-all; margin-top: 10px;">
+                  <p style="color: #059669; font-size: 12px; word-break: break-all; margin-top: 10px;">
                     ${verificationUrl}
                   </p>
                 </div>
@@ -313,7 +315,7 @@ export const getWelcomeEmailTemplate = (
               <td>
                 <h2 class="greeting">Welcome aboard, ${firstName}! 🎉</h2>
                 <p class="message">
-                  Your AI Sidekick is ready to help <strong style="color: #10b981;">${businessName}</strong> 
+                  Your AI Sidekick is ready to help <strong style="color: #059669;">${businessName}</strong> 
                   dominate the local ${trade} market. Let's get you growing!
                 </p>
                 
@@ -347,8 +349,8 @@ export const getWelcomeEmailTemplate = (
                   </a>
                 </div>
                 
-                <div style="background-color: #064e3b; border-radius: 8px; padding: 20px; margin: 30px 0; text-align: center;">
-                  <p style="color: #d1fae5; font-size: 16px; margin: 0; font-weight: 500;">
+                <div style="background-color: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 20px; margin: 30px 0; text-align: center;">
+                  <p style="color: #047857; font-size: 16px; margin: 0; font-weight: 500;">
                     💡 <strong>Pro Tip:</strong> Start by asking<br/>
                     <em>"How can I get 10 more ${trade} clients this month?"</em>
                   </p>
@@ -356,7 +358,7 @@ export const getWelcomeEmailTemplate = (
                 
                 <div class="divider"></div>
                 
-                <p style="color: #9ca3af; font-size: 14px; text-align: center;">
+                <p style="color: #6b7280; font-size: 14px; text-align: center;">
                   <strong>Need help?</strong> Just reply to this email — we're here to support your success!
                 </p>
               </td>
@@ -375,7 +377,7 @@ export const getWelcomeEmailTemplate = (
                 </div>
                 <p class="unsubscribe">
                   <a href="${process.env.NEXT_PUBLIC_SITE_URL}/unsubscribe?email=${encodeURIComponent(email)}" 
-                     style="color: #4b5563 !important;">
+                     style="color: #9ca3af !important;">
                     Unsubscribe from emails
                   </a>
                 </p>
@@ -440,7 +442,7 @@ export const getPasswordResetEmailTemplate = (resetUrl: string) => `
                   <p style="color: #6b7280; font-size: 13px; margin: 0;">
                     <strong>Can't click the button?</strong> Copy and paste this link into your browser:
                   </p>
-                  <p style="color: #10b981; font-size: 12px; word-break: break-all; margin-top: 10px;">
+                  <p style="color: #059669; font-size: 12px; word-break: break-all; margin-top: 10px;">
                     ${resetUrl}
                   </p>
                 </div>
