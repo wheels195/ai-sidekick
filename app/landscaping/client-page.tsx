@@ -977,6 +977,25 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     }
   }, [messages.length])
 
+  // Prevent default drag and drop behavior on document
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const preventDefault = (e: Event) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+
+      // Prevent files from opening in browser when dropped outside drop zones
+      document.addEventListener('dragover', preventDefault)
+      document.addEventListener('drop', preventDefault)
+
+      return () => {
+        document.removeEventListener('dragover', preventDefault)
+        document.removeEventListener('drop', preventDefault)
+      }
+    }
+  }, [])
+
   // Auto-save conversation when messages change
   useEffect(() => {
     if (messages.length > 1) {
@@ -1162,11 +1181,14 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
     e.preventDefault()
     e.stopPropagation()
     
-    setDragCounter(prev => prev - 1)
-    if (dragCounter <= 1) {
-      setIsDragOver(false)
-    }
-  }, [dragCounter])
+    setDragCounter(prev => {
+      const newCounter = prev - 1
+      if (newCounter === 0) {
+        setIsDragOver(false)
+      }
+      return newCounter
+    })
+  }, [])
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -2607,7 +2629,13 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 }}
               >
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="relative rounded-2xl border-2 border-emerald-500/40 p-3">
+                  <div 
+                    className="relative rounded-2xl border-2 border-emerald-500/40 p-3"
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                  >
                     <div className="overflow-hidden">
                       {/* File Upload Display with Image Previews - Reserve space to prevent layout shift */}
                       <div className="min-h-0" style={{ height: uploadedFiles.length > 0 ? 'auto' : '0px', overflow: uploadedFiles.length > 0 ? 'visible' : 'hidden' }}>
