@@ -45,6 +45,53 @@ import DisplayCards from "@/components/ui/display-cards"
 import TestimonialCarousel from "@/components/TestimonialCarousel"
 import { supabase } from '@/lib/supabase/client'
 
+// Typewriter component for animated text
+function TypewriterText({ text }: { text: string }) {
+  const [displayedText, setDisplayedText] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, 50) // 50ms delay between each letter
+
+      return () => clearTimeout(timeout)
+    }
+  }, [currentIndex, text])
+
+  // Split the text to apply different gradients
+  const renderText = () => {
+    const words = displayedText.split(' ')
+    const specializedAI = words.slice(0, 2).join(' ')
+    const forLocalTrades = words.slice(2).join(' ')
+
+    return (
+      <>
+        {specializedAI && (
+          <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
+            {specializedAI}
+          </span>
+        )}
+        {specializedAI && forLocalTrades && ' '}
+        {forLocalTrades && (
+          <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            {forLocalTrades}
+          </span>
+        )}
+      </>
+    )
+  }
+
+  return (
+    <span className="inline-block min-h-[1.2em]">
+      {renderText()}
+      <span className="animate-pulse">|</span>
+    </span>
+  )
+}
+
 export default function LandingPage() {
   const router = useRouter()
   const [demoStep, setDemoStep] = useState(0)
@@ -664,15 +711,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-medium mb-6 sm:mb-8 leading-tight">
-              <div className="mb-2">
-                <span className="word-animate bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent" style={{animationDelay: '0.2s'}}>Specialized</span>{' '}
-                <span className="word-animate bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent" style={{animationDelay: '0.4s'}}>AI</span>
-              </div>
-              <div>
-                <span className="word-animate bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent" style={{animationDelay: '0.6s'}}>For</span>{' '}
-                <span className="word-animate bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent" style={{animationDelay: '0.8s'}}>Local</span>{' '}
-                <span className="word-animate bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent" style={{animationDelay: '1.0s'}}>Trades</span>
-              </div>
+              <TypewriterText text="Specialized AI For Local Trades" />
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-200 leading-relaxed max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
