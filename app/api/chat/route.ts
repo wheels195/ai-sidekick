@@ -475,6 +475,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get current user message for processing
+    const currentUserMessage = messages[messages.length - 1]
+
     // Only try Supabase if URL is configured
     let user = null
     let userProfile = null
@@ -571,7 +574,6 @@ export async function POST(request: NextRequest) {
 
     // Handle web search if enabled and needed
     let searchResults = ''
-    const currentUserMessage = messages[messages.length - 1]
     
     // Moderate user message for safety and policy compliance
     if (currentUserMessage?.role === 'user' && user) {
@@ -1057,7 +1059,6 @@ ${searchResults}
               const serviceSupabase = createServiceClient(supabaseUrl, supabaseServiceKey)
               
               // Calculate accurate token usage and costs first
-              const currentUserMessage = messages[messages.length - 1]
               
               // Use actual OpenAI token counts if available, otherwise estimate
               const inputTokens = actualTokenUsage?.prompt_tokens || Math.ceil((currentUserMessage?.content?.length || 0) / 4)

@@ -671,6 +671,8 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null)
   const [currentSessionId, setCurrentSessionId] = useState<string>(() => crypto.randomUUID())
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [isDragOver, setIsDragOver] = useState(false)
+  const [dragCounter, setDragCounter] = useState(0)
   const [activeTool, setActiveTool] = useState<string | null>(null) // 'web-search', 'create-image', 'attach-file', null
   const [showToolsDropdown, setShowToolsDropdown] = useState(false)
   const [webSearchEnabled, setWebSearchEnabled] = useState(false)
@@ -1144,6 +1146,67 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
       })
     }
   }
+
+  // Drag and drop file upload handlers
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    setDragCounter(prev => prev + 1)
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setIsDragOver(true)
+    }
+  }, [])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    setDragCounter(prev => prev - 1)
+    if (dragCounter <= 1) {
+      setIsDragOver(false)
+    }
+  }, [dragCounter])
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    // Show drop effect
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'copy'
+    }
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    setIsDragOver(false)
+    setDragCounter(0)
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const droppedFiles = Array.from(e.dataTransfer.files)
+      const validFiles = droppedFiles.filter(file => {
+        // Same validation as file input: image/*,.pdf,.doc,.docx,.txt
+        return file.type.startsWith('image/') || 
+               file.type === 'application/pdf' ||
+               file.type === 'application/msword' ||
+               file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+               file.type === 'text/plain'
+      })
+      
+      if (validFiles.length > 0) {
+        setUploadedFiles(prev => [...prev, ...validFiles])
+        setActiveTool('attach-file')
+        
+        // Show user feedback if some files were invalid
+        if (validFiles.length < droppedFiles.length) {
+          console.log(`Added ${validFiles.length} valid files. ${droppedFiles.length - validFiles.length} files were skipped (unsupported format).`)
+        }
+      }
+    }
+  }, [])
 
   // Handle tool selection
   const handleToolSelect = (tool: string) => {
@@ -2271,7 +2334,11 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
 
               {/* Messages Area - Internal Scroll with Mobile Optimization */}
               <div 
-                className={`messages-scroll-container overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''}`}
+                className={`messages-scroll-container overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-emerald-500/20 ${isMobile ? 'mobile-scroll-container mobile-messages-container' : ''} relative`}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
                 style={isMobile ? {
                   scrollBehavior: 'auto',
                   height: 'calc(100dvh - 200px)',
@@ -2494,6 +2561,22 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     >
                       Maybe later
                     </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Drag and Drop Overlay */}
+              {isDragOver && (
+                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm border-2 border-dashed border-emerald-500 rounded-2xl z-[80] flex items-center justify-center">
+                  <div className="text-center text-white p-8">
+                    <Upload className="w-16 h-16 text-emerald-400 mx-auto mb-4 animate-bounce" />
+                    <h3 className="text-2xl font-semibold mb-2">Drop files here</h3>
+                    <p className="text-gray-300 text-lg">
+                      Upload images, PDFs, or documents to get started
+                    </p>
+                    <p className="text-sm text-gray-400 mt-2">
+                      Supports: Images, PDF, DOC, DOCX, TXT
+                    </p>
                   </div>
                 </div>
               )}
