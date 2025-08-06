@@ -70,25 +70,30 @@ function TypewriterText({ text }: { text: string }) {
     return (
       <>
         {specializedAI && (
-          <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
-            {specializedAI}
-          </span>
+          <div className="mb-2">
+            <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
+              {specializedAI}
+            </span>
+          </div>
         )}
-        {specializedAI && forLocalTrades && ' '}
         {forLocalTrades && (
-          <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            {forLocalTrades}
-          </span>
+          <div>
+            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              {forLocalTrades}
+            </span>
+          </div>
         )}
       </>
     )
   }
 
   return (
-    <span className="inline-block min-h-[1.2em]">
+    <div className="inline-block min-h-[1.2em]">
       {renderText()}
-      <span className="animate-pulse">|</span>
-    </span>
+      {currentIndex >= text.length && (
+        <span className="animate-pulse absolute">|</span>
+      )}
+    </div>
   )
 }
 
