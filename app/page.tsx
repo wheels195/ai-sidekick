@@ -749,10 +749,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             ].map((value, index) => (
               <Card
                 key={index}
-                className="relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] fade-left"
-                style={{
-                  animationDelay: `${index * 200}ms`
-                }}
+                className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] fade-left delay-${index * 200}`}
               >
                 {/* Subtle gradient highlight - always visible */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
