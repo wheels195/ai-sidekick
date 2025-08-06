@@ -1140,16 +1140,16 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
       {/* How It Works Section */}
       <section
         id="features"
-        className="py-16 sm:py-24 lg:py-32 relative bg-black w-full scroll-animate fade-up"
+        className="py-16 sm:py-24 lg:py-32 relative bg-black w-full"
       >
         <div className="w-full px-8 sm:px-12 lg:px-16 xl:px-20">
           <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold mb-4 sm:mb-6 fade-left delay-0">
               <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 How <span className="font-cursive">AI Sidekick</span> Works
               </span>
             </h2>
-            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+            <p className="text-xl xl:text-2xl 2xl:text-3xl text-gray-200 max-w-3xl xl:max-w-5xl 2xl:max-w-6xl mx-auto fade-left delay-200">
               We create specialized AI assistants for each trade, trained on industry-specific knowledge and best
               practices
             </p>
@@ -1184,7 +1184,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="flex items-start space-x-6 group hover:scale-105 transition-all duration-300"
+                  className="flex items-start space-x-6 group hover:scale-105 transition-all duration-300 fade-left"
+                  style={{ animationDelay: `${400 + (index * 200)}ms` }}
                 >
                   <div 
                     className="bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-2xl backdrop-blur-xl border border-white/10 group-hover:shadow-blue-500/20 transition-all duration-300 shadow-lg"
