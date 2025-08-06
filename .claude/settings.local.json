@@ -43,7 +43,8 @@
       "Bash(npx supabase:*)",
       "Bash(find:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:supabase.com)"
+      "WebFetch(domain:supabase.com)",
+      "WebFetch(domain:docs.anthropic.com)"
     ],
     "deny": []
   }
