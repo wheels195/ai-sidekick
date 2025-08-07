@@ -9,6 +9,7 @@ import {
   performCachedGooglePlacesSearch,
   performCachedGoogleCustomSearch,
   shouldTriggerWebSearch,
+  shouldSearchForCompetitors,
   enhanceSystemPromptWithEnforcement,
   createFileContextConfirmation,
   enhanceFileContext,
@@ -623,28 +624,34 @@ export async function POST(request: NextRequest) {
       })
       
       try {
-        // 1. Google Places search for local business data (existing functionality)
-        console.log('🔍 Performing Google Places search...')
-        const intelligentQuery = convertUserIntentToSearch(currentUserMessage.content, userProfile)
-        console.log('🔍 Converted Places query:', { original: currentUserMessage.content, intelligent: intelligentQuery })
+        // 1. Google Places search - ONLY when competitor data is actually needed
+        const needsCompetitorData = shouldSearchForCompetitors(currentUserMessage.content)
         
-        placesResults = await performCachedGooglePlacesSearch(intelligentQuery, location, userProfile, request)
-        console.log('🔍 Google Places search returned:', { 
-          length: placesResults.length,
-          hasError: placesResults.includes('error'),
-          hasNotAvailable: placesResults.includes('not available'),
-          hasNotConfigured: placesResults.includes('not configured')
-        })
-        
-        // Smart retry logic for Places: if no results, try adjacent areas
-        if (placesResults.includes('No local businesses found') && userProfile?.zip_code && userProfile.zip_code !== 'Your ZIP') {
-          console.log('🔍 No Places results found, attempting smart retry with adjacent areas...')
-          const adjacentLocation = `${userProfile.zip_code} surrounding areas`
-          const retryResults = await performCachedGooglePlacesSearch(intelligentQuery, adjacentLocation, userProfile, request)
-          if (retryResults && !retryResults.includes('No local businesses found')) {
-            placesResults = retryResults
-            console.log('🔍 Smart retry successful with adjacent areas')
+        if (needsCompetitorData) {
+          console.log('🔍 Competitor search needed - performing Google Places search...')
+          const intelligentQuery = convertUserIntentToSearch(currentUserMessage.content, userProfile)
+          console.log('🔍 Converted Places query:', { original: currentUserMessage.content, intelligent: intelligentQuery })
+          
+          placesResults = await performCachedGooglePlacesSearch(intelligentQuery, location, userProfile, request)
+          console.log('🔍 Google Places search returned:', { 
+            length: placesResults.length,
+            hasError: placesResults.includes('error'),
+            hasNotAvailable: placesResults.includes('not available'),
+            hasNotConfigured: placesResults.includes('not configured')
+          })
+          
+          // Smart retry logic for Places: if no results, try adjacent areas
+          if (placesResults.includes('No local businesses found') && userProfile?.zip_code && userProfile.zip_code !== 'Your ZIP') {
+            console.log('🔍 No Places results found, attempting smart retry with adjacent areas...')
+            const adjacentLocation = `${userProfile.zip_code} surrounding areas`
+            const retryResults = await performCachedGooglePlacesSearch(intelligentQuery, adjacentLocation, userProfile, request)
+            if (retryResults && !retryResults.includes('No local businesses found')) {
+              placesResults = retryResults
+              console.log('🔍 Smart retry successful with adjacent areas')
+            }
           }
+        } else {
+          console.log('🔍 Skipping Google Places search - no competitor intent detected')
         }
         
         // 2. Google Custom Search for up-to-date web information (NEW)

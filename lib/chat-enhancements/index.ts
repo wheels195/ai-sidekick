@@ -20,6 +20,10 @@ export {
 } from './googleCustomSearch';
 
 export {
+  shouldSearchForCompetitors
+} from './competitorDetection';
+
+export {
   SYSTEM_PROMPT_ENFORCEMENT_BLOCK,
   enhanceSystemPromptWithEnforcement,
   extractMessageCategory
