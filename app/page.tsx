@@ -792,7 +792,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             ].map((value, index) => (
               <Card
                 key={index}
-                className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:bg-zinc-900 hover:border-emerald-500/50 hover:shadow-2xl hover:scale-[1.02] fade-left delay-${index * 200}`}
+                className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 group overflow-hidden hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/20 hover:animate-pulse fade-left delay-${index * 200}`}
               >
                 {/* Subtle gradient highlight - always visible */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
@@ -807,7 +807,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 <CardContent className="p-6 sm:p-8 text-left relative z-10">
                   {/* Icon with subtle pulse animation */}
                   <div className="relative mb-4 w-fit">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center transition-all duration-300 group-hover:bg-emerald-500/15 animate-icon-pulse">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/40">
                       <value.icon className="w-6 h-6 text-emerald-400" />
                     </div>
                   </div>
