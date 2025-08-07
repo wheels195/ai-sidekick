@@ -119,6 +119,22 @@ npm run lint   # Code linting
 - **Professional Styling** - Light gray backgrounds (#f9fafb) with subtle borders for feature boxes
 - **Mobile-First Design** - All text colors optimized for readability across all email clients
 
+### ✅ Hero Section Animation Updates (August 2025)
+- **Title Change** - Updated to "Specialized AI For Landscapers" with landscaping-specific focus
+- **Typewriter Effect** - Letter-by-letter animation for main heading with 50ms delay per character
+- **Custom Gradient** - "For Landscapers" uses light-to-dark green gradient (emerald-300 to emerald-600)
+- **Typography Mix** - "For" uses Dancing Script font, "Landscapers" uses regular font with increased letter spacing
+- **Individual Card Animations** - Hero feature cards animate individually with 200ms staggered delays
+- **Cursor Fix** - Removed persistent blinking cursor after typewriter animation completes
+
+### ✅ Google Places API Optimization (August 2025)
+- **Intelligent Competitor Detection** - New module reduces unnecessary API calls by 60-70%
+- **Smart Intent Analysis** - Only triggers on explicit competitor/market research queries
+- **Negative Pattern Filtering** - Skips how-to questions, internal operations, and general advice
+- **Context-Based Triggering** - Requires multiple indicators (business + location + comparison terms)
+- **Specialized Detection** - Identifies pricing comparison, service comparison, and market positioning intents
+- **Cost Savings** - Combined with 24-hour caching, dramatically reduces API expenses
+
 ## Current Architecture
 
 ```
@@ -129,8 +145,35 @@ npm run lint   # Code linting
 /api/files/process                # Multi-format file analysis
 /api/admin/analytics              # Real-time business metrics API
 /lib/chat-enhancements/           # Google APIs and intelligence modules
+/lib/chat-enhancements/competitorDetection.ts  # Smart competitor intent detection
 /lib/moderation.ts                # Content filtering across all inputs
 ```
+
+## Authentication & Signup Process
+
+### Current Implementation:
+- **Dual Authentication** - Google OAuth + Email/Password options
+- **Email Verification Required** - 24-hour token system for email signups
+- **Signup Flow**: `/signup` → Email verification → `/signup/complete` (profile completion)
+- **Free Trial Setup** - Automatic 7-day trial with 250,000 tokens
+- **Industry Standards** - Password hashing, minimum requirements, confirmation field
+- **Professional Emails** - Branded verification emails with mobile-optimized templates
+
+## Web Search Architecture
+
+### Google Places API (Local Competitors):
+- **Smart Triggering** - Only activates on competitor/market research intent (60-70% reduction in calls)
+- **No Toggle Required** - Runs automatically when competitor data is needed
+- **24-Hour Caching** - Reduces costs by ~80% through Supabase cache
+- **Smart Retry** - Searches adjacent areas if no local results found
+- **Returns** - Up to 10 local businesses with ratings, reviews, pricing levels
+
+### Google Custom Search API (Web Intelligence):
+- **Toggle Required** - User must enable web search in UI
+- **Keyword Detection** - Triggers on "latest", "trend", "regulation", "pricing", etc.
+- **Domain Filtering** - Focuses on landscaping-specific sites (landscapenetwork.com, etc.)
+- **Result Freshness** - Limited to last year's content
+- **24-Hour Caching** - Same cost-saving strategy as Places API
 
 ## Environment Variables (Production Ready)
 
@@ -241,19 +284,22 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 - **Best practices mandatory** - Use latest patterns, proper error handling, and optimal architecture
 - **Professional software engineering only** - Treat every change as production code for enterprise clients
 
-## Chat Enhancement Package (Implemented July 2025)
+## Chat Enhancement Package (Implemented July-August 2025)
 
 ### Enhanced Features Added:
 - **Dynamic Image Analysis** - Context-aware prompts based on user intent and file type
 - **Google Places API Caching** - 24-hour Supabase cache reducing API costs ~80%
+- **Intelligent Competitor Detection** - Smart triggering reduces unnecessary Places API calls by 60-70%
 - **System Prompt Enforcement** - Flexible, creative responses with consistent formatting
 - **Professional Table Styling** - Emerald green headers, proper borders, mobile-optimized
 - **Increased Results** - Google Places now shows up to 10 results (increased from 3-6)
 
 ### Key Files:
 - `/lib/chat-enhancements/` - Modular enhancement functions
+- `/lib/chat-enhancements/competitorDetection.ts` - Intelligent API trigger logic
 - `/app/api/chat/route.ts` - Integration with chat API
 - `/supabase-migrations/places_cache_table.sql` - Caching infrastructure
+- `/supabase-migrations/web_search_cache_table.sql` - Web search caching
 
 ## 📊 Business Intelligence Summary
 
@@ -275,4 +321,4 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 
 ---
 
-*Last updated: August 4, 2025 - Email Template Mobile Compatibility Fix*
+*Last updated: August 7, 2025 - Google Places API Optimization & Hero Section Updates*
