@@ -78,7 +78,7 @@ function TypewriterText({ text }: { text: string }) {
         )}
         {forLandscapers && (
           <div>
-            <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-emerald-300 to-emerald-600 bg-clip-text text-transparent">
               {forLandscapers}
             </span>
           </div>
