@@ -49,6 +49,7 @@ import { supabase } from '@/lib/supabase/client'
 function TypewriterText({ text }: { text: string }) {
   const [displayedText, setDisplayedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [showUnderline, setShowUnderline] = useState(false)
 
   useEffect(() => {
     if (currentIndex < text.length) {
@@ -58,6 +59,9 @@ function TypewriterText({ text }: { text: string }) {
       }, 50) // 50ms delay between each letter
 
       return () => clearTimeout(timeout)
+    } else {
+      // Show underline after text is complete
+      setTimeout(() => setShowUnderline(true), 200)
     }
   }, [currentIndex, text])
 
@@ -81,11 +85,17 @@ function TypewriterText({ text }: { text: string }) {
             <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
               <span>{forLandscapers.split(' ')[0]}</span>{' '}
               <span className="tracking-wide relative inline-block">
-                <span className="relative z-10">
-                  <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
-                  <span>{forLandscapers.split(' ')[1]?.slice(1)}</span>
-                </span>
-                <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-400/40 to-emerald-600/40"></span>
+                <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
+                <span>{forLandscapers.split(' ')[1]?.slice(1)}</span>
+                {showUnderline && (
+                  <span 
+                    className="absolute -bottom-2 left-0 h-[3px] bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-lg shadow-emerald-500/50 animate-underline-slide"
+                    style={{
+                      filter: 'blur(0.5px)',
+                      boxShadow: '0 2px 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3)'
+                    }}
+                  ></span>
+                )}
               </span>
             </span>
           </div>
@@ -506,6 +516,23 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         }
         .animate-icon-pulse {
           animation: icon-pulse 6s ease-in-out infinite;
+        }
+        @keyframes underline-slide {
+          0% { 
+            width: 0;
+            opacity: 0;
+          }
+          50% {
+            width: 100%;
+            opacity: 0.8;
+          }
+          100% { 
+            width: 100%;
+            opacity: 1;
+          }
+        }
+        .animate-underline-slide {
+          animation: underline-slide 0.6s ease-out forwards;
         }
         /* Mobile touch - pause on active/focus states */
         @media (hover: none) and (pointer: coarse) {
