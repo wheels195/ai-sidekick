@@ -79,8 +79,11 @@ function TypewriterText({ text }: { text: string }) {
         {forLandscapers && (
           <div>
             <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
-              <span className="font-cursive">{forLandscapers.split(' ')[0]}</span>{' '}
-              <span className="tracking-wide">{forLandscapers.split(' ')[1]}</span>
+              <span>{forLandscapers.split(' ')[0]}</span>{' '}
+              <span className="tracking-wide">
+                <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
+                <span>{forLandscapers.split(' ')[1]?.slice(1)}</span>
+              </span>
             </span>
           </div>
         )}
