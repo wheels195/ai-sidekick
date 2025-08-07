@@ -65,7 +65,7 @@ function TypewriterText({ text }: { text: string }) {
   const renderText = () => {
     const words = displayedText.split(' ')
     const specializedAI = words.slice(0, 2).join(' ')
-    const forLocalTrades = words.slice(2).join(' ')
+    const forLandscapers = words.slice(2).join(' ')
 
     return (
       <>
@@ -76,10 +76,10 @@ function TypewriterText({ text }: { text: string }) {
             </span>
           </div>
         )}
-        {forLocalTrades && (
+        {forLandscapers && (
           <div>
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              {forLocalTrades}
+            <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">
+              {forLandscapers}
             </span>
           </div>
         )}
@@ -716,7 +716,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-medium mb-6 sm:mb-8 leading-tight">
-              <TypewriterText text="Specialized AI For Local Trades" />
+              <TypewriterText text="Specialized AI For Landscapers" />
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-200 leading-relaxed max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
