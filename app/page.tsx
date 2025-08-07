@@ -80,7 +80,7 @@ function TypewriterText({ text }: { text: string }) {
           <div>
             <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
               <span className="font-cursive">{forLandscapers.split(' ')[0]}</span>{' '}
-              <span>{forLandscapers.split(' ')[1]}</span>
+              <span className="tracking-wide">{forLandscapers.split(' ')[1]}</span>
             </span>
           </div>
         )}
@@ -713,7 +713,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               <span className="text-blue-300 font-medium">AI-Powered Business Growth</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-medium mb-6 sm:mb-8 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-normal mb-6 sm:mb-8 leading-tight">
               <TypewriterText text="Specialized AI For Landscapers" />
             </h1>
 
