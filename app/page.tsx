@@ -90,7 +90,7 @@ function TypewriterText({ text }: { text: string }) {
   return (
     <div className="inline-block min-h-[1.2em] relative">
       {renderText()}
-      {currentIndex >= text.length && (
+      {currentIndex < text.length && (
         <span className="animate-pulse inline-block ml-1">|</span>
       )}
     </div>
