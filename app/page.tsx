@@ -81,9 +81,11 @@ function TypewriterText({ text }: { text: string }) {
             <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
               <span>{forLandscapers.split(' ')[0]}</span>{' '}
               <span className="tracking-wide relative inline-block">
-                <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
-                <span>{forLandscapers.split(' ')[1]?.slice(1)}</span>
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-400/50 to-emerald-600/50 transform translate-y-1"></span>
+                <span className="relative z-10">
+                  <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
+                  <span>{forLandscapers.split(' ')[1]?.slice(1)}</span>
+                </span>
+                <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-400/40 to-emerald-600/40"></span>
               </span>
             </span>
           </div>
