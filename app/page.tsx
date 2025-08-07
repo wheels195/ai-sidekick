@@ -84,19 +84,21 @@ function TypewriterText({ text }: { text: string }) {
           <div>
             <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
               <span>{forLandscapers.split(' ')[0]}</span>{' '}
-              <span className="tracking-wide relative inline-block">
+            </span>
+            <span className="tracking-wide relative inline-block">
+              <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
                 <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
                 <span>{forLandscapers.split(' ')[1]?.slice(1)}</span>
-                {showUnderline && (
-                  <span 
-                    className="absolute -bottom-2 left-0 h-[3px] bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-lg shadow-emerald-500/50 animate-underline-slide"
-                    style={{
-                      filter: 'blur(0.5px)',
-                      boxShadow: '0 2px 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3)'
-                    }}
-                  ></span>
-                )}
               </span>
+              {showUnderline && (
+                <span 
+                  className="absolute -bottom-2 left-0 h-[3px] bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-full shadow-lg shadow-emerald-500/50 animate-underline-slide"
+                  style={{
+                    filter: 'blur(0.5px)',
+                    boxShadow: '0 2px 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3)'
+                  }}
+                ></span>
+              )}
             </span>
           </div>
         )}
