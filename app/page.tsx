@@ -125,8 +125,21 @@ export default function LandingPage() {
     const elementsToAnimate = document.querySelectorAll('.fade-left, .fade-right')
     elementsToAnimate.forEach((el) => observer.observe(el))
 
+    // Special handling for feature cards with staggered animation
+    const featureCardsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-visible')
+        }
+      })
+    }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' }) // Higher threshold and margin to trigger later
+
+    const featureCards = document.querySelectorAll('.feature-card-animate')
+    featureCards.forEach((el) => featureCardsObserver.observe(el))
+
     return () => {
       elementsToAnimate.forEach((el) => observer.unobserve(el))
+      featureCards.forEach((el) => featureCardsObserver.unobserve(el))
     }
   }, [])
 
@@ -409,12 +422,15 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         /* Staggered delays for individual elements */
         .fade-left.delay-0 { transition-delay: 0ms; }
         .fade-left.delay-200 { transition-delay: 200ms; }
+        .fade-left.delay-300 { transition-delay: 300ms; }
         .fade-left.delay-400 { transition-delay: 400ms; }
         .fade-left.delay-600 { transition-delay: 600ms; }
         .fade-left.delay-800 { transition-delay: 800ms; }
+        .fade-left.delay-900 { transition-delay: 900ms; }
         .fade-left.delay-1000 { transition-delay: 1000ms; }
         .fade-left.delay-1200 { transition-delay: 1200ms; }
         .fade-left.delay-1400 { transition-delay: 1400ms; }
+        .fade-left.delay-1500 { transition-delay: 1500ms; }
         .fade-left.delay-1600 { transition-delay: 1600ms; }
         .fade-left.delay-1800 { transition-delay: 1800ms; }
         .fade-left.delay-2000 { transition-delay: 2000ms; }
@@ -790,11 +806,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 tag: "AI-Powered",
               },
             ].map((value, index) => {
-              const delayClass = `delay-${index * 200}`
+              const delayClass = `delay-${index * 300}` // Increased delay to 300ms between cards
               return (
                 <Card
                   key={index}
-                  className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-300 ease-out cursor-pointer group overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:-translate-y-3 hover:scale-105 fade-left ${delayClass}`}
+                  className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 ease-out cursor-pointer group overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:-translate-y-3 hover:scale-105 feature-card-animate fade-left ${delayClass}`}
                   style={{
                     transform: 'translateY(0px) scale(1)',
                     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)'
