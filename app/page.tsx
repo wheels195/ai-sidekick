@@ -407,6 +407,26 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           transition: all 1s ease-out;
         }
         
+        /* Feature cards start hidden and slide in from left */
+        .feature-card-animate {
+          opacity: 0;
+          transform: translateX(-80px);
+          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .feature-card-animate.animate-visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        
+        /* Delays for feature cards */
+        .feature-card-animate.delay-0 { transition-delay: 0ms; }
+        .feature-card-animate.delay-300 { transition-delay: 300ms; }
+        .feature-card-animate.delay-600 { transition-delay: 600ms; }
+        .feature-card-animate.delay-900 { transition-delay: 900ms; }
+        .feature-card-animate.delay-1200 { transition-delay: 1200ms; }
+        .feature-card-animate.delay-1500 { transition-delay: 1500ms; }
+        
         .fade-right {
           opacity: 0;
           transform: translateX(50px);
@@ -810,11 +830,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               return (
                 <Card
                   key={index}
-                  className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-500 ease-out cursor-pointer group overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:-translate-y-3 hover:scale-105 feature-card-animate fade-left ${delayClass}`}
-                  style={{
-                    transform: 'translateY(0px) scale(1)',
-                    transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)'
-                  }}
+                  className={`relative bg-black border border-emerald-500/30 shadow-xl cursor-pointer group overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:-translate-y-3 hover:scale-105 feature-card-animate ${delayClass}`}
               >
                 {/* Subtle gradient highlight - always visible */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
