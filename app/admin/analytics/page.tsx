@@ -1,9 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { BarChart3, TrendingUp, Users, DollarSign, Clock, Target, ArrowLeft, RefreshCw, Globe, MapPin, Zap, Eye, MousePointer, Calendar, PieChart, Activity } from "lucide-react"
+import { BarChart3, TrendingUp, Users, DollarSign, Clock, Target, ArrowLeft, RefreshCw, Globe, MapPin, Zap, Eye, MousePointer, Calendar, PieChart, Activity, Shield } from "lucide-react"
 
 interface AnalyticsData {
   view: string
@@ -105,6 +106,31 @@ export default function AdminAnalyticsPage() {
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
   const [activeView, setActiveView] = useState<string>('overview')
+  const [user, setUser] = useState<any>(null)
+  const [authLoading, setAuthLoading] = useState(true)
+  const router = useRouter()
+
+  // Check if user is authenticated and is admin
+  const checkAdminAccess = async () => {
+    try {
+      const response = await fetch('/api/user/profile')
+      if (response.ok) {
+        const userData = await response.json()
+        if (userData.success && userData.user.email === 'admin@ai-sidekick.io') {
+          setUser(userData.user)
+          setAuthLoading(false)
+          return true
+        }
+      }
+      // Not admin or not authenticated - redirect to login
+      router.push('/login?redirect=/admin/analytics')
+      return false
+    } catch (error) {
+      console.error('Auth check failed:', error)
+      router.push('/login?redirect=/admin/analytics')
+      return false
+    }
+  }
 
   const fetchAnalytics = async (view: string = 'overview') => {
     setLoading(true)
@@ -115,7 +141,7 @@ export default function AdminAnalyticsPage() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'x-admin-key': 'a8f3d2c9b7e4f1a6d8c2e9f3b5a7d4c1e6f8a2b9c5d7e3f1a8b4c6d9e2f5a8b1'
+          'x-admin-key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'a8f3d2c9b7e4f1a6d8c2e9f3b5a7d4c1e6f8a2b9c5d7e3f1a8b4c6d9e2f5a8b1'
         }
       })
       
@@ -139,15 +165,22 @@ export default function AdminAnalyticsPage() {
   }
 
   useEffect(() => {
-    fetchAnalytics()
+    const initializeAdmin = async () => {
+      const isAuthorized = await checkAdminAccess()
+      if (isAuthorized) {
+        fetchAnalytics()
+      }
+    }
+    initializeAdmin()
   }, [])
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-black flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white text-lg">Loading analytics...</p>
+          <p className="text-emerald-400 text-sm mt-2">Welcome, {user?.firstName || 'Admin'}</p>
         </div>
       </div>
     )
@@ -203,6 +236,10 @@ export default function AdminAnalyticsPage() {
                 Back to Home
               </Button>
               <h1 className="text-xl font-bold text-white">Admin Analytics</h1>
+              <div className="flex items-center space-x-2">
+                <Shield className="w-4 h-4 text-emerald-400" />
+                <span className="text-emerald-400 text-sm">Admin: {user?.firstName || 'User'}</span>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               {lastUpdated && (
