@@ -84,7 +84,7 @@ function TypewriterText({ text }: { text: string }) {
               <span className="tracking-wide">
                 <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
                 <span>{forLandscapers.split(' ')[1]?.slice(1, -1)}</span>
-                <span className="font-cursive">{forLandscapers.split(' ')[1]?.slice(-1)}</span>
+                <span className="font-cursive">{forLandscapers.split(' ')[1]?.slice(-1).toUpperCase()}</span>
               </span>
             </span>
           </div>
