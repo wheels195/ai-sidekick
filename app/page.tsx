@@ -789,15 +789,16 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 metric: "Rank #1 locally",
                 tag: "AI-Powered",
               },
-            ].map((value, index) => (
-              <Card
-                key={index}
-                className="relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-300 ease-out cursor-pointer group overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:-translate-y-3 hover:scale-105 fade-left"
-                style={{
-                  animationDelay: `${index * 200}ms`,
-                  transform: 'translateY(0px) scale(1)',
-                  transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)'
-                }}
+            ].map((value, index) => {
+              const delayClass = `delay-${index * 200}`
+              return (
+                <Card
+                  key={index}
+                  className={`relative bg-black border border-emerald-500/30 shadow-xl transition-all duration-300 ease-out cursor-pointer group overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:-translate-y-3 hover:scale-105 fade-left ${delayClass}`}
+                  style={{
+                    transform: 'translateY(0px) scale(1)',
+                    transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
               >
                 {/* Subtle gradient highlight - always visible */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
@@ -833,7 +834,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
