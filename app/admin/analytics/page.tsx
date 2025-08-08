@@ -1219,6 +1219,159 @@ export default function AdminAnalyticsPage() {
             </Card>
           )}
             </>
+          ) : activeView === 'users' ? (
+            // Users View
+            <div className="space-y-8">
+              <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-white text-xl flex items-center">
+                    <Users className="w-6 h-6 mr-2 text-emerald-400" />
+                    User Analytics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {data?.users && data.users.length > 0 ? (
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div className="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-4">
+                          <p className="text-emerald-300 text-sm font-medium">Total Users</p>
+                          <p className="text-2xl font-bold text-white">{data.total_users || 0}</p>
+                        </div>
+                        <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                          <p className="text-blue-300 text-sm font-medium">Active This Week</p>
+                          <p className="text-2xl font-bold text-white">{data.active_users_week || 0}</p>
+                        </div>
+                        <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+                          <p className="text-purple-300 text-sm font-medium">High Engagement</p>
+                          <p className="text-2xl font-bold text-white">{data.high_engagement || 0}</p>
+                        </div>
+                        <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
+                          <p className="text-orange-300 text-sm font-medium">Upgrade Candidates</p>
+                          <p className="text-2xl font-bold text-white">{data.upgrade_candidates || 0}</p>
+                        </div>
+                      </div>
+                      {data.users.length > 0 && (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b border-gray-600/30">
+                                <th className="text-left py-3 px-4 font-medium text-emerald-300">User</th>
+                                <th className="text-left py-3 px-4 font-medium text-emerald-300">Business</th>
+                                <th className="text-left py-3 px-4 font-medium text-emerald-300">Engagement</th>
+                                <th className="text-left py-3 px-4 font-medium text-emerald-300">Conversations</th>
+                                <th className="text-left py-3 px-4 font-medium text-emerald-300">Upgrade Likelihood</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {data.users.map((user: any, index: number) => (
+                                <tr key={index} className="border-b border-gray-700/30">
+                                  <td className="py-3 px-4 text-white">{user.name || 'Anonymous'}</td>
+                                  <td className="py-3 px-4 text-gray-300">{user.business || 'N/A'}</td>
+                                  <td className="py-3 px-4">
+                                    <span className={`px-2 py-1 rounded text-xs ${
+                                      user.engagement_score > 70 ? 'bg-green-900/40 text-green-300' :
+                                      user.engagement_score > 40 ? 'bg-yellow-900/40 text-yellow-300' :
+                                      'bg-red-900/40 text-red-300'
+                                    }`}>
+                                      {user.engagement_score || 0}%
+                                    </span>
+                                  </td>
+                                  <td className="py-3 px-4 text-gray-300">{user.conversation_count || 0}</td>
+                                  <td className="py-3 px-4">
+                                    <span className={`px-2 py-1 rounded text-xs ${
+                                      user.upgrade_likelihood > 60 ? 'bg-emerald-900/40 text-emerald-300' :
+                                      user.upgrade_likelihood > 30 ? 'bg-blue-900/40 text-blue-300' :
+                                      'bg-gray-900/40 text-gray-400'
+                                    }`}>
+                                      {user.upgrade_likelihood || 0}%
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <Users className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-white mb-2">No Users Yet</h3>
+                      <p className="text-gray-400">User analytics will appear here once you have registered users.</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          ) : activeView === 'recommendations' ? (
+            // Recommendations/Insights View
+            <div className="space-y-8">
+              <Card className="backdrop-blur-2xl bg-gray-800/40 border-gray-600/30 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-white text-xl flex items-center">
+                    <Target className="w-6 h-6 mr-2 text-emerald-400" />
+                    Business Insights & Recommendations
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {data?.recommendations && data.recommendations.length > 0 ? (
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                          <p className="text-red-300 text-sm font-medium">High Priority</p>
+                          <p className="text-2xl font-bold text-white">{data.summary?.high_priority || 0}</p>
+                        </div>
+                        <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+                          <p className="text-yellow-300 text-sm font-medium">Medium Priority</p>
+                          <p className="text-2xl font-bold text-white">{data.summary?.medium_priority || 0}</p>
+                        </div>
+                        <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                          <p className="text-blue-300 text-sm font-medium">Total Recommendations</p>
+                          <p className="text-2xl font-bold text-white">{data.summary?.total_recommendations || 0}</p>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        {data.recommendations.map((rec: any, index: number) => (
+                          <div key={index} className={`p-4 rounded-lg border ${
+                            rec.priority === 'high' ? 'bg-red-900/20 border-red-500/30' :
+                            rec.priority === 'medium' ? 'bg-yellow-900/20 border-yellow-500/30' :
+                            'bg-blue-900/20 border-blue-500/30'
+                          }`}>
+                            <div className="flex items-start space-x-3">
+                              <div className={`w-2 h-2 rounded-full mt-2 ${
+                                rec.priority === 'high' ? 'bg-red-500' :
+                                rec.priority === 'medium' ? 'bg-yellow-500' :
+                                'bg-blue-500'
+                              }`}></div>
+                              <div className="flex-1">
+                                <h4 className="text-white font-semibold">{rec.title}</h4>
+                                <p className="text-gray-300 mt-1">{rec.description}</p>
+                                <p className="text-gray-400 text-sm mt-2 italic">{rec.action}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <Target className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-white mb-2">No Insights Available</h3>
+                      <p className="text-gray-400">Business insights and recommendations will appear here once you have more data and user activity.</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          ) : (
+            // Default to overview for other views (costs, overview, etc.)
+            data && (
+              <div className="text-center py-12">
+                <BarChart3 className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">View Coming Soon</h3>
+                <p className="text-gray-400">This analytics view is being developed. Please use Overview or Admin Usage for now.</p>
+              </div>
+            )
           )}
 
         </div>
