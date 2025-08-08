@@ -6,9 +6,15 @@ function verifyAdminAccess(request: NextRequest) {
   const adminKey = request.headers.get('x-admin-key')
   const expectedKey = process.env.ADMIN_API_KEY
   
-  // In development, allow access without key for testing
-  if (process.env.NODE_ENV === 'development' && !expectedKey) {
-    return true
+  // SECURITY: Always require admin key, even in development
+  if (!expectedKey) {
+    console.error('ADMIN_API_KEY environment variable is not set')
+    return false
+  }
+  
+  if (!adminKey) {
+    console.warn('Admin access attempted without API key')
+    return false
   }
   
   return adminKey === expectedKey

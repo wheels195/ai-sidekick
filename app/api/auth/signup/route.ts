@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendVerificationEmail } from '@/lib/email'
 import crypto from 'crypto'
+import bcrypt from 'bcrypt'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -32,9 +33,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate verification token
+    // Generate verification token and hash password securely
     const verificationToken = crypto.randomBytes(32).toString('hex')
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
+    const saltRounds = 12
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
 
     // Create user profile with verification token and trial setup
     const userId = crypto.randomUUID()

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import crypto from 'crypto'
+import bcrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -42,9 +42,29 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verify password
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
-    if (hashedPassword !== user.password_hash) {
+    // Verify password - handle both bcrypt and legacy SHA-256 hashes
+    let isValidPassword = false
+    
+    // First try bcrypt (new secure method)
+    try {
+      isValidPassword = await bcrypt.compare(password, user.password_hash)
+    } catch (bcryptError) {
+      // If bcrypt fails, try legacy SHA-256 (for existing users)
+      const crypto = require('crypto')
+      const legacyHash = crypto.createHash('sha256').update(password).digest('hex')
+      if (legacyHash === user.password_hash) {
+        isValidPassword = true
+        // Upgrade password to bcrypt for security
+        const saltRounds = 12
+        const newHash = await bcrypt.hash(password, saltRounds)
+        await supabase
+          .from('user_profiles')
+          .update({ password_hash: newHash })
+          .eq('id', user.id)
+      }
+    }
+    
+    if (!isValidPassword) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
         { status: 401 }
