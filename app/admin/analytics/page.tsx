@@ -774,9 +774,9 @@ export default function AdminAnalyticsPage() {
                 </Card>
               )}
             </div>
-          ) : (
-            // Default to Overview for all other views
-            <>
+          ) : activeView === 'overview' || !activeView || activeView === 'costs' ? (
+            // Default to Overview for overview, costs, and undefined views
+            <div className="space-y-8">
               {/* Overview Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="backdrop-blur-2xl bg-blue-900/40 border-blue-500/30 shadow-2xl">
@@ -1218,7 +1218,7 @@ export default function AdminAnalyticsPage() {
               </CardContent>
             </Card>
           )}
-            </>
+            </div>
           ) : activeView === 'users' ? (
             // Users View - Show empty state immediately since we don't have user data yet
             <div className="space-y-8">
@@ -1258,14 +1258,12 @@ export default function AdminAnalyticsPage() {
               </Card>
             </div>
           ) : (
-            // Default to overview for other views (costs, overview, etc.)
-            data && (
-              <div className="text-center py-12">
-                <BarChart3 className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">View Coming Soon</h3>
-                <p className="text-gray-400">This analytics view is being developed. Please use Overview or Admin Usage for now.</p>
-              </div>
-            )
+            // Default fallback for unknown views
+            <div className="text-center py-12">
+              <BarChart3 className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">View Coming Soon</h3>
+              <p className="text-gray-400">This analytics view is being developed. Please use Overview or Admin Usage for now.</p>
+            </div>
           )}
 
         </div>
