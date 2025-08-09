@@ -756,7 +756,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-200 leading-relaxed max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
-              An AI web app built for landscapers — to help you quote faster, upsell more services, grow your business, and make smarter decisions.
+              Upsell <span className="font-bold">more services</span>. Improve <span className="font-bold">online visibility</span>. Make <span className="font-bold">smarter business decisions</span> — all with <span className="font-cursive bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">AI-Sidekick</span>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
