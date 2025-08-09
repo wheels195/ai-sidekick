@@ -20,7 +20,7 @@ npm run lint   # Code linting
 - **Backend:** Supabase (PostgreSQL + Auth), OpenAI APIs, Resend Email
 - **Deployment:** Vercel with custom domain (ai-sidekick.io)
 
-## Recent Major Updates (July 2025)
+## Recent Major Updates (August 2025)
 
 ### ✅ Core Platform Features  
 - **Consolidated Tools Dropdown** - Upward-opening with Wrench icon, green pill indicators, themed tooltips
@@ -47,8 +47,12 @@ npm run lint   # Code linting
 - **Business Insights** - AI-generated recommendations based on usage patterns
 - **Google Analytics Integration** - Client-side tracking active (G-5LGBPTHXJW)
 
-### ✅ Security & Data Integrity Fixes (July 2025)
-- **Supabase RLS Security** - Fixed all 8 security issues, enabled Row Level Security
+### ✅ Critical Security Updates (August 9, 2025)
+- **Password Security** - Upgraded from SHA-256 to bcrypt with salt rounds (12)
+- **Admin Panel Security** - Fixed public access vulnerability, now requires authentication
+- **Analytics Dashboard** - Added proper authentication check for admin@ai-sidekick.io only
+- **API Key Security** - Removed development bypasses, enforced production security
+- **Supabase RLS Security** - All 8 tables have Row Level Security enabled and verified
 - **Authentication Isolation** - Proper user data separation and service role usage
 - **Conversation Persistence** - Fixed chat history saving and loading issues
 - **Markdown Formatting** - Unified response styling across all chat features
@@ -119,13 +123,13 @@ npm run lint   # Code linting
 - **Professional Styling** - Light gray backgrounds (#f9fafb) with subtle borders for feature boxes
 - **Mobile-First Design** - All text colors optimized for readability across all email clients
 
-### ✅ Hero Section Animation Updates (August 2025)
-- **Title Change** - Updated to "Specialized AI For Landscapers" with landscaping-specific focus
-- **Typewriter Effect** - Letter-by-letter animation for main heading with 50ms delay per character
-- **Custom Gradient** - "For Landscapers" uses light-to-dark green gradient (emerald-300 to emerald-600)
-- **Typography Mix** - "For" uses Dancing Script font, "Landscapers" uses regular font with increased letter spacing
+### ✅ Hero Section Updates (August 9, 2025)
+- **Title** - "Specialized AI For Landscapers" with typewriter animation
+- **New Subtitle** - "Upsell more services. Improve online visibility. Make smarter business decisions—all with AI Sidekick"
+- **Typography Refinements** - Bold keywords, tighter line height (leading-snug), "AI Sidekick" 15% larger with letter spacing
+- **Custom Gradient** - "AI Sidekick" uses emerald gradient (300-600) with Dancing Script font
 - **Individual Card Animations** - Hero feature cards animate individually with 200ms staggered delays
-- **Cursor Fix** - Removed persistent blinking cursor after typewriter animation completes
+- **Professional Polish** - Removed em dash spacing, optimized readability across all breakpoints
 
 ### ✅ Google Places API Optimization (August 2025)
 - **Intelligent Competitor Detection** - New module reduces unnecessary API calls by 60-70%
@@ -216,6 +220,31 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 - **Password creation flow** - Email verification and password setup on mobile
 - **Cross-device authentication** - Google on desktop, email/password on mobile
 - **Logout functionality** - Verify fixed logout loop on all devices
+
+### 🧪 TESTING CHECKLIST (Post-Security Update)
+
+#### Authentication & Security Testing
+1. **Password Migration** - Test that existing users can still log in (SHA-256 → bcrypt migration)
+2. **New User Signup** - Create a new account and verify bcrypt password is used
+3. **Admin Panel Access** - Verify only admin@ai-sidekick.io can access /admin/analytics
+4. **Non-Admin Test** - Try accessing admin panel from a regular user account (should redirect to login)
+
+#### Core Functionality Testing
+1. **Chat Features** - Test all tools (web search, file upload, image generation)
+2. **Cost Tracking** - Verify API costs are being tracked in admin dashboard
+3. **User Data Isolation** - Ensure users can only see their own conversations
+4. **Email Verification** - Test signup flow with email verification
+
+#### Analytics Dashboard Testing
+1. **Overview Tab** - Verify metrics display correctly
+2. **Costs Tab** - Check all API cost breakdowns work
+3. **Admin Usage Tab** - Confirm admin costs are separated
+4. **Users/Insights Tabs** - Verify empty states display properly
+
+#### Mobile Testing
+1. **Responsive Design** - Test on actual mobile devices
+2. **Chat Interface** - Verify tools dropdown works on mobile
+3. **Authentication** - Test login/signup on mobile browsers
 
 ### 🎯 PRE-LAUNCH CHECKLIST (Final Items)
 
@@ -321,4 +350,4 @@ NEXT_PUBLIC_SITE_URL=https://ai-sidekick.io
 
 ---
 
-*Last updated: August 7, 2025 - Google Places API Optimization & Hero Section Updates*
+*Last updated: August 9, 2025 - Critical Security Updates & Hero Section Refinements*
