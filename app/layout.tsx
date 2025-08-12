@@ -3,6 +3,7 @@ import { Inter, Dancing_Script } from 'next/font/google'
 import './globals.css'
 import 'highlight.js/styles/github-dark.css'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import MetaPixel from '@/components/analytics/MetaPixel'
 
 const inter = Inter({ subsets: ['latin'] })
 const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-cursive' })
@@ -58,6 +59,9 @@ export default function RootLayout({
       <body className={`${inter.className} ${dancingScript.variable}`}>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
+        {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
+          <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
         )}
         {children}
       </body>
