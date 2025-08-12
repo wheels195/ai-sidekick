@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 declare global {
@@ -14,7 +14,7 @@ interface MetaPixelProps {
   pixelId: string
 }
 
-export default function MetaPixel({ pixelId }: MetaPixelProps) {
+function MetaPixelInner({ pixelId }: MetaPixelProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -68,5 +68,13 @@ export default function MetaPixel({ pixelId }: MetaPixelProps) {
         />
       </noscript>
     </>
+  )
+}
+
+export default function MetaPixel({ pixelId }: MetaPixelProps) {
+  return (
+    <Suspense fallback={null}>
+      <MetaPixelInner pixelId={pixelId} />
+    </Suspense>
   )
 }
