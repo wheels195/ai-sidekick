@@ -390,8 +390,17 @@ function ProfileCompletionForm() {
       const data = await response.json()
 
       if (response.ok) {
-        // Success - redirect to landscaping chat
-        router.push('/landscaping')
+        // Track successful signup with Meta Pixel
+        if (typeof window !== 'undefined' && window.fbq) {
+          window.fbq('track', 'CompleteRegistration', {
+            status: 'free_trial',
+            value: 0.00,
+            currency: 'USD'
+          })
+        }
+        
+        // Success - redirect to landscaping chat with signup confirmation parameter
+        router.push('/landscaping?welcome=true')
       } else {
         setErrors({ submit: data.error || 'Failed to complete profile' })
       }
