@@ -47,7 +47,15 @@
       "WebFetch(domain:docs.anthropic.com)",
       "Bash(git fetch:*)",
       "Bash(gh api:*)",
-      "WebFetch(domain:www.anthropic.com)"
+      "WebFetch(domain:www.anthropic.com)",
+      "Bash(npm config:*)",
+      "Bash(npx supabase:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git remote set-head:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(git reset:*)",
+      "Bash(git checkout:*)",
+      "WebFetch(domain:developers.facebook.com)"
     ],
     "deny": []
   }
