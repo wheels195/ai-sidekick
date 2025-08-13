@@ -159,18 +159,23 @@ function LoginForm() {
       })
 
       const data = await response.json()
+      console.log('Login response:', response.status, data)
 
       if (response.ok) {
+        console.log('Login successful, profileIncomplete:', data.profileIncomplete)
         // Check if profile is incomplete
         if (data.profileIncomplete) {
+          console.log('Redirecting to profile completion')
           // Redirect to complete profile
           router.push('/signup/complete?from=login')
         } else {
+          console.log('Profile complete, redirecting to app')
           // Success - redirect to the intended page or default to landscaping
           const redirectUrl = searchParams.get('redirect') || '/landscaping'
           router.push(redirectUrl)
         }
       } else {
+        console.log('Login failed:', data.error)
         setErrors({ submit: data.error || 'Failed to sign in' })
       }
     } catch (error) {
