@@ -29,9 +29,9 @@ function VerifyEmailContent() {
         if (response.ok) {
           setStatus('success')
           setMessage(data.message)
-          // Redirect to login after 3 seconds
+          // Redirect to complete profile after 3 seconds
           setTimeout(() => {
-            router.push('/login?verified=true')
+            router.push('/signup/complete')
           }, 3000)
         } else {
           setStatus('error')
@@ -75,13 +75,13 @@ function VerifyEmailContent() {
                 <h1 className="text-2xl font-bold text-white mb-2">Email Verified!</h1>
                 <p className="text-gray-300 mb-6">{message}</p>
                 <p className="text-sm text-gray-400 mb-6">
-                  Redirecting you to login in 3 seconds...
+                  Redirecting you to complete your profile in 3 seconds...
                 </p>
                 <Button 
-                  onClick={() => router.push('/login?verified=true')}
+                  onClick={() => router.push('/signup/complete')}
                   className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white"
                 >
-                  Continue to Login
+                  Continue to Profile Setup
                 </Button>
               </>
             )}

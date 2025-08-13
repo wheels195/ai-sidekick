@@ -117,8 +117,8 @@ export default function SignupPage() {
       const data = await response.json()
 
       if (response.ok) {
-        // Success - redirect to complete profile page
-        window.location.href = '/signup/complete'
+        // Success - redirect to check email page
+        window.location.href = `/check-email?email=${encodeURIComponent(formData.email)}`
       } else {
         setErrors({ submit: data.error || 'Failed to create account' })
       }
