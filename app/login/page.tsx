@@ -161,9 +161,15 @@ function LoginForm() {
       const data = await response.json()
 
       if (response.ok) {
-        // Success - redirect to the intended page or default to landscaping
-        const redirectUrl = searchParams.get('redirect') || '/landscaping'
-        router.push(redirectUrl)
+        // Check if profile is incomplete
+        if (data.profileIncomplete) {
+          // Redirect to complete profile
+          router.push('/signup/complete?from=login')
+        } else {
+          // Success - redirect to the intended page or default to landscaping
+          const redirectUrl = searchParams.get('redirect') || '/landscaping'
+          router.push(redirectUrl)
+        }
       } else {
         setErrors({ submit: data.error || 'Failed to sign in' })
       }

@@ -62,18 +62,7 @@ export async function GET(request: NextRequest) {
       // Don't fail the verification if this fails
     }
 
-    // Send welcome email after successful verification
-    const welcomeEmailResult = await sendWelcomeEmail(
-      user.email, 
-      user.first_name, 
-      user.business_name || 'Your Business', 
-      user.trade || 'landscaping'
-    )
-    
-    if (!welcomeEmailResult.success) {
-      console.error('Failed to send welcome email:', welcomeEmailResult.error)
-      // Don't fail verification if welcome email fails
-    }
+    // Don't send welcome email here - wait until profile is completed
 
     // Return success with user data - frontend will redirect to profile completion
     return NextResponse.json({ 

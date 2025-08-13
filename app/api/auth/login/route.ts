@@ -71,6 +71,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if profile is complete (business details filled)
+    const isProfileIncomplete = !user.business_name || !user.location || !user.trade
+    
     // Update last login
     await supabase
       .from('user_profiles')
@@ -90,7 +93,7 @@ export async function POST(request: NextRequest) {
       .setExpirationTime(expirationTime)
       .sign(JWT_SECRET)
 
-    // Create response with user data
+    // Create response with user data and profile status
     const response = NextResponse.json({
       success: true,
       user: {
@@ -100,6 +103,7 @@ export async function POST(request: NextRequest) {
         trade: user.trade,
         selectedPlan: user.selected_plan
       },
+      profileIncomplete: isProfileIncomplete,
       message: 'Login successful'
     })
 
