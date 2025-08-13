@@ -33,20 +33,40 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // First create the user in Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+      email: email,
+      password: password,
+      email_confirm: false,
+      user_metadata: {
+        first_name: firstName,
+        last_name: lastName
+      }
+    })
+
+    if (authError) {
+      console.error('Auth creation error:', authError)
+      return NextResponse.json(
+        { error: authError.message || 'Failed to create user account' },
+        { status: 400 }
+      )
+    }
+
+    const userId = authData.user.id
+
     // Generate verification token and hash password securely
     const verificationToken = crypto.randomBytes(32).toString('hex')
     const saltRounds = 12
     const hashedPassword = await bcrypt.hash(password, saltRounds)
 
     // Create user profile with verification token and trial setup
-    const userId = crypto.randomUUID()
     const now = new Date()
     const trialExpiresAt = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000)) // 7 days from now
     
     const { error: profileError } = await supabase
       .from('user_profiles')
       .insert({
-        id: userId,
+        id: userId, // Use the same ID from Supabase Auth
         first_name: firstName,
         last_name: lastName,
         email: email,
@@ -64,8 +84,10 @@ export async function POST(request: NextRequest) {
 
     if (profileError) {
       console.error('Profile creation error:', profileError)
+      // If profile creation fails, delete the auth user to maintain consistency
+      await supabase.auth.admin.deleteUser(userId)
       return NextResponse.json(
-        { error: 'Failed to create user account' },
+        { error: 'Failed to create user profile' },
         { status: 500 }
       )
     }
