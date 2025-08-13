@@ -914,12 +914,13 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 </div>
 
                 {/* Demo Video - Near Full Width (outside padded container) */}
-                <div className="mb-12 fade-left delay-1000 relative">
-                  {/* Live Badge - Positioned outside container but relative to it */}
-                  <div className="absolute -top-3 right-2 sm:right-4 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
-                    🟢 LIVE NOW
-                  </div>
-                  <div className="relative w-full max-w-4xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
+                <div className="mb-12 fade-left delay-1000">
+                  <div className="relative w-full max-w-4xl mx-auto">
+                    {/* Live Badge - Positioned relative to video container */}
+                    <div className="absolute -top-3 right-2 sm:right-4 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
+                      🟢 LIVE NOW
+                    </div>
+                    <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
                     <video 
                       ref={(video) => {
                         if (video) {
@@ -964,6 +965,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                       <source src="/ai-sidekick-demo.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
+                    </div>
                   </div>
                 </div>
 
