@@ -304,20 +304,27 @@ function ProfileCompletionForm() {
   })
 
   useEffect(() => {
-    // Get current user and pre-fill data
+    // Get current user and pre-fill data if available
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
+      
+      // Check if coming from email verification
+      const isVerified = searchParams.get('verified') === 'true'
+      const emailFromVerification = searchParams.get('email')
+      
+      // If not logged in and not coming from verification, redirect to login
+      if (!user && !isVerified) {
         router.push('/login')
         return
       }
+      
       setUser(user)
       
-      // Pre-fill email from OAuth data
-      const email = searchParams.get('email') || user.email
+      // Pre-fill email from verification or OAuth data
+      const email = emailFromVerification || searchParams.get('email') || user?.email
       
       // Pre-fill name if available from OAuth
-      if (user.user_metadata?.full_name) {
+      if (user?.user_metadata?.full_name) {
         const names = user.user_metadata.full_name.split(' ')
         setFormData(prev => ({
           ...prev,

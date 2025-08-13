@@ -51,6 +51,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to verify email' }, { status: 500 })
     }
 
+    // Also update the auth user to confirm their email
+    const { error: authUpdateError } = await supabase.auth.admin.updateUserById(
+      user.id,
+      { email_confirmed_at: new Date().toISOString() }
+    )
+
+    if (authUpdateError) {
+      console.error('Error updating auth user:', authUpdateError)
+      // Don't fail the verification if this fails
+    }
+
     // Send welcome email after successful verification
     const welcomeEmailResult = await sendWelcomeEmail(
       user.email, 
@@ -64,11 +75,12 @@ export async function GET(request: NextRequest) {
       // Don't fail verification if welcome email fails
     }
 
-    // Return success - frontend will redirect
+    // Return success with user data - frontend will redirect to profile completion
     return NextResponse.json({ 
       success: true, 
       message: 'Email verified successfully',
-      redirectTo: '/login?verified=true'
+      redirectTo: `/signup/complete?email=${encodeURIComponent(user.email)}&verified=true`,
+      email: user.email
     })
 
   } catch (error) {

@@ -30,8 +30,9 @@ function VerifyEmailContent() {
           setStatus('success')
           setMessage(data.message)
           // Redirect to complete profile after 3 seconds
+          const redirectUrl = data.redirectTo || `/signup/complete?email=${encodeURIComponent(data.email || '')}&verified=true`
           setTimeout(() => {
-            router.push('/signup/complete')
+            router.push(redirectUrl)
           }, 3000)
         } else {
           setStatus('error')
@@ -78,7 +79,11 @@ function VerifyEmailContent() {
                   Redirecting you to complete your profile in 3 seconds...
                 </p>
                 <Button 
-                  onClick={() => router.push('/signup/complete')}
+                  onClick={() => {
+                    const urlParams = new URLSearchParams(window.location.search)
+                    const token = urlParams.get('token')
+                    router.push(`/signup/complete?verified=true`)
+                  }}
                   className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white"
                 >
                   Continue to Profile Setup
