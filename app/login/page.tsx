@@ -146,37 +146,46 @@ function LoginForm() {
         localStorage.removeItem('rememberedEmail')
       }
 
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          rememberMe: rememberMe
-        }),
+      // Use Supabase client-side auth
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
       })
 
-      const data = await response.json()
-      console.log('Login response:', response.status, data)
+      console.log('Supabase auth response:', authData, authError)
 
-      if (response.ok) {
-        console.log('Login successful, profileIncomplete:', data.profileIncomplete)
-        // Check if profile is incomplete
-        if (data.profileIncomplete) {
-          console.log('Redirecting to profile completion')
-          // Redirect to complete profile
-          router.push('/signup/complete?from=login')
+      if (authError) {
+        console.log('Login failed:', authError.message)
+        if (authError.message.includes('Email not confirmed')) {
+          setErrors({ submit: 'Please verify your email address before logging in' })
         } else {
-          console.log('Profile complete, redirecting to app')
-          // Success - redirect to the intended page or default to landscaping
-          const redirectUrl = searchParams.get('redirect') || '/landscaping'
-          router.push(redirectUrl)
+          setErrors({ submit: authError.message || 'Failed to sign in' })
         }
-      } else {
-        console.log('Login failed:', data.error)
-        setErrors({ submit: data.error || 'Failed to sign in' })
+        return
+      }
+
+      if (authData.user) {
+        console.log('Login successful, checking profile completion')
+        
+        // Check if profile is complete by fetching user profile
+        const response = await fetch('/api/user/profile')
+        const profileData = await response.json()
+        
+        if (response.ok && profileData.user) {
+          const isProfileIncomplete = !profileData.user.businessName || !profileData.user.location || !profileData.user.trade
+          
+          if (isProfileIncomplete) {
+            console.log('Profile incomplete, redirecting to completion')
+            router.push('/signup/complete?from=login')
+          } else {
+            console.log('Profile complete, redirecting to app')
+            const redirectUrl = searchParams.get('redirect') || '/landscaping'
+            router.push(redirectUrl)
+          }
+        } else {
+          console.log('Could not fetch profile, redirecting to completion')
+          router.push('/signup/complete?from=login')
+        }
       }
     } catch (error) {
       setErrors({ submit: 'Network error. Please try again.' })
