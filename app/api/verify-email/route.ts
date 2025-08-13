@@ -51,15 +51,22 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to verify email' }, { status: 500 })
     }
 
-    // Also update the auth user to confirm their email
-    const { error: authUpdateError } = await supabase.auth.admin.updateUserById(
-      user.id,
-      { email_confirmed_at: new Date().toISOString() }
-    )
+    // Confirm the user's email in Supabase Auth using the correct method
+    try {
+      const { data: authUser, error: authUpdateError } = await supabase.auth.admin.updateUserById(
+        user.id,
+        { email_confirm: true }
+      )
 
-    if (authUpdateError) {
-      console.error('Error updating auth user:', authUpdateError)
-      // Don't fail the verification if this fails
+      if (authUpdateError) {
+        console.error('Error confirming auth user email:', authUpdateError)
+        console.error('Full auth update error:', JSON.stringify(authUpdateError, null, 2))
+      } else {
+        console.log('Successfully confirmed email for user:', user.id)
+        console.log('Updated auth user:', authUser?.user?.email_confirmed_at ? 'Email confirmed' : 'Email not confirmed')
+      }
+    } catch (error) {
+      console.error('Exception while confirming email:', error)
     }
 
     // Don't send welcome email here - wait until profile is completed
