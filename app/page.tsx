@@ -919,7 +919,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                   <div className="absolute -top-3 right-2 sm:right-4 bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-xs font-bold px-4 py-1 rounded-full transform rotate-12 shadow-lg animate-pulse z-20">
                     🟢 LIVE NOW
                   </div>
-                  <div className="relative w-full max-w-7xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
+                  <div className="relative w-full max-w-4xl mx-auto aspect-square rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/20">
                     <video 
                       ref={(video) => {
                         if (video) {
