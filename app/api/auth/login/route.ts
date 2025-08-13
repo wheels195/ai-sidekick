@@ -20,72 +20,55 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Find user by email
-    const { data: user, error: fetchError } = await supabase
+    // Use Supabase Auth for authentication
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (authError || !authData.user) {
+      // Check if it's an unverified email error
+      if (authError?.message?.includes('Email not confirmed')) {
+        return NextResponse.json(
+          { error: 'Please verify your email address before logging in' },
+          { status: 401 }
+        )
+      }
+      return NextResponse.json(
+        { error: 'Invalid email or password' },
+        { status: 401 }
+      )
+    }
+
+    // Get user profile to check if it's complete
+    const { data: userProfile, error: profileError } = await supabase
       .from('user_profiles')
       .select('*')
-      .eq('email', email)
+      .eq('id', authData.user.id)
       .single()
 
-    if (fetchError || !user) {
+    if (profileError || !userProfile) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
-      )
-    }
-
-    // Check if email is verified
-    if (!user.email_verified) {
-      return NextResponse.json(
-        { error: 'Please verify your email address before logging in' },
-        { status: 401 }
-      )
-    }
-
-    // Verify password - handle both bcrypt and legacy SHA-256 hashes
-    let isValidPassword = false
-    
-    // First try bcrypt (new secure method)
-    try {
-      isValidPassword = await bcrypt.compare(password, user.password_hash)
-    } catch (bcryptError) {
-      // If bcrypt fails, try legacy SHA-256 (for existing users)
-      const crypto = require('crypto')
-      const legacyHash = crypto.createHash('sha256').update(password).digest('hex')
-      if (legacyHash === user.password_hash) {
-        isValidPassword = true
-        // Upgrade password to bcrypt for security
-        const saltRounds = 12
-        const newHash = await bcrypt.hash(password, saltRounds)
-        await supabase
-          .from('user_profiles')
-          .update({ password_hash: newHash })
-          .eq('id', user.id)
-      }
-    }
-    
-    if (!isValidPassword) {
-      return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
+        { error: 'User profile not found' },
+        { status: 404 }
       )
     }
 
     // Check if profile is complete (business details filled)
-    const isProfileIncomplete = !user.business_name || !user.location || !user.trade
+    const isProfileIncomplete = !userProfile.business_name || !userProfile.location || !userProfile.trade
     
     // Update last login
     await supabase
       .from('user_profiles')
       .update({ last_login_at: new Date().toISOString() })
-      .eq('id', user.id)
+      .eq('id', authData.user.id)
 
     // Create JWT token with extended expiration if remember me is checked
     const expirationTime = rememberMe ? '30d' : '7d'
     const token = await new SignJWT({ 
-      userId: user.id, 
-      email: user.email,
-      trade: user.trade,
+      userId: authData.user.id, 
+      email: authData.user.email,
+      trade: userProfile.trade,
       rememberMe: rememberMe
     })
       .setProtectedHeader({ alg: 'HS256' })
@@ -97,11 +80,11 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({
       success: true,
       user: {
-        id: user.id,
-        email: user.email,
-        businessName: user.business_name,
-        trade: user.trade,
-        selectedPlan: user.selected_plan
+        id: authData.user.id,
+        email: authData.user.email,
+        businessName: userProfile.business_name,
+        trade: userProfile.trade,
+        selectedPlan: userProfile.selected_plan
       },
       profileIncomplete: isProfileIncomplete,
       message: 'Login successful'
