@@ -2,6 +2,7 @@
 
 // Reverted to clean version without sidebar components
 import React from "react"
+import DOMPurify from 'dompurify'
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -389,7 +390,13 @@ const convertMarkdownToHtml = (markdown: string): string => {
   if (inCheckList) htmlLines.push('</ul>')
   if (inTable) htmlLines.push('</tbody></table></div>')
   
-  return htmlLines.join('\n')
+  // SECURITY: Sanitize HTML to prevent XSS attacks
+  const unsafeHtml = htmlLines.join('\n')
+  return DOMPurify.sanitize(unsafeHtml, {
+    ALLOWED_TAGS: ['div', 'p', 'strong', 'em', 'br', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'pre', 'span'],
+    ALLOWED_ATTR: ['class', 'style'],
+    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
+  })
 }
 
 interface UseAutoResizeTextareaProps {

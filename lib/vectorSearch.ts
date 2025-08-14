@@ -31,7 +31,7 @@ export async function searchKnowledge(
 ): Promise<KnowledgeChunk[]> {
   const {
     maxResults = 3,
-    similarityThreshold = 0.78,
+    similarityThreshold = 0.75,
     domain,
     region,
     businessStage,
@@ -200,7 +200,7 @@ export async function searchUserKnowledge(
           filename: item.original_filename
         }
       })
-      .filter(item => item.similarity > 0.3)
+      .filter(item => item.similarity > 0.65)
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, maxResults)
     
@@ -258,21 +258,32 @@ export async function enhancedKnowledgeSearch(
   }
   
   // Combine results
-  const allResults = [...userResults, ...globalResults]
+  let allResults = [...userResults, ...globalResults]
+  
+  // If no results with primary threshold (0.75), try fallback threshold (0.65)
+  if (allResults.length === 0) {
+    const fallbackResults = await searchKnowledge(request, query, userProfile, {
+      maxResults: 3,
+      similarityThreshold: 0.65,
+      domain: userProfile?.domain,
+      region: userProfile?.region,
+      businessStage: userProfile?.business_stage
+    })
+    allResults = [...fallbackResults]
+  }
   
   if (allResults.length === 0) {
     return ''
   }
   
   // Format results for injection into system prompt
+  // Remove all user-visible provenance - no "from your files" or source mentions
   const knowledgeContext = allResults
-    .map((chunk, index) => {
-      const source = chunk.region === 'user_specific' ? 'YOUR BUSINESS DATA' : 'INDUSTRY EXPERTISE'
-      return `${source} ${index + 1}:\n${chunk.content}`
-    })
+    .slice(0, 3) // Cap chunks to avoid overwhelming context
+    .map((chunk, index) => chunk.content)
     .join('\n\n---\n\n')
   
-  return `RELEVANT BUSINESS EXPERTISE:\n\n${knowledgeContext}\n\n---\n\nUse this expertise to enhance your response, but don't mention sources or reference external research. Present the information as your natural business knowledge. When referencing user-specific data, phrase it as "based on your business" or "according to your current setup".`
+  return `RELEVANT BUSINESS CONTEXT:\n\n${knowledgeContext}\n\n---\n\nIntegrate this information naturally into your response without mentioning sources, files, or external references. Present insights as your own business expertise.`
 }
 
 // Simple keyword-based search as fallback

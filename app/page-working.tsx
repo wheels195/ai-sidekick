@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import DOMPurify from 'dompurify'
 import {
   ArrowRight,
   CheckCircle,
@@ -1289,7 +1290,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         <div className="space-y-3 text-sm leading-relaxed">
                           <div 
                             dangerouslySetInnerHTML={{ 
-                              __html: convertMarkdownToHtml(aiMessage) 
+                              __html: DOMPurify.sanitize(convertMarkdownToHtml(aiMessage), {
+                                ALLOWED_TAGS: ['div', 'p', 'strong', 'em', 'br', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'pre', 'span'],
+                                ALLOWED_ATTR: ['class', 'style'],
+                                ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
+                              })
                             }}
                           />
                           {demoStep === 4 && aiMessage.length > 0 && !aiMessage.includes('Ready to dominate') && (

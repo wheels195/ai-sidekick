@@ -70,9 +70,9 @@ export async function middleware(request: NextRequest) {
     console.log('Path:', request.nextUrl.pathname)
     console.log('User:', user ? user.email : 'NONE')
     console.log('Auth Error:', error?.message || 'NONE')
-    console.log('All cookies:', request.cookies.getAll().map(c => `${c.name}=${c.value.substring(0, 30)}...`))
-    console.log('Supabase cookies:', request.cookies.getAll().filter(c => c.name.startsWith('sb-')).map(c => `${c.name}=${c.value.substring(0, 50)}...`))
-    console.log('Auth token cookies:', request.cookies.getAll().filter(c => c.name.includes('auth-token')).map(c => `${c.name}=${c.value.substring(0, 50)}...`))
+    console.log('All cookies count:', request.cookies.getAll().length)
+    console.log('Supabase cookies count:', request.cookies.getAll().filter(c => c.name.startsWith('sb-')).length)
+    console.log('Auth token cookies count:', request.cookies.getAll().filter(c => c.name.includes('auth-token')).length)
     
     if (!user) {
       console.log('❌ No user found, redirecting to login')

@@ -97,7 +97,7 @@ export async function performCachedGoogleCustomSearch(
   return searchResults
 }
 
-// Detect what type of search this is for domain filtering
+// Detect what type of search this is for domain filtering and date restrictions
 function detectSearchType(query: string): string {
   const queryLower = query.toLowerCase()
   
@@ -122,6 +122,18 @@ function detectSearchType(query: string): string {
   }
   
   return 'general'
+}
+
+// Get date restriction based on search type
+function getDateRestrict(searchType: string): string {
+  switch (searchType) {
+    case 'trends':
+      return 'd90' // Last 90 days for trends
+    case 'regulatory':
+      return 'y2'  // Last 2 years for regulations
+    default:
+      return 'y1'  // Last year for general searches
+  }
 }
 
 // Get domain filters based on search type
@@ -201,7 +213,10 @@ async function performGoogleCustomSearch(
     searchUrl.searchParams.set('cx', process.env.GOOGLE_CUSTOM_SEARCH_ENGINE_ID)
     searchUrl.searchParams.set('q', enhancedQuery)
     searchUrl.searchParams.set('num', '8') // Get top 8 results
-    searchUrl.searchParams.set('dateRestrict', 'y1') // Results from last year only
+    searchUrl.searchParams.set('dateRestrict', getDateRestrict(searchType)) // Dynamic date restriction
+    searchUrl.searchParams.set('gl', 'us') // Geolocation - prioritize US results
+    searchUrl.searchParams.set('lr', 'lang_en') // Language restrict - English only
+    searchUrl.searchParams.set('sort', 'date') // Sort by date when supported
     
     // PERFORMANCE OPTIMIZATION: Request only the fields we actually need
     // This reduces bandwidth, parsing time, and improves response speed
@@ -256,7 +271,7 @@ async function performGoogleCustomSearch(
         })
         .join('\n---\n\n')
       
-      const searchSummary = `**Search Query:** ${enhancedQuery}\n**Search Type:** ${searchType}\n**Results Found:** ${data.items.length}\n**Domain Focus:** ${getDomainFilters(searchType, userProfile).slice(0, 3).join(', ')}\n\n`
+      const searchSummary = `**Search Query:** ${enhancedQuery}\n**Search Type:** ${searchType}\n**Date Filter:** ${getDateRestrict(searchType)}\n**Results Found:** ${data.items.length}\n**Domain Focus:** ${getDomainFilters(searchType, userProfile).slice(0, 3).join(', ')}\n\n`
       
       console.log('✅ Google Custom Search completed successfully')
       return `${searchSummary}Current web search results:\n\n${formattedResults}\n\n**Note:** Results are filtered to show the most relevant and up-to-date information from trusted landscaping and business sources.`

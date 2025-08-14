@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
+import { createServiceClient as createServiceRoleClient } from '@/lib/supabase/service'
 import { cookies } from 'next/headers'
 import { moderateUserMessage } from '@/lib/moderation'
 import {
@@ -359,10 +360,107 @@ function convertUserIntentToSearch(userMessage: string, userProfile: any): strin
   return 'landscaping companies lawn care services landscape contractors'
 }
 
+// Store files in knowledge base using service client (no HTTP calls)
+async function storeFilesInKnowledgeBase(files: any[], userId: string): Promise<any[]> {
+  const supabase = createServiceRoleClient()
+  const processedFiles = []
+  
+  for (const file of files) {
+    try {
+      // Extract content from file (simplified version)
+      let extractedContent = ''
+      
+      if (file.type.startsWith('image/')) {
+        // For images, use OpenAI Vision
+        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+        const response = await openai.chat.completions.create({
+          model: 'gpt-4o',
+          messages: [{
+            role: 'user',
+            content: [{
+              type: 'text',
+              text: 'Extract all text and business information from this image.'
+            }, {
+              type: 'image_url',
+              image_url: { url: file.content }
+            }]
+          }],
+          max_tokens: 1000
+        })
+        extractedContent = response.choices[0].message.content || ''
+      } else {
+        // For other files, use content directly
+        extractedContent = file.content || ''
+      }
+      
+      // Store in database
+      const { data, error } = await supabase
+        .from('uploaded_files')
+        .insert({
+          user_id: userId,
+          file_name: file.name,
+          file_type: file.type,
+          file_url: file.content,
+          file_size: file.size || 0,
+          analysis_results: { content: extractedContent },
+          analysis_status: 'completed'
+        })
+        .select()
+        .single()
+      
+      if (error) {
+        console.error('Error storing file:', error)
+      } else {
+        processedFiles.push(data)
+      }
+    } catch (error) {
+      console.error('Error processing file:', error)
+    }
+  }
+  
+  return processedFiles
+}
+
+// Intent-aware temperature routing for production business output
+function getTemperatureForQuery(query: string, hasSearchResults: boolean, hasFiles: boolean): number {
+  const queryLower = query.toLowerCase()
+  
+  // Factual/data queries need lowest temperature (0.2) for precision
+  if (
+    queryLower.includes('price') || queryLower.includes('cost') || queryLower.includes('rate') ||
+    queryLower.includes('statistic') || queryLower.includes('data') || queryLower.includes('number') ||
+    queryLower.includes('percent') || queryLower.includes('average') || queryLower.includes('how much') ||
+    queryLower.includes('calculation') || queryLower.includes('formula') || queryLower.includes('exact') ||
+    hasSearchResults || hasFiles // External data requires precision
+  ) {
+    return 0.2
+  }
+  
+  // Scripts/templates need controlled creativity (0.5) for professional output
+  if (
+    queryLower.includes('script') || queryLower.includes('template') || queryLower.includes('email') ||
+    queryLower.includes('proposal') || queryLower.includes('contract') || queryLower.includes('quote') ||
+    queryLower.includes('write me') || queryLower.includes('draft') || queryLower.includes('letter')
+  ) {
+    return 0.5
+  }
+  
+  // Brainstorming needs higher creativity (0.7) but controlled for business
+  if (
+    queryLower.includes('brainstorm') || queryLower.includes('idea') || queryLower.includes('creative') ||
+    queryLower.includes('innovative') || queryLower.includes('unique') || queryLower.includes('think outside') ||
+    queryLower.includes('alternatives') || queryLower.includes('options')
+  ) {
+    return 0.7
+  }
+  
+  // Default balanced temperature (0.5) for general business queries
+  return 0.5
+}
+
 // Google Places API search function
 async function performGooglePlacesSearch(query: string, location?: string): Promise<string> {
   console.log('🔍 performGooglePlacesSearch called with:', { query, location, hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY })
-  console.log('🔍 API Key first 10 chars:', process.env.GOOGLE_PLACES_API_KEY?.substring(0, 10))
   
   if (!process.env.GOOGLE_PLACES_API_KEY || process.env.GOOGLE_PLACES_API_KEY === 'your-google-places-api-key-here' || process.env.GOOGLE_PLACES_API_KEY === 'PLACEHOLDER_FOR_REAL_KEY') {
     console.log('❌ No valid Google Places API key found')
@@ -553,20 +651,9 @@ export async function POST(request: NextRequest) {
       // Store files in user knowledge base if user is authenticated
       if (user) {
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/files/process`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
-            },
-            body: JSON.stringify({ files }),
-          })
-          
-          if (response.ok) {
-            console.log('📁 Files stored in user knowledge base')
-          } else {
-            console.error('📁 Failed to store files in knowledge base')
-          }
+          // Use service client directly instead of HTTP call with Bearer token
+          const processedFiles = await storeFilesInKnowledgeBase(files, user.id)
+          console.log('📁 Files stored in user knowledge base:', processedFiles.length)
         } catch (error) {
           console.error('📁 Error storing files:', error)
         }
@@ -989,9 +1076,10 @@ ${searchResults}
     const isHighValueQuery = detectHighValueQuery(currentUserMessage.content, userProfile)
     const modelToUse = hasSearchResults || hasFiles || isHighValueQuery ? 'gpt-4o' : 'gpt-4o-mini'
     const maxTokens = hasSearchResults || hasFiles || isHighValueQuery ? 6000 : 4000
+    const temperature = getTemperatureForQuery(currentUserMessage.content, hasSearchResults, hasFiles)
     
     console.log(`🧠 Smart routing: ${modelToUse} (web search: ${webSearchEnabled}, files: ${files?.length || 0}, high-value: ${isHighValueQuery})`)
-    console.log(`🧠 Query analysis: "${currentUserMessage.content.substring(0, 100)}..."`)
+    console.log(`🧠 Query analysis: "${currentUserMessage.content.substring(0, 100)}..." | Temperature: ${temperature}`)
     
     // Log model usage for user awareness
     const modelIndicator = modelToUse === 'gpt-4o' ? '💪 GPT-4o' : '⚡ GPT-4o-mini'
@@ -1001,7 +1089,7 @@ ${searchResults}
         model: modelToUse,
         messages: chatMessages,
         max_tokens: maxTokens,
-        temperature: 0.7,
+        temperature,
         stream: true,
         stream_options: { include_usage: true }  // Get actual token usage
       })
@@ -1061,7 +1149,7 @@ ${searchResults}
               // Use service role for assistant message insertion to bypass RLS
               const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
               const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-              console.log('🔑 Service role key available:', !!supabaseServiceKey, 'First 20 chars:', supabaseServiceKey?.substring(0, 20))
+              console.log('🔑 Service role key available:', !!supabaseServiceKey)
               const serviceSupabase = createServiceClient(supabaseUrl, supabaseServiceKey)
               
               // Calculate accurate token usage and costs first

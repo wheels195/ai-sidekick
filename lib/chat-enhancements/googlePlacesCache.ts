@@ -10,7 +10,10 @@ interface CachedPlacesData {
 export async function getCachedPlacesResult(
   query: string, 
   zipCode: string, 
-  request: NextRequest
+  request: NextRequest,
+  latitude?: number,
+  longitude?: number,
+  radius?: number
 ): Promise<string | null> {
   try {
     const { supabase } = createClient(request)
@@ -18,10 +21,15 @@ export async function getCachedPlacesResult(
     // Check for cached results within 24 hours
     const twentyFourHoursAgo = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString()
     
+    // Build cache key with coordinates and radius if available
+    const cacheKey = latitude && longitude ? 
+      `${query}|${zipCode}|${latitude.toFixed(4)}|${longitude.toFixed(4)}|${radius || 50000}` : 
+      `${query}|${zipCode}`
+    
     const { data: cachedResult, error } = await supabase
       .from('places_cache')
       .select('results')
-      .eq('query', query)
+      .eq('query', cacheKey)
       .eq('zip', zipCode)
       .gte('created_at', twentyFourHoursAgo)
       .single()
@@ -47,16 +55,24 @@ export async function cachePlacesResult(
   query: string,
   zipCode: string,
   results: string,
-  request: NextRequest
+  request: NextRequest,
+  latitude?: number,
+  longitude?: number,
+  radius?: number
 ): Promise<void> {
   try {
     // Use service role for cache writes to bypass RLS
     const supabase = createServiceClient()
     
+    // Build cache key with coordinates and radius if available
+    const cacheKey = latitude && longitude ? 
+      `${query}|${zipCode}|${latitude.toFixed(4)}|${longitude.toFixed(4)}|${radius || 50000}` : 
+      `${query}|${zipCode}`
+    
     const { error } = await supabase
       .from('places_cache')
       .insert({
-        query,
+        query: cacheKey,
         zip: zipCode,
         results,
         created_at: new Date().toISOString()
@@ -81,8 +97,19 @@ export async function performCachedGooglePlacesSearch(
 ): Promise<string> {
   const zipCode = userProfile?.zip_code || location
 
+  // Get coordinates for improved caching and accuracy
+  const coordinates = location ? await getLocationCoordinates(location) : null
+  const radius = 50000 // 50km radius
+  
   // Check cache first
-  const cachedResult = await getCachedPlacesResult(query, zipCode, request)
+  const cachedResult = await getCachedPlacesResult(
+    query, 
+    zipCode, 
+    request, 
+    coordinates?.latitude, 
+    coordinates?.longitude, 
+    radius
+  )
   if (cachedResult) {
     return cachedResult
   }
@@ -92,7 +119,15 @@ export async function performCachedGooglePlacesSearch(
   
   // Cache the results if successful
   if (searchResults && !searchResults.includes('error') && !searchResults.includes('not available')) {
-    await cachePlacesResult(query, zipCode, searchResults, request)
+    await cachePlacesResult(
+      query, 
+      zipCode, 
+      searchResults, 
+      request, 
+      coordinates?.latitude, 
+      coordinates?.longitude, 
+      radius
+    )
   }
 
   return searchResults
@@ -100,14 +135,36 @@ export async function performCachedGooglePlacesSearch(
 
 // Helper function to use Google's geocoding for dynamic location bias (nationwide support)
 async function getLocationCoordinates(location: string): Promise<{ latitude: number; longitude: number } | null> {
-  // For now, we'll rely on Google Places API's built-in location handling
-  // The textQuery "near [location]" should provide sufficient geographic targeting
-  // without needing explicit lat/lng coordinates
-  
-  // Future enhancement: Could integrate with Google Geocoding API for precise coordinates
-  // But Google Places API already handles location targeting well with "near [location]"
-  
-  return null
+  try {
+    if (!process.env.GOOGLE_PLACES_API_KEY || !location || location === 'Your ZIP') {
+      return null
+    }
+
+    const geocodeUrl = new URL('https://maps.googleapis.com/maps/api/geocode/json')
+    geocodeUrl.searchParams.set('address', location)
+    geocodeUrl.searchParams.set('key', process.env.GOOGLE_PLACES_API_KEY)
+    geocodeUrl.searchParams.set('region', 'us')
+
+    const response = await fetch(geocodeUrl.toString())
+    
+    if (!response.ok) {
+      console.error('❌ Geocoding API error:', response.status)
+      return null
+    }
+
+    const data = await response.json()
+    
+    if (data.status === 'OK' && data.results && data.results.length > 0) {
+      const { lat, lng } = data.results[0].geometry.location
+      console.log('✅ Geocoded coordinates for', location, ':', { lat, lng })
+      return { latitude: lat, longitude: lng }
+    }
+    
+    return null
+  } catch (error) {
+    console.error('❌ Geocoding error:', error)
+    return null
+  }
 }
 
 // Original Google Places search function (preserved from your existing code)
@@ -123,23 +180,41 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
     const searchQuery = location ? `${query} in ${location}` : query
     console.log('🔍 Google Places search query:', searchQuery)
     
+    // Get coordinates for location bias (more accurate targeting)
+    const coordinates = location ? await getLocationCoordinates(location) : null
+    
     const textSearchUrl = `https://places.googleapis.com/v1/places:searchText`
+    
+    // Build request body with optional location bias
+    const requestBody: any = {
+      textQuery: `${query} near ${location}`,
+      maxResultCount: 15,
+      languageCode: 'en',
+      regionCode: 'US'
+    }
+    
+    // Add location bias if coordinates are available
+    if (coordinates) {
+      requestBody.locationBias = {
+        circle: {
+          center: {
+            latitude: coordinates.latitude,
+            longitude: coordinates.longitude
+          },
+          radius: 50000 // 50km radius
+        }
+      }
+      console.log('✅ Using location bias with coordinates:', coordinates)
+    }
     
     const response = await fetch(textSearchUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': process.env.GOOGLE_PLACES_API_KEY,
-        'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.priceLevel,places.websiteUri,places.businessStatus,places.types,places.editorialSummary'
+        'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.priceLevel,places.websiteUri,places.businessStatus'
       },
-      body: JSON.stringify({
-        textQuery: `${query} near ${location}`,
-        maxResultCount: 15, // Increased from 8 to get more results
-        languageCode: 'en',
-        regionCode: 'US'
-        // Note: Google Places API handles location targeting automatically with "near [location]"
-        // This works nationwide for any city, ZIP code, or address without hardcoded coordinates
-      })
+      body: JSON.stringify(requestBody)
     })
 
     if (!response.ok) {
@@ -157,8 +232,26 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
     
     if (data.places && data.places.length > 0) {      
       console.log('🔍 Processing', data.places.length, 'results from Google Places API')
-      const formattedResults = data.places
-        .slice(0, 10) // Increased from 6 to 10 results for more comprehensive analysis
+      
+      // De-duplicate by business name and sort by rating (highest first)
+      const uniquePlaces = data.places
+        .filter((place: any, index: number, arr: any[]) => {
+          const name = place.displayName?.text || ''
+          return arr.findIndex(p => p.displayName?.text === name) === index
+        })
+        .sort((a: any, b: any) => {
+          // Sort by rating (highest first), then by review count
+          const ratingA = a.rating || 0
+          const ratingB = b.rating || 0
+          if (ratingA !== ratingB) return ratingB - ratingA
+          
+          const reviewsA = a.userRatingCount || 0
+          const reviewsB = b.userRatingCount || 0
+          return reviewsB - reviewsA
+        })
+        .slice(0, 10) // Top 10 unique, highest-rated results
+      
+      const formattedResults = uniquePlaces
         .map((place: any, index: number) => {
           const name = place.displayName?.text || 'Business Name Not Available'
           const address = place.formattedAddress || 'Address not available'
@@ -167,8 +260,6 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
           const reviewCount = place.userRatingCount ? `${place.userRatingCount} reviews` : 'No reviews'
           const priceLevel = place.priceLevel ? '$'.repeat(place.priceLevel) : 'Price level unknown'
           const website = place.websiteUri || 'Website not available'
-          const businessTypes = place.types ? place.types.join(', ') : 'Services not specified'
-          const summary = place.editorialSummary?.text || 'No summary available'
           const status = place.businessStatus || 'Status unknown'
           
           let formatted = `BUSINESS ${index + 1}: **${name}**\n`
@@ -178,8 +269,6 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
           formatted += `PRICE_LEVEL: ${priceLevel}\n`
           formatted += `WEBSITE: ${website}\n`
           formatted += `BUSINESS_STATUS: ${status}\n`
-          formatted += `SERVICES/TYPES: ${businessTypes}\n`
-          formatted += `SUMMARY: ${summary}\n`
           
           return formatted
         })
