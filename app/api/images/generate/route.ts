@@ -37,61 +37,11 @@ interface ImageGenerationRequest {
   businessContext?: boolean // Whether to enhance with user business context
 }
 
-// Enhance prompts with business context
-function enhancePromptWithBusinessContext(prompt: string, userProfile: any): string {
-  if (!userProfile || userProfile.is_demo_profile) {
-    return prompt
-  }
-
-  const businessName = userProfile.business_name || 'your business'
-  const location = userProfile.location || ''
-  const services = userProfile.services?.join(', ') || 'landscaping services'
-  const trade = userProfile.trade || 'landscaping'
-
-  // Business-specific enhancement patterns
-  const enhancements = {
-    logo: `Professional ${trade} business logo for "${businessName}" ${location ? `in ${location}` : ''}, clean modern design, suitable for business cards and websites`,
-    
-    marketing: `Marketing material for ${businessName}, a ${trade} company ${location ? `in ${location}` : ''} specializing in ${services}, professional design`,
-    
-    before_after: `Professional before and after comparison image for ${trade} services, showing transformation results for ${services}`,
-    
-    team: `Professional team photo style image for ${businessName} ${trade} company, workers in uniform with tools and equipment`,
-    
-    equipment: `Professional ${trade} equipment and tools layout, clean organized display suitable for marketing materials`,
-    
-    website: `Hero banner image for ${businessName} website, showcasing ${services} with professional quality`
-  }
-
-  const lowerPrompt = prompt.toLowerCase()
-  
-  // Apply context based on prompt content
-  if (lowerPrompt.includes('logo')) {
-    return `${enhancements.logo}. Original request: ${prompt}`
-  }
-  
-  if (lowerPrompt.includes('marketing') || lowerPrompt.includes('advertisement') || lowerPrompt.includes('flyer')) {
-    return `${enhancements.marketing}. ${prompt}`
-  }
-  
-  if (lowerPrompt.includes('before') && lowerPrompt.includes('after')) {
-    return `${enhancements.before_after}. ${prompt}`
-  }
-  
-  if (lowerPrompt.includes('team') || lowerPrompt.includes('workers') || lowerPrompt.includes('crew')) {
-    return `${enhancements.team}. ${prompt}`
-  }
-  
-  if (lowerPrompt.includes('equipment') || lowerPrompt.includes('tools')) {
-    return `${enhancements.equipment}. ${prompt}`
-  }
-  
-  if (lowerPrompt.includes('website') || lowerPrompt.includes('banner') || lowerPrompt.includes('header')) {
-    return `${enhancements.website}. ${prompt}`
-  }
-  
-  // General business enhancement
-  return `Professional ${trade} business image: ${prompt}. Style: clean, modern, suitable for business marketing materials.`
+// Minimal prompt processing - only add technical hints when absolutely necessary
+function processImagePrompt(prompt: string, userProfile: any): string {
+  // Just return the user's prompt as-is
+  // DALL-E 3 is smart enough to understand context without our interference
+  return prompt
 }
 
 // Check user's generation limits
@@ -177,9 +127,9 @@ export async function POST(request: NextRequest) {
       prompt, 
       model = 'dall-e-3', 
       size = '1024x1024', 
-      quality = 'standard',
-      style = 'natural',
-      businessContext = true
+      quality = 'hd',  // Changed from 'standard' to 'hd' for better quality
+      style = 'vivid',  // Changed from 'natural' to 'vivid' for more vibrant marketing images
+      businessContext = false  // Deprecated - no longer forcing business context
     } = body
 
     if (!prompt || prompt.trim().length === 0) {
@@ -209,16 +159,13 @@ export async function POST(request: NextRequest) {
       .eq('id', user.id)
       .single()
 
-    // Enhance prompt with business context if requested
-    let enhancedPrompt = prompt
-    if (businessContext && userProfile) {
-      enhancedPrompt = enhancePromptWithBusinessContext(prompt, userProfile)
-      console.log('🎨 Enhanced prompt with business context:', enhancedPrompt)
-    }
+    // Process prompt minimally - just pass through what user asked for
+    let finalPrompt = processImagePrompt(prompt, userProfile)
+    console.log('🎨 Processing prompt:', { original: prompt, final: finalPrompt })
 
     // Moderate the prompt
     console.log('🛡️ Moderating DALL-E prompt...')
-    const moderationResult = await moderateDallePrompt(enhancedPrompt, user.id, request)
+    const moderationResult = await moderateDallePrompt(finalPrompt, user.id, request)
     
     if (!moderationResult.allowed) {
       console.log('🚫 DALL-E prompt blocked by moderation:', moderationResult.reason)
@@ -241,13 +188,13 @@ export async function POST(request: NextRequest) {
       style,
       cost: generationCost,
       originalPrompt: prompt,
-      enhancedPrompt: enhancedPrompt
+      finalPrompt: finalPrompt
     })
 
     // Generate image with DALL-E
     const imageResponse = await openai.images.generate({
       model,
-      prompt: enhancedPrompt,
+      prompt: finalPrompt,  // Use the minimally processed prompt
       n: 1,
       size: size as any,
       quality: model === 'dall-e-3' ? quality as any : undefined,
@@ -313,7 +260,6 @@ export async function POST(request: NextRequest) {
         url: generatedImage.url,
         revisedPrompt: generatedImage.revised_prompt,
         originalPrompt: prompt,
-        enhancedPrompt: businessContext ? enhancedPrompt : undefined,
         model,
         size,
         quality,

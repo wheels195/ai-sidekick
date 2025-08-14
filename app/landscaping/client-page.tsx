@@ -558,42 +558,58 @@ const generateSimpleGreeting = (user: any): string => {
   return `Hi, ${displayName}! I'm **Scout**, your Landscaping AI Sidekick. How can we grow your business today?`
 }
 
-// Generate better responses for image creation
+// Generate better responses for image creation with helpful tips
 const generateImageSuccessResponse = (prompt: string): string => {
-  const responses = [
-    `✨ I've created a custom landscaping image for you based on: "${prompt}"
-
-**What you can do with this image:**
-- Share it on social media to showcase your vision
-- Use it in proposals or presentations
-- Add it to your portfolio
-- Show clients different design possibilities
-
-Need any adjustments or want to create another variation? Just let me know!`,
-    
-    `🎨 Here's your landscaping visualization for: "${prompt}"
-
-**Pro tip:** This image can help you:
-- Communicate design ideas with clients
-- Create before/after comparisons
-- Build your online portfolio
-- Generate social media content
-
-Want to explore different angles or styles? I'm here to help!`,
-    
-    `📸 Your custom image is ready: "${prompt}"
-
-**Business uses:**
-- Client presentations and proposals
-- Marketing materials and flyers
-- Website galleries
-- Social media posts
-
-I can create variations or entirely new concepts - just describe what you need!`
-  ]
+  // Analyze what type of image they might have created
+  const lowerPrompt = prompt.toLowerCase()
   
-  // Randomly select a response for variety
-  return responses[Math.floor(Math.random() * responses.length)]
+  let tips = ''
+  
+  if (lowerPrompt.includes('facebook') || lowerPrompt.includes('social') || lowerPrompt.includes('instagram')) {
+    tips = `**Social Media Tips:**
+- Facebook ads perform best with bright, eye-catching visuals
+- Include a clear focal point (e.g., beautiful lawn, water feature)
+- Try adding text overlay with your offer: "20% off spring cleanup"
+- Test different styles: photorealistic vs illustrated`
+  } else if (lowerPrompt.includes('before') || lowerPrompt.includes('after')) {
+    tips = `**Before/After Tips:**
+- Side-by-side comparisons work great for portfolios
+- Dramatic transformations get more engagement
+- Include time stamps: "3-day transformation" 
+- Try aerial views for large projects`
+  } else if (lowerPrompt.includes('logo')) {
+    tips = `**Logo Design Tips:**
+- Simple, clean designs work best at small sizes
+- Try variations: with/without tagline
+- Consider seasonal versions
+- Test on different backgrounds`
+  } else if (lowerPrompt.includes('flyer') || lowerPrompt.includes('marketing')) {
+    tips = `**Marketing Material Tips:**
+- Include a clear call-to-action
+- Leave space for contact information
+- Seasonal themes increase relevance
+- Professional photography style builds trust`
+  } else {
+    tips = `**Pro Tips for Better Images:**
+- Be specific: "drought-resistant xeriscape garden with succulents"
+- Add style: "photorealistic", "modern", "aerial view", "golden hour lighting"
+- Include details: "residential", "commercial", "luxury estate"
+- Specify mood: "vibrant", "serene", "professional"`
+  }
+
+  return `✨ **Your image has been generated!**
+
+Original request: "${prompt}"
+
+${tips}
+
+**Want to refine it?** Try adding:
+- Style preferences (photorealistic, illustrated, modern)
+- Specific elements (stone pathway, water feature, native plants)
+- Lighting/time (golden hour, bright daylight, evening)
+- Perspective (aerial, close-up, wide angle)
+
+Just describe what you'd like to see differently!`
 }
 
 // Rotating welcome messages system
@@ -670,6 +686,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
   const [showRatingPrompt, setShowRatingPrompt] = useState(false)
   const [hasRatedConversation, setHasRatedConversation] = useState(false)
   const [showHelpPanel, setShowHelpPanel] = useState(false)
+  const [showImageTips, setShowImageTips] = useState(false)
   // Mobile detection hook for runtime behavior
   const isMobile = useIsMobile()
   const [isClient, setIsClient] = useState(true)
@@ -1265,9 +1282,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
           prompt: prompt.trim(),
           model: 'dall-e-3',
           size: '1024x1024',
-          quality: 'standard',
-          style: 'natural',
-          businessContext: true
+          quality: 'hd',  // Better quality for professional use
+          style: 'vivid',  // More vibrant for marketing materials
+          businessContext: false  // Let user control their prompts
         }),
       })
 
@@ -1395,9 +1412,9 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
             prompt: input.trim(),
             model: 'dall-e-3',
             size: '1024x1024',
-            quality: 'standard',
-            style: 'natural',
-            businessContext: true
+            quality: 'hd',  // Better quality for professional use
+            style: 'vivid',  // More vibrant for marketing materials
+            businessContext: false  // Let user control their prompts
           }),
         }).then(res => res.json())
         
@@ -2893,6 +2910,20 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                             Tips
                           </span>
                         </button>
+                        
+                        {activeTool === 'create-image' && (
+                          <button
+                            type="button"
+                            onClick={() => setShowImageTips(true)}
+                            className="group p-2 hover:bg-purple-500/10 rounded-lg transition-colors flex items-center gap-1"
+                            disabled={isLoading}
+                          >
+                            <Camera className="w-4 h-4 text-purple-300" />
+                            <span className="text-xs text-purple-400">
+                              Images
+                            </span>
+                          </button>
+                        )}
                       </div>
                       <div className="flex items-center gap-2">
                         {/* Language selector for speech-to-text */}
@@ -3220,6 +3251,166 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                     <h4 className="text-sm font-semibold text-white mb-1">Pro Tip</h4>
                     <p className="text-xs text-gray-300">
                       Start with business context: "I run a 3-person landscaping crew in Austin, Texas, focusing on residential lawn care. We charge $50/hour but competitors charge $75. How can I justify higher prices?"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Tips Panel - Slide out from right */}
+      {showImageTips && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowImageTips(false)}
+          />
+          
+          {/* Panel - Slide in from right */}
+          <div className="absolute right-0 top-14 sm:top-16 lg:top-20 h-[calc(100%-3.5rem)] sm:h-[calc(100%-4rem)] lg:h-[calc(100%-5rem)] w-full sm:w-96 lg:w-[28rem] bg-gradient-to-br from-gray-900 via-gray-950 to-black border-l border-white/10 shadow-2xl overflow-y-auto transform transition-all duration-300 ease-out translate-x-0">
+            {/* Panel Header */}
+            <div className="sticky top-0 bg-gray-900/95 backdrop-blur-xl border-b border-white/10 p-4 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-500 rounded-lg flex items-center justify-center">
+                  <Camera className="w-4 h-4 text-white" />
+                </div>
+                <h2 className="text-lg font-bold text-white">Image Generation Tips</h2>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowImageTips(false)}
+                className="text-gray-400 hover:text-white p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {/* Panel Content */}
+            <div className="p-4 space-y-6">
+              {/* Quick Templates */}
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Target className="w-4 h-4 text-purple-400" />
+                  <h3 className="text-lg font-semibold text-white">Quick Templates</h3>
+                </div>
+                
+                <div className="space-y-2">
+                  {[
+                    "Facebook ad for lawn care with before/after comparison",
+                    "Instagram post showing luxury landscape transformation",
+                    "Professional team photo with equipment and branded truck",
+                    "Seasonal promotion flyer for spring cleanup special",
+                    "Logo design for landscaping business with green theme",
+                    "Before and after drought-resistant garden installation"
+                  ].map((template, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setInput(template)
+                        setShowImageTips(false)
+                      }}
+                      className="w-full text-left text-sm bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 rounded-lg px-3 py-2 text-purple-200 hover:text-white transition-all duration-300"
+                    >
+                      {template}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Style Guide */}
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <h3 className="text-lg font-semibold text-white">Style Guide</h3>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="bg-white/5 rounded-lg p-3 border border-purple-500/20">
+                    <h4 className="text-sm font-semibold text-purple-300 mb-2">🎯 Marketing</h4>
+                    <p className="text-xs text-gray-300">"vibrant, professional photography, bright daylight, eye-catching"</p>
+                  </div>
+                  
+                  <div className="bg-white/5 rounded-lg p-3 border border-purple-500/20">
+                    <h4 className="text-sm font-semibold text-purple-300 mb-2">📱 Social Media</h4>
+                    <p className="text-xs text-gray-300">"square format, bold colors, dramatic lighting, Instagram-style"</p>
+                  </div>
+                  
+                  <div className="bg-white/5 rounded-lg p-3 border border-purple-500/20">
+                    <h4 className="text-sm font-semibold text-purple-300 mb-2">🏠 Portfolio</h4>
+                    <p className="text-xs text-gray-300">"high-end residential, golden hour, wide angle, luxury estate"</p>
+                  </div>
+                  
+                  <div className="bg-white/5 rounded-lg p-3 border border-purple-500/20">
+                    <h4 className="text-sm font-semibold text-purple-300 mb-2">⚡ Before/After</h4>
+                    <p className="text-xs text-gray-300">"split screen, same angle, dramatic transformation, side-by-side"</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pro Techniques */}
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Leaf className="w-4 h-4 text-purple-400" />
+                  <h3 className="text-lg font-semibold text-white">Pro Techniques</h3>
+                </div>
+                
+                <div className="space-y-2 text-sm text-gray-300">
+                  <div className="flex items-start space-x-2">
+                    <span className="text-purple-400 font-bold">•</span>
+                    <span><strong className="text-white">Be specific:</strong> "zero-turn mower on striped lawn" vs "lawn mower"</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-purple-400 font-bold">•</span>
+                    <span><strong className="text-white">Add weather:</strong> "after fresh rain, morning dew, sunny day"</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-purple-400 font-bold">•</span>
+                    <span><strong className="text-white">Property type:</strong> "luxury estate, suburban home, commercial property"</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-purple-400 font-bold">•</span>
+                    <span><strong className="text-white">Add season:</strong> "fall colors, spring blooms, summer green"</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Common Uses */}
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <DollarSign className="w-4 h-4 text-purple-400" />
+                  <h3 className="text-lg font-semibold text-white">Business Uses</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  {[
+                    "Social media ads",
+                    "Website hero images", 
+                    "Email campaigns",
+                    "Proposal visuals",
+                    "Google Business Profile",
+                    "Yard signs & flyers",
+                    "Business cards",
+                    "Truck wraps mockups"
+                  ].map((use, index) => (
+                    <div key={index} className="bg-purple-500/10 rounded-lg px-2 py-1 text-purple-200 border border-purple-500/20">
+                      {use}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Pro Tip */}
+              <div className="p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg border border-purple-500/20">
+                <div className="flex items-start space-x-3">
+                  <Camera className="w-4 h-4 text-purple-400 mt-1" />
+                  <div>
+                    <h4 className="text-sm font-semibold text-white mb-1">Pro Tip</h4>
+                    <p className="text-xs text-gray-300">
+                      Try: "Facebook ad image: luxury residential landscape with drought-resistant plants, professional photography, bright morning light, before/after split screen"
                     </p>
                   </div>
                 </div>
