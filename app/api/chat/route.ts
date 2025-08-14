@@ -929,9 +929,8 @@ Query: "${currentUserMessage.content}" in ${localContext}
 ${searchResults}
 
 **Table Formatting Instructions:** 
-- When presenting competitive analysis, create tables with these columns: Business Name, Phone, Rating (Reviews), Address, Price Level, Services, Website
+- When presenting competitive analysis, create tables with these columns: Business Name, Phone, Rating (Reviews), Address, Price Level, Website
 - Show ALL available businesses (minimum 5 when possible)
-- Use real business types/services from the data, NOT "General Contractor"
 - Include review count with ratings (e.g., "4.9⭐ (127 reviews)")
 - Show actual price levels using $ symbols
 - Never create fake competitors - only use the real data above`

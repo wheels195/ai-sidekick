@@ -296,8 +296,8 @@ const convertMarkdownToHtml = (markdown: string): string => {
       }
       const number = line.match(/^\d+/)[0]
       let text = line.replace(/^\d+\.\s+/, '')
-      // Handle bold text with emerald color for titles - enhanced processing
-      text = text.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-emerald-400">$1</strong>')
+      // Handle bold text - enhanced processing (keep white, not emerald)
+      text = text.replace(/\*\*([^*\n]+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
       // Handle markdown links [text](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
       htmlLines.push(`<div class="flex items-start mb-3"><span class="text-emerald-400 font-semibold text-base mr-2 mt-0.5">${number}.</span><div class="text-white leading-relaxed flex-1 text-base">${text}</div></div>`)

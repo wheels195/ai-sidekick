@@ -55,7 +55,8 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(git reset:*)",
       "Bash(git checkout:*)",
-      "WebFetch(domain:developers.facebook.com)"
+      "WebFetch(domain:developers.facebook.com)",
+      "WebFetch(domain:developers.google.com)"
     ],
     "deny": []
   }

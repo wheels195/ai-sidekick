@@ -98,6 +98,18 @@ export async function performCachedGooglePlacesSearch(
   return searchResults
 }
 
+// Helper function to use Google's geocoding for dynamic location bias (nationwide support)
+async function getLocationCoordinates(location: string): Promise<{ latitude: number; longitude: number } | null> {
+  // For now, we'll rely on Google Places API's built-in location handling
+  // The textQuery "near [location]" should provide sufficient geographic targeting
+  // without needing explicit lat/lng coordinates
+  
+  // Future enhancement: Could integrate with Google Geocoding API for precise coordinates
+  // But Google Places API already handles location targeting well with "near [location]"
+  
+  return null
+}
+
 // Original Google Places search function (preserved from your existing code)
 async function performGooglePlacesSearch(query: string, location?: string): Promise<string> {
   console.log('🔍 performGooglePlacesSearch called with:', { query, location, hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY })
@@ -125,6 +137,8 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
         maxResultCount: 15, // Increased from 8 to get more results
         languageCode: 'en',
         regionCode: 'US'
+        // Note: Google Places API handles location targeting automatically with "near [location]"
+        // This works nationwide for any city, ZIP code, or address without hardcoded coordinates
       })
     })
 
@@ -175,10 +189,10 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
       return `Current local business data from Google Places:\n\n${formattedResults}`
     }
     
-    console.log('⚠️ No Google Places results found')
-    return "No local businesses found for this query."
+    console.log('⚠️ No Google Places results found for:', query, 'near', location)
+    return "IMPORTANT: No local business data was returned from Google Places API for this search. DO NOT create fake or hypothetical competitors. Instead, explain to the user that no local competitors were found in their area and suggest they try a broader search or check if their location information is correct."
   } catch (error) {
     console.error('❌ Google Places search error:', error)
-    return `Business search encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}. Providing general guidance instead.`
+    return `IMPORTANT: Google Places API encountered an error and returned no real business data. DO NOT create fake competitors or hallucinate business information. Instead, inform the user that the business search failed due to: ${error instanceof Error ? error.message : 'Unknown error'}. Suggest they try again later or contact support if the issue persists.`
   }
 }

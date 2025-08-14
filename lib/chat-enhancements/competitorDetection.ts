@@ -66,7 +66,7 @@ export function shouldSearchForCompetitors(query: string): boolean {
   // RULE 4: Combined context detection (multiple indicators)
   const contextIndicators = {
     businessTerms: ['business', 'company', 'service', 'landscaper', 'contractor'],
-    locationTerms: ['local', 'near me', 'in my area', 'around here', 'nearby'],
+    locationTerms: ['local', 'near me', 'in my area', 'around here', 'nearby', 'in my zip code', 'my zip code', 'zip code'],
     comparisonTerms: ['other', 'compare', 'versus', 'vs', 'against', 'relative to'],
     marketTerms: ['market', 'industry', 'competition', 'competitors']
   }
