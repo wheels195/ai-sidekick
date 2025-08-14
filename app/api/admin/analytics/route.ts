@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 
 // Admin API key verification
 function verifyAdminAccess(request: NextRequest) {
@@ -223,7 +223,8 @@ export async function GET(request: NextRequest) {
     const view = searchParams.get('view') || 'overview'
     const dates = getDateRanges()
 
-    const { supabase } = createClient(request)
+    // Use service client for admin analytics to bypass RLS
+    const supabase = createServiceClient()
 
     switch (view) {
       case 'costs':
