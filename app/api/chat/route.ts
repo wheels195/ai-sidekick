@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { createClient } from '@/lib/supabase/server'
-import { createClient as createServiceClient } from '@supabase/supabase-js'
-import { createServiceClient as createServiceRoleClient } from '@/lib/supabase/service'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { moderateUserMessage } from '@/lib/moderation'
 import {
@@ -362,7 +360,7 @@ function convertUserIntentToSearch(userMessage: string, userProfile: any): strin
 
 // Store files in knowledge base using service client (no HTTP calls)
 async function storeFilesInKnowledgeBase(files: any[], userId: string): Promise<any[]> {
-  const supabase = createServiceRoleClient()
+  const supabase = createServiceClient()
   const processedFiles = []
   
   for (const file of files) {
@@ -1145,10 +1143,8 @@ ${searchResults}
             })
             try {
               // Use service role for assistant message insertion to bypass RLS
-              const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-              const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-              console.log('🔑 Service role key available:', !!supabaseServiceKey)
-              const serviceSupabase = createServiceClient(supabaseUrl, supabaseServiceKey)
+              console.log('🔑 Creating service client for assistant message save...')
+              const serviceSupabase = createServiceClient()
               
               // Calculate accurate token usage and costs first
               
