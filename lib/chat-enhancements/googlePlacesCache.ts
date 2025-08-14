@@ -212,7 +212,7 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': process.env.GOOGLE_PLACES_API_KEY,
-        'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.priceLevel,places.websiteUri,places.businessStatus'
+        'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.websiteUri,places.businessStatus'
       },
       body: JSON.stringify(requestBody)
     })
@@ -258,7 +258,6 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
           const phone = place.nationalPhoneNumber || 'Phone not available'
           const rating = place.rating ? `${place.rating}⭐` : 'No rating'
           const reviewCount = place.userRatingCount ? `${place.userRatingCount} reviews` : 'No reviews'
-          const priceLevel = place.priceLevel ? '$'.repeat(place.priceLevel) : 'Price level unknown'
           const website = place.websiteUri || 'Website not available'
           const status = place.businessStatus || 'Status unknown'
           
@@ -266,7 +265,6 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
           formatted += `ADDRESS: ${address}\n`
           formatted += `PHONE: ${phone}\n`
           formatted += `RATING: ${rating} (${reviewCount})\n`
-          formatted += `PRICE_LEVEL: ${priceLevel}\n`
           formatted += `WEBSITE: ${website}\n`
           formatted += `BUSINESS_STATUS: ${status}\n`
           
