@@ -592,14 +592,44 @@ export async function POST(request: NextRequest) {
             .select('*')
             .eq('id', user.id)
             .single()
-          userProfile = profile
+          
+          // If OAuth user has no profile, create a basic one for analytics
+          if (!profile) {
+            console.log('🔧 Creating basic profile for OAuth user:', user.email)
+            const now = new Date()
+            const trialExpiresAt = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000)) // 7 days
+            
+            const { data: newProfile } = await createServiceClient()
+              .from('user_profiles')
+              .insert({
+                id: user.id,
+                email: user.email,
+                first_name: user.user_metadata?.first_name || 'User',
+                last_name: user.user_metadata?.last_name || '',
+                business_name: 'My Business',
+                selected_plan: 'Free Trial',
+                user_role: user.email === 'admin@ai-sidekick.io' ? 'admin' : 'user',
+                tokens_used_trial: 0,
+                trial_token_limit: 250000,
+                trial_started_at: now.toISOString(),
+                trial_expires_at: trialExpiresAt.toISOString(),
+                created_at: now.toISOString()
+              })
+              .select('*')
+              .single()
+            
+            userProfile = newProfile
+            console.log('✅ Basic profile created for OAuth user')
+          } else {
+            userProfile = profile
+          }
           
           // Check trial limits for authenticated users (skip for admin)
-          if (profile && profile.user_role !== 'admin') {
+          if (userProfile && userProfile.user_role !== 'admin') {
             const now = new Date()
-            const trialExpires = profile.trial_expires_at ? new Date(profile.trial_expires_at) : null
-            const tokensUsed = profile.tokens_used_trial || 0
-            const tokenLimit = profile.trial_token_limit || 250000
+            const trialExpires = userProfile.trial_expires_at ? new Date(userProfile.trial_expires_at) : null
+            const tokensUsed = userProfile.tokens_used_trial || 0
+            const tokenLimit = userProfile.trial_token_limit || 250000
             
             // Check if trial has expired
             if (trialExpires && now > trialExpires) {
