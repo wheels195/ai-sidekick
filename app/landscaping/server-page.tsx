@@ -6,14 +6,22 @@ export default async function LandscapingChatPage() {
   // Load user data server-side
   const user = await getServerUserProfile()
   
-  // Redirect to login if not authenticated
+  // Handle different authentication states
   if (!user) {
     redirect('/login?redirect=/landscaping')
   }
+  
+  // Check if user is authenticated but needs to complete profile
+  if ('needsProfileCompletion' in user) {
+    redirect(`/signup/complete?email=${encodeURIComponent(user.userEmail)}`)
+  }
 
+  // TypeScript now knows user is a UserProfile, not ProfileCompletion
+  const userProfile = user as Extract<typeof user, { id: string }>
+  
   // Determine appropriate greeting based on user history
-  const isReturningUser = user.hasConversationHistory
-  const displayName = user.firstName || 'there'
+  const isReturningUser = userProfile.hasConversationHistory
+  const displayName = userProfile.firstName || 'there'
   
   const initialGreeting = isReturningUser
     ? `<span class="text-white">Hey ${displayName}! What are we working on today?</span>`
@@ -22,7 +30,7 @@ export default async function LandscapingChatPage() {
   // Pass user data and greeting to client component
   return (
     <LandscapingChatClient 
-      user={user}
+      user={userProfile}
       initialGreeting={initialGreeting}
       isReturningUser={isReturningUser}
     />

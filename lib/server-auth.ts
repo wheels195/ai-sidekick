@@ -23,7 +23,12 @@ interface UserProfile {
   hasConversationHistory: boolean
 }
 
-export async function getServerUserProfile(): Promise<UserProfile | null> {
+interface ProfileCompletion {
+  needsProfileCompletion: true
+  userEmail: string
+}
+
+export async function getServerUserProfile(): Promise<UserProfile | ProfileCompletion | null> {
   try {
     const cookieStore = cookies()
     const supabase = createServerClient(
@@ -53,60 +58,8 @@ export async function getServerUserProfile(): Promise<UserProfile | null> {
       .single()
 
     if (error || !profile) {
-      // If OAuth user has no profile, create a basic one
-      if (user && !profile) {
-        console.log('🔧 Creating basic profile for OAuth user server-side:', user.email)
-        const now = new Date()
-        const trialExpiresAt = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000)) // 7 days
-        
-        try {
-          const { data: newProfile } = await createServiceClient()
-            .from('user_profiles')
-            .insert({
-              id: user.id,
-              email: user.email,
-              first_name: user.user_metadata?.first_name || 'User',
-              last_name: user.user_metadata?.last_name || '',
-              business_name: 'My Business',
-              selected_plan: 'Free Trial',
-              user_role: user.email === 'admin@ai-sidekick.io' ? 'admin' : 'user',
-              tokens_used_trial: 0,
-              trial_token_limit: 250000,
-              trial_started_at: now.toISOString(),
-              trial_expires_at: trialExpiresAt.toISOString(),
-              created_at: now.toISOString()
-            })
-            .select('*')
-            .single()
-          
-          if (newProfile) {
-            console.log('✅ Basic profile created server-side')
-            // Return the newly created profile data
-            return {
-              id: newProfile.id,
-              firstName: newProfile.first_name || '',
-              lastName: newProfile.last_name || '',
-              email: newProfile.email,
-              businessName: newProfile.business_name || 'Your Business',
-              trade: newProfile.trade || 'landscaping',
-              selectedPlan: newProfile.selected_plan || '',
-              location: newProfile.location || '',
-              zipCode: newProfile.zip_code || '',
-              services: newProfile.services || [],
-              teamSize: newProfile.team_size || 0,
-              targetCustomers: newProfile.target_customers || '',
-              yearsInBusiness: newProfile.years_in_business || 0,
-              businessPriorities: newProfile.business_priorities || [],
-              tokensUsedTrial: newProfile.tokens_used_trial || 0,
-              trialTokenLimit: newProfile.trial_token_limit || 250000,
-              hasConversationHistory: false
-            }
-          }
-        } catch (createError) {
-          console.error('Failed to create profile server-side:', createError)
-        }
-      }
-      return null
+      // Return special indicator for authenticated users without profile
+      return { needsProfileCompletion: true, userEmail: user.email }
     }
 
     // Check if user has any previous conversations
