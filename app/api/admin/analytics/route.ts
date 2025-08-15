@@ -473,8 +473,26 @@ async function getCostAnalytics(supabase: any, dates: any) {
 
 async function getUserAnalytics(supabase: any, dates: any) {
   try {
+    console.log('🔍 getUserAnalytics - Admin emails to exclude:', ADMIN_EMAILS)
+    
+    // Get ALL user profiles first for debugging
+    const { data: allUsers, error: allUsersError } = await supabase
+      .from('user_profiles')
+      .select(`
+        id, first_name, last_name, business_name, created_at, 
+        tokens_used_trial, total_cost_trial, last_activity_at,
+        trade, team_size, target_customers, email
+      `)
+      .order('created_at', { ascending: false })
+    
+    console.log('🔍 All users in user_profiles:', {
+      count: allUsers?.length || 0,
+      emails: allUsers?.map(u => u.email) || [],
+      error: allUsersError
+    })
+    
     // Get user engagement metrics - excluding admin users
-    const { data: users } = await supabase
+    const { data: users, error: usersError } = await supabase
       .from('user_profiles')
       .select(`
         id, first_name, last_name, business_name, created_at, 
@@ -482,7 +500,14 @@ async function getUserAnalytics(supabase: any, dates: any) {
         trade, team_size, target_customers, email
       `)
       .not('email', 'in', `(${ADMIN_EMAILS.map(e => `"${e}"`).join(',')})`)
-      .order('created_at', { ascending: false }) || []
+      .order('created_at', { ascending: false })
+    
+    console.log('🔍 Filtered users (excluding admins):', {
+      count: users?.length || 0,
+      emails: users?.map(u => u.email) || [],
+      error: usersError,
+      filterQuery: `not('email', 'in', '(${ADMIN_EMAILS.map(e => `"${e}"`).join(',')})')`
+    })
 
     // Get admin user IDs to exclude from conversations
     const { data: adminUsers } = await supabase
