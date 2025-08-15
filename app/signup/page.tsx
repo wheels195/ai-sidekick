@@ -79,7 +79,11 @@ export default function SignupPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURIComponent('/signup/complete')}`
+          redirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURIComponent('/signup/complete')}`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'select_account consent'
+          }
         }
       })
 
