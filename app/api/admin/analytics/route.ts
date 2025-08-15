@@ -211,31 +211,43 @@ function getDateRanges() {
 
 export async function GET(request: NextRequest) {
   try {
+    console.log('🔍 Analytics API called')
+    
     // Verify admin access
     if (!verifyAdminAccess(request)) {
+      console.log('❌ Admin access verification failed')
       return NextResponse.json(
         { error: 'Unauthorized - Admin access required' },
         { status: 401 }
       )
     }
+    
+    console.log('✅ Admin access verified')
 
     const { searchParams } = new URL(request.url)
     const view = searchParams.get('view') || 'overview'
     const dates = getDateRanges()
+    
+    console.log('🔍 Analytics request:', { view, url: request.url })
 
     // Use service client for admin analytics to bypass RLS
     const supabase = createServiceClient()
 
     switch (view) {
       case 'costs':
+        console.log('🔍 Calling getCostAnalytics')
         return await getCostAnalytics(supabase, dates)
       case 'users':
+        console.log('🔍 Calling getUserAnalytics')
         return await getUserAnalytics(supabase, dates)
       case 'recommendations':
+        console.log('🔍 Calling getRecommendations')
         return await getRecommendations(supabase, dates)
       case 'admin':
+        console.log('🔍 Calling getAdminAnalytics')
         return await getAdminAnalytics(supabase, dates)
       default:
+        console.log('🔍 Calling getOverviewAnalytics (default)')
         return await getOverviewAnalytics(supabase, dates)
     }
 
