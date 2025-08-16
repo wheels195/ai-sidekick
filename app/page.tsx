@@ -45,7 +45,7 @@ import DisplayCards from "@/components/ui/display-cards"
 import TestimonialCarousel from "@/components/TestimonialCarousel"
 import { supabase } from '@/lib/supabase/client'
 
-// Typewriter component for animated text
+// Typewriter component for animated text effect
 function TypewriterText({ text }: { text: string }) {
   const [displayedText, setDisplayedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
