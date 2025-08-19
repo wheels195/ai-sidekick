@@ -758,7 +758,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-200 leading-snug max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
-              Upsell <span className="font-bold">more services</span>. Improve <span className="font-bold">online visibility</span>. Make <span className="font-bold">smarter business decisions</span>—all with <span className="font-cursive font-bold text-[1.15em] tracking-wide bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">AI Sidekick</span>.
+              Chat in <span className="font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">50+ languages</span> with your <span className="font-bold">24/7 landscaping expert</span> to write <span className="font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">proposals in seconds</span>, create <span className="font-bold">marketing content</span>, and <span className="font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">win more jobs</span>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
