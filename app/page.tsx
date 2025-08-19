@@ -750,7 +750,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           <div className="text-center mb-20">
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-8 mt-8 sm:mt-0 hover:scale-105 transition-all duration-300">
               <Zap className="w-5 h-5 text-emerald-400" />
-              <span className="text-blue-300 font-medium">AI-Powered Business Growth</span>
+              <span className="text-blue-300 font-medium">AI-Powered Business Growth Platform</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-normal mb-6 sm:mb-8 leading-tight">
