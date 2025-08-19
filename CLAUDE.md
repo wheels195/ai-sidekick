@@ -20,6 +20,48 @@ npm run lint   # Code linting
 - **Backend:** Supabase (PostgreSQL + Auth), OpenAI APIs, Resend Email
 - **Deployment:** Vercel with custom domain (ai-sidekick.io)
 
+## Development Workflow & Deployment Strategy
+
+### **Production Environment**
+- **Live Site:** ai-sidekick.io (Facebook/Instagram ads running - $10/day budget)
+- **Branch:** `main` only deploys to production
+- **User Base:** Active users with live ad traffic (400+ impressions, 14 clicks as of August 19, 2025)
+
+### **Development Workflow (August 19, 2025)**
+**CRITICAL: Never push directly to production with live users and ads running**
+
+#### **Branch Strategy:**
+- **`main`** → Production (ai-sidekick.io) - LIVE users
+- **`develop`** → Staging branch for final review
+- **`feature/*`** → Individual features and changes
+
+#### **Development Process:**
+```bash
+# 1. Create feature branch for ANY change
+git checkout main && git pull origin main
+git checkout -b feature/descriptive-name
+
+# 2. Make changes and push to feature branch
+git add . && git commit -m "Description"
+git push origin feature/descriptive-name
+
+# 3. Vercel automatically creates preview URL
+# Test thoroughly on preview before merging
+
+# 4. When ready for production:
+git checkout main && git merge feature/descriptive-name
+git push origin main  # Goes LIVE immediately
+```
+
+#### **When to Use Preview vs Production:**
+- **Preview (feature branches):** ALL development, testing, client reviews, experimental changes
+- **Production (main):** Only final approved changes, critical hotfixes, or explicitly requested deployments
+
+### **Analytics & Marketing Status**
+- **Google Analytics:** Active (G-5LGBPTHXJW) with comprehensive event tracking
+- **Meta Pixel:** Active for Facebook/Instagram ad attribution
+- **Ad Performance:** Day 3 of testing ($10/day budget) - 400+ impressions, 14 clicks, 0 conversions (normal for early testing)
+
 ## Recent Major Updates (August 2025)
 
 ### ✅ Core Platform Features  
@@ -66,6 +108,15 @@ npm run lint   # Code linting
 - **Smart Places API** - Rating-based sorting, de-duplication, coordinate-enhanced cache keys with 50km location bias
 - **RAG Optimization** - Removed user-visible provenance, added 0.65 fallback threshold, capped chunks for cleaner responses
 - **Dynamic Geocoding System** - First-use ZIP→lat/lng persistence with smart coordinate reuse for nationwide accuracy
+
+### ✅ Hero Section Clarity Improvements (August 19, 2025)
+- **Subtitle Optimization** - Changed from vague benefits to specific capabilities and outcomes
+- **Language Support Highlight** - Added "50+ languages" as key differentiator in subtitle
+- **Clear Value Proposition** - Made it explicit that AI Sidekick is an interactive chat tool
+- **10-Year-Old Reading Level** - Simplified language for immediate comprehension (3-5 seconds)
+- **Concrete Outcomes** - Replaced "grow your business" with "win more jobs" for specificity
+- **Visual Hierarchy** - Applied emerald gradients to key selling points: languages, speed, outcomes
+- **Trust Indicators** - Added professional trust signals below CTA: "7 Days Free | No Credit Card Required | Cancel Anytime"
 
 ### ✅ Recent Mobile UX Fixes (Latest Sessions)
 - **Speech-to-text functionality** - Fixed transcription API with file streams, microphone hidden on mobile (use iOS keyboard mic)
