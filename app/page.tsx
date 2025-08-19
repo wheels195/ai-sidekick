@@ -28,6 +28,8 @@ import {
   Settings,
   ClipboardCheck,
   Bot,
+  Calendar,
+  CreditCard,
   Shield,
   BookOpen,
   Lightbulb,
@@ -768,6 +770,24 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 <span className="block sm:inline">Start Your Free Trial</span>
                 <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
               </Button>
+            </div>
+            
+            {/* Trust Indicators */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-6 sm:mt-8">
+              <div className="flex items-center gap-2 text-white/80">
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <span className="text-sm sm:text-base font-medium">7 Days Free</span>
+              </div>
+              <div className="hidden sm:block w-px h-5 bg-white/20" />
+              <div className="flex items-center gap-2 text-white/80">
+                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <span className="text-sm sm:text-base font-medium">No Credit Card Required</span>
+              </div>
+              <div className="hidden sm:block w-px h-5 bg-white/20" />
+              <div className="flex items-center gap-2 text-white/80">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <span className="text-sm sm:text-base font-medium">Cancel Anytime</span>
+              </div>
             </div>
             
           </div>
