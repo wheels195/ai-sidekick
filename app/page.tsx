@@ -765,17 +765,8 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 backdrop-blur-sm border border-white/20 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
                 onClick={() => window.location.href = '/signup'}
               >
-                <span className="block sm:inline">Try Landscaping AI Free</span>
+                <span className="block sm:inline">Start Your Free Trial</span>
                 <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 hover:border-white/50 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
-                onClick={() => window.location.href = '/signup'}
-              >
-                Create Your Account
-                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
               </Button>
             </div>
             
