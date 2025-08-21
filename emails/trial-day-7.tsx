@@ -3,16 +3,19 @@ import BrandLayout from './_components/BrandLayout'
 import BrandButton from './_components/BrandButton'
 
 interface TrialDay7Props {
+  userEmail?: string;
   firstName: string
 }
 
 export default function TrialDay7Email({ 
-  firstName = 'Business Owner'
+  firstName = 'Business Owner',
+  userEmail
 }: TrialDay7Props) {
   return (
     <BrandLayout 
       title={`${firstName}, your trial ends today — here's my ask`}
       preview="Don't lose the momentum you've started — keep growing today."
+      userEmail={userEmail}
     >
       <Heading style={greetingStyle}>
         Hi {firstName},

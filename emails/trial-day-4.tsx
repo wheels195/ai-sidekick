@@ -3,16 +3,19 @@ import BrandLayout from './_components/BrandLayout'
 import BrandButton from './_components/BrandButton'
 
 interface TrialDay4Props {
+  userEmail?: string;
   firstName: string
 }
 
 export default function TrialDay4Email({ 
-  firstName = 'Business Owner'
+  firstName = 'Business Owner',
+  userEmail
 }: TrialDay4Props) {
   return (
     <BrandLayout 
       title="Don't guess. Ask AI Sidekick."
       preview="Pricing, promos, crew scheduling — get clear answers fast."
+      userEmail={userEmail}
     >
       <Heading style={greetingStyle}>
         Hi {firstName},

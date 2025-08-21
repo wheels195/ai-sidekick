@@ -152,4 +152,132 @@ export async function sendTrialDay2Email(email: string, firstName: string) {
   }
 }
 
-// Additional trial email functions would follow the same pattern...
+export async function sendTrialDay3Email(email: string, firstName: string) {
+  try {
+    const emailHtml = render(TrialDay3Email({ 
+      firstName,
+      userEmail: email
+    }));
+
+    const { data, error } = await resend.emails.send({
+      from: 'AI Sidekick Team <support@ai-sidekick.io>',
+      to: [email],
+      subject: 'Want more leads? Start with better ads.',
+      html: emailHtml
+    });
+
+    if (error) {
+      console.error('Trial Day 3 email error:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Trial Day 3 email failed:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendTrialDay4Email(email: string, firstName: string) {
+  try {
+    const emailHtml = render(TrialDay4Email({ 
+      firstName,
+      userEmail: email
+    }));
+
+    const { data, error } = await resend.emails.send({
+      from: 'AI Sidekick Team <support@ai-sidekick.io>',
+      to: [email],
+      subject: 'Don\'t guess. Ask AI Sidekick.',
+      html: emailHtml
+    });
+
+    if (error) {
+      console.error('Trial Day 4 email error:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Trial Day 4 email failed:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendTrialDay5Email(email: string, firstName: string) {
+  try {
+    const emailHtml = render(TrialDay5Email({ 
+      firstName,
+      userEmail: email
+    }));
+
+    const { data, error } = await resend.emails.send({
+      from: 'AI Sidekick Team <support@ai-sidekick.io>',
+      to: [email],
+      subject: 'Your trial ends in 2 days — don\'t lose momentum',
+      html: emailHtml
+    });
+
+    if (error) {
+      console.error('Trial Day 5 email error:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Trial Day 5 email failed:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendTrialDay6Email(email: string, firstName: string) {
+  try {
+    const emailHtml = render(TrialDay6Email({ 
+      firstName,
+      userEmail: email
+    }));
+
+    const { data, error } = await resend.emails.send({
+      from: 'AI Sidekick Team <support@ai-sidekick.io>',
+      to: [email],
+      subject: 'How do you stack up against competitors?',
+      html: emailHtml
+    });
+
+    if (error) {
+      console.error('Trial Day 6 email error:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Trial Day 6 email failed:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendTrialDay7Email(email: string, firstName: string) {
+  try {
+    const emailHtml = render(TrialDay7Email({ 
+      firstName,
+      userEmail: email
+    }));
+
+    const { data, error } = await resend.emails.send({
+      from: 'Mike Wheeler, AI Sidekick <support@ai-sidekick.io>',
+      to: [email],
+      subject: `${firstName}, your trial ends today — here\'s my ask`,
+      html: emailHtml
+    });
+
+    if (error) {
+      console.error('Trial Day 7 email error:', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Trial Day 7 email failed:', error);
+    return { success: false, error };
+  }
+}
