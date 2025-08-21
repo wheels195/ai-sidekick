@@ -20,6 +20,49 @@ export async function POST(request: NextRequest) {
   console.log('🔧 Fixing email sequence for Hazel...')
   
   try {
+    // First check if the table exists, create if needed
+    const { error: tableCheckError } = await supabase
+      .from('email_campaigns')
+      .select('id')
+      .limit(1)
+    
+    if (tableCheckError && tableCheckError.code === '42P01') {
+      // Table doesn't exist, create it
+      const createTableSQL = `
+        CREATE TABLE IF NOT EXISTS email_campaigns (
+          id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+          user_email TEXT NOT NULL,
+          email_type TEXT NOT NULL,
+          scheduled_for TIMESTAMP WITH TIME ZONE,
+          sent_at TIMESTAMP WITH TIME ZONE,
+          status TEXT DEFAULT 'scheduled',
+          user_data JSONB,
+          created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+          updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        );
+        
+        CREATE INDEX IF NOT EXISTS email_campaigns_user_email_idx ON email_campaigns(user_email);
+        CREATE INDEX IF NOT EXISTS email_campaigns_email_type_idx ON email_campaigns(email_type);
+        CREATE INDEX IF NOT EXISTS email_campaigns_sent_at_idx ON email_campaigns(sent_at);
+        CREATE INDEX IF NOT EXISTS email_campaigns_scheduled_for_idx ON email_campaigns(scheduled_for);
+        CREATE INDEX IF NOT EXISTS email_campaigns_status_idx ON email_campaigns(status);
+        
+        ALTER TABLE email_campaigns ENABLE ROW LEVEL SECURITY;
+        
+        CREATE POLICY "Users can view own email campaigns" ON email_campaigns
+          FOR SELECT USING (user_email = auth.email());
+        
+        CREATE POLICY "Service role can manage all email campaigns" ON email_campaigns
+          FOR ALL USING (auth.role() = 'service_role');
+      `
+      
+      const { error: createError } = await supabase.rpc('exec', { sql: createTableSQL })
+      if (createError) {
+        console.error('Failed to create email_campaigns table:', createError)
+        return NextResponse.json({ error: 'Failed to create email table', details: createError }, { status: 500 })
+      }
+    }
+    
     // Calculate signup date
     const signupDate = new Date(signupTime)
     const now = new Date()
@@ -65,13 +108,22 @@ export async function POST(request: NextRequest) {
     }
     
     // Insert scheduled emails
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('email_campaigns')
       .insert(emailsToSchedule)
+      .select()
     
     if (error) {
       console.error('❌ Failed to schedule emails:', error)
-      return NextResponse.json({ error: 'Failed to schedule emails', details: error }, { status: 500 })
+      return NextResponse.json({ 
+        error: 'Failed to schedule emails', 
+        details: {
+          message: error.message,
+          code: error.code,
+          hint: error.hint,
+          details: error.details
+        } 
+      }, { status: 500 })
     }
     
     console.log(`✅ Successfully scheduled ${emailsToSchedule.length} emails for Hazel!`)
