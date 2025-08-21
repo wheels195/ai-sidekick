@@ -1,3 +1,4 @@
+import React from 'react'
 import { Text, Heading, Section } from '@react-email/components'
 import BrandLayout from './_components/BrandLayout'
 import BrandButton from './_components/BrandButton'
