@@ -26,100 +26,107 @@ function daysSinceSignup(createdAt: string): number {
   return diffDays
 }
 
-// Check and send trial emails based on signup date
+// Process scheduled emails that are ready to send
 export async function processPendingTrialEmails() {
   const supabase = createServiceClient()
   
   try {
-    // Get all users who are in their 7-day trial
-    const { data: users, error } = await supabase
-      .from('user_profiles')
-      .select('email, first_name, business_name, trade, created_at')
-      .eq('email_marketing_consent', true)
-      .is('unsubscribed_at', null)
-      .gte('created_at', new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString()) // Last 8 days
+    const now = new Date().toISOString()
+    
+    // Get all scheduled emails that are ready to send
+    const { data: scheduledEmails, error } = await supabase
+      .from('email_campaigns')
+      .select('id, user_email, email_type, user_data')
+      .eq('status', 'scheduled')
+      .lte('scheduled_for', now) // Email is due
     
     if (error) {
-      console.error('Error fetching users for trial emails:', error)
+      console.error('Error fetching scheduled emails:', error)
       return
     }
 
-    for (const user of users || []) {
-      const days = daysSinceSignup(user.created_at)
-      
-      // Check if we need to send a trial email
-      switch (days) {
-        case 1:
-          await sendTrialEmailIfNotSent(user, 1, sendTrialDay1Email)
-          break
-        case 2:
-          await sendTrialEmailIfNotSent(user, 2, sendTrialDay2Email)
-          break
-        case 3:
-          await sendTrialEmailIfNotSent(user, 3, sendTrialDay3Email)
-          break
-        case 4:
-          await sendTrialEmailIfNotSent(user, 4, sendTrialDay4Email)
-          break
-        case 5:
-          await sendTrialEmailIfNotSent(user, 5, sendTrialDay5Email)
-          break
-        case 6:
-          await sendTrialEmailIfNotSent(user, 6, sendTrialDay6Email)
-          break
-        case 7:
-          await sendTrialEmailIfNotSent(user, 7, sendTrialDay7Email)
-          break
-      }
+    console.log(`📧 Found ${scheduledEmails?.length || 0} emails ready to send`)
+
+    for (const emailRecord of scheduledEmails || []) {
+      await sendScheduledEmail(emailRecord)
     }
     
-    console.log('✅ Trial email processing completed')
+    console.log('✅ Scheduled email processing completed')
   } catch (error) {
-    console.error('❌ Error processing trial emails:', error)
+    console.error('❌ Error processing scheduled emails:', error)
   }
 }
 
-// Check if email was already sent and send if not
-async function sendTrialEmailIfNotSent(
-  user: UserForEmail, 
-  day: number, 
-  sendFunction: (email: string, firstName: string) => Promise<any>
-) {
+// Send a specific scheduled email
+async function sendScheduledEmail(emailRecord: any) {
   const supabase = createServiceClient()
+  const { id, user_email, email_type, user_data } = emailRecord
+  const userData = JSON.parse(user_data || '{}')
+  const firstName = userData.firstName || 'there'
   
   try {
-    // Check if this specific trial email was already sent
-    const { data: existingEmail, error: checkError } = await supabase
+    // Mark as sending to prevent duplicates
+    await supabase
       .from('email_campaigns')
-      .select('id')
-      .eq('user_email', user.email)
-      .eq('email_type', `trial-day-${day}`)
-      .single()
+      .update({ status: 'sending' })
+      .eq('id', id)
     
-    if (existingEmail) {
-      console.log(`Trial Day ${day} already sent to ${user.email}`)
-      return
+    // Determine which email function to call
+    let result
+    switch (email_type) {
+      case 'trial-day-1':
+        result = await sendTrialDay1Email(user_email, firstName)
+        break
+      case 'trial-day-2':
+        result = await sendTrialDay2Email(user_email, firstName)
+        break
+      case 'trial-day-3':
+        result = await sendTrialDay3Email(user_email, firstName)
+        break
+      case 'trial-day-4':
+        result = await sendTrialDay4Email(user_email, firstName)
+        break
+      case 'trial-day-5':
+        result = await sendTrialDay5Email(user_email, firstName)
+        break
+      case 'trial-day-6':
+        result = await sendTrialDay6Email(user_email, firstName)
+        break
+      case 'trial-day-7':
+        result = await sendTrialDay7Email(user_email, firstName)
+        break
+      default:
+        console.error(`Unknown email type: ${email_type}`)
+        return
     }
-    
-    // Send the email
-    const result = await sendFunction(user.email, user.first_name)
     
     if (result.success) {
-      // Log the sent email
+      // Mark as sent
       await supabase
         .from('email_campaigns')
-        .insert({
-          user_email: user.email,
-          email_type: `trial-day-${day}`,
-          sent_at: new Date().toISOString(),
-          status: 'sent'
+        .update({ 
+          status: 'sent',
+          sent_at: new Date().toISOString()
         })
+        .eq('id', id)
       
-      console.log(`✅ Trial Day ${day} sent to ${user.first_name} (${user.email})`)
+      console.log(`✅ ${email_type} sent to ${firstName} (${user_email})`)
     } else {
-      console.error(`❌ Failed to send Trial Day ${day} to ${user.email}:`, result.error)
+      // Mark as failed
+      await supabase
+        .from('email_campaigns')
+        .update({ status: 'failed' })
+        .eq('id', id)
+      
+      console.error(`❌ Failed to send ${email_type} to ${user_email}:`, result.error)
     }
   } catch (error) {
-    console.error(`❌ Error sending Trial Day ${day} to ${user.email}:`, error)
+    console.error(`❌ Error sending ${email_type} to ${user_email}:`, error)
+    
+    // Mark as failed
+    await supabase
+      .from('email_campaigns')
+      .update({ status: 'failed' })
+      .eq('id', id)
   }
 }

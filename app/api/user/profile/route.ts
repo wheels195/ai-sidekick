@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import { sendWelcomeEmail } from '@/lib/email'
+import { scheduleTrialEmailSequence } from '@/lib/email-scheduler'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -150,6 +151,19 @@ export async function POST(request: NextRequest) {
         // Don't fail profile creation if welcome email fails
       } else {
         console.log('Welcome email sent successfully to OAuth user:', data.email)
+        
+        // Schedule 7-day trial email sequence
+        const scheduleResult = await scheduleTrialEmailSequence({
+          email: data.email,
+          firstName: data.first_name,
+          signupDate: new Date().toISOString()
+        })
+        
+        if (scheduleResult.success) {
+          console.log(`Trial email sequence scheduled for ${data.first_name} (${data.email})`)
+        } else {
+          console.error('Failed to schedule trial emails:', scheduleResult.error)
+        }
       }
     }
 
