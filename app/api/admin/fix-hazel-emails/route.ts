@@ -1,7 +1,16 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
 
-export async function POST() {
+// One-time admin function - bypassing normal auth for emergency fix
+export async function POST(request: NextRequest) {
+  // Simple security check using URL parameter
+  const { searchParams } = new URL(request.url)
+  const authKey = searchParams.get('key')
+  
+  if (authKey !== 'hazel-fix-2025') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  
   const supabase = createServiceClient()
   
   const userEmail = 'topguncleaner@gmail.com'
