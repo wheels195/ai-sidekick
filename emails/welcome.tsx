@@ -1,22 +1,26 @@
 import { Text, Heading, Section, Hr } from '@react-email/components'
 import BrandLayout from './_components/BrandLayout'
 import BrandButton from './_components/BrandButton'
+import CheckmarkBullet from './_components/CheckmarkBullet'
 
 interface WelcomeEmailProps {
   firstName: string
   businessName: string
   trade: string
+  userEmail?: string
 }
 
 export default function WelcomeEmail({ 
   firstName = 'Business Owner', 
   businessName = 'Your Business', 
-  trade = 'landscaping' 
+  trade = 'landscaping',
+  userEmail
 }: WelcomeEmailProps) {
   return (
     <BrandLayout 
       title={`Welcome to AI Sidekick, ${firstName}!`}
       preview="Your AI Sidekick is ready to help your business grow!"
+      userEmail={userEmail}
     >
       <Heading style={greetingStyle}>
         Welcome aboard, {firstName}! 🎉
@@ -29,26 +33,14 @@ export default function WelcomeEmail({
 
       <Section style={featureBoxStyle}>
         <Heading style={featureTitleStyle}>🚀 Your Growth Arsenal Includes:</Heading>
-        <ul style={featureListStyle}>
-          <li style={featureItemStyle}>
-            <span style={checkmarkStyle}>✓</span> Smart pricing & upsell strategies
-          </li>
-          <li style={featureItemStyle}>
-            <span style={checkmarkStyle}>✓</span> Local SEO & Google ranking tactics
-          </li>
-          <li style={featureItemStyle}>
-            <span style={checkmarkStyle}>✓</span> Customer acquisition playbooks
-          </li>
-          <li style={featureItemStyle}>
-            <span style={checkmarkStyle}>✓</span> AI-powered marketing content
-          </li>
-          <li style={featureItemStyle}>
-            <span style={checkmarkStyle}>✓</span> Competitive intelligence reports
-          </li>
-          <li style={featureItemStyle}>
-            <span style={checkmarkStyle}>✓</span> 24/7 business strategy support
-          </li>
-        </ul>
+        <Section>
+          <CheckmarkBullet>Smart pricing & upsell strategies</CheckmarkBullet>
+          <CheckmarkBullet>Local SEO & Google ranking tactics</CheckmarkBullet>
+          <CheckmarkBullet>Customer acquisition playbooks</CheckmarkBullet>
+          <CheckmarkBullet>AI-powered marketing content</CheckmarkBullet>
+          <CheckmarkBullet>Competitive intelligence reports</CheckmarkBullet>
+          <CheckmarkBullet>24/7 business strategy support</CheckmarkBullet>
+        </Section>
       </Section>
 
       <Section style={buttonContainerStyle}>

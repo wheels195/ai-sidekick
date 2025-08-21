@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link } from '@react-email/components'
 
 interface BrandButtonProps {
@@ -22,15 +23,15 @@ export default function BrandButton({ href, children, style = {} }: BrandButtonP
 
 const buttonStyle = {
   display: 'inline-block',
-  padding: '16px 40px',
+  padding: '14px 32px', // Slightly smaller for better proportions
   backgroundColor: '#10b981', // Emerald green
-  color: '#ffffff',
+  color: '#ffffff !important', // Force white text for email clients
   textDecoration: 'none',
   fontWeight: '600',
-  fontSize: '16px',
-  borderRadius: '8px',
+  fontSize: '15px', // Slightly smaller
+  borderRadius: '6px', // Less rounded for professional look
   textAlign: 'center' as const,
-  background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)', // Gradient
-  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.3)',
-  transition: 'all 0.2s ease',
+  background: '#10b981', // Solid color for better email client support
+  border: 'none',
+  cursor: 'pointer',
 }

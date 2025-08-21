@@ -4,15 +4,18 @@ import BrandButton from './_components/BrandButton'
 
 interface TrialDay1Props {
   firstName: string
+  userEmail?: string
 }
 
 export default function TrialDay1Email({ 
-  firstName = 'Business Owner'
+  firstName = 'Business Owner',
+  userEmail
 }: TrialDay1Props) {
   return (
     <BrandLayout 
       title={`${firstName}, here's your first win with AI Sidekick`}
       preview="Draft proposals, ads, and revenue ideas in minutes — not hours."
+      userEmail={userEmail}
     >
       <Heading style={greetingStyle}>
         Hi {firstName},

@@ -1,3 +1,4 @@
+import React from 'react'
 import { 
   Html, 
   Head, 
@@ -13,9 +14,10 @@ interface BrandLayoutProps {
   children: React.ReactNode
   title: string
   preview?: string
+  userEmail?: string
 }
 
-export default function BrandLayout({ children, title, preview }: BrandLayoutProps) {
+export default function BrandLayout({ children, title, preview, userEmail }: BrandLayoutProps) {
   return (
     <Html lang="en">
       <Head>
@@ -52,6 +54,10 @@ export default function BrandLayout({ children, title, preview }: BrandLayoutPro
               <Link href={`${process.env.NEXT_PUBLIC_SITE_URL}/learn`} style={footerLinkStyle}>
                 Learn
               </Link>
+              <Text style={separatorStyle}>•</Text>
+              <Link href={`${process.env.NEXT_PUBLIC_SITE_URL}/unsubscribe${userEmail ? `?email=${encodeURIComponent(userEmail)}` : ''}`} style={footerLinkStyle}>
+                Unsubscribe
+              </Link>
             </Section>
           </Section>
         </Container>
@@ -82,27 +88,25 @@ const containerStyle = {
 }
 
 const headerStyle = {
-  backgroundColor: 'linear-gradient(135deg, #064e3b 0%, #10b981 100%)', // Emerald gradient
-  padding: '40px 30px',
+  backgroundColor: '#059669', // Solid emerald background for better email client support
+  padding: '24px 30px', // Reduced padding for less overpowering header
   textAlign: 'center' as const,
-  background: '#059669', // Fallback for email clients that don't support gradients
 }
 
 const logoStyle = {
-  fontSize: '48px',
-  fontWeight: '700',
+  fontSize: '28px', // Reduced from 48px for industry standard
+  fontWeight: '600', // Slightly lighter weight
   color: '#ffffff',
   margin: '0',
   fontFamily: '"Dancing Script", "Brush Script MT", cursive',
   fontStyle: 'italic',
-  letterSpacing: '-2px',
-  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+  letterSpacing: '-1px', // Reduced letter spacing
 }
 
 const taglineStyle = {
   color: '#ffffff',
-  fontSize: '14px',
-  margin: '8px 0 0 0',
+  fontSize: '13px',
+  margin: '4px 0 0 0', // Reduced top margin
   opacity: '0.9',
 }
 

@@ -1,6 +1,7 @@
 import { Text, Heading, Section } from '@react-email/components'
 import BrandLayout from './_components/BrandLayout'
 import BrandButton from './_components/BrandButton'
+import CheckmarkBullet from './_components/CheckmarkBullet'
 
 interface TrialDay2Props {
   firstName: string
@@ -23,10 +24,10 @@ export default function TrialDay2Email({
       </Text>
 
       <Section style={benefitsStyle}>
-        <Text style={benefitTextStyle}>✅ Ads → Before/after images that stop customers from scrolling</Text>
-        <Text style={benefitTextStyle}>✅ Sales → Polished proposals that close jobs faster</Text>
-        <Text style={benefitTextStyle}>✅ Pricing → Spotting competitor gaps and bidding smarter</Text>
-        <Text style={benefitTextStyle}>✅ Growth → Upsells that boost revenue per visit</Text>
+        <CheckmarkBullet>Ads → Before/after images that stop customers from scrolling</CheckmarkBullet>
+        <CheckmarkBullet>Sales → Polished proposals that close jobs faster</CheckmarkBullet>
+        <CheckmarkBullet>Pricing → Spotting competitor gaps and bidding smarter</CheckmarkBullet>
+        <CheckmarkBullet>Growth → Upsells that boost revenue per visit</CheckmarkBullet>
       </Section>
 
       <Text style={messageStyle}>

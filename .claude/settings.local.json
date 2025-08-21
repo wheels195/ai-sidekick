@@ -67,7 +67,10 @@
       "Bash(npm update:*)",
       "Bash(sudo npm update:*)",
       "Bash(export PATH=~/.npm-global/bin:$PATH)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(for file in emails/trial-day-*.tsx emails/welcome.tsx)",
+      "Bash(do)",
+      "Bash(done)"
     ],
     "deny": []
   },

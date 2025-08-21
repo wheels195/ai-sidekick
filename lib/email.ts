@@ -38,7 +38,8 @@ export async function sendWelcomeEmail(email: string, firstName: string, busines
     const emailHtml = render(WelcomeEmail({ 
       firstName, 
       businessName, 
-      trade 
+      trade,
+      userEmail: email
     }));
 
     const { data, error } = await resend.emails.send({
