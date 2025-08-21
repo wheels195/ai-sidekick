@@ -1,9 +1,11 @@
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
 import { 
   getVerificationEmailTemplate, 
   getWelcomeEmailTemplate,
   getPasswordResetEmailTemplate 
 } from './email-templates';
+import WelcomeEmail from '../emails/welcome';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -32,11 +34,18 @@ export async function sendVerificationEmail(email: string, verificationToken: st
 
 export async function sendWelcomeEmail(email: string, firstName: string, businessName: string, trade: string) {
   try {
+    // Use React Email component with dark theme
+    const emailHtml = render(WelcomeEmail({ 
+      firstName, 
+      businessName, 
+      trade 
+    }));
+
     const { data, error } = await resend.emails.send({
       from: 'AI Sidekick <support@ai-sidekick.io>',
       to: [email],
       subject: `Welcome to AI Sidekick, ${firstName}!`,
-      html: getWelcomeEmailTemplate(firstName, businessName, trade, email)
+      html: emailHtml
     });
 
     if (error) {

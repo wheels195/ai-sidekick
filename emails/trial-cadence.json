@@ -1,0 +1,101 @@
+{
+  "cadence": {
+    "name": "7-Day Trial Email Sequence",
+    "description": "Automated email sequence to convert trial users to paid subscribers",
+    "trigger": "user_signup_completed",
+    "emails": [
+      {
+        "day": 1,
+        "delay_hours": 24,
+        "component": "trial-day-1",
+        "subject": "[First Name], here's your first win with AI Sidekick",
+        "from": "Mike Wheeler <mike@ai-sidekick.io>",
+        "description": "Founder introduction with practical first steps",
+        "conversion_goal": "engagement",
+        "cta": "Get Your First Revenue Idea"
+      },
+      {
+        "day": 2,
+        "delay_hours": 48,
+        "component": "trial-day-2", 
+        "subject": "Landscapers are using AI Sidekick to win more jobs",
+        "from": "AI Sidekick <admin@ai-sidekick.io>",
+        "description": "Social proof and real use cases",
+        "conversion_goal": "feature_usage",
+        "cta": "See How to Win More Jobs"
+      },
+      {
+        "day": 3,
+        "delay_hours": 72,
+        "component": "trial-day-3",
+        "subject": "Want more leads? Start with better ads.",
+        "from": "AI Sidekick <admin@ai-sidekick.io>",
+        "description": "Specific use case: ad creation and marketing",
+        "conversion_goal": "ad_creation",
+        "cta": "Create a Before/After Ad Now"
+      },
+      {
+        "day": 4,
+        "delay_hours": 96,
+        "component": "trial-day-4",
+        "subject": "Don't guess. Ask AI Sidekick.",
+        "from": "AI Sidekick <admin@ai-sidekick.io>",
+        "description": "Positioning as business advisor and consultant replacement",
+        "conversion_goal": "strategic_usage",
+        "cta": "Find Out If You're Charging Enough"
+      },
+      {
+        "day": 5,
+        "delay_hours": 120,
+        "component": "trial-day-5",
+        "subject": "Your trial ends in 2 days — don't lose momentum",
+        "from": "AI Sidekick <admin@ai-sidekick.io>",
+        "description": "First urgency email highlighting what they'll lose",
+        "conversion_goal": "urgency_awareness",
+        "cta": "Keep Your Growth Tools Running"
+      },
+      {
+        "day": 6,
+        "delay_hours": 144,
+        "component": "trial-day-6",
+        "subject": "How do you stack up against competitors?",
+        "from": "AI Sidekick <admin@ai-sidekick.io>",
+        "description": "Competitive intelligence value proposition",
+        "conversion_goal": "competitive_advantage",
+        "cta": "Uncover Competitor Gaps Now"
+      },
+      {
+        "day": 7,
+        "delay_hours": 168,
+        "component": "trial-day-7",
+        "subject": "[First Name], your trial ends today — here's my ask",
+        "from": "Mike Wheeler <mike@ai-sidekick.io>",
+        "description": "Final personal appeal from founder",
+        "conversion_goal": "subscription_conversion",
+        "cta": "Upgrade Today to Keep Growing"
+      }
+    ],
+    "metrics": {
+      "expected_open_rate": "45%",
+      "expected_click_rate": "12%",
+      "expected_conversion_rate": "18%",
+      "total_sequence_value": "$297"
+    },
+    "personalization": [
+      "firstName",
+      "signupDate",
+      "trialExpiryDate"
+    ],
+    "automation_notes": {
+      "scheduling": "Use Supabase cron or external service like Resend Sequences",
+      "personalization": "Pull firstName from user_profiles table",
+      "from_addresses": {
+        "mike@ai-sidekick.io": "Personal emails from founder (days 1, 7)",
+        "admin@ai-sidekick.io": "Team emails (days 2-6)"
+      },
+      "tracking": "Log all sends in email_campaigns table",
+      "unsubscribe": "Check email_preferences before sending",
+      "conversion_tracking": "Monitor subscription upgrades within 48 hours of email 7"
+    }
+  }
+}
