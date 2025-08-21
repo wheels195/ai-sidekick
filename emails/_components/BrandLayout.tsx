@@ -7,7 +7,7 @@ import {
   Section, 
   Text, 
   Link, 
-  Heading 
+  Img 
 } from '@react-email/components'
 
 interface BrandLayoutProps {
@@ -30,8 +30,13 @@ export default function BrandLayout({ children, title, preview, userEmail }: Bra
         <Container style={containerStyle}>
           {/* Header */}
           <Section style={headerStyle}>
-            <Heading style={logoStyle}>AI Sidekick</Heading>
-            <Text style={taglineStyle}>Specialized AI for Local Trades</Text>
+            <Img 
+              src={`${process.env.NEXT_PUBLIC_SITE_URL}/email-header.png`}
+              alt="AI Sidekick - Specialized AI for Local Trades"
+              width={600}
+              height={120}
+              style={headerImageStyle}
+            />
           </Section>
 
           {/* Content */}
@@ -88,26 +93,18 @@ const containerStyle = {
 }
 
 const headerStyle = {
-  backgroundColor: '#059669', // Solid emerald background for better email client support
-  padding: '24px 30px', // Reduced padding for less overpowering header
+  padding: '0', // No padding needed for full-width image
   textAlign: 'center' as const,
+  backgroundColor: 'transparent', // No background color needed
 }
 
-const logoStyle = {
-  fontSize: '28px', // Reduced from 48px for industry standard
-  fontWeight: '600', // Slightly lighter weight
-  color: '#ffffff',
-  margin: '0',
-  fontFamily: '"Dancing Script", "Brush Script MT", cursive',
-  fontStyle: 'italic',
-  letterSpacing: '-1px', // Reduced letter spacing
-}
-
-const taglineStyle = {
-  color: '#ffffff',
-  fontSize: '13px',
-  margin: '4px 0 0 0', // Reduced top margin
-  opacity: '0.9',
+const headerImageStyle = {
+  display: 'block',
+  width: '100%',
+  maxWidth: '600px',
+  height: 'auto', // Maintain aspect ratio
+  border: 'none',
+  outline: 'none',
 }
 
 const contentStyle = {
