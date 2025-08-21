@@ -50,7 +50,7 @@ export async function sendVerificationEmail(email: string, verificationToken: st
 export async function sendWelcomeEmail(email: string, firstName: string, businessName: string, trade: string) {
   try {
     // Use React Email component with dark theme
-    const emailHtml = render(WelcomeEmail({ 
+    const emailHtml = await render(WelcomeEmail({ 
       firstName, 
       businessName, 
       trade,
@@ -102,7 +102,7 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
 // Trial Day Email Functions with Full Personalization
 export async function sendTrialDay1Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay1Email({ 
+    const emailHtml = await render(TrialDay1Email({ 
       firstName,
       userEmail: email
     }));
@@ -128,7 +128,7 @@ export async function sendTrialDay1Email(email: string, firstName: string) {
 
 export async function sendTrialDay2Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay2Email({ 
+    const emailHtml = await render(TrialDay2Email({ 
       firstName,
       userEmail: email
     }));
@@ -154,7 +154,7 @@ export async function sendTrialDay2Email(email: string, firstName: string) {
 
 export async function sendTrialDay3Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay3Email({ 
+    const emailHtml = await render(TrialDay3Email({ 
       firstName,
       userEmail: email
     }));
@@ -180,7 +180,7 @@ export async function sendTrialDay3Email(email: string, firstName: string) {
 
 export async function sendTrialDay4Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay4Email({ 
+    const emailHtml = await render(TrialDay4Email({ 
       firstName,
       userEmail: email
     }));
@@ -206,7 +206,7 @@ export async function sendTrialDay4Email(email: string, firstName: string) {
 
 export async function sendTrialDay5Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay5Email({ 
+    const emailHtml = await render(TrialDay5Email({ 
       firstName,
       userEmail: email
     }));
@@ -232,7 +232,7 @@ export async function sendTrialDay5Email(email: string, firstName: string) {
 
 export async function sendTrialDay6Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay6Email({ 
+    const emailHtml = await render(TrialDay6Email({ 
       firstName,
       userEmail: email
     }));
@@ -258,7 +258,7 @@ export async function sendTrialDay6Email(email: string, firstName: string) {
 
 export async function sendTrialDay7Email(email: string, firstName: string) {
   try {
-    const emailHtml = render(TrialDay7Email({ 
+    const emailHtml = await render(TrialDay7Email({ 
       firstName,
       userEmail: email
     }));
