@@ -78,7 +78,9 @@ const CONTEXT_RULES = `## 🔒 Context Usage Rules
 - Never guess or generalize - use actual data provided
 - No recommendations for services they don't offer
 - No generic advice that applies to any landscaper
-- Always tie strategies to user's specific business context`
+- Always tie strategies to user's specific business context
+- **NEVER INVENT COMPETITOR NAMES OR BUSINESSES** - only use real search data
+- If no search data available, state "search data unavailable" instead of guessing`
 
 const QUALITY_CONTROL = `## 🚫 Quality Control
 
@@ -654,6 +656,56 @@ export async function POST(request: NextRequest) {
                 { status: 403 }
               )
             }
+            
+            // Pre-request token validation - estimate if this request would exceed limit
+            const remainingTokens = tokenLimit - tokensUsed
+            
+            // Estimate tokens for this request using tiktoken (more accurate than character count)
+            const { countChatTokens } = await import('@/lib/tokenUtils')
+            
+            // Build estimated message array for token counting
+            const estimatedMessages = [
+              { role: 'system', content: BASE_LANDSCAPING_SYSTEM_PROMPT },
+              ...previousMessages,
+              currentUserMessage
+            ]
+            
+            // Count tokens for the request
+            const estimatedInputTokens = countChatTokens(estimatedMessages)
+            const estimatedOutputTokens = 2000 // Conservative estimate for response
+            const estimatedTotalTokens = estimatedInputTokens + estimatedOutputTokens
+            
+            console.log('🎯 Pre-request token validation:', {
+              remainingTokens,
+              estimatedInputTokens,
+              estimatedOutputTokens,
+              estimatedTotalTokens,
+              wouldExceed: estimatedTotalTokens > remainingTokens
+            })
+            
+            // Warn if getting close to limit (under 10k remaining after this request)
+            const tokensAfterRequest = remainingTokens - estimatedTotalTokens
+            if (tokensAfterRequest < 10000 && tokensAfterRequest > 0) {
+              console.log('⚠️ User approaching token limit:', {
+                tokensAfterRequest,
+                percentUsed: ((tokensUsed + estimatedTotalTokens) / tokenLimit * 100).toFixed(1)
+              })
+            }
+            
+            // Block if this request would exceed limit
+            if (estimatedTotalTokens > remainingTokens) {
+              return NextResponse.json(
+                { 
+                  error: `Insufficient tokens for this request. You have ${remainingTokens.toLocaleString()} tokens remaining, but this request needs approximately ${estimatedTotalTokens.toLocaleString()} tokens. Please upgrade to continue.`,
+                  errorType: 'INSUFFICIENT_TOKENS',
+                  tokensRemaining: remainingTokens,
+                  estimatedUsage: estimatedTotalTokens,
+                  tokensUsed,
+                  tokenLimit
+                },
+                { status: 403 }
+              )
+            }
           }
         }
       } catch (error) {
@@ -723,7 +775,7 @@ export async function POST(request: NextRequest) {
       // Enhanced search: Google Places for local businesses + Google Custom Search for general web data
       console.log('🔍 Web search enabled - performing intelligent search routing')
       
-      const location = userProfile?.location || userProfile?.zip_code || 'Dallas, TX'
+      const location = userProfile?.location || userProfile?.zip_code
       let placesResults = ''
       let webResults = ''
       
@@ -1070,7 +1122,8 @@ ${searchResults}
     
     if (user && currentUserMessage?.role === 'user' && process.env.NEXT_PUBLIC_SUPABASE_URL) {
       try {
-        const { supabase } = createClient(request)
+        console.log('🔑 Using service client for user message save to bypass RLS...')
+        const supabase = createServiceClient()
         const { data: storedMessage } = await supabase
           .from('user_conversations')
           .insert({
@@ -1179,9 +1232,35 @@ ${searchResults}
               // Calculate accurate token usage and costs first
               
               // Use actual OpenAI token counts if available, otherwise estimate
-              const inputTokens = actualTokenUsage?.prompt_tokens || Math.ceil((currentUserMessage?.content?.length || 0) / 4)
-              const outputTokens = actualTokenUsage?.completion_tokens || Math.ceil(fullResponse.length / 4)
-              const totalTokens = actualTokenUsage?.total_tokens || (inputTokens + outputTokens)
+              console.log('🔍 Token usage from OpenAI:', actualTokenUsage)
+              
+              // Calculate tokens with better fallback
+              let inputTokens = 0
+              let outputTokens = 0
+              let totalTokens = 0
+              
+              if (actualTokenUsage) {
+                // Use actual token counts from OpenAI
+                inputTokens = actualTokenUsage.prompt_tokens || 0
+                outputTokens = actualTokenUsage.completion_tokens || 0
+                totalTokens = actualTokenUsage.total_tokens || (inputTokens + outputTokens)
+              } else {
+                // Fallback estimation when OpenAI doesn't provide usage
+                console.log('⚠️ No token usage from OpenAI, using estimation')
+                // More accurate estimation: ~1 token per 4 characters for English text
+                inputTokens = Math.ceil((currentUserMessage?.content?.length || 0) / 4) + 
+                             Math.ceil(JSON.stringify(chatMessages).length / 4) // Include system + context
+                outputTokens = Math.ceil(fullResponse.length / 4)
+                totalTokens = inputTokens + outputTokens
+              }
+              
+              // Ensure we never have zero or null tokens
+              if (!totalTokens || totalTokens === 0) {
+                console.error('❌ Token calculation resulted in 0, using minimum fallback')
+                inputTokens = inputTokens || 50
+                outputTokens = outputTokens || 50
+                totalTokens = inputTokens + outputTokens
+              }
               
               // Calculate costs based on model and actual usage
               const costs = calculateApiCosts({
@@ -1257,6 +1336,20 @@ ${searchResults}
                   last_activity_at: new Date().toISOString()
                 })
                 .eq('id', user.id)
+              
+              // Also track in api_usage_tracking for analytics dashboard
+              await serviceSupabase
+                .from('api_usage_tracking')
+                .insert({
+                  user_id: user.id,
+                  api_type: 'chat',
+                  endpoint: '/api/chat',
+                  model_used: modelToUse,
+                  tokens_used: totalTokens,
+                  cost_usd: costs.totalCostUsd,
+                  cost_breakdown: costs,
+                  date_used: new Date().toISOString().split('T')[0]
+                })
 
               // Store anonymized data for global learning
               await serviceSupabase

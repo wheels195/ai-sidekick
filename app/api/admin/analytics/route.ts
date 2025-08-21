@@ -306,6 +306,8 @@ async function getCostAnalytics(supabase: any, dates: any) {
       .limit(50) || []
 
   // Calculate aggregated costs - with fallback for missing cost_breakdown
+  // NOTE: Chat costs are now in BOTH user_conversations and api_usage_tracking
+  // This may cause double-counting. Monitor in production and adjust if needed.
   const calculatePeriodCosts = (costs: any[], apiUsage: any[] = []) => {
     return costs?.reduce((acc, conv) => {
       const breakdown = conv.cost_breakdown
@@ -430,6 +432,13 @@ async function getCostAnalytics(supabase: any, dates: any) {
         acc.dalle_cost += cost
       } else if (usage.api_type === 'whisper') {
         acc.whisper_cost += cost
+      } else if (usage.api_type === 'chat') {
+        // Add chat costs from api_usage_tracking (in addition to user_conversations)
+        if (usage.model_used === 'gpt-4o') {
+          acc.gpt4o_cost += cost
+        } else if (usage.model_used === 'gpt-4o-mini') {
+          acc.gpt4o_mini_cost += cost
+        }
       }
       
       return acc
