@@ -162,6 +162,7 @@ const BASIC_FORMATTING = `
 - Use emerald green (#34d399) for headings and emphasis
 - Use ### for section headers (never ### **Title** - just ### Title)
 - Use **text** only for emphasis within content, not for headers
+- **CRITICAL: DO NOT combine ### with ** - use either ### Title OR **emphasis** separately**
 - Lists with - for bullets, numbers for sequences
 - Format consistently whether web search is on or off
 - End responses with actionable follow-up questions`
@@ -484,7 +485,7 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
       },
       body: JSON.stringify({
         textQuery: `${query} near ${location}`, // Enhanced query for hyper-local results
-        maxResultCount: 8,
+        pageSize: 8,
         languageCode: 'en',
         regionCode: 'US' // Focus on US businesses only
       })
@@ -529,7 +530,7 @@ async function performGooglePlacesSearch(query: string, location?: string): Prom
           formatted += `ADDRESS: ${address}\n`
           formatted += `PHONE: ${phone}\n`
           formatted += `RATING: ${rating} (${reviewCount})\n`
-          formatted += `WEBSITE: ${website}\n`
+          formatted += `WEBSITE: ${website !== 'Website not available' ? `[Visit Website](${website})` : website}\n`
           formatted += `BUSINESS_STATUS: ${status}\n`
           formatted += `SERVICES/TYPES: ${businessTypes}\n`
           formatted += `SUMMARY: ${summary}\n`
