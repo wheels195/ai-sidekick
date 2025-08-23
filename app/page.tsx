@@ -754,7 +754,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-white leading-snug max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
-              Your 24/7 landscaping sidekick that writes proposals in 30 seconds, creates before & after marketing images, and helps you win more contracts. Designed for landscapers nationwide.
+              Your 24/7 sidekick that writes proposals in 30 seconds, creates before & after images, and helps you win more jobs.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
