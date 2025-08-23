@@ -795,7 +795,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               {/* Rounded container for image */}
               <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-500/10 to-teal-500/10 backdrop-blur-sm border border-emerald-500/20 shadow-2xl">
                 <img 
-                  src="/images/hero-image.png" 
+                  src="/images/hero-image.png?v=2" 
                   alt="Landscaper using AI Sidekick on tablet to grow their business"
                   className="w-full h-full object-cover"
                   width={2400}
