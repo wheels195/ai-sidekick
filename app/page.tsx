@@ -752,7 +752,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 <span className="text-blue-300 font-medium">AI-Powered Business Growth Platform</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight">
+              <h1 className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-6 sm:mb-8 leading-tight">
                 <TypewriterText text="The First AI Platform Built for Landscapers" />
               </h1>
 
