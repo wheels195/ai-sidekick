@@ -66,28 +66,24 @@ function TypewriterText({ text }: { text: string }) {
   // Split the text to apply different gradients
   const renderText = () => {
     const words = displayedText.split(' ')
-    const specializedAI = words.slice(0, 2).join(' ')
-    const forLandscapers = words.slice(2).join(' ')
+    // "The First AI Platform Built for" - first 6 words
+    const firstPart = words.slice(0, 6).join(' ')
+    // "Landscaping Businesses" - last 2 words
+    const landscapingBusinesses = words.slice(6).join(' ')
 
     return (
       <>
-        {specializedAI && (
+        {firstPart && (
           <div className="mb-2">
             <span className="bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent">
-              {specializedAI}
+              {firstPart}
             </span>
           </div>
         )}
-        {forLandscapers && (
+        {landscapingBusinesses && (
           <div>
             <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
-              <span>{forLandscapers.split(' ')[0]}</span>
-              <span>&nbsp;</span>
-              <span className="tracking-wide">
-                <span className="font-cursive">{forLandscapers.split(' ')[1]?.charAt(0)}</span>
-                <span>{forLandscapers.split(' ')[1]?.slice(1, -1)}</span>
-                <span className="font-cursive">{forLandscapers.split(' ')[1]?.slice(-1).toUpperCase()}</span>
-              </span>
+              {landscapingBusinesses}
             </span>
           </div>
         )}
@@ -754,11 +750,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-normal mb-6 sm:mb-8 leading-tight">
-              <TypewriterText text="Specialized AI For Landscapers" />
+              <TypewriterText text="The First AI Platform Built for Landscaping Businesses" />
             </h1>
 
-            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-200 leading-snug max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
-              Chat in <span className="font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">50+ languages</span> with your <span className="font-bold">24/7 landscaping expert</span> to write <span className="font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">proposals in seconds</span>, create <span className="font-bold">marketing content</span>, and <span className="font-bold bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">win more jobs</span>.
+            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-white leading-snug max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
+              Your 24/7 landscaping sidekick that writes proposals in 30 seconds, creates before & after marketing images, and helps you win more contracts. Designed for landscapers nationwide.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
