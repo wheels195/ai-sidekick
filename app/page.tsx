@@ -1747,7 +1747,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
           </div>
 
           {/* All Plans in a Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center items-stretch w-full sm:max-w-7xl sm:mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 justify-center items-stretch w-full sm:max-w-5xl sm:mx-auto">
             <ModernPricingCard
               planName="Free Trial"
               price="0"
@@ -1783,36 +1783,6 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               ]}
               onClick={() => window.location.href = '/signup?plan=advanced'}
             />
-
-            <div className="relative">
-              {/* Coming Soon Overlay */}
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl z-10 flex items-center justify-center">
-                <div className="transform -rotate-12">
-                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-full text-lg shadow-2xl animate-pulse">
-                    COMING SOON
-                  </span>
-                </div>
-              </div>
-              
-              {/* Blurred Card */}
-              <div className="opacity-70">
-                <ModernPricingCard
-                  planName="Sidepiece AI"
-                  price="Contact Us"
-                  description="Premium access to all trade AI sidekicks"
-                  buttonText="Contact for Pricing"
-                  features={[
-                    "Access to ALL trade AI sidekicks",
-                    "Landscaping, Electrical, HVAC, Plumbing & more",
-                    "Higher token limits & priority processing",
-                    "Advanced analytics & reporting",
-                    "Custom integrations available",
-                    "Dedicated account management",
-                  ]}
-                  onClick={() => {}}
-                />
-              </div>
-            </div>
           </div>
         </div>
       </section>
