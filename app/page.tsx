@@ -68,8 +68,8 @@ function TypewriterText({ text }: { text: string }) {
     const words = displayedText.split(' ')
     // "The First AI Platform Built for" - first 6 words
     const firstPart = words.slice(0, 6).join(' ')
-    // "Landscaping Businesses" - last 2 words
-    const landscapingBusinesses = words.slice(6).join(' ')
+    // "Landscapers" - last word
+    const landscapers = words.slice(6).join(' ')
 
     return (
       <>
@@ -80,10 +80,10 @@ function TypewriterText({ text }: { text: string }) {
             </span>
           </div>
         )}
-        {landscapingBusinesses && (
+        {landscapers && (
           <div>
-            <span className="bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent">
-              {landscapingBusinesses}
+            <span className="bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-700 bg-clip-text text-transparent">
+              {landscapers}
             </span>
           </div>
         )}
@@ -753,11 +753,11 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-normal mb-6 sm:mb-8 leading-tight">
-                <TypewriterText text="The First AI Platform Built for Landscaping Businesses" />
+                <TypewriterText text="The First AI Platform Built for Landscapers" />
               </h1>
 
               <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl text-white leading-snug max-w-4xl mb-8 sm:mb-12">
-                Your 24/7 sidekick that writes proposals in 30 seconds, creates before & after images, and helps you win more jobs.
+                AI Sidekick is more than software — it's your business partner for proposals, marketing, and winning more clients. Built to help landscapers think bigger and grow faster.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-center w-full max-w-md sm:max-w-none mx-auto lg:mx-0">
