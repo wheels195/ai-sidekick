@@ -743,49 +743,68 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/08 to-teal-500/08 rounded-full blur-3xl"></div>
         <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-20 sm:max-w-7xl sm:mx-auto xl:max-w-none">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-8 mt-8 sm:mt-0 hover:scale-105 transition-all duration-300">
-              <Zap className="w-5 h-5 text-emerald-400" />
-              <span className="text-blue-300 font-medium">AI-Powered Business Growth Platform</span>
+          {/* Two column layout - text left, image right */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-20">
+            {/* Left column - Text content */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-3 mb-8 mt-8 sm:mt-0 hover:scale-105 transition-all duration-300">
+                <Zap className="w-5 h-5 text-emerald-400" />
+                <span className="text-blue-300 font-medium">AI-Powered Business Growth Platform</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-normal mb-6 sm:mb-8 leading-tight">
+                <TypewriterText text="The First AI Platform Built for Landscaping Businesses" />
+              </h1>
+
+              <p className="text-lg sm:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl text-white leading-snug max-w-4xl mb-8 sm:mb-12">
+                Your 24/7 sidekick that writes proposals in 30 seconds, creates before & after images, and helps you win more jobs.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-center w-full max-w-md sm:max-w-none mx-auto lg:mx-0">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 backdrop-blur-sm border border-white/20 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
+                  onClick={() => window.location.href = '/signup'}
+                >
+                  <span className="block sm:inline">Start Your Free Trial</span>
+                  <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
+                </Button>
+              </div>
+              
+              {/* Trust Indicators */}
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-6 mt-6 sm:mt-8">
+                <div className="flex items-center gap-2 text-white/80">
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                  <span className="text-sm sm:text-base font-medium">7 Days Free</span>
+                </div>
+                <div className="hidden sm:block w-px h-5 bg-white/20" />
+                <div className="flex items-center gap-2 text-white/80">
+                  <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                  <span className="text-sm sm:text-base font-medium">No Credit Card Required</span>
+                </div>
+                <div className="hidden sm:block w-px h-5 bg-white/20" />
+                <div className="flex items-center gap-2 text-white/80">
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                  <span className="text-sm sm:text-base font-medium">Cancel Anytime</span>
+                </div>
+              </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl 3xl:text-9xl font-normal mb-6 sm:mb-8 leading-tight">
-              <TypewriterText text="The First AI Platform Built for Landscaping Businesses" />
-            </h1>
-
-            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl text-white leading-snug max-w-4xl xl:max-w-6xl 2xl:max-w-7xl mx-auto mb-8 sm:mb-12 px-4">
-              Your 24/7 sidekick that writes proposals in 30 seconds, creates before & after images, and helps you win more jobs.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full max-w-md sm:max-w-none mx-auto px-4">
-              <Button
-                size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 backdrop-blur-sm border border-white/20 text-center min-h-[44px] sm:min-h-[48px] lg:min-h-[52px]"
-                onClick={() => window.location.href = '/signup'}
-              >
-                <span className="block sm:inline">Start Your Free Trial</span>
-                <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 inline" />
-              </Button>
+            {/* Right column - Image */}
+            <div className="relative order-first lg:order-last">
+              {/* Rounded container for image */}
+              <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-500/10 to-teal-500/10 backdrop-blur-sm border border-emerald-500/20 shadow-2xl">
+                <img 
+                  src="/images/hero-image.png" 
+                  alt="Landscaper using AI Sidekick on tablet to grow their business"
+                  className="w-full h-full object-cover"
+                  width={2400}
+                  height={1600}
+                />
+              </div>
+              {/* Subtle glow effect behind image */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-3xl blur-2xl -z-10"></div>
             </div>
-            
-            {/* Trust Indicators */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-6 sm:mt-8">
-              <div className="flex items-center gap-2 text-white/80">
-                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
-                <span className="text-sm sm:text-base font-medium">7 Days Free</span>
-              </div>
-              <div className="hidden sm:block w-px h-5 bg-white/20" />
-              <div className="flex items-center gap-2 text-white/80">
-                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
-                <span className="text-sm sm:text-base font-medium">No Credit Card Required</span>
-              </div>
-              <div className="hidden sm:block w-px h-5 bg-white/20" />
-              <div className="flex items-center gap-2 text-white/80">
-                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
-                <span className="text-sm sm:text-base font-medium">Cancel Anytime</span>
-              </div>
-            </div>
-            
           </div>
 
           {/* Value Propositions */}
