@@ -82,7 +82,7 @@ function TypewriterText({ text }: { text: string }) {
         )}
         {landscapers && (
           <div>
-            <span className="bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-700 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-500 bg-clip-text text-transparent">
               {landscapers}
             </span>
           </div>
@@ -752,7 +752,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                 <span className="text-blue-300 font-medium">AI-Powered Business Growth Platform</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-normal mb-6 sm:mb-8 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight">
                 <TypewriterText text="The First AI Platform Built for Landscapers" />
               </h1>
 
