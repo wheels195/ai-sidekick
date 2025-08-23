@@ -791,7 +791,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
             </div>
 
             {/* Right column - Image */}
-            <div className="relative order-first lg:order-last">
+            <div className="relative lg:order-last">
               {/* Rounded container for image */}
               <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-500/10 to-teal-500/10 backdrop-blur-sm border border-emerald-500/20 shadow-2xl">
                 <img 
