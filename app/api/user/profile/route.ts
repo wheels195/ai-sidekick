@@ -151,19 +151,21 @@ export async function POST(request: NextRequest) {
         // Don't fail profile creation if welcome email fails
       } else {
         console.log('Welcome email sent successfully to OAuth user:', data.email)
-        
-        // Schedule 7-day trial email sequence
-        const scheduleResult = await scheduleTrialEmailSequence({
-          email: data.email,
-          firstName: data.first_name,
-          signupDate: new Date().toISOString()
-        })
-        
-        if (scheduleResult.success) {
-          console.log(`Trial email sequence scheduled for ${data.first_name} (${data.email})`)
-        } else {
-          console.error('Failed to schedule trial emails:', scheduleResult.error)
-        }
+      }
+    }
+
+    // Schedule 7-day trial email sequence for ALL users (OAuth + email/password)
+    if (!isAdmin) { // Don't schedule trial emails for admin accounts
+      const scheduleResult = await scheduleTrialEmailSequence({
+        email: data.email,
+        firstName: data.first_name,
+        signupDate: new Date().toISOString()
+      })
+      
+      if (scheduleResult.success) {
+        console.log(`Trial email sequence scheduled for ${data.first_name} (${data.email})`)
+      } else {
+        console.error('Failed to schedule trial emails:', scheduleResult.error)
       }
     }
 
