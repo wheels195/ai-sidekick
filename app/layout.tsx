@@ -4,6 +4,7 @@ import './globals.css'
 import 'highlight.js/styles/github-dark.css'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import MetaPixel from '@/components/analytics/MetaPixel'
+import GoogleTagManager, { GoogleTagManagerNoscript } from '@/components/analytics/GoogleTagManager'
 
 const inter = Inter({ subsets: ['latin'] })
 const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-cursive' })
@@ -57,6 +58,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${dancingScript.variable}`}>
+        <GoogleTagManagerNoscript gtmId="GTM-TCVJNKW4" />
+        <GoogleTagManager gtmId="GTM-TCVJNKW4" />
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
