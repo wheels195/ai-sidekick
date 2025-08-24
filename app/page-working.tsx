@@ -763,7 +763,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             <Leaf className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h1 className="text-sm font-bold text-white font-cursive">Scout</h1>
+                            <h1 className="text-sm font-bold text-white font-cursive">Sonny</h1>
                             <p className="text-xs text-gray-300">Personal Business Strategist</p>
                           </div>
                         </div>
@@ -801,7 +801,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                             {/* Character with hover glow */}
                             <img 
                               src="/character.png?v=4" 
-                              alt="Scout character"
+                              alt="Sonny character"
                               className="w-72 h-72 object-contain relative z-10 transition-all duration-300 group-hover:scale-105"
                               style={{ 
                                 filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
@@ -814,7 +814,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
                         <div className="ml-0 lg:ml-48">
                         <div className="space-y-3 text-sm">
                           <p className="text-base">
-                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Scout</span>. Your strategic business sidekick.
+                            Hey there — I'm <span className="font-cursive text-emerald-300 font-semibold text-lg">Sonny</span>. Your strategic business sidekick.
                           </p>
                           
                           <p className="text-gray-200 text-sm">
@@ -1476,7 +1476,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               Every <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-cursive">AI Sidekick</span> is trained like a business consultant — just for your trade.
             </h3>
             <p className="text-lg xl:text-xl 2xl:text-2xl text-gray-200 mb-8 lg:mb-10 max-w-3xl mx-auto">
-              The first is <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive text-xl xl:text-2xl 2xl:text-3xl">Scout</span>, our landscaping AI sidekick. More trades coming soon.
+              The first is <span className="bg-gradient-to-r from-emerald-400 to-emerald-800 bg-clip-text text-transparent font-cursive text-xl xl:text-2xl 2xl:text-3xl">Sonny</span>, our landscaping AI sidekick. More trades coming soon.
             </p>
             
             <Button 
@@ -1485,7 +1485,7 @@ Elite Landscape Co. has 234 reviews but charges premium rates ($$$$) - opportuni
               className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-base sm:text-lg lg:text-xl xl:text-2xl px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 xl:py-8 shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105 max-w-full min-h-[44px] sm:min-h-[52px] lg:min-h-[56px]"
             >
               <span className="truncate">
-                → Explore <span className="font-cursive">Scout</span>
+                → Explore <span className="font-cursive">Sonny</span>
               </span>
               <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 flex-shrink-0" />
             </Button>

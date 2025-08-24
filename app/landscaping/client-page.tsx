@@ -466,7 +466,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         <div className="space-y-2 sm:space-y-4">
           <h1 className="text-lg sm:text-2xl text-white font-semibold">
             Hi! 👋<br />
-            I'm <span className="font-cursive text-emerald-400 font-bold text-2xl sm:text-3xl">Scout</span>, your AI Sidekick for growing your business.
+            I'm <span className="font-cursive text-emerald-400 font-bold text-2xl sm:text-3xl">Sonny</span>, your AI Sidekick for growing your business.
           </h1>
           
           {/* What I can help with */}
@@ -519,7 +519,7 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
         {/* Simplified greeting */}
         <h1 className="text-lg sm:text-2xl text-white font-semibold">
           Hi {displayName}! 👋<br />
-          I'm <span className="font-cursive text-emerald-400 font-bold text-2xl sm:text-3xl">Scout</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
+          I'm <span className="font-cursive text-emerald-400 font-bold text-2xl sm:text-3xl">Sonny</span>, your AI Sidekick for growing <span className="text-emerald-200">{businessName || 'your business'}</span>.
         </h1>
         
         {/* What I can help with */}
@@ -551,11 +551,11 @@ const WelcomeHeader = ({ user, isFirstTime }: { user: any, isFirstTime: boolean 
 // Simple greeting for chat messages (when welcome header is hidden)
 const generateSimpleGreeting = (user: any): string => {
   if (!user) {
-    return "Hi! I'm **Scout**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business. What can I help you with today?"
+    return "Hi! I'm **Sonny**, your Landscaping AI Sidekick. I'm here to help you grow your landscaping business. What can I help you with today?"
   }
   
   const displayName = user.firstName || 'there'
-  return `Hi, ${displayName}! I'm **Scout**, your Landscaping AI Sidekick. How can we grow your business today?`
+  return `Hi, ${displayName}! I'm **Sonny**, your Landscaping AI Sidekick. How can we grow your business today?`
 }
 
 // Generate better responses for image creation with helpful tips
@@ -618,7 +618,7 @@ const WELCOME_MESSAGES = [
   "What's on your business agenda today?",
   "Ready to tackle today's landscaping challenges?",
   "Let's make your business bloom today",
-  "What can Scout help you accomplish today?",
+  "What can Sonny help you accomplish today?",
   "How can we elevate your landscaping business?",
   "What's your biggest business priority right now?",
   "Let's turn your landscaping goals into reality",
@@ -2037,7 +2037,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-t-emerald-300 rounded-full animate-spin" style={{ animationDelay: '0.5s', animationDirection: 'reverse' }}></div>
               </div>
               <div className="text-emerald-400 text-lg font-medium animate-pulse">
-                Loading Scout...
+                Loading Sonny...
               </div>
             </div>
           </div>
@@ -2152,10 +2152,10 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 <Leaf className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-bold">Scout | Your AI Sidekick</h1>
+                <h1 className="text-base sm:text-lg lg:text-xl typography-heading-bold text-white font-bold">Sonny | Your AI Sidekick</h1>
               </div>
               <div className="sm:hidden">
-                <h1 className="text-base typography-heading-bold text-white font-bold">Scout | Your AI Sidekick</h1>
+                <h1 className="text-base typography-heading-bold text-white font-bold">Sonny | Your AI Sidekick</h1>
               </div>
             </div>
 
@@ -3191,7 +3191,7 @@ export default function LandscapingChatClient({ user: initialUser, initialGreeti
                 </div>
                 
                 <p className="text-gray-300 text-sm">
-                  The more context you provide, the better Scout can help your landscaping business:
+                  The more context you provide, the better Sonny can help your landscaping business:
                 </p>
 
                 <div className="space-y-3">

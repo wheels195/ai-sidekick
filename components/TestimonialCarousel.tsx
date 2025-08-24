@@ -47,8 +47,8 @@ interface TestimonialCarouselProps {
 const placeholderTestimonials: Testimonial[] = [
   {
     imageSrc: '/testimonial-1.jpg',
-    headline: 'Scout finds money in the places you overlook',
-    subheadline: 'From upsell ideas to smarter customer follow-ups, Scout gives landscapers like Bob an edge — without the stress of doing it alone.',
+    headline: 'Sonny finds money in the places you overlook',
+    subheadline: 'From upsell ideas to smarter customer follow-ups, Sonny gives landscapers like Bob an edge — without the stress of doing it alone.',
     stats: [
       { icon: <TrendingUp className="w-5 h-5 text-emerald-400" />, text: '3 Personalized Upsell Ideas based on services Bob already offers' },
       { icon: <Users className="w-5 h-5 text-emerald-400" />, text: '2x Follow-Up Rate using built-in text and email templates' },
