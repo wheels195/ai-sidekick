@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sidekick for Staffing &mdash; Fill Roles Faster, Never Lose a Candidate</title>
+  <meta name="description" content="Staffing agencies lose top candidates in 10 days. AI Sidekick texts back instantly, engages candidates 24/7, and automates follow-up so you fill more roles faster.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #111;
+      --bg-card: #151515;
+      --border: #222;
+      --border-h: #333;
+      --text: #eee;
+      --text-2: #999;
+      --text-3: #555;
+      --accent: #c9a96e;
+      --accent-light: #dbbf8a;
+      --accent-dim: rgba(201,169,110,0.12);
+      --accent-dimmer: rgba(201,169,110,0.06);
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --max-w: 1180px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.55;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.03;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;
+      background-size: 200px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .w {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .serif { font-family: var(--serif); font-weight: 400; }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+
+    em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent), #a88a55);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s var(--ease);
+      text-decoration: none;
+    }
+
+    .btn-main {
+      padding: 0.95rem 2.2rem;
+      font-size: 0.92rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: #0a0a0a;
+      border-radius: 100px;
+    }
+
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,169,110,0.2); }
+
+    .btn-ghost {
+      padding: 0.95rem 2.2rem;
+      font-size: 0.92rem;
+      background: transparent;
+      color: var(--text);
+      border-radius: 100px;
+      border: 1px solid var(--border-h);
+    }
+
+    .btn-ghost:hover { border-color: var(--text-2); }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 0;
+      transition: all 0.35s var(--ease);
+    }
+
+    nav.pinned {
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 0;
+    }
+
+    nav .w { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--text-2); font-weight: 400; }
+
+    .nav-r {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .nav-r a { color: var(--text-2); transition: color 0.2s; }
+    .nav-r a:hover { color: var(--text); }
+    .nav-r .btn-main { color: #0a0a0a; font-size: 0.82rem; padding: 0.65rem 1.5rem; }
+
+    @media (max-width: 768px) {
+      .nav-r a:not(.btn) { display: none; }
+    }
+
+    /* === HERO === */
+    .hero {
+      padding: 10rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-blur {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      opacity: 0.08;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      top: 10%;
+      left: 15%;
+    }
+
+    .hero .w {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.15s forwards;
+    }
+
+    .hero-h {
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.3s forwards;
+    }
+
+    .hero-p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 2.25rem;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.45s forwards;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.6s forwards;
+    }
+
+    .hero-img {
+      border-radius: 20px;
+      overflow: hidden;
+      opacity: 0;
+      animation: up 0.9s var(--ease) 0.5s forwards;
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero .w { grid-template-columns: 1fr; }
+      .hero { padding: 7rem 0 3rem; }
+      .hero-h { font-size: clamp(2.2rem, 7vw, 3.2rem); }
+      .hero-img { margin-top: 1rem; }
+      .hero-img img { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-img { display: none; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* === STATS === */
+    .stats {
+      padding: 4.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.4;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-src {
+      font-size: 0.62rem;
+      color: var(--text-3);
+    }
+
+    .stat-src a {
+      color: var(--text-3);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+
+    .stat-src a:hover { color: var(--text-2); }
+
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .stat-card { text-align: left; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+      .stat-card:last-child { border-bottom: none; }
+    }
+
+    /* === PROBLEM === */
+    .problem {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problem-top { margin-bottom: 3rem; max-width: 680px; }
+    .problem-eyebrow { margin-bottom: 1rem; }
+
+    .problem-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .problem-p {
+      font-size: 1rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .scenarios {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .scenario {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+    }
+
+    .scenario-time {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .scenario-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .scenario-desc {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .scenario-result {
+      font-size: 0.82rem;
+      padding: 0.6rem 0.85rem;
+      background: rgba(52,199,89,0.08);
+      border: 1px solid rgba(52,199,89,0.15);
+      border-radius: 8px;
+      color: #6dd58c;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .scenarios { grid-template-columns: 1fr; }
+    }
+
+    /* === HOW IT WORKS === */
+    .how {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .how-top { margin-bottom: 3rem; }
+    .how-eyebrow { margin-bottom: 1rem; }
+
+    .how-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+
+    /* === ROI === */
+    .roi {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .roi-top { margin-bottom: 3rem; max-width: 620px; }
+    .roi-eyebrow { margin-bottom: 1rem; }
+
+    .roi-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .roi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .roi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .roi-card-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 1.25rem;
+    }
+
+    .roi-card-red .roi-card-label { color: #e85d54; }
+    .roi-card-green .roi-card-label { color: #6dd58c; }
+
+    .roi-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--text-2);
+    }
+
+    .roi-line:last-child { border-bottom: none; }
+
+    .roi-line span:last-child { font-weight: 600; color: var(--text); }
+
+    .roi-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.85rem 0 0;
+      margin-top: 0.5rem;
+      border-top: 1px solid var(--border-h);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .roi-total-red { color: #e85d54; }
+    .roi-total-green { color: #6dd58c; }
+
+    .roi-src {
+      margin-top: 1.5rem;
+      font-size: 0.68rem;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+
+    .roi-src a {
+      color: var(--text-3);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+
+    .roi-src a:hover { color: var(--text-2); }
+
+    @media (max-width: 768px) {
+      .roi-grid { grid-template-columns: 1fr; }
+    }
+
+    /* === PRICING === */
+    .pricing {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-top { margin-bottom: 3rem; }
+    .pricing-eyebrow { margin-bottom: 1rem; }
+
+    .pricing-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-h);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 560px;
+    }
+
+    .pricing-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-price {
+      font-family: var(--serif);
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price small {
+      font-size: 1rem;
+      color: var(--text-2);
+      font-family: var(--sans);
+      font-weight: 400;
+    }
+
+    .pricing-setup {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-list li {
+      padding: 0.45rem 0;
+      font-size: 0.88rem;
+      color: var(--text-2);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .pricing-list li::before {
+      content: '\2713';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* === FAQ === */
+    .faq {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-top { margin-bottom: 3rem; }
+    .faq-eyebrow { margin-bottom: 1rem; }
+
+    .faq-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .faq-list { max-width: 780px; }
+
+    .faq-item { border-bottom: 1px solid var(--border); }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.4rem 0;
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .faq-q:hover { color: var(--accent-light); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--accent);
+      transition: transform 0.35s var(--ease), background 0.25s ease;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--accent-dim);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease), padding 0.3s ease;
+    }
+
+    .faq-item.open .faq-a { max-height: 300px; }
+
+    .faq-a-inner {
+      padding-bottom: 1.4rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    /* === CTA === */
+    .cta {
+      padding: 7rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta .w {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .cta-h {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .cta-p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .cta-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: left;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-full { margin-bottom: 1.25rem; }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.02em;
+    }
+
+    .form-group input,
+    .form-group select {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      padding: 0.7rem 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      transition: border-color 0.25s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus { border-color: var(--accent); }
+
+    .form-group select option { background: var(--bg); color: var(--text); }
+
+    .form-submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .cta-note {
+      margin-top: 1.25rem;
+      font-size: 0.82rem;
+      color: var(--text-3);
+      text-align: center;
+    }
+
+    .form-success { text-align: center; padding: 2rem 0; }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(52,199,89,0.12);
+      color: #34c759;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin: 0 auto 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* === FOOTER === */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    footer .w {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .f-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.82rem;
+    }
+
+    .f-links a { color: var(--text-3); transition: color 0.2s; }
+    .f-links a:hover { color: var(--text); }
+
+    .f-copy { font-size: 0.72rem; color: var(--text-3); }
+
+    /* === REVEAL === */
+    .rv {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+
+    .rv.show { opacity: 1; transform: translateY(0); }
+
+    .rv-d1 { transition-delay: 0.06s; }
+    .rv-d2 { transition-delay: 0.12s; }
+    .rv-d3 { transition-delay: 0.18s; }
+    .rv-d4 { transition-delay: 0.24s; }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="w">
+      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <ul class="nav-r">
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#industries">Industries</a></li>
+        <li><a href="#contact" class="btn btn-main">Book a Demo</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-blur"></div>
+    <div class="w">
+      <div>
+        <p class="eyebrow hero-eyebrow">AI Sidekick for Staffing</p>
+        <h1 class="serif hero-h">The best candidates vanish in <em>10 days.</em> Are you fast enough?</h1>
+        <p class="hero-p">Top talent doesn't wait. Every slow reply, missed callback, and forgotten follow-up sends qualified candidates straight to a competing agency. AI Sidekick engages candidates instantly, keeps them warm around the clock, and automates your follow-up so you place more people, faster.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-main">Get a Free Consultation</a>
+          <a href="#roi" class="btn btn-ghost">See the Math</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="images/staffing.png" alt="Staffing agency office with recruiters working" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="w">
+      <div class="stats-grid">
+        <div class="stat-card rv">
+          <div class="stat-num serif">10 days</div>
+          <div class="stat-label">is all the time top candidates stay on the market before accepting another offer</div>
+          <div class="stat-src"><a href="https://www.myshortlister.com/insights/recruiting-statistics" target="_blank" rel="noopener">Shortlister / SHRM</a></div>
+        </div>
+        <div class="stat-card rv rv-d1">
+          <div class="stat-num serif">45%</div>
+          <div class="stat-label">response rate for text messages vs. just 6% for email outreach to candidates</div>
+          <div class="stat-src"><a href="https://blog.clearcompany.com/text-recruiting-statistics-you-should-know" target="_blank" rel="noopener">ClearCompany</a></div>
+        </div>
+        <div class="stat-card rv rv-d2">
+          <div class="stat-num serif">67%</div>
+          <div class="stat-label">of candidates who apply through staffing agencies never receive a response</div>
+          <div class="stat-src"><a href="https://blog.theinterviewguys.com/the-2025-ghosting-index/" target="_blank" rel="noopener">The 2025 Ghosting Index</a></div>
+        </div>
+        <div class="stat-card rv rv-d3">
+          <div class="stat-num serif">60%</div>
+          <div class="stat-label">of candidates drop off entirely if they wait more than two weeks for a response</div>
+          <div class="stat-src"><a href="https://www.staffingfuture.com/the-staffing-metrics-that-will-matter-most-in-2026/" target="_blank" rel="noopener">Staffing Future</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="problem">
+    <div class="w">
+      <div class="problem-top rv">
+        <p class="eyebrow problem-eyebrow">Sound familiar?</p>
+        <h2 class="serif problem-h">Your recruiters are sourcing. The <em>pipeline</em> is leaking.</h2>
+        <p class="problem-p">You can't personally respond to every candidate, follow up on every job order, and check in on every placement all at once. But every hour of silence is a candidate who just accepted your competitor's offer.</p>
+      </div>
+      <div class="scenarios">
+        <div class="scenario rv rv-d1">
+          <div class="scenario-time">Monday, 7:45 AM</div>
+          <div class="scenario-title">Hot candidate applies over the weekend</div>
+          <div class="scenario-desc">A qualified forklift operator submits an application Saturday afternoon. By Monday morning, two other agencies have already called him. He's placed before your team even opens the inbox.</div>
+          <div class="scenario-result"><strong>With AI Sidekick:</strong> Instant text goes out within seconds of application. AI confirms availability, collects certifications, and schedules an interview for Monday morning.</div>
+        </div>
+        <div class="scenario rv rv-d2">
+          <div class="scenario-time">Wednesday, 2:15 PM</div>
+          <div class="scenario-title">Client calls with an urgent job order</div>
+          <div class="scenario-desc">A warehouse manager needs 8 workers by Friday. Your recruiters are in interviews and on calls. The voicemail sits for 3 hours. The client calls another agency.</div>
+          <div class="scenario-result"><strong>With AI Sidekick:</strong> Missed call triggers an immediate text. AI captures the job details, headcount, and timeline. Your team gets a structured lead notification instantly.</div>
+        </div>
+        <div class="scenario rv rv-d3">
+          <div class="scenario-time">Friday, 4:30 PM</div>
+          <div class="scenario-title">Placed candidates go silent before start date</div>
+          <div class="scenario-desc">You placed 5 workers to start Monday. No one confirmed. Two of them ghosted and took other assignments. Now you're scrambling to backfill over the weekend.</div>
+          <div class="scenario-result"><strong>With AI Sidekick:</strong> Automated check-in sequence confirms start dates at day 3, day 1, and morning-of. No-show risks get flagged early so you can backfill in time.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="w">
+      <div class="how-top rv">
+        <p class="eyebrow how-eyebrow">How it works</p>
+        <h2 class="serif how-h">Set it up once. Place candidates <em>faster.</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step rv rv-d1">
+          <div class="step-num serif">01</div>
+          <div class="step-title">We configure your system</div>
+          <div class="step-desc">We connect to your phone lines and application channels, then customize every message to match your agency's tone and workflow. Setup takes less than 48 hours &mdash; no IT team required.</div>
+        </div>
+        <div class="step rv rv-d2">
+          <div class="step-num serif">02</div>
+          <div class="step-title">Candidates and clients get instant responses</div>
+          <div class="step-desc">When a call or application comes in and your team is unavailable, AI Sidekick texts back immediately. It screens candidates, captures job order details from clients, and books interviews &mdash; all automatically.</div>
+        </div>
+        <div class="step rv rv-d3">
+          <div class="step-num serif">03</div>
+          <div class="step-title">Follow-up runs on autopilot</div>
+          <div class="step-desc">Every candidate, placement, and client inquiry gets automated follow-up sequences. Pre-start confirmations reduce no-shows. Post-placement check-ins improve retention and generate referrals.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="roi" id="roi">
+    <div class="w">
+      <div class="roi-top rv">
+        <p class="eyebrow roi-eyebrow">The math</p>
+        <h2 class="serif roi-h">What slow response times are <em>actually costing</em> you.</h2>
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card roi-card-red rv rv-d1">
+          <div class="roi-card-label">Without AI Sidekick</div>
+          <div class="roi-line"><span>New candidate inquiries per month</span><span>120</span></div>
+          <div class="roi-line"><span>Candidates who never get a response</span><span>67%</span></div>
+          <div class="roi-line"><span>Lost candidates per month</span><span>80</span></div>
+          <div class="roi-line"><span>Avg direct-hire placement fee (20%)</span><span>$10,000</span></div>
+          <div class="roi-line"><span>Placement rate on engaged candidates</span><span>~15%</span></div>
+          <div class="roi-total"><span>Placement revenue lost per month</span><span class="roi-total-red">$120,000</span></div>
+        </div>
+        <div class="roi-card roi-card-green rv rv-d2">
+          <div class="roi-card-label">With AI Sidekick</div>
+          <div class="roi-line"><span>Candidate inquiries recovered by text</span><span>80</span></div>
+          <div class="roi-line"><span>Candidates who engage via text</span><span>45%</span></div>
+          <div class="roi-line"><span>Recovered candidates per month</span><span>36</span></div>
+          <div class="roi-line"><span>Avg direct-hire placement fee (20%)</span><span>$10,000</span></div>
+          <div class="roi-line"><span>Placement rate with follow-up</span><span>~20%</span></div>
+          <div class="roi-total"><span>Revenue recovered per month</span><span class="roi-total-green">+$72,000</span></div>
+        </div>
+      </div>
+      <div class="roi-src rv rv-d3">
+        <strong>Sources:</strong> Top candidate window from <a href="https://www.myshortlister.com/insights/recruiting-statistics" target="_blank" rel="noopener">Shortlister / SHRM</a>. Ghosting rate from <a href="https://blog.theinterviewguys.com/the-2025-ghosting-index/" target="_blank" rel="noopener">The 2025 Ghosting Index</a>. Text response rate from <a href="https://blog.clearcompany.com/text-recruiting-statistics-you-should-know" target="_blank" rel="noopener">ClearCompany</a>. Placement fee benchmarks from <a href="https://www.theresource.com/2025/10/27/average-staffing-agency-markup-in-2025/" target="_blank" rel="noopener">The Resource Company</a>. Candidate drop-off from <a href="https://www.staffingfuture.com/the-staffing-metrics-that-will-matter-most-in-2026/" target="_blank" rel="noopener">Staffing Future</a>.
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="w">
+      <div class="pricing-top rv">
+        <p class="eyebrow pricing-eyebrow">Pricing</p>
+        <h2 class="serif pricing-h">One plan. <em>Everything</em> included.</h2>
+      </div>
+      <div class="pricing-card rv rv-d1">
+        <div class="pricing-name">The Autopilot Package</div>
+        <div class="pricing-price serif">$399 <small>/month</small></div>
+        <div class="pricing-setup">$1,500 one-time setup</div>
+        <ul class="pricing-list">
+          <li>Instant text-back for missed candidate and client calls (24/7/365)</li>
+          <li>AI-powered candidate screening via text conversation</li>
+          <li>Automated pre-start confirmation sequences to reduce no-shows</li>
+          <li>Client job order intake when your team is unavailable</li>
+          <li>Post-placement check-in and referral request automation</li>
+          <li>Custom message templates matching your agency's voice</li>
+          <li>Monthly performance report with placement metrics</li>
+          <li>No contracts &mdash; cancel anytime</li>
+        </ul>
+        <a href="#contact" class="btn btn-main" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="w">
+      <div class="faq-top rv">
+        <p class="eyebrow faq-eyebrow">Staffing-Specific Questions</p>
+        <h2 class="serif faq-h">You're probably <em>wondering.</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item rv rv-d1">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can the AI screen candidates or just send generic replies?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">It screens. We customize the AI to ask job-relevant questions &mdash; availability, certifications, work history, transportation, shift preferences &mdash; whatever your recruiters normally ask in a first call. The candidate's answers are organized and delivered to your team so they can prioritize the best fits immediately.</div></div>
+        </div>
+        <div class="faq-item rv rv-d1">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Will candidates know they're texting with AI?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">The messages come from your agency's number and sound like your team wrote them. Most candidates can't tell the difference. If someone specifically asks to speak to a recruiter, the AI lets them know a team member will reach out and flags it for your staff immediately.</div></div>
+        </div>
+        <div class="faq-item rv rv-d2">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Does this integrate with our ATS or job board postings?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">AI Sidekick works alongside your existing ATS &mdash; Bullhorn, JobDiva, Avionte, or whatever you use. We don't replace your system. We fill the gap between when a candidate reaches out and when your recruiter can respond, so no lead falls through the cracks regardless of where it originated.</div></div>
+        </div>
+        <div class="faq-item rv rv-d3">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How does this help with candidate no-shows?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">No-shows are often a communication problem, not a reliability problem. AI Sidekick sends automated check-ins at 3 days before, 1 day before, and morning-of a start date. If a placed candidate goes silent or indicates they can't make it, your team gets an early warning so you can backfill before it becomes a client problem.</div></div>
+        </div>
+        <div class="faq-item rv rv-d3">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            We handle both temp and direct-hire. Does it work for both?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Yes. For temp and light-industrial, the AI focuses on speed &mdash; confirming availability, collecting basic qualifications, and scheduling orientations. For direct-hire, it runs a more detailed screening conversation and nurtures passive candidates with follow-up sequences over days or weeks. You set the rules for each workflow.</div></div>
+        </div>
+        <div class="faq-item rv rv-d4">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What about client-side communication? Can it handle incoming job orders?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">When a client calls and your team is unavailable, AI Sidekick texts them back immediately and captures the key details &mdash; role, headcount, start date, location, pay range. Your account manager gets a structured summary instead of a vague voicemail, and the client gets a response in seconds instead of hours.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="cta-glow"></div>
+    <div class="w">
+      <h2 class="serif cta-h rv">Ready to stop losing placements to <em>slow follow-up?</em></h2>
+      <p class="cta-p rv rv-d1">Tell us about your staffing agency and we'll show you exactly how many candidates you're losing &mdash; and how to recover them.</p>
+      <form class="cta-form rv rv-d2" id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@myagency.com" required>
+          </div>
+          <div class="form-group">
+            <label for="company">Company name</label>
+            <input type="text" id="company" name="company" placeholder="Apex Staffing Group">
+          </div>
+        </div>
+        <div class="form-group form-full">
+          <label for="challenge">What's your biggest challenge right now?</label>
+          <select id="challenge" name="challenge" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="candidate-response">Slow candidate response times</option>
+            <option value="no-shows">Candidate no-shows and ghosting</option>
+            <option value="after-hours">Missing calls and applications after hours</option>
+            <option value="client-followup">Keeping up with client job orders</option>
+            <option value="all">All of the above</option>
+          </select>
+        </div>
+        <input type="hidden" name="business" value="staffing">
+        <button type="submit" class="btn btn-main form-submit">Get Your Free Consultation</button>
+        <p class="cta-note">No obligation. We'll reach out within 24 hours.</p>
+      </form>
+      <div class="form-success" id="form-success" style="display:none;">
+        <div class="success-icon">&#10003;</div>
+        <h3 class="serif" style="font-size:1.8rem;">We got your info!</h3>
+        <p style="color:var(--text-2);margin-top:0.5rem;">We'll reach out within 24 hours. Looking forward to chatting.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="w">
+      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <ul class="f-links">
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#industries">Industries</a></li>
+        <li><a href="#contact">Book a Demo</a></li>
+      </ul>
+      <span class="f-copy">&copy; 2026 AI Sidekick. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    var o = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('show'); o.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' });
+    document.querySelectorAll('.rv').forEach(function(el) { o.observe(el); });
+
+    function toggleFaq(btn) {
+      var item = btn.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el) {
+        el.classList.remove('open');
+      });
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(e.target));
+      console.log('Form submission:', data);
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('pinned', window.scrollY > 50);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>

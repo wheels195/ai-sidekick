@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sidekick for Veterinary Clinics — Never Lose a Pet Owner to a Missed Call</title>
+  <meta name="description" content="Veterinary clinics miss up to 28% of incoming calls, costing over $100K/year in lost revenue. AI Sidekick texts back instantly, books appointments 24/7, and follows up automatically.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #111;
+      --bg-card: #151515;
+      --border: #222;
+      --border-h: #333;
+      --text: #eee;
+      --text-2: #999;
+      --text-3: #555;
+      --accent: #c9a96e;
+      --accent-light: #dbbf8a;
+      --accent-dim: rgba(201,169,110,0.12);
+      --accent-dimmer: rgba(201,169,110,0.06);
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --max-w: 1180px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.55;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.03;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;
+      background-size: 200px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .w {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .serif { font-family: var(--serif); font-weight: 400; }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+
+    em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent), #a88a55);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s var(--ease);
+      text-decoration: none;
+    }
+
+    .btn-main {
+      padding: 0.95rem 2.2rem;
+      font-size: 0.92rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: #0a0a0a;
+      border-radius: 100px;
+    }
+
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,169,110,0.2); }
+
+    .btn-ghost {
+      padding: 0.95rem 2.2rem;
+      font-size: 0.92rem;
+      background: transparent;
+      color: var(--text);
+      border-radius: 100px;
+      border: 1px solid var(--border-h);
+    }
+
+    .btn-ghost:hover { border-color: var(--text-2); }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 0;
+      transition: all 0.35s var(--ease);
+    }
+
+    nav.pinned {
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 0;
+    }
+
+    nav .w { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--text-2); font-weight: 400; }
+
+    .nav-r {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .nav-r a { color: var(--text-2); transition: color 0.2s; }
+    .nav-r a:hover { color: var(--text); }
+    .nav-r .btn-main { color: #0a0a0a; font-size: 0.82rem; padding: 0.65rem 1.5rem; }
+
+    @media (max-width: 768px) {
+      .nav-r a:not(.btn) { display: none; }
+    }
+
+    /* === HERO === */
+    .hero {
+      padding: 10rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-blur {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      opacity: 0.08;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      top: 10%;
+      left: 15%;
+    }
+
+    .hero .w {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.15s forwards;
+    }
+
+    .hero-h {
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.3s forwards;
+    }
+
+    .hero-p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 2.25rem;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.45s forwards;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.6s forwards;
+    }
+
+    .hero-img {
+      border-radius: 20px;
+      overflow: hidden;
+      opacity: 0;
+      animation: up 0.9s var(--ease) 0.5s forwards;
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero .w { grid-template-columns: 1fr; }
+      .hero { padding: 7rem 0 3rem; }
+      .hero-h { font-size: clamp(2.2rem, 7vw, 3.2rem); }
+      .hero-img { margin-top: 1rem; }
+      .hero-img img { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-img { display: none; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* === STATS === */
+    .stats {
+      padding: 4.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.4;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-src {
+      font-size: 0.62rem;
+      color: var(--text-3);
+    }
+
+    .stat-src a {
+      color: var(--text-3);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+
+    .stat-src a:hover { color: var(--text-2); }
+
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .stat-card { text-align: left; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+      .stat-card:last-child { border-bottom: none; }
+    }
+
+    /* === PROBLEM === */
+    .problem {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problem-top { margin-bottom: 3rem; max-width: 680px; }
+    .problem-eyebrow { margin-bottom: 1rem; }
+
+    .problem-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .problem-p {
+      font-size: 1rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .scenarios {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .scenario {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+    }
+
+    .scenario-time {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .scenario-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .scenario-desc {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .scenario-result {
+      font-size: 0.82rem;
+      padding: 0.6rem 0.85rem;
+      background: rgba(52,199,89,0.08);
+      border: 1px solid rgba(52,199,89,0.15);
+      border-radius: 8px;
+      color: #6dd58c;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .scenarios { grid-template-columns: 1fr; }
+    }
+
+    /* === HOW IT WORKS === */
+    .how {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .how-top { margin-bottom: 3rem; }
+    .how-eyebrow { margin-bottom: 1rem; }
+
+    .how-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+
+    /* === ROI === */
+    .roi {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .roi-top { margin-bottom: 3rem; max-width: 620px; }
+    .roi-eyebrow { margin-bottom: 1rem; }
+
+    .roi-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .roi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .roi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .roi-card-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 1.25rem;
+    }
+
+    .roi-card-red .roi-card-label { color: #e85d54; }
+    .roi-card-green .roi-card-label { color: #6dd58c; }
+
+    .roi-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--text-2);
+    }
+
+    .roi-line:last-child { border-bottom: none; }
+
+    .roi-line span:last-child { font-weight: 600; color: var(--text); }
+
+    .roi-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.85rem 0 0;
+      margin-top: 0.5rem;
+      border-top: 1px solid var(--border-h);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .roi-total-red { color: #e85d54; }
+    .roi-total-green { color: #6dd58c; }
+
+    .roi-src {
+      margin-top: 1.5rem;
+      font-size: 0.68rem;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+
+    .roi-src a {
+      color: var(--text-3);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+
+    .roi-src a:hover { color: var(--text-2); }
+
+    @media (max-width: 768px) {
+      .roi-grid { grid-template-columns: 1fr; }
+    }
+
+    /* === PRICING === */
+    .pricing {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-top { margin-bottom: 3rem; }
+    .pricing-eyebrow { margin-bottom: 1rem; }
+
+    .pricing-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-h);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 560px;
+    }
+
+    .pricing-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-price {
+      font-family: var(--serif);
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price small {
+      font-size: 1rem;
+      color: var(--text-2);
+      font-family: var(--sans);
+      font-weight: 400;
+    }
+
+    .pricing-setup {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-list li {
+      padding: 0.45rem 0;
+      font-size: 0.88rem;
+      color: var(--text-2);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .pricing-list li::before {
+      content: '\2713';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* === FAQ === */
+    .faq {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-top { margin-bottom: 3rem; }
+    .faq-eyebrow { margin-bottom: 1rem; }
+
+    .faq-h {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .faq-list { max-width: 780px; }
+
+    .faq-item { border-bottom: 1px solid var(--border); }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.4rem 0;
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .faq-q:hover { color: var(--accent-light); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--accent);
+      transition: transform 0.35s var(--ease), background 0.25s ease;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--accent-dim);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease), padding 0.3s ease;
+    }
+
+    .faq-item.open .faq-a { max-height: 300px; }
+
+    .faq-a-inner {
+      padding-bottom: 1.4rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    /* === CTA === */
+    .cta {
+      padding: 7rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta .w {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .cta-h {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .cta-p {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .cta-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: left;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-full { margin-bottom: 1.25rem; }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.02em;
+    }
+
+    .form-group input,
+    .form-group select {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      padding: 0.7rem 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      transition: border-color 0.25s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus { border-color: var(--accent); }
+
+    .form-group select option { background: var(--bg); color: var(--text); }
+
+    .form-submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .cta-note {
+      margin-top: 1.25rem;
+      font-size: 0.82rem;
+      color: var(--text-3);
+      text-align: center;
+    }
+
+    .form-success { text-align: center; padding: 2rem 0; }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(52,199,89,0.12);
+      color: #34c759;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin: 0 auto 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* === FOOTER === */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    footer .w {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .f-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.82rem;
+    }
+
+    .f-links a { color: var(--text-3); transition: color 0.2s; }
+    .f-links a:hover { color: var(--text); }
+
+    .f-copy { font-size: 0.72rem; color: var(--text-3); }
+
+    /* === REVEAL === */
+    .rv {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+
+    .rv.show { opacity: 1; transform: translateY(0); }
+
+    .rv-d1 { transition-delay: 0.06s; }
+    .rv-d2 { transition-delay: 0.12s; }
+    .rv-d3 { transition-delay: 0.18s; }
+    .rv-d4 { transition-delay: 0.24s; }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="w">
+      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <ul class="nav-r">
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#industries">Industries</a></li>
+        <li><a href="#contact" class="btn btn-main">Book a Demo</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-blur"></div>
+    <div class="w">
+      <div>
+        <p class="eyebrow hero-eyebrow">AI Sidekick for Veterinary</p>
+        <h1 class="serif hero-h">That after-hours emergency call went straight to <em>voicemail.</em></h1>
+        <p class="hero-p">Veterinary clinics miss up to 28% of incoming calls &mdash; and 85% of those pet owners will never call back. AI Sidekick responds instantly by text, triages urgency, books appointments around the clock, and follows up on every lead so no pet owner slips through the cracks.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-main">Get a Free Consultation</a>
+          <a href="#roi" class="btn btn-ghost">See the Math</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="images/vet.png" alt="Veterinarian examining a dog in a clinic" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="w">
+      <div class="stats-grid">
+        <div class="stat-card rv">
+          <div class="stat-num serif">24-28%</div>
+          <div class="stat-label">of all calls to veterinary clinics go unanswered</div>
+          <div class="stat-src"><a href="https://www.peerlogic.com/post/how-many-calls-are-you-missing--and-whats-it-costing-your-clinic" target="_blank" rel="noopener">Peerlogic</a></div>
+        </div>
+        <div class="stat-card rv rv-d1">
+          <div class="stat-num serif">$100K+</div>
+          <div class="stat-label">in recoverable revenue lost annually to missed calls</div>
+          <div class="stat-src"><a href="https://todaysveterinarybusiness.com/the-six-figure-problem-with-your-phone-system/" target="_blank" rel="noopener">Today's Veterinary Business</a></div>
+        </div>
+        <div class="stat-card rv rv-d2">
+          <div class="stat-num serif">$5,000</div>
+          <div class="stat-label">average lifetime value of a single bonded veterinary client</div>
+          <div class="stat-src"><a href="https://www.practicelife.com/en/latest/the-lifetime-value-of-a-veterinary-client/" target="_blank" rel="noopener">Practice Life</a></div>
+        </div>
+        <div class="stat-card rv rv-d3">
+          <div class="stat-num serif">94M</div>
+          <div class="stat-label">U.S. households now own at least one pet &mdash; demand is surging</div>
+          <div class="stat-src"><a href="https://americanpetproducts.org/industry-trends-and-stats" target="_blank" rel="noopener">APPA 2025</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="problem">
+    <div class="w">
+      <div class="problem-top rv">
+        <p class="eyebrow problem-eyebrow">Sound familiar?</p>
+        <h2 class="serif problem-h">The exam room is full. The phone won't stop <em>ringing.</em></h2>
+        <p class="problem-p">Your front desk is juggling check-ins, discharges, and anxious pet parents in the lobby. Every unanswered ring is a new client booking with the clinic down the street &mdash; or worse, a pet emergency that can't wait.</p>
+      </div>
+      <div class="scenarios">
+        <div class="scenario rv rv-d1">
+          <div class="scenario-time">Sunday, 11:42 PM</div>
+          <div class="scenario-title">Dog ate something toxic</div>
+          <div class="scenario-desc">A panicked pet owner calls after their Labrador got into a box of chocolate. Your phone rolls to a generic voicemail. They drive 30 minutes to an emergency hospital instead of your clinic.</div>
+          <div class="scenario-result"><strong>With AI Sidekick:</strong> Instant text identifies the emergency, provides your after-hours triage instructions, and alerts your on-call vet directly. The client stays with your practice.</div>
+        </div>
+        <div class="scenario rv rv-d2">
+          <div class="scenario-time">Monday, 10:15 AM</div>
+          <div class="scenario-title">5 calls stack up during morning rush</div>
+          <div class="scenario-desc">Two wellness exams, a post-surgical follow-up, and a walk-in with a limping cat. Your receptionist is swamped. Five calls ring through &mdash; none get answered. No messages left.</div>
+          <div class="scenario-result"><strong>With AI Sidekick:</strong> All five callers get an immediate text. Three book appointments, one asks about vaccine pricing, one requests a prescription refill. Zero leads lost.</div>
+        </div>
+        <div class="scenario rv rv-d3">
+          <div class="scenario-time">Wednesday, 3:00 PM</div>
+          <div class="scenario-title">New puppy owner never comes back</div>
+          <div class="scenario-desc">A first-time pet parent brought their puppy in for shots two months ago. They were supposed to come back for boosters, but nobody followed up. They found another vet closer to home.</div>
+          <div class="scenario-result"><strong>With AI Sidekick:</strong> Automated follow-up reminds them about upcoming boosters at day 7, 30, and 60. They book their next visit before they even think about switching.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="w">
+      <div class="how-top rv">
+        <p class="eyebrow how-eyebrow">How it works</p>
+        <h2 class="serif how-h">Set it up once. It runs <em>forever.</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step rv rv-d1">
+          <div class="step-num serif">01</div>
+          <div class="step-title">We configure your clinic's system</div>
+          <div class="step-desc">We connect to your phone line and customize every response for veterinary &mdash; species, appointment types, emergency protocols, and your clinic's tone. Setup takes less than 48 hours with zero disruption to your practice.</div>
+        </div>
+        <div class="step rv rv-d2">
+          <div class="step-num serif">02</div>
+          <div class="step-title">Every missed call gets a text instantly</div>
+          <div class="step-desc">When a call goes unanswered, the pet owner receives a friendly text within seconds. The AI asks about their pet, the reason for the visit, and books the right appointment type &mdash; wellness, sick visit, surgery consult, or refill request.</div>
+        </div>
+        <div class="step rv rv-d3">
+          <div class="step-num serif">03</div>
+          <div class="step-title">Follow-ups and reviews on autopilot</div>
+          <div class="step-desc">Every new client inquiry gets an automated follow-up sequence. After appointments, pet owners are prompted to leave a Google review. Vaccine and checkup reminders go out automatically to keep clients bonded to your practice.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="roi" id="roi">
+    <div class="w">
+      <div class="roi-top rv">
+        <p class="eyebrow roi-eyebrow">The math</p>
+        <h2 class="serif roi-h">What missed calls are <em>actually costing</em> your clinic.</h2>
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card roi-card-red rv rv-d1">
+          <div class="roi-card-label">Without AI Sidekick</div>
+          <div class="roi-line"><span>Calls per month (avg clinic)</span><span>800</span></div>
+          <div class="roi-line"><span>Missed call rate</span><span>26%</span></div>
+          <div class="roi-line"><span>Missed calls per month</span><span>208</span></div>
+          <div class="roi-line"><span>Callers who don't call back</span><span>85%</span></div>
+          <div class="roi-line"><span>Lost potential clients per month</span><span>177</span></div>
+          <div class="roi-line"><span>Average first-visit value</span><span>$200</span></div>
+          <div class="roi-line"><span>Booking rate if answered</span><span>~40%</span></div>
+          <div class="roi-total"><span>Revenue lost per month</span><span class="roi-total-red">$14,160</span></div>
+        </div>
+        <div class="roi-card roi-card-green rv rv-d2">
+          <div class="roi-card-label">With AI Sidekick</div>
+          <div class="roi-line"><span>Missed calls recovered by text-back</span><span>208</span></div>
+          <div class="roi-line"><span>Pet owners who engage via text</span><span>65%</span></div>
+          <div class="roi-line"><span>Recovered leads per month</span><span>135</span></div>
+          <div class="roi-line"><span>Average first-visit value</span><span>$200</span></div>
+          <div class="roi-line"><span>Booking rate with follow-up</span><span>~45%</span></div>
+          <div class="roi-line"><span>Client lifetime value</span><span>$5,000</span></div>
+          <div class="roi-total"><span>Revenue recovered per month</span><span class="roi-total-green">+$12,150</span></div>
+        </div>
+      </div>
+      <div class="roi-src rv rv-d3">
+        <strong>Sources:</strong> Missed call rate from <a href="https://www.peerlogic.com/post/how-many-calls-are-you-missing--and-whats-it-costing-your-clinic" target="_blank" rel="noopener">Peerlogic veterinary phone data</a>. Six-figure revenue loss from <a href="https://todaysveterinarybusiness.com/the-six-figure-problem-with-your-phone-system/" target="_blank" rel="noopener">Today's Veterinary Business</a>. Average visit cost ($200) from <a href="https://capitaloneshopping.com/research/pet-spending-statistics/" target="_blank" rel="noopener">Capital One Shopping 2025 data</a>. Client lifetime value ($5,000) from <a href="https://www.practicelife.com/en/latest/the-lifetime-value-of-a-veterinary-client/" target="_blank" rel="noopener">Practice Life</a>. Caller behavior from <a href="https://www.moneypenny.com/us/resources/blog/does-my-veterinary-practice-need-an-answering-service/" target="_blank" rel="noopener">Moneypenny</a>.
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="w">
+      <div class="pricing-top rv">
+        <p class="eyebrow pricing-eyebrow">Pricing</p>
+        <h2 class="serif pricing-h">One plan. <em>Everything</em> included.</h2>
+      </div>
+      <div class="pricing-card rv rv-d1">
+        <div class="pricing-name">The Autopilot Package</div>
+        <div class="pricing-price serif">$399 <small>/month</small></div>
+        <div class="pricing-setup">$1,500 one-time setup</div>
+        <ul class="pricing-list">
+          <li>Missed call text-back (24/7/365)</li>
+          <li>After-hours emergency triage and on-call vet alerts</li>
+          <li>AI-powered appointment booking by species and visit type</li>
+          <li>Automated vaccine and checkup reminders</li>
+          <li>New client follow-up sequences at day 2, 7, and 30</li>
+          <li>Google review requests after every appointment</li>
+          <li>Prescription refill request handling via text</li>
+          <li>Monthly performance report</li>
+          <li>No contracts &mdash; cancel anytime</li>
+        </ul>
+        <a href="#contact" class="btn btn-main" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="w">
+      <div class="faq-top rv">
+        <p class="eyebrow faq-eyebrow">Veterinary-Specific Questions</p>
+        <h2 class="serif faq-h">You're probably <em>wondering.</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item rv rv-d1">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can the AI handle after-hours emergencies like poisoning or trauma?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Yes. We configure emergency detection keywords and scenarios specific to veterinary &mdash; toxin ingestion, difficulty breathing, hit by car, seizures, bloat, and more. When the AI identifies an emergency, it instantly escalates by texting or calling your on-call veterinarian. You define the rules for what gets escalated and to whom.</div></div>
+        </div>
+        <div class="faq-item rv rv-d1">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is client and pet data kept secure and private?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Absolutely. While veterinary practices are not subject to HIPAA, we treat all client and patient data with the same level of care. All communications are encrypted, we never share data with third parties, and you maintain full ownership of every conversation and contact record. We can also sign a data processing agreement if your practice requires one.</div></div>
+        </div>
+        <div class="faq-item rv rv-d2">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Will the AI know the difference between a wellness visit and a sick pet?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Yes. The AI is configured specifically for veterinary practices. It asks the right questions &mdash; species, symptoms, age, whether the pet is eating and drinking &mdash; and routes to the correct appointment type. Wellness exams, sick visits, dental cleanings, surgery consults, and prescription refills are all handled differently based on your scheduling preferences.</div></div>
+        </div>
+        <div class="faq-item rv rv-d3">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            We use a practice management system already. Will this integrate?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">AI Sidekick works alongside your existing PMS &mdash; whether that's eVetPractice, Cornerstone, Avimark, or another system. We don't replace your software. We fill the gap between a missed call and a booked appointment, making sure every lead reaches your front desk instead of disappearing into voicemail.</div></div>
+        </div>
+        <div class="faq-item rv rv-d3">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can it handle prescription refill requests?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Yes. When a pet owner texts about a refill, the AI collects the pet's name, medication, and last visit date, then sends that information directly to your team for approval. No more phone tag over routine refills &mdash; your staff processes them when they have a moment, and the client gets a confirmation text when it's ready.</div></div>
+        </div>
+        <div class="faq-item rv rv-d4">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            We're a small single-doctor practice. Is this worth it for us?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Small practices are where this makes the biggest impact. You likely don't have a dedicated call center or overflow staff. If you're missing even 50 calls a month and each new client is worth $5,000 over their lifetime, even converting a handful of those into bonded clients pays for the system many times over. The average clinic loses over $100,000 a year to phone inefficiency alone.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="cta-glow"></div>
+    <div class="w">
+      <h2 class="serif cta-h rv">Ready to stop losing clients to <em>voicemail?</em></h2>
+      <p class="cta-p rv rv-d1">Tell us about your veterinary practice and we'll show you exactly how many pet owners you're losing &mdash; and how to bring them back.</p>
+      <form class="cta-form rv rv-d2" id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Dr. Jane Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@myclinicdvm.com" required>
+          </div>
+          <div class="form-group">
+            <label for="company">Clinic name</label>
+            <input type="text" id="company" name="company" placeholder="Pawsitive Care Veterinary">
+          </div>
+        </div>
+        <div class="form-group form-full">
+          <label for="challenge">What's your biggest challenge right now?</label>
+          <select id="challenge" name="challenge" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="missed-calls">Missing calls during appointments and procedures</option>
+            <option value="after-hours">No after-hours or emergency call coverage</option>
+            <option value="follow-up">Losing new clients due to lack of follow-up</option>
+            <option value="reminders">Missed vaccine and checkup reminders</option>
+            <option value="reviews">Not enough Google reviews</option>
+            <option value="all">All of the above</option>
+          </select>
+        </div>
+        <input type="hidden" name="business" value="veterinary">
+        <button type="submit" class="btn btn-main form-submit">Get Your Free Consultation</button>
+        <p class="cta-note">No obligation. We'll reach out within 24 hours.</p>
+      </form>
+      <div class="form-success" id="form-success" style="display:none;">
+        <div class="success-icon">&#10003;</div>
+        <h3 class="serif" style="font-size:1.8rem;">We got your info!</h3>
+        <p style="color:var(--text-2);margin-top:0.5rem;">We'll reach out within 24 hours. Looking forward to chatting.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="w">
+      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <ul class="f-links">
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#industries">Industries</a></li>
+        <li><a href="#contact">Book a Demo</a></li>
+      </ul>
+      <span class="f-copy">&copy; 2026 AI Sidekick. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    var o = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('show'); o.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' });
+    document.querySelectorAll('.rv').forEach(function(el) { o.observe(el); });
+
+    function toggleFaq(btn) {
+      var item = btn.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el) {
+        el.classList.remove('open');
+      });
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(e.target));
+      console.log('Form submission:', data);
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('pinned', window.scrollY > 50);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
