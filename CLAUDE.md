@@ -27,7 +27,7 @@ Static HTML pages — no build tools, no framework, no dependencies beyond Googl
 
 12 verticals: HVAC, Med Spa, Auto Repair, Dental, Insurance, Real Estate, Property Management, CPA & Bookkeeping, Veterinary, Law Firms, Staffing, Restoration.
 
-HVAC page is built (`hvac.html`). Remaining verticals still need dedicated pages.
+All 12 vertical pages are built and live.
 
 ## Pricing
 
@@ -42,3 +42,11 @@ All CTA buttons scroll to `#contact` form on the page.
 - All statistics must be real and sourced with clickable citations
 - No fake testimonials (FTC guidelines) — use sourced industry data instead
 - No emojis anywhere — use Lucide SVG icons
+
+## Next Steps
+
+- **Form backend**: Connect contact forms to Google Sheets + Resend for email notifications. Two options considered:
+  1. Make.com webhook → Google Sheets → Resend (no-code)
+  2. Vercel serverless function `/api/submit.js` → Sheets + Resend (fewer moving parts)
+- **Calendly**: Replace `#contact` form links with real Calendly link when ready
+- **Domain**: Site is live at `ai-sidekick.io` via Vercel
