@@ -15,9 +15,9 @@ Static HTML pages — no build tools, no framework, no dependencies beyond Googl
 
 ## Design System
 
-- **Background:** Dark (#0a0a0a)
-- **Accent:** Gold (#c9a96e)
-- **Banned colors:** No purple, blue, or teal anywhere
+- **Background:** Light (#fafaf9 warm white)
+- **Accent:** Navy (#1a3a5c)
+- **Banned colors:** No purple or teal anywhere
 - **Display font:** Instrument Serif (Google Fonts)
 - **Body font:** DM Sans (Google Fonts)
 - **Icons:** Inline Lucide SVGs (no library import, no emojis)

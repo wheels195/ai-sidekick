@@ -3,3 +3,8 @@
 .DS_Store
 Thumbs.db
 node_modules/
+
+.next/
+Ai_Sidekick/
+tsconfig.tsbuildinfo
+next-env.d.ts
