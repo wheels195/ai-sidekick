@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to AI Sidekick — Getting Started Guide</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a3a5c;
+      --navy-light: #2d5f8a;
+      --bg: #fafaf9;
+      --card: #ffffff;
+      --border: #e5e5e3;
+      --text: #1a1a1a;
+      --text-2: #333;
+      --text-3: #666;
+      --green: #1a7a3a;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding-bottom: 2.5rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo span {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.6rem;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-sub {
+      font-size: 1.15rem;
+      color: var(--text-3);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.7rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p { margin-bottom: 1rem; }
+
+    ul {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li { margin-bottom: 0.4rem; }
+
+    /* Steps */
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-num {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+    }
+
+    .step-time {
+      display: inline-block;
+      background: rgba(26, 58, 92, 0.08);
+      color: var(--navy);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+
+    /* What you get */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(26, 58, 92, 0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+
+    /* Highlights */
+    .highlight {
+      background: rgba(26, 58, 92, 0.05);
+      border-left: 3px solid var(--navy);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    /* What we need from you */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+
+    .info-card-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-bottom: 0.35rem;
+      color: var(--navy);
+    }
+
+    .info-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -2.5rem;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      background: var(--navy);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+
+    .tl-when {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.15rem;
+    }
+
+    .tl-what {
+      font-size: 0.95rem;
+      color: var(--text-2);
+    }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 0;
+    }
+
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-a {
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .cta h2 { margin-bottom: 0.5rem; }
+
+    .cta p {
+      color: var(--text-3);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-contact {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .print-btn:hover { transform: translateY(-2px); }
+
+    @media print {
+      .print-btn { display: none; }
+      .step, .cta { break-inside: avoid; }
+      body { font-size: 14px; }
+      .container { padding: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 2rem 1.25rem 4rem; }
+      h1 { font-size: 2rem; }
+      .features, .info-grid { grid-template-columns: 1fr; }
+      .step { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">AI <span>Sidekick</span></div>
+      <h1>Welcome Aboard.</h1>
+      <p class="header-sub">Here's exactly what happens next &mdash; and what your AI system will do for your business.</p>
+    </div>
+
+    <!-- WHAT YOU'RE GETTING -->
+    <h2>What You're Getting</h2>
+    <p>We're building a complete AI-powered system that runs 24/7 so you never lose a customer to a missed call, slow follow-up, or forgotten review request again.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.91 11.1a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2z"/></svg>
+        </div>
+        <div class="feature-title">Missed Call Text-Back</div>
+        <div class="feature-desc">Every missed call gets an instant, friendly text so the lead stays warm instead of calling your competitor.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="feature-title">AI Conversations</div>
+        <div class="feature-desc">The AI chats with leads over text &mdash; answering questions, gathering details, and keeping them engaged.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="feature-title">Automatic Booking</div>
+        <div class="feature-desc">Leads book appointments directly onto your calendar. They get confirmations and reminders automatically.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="feature-title">Lead Follow-Up</div>
+        <div class="feature-desc">Gave someone a quote? The system follows up automatically so you never forget to close the loop.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="feature-title">Review Automation</div>
+        <div class="feature-desc">After every job, your customer gets a friendly text with a link to leave you a Google review.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="feature-title">24/7 Coverage</div>
+        <div class="feature-desc">Nights, weekends, holidays &mdash; the system never clocks out. Every call and lead is handled instantly.</div>
+      </div>
+    </div>
+
+    <div class="highlight"><strong>You don't need to learn any software.</strong> We handle everything &mdash; setup, customization, and ongoing optimization. You just keep running your business.</div>
+
+    <!-- HOW IT WORKS -->
+    <h2 style="margin-top:2.5rem;">How Onboarding Works</h2>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Kickoff Call</div>
+        <span class="step-time">30 min</span>
+      </div>
+      <p>We hop on a quick call to learn about your business. We'll ask about your services, hours, how you talk to customers, and how you'd like appointments handled. This is everything we need to build your system.</p>
+      <h3>What we'll need from you:</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">Business Details</div>
+          <div class="info-card-desc">Business name, address, phone number, hours of operation, and services you offer.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">Your Voice &amp; Tone</div>
+          <div class="info-card-desc">How do you talk to customers? Casual and friendly, or more professional? Any phrases you like to use?</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">Scheduling Preferences</div>
+          <div class="info-card-desc">How long are your appointments? What time slots work? Do you need buffer time between jobs?</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">Google Business Profile</div>
+          <div class="info-card-desc">We'll connect your Google profile so the system can automatically request reviews from happy customers.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">We Build Your System</div>
+        <span class="step-time">24-48 hours</span>
+      </div>
+      <p>Using everything from the kickoff call, we build and customize your entire AI system. Every text message, every conversation flow, every follow-up sequence is tailored to sound like you and your business.</p>
+      <p>You don't need to do anything during this step. We handle it all.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">We Test Everything</div>
+        <span class="step-time">Same day</span>
+      </div>
+      <p>Before anything goes live, we test every part of the system ourselves &mdash; missed call text-backs, AI conversations, appointment booking, reminders, follow-ups, and review requests. Nothing launches until it's working perfectly.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Launch Call &mdash; See It Live</div>
+        <span class="step-time">15 min</span>
+      </div>
+      <p>We walk you through a live demo. We'll call your number together, show you the instant text-back, watch the AI have a conversation, and see the appointment land on your calendar. You'll know exactly what your customers experience.</p>
+      <p>Then we flip the switch. You're live.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Ongoing Support &amp; Optimization</div>
+        <span class="step-time">Always</span>
+      </div>
+      <p>We monitor your system daily during the first week and make adjustments based on real conversations. At the end of your first month, you'll get a performance report showing exactly how many leads were caught, appointments booked, and reviews collected.</p>
+      <p>Need something changed? Just text or call us. We're always available.</p>
+    </div>
+
+    <!-- TIMELINE -->
+    <h2 style="margin-top:2.5rem;">Your Timeline</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Today</div>
+        <div class="tl-what">Welcome aboard! We'll reach out to schedule your kickoff call.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Day 1-2</div>
+        <div class="tl-what">Kickoff call &mdash; we learn about your business and gather what we need.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Day 2-4</div>
+        <div class="tl-what">We build and customize your AI system behind the scenes.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Day 4-5</div>
+        <div class="tl-what">We test everything internally. Nothing launches until it's perfect.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Day 5-7</div>
+        <div class="tl-what">Launch call &mdash; live demo, then you're up and running.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Week 1-2</div>
+        <div class="tl-what">We monitor daily and fine-tune based on real conversations.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Day 30</div>
+        <div class="tl-what">Your first monthly performance report &mdash; leads caught, appointments booked, reviews collected.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">Ongoing</div>
+        <div class="tl-what">Monthly reports, optimization, and direct support whenever you need it.</div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2 style="margin-top:2.5rem;">Common Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Do I need to learn any software?</div>
+      <div class="faq-a">Not at all. We handle everything. You'll get notifications when leads come in and see appointments on your calendar, but the system runs on autopilot. If you can send a text, you're good.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will customers know they're talking to AI?</div>
+      <div class="faq-a">No. We customize every message to match your voice and tone. Customers typically can't tell the difference &mdash; responses feel natural, helpful, and personal.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if someone needs to talk to a real person?</div>
+      <div class="faq-a">The AI knows when to step aside. Complex situations get routed directly to you or your team instantly. You can also jump into any conversation at any time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens after hours?</div>
+      <div class="faq-a">Instead of going to voicemail (where most people hang up), callers get a friendly text within seconds. The AI keeps the conversation going and many leads turn into booked appointments &mdash; even at 11pm on a Saturday.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">When will I start seeing results?</div>
+      <div class="faq-a">Most businesses see their first recovered lead within the first few days. By the end of month one, you'll have clear data on calls caught, leads followed up, and reviews collected.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I want to cancel?</div>
+      <div class="faq-a">No contracts, no commitments. Cancel anytime with a simple message. We believe the results speak for themselves.</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2>Questions? We're here.</h2>
+      <p>Reach out anytime &mdash; we're always happy to help.</p>
+      <div class="cta-contact">Text or call us directly</div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</body>
+</html>

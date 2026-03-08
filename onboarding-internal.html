@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sidekick — Internal Onboarding Playbook</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1a3a5c;
+      --navy-light: #2d5f8a;
+      --bg: #fafaf9;
+      --card: #ffffff;
+      --border: #e5e5e3;
+      --text: #1a1a1a;
+      --text-2: #333;
+      --text-3: #666;
+      --green: #1a7a3a;
+      --red: #c0392b;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.8rem;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-3);
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p { margin-bottom: 1rem; }
+
+    ul, ol {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li { margin-bottom: 0.4rem; }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li {
+      padding-left: 1.75rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.45rem;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-radius: 3px;
+    }
+
+    .phase {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .phase-num {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .phase-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      display: inline;
+      vertical-align: middle;
+    }
+
+    .callout {
+      background: rgba(26, 58, 92, 0.06);
+      border-left: 3px solid var(--navy);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .callout-warn {
+      background: rgba(192, 57, 43, 0.06);
+      border-left-color: var(--red);
+    }
+
+    .callout-green {
+      background: rgba(26, 122, 58, 0.06);
+      border-left-color: var(--green);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: var(--navy);
+      color: #fff;
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:nth-child(even) td { background: rgba(26, 58, 92, 0.03); }
+
+    .objection {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .objection-q {
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .objection-a {
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .link-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .link-list a {
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26, 58, 92, 0.3);
+      transition: border-color 0.2s;
+    }
+
+    .link-list a:hover { border-color: var(--navy); }
+
+    strong { color: var(--text); }
+
+    code {
+      background: rgba(26, 58, 92, 0.08);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .print-btn:hover { transform: translateY(-2px); }
+
+    @media print {
+      .print-btn { display: none; }
+      .phase { break-inside: avoid; }
+      body { font-size: 14px; }
+      .container { padding: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 2rem 1.25rem 4rem; }
+      h1 { font-size: 2rem; }
+      .phase { padding: 1.5rem; }
+      table { font-size: 0.82rem; }
+      th, td { padding: 0.5rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">Internal Document — Do Not Share</div>
+    <h1>AI Sidekick Onboarding Playbook</h1>
+    <p class="subtitle">Complete guide from first inquiry to fully operational system. Includes GoHighLevel setup, scripts, objections, and unit economics.</p>
+
+    <!-- PHASE 1 -->
+    <div class="phase">
+      <span class="phase-num">1</span>
+      <div class="phase-title">Inquiry &amp; Discovery</div>
+
+      <h3>How Leads Come In</h3>
+      <ul>
+        <li><strong>Website form</strong> (ai-sidekick.io &rarr; "Get Your Free Consultation") &mdash; Collects name, phone, email, business type, biggest challenge</li>
+        <li><strong>Vertical landing pages</strong> (hvac.html, dental.html, etc.)</li>
+        <li><strong>Direct calls/texts</strong> from ads or referrals</li>
+      </ul>
+
+      <h3>When Someone Inquires</h3>
+      <ol>
+        <li>Form shows "We got your info! We'll reach out within 24 hours."</li>
+        <li>You receive the lead &mdash; name, phone, email, industry, challenge</li>
+        <li><strong>Personal outreach within 24 hours</strong> &mdash; call or text to schedule discovery call</li>
+      </ol>
+
+      <h3>Discovery Call Script (15-20 min)</h3>
+      <p><strong>Goal:</strong> Understand their business, pain points, and current process.</p>
+
+      <h4>Questions to Ask</h4>
+      <ul>
+        <li>How many calls do you get per day/week?</li>
+        <li>What happens when you miss a call right now? (Voicemail? Nothing?)</li>
+        <li>Do you have someone answering phones, or is it just you?</li>
+        <li>How do you follow up with leads who got a quote but didn't book?</li>
+        <li>How many Google reviews do you have? Are you actively asking for them?</li>
+        <li>What's your average job/client worth? (Helps frame ROI)</li>
+        <li>What software do you currently use? (Scheduling, CRM, etc.)</li>
+        <li>What's your biggest frustration with how leads are handled today?</li>
+      </ul>
+
+      <h4>Key Stats to Cite</h4>
+      <ul>
+        <li><strong>85%</strong> of missed callers never call back (Smith.ai)</li>
+        <li><strong>78%</strong> of customers buy from the first business that responds</li>
+        <li><strong>21x</strong> more likely to convert when you respond within 5 minutes (MIT/InsideSales)</li>
+        <li>Receptionist costs $2,500-4,000/mo for 8hrs/day vs. $399/mo for 24/7/365</li>
+      </ul>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase">
+      <span class="phase-num">2</span>
+      <div class="phase-title">Close &amp; Kickoff</div>
+
+      <h3>Pricing</h3>
+      <ul>
+        <li><strong>$399/month</strong> &mdash; flat rate, all-inclusive</li>
+        <li><strong>$1,500 one-time setup fee</strong> &mdash; covers full system build, customization, and training</li>
+      </ul>
+
+      <h3>What's Included</h3>
+      <ol>
+        <li>Full system setup &amp; customization</li>
+        <li>AI trained on your business &amp; voice</li>
+        <li>Unlimited text-backs &amp; conversations</li>
+        <li>Online booking calendar</li>
+        <li>Automated follow-up sequences</li>
+        <li>Review request automation</li>
+        <li>Lead pipeline &amp; CRM</li>
+        <li>Monthly performance reports</li>
+        <li>Ongoing optimization &amp; support</li>
+        <li>No contracts &mdash; cancel anytime</li>
+      </ol>
+
+      <h3>Once They Say Yes</h3>
+      <ol>
+        <li><strong>Collect payment</strong> &mdash; $1,500 setup + first month ($399)</li>
+        <li><strong>Send welcome message/email</strong> with what to expect and what you need from them</li>
+        <li><strong>Schedule kickoff call</strong> (30-45 min) within 1-2 business days</li>
+      </ol>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase">
+      <span class="phase-num">3</span>
+      <div class="phase-title">Kickoff &amp; Information Gathering</div>
+
+      <h3>Kickoff Call Agenda (30-45 min)</h3>
+
+      <h4>Business Information Needed</h4>
+      <ul>
+        <li>Business name, address, website</li>
+        <li>Business phone number (the one that triggers missed call text-back)</li>
+        <li>Business hours (when AI handles calls vs. live answering)</li>
+        <li>Services offered and typical pricing ranges</li>
+        <li>Service area / locations served</li>
+        <li>How they want appointments scheduled (time slots, duration, buffer time)</li>
+      </ul>
+
+      <h4>Brand Voice &amp; Messaging</h4>
+      <ul>
+        <li>How do they talk to customers? (Casual? Professional?)</li>
+        <li>Any specific phrases they use or want included?</li>
+        <li>Anything the AI should NEVER say? (specific pricing, guarantees, etc.)</li>
+        <li>How should the AI introduce itself?</li>
+        <li>What info should the AI collect from leads? (Name, address, photos?)</li>
+      </ul>
+
+      <h4>Technical Setup Info</h4>
+      <ul>
+        <li>Current phone system/carrier</li>
+        <li>Existing scheduling software (if any)</li>
+        <li>Google Business Profile login (for review automation)</li>
+        <li>Any existing CRM data to migrate?</li>
+      </ul>
+
+      <h4>Review Automation</h4>
+      <ul>
+        <li>Link to their Google Business Profile</li>
+        <li>When should review requests go out?</li>
+        <li>Custom review request message preferences</li>
+      </ul>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase">
+      <span class="phase-num">4</span>
+      <div class="phase-title">System Build in GoHighLevel (24-48 hrs)</div>
+
+      <div class="callout-warn callout">The customer never sees or touches GoHighLevel. Everything below is your internal setup.</div>
+
+      <div class="callout-green callout"><strong>Snapshot tip:</strong> If you've built a working setup for one industry, save it as a GHL Snapshot. Snapshots clone workflows, calendars, pipelines, and settings — apply to new sub-accounts and customize instead of building from scratch.</div>
+
+      <h4>1. Sub-Account &amp; Phone Setup</h4>
+      <ul class="checklist">
+        <li>Create GHL sub-account for the customer</li>
+        <li>Fill in business info: name, address, timezone, language</li>
+        <li>Purchase or port business phone number via LC Phone (~$1.15/mo local, ~$2.15/mo toll-free)</li>
+        <li>Complete A2P 10DLC registration (mandatory for US SMS) &mdash; brand registration $4-12 one-time, campaign $4/mo, takes 1-5 business days</li>
+        <li>Configure call forwarding / missed call trigger</li>
+        <li>Set up business hours vs. after-hours rules</li>
+      </ul>
+
+      <h4>2. Missed Call Text-Back</h4>
+      <p><strong>Basic method:</strong> Settings &rarr; "Enable Missed Call Text Back" &rarr; customize message</p>
+      <p><strong>Workflow method (recommended):</strong></p>
+      <ul class="checklist">
+        <li>Automations &rarr; Workflows &rarr; Create Workflow</li>
+        <li>Trigger: "Inbound Call" with Call Status = "Missed"</li>
+        <li>Enable "Run Once Per Contact"</li>
+        <li>Add wait step (10-30 sec delay)</li>
+        <li>Add "Send SMS" action with custom brand-voice message</li>
+        <li>Add "Push Notification to Assigned User" for owner alerts</li>
+        <li>Set up Conversation AI for two-way SMS responses</li>
+        <li>Test: call the number, don't answer, verify text fires</li>
+      </ul>
+
+      <div class="callout">
+        <strong>SMS Costs:</strong> Standard 10DLC: $0.0119/msg &bull; Toll-free: $0.0175/msg &bull; MMS: $0.03/msg &bull; Messages over 160 chars = multiple segments
+      </div>
+
+      <h4>3. AI Employee Setup (Voice + Conversation AI)</h4>
+      <p>$0.13/min for Voice AI, or $97/mo unlimited per sub-account.</p>
+      <ul class="checklist">
+        <li>Enable AI Employee in Agency Settings &rarr; Company tab</li>
+        <li>Configure Conversation AI for SMS/chat (greeting, tone, personality)</li>
+        <li>Train on services, pricing ranges, FAQs, booking rules</li>
+        <li>Set up intent detection (booking, quote, emergency, general)</li>
+        <li>Configure Voice AI Agent (optional) for live call answering</li>
+        <li>Set boundaries: topics AI should never discuss</li>
+      </ul>
+
+      <h4>4. Appointment Booking</h4>
+      <ul class="checklist">
+        <li>Calendars &rarr; Calendar Settings &rarr; Create Service Calendar</li>
+        <li>Configure appointment types, durations, buffer time</li>
+        <li>Set availability windows matching business schedule</li>
+        <li>Link to owner's Google Calendar (prevent double-booking)</li>
+        <li>Set up automated confirmation SMS/email</li>
+        <li>Build reminder workflow: 24hr + 1hr before</li>
+        <li>Enable payment collection if needed (Stripe, Square)</li>
+        <li>Create booking link for AI to share in conversations</li>
+      </ul>
+
+      <h4>5. Lead Follow-Up Sequences</h4>
+      <ul class="checklist">
+        <li>Set up pipeline: New &rarr; Contacted &rarr; Quoted &rarr; Booked &rarr; Completed</li>
+        <li>Build quote follow-up: Day 1, Day 3, Day 7, Day 14</li>
+        <li>Build new lead nurture sequence</li>
+        <li>Configure human handoff triggers</li>
+        <li>Set up "Goal" actions &mdash; stop sequence when contact books or replies</li>
+      </ul>
+
+      <h4>6. Review Automation</h4>
+      <ul class="checklist">
+        <li>Connect Google Business Profile</li>
+        <li>Use Guided Review Setup Wizard</li>
+        <li>Build post-job review request workflow (trigger on "Completed" stage, 2hr delay)</li>
+        <li>Send SMS with direct Google review link</li>
+        <li>One follow-up reminder if no review in 3 days</li>
+        <li>Enable Reviews AI (Suggestive mode initially)</li>
+        <li>Set up "Review Received" trigger &mdash; auto-respond to 5-star, alert owner for 1-3 star</li>
+      </ul>
+
+      <h4>7. Dashboard &amp; Reporting</h4>
+      <ul class="checklist">
+        <li>Configure owner notifications (real-time SMS/push for new leads)</li>
+        <li>Set up monthly report template (calls caught, conversations, bookings, follow-ups, reviews)</li>
+        <li>Add owner as Staff user only if they want limited dashboard access</li>
+      </ul>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase">
+      <span class="phase-num">5</span>
+      <div class="phase-title">Testing &amp; Launch</div>
+
+      <h3>Internal Testing (Before Going Live)</h3>
+      <ul class="checklist">
+        <li>Call the business number, let it ring &mdash; verify text-back fires within seconds</li>
+        <li>Reply to the text &mdash; verify AI responds naturally in brand voice</li>
+        <li>Book an appointment through the AI &mdash; verify it shows on calendar</li>
+        <li>Test appointment reminders (confirmation + reminder sequence)</li>
+        <li>Trigger a follow-up sequence &mdash; verify timing and messaging</li>
+        <li>Send a test review request &mdash; verify link goes to correct Google profile</li>
+        <li>Test after-hours vs. business hours behavior</li>
+        <li>Test human handoff scenario</li>
+      </ul>
+
+      <h3>Launch Call with Customer (15-20 min)</h3>
+      <ol>
+        <li><strong>Live demo</strong> &mdash; "I'm going to call your number right now. Watch your phone." Show the text-back, AI conversation, and booked appointment.</li>
+        <li><strong>Day-to-day expectations</strong> &mdash; Notifications for new leads, appointments on calendar, automatic follow-up, they can take over any conversation manually.</li>
+        <li><strong>Set expectations</strong> &mdash; First recovered lead within days. Monthly report at end of month 1. "Text/call me to adjust anything."</li>
+        <li><strong>Confirm notification preferences</strong> &mdash; Real-time alerts or daily summary?</li>
+      </ol>
+    </div>
+
+    <!-- PHASE 6 -->
+    <div class="phase">
+      <span class="phase-num">6</span>
+      <div class="phase-title">Ongoing Management</div>
+
+      <h3>First 7 Days</h3>
+      <ul class="checklist">
+        <li>Monitor system daily for issues</li>
+        <li>Check AI conversation quality &mdash; accurate and on-brand?</li>
+        <li>Follow up with customer: "How's everything looking?"</li>
+        <li>Make messaging tweaks based on real conversations</li>
+      </ul>
+
+      <h3>First 30 Days</h3>
+      <ul class="checklist">
+        <li>Review all conversations and lead outcomes</li>
+        <li>Identify patterns where AI needs adjustment</li>
+        <li>Send first monthly performance report</li>
+        <li>Check-in call to review results and ROI</li>
+      </ul>
+
+      <h3>Monthly Ongoing</h3>
+      <ul class="checklist">
+        <li>Send monthly performance report</li>
+        <li>Optimize AI responses based on conversation data</li>
+        <li>Adjust follow-up timing/messaging</li>
+        <li>Monitor review generation</li>
+        <li>Quarterly strategy call (optional, builds retention)</li>
+      </ul>
+    </div>
+
+    <!-- TIMELINE -->
+    <h2>Customer-Facing Timeline</h2>
+    <table>
+      <thead>
+        <tr><th>Day</th><th>What Happens</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>Customer inquires via website or call</td></tr>
+        <tr><td>0-1</td><td>You reach out, schedule discovery call</td></tr>
+        <tr><td>1-3</td><td>Discovery call &rarr; customer says yes &rarr; payment collected</td></tr>
+        <tr><td>2-4</td><td>Kickoff call &mdash; gather business info, voice/tone preferences</td></tr>
+        <tr><td>3-5</td><td>You build the system in GHL (24-48 hours)</td></tr>
+        <tr><td>4-6</td><td>Internal testing &mdash; everything verified working</td></tr>
+        <tr><td>5-7</td><td>Launch call &mdash; live demo, go live</td></tr>
+        <tr><td>7-14</td><td>Monitor &amp; optimize &mdash; daily check-ins first week</td></tr>
+        <tr><td>30</td><td>First monthly performance report</td></tr>
+        <tr><td>Ongoing</td><td>Monthly reports, optimization, support</td></tr>
+      </tbody>
+    </table>
+
+    <!-- OBJECTIONS -->
+    <h2>Handling Objections</h2>
+
+    <div class="objection">
+      <div class="objection-q">"$1,500 setup is expensive."</div>
+      <div class="objection-a">"That covers building a fully custom system trained on your business &mdash; your voice, your services, your hours. It's not a template. And it pays for itself the first time it catches a $2,000+ job from a missed call."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"$399/month is a lot."</div>
+      <div class="objection-a">"A part-time receptionist costs $1,500-2,000/month and only works during business hours. This works 24/7/365, handles unlimited conversations, follows up automatically, and gets you reviews. If it recovers even one extra job per month, it more than pays for itself."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I don't get that many missed calls."</div>
+      <div class="objection-a">"Most business owners are surprised. We typically find 20-40 missed calls per month that went straight to voicemail. Even if it's just 10, at your average job value, that's significant revenue walking away."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I tried something like this before and it didn't work."</div>
+      <div class="objection-a">"Most tools give you software and expect you to figure it out. We do everything for you &mdash; setup, customization, optimization. You don't log into anything. And there's no contract, so if it's not working, you can cancel anytime."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"Can I see it in action first?"</div>
+      <div class="objection-a">"Absolutely. Give me your cell number &mdash; I'll set up a quick demo right now and you can see exactly what your customers would experience."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I need to think about it."</div>
+      <div class="objection-a">"Totally understand. While you're thinking, keep track of how many calls go to voicemail this week. That's the revenue gap we close. I'll follow up [specific day]."</div>
+    </div>
+
+    <!-- UNIT ECONOMICS -->
+    <h2>Unit Economics</h2>
+
+    <h3>Your GHL Plan</h3>
+    <ul>
+      <li><strong>Unlimited ($297/mo)</strong> &mdash; Unlimited sub-accounts, no SaaS mode. Start here.</li>
+      <li><strong>Agency Pro ($497/mo)</strong> &mdash; Adds SaaS mode, white-label app, automated billing. Upgrade at 5+ clients.</li>
+    </ul>
+
+    <h3>Per-Client Variable Costs</h3>
+    <table>
+      <thead><tr><th>Cost Item</th><th>Estimate</th></tr></thead>
+      <tbody>
+        <tr><td>Phone number</td><td>$1.15/mo</td></tr>
+        <tr><td>A2P campaign fee</td><td>$4/mo</td></tr>
+        <tr><td>SMS (~500 texts/mo)</td><td>~$6/mo</td></tr>
+        <tr><td>AI Employee</td><td>$0.13/min or $97/mo unlimited</td></tr>
+        <tr><td><strong>Total per client</strong></td><td><strong>~$15-110/mo</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Profit at Scale</h3>
+    <table>
+      <thead><tr><th>Clients</th><th>Monthly Revenue</th><th>GHL Cost</th><th>Variable</th><th>Net Profit</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>$399</td><td>$297</td><td>~$50</td><td style="color:var(--green);font-weight:600;">~$52</td></tr>
+        <tr><td>3</td><td>$1,197</td><td>$297</td><td>~$150</td><td style="color:var(--green);font-weight:600;">~$750</td></tr>
+        <tr><td>5</td><td>$1,995</td><td>$297</td><td>~$250</td><td style="color:var(--green);font-weight:600;">~$1,448</td></tr>
+        <tr><td>10</td><td>$3,990</td><td>$497</td><td>~$500</td><td style="color:var(--green);font-weight:600;">~$2,993</td></tr>
+        <tr><td>20</td><td>$7,980</td><td>$497</td><td>~$1,000</td><td style="color:var(--green);font-weight:600;">~$6,483</td></tr>
+      </tbody>
+    </table>
+    <p><em>Plus setup fees: 10 clients = $15,000 in one-time revenue</em></p>
+
+    <!-- GHL RESOURCES -->
+    <h2>Key GHL Resources</h2>
+    <ul class="link-list">
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/48001239140" target="_blank">Missed Call Text-Back Setup</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/155000003906" target="_blank">AI Employee Overview</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/155000003911" target="_blank">Voice AI Agents</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/155000001159" target="_blank">Creating Service Calendars</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/155000003873" target="_blank">Review Automation Workflows</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/155000005200" target="_blank">A2P 10DLC Registration &amp; Fees</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/48001203458" target="_blank">SMS Pricing Calculator</a></li>
+      <li><a href="https://supplygem.com/gohighlevel-client-onboarding-checklist/" target="_blank">Client Onboarding Checklist</a></li>
+      <li><a href="https://help.gohighlevel.com/support/solutions/articles/155000001156" target="_blank">GHL Pricing &amp; Billing Guide</a></li>
+    </ul>
+
+    <!-- INTERNAL NOTES -->
+    <h2>Internal Notes</h2>
+    <div class="callout-warn callout">
+      <ul style="margin:0;padding-left:1.25rem;">
+        <li><strong>GoHighLevel is never mentioned to customers.</strong> The product is "AI Sidekick."</li>
+        <li><strong>The customer never logs into GHL.</strong> You send reports or show screenshots.</li>
+        <li><strong>You are the point of contact.</strong> Personal call/text, not a ticket system.</li>
+        <li><strong>DFW focus</strong> &mdash; offer to meet in person when possible.</li>
+        <li><strong>Snapshot strategy</strong> &mdash; Build one solid setup per industry, save as Snapshot, reuse. Cuts build time to 2-4 hours.</li>
+        <li><strong>A2P lead time</strong> &mdash; Submit registration ASAP after close. 1-5 business days for approval.</li>
+      </ul>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</body>
+</html>
