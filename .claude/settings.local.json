@@ -81,7 +81,14 @@
       "Bash(for:*)",
       "Bash(git status:*)",
       "Bash(git log:*)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "Read(path:/mnt/c/Users/wheel/*)",
+      "WebFetch(domain:www.avoca.ai)",
+      "WebFetch(domain:avoca.ai)",
+      "WebFetch(domain:www.gohighlevel.com)",
+      "WebFetch(domain:help.gohighlevel.com)",
+      "WebFetch(domain:ideas.gohighlevel.com)",
+      "WebFetch(domain:developers.gohighlevel.com)"
     ],
     "deny": []
   }

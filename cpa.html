@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Sidekick for CPAs — Never Lose a Client to a Missed Call Again</title>
   <meta name="description" content="CPA and bookkeeping firms lose thousands in client revenue to unanswered calls, especially during tax season. AI Sidekick texts back instantly, books consultations 24/7, and follows up automatically.">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -132,6 +140,9 @@
     nav .w { display: flex; justify-content: space-between; align-items: center; }
 
     .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
       font-family: var(--sans);
       font-weight: 700;
       white-space: nowrap;
@@ -140,6 +151,7 @@
       letter-spacing: -0.02em;
     }
 
+    .logo img { height: 28px; width: 28px; object-fit: contain; }
     .logo span { color: var(--text-2); font-weight: 400; }
 
     .nav-r {
@@ -668,6 +680,94 @@
       flex-shrink: 0;
     }
 
+    .pricing-tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .pricing-tier {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.25rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+
+    .pricing-tier:hover {
+      border-color: var(--border-h);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    .pricing-tier-popular {
+      border-color: var(--accent);
+      box-shadow: 0 8px 40px rgba(26,58,92,0.12);
+    }
+
+    .pricing-tier-popular:hover {
+      border-color: var(--accent-light);
+      box-shadow: 0 12px 48px rgba(26,58,92,0.18);
+    }
+
+    .tier-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 1.1rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .tier-name {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .tier-tagline {
+      font-size: 0.82rem;
+      color: var(--text-3);
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    .tier-includes-label {
+      font-size: 0.78rem !important;
+      font-weight: 600;
+      color: var(--accent) !important;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding-bottom: 0.5rem !important;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.25rem;
+      list-style: none;
+    }
+
+    .tier-includes-label::before { display: none !important; }
+
+    .tier-note {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-3);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .pricing-tiers { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .pricing-tier-popular { order: -1; }
+    }
+
     /* === FAQ === */
     .faq {
       padding: 5.5rem 0;
@@ -905,7 +1005,7 @@
 
   <nav id="nav">
     <div class="w">
-      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <a href="/" class="logo"><img src="images/logo.png" alt="AI Sidekick logo">AI <span>Sidekick</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
       <ul class="nav-r" id="navMenu">
         <li><a href="/#how">How It Works</a></li>
@@ -929,7 +1029,7 @@
         </div>
       </div>
       <div class="hero-img">
-        <img src="images/cpa.png" alt="CPA office with organized tax documents" loading="eager">
+        <img src="images/cpa.jpg" alt="CPA office with organized tax documents" loading="eager">
       </div>
     </div>
   </section>
@@ -1053,23 +1153,61 @@
     <div class="w">
       <div class="pricing-top rv">
         <p class="eyebrow pricing-eyebrow">Pricing</p>
-        <h2 class="serif pricing-h">One plan. <em>Everything</em> included.</h2>
+        <h2 class="serif pricing-h">Pick the plan that <em>fits your business.</em></h2>
       </div>
-      <div class="pricing-card rv rv-d1">
-        <div class="pricing-name">The Autopilot Package</div>
-        <div class="pricing-price serif">$399 <small>/month</small></div>
-        <div class="pricing-setup">$1,500 one-time setup</div>
-        <ul class="pricing-list">
-          <li>Missed call text-back (24/7/365)</li>
-          <li>AI-powered lead qualification and follow-up</li>
-          <li>Automated proposal follow-ups at day 2, 5, and 10</li>
-          <li>Google review requests after completed engagements</li>
-          <li>AI receptionist for after-hours and tax season overflow</li>
-          <li>Custom message templates matching your firm's professional tone</li>
-          <li>Monthly performance report</li>
-          <li>No contracts &mdash; cancel anytime</li>
-        </ul>
-        <a href="#contact" class="btn btn-main" style="width:100%;justify-content:center;">Get Started</a>
+      <div class="pricing-tiers">
+        <div class="pricing-tier rv rv-d1">
+          <div class="tier-name">Starter</div>
+          <div class="tier-tagline">Capture leads you're losing today</div>
+          <div class="pricing-price serif">$297 <small>/month</small></div>
+          <div class="pricing-setup">$997 one-time setup</div>
+          <ul class="pricing-list">
+            <li>Missed call text-back (24/7)</li>
+            <li>Two-way SMS conversations</li>
+            <li>Online booking calendar</li>
+            <li>Automated appointment reminders</li>
+            <li>Google review request automation</li>
+            <li>Monthly performance reports</li>
+            <li>Lead pipeline &amp; CRM</li>
+          </ul>
+          <a href="#contact" class="btn btn-main" style="width:100%;justify-content:center;">Book a Demo</a>
+          <p class="tier-note">No contracts — cancel anytime</p>
+        </div>
+        <div class="pricing-tier pricing-tier-popular rv rv-d2">
+          <div class="tier-badge">Most Popular</div>
+          <div class="tier-name">Growth</div>
+          <div class="tier-tagline">Your own AI receptionist + full automation</div>
+          <div class="pricing-price serif">$497 <small>/month</small></div>
+          <div class="pricing-setup">$1,500 one-time setup</div>
+          <ul class="pricing-list">
+            <li class="tier-includes-label">Everything in Starter, plus:</li>
+            <li><strong>AI Voice Receptionist (24/7)</strong></li>
+            <li>AI chat widget for your website</li>
+            <li>Automated follow-up sequences</li>
+            <li>Quote &amp; estimate reminders</li>
+            <li>Human handoff when needed</li>
+            <li>Ongoing optimization &amp; support</li>
+          </ul>
+          <a href="#contact" class="btn btn-main" style="width:100%;justify-content:center;">Book a Demo</a>
+          <p class="tier-note">No contracts — cancel anytime</p>
+        </div>
+        <div class="pricing-tier rv rv-d3">
+          <div class="tier-name">Autopilot</div>
+          <div class="tier-tagline">Full AI workforce across every channel</div>
+          <div class="pricing-price serif">$797 <small>/month</small></div>
+          <div class="pricing-setup">$2,500 one-time setup</div>
+          <ul class="pricing-list">
+            <li class="tier-includes-label">Everything in Growth, plus:</li>
+            <li><strong>Multi-channel AI (Facebook, Instagram, WhatsApp)</strong></li>
+            <li><strong>Spanish language AI support</strong></li>
+            <li>Outbound AI follow-up calls</li>
+            <li>AI review responses (auto-reply)</li>
+            <li>Real-time analytics dashboard</li>
+            <li>Priority support &amp; dedicated manager</li>
+          </ul>
+          <a href="#contact" class="btn btn-main" style="width:100%;justify-content:center;">Book a Demo</a>
+          <p class="tier-note">No contracts — cancel anytime</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1179,7 +1317,7 @@
 
   <footer>
     <div class="w">
-      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <a href="/" class="logo"><img src="images/logo.png" alt="AI Sidekick logo">AI <span>Sidekick</span></a>
       <ul class="f-links">
         <li><a href="/#how">How It Works</a></li>
         <li><a href="/#pricing">Pricing</a></li>

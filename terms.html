@@ -36,7 +36,8 @@
     .w { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
     nav { padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
     nav .w-nav { max-width: 1180px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-family: var(--sans); font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; }
+    .logo { font-family: var(--sans); font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem; }
+    .logo img { height: 28px; width: 28px; object-fit: contain; }
     .logo span { color: var(--text-2); font-weight: 400; }
     .back { font-size: 0.85rem; color: var(--text-2); text-decoration: none; }
     .back:hover { color: var(--text); }
@@ -55,7 +56,7 @@
 
   <nav>
     <div class="w-nav">
-      <a href="/" class="logo">AI <span>Sidekick</span></a>
+      <a href="/" class="logo"><img src="images/logo.png" alt="AI Sidekick logo">AI <span>Sidekick</span></a>
       <a href="/" class="back">&larr; Back to home</a>
     </div>
   </nav>

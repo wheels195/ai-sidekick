@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-AI Sidekick is a local AI automation service for small businesses in DFW. We install AI-powered systems (missed call text-back, lead follow-up, AI receptionist, review automation) so business owners never lose a customer to a missed call or slow response. Backend is GoHighLevel (never mentioned on the website).
+AI Sidekick is a national AI automation service for service businesses. We install AI-powered systems (AI voice receptionist, missed call text-back, lead follow-up, multi-channel AI chat, review automation) so business owners never lose a customer to a missed call or slow response. Backend is GoHighLevel (never mentioned on the website).
 
 ## Architecture
 
@@ -11,7 +11,7 @@ Static HTML pages — no build tools, no framework, no dependencies beyond Googl
 - `hvac.html` — HVAC vertical page (template for other verticals)
 - `privacy.html` — privacy policy
 - `terms.html` — terms of service
-- `images/` — static assets
+- `images/` — static assets (all images served locally, no external hotlinking)
 
 ## Design System
 
@@ -31,7 +31,10 @@ All 12 vertical pages are built and live.
 
 ## Pricing
 
-$1,500 setup / $399 per month — 4-stage flow (Capture → Book → Follow Up → Grow).
+3 tiers:
+- **Starter** — $297/mo, $997 setup (missed call text-back, SMS, booking, reminders, review requests, reports, CRM)
+- **Growth** — $497/mo, $1,500 setup (adds AI Voice Receptionist, website chat widget, follow-up sequences, human handoff)
+- **Autopilot** — $797/mo, $2,500 setup (adds multi-channel AI, Spanish language, outbound AI calls, AI review responses, analytics dashboard, priority support)
 
 ## CTA Links
 
@@ -48,5 +51,6 @@ All CTA buttons scroll to `#contact` form on the page.
 - **Form backend**: Connect contact forms to Google Sheets + Resend for email notifications. Two options considered:
   1. Make.com webhook → Google Sheets → Resend (no-code)
   2. Vercel serverless function `/api/submit.js` → Sheets + Resend (fewer moving parts)
+- **GA4**: Replace `G-XXXXXXXXXX` placeholder in index.html with real GA4 measurement ID
 - **Calendly**: Replace `#contact` form links with real Calendly link when ready
 - **Domain**: Site is live at `ai-sidekick.io` via Vercel
