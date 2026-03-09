@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-AI Sidekick is a national AI automation service for service businesses. We install AI-powered systems (AI voice receptionist, missed call text-back, lead follow-up, multi-channel AI chat, review automation) so business owners never lose a customer to a missed call or slow response. Backend is GoHighLevel (never mentioned on the website).
+AI Sidekick is a national AI automation service for service businesses. We configure AI-powered systems (AI voice receptionist, missed call text-back, lead follow-up, multi-channel AI chat, review automation) so business owners capture every lead. Backend is GoHighLevel (never mentioned on the website). GHL is NOT a custom product — it's configured with prompts/templates, not "trained" via ML.
 
 ## Architecture
 
@@ -42,15 +42,28 @@ All CTA buttons scroll to `#contact` form on the page.
 
 ## Content Rules
 
-- All statistics must be real and sourced with clickable citations
+- All statistics must be real and sourced with clickable citations (no unsourced numbers)
 - No fake testimonials (FTC guidelines) — use sourced industry data instead
 - No emojis anywhere — use Lucide SVG icons
+- No cliche AI marketing language: "without lifting a finger", "through the cracks", "never sleeps", "game-changer", "supercharge", "nurtured", "personal touchpoint", "pipeline goes dark"
+- No vague claims: "matches your brand voice/tone", "feels like a team member", "personalized", "seamless"
+- Use "configured" not "trained" when describing AI setup (GHL is template config, not ML training)
+- Be honest about integrations: GHL does NOT natively integrate with industry software (ServiceTitan, Dentrix, Clio, etc.) — say so, mention Zapier/Make as option
+- No compliance claims (HIPAA, state bar, etc.) — recommend consulting their own compliance team
+- No false social proof — this is a new business with zero clients
+- "On autopilot" is OK in the hero headline only (user preference) but avoid elsewhere
+- Copy should be specific and factual, not aspirational or fear-based
+
+## Logo
+
+- `images/logo.png` — AS monogram, used in nav and footer on all pages
+- `images/favicon.png` — favicon (same logo)
 
 ## Next Steps
 
-- **Form backend**: Connect contact forms to Google Sheets + Resend for email notifications. Two options considered:
-  1. Make.com webhook → Google Sheets → Resend (no-code)
-  2. Vercel serverless function `/api/submit.js` → Sheets + Resend (fewer moving parts)
-- **GA4**: Replace `G-XXXXXXXXXX` placeholder in index.html with real GA4 measurement ID
-- **Calendly**: Replace `#contact` form links with real Calendly link when ready
+- **GHL Agency Account**: Need to sign up, build demo sub-account (fake HVAC business), test full flow
+- **Demo site**: Build a simple one-page site for fake HVAC company with GHL chat widget embedded
+- **Calendly**: Set up for AI Sidekick's own sales/demo calls, replace `#contact` form links
+- **GA4**: Replace `G-XXXXXXXXXX` placeholder with real GA4 measurement ID
+- **Form backend**: Connect contact forms to Google Sheets + Resend (or replace with Calendly embed)
 - **Domain**: Site is live at `ai-sidekick.io` via Vercel
