@@ -944,7 +944,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
-      align-items: start;
+      align-items: stretch;
     }
 
     .tier-card {
@@ -964,13 +964,35 @@
     }
 
     .tier-popular {
+      background: var(--accent);
+      color: #fff;
       border-color: var(--accent);
-      box-shadow: 0 8px 40px rgba(26,58,92,0.12);
+      box-shadow: 0 8px 40px rgba(26,58,92,0.2);
+      transform: scale(1.04);
+      z-index: 2;
     }
 
     .tier-popular:hover {
       border-color: var(--accent-light);
-      box-shadow: 0 12px 48px rgba(26,58,92,0.18);
+      box-shadow: 0 16px 56px rgba(26,58,92,0.28);
+    }
+
+    .tier-popular .tier-tagline { color: rgba(255,255,255,0.7); }
+    .tier-popular .price-per { color: rgba(255,255,255,0.8); }
+    .tier-popular .price-setup { color: rgba(255,255,255,0.6); }
+    .tier-popular .tier-price-wrap { border-bottom-color: rgba(255,255,255,0.2); }
+    .tier-popular .tier-features li { color: rgba(255,255,255,0.85); }
+    .tier-popular .tier-features li svg polyline { stroke: rgba(255,255,255,0.9); }
+    .tier-popular .tier-includes { color: rgba(255,255,255,0.9) !important; border-bottom-color: rgba(255,255,255,0.2); }
+    .tier-popular .pkg-note { color: rgba(255,255,255,0.5); }
+
+    .tier-popular .tier-btn {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    .tier-popular .tier-btn:hover {
+      background: rgba(255,255,255,0.9);
     }
 
     .tier-badge {
@@ -978,8 +1000,8 @@
       top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-      color: #fff;
+      background: #fff;
+      color: var(--accent);
       font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -987,6 +1009,7 @@
       padding: 0.35rem 1.1rem;
       border-radius: 100px;
       white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .tier-header {
@@ -1052,7 +1075,7 @@
 
     .tier-features li strong {
       font-weight: 600;
-      color: var(--text);
+      color: inherit;
     }
 
     .tier-includes {
@@ -1081,7 +1104,7 @@
 
     @media (max-width: 900px) {
       .pricing-tiers { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-      .tier-popular { order: -1; }
+      .tier-popular { order: -1; transform: none; }
     }
 
     /* === ROI CALCULATOR === */
@@ -2299,7 +2322,7 @@
           </div>
           <ul class="tier-features">
             <li class="tier-includes">Everything in Starter, plus:</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>AI Voice Receptionist (24/7)</strong></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI Voice Receptionist (24/7)</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI chat widget for your website</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automated follow-up sequences</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Quote &amp; estimate reminders</li>
@@ -2322,8 +2345,8 @@
           </div>
           <ul class="tier-features">
             <li class="tier-includes">Everything in Growth, plus:</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Multi-channel AI (Facebook, Instagram, WhatsApp)</strong></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Spanish language AI support</strong></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-channel AI (Facebook, Instagram, WhatsApp)</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spanish language AI support</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Outbound AI follow-up calls</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI review responses (auto-reply)</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Real-time analytics dashboard</li>
