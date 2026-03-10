@@ -1369,9 +1369,83 @@
       margin: 0 auto;
     }
 
+    .billing-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .billing-label {
+      font-size: 0.9rem;
+      color: var(--text-3);
+      transition: color 0.3s var(--ease);
+      cursor: pointer;
+    }
+
+    .billing-label-active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .billing-save {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      margin-left: 0.25rem;
+      vertical-align: middle;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: var(--border);
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s var(--ease);
+      flex-shrink: 0;
+    }
+
+    .toggle-switch.active {
+      background: var(--accent);
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s var(--ease);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .toggle-switch.active .toggle-knob {
+      transform: translateX(20px);
+    }
+
+    .price-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.25rem;
+      min-height: 1.2em;
+    }
+
     .pricing-tiers {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr;
+      max-width: 420px;
+      margin: 0 auto;
       gap: 1.25rem;
       align-items: stretch;
     }
@@ -1380,7 +1454,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 2.25rem 1.75rem;
+      padding: 2rem 1.75rem;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -1397,8 +1471,6 @@
       color: #fff;
       border-color: var(--accent);
       box-shadow: 0 8px 40px rgba(26,58,92,0.2);
-      transform: scale(1.04);
-      z-index: 2;
     }
 
     .tier-popular:hover {
@@ -1442,7 +1514,8 @@
     }
 
     .tier-header {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
     }
 
     .tier-name {
@@ -1459,14 +1532,14 @@
 
     .tier-price-wrap {
       text-align: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
       border-bottom: 1px solid var(--border);
     }
 
     .price-amount {
       font-family: var(--serif);
-      font-size: 3.8rem;
+      font-size: 3.2rem;
       line-height: 0.95;
       margin-bottom: 0.15rem;
     }
@@ -1489,17 +1562,18 @@
     }
 
     .tier-features li {
-      font-size: 0.85rem;
+      font-size: 0.92rem;
       color: var(--text-2);
-      padding: 0.4rem 0;
+      padding: 0.35rem 0;
       display: flex;
-      gap: 0.6rem;
-      align-items: center;
-      line-height: 1.4;
+      gap: 0.5rem;
+      align-items: flex-start;
+      line-height: 1.35;
     }
 
     .tier-features li svg {
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
     .tier-features li strong {
@@ -1507,15 +1581,93 @@
       color: inherit;
     }
 
-    .tier-includes {
-      font-size: 0.78rem !important;
-      font-weight: 600;
-      color: var(--accent) !important;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding-bottom: 0.5rem !important;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 0.25rem;
+    .feature-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feature-label span:first-child {
+      flex-shrink: 1;
+    }
+
+    .tip-wrap {
+      position: relative;
+      display: inline-flex;
+      flex-shrink: 0;
+    }
+
+    .tip-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tip-bubble {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e1e1e;
+      color: #fff;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      width: 240px;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      pointer-events: none;
+      font-weight: 400;
+    }
+
+    .tip-bubble::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #1e1e1e;
+    }
+
+    /* Auto-align: push right-overflowing tips left */
+    .tip-wrap.tip-align-left .tip-bubble {
+      left: auto;
+      right: -8px;
+      transform: none;
+    }
+    .tip-wrap.tip-align-left .tip-bubble::after {
+      left: auto;
+      right: 12px;
+      transform: none;
+    }
+
+    /* Auto-align: push left-overflowing tips right */
+    .tip-wrap.tip-align-right .tip-bubble {
+      left: -8px;
+      transform: none;
+    }
+    .tip-wrap.tip-align-right .tip-bubble::after {
+      left: 12px;
+      transform: none;
+    }
+
+    .tip-wrap.active .tip-bubble {
+      display: block;
     }
 
     .tier-btn {
@@ -1532,8 +1684,13 @@
     }
 
     @media (max-width: 900px) {
-      .pricing-tiers { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-      .tier-popular { order: -1; transform: none; }
+      .tip-bubble { width: 200px; }
+    }
+
+    @media (max-width: 520px) {
+      .pricing-tiers { max-width: 100%; }
+      .tier-card { padding: 1.75rem 1.25rem; }
+      .tier-btn { max-width: 100%; }
     }
 
     /* === ROI CALCULATOR === */
@@ -2554,74 +2711,39 @@
     <div class="w">
       <div class="package-top rv">
         <p class="eyebrow eyebrow-subtle package-eyebrow">Pricing</p>
-        <h2 class="serif package-h">Pick the plan that <em>fits your business.</em></h2>
-        <p class="package-sub">Every plan includes full setup, customization, and ongoing support. We build and manage the system &mdash; you just review the results.</p>
+        <h2 class="serif package-h">One plan. <em>Everything included.</em></h2>
+        <div class="billing-toggle">
+          <span class="billing-label billing-label-active" id="label-monthly" onclick="if(isAnnual)toggleBilling()">Monthly</span>
+          <button class="toggle-switch" id="billingToggle" onclick="toggleBilling()" aria-label="Toggle annual billing">
+            <span class="toggle-knob"></span>
+          </button>
+          <span class="billing-label" id="label-annual" onclick="if(!isAnnual)toggleBilling()">Annual <span class="billing-save">Save 33%</span></span>
+        </div>
       </div>
       <div class="pricing-tiers">
-        <!-- Starter -->
-        <div class="tier-card rv rv-d1">
+        <div class="tier-card tier-popular rv rv-d1">
           <div class="tier-header">
-            <div class="tier-name">Starter</div>
-            <div class="tier-tagline">Capture leads you're losing today</div>
+            <div class="tier-name">AI Sidekick</div>
+            <div class="tier-tagline">Full AI automation for your business</div>
           </div>
           <div class="tier-price-wrap">
-            <div class="price-amount serif">$397</div>
-            <div class="price-per">per month</div>
-            <div class="price-setup">$1,500 one-time setup</div>
+            <div class="price-amount serif" id="priceAmount">$397</div>
+            <div class="price-per" id="pricePer">per month</div>
+            <div class="price-sub" id="priceSub"></div>
+            <div class="price-setup">$500 one-time setup</div>
           </div>
           <ul class="tier-features">
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Missed call text-back (24/7)</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Two-way SMS conversations</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Online booking calendar</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automated appointment reminders</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Google review request automation</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Monthly performance reports</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lead pipeline &amp; CRM</li>
-          </ul>
-          <a href="#contact" class="btn btn-main tier-btn">Book a Demo</a>
-          <p class="pkg-note">No contracts &mdash; cancel anytime</p>
-        </div>
-        <!-- Growth (Popular) -->
-        <div class="tier-card tier-popular rv rv-d2">
-          <div class="tier-badge">Most Popular</div>
-          <div class="tier-header">
-            <div class="tier-name">Growth</div>
-            <div class="tier-tagline">Your own AI receptionist + full automation</div>
-          </div>
-          <div class="tier-price-wrap">
-            <div class="price-amount serif">$697</div>
-            <div class="price-per">per month</div>
-            <div class="price-setup">$1,500 one-time setup</div>
-          </div>
-          <ul class="tier-features">
-            <li class="tier-includes">Everything in Starter, plus:</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI Voice Receptionist (24/7)</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI chat widget for your website</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automated follow-up sequences</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Quote &amp; estimate reminders</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Human handoff when needed</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We adjust your AI based on your results</li>
-          </ul>
-          <a href="#contact" class="btn btn-main tier-btn">Book a Demo</a>
-          <p class="pkg-note">No contracts &mdash; cancel anytime</p>
-        </div>
-        <!-- Autopilot -->
-        <div class="tier-card rv rv-d3">
-          <div class="tier-header">
-            <div class="tier-name">Autopilot</div>
-            <div class="tier-tagline">Full automation across voice, text, and web</div>
-          </div>
-          <div class="tier-price-wrap">
-            <div class="price-amount serif">$997</div>
-            <div class="price-per">per month</div>
-            <div class="price-setup">$1,500 one-time setup</div>
-          </div>
-          <ul class="tier-features">
-            <li class="tier-includes">Everything in Growth, plus:</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spanish language AI support</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Outbound AI follow-up calls</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Real-time analytics dashboard</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support &amp; dedicated manager</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>AI voice receptionist (24/7)</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">An AI answers your phone, talks to callers, answers questions about your business, and books appointments on your calendar.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Missed call text-back</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">When you miss a call, the system instantly texts the caller so you don't lose the lead.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Two-way SMS conversations</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">The AI texts back and forth with leads, answering questions and collecting details over SMS.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>AI website chat widget</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat bubble on your website where visitors can ask questions and book appointments without calling.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Online booking calendar</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers book directly into your schedule. Syncs with Google Calendar or Outlook.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Automated appointment reminders</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automatic text and email reminders before appointments so customers don't no-show.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Follow-up sequences</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automated texts and emails that go out to leads who haven't booked yet, so no one falls off your radar.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Google review requests</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">After a job is done, the system texts your customer a link to leave you a Google review.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Lead pipeline &amp; CRM</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">See every lead, conversation, and booked job in one dashboard. Know exactly where each customer stands.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Spanish language support</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">The AI can answer calls and texts in both English and Spanish.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Reporting dashboard</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Log in anytime to see your calls, texts, bookings, and leads in real time.</span></span></span></li>
           </ul>
           <a href="#contact" class="btn btn-main tier-btn">Book a Demo</a>
           <p class="pkg-note">No contracts &mdash; cancel anytime</p>
@@ -2642,7 +2764,7 @@
             What exactly does AI Sidekick do?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">We set up AI systems that text back missed calls, send automated SMS and email follow-up sequences to leads, book appointments through an online calendar, and request Google reviews after completed jobs. On our Growth and Autopilot plans, you also get an AI voice agent that answers phone calls and an AI chat widget for your website.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">We set up AI systems that answer your phone calls, text back missed calls, send automated SMS and email follow-up sequences to leads, book appointments through an online calendar, and send Google review requests after completed jobs. You also get an AI chat widget for your website.</div></div>
         </div>
         <div class="faq-item rv rv-d2">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -2684,7 +2806,7 @@
             How is this different from hiring a receptionist?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">The average U.S. receptionist earns <a href="https://www.ziprecruiter.com/Salaries/Receptionist-Salary" target="_blank" rel="noopener">$3,088/month</a>, and that's for 8 hours a day, five days a week. AI Sidekick runs 24/7 — nights, weekends, holidays — starting at $397/month. It handles multiple calls and conversations simultaneously, and never misses a shift.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">The average U.S. receptionist earns <a href="https://www.ziprecruiter.com/Salaries/Receptionist-Salary" target="_blank" rel="noopener">$3,088/month</a>, and that's for 8 hours a day, five days a week. AI Sidekick runs 24/7 — nights, weekends, holidays — at $397/month. It handles multiple calls and conversations simultaneously, and never misses a shift.</div></div>
         </div>
         <div class="faq-item rv rv-d5">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -2805,6 +2927,61 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' });
     document.querySelectorAll('.rv').forEach(function(el) { o.observe(el); });
+
+    // Billing toggle
+    var isAnnual = false;
+    function toggleBilling() {
+      isAnnual = !isAnnual;
+      var toggle = document.getElementById('billingToggle');
+      var labelM = document.getElementById('label-monthly');
+      var labelA = document.getElementById('label-annual');
+      var amount = document.getElementById('priceAmount');
+      var per = document.getElementById('pricePer');
+      var sub = document.getElementById('priceSub');
+
+      toggle.classList.toggle('active', isAnnual);
+      labelM.classList.toggle('billing-label-active', !isAnnual);
+      labelA.classList.toggle('billing-label-active', isAnnual);
+
+      if (isAnnual) {
+        amount.textContent = '$266';
+        per.textContent = 'per month';
+        sub.textContent = '$3,192 billed annually';
+      } else {
+        amount.textContent = '$397';
+        per.textContent = 'per month';
+        sub.textContent = '';
+      }
+    }
+
+    // Tooltip logic
+    function toggleTip(e, wrap) {
+      e.stopPropagation();
+      var wasActive = wrap.classList.contains('active');
+      // Close all open tips
+      document.querySelectorAll('.tip-wrap.active').forEach(function(el) {
+        el.classList.remove('active');
+      });
+      if (!wasActive) {
+        // Reset alignment
+        wrap.classList.remove('tip-align-left', 'tip-align-right');
+        wrap.classList.add('active');
+        // Auto-align: check if bubble overflows viewport
+        var bubble = wrap.querySelector('.tip-bubble');
+        var rect = bubble.getBoundingClientRect();
+        if (rect.right > window.innerWidth - 8) {
+          wrap.classList.add('tip-align-left');
+        } else if (rect.left < 8) {
+          wrap.classList.add('tip-align-right');
+        }
+      }
+    }
+    // Close tips on outside click
+    document.addEventListener('click', function() {
+      document.querySelectorAll('.tip-wrap.active').forEach(function(el) {
+        el.classList.remove('active');
+      });
+    });
 
     function toggleFaq(btn) {
       var item = btn.parentElement;
