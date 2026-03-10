@@ -327,10 +327,13 @@ You need **Agency Pro ($497/mo)** for advanced API access, SaaS mode, and rebill
 | SMS (~1,000 segments/mo) | ~$8/mo |
 | Voice AI (~500 mins/mo) | ~$30-50/mo |
 | Conversation AI (~1,000 msgs/mo) | ~$20/mo |
+| Workflow premium actions (~3,000/mo) | ~$30/mo |
 | Voice calls (non-AI) | ~$10/mo |
 | Email (~2,000/mo) | ~$1.35/mo |
 | Reviews AI (~50/mo) | ~$0.50/mo |
-| **Total per client** | **~$75-95/mo** |
+| **Total per client** | **~$105-125/mo** |
+
+*Consider Workflow Pro Growth tier ($25/mo for 30,000 executions) at 5+ clients.*
 
 ### Revenue per Client
 | Item | Amount |
@@ -341,13 +344,15 @@ You need **Agency Pro ($497/mo)** for advanced API access, SaaS mode, and rebill
 ### Break-Even Analysis (avg $697/mo per client)
 | Clients | Monthly Revenue | Your GHL Cost | Variable Costs | Net Profit |
 |---------|----------------|---------------|----------------|------------|
-| 1 | $697 | $497 | ~$85 | ~$115/mo |
-| 3 | $2,091 | $497 | ~$255 | ~$1,339/mo |
-| 5 | $3,485 | $497 | ~$425 | ~$2,563/mo |
-| 10 | $6,970 | $497 | ~$850 | ~$5,623/mo |
-| 20 | $13,940 | $497 | ~$1,700 | ~$11,743/mo |
+| 1 | $697 | $497 | ~$115 | ~$85/mo |
+| 3 | $2,091 | $497 | ~$345 | ~$1,249/mo |
+| 5 | $3,485 | $522 | ~$575 | ~$2,388/mo |
+| 10 | $6,970 | $522 | ~$1,150 | ~$5,298/mo |
+| 20 | $13,940 | $522 | ~$2,300 | ~$11,118/mo |
 
-*Plus setup fees: 10 clients × $1,500 = $15,000 in one-time revenue*
+*GHL cost at 5+ clients includes $497 Agency Pro + $25 Workflow Pro Growth tier.*
+*Plus setup fees: 10 clients × $1,500 = $15,000 in one-time revenue.*
+*These are estimates — track real usage once live and adjust if needed.*
 
 ---
 
