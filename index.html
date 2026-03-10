@@ -325,11 +325,11 @@
     }
 
     .hero-h em,
-    .problem-h em,
     .how-h em,
     .package-h em,
     .verticals-h em,
-    .proof-h em,
+    .features-h em,
+    .demo-h em,
     .cta-h em {
       font-style: italic;
       color: var(--accent);
@@ -688,24 +688,23 @@
       .hero-btns { flex-direction: column; align-items: stretch; }
       .hero-btns .btn { text-align: center; justify-content: center; }
       .w { padding: 0 1.25rem; }
-      .problem, .how, .package, .verticals, .proof, .trust, .faq, .cta { padding: 3.5rem 0; }
-      .package-top, .how-top, .faq-top, .trust-top, .proof-top { margin-bottom: 2rem; }
+      .features, .demo, .how, .package, .verticals, .faq, .cta { padding: 3.5rem 0; }
+      .package-top, .how-top, .faq-top, .features-top, .demo-top { margin-bottom: 2rem; }
 
       /* Mobile typography — 18px base for 35-65 yr old audience */
       .hero-p { font-size: 1.2rem; line-height: 1.65; }
       .btn-main { font-size: 1.15rem; padding: 1.1rem 2rem; }
       .btn-text { font-size: 1.1rem; }
       .eyebrow { font-size: 0.85rem; }
-      .stp p, .p-card p, .trust-desc { font-size: 1.15rem; line-height: 1.65; }
-      .stp h3, .p-card h3, .trust-title { font-size: 1.3rem; }
+      .stp p, .feat-sub { font-size: 1.15rem; line-height: 1.65; }
+      .stp h3, .feat-title { font-size: 1.3rem; }
       .how-intro, .package-sub { font-size: 1.15rem; }
       .faq-q { font-size: 1.2rem; }
       .faq-a-inner { font-size: 1.1rem; }
       .cta-p { font-size: 1.15rem; }
       .form-group label { font-size: 1rem; }
       .form-group input, .form-group select { font-size: 1.1rem; }
-      .proof-stat-text { font-size: 1.2rem; }
-      .proof-stat-src { font-size: 0.95rem; }
+      .features-sub, .demo-sub { font-size: 1.15rem; }
       .tier-name { font-size: 1.6rem; }
       .tier-tagline { font-size: 1rem; }
       .tier-features li { font-size: 1.05rem; }
@@ -716,7 +715,7 @@
       .roi-src, .stat-src { font-size: 0.88rem; }
 
       /* Section headings — bump for mobile readability */
-      .problem-h, .how-h, .package-h, .verticals-h, .proof-h, .trust-h, .faq-h, .cta-h { font-size: clamp(2rem, 8vw, 2.8rem); }
+      .features-h, .demo-h, .how-h, .package-h, .verticals-h, .faq-h, .cta-h { font-size: clamp(2rem, 8vw, 2.8rem); }
       .cta-note { font-size: 1rem; }
       .f-links a { font-size: 1rem; }
       .f-copy { font-size: 0.88rem; }
@@ -761,87 +760,509 @@
     }
 
     /* === PROBLEM === */
-    .problem { padding: 5.5rem 0; }
-
-    .problem .w {
-      display: grid;
-      grid-template-columns: 0.45fr 0.55fr;
-      gap: 4rem;
+    /* === FEATURES === */
+    .features {
+      padding: 5.5rem 0;
     }
 
-    .problem-left { position: sticky; top: 8rem; align-self: start; }
+    .features-top { margin-bottom: 3rem; }
+    .features-eyebrow { margin-bottom: 1rem; }
 
-    .problem-eyebrow { margin-bottom: 1rem; }
-
-    .problem-h {
+    .features-h {
       font-size: clamp(2.4rem, 4vw, 3.4rem);
       line-height: 1.08;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.75rem;
     }
 
+    .features-h em {
+      font-style: italic;
+      color: var(--accent);
+    }
 
-    .problem-p {
+    .features-sub {
       font-size: 0.95rem;
       color: var(--text-2);
       line-height: 1.65;
     }
 
-    .problem-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: auto auto;
+      gap: 1rem;
     }
 
-    .p-card {
+    .feat-grid .feat-card:nth-child(1),
+    .feat-grid .feat-card:nth-child(2),
+    .feat-grid .feat-card:nth-child(3) {
+      grid-column: span 2;
+    }
+
+    .feat-grid .feat-card:nth-child(4),
+    .feat-grid .feat-card:nth-child(5) {
+      grid-column: span 3;
+    }
+
+    .feat-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.5rem;
-      align-items: start;
-      transition: all 0.4s var(--ease);
+      padding: 1.35rem 1.35rem 0;
+      transition: border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 320px;
     }
 
-    .p-card:hover {
+    .feat-card:hover {
       border-color: var(--border-h);
-      transform: translateX(6px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
     }
 
-    .p-card-num {
-      font-family: var(--serif);
-      font-size: clamp(3.2rem, 5vw, 4.5rem);
-      line-height: 1;
-      color: var(--accent);
-      min-width: 110px;
+    .feat-head {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.25rem;
     }
 
-    .p-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
+    .feat-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(26,58,92,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .p-card p {
+    .feat-title {
       font-size: 0.88rem;
-      color: var(--text-2);
-      line-height: 1.55;
+      font-weight: 600;
+      letter-spacing: -0.01em;
     }
 
-    .stat-src {
-      font-size: 0.72rem;
+    .feat-sub {
+      font-size: 0.78rem;
       color: var(--text-3);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      margin-left: 0.25em;
+      line-height: 1.45;
+      margin-bottom: 1rem;
     }
 
-    @media (max-width: 768px) {
-      .problem .w { grid-template-columns: 1fr; gap: 2rem; }
-      .problem-left { position: static; }
-      .p-card { grid-template-columns: 1fr; gap: 0.5rem; }
-      .p-card-num { font-size: 3rem; }
+    .feat-visual {
+      flex: 1;
+      border-radius: 10px 10px 0 0;
+      background: #f4f4f2;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* --- Card 1: AI Voice Receptionist --- */
+    .fv-call {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.25rem 0.75rem 0.75rem;
+      height: 100%;
+    }
+
+    .fv-call-badge {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #fff;
+      background: #22c55e;
+      padding: 0.18rem 0.6rem;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+      animation: fv-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fv-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+
+    .fv-call-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(26,58,92,0.18) 100%);
+      border: 2px solid rgba(26,58,92,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .fv-call-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .fv-call-number {
+      font-size: 0.7rem;
+      color: var(--text-3);
+    }
+
+    .fv-call-timer {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.08em;
+      margin: 0.5rem 0 0.65rem;
+      font-family: var(--sans);
+    }
+
+    .fv-call-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .fv-call-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s var(--ease);
+    }
+
+    .feat-card:hover .fv-call-btn { transform: scale(1.06); }
+
+    .fv-call-btn--mute { background: rgba(26,58,92,0.08); }
+    .fv-call-btn--end { background: #ef4444; }
+    .fv-call-btn--transfer { background: rgba(26,58,92,0.08); }
+    .fv-call-btn--speaker { background: rgba(26,58,92,0.08); }
+
+    /* --- Card 2: Missed Call Text-Back --- */
+    .fv-sms {
+      display: flex;
+      flex-direction: column;
+      padding: 0.85rem;
+      gap: 0.35rem;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .fv-sms-time {
+      font-size: 0.6rem;
+      color: var(--text-3);
+      text-align: center;
+      margin-bottom: 0.1rem;
+    }
+
+    .fv-sms-bubble {
+      max-width: 84%;
+      padding: 0.5rem 0.7rem;
+      border-radius: 16px;
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+
+    .fv-sms-bubble--ai {
+      background: #007aff;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .fv-sms-bubble--user {
+      background: #e8e8ea;
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    /* --- Card 3: Lead Follow-Up --- */
+    .fv-seq {
+      display: flex;
+      flex-direction: column;
+      padding: 0.85rem 0.75rem;
+      gap: 0;
+      height: 100%;
+      justify-content: center;
+    }
+
+    .fv-seq-step {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .fv-seq-step + .fv-seq-step { margin-top: 0.2rem; }
+
+    .fv-seq-dot-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .fv-seq-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .fv-seq-line {
+      width: 2px;
+      height: 16px;
+      background: var(--border);
+    }
+
+    .fv-seq-dot--sent { background: #22c55e; }
+    .fv-seq-dot--pending { background: var(--border); }
+
+    .fv-seq-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.65rem;
+      gap: 0.5rem;
+    }
+
+    .fv-seq-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .fv-seq-meta {
+      font-size: 0.6rem;
+      color: var(--text-3);
+    }
+
+    .fv-seq-badge {
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 0.12rem 0.4rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .fv-seq-badge--sent { background: rgba(34,197,94,0.12); color: #16a34a; }
+    .fv-seq-badge--open { background: rgba(26,58,92,0.08); color: var(--accent); }
+    .fv-seq-badge--sched { background: rgba(0,0,0,0.05); color: var(--text-3); }
+
+    /* --- Card 4: AI Website Chat --- */
+    .fv-chat {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .fv-chat-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      background: var(--accent);
+    }
+
+    .fv-chat-bar-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .fv-chat-bar-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .fv-chat-bar-x {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1;
+    }
+
+    .fv-chat-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0.6rem;
+      gap: 0.3rem;
+      justify-content: flex-end;
+    }
+
+    .fv-chat-msg {
+      max-width: 86%;
+      padding: 0.45rem 0.65rem;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      line-height: 1.4;
+    }
+
+    .fv-chat-msg--bot {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+
+    .fv-chat-msg--user {
+      background: var(--accent);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+
+    .fv-chat-input {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.6rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .fv-chat-input span {
+      flex: 1;
+      font-size: 0.65rem;
+      color: var(--text-3);
+    }
+
+    .fv-chat-send {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- Card 5: Review Automation --- */
+    .fv-review {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 0.85rem;
+      gap: 0.6rem;
+      height: 100%;
+    }
+
+    .fv-review-stars {
+      display: flex;
+      gap: 0.15rem;
+    }
+
+    .fv-review-score {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .fv-review-score-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .fv-review-score-label {
+      font-size: 0.65rem;
+      color: var(--text-3);
+    }
+
+    .fv-review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      width: 100%;
+    }
+
+    .fv-review-card-row {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .fv-review-card-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .fv-review-card-name {
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .fv-review-card-stars {
+      margin-left: auto;
+      display: flex;
+      gap: 1px;
+    }
+
+    .fv-review-card-text {
+      font-size: 0.65rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .fv-review-notif {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.18);
+      border-radius: 8px;
+      padding: 0.4rem 0.6rem;
+      width: 100%;
+    }
+
+    .fv-review-notif svg { flex-shrink: 0; }
+
+    .fv-review-notif-text {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #16a34a;
+    }
+
+    @media (max-width: 900px) {
+      .feat-grid { grid-template-columns: repeat(2, 1fr); }
+      .feat-grid .feat-card { grid-column: span 1; }
+      .feat-card { min-height: 290px; }
+    }
+
+    @media (max-width: 540px) {
+      .feat-grid { grid-template-columns: 1fr; }
+      .feat-grid .feat-card { grid-column: span 1; }
+      .feat-card { min-height: 300px; }
     }
 
     /* === HOW === */
@@ -1394,131 +1815,6 @@
     }
 
     /* === PROOF === */
-    .proof {
-      padding: 5.5rem 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .proof-top { margin-bottom: 3rem; }
-
-    .proof-eyebrow { margin-bottom: 1rem; }
-
-    .proof-h {
-      font-size: clamp(2.4rem, 4vw, 3.4rem);
-      line-height: 1.08;
-    }
-
-
-    .proof-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .proof-stat {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .proof-stat-num {
-      font-size: clamp(3rem, 6vw, 4rem);
-      line-height: 1;
-      margin-bottom: 0.75rem;
-      color: var(--accent);
-    }
-
-    .proof-stat-text {
-      font-size: 1.1rem;
-      color: var(--text);
-      line-height: 1.55;
-      margin-bottom: 0.75rem;
-    }
-
-    .proof-stat-src {
-      font-size: 0.82rem;
-      color: var(--text-3);
-    }
-
-    .proof-stat-src a {
-      color: var(--text-3);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      transition: color 0.2s;
-    }
-
-    .proof-stat-src a:hover { color: var(--text-2); }
-
-    @media (max-width: 768px) {
-      .proof-stats { grid-template-columns: 1fr; }
-    }
-
-    /* === TRUST === */
-    .trust {
-      padding: 5.5rem 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .trust-top { margin-bottom: 3rem; }
-    .trust-eyebrow { margin-bottom: 1rem; }
-
-    .trust-h {
-      font-size: clamp(2.4rem, 4vw, 3.4rem);
-      line-height: 1.08;
-    }
-
-    .trust-h em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .trust-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-    }
-
-    .trust-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-    }
-
-    .trust-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(26,58,92,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-
-    .trust-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .trust-desc {
-      font-size: 0.85rem;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    @media (max-width: 768px) {
-      .trust-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 480px) {
-      .trust-grid { grid-template-columns: 1fr; }
-    }
-
     /* === FAQ === */
     .faq {
       padding: 5.5rem 0;
@@ -1600,103 +1896,6 @@
       font-size: 0.95rem;
       line-height: 1.7;
       color: var(--text-2);
-    }
-
-    /* === ONBOARDING === */
-    .onboard {
-      padding: 5.5rem 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .onboard-top { margin-bottom: 3rem; text-align: center; }
-    .onboard-eyebrow { margin-bottom: 1rem; }
-
-    .onboard-h {
-      font-size: clamp(2.4rem, 4vw, 3.4rem);
-      line-height: 1.08;
-    }
-
-    .onboard-h em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .onboard-steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .onboard-step {
-      background: var(--bg-card);
-      padding: 2.5rem 2rem;
-      position: relative;
-      transition: background 0.4s var(--ease);
-    }
-
-    .onboard-step:hover { background: #f5f5f3; }
-
-    .onboard-num {
-      font-size: 3rem;
-      line-height: 1;
-      color: var(--accent-dim);
-      margin-bottom: 1rem;
-      transition: color 0.4s var(--ease);
-    }
-
-    .onboard-step:hover .onboard-num { color: var(--accent); }
-
-    .onboard-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      letter-spacing: -0.01em;
-    }
-
-    .onboard-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .onboard-list li {
-      font-size: 0.88rem;
-      color: var(--text-2);
-      line-height: 1.5;
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .onboard-list li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.55em;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.4;
-    }
-
-    .onboard-step:hover .onboard-list li::before {
-      opacity: 0.8;
-    }
-
-    @media (max-width: 768px) {
-      .onboard-steps { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 480px) {
-      .onboard-h { font-size: clamp(2rem, 8vw, 2.8rem); }
-      .onboard-title { font-size: 1.3rem; }
-      .onboard-list li { font-size: 1.05rem; }
     }
 
     /* === CTA === */
@@ -1910,7 +2109,7 @@
       <div>
         <p class="eyebrow eyebrow-subtle hero-eyebrow">AI-powered automation for service businesses</p>
         <h1 class="serif hero-h">Answer every call. Book every lead. <i>Grow on autopilot.</i></h1>
-        <p class="hero-p">AI that answers your calls, books your jobs, and follows up with every lead &mdash; across every channel, 24/7.</p>
+        <p class="hero-p">AI that answers your calls, books your jobs, and follows up with every lead &mdash; 24/7.</p>
         <div class="hero-btns">
           <a href="#contact" class="btn btn-main">Book a Demo</a>
         </div>
@@ -2003,7 +2202,7 @@
       <span class="marquee-item"><span class="dot"></span>Missed Call Text-Back</span>
       <span class="marquee-item"><span class="dot"></span>Lead Follow-Up</span>
       <span class="marquee-item"><span class="dot"></span>Review Automation</span>
-      <span class="marquee-item"><span class="dot"></span>Multi-Channel AI Chat</span>
+      <span class="marquee-item"><span class="dot"></span>AI Website Chat</span>
       <span class="marquee-item"><span class="dot"></span>Spanish Language Support</span>
       <span class="marquee-item"><span class="dot"></span>HVAC</span>
       <span class="marquee-item"><span class="dot"></span>Med Spas</span>
@@ -2015,40 +2214,163 @@
       <span class="marquee-item"><span class="dot"></span>Missed Call Text-Back</span>
       <span class="marquee-item"><span class="dot"></span>Lead Follow-Up</span>
       <span class="marquee-item"><span class="dot"></span>Review Automation</span>
-      <span class="marquee-item"><span class="dot"></span>Multi-Channel AI Chat</span>
+      <span class="marquee-item"><span class="dot"></span>AI Website Chat</span>
       <span class="marquee-item"><span class="dot"></span>Spanish Language Support</span>
     </div>
   </div>
 
-  <section class="problem" id="problem">
+  <section class="features" id="features">
     <div class="w">
-      <div class="problem-left">
-        <p class="eyebrow eyebrow-subtle problem-eyebrow rv">Why speed wins</p>
-        <h2 class="serif problem-h rv rv-d1">The fastest response <em>wins the job.</em></h2>
-        <p class="problem-p rv rv-d2">The businesses that respond first get the customer. AI Sidekick makes sure that business is always yours.</p>
+      <div class="features-top rv">
+        <p class="eyebrow eyebrow-subtle features-eyebrow">What we set up for you</p>
+        <h2 class="serif features-h">Five systems that run <em>your front office.</em></h2>
+        <p class="features-sub">We configure and manage every system. You don't install anything or learn any software.</p>
       </div>
-      <div class="problem-cards">
-        <div class="p-card rv rv-d1">
-          <div class="p-card-num serif">62%</div>
-          <div>
-            <h3>of calls go to voicemail</h3>
-            <p>Your customers aren't leaving messages — they're calling the next company. AI answers every call so you never lose that chance. <a href="https://numa.com/resources/how-many-calls-does-a-dealership-miss" target="_blank" rel="noopener" class="stat-src">Numa</a></p>
+      <div class="feat-grid">
+
+        <!-- 1: AI Voice Receptionist -->
+        <div class="feat-card rv rv-d1">
+          <div class="feat-head">
+            <div class="feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.91 11.1a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2z"/></svg></div>
+            <h3 class="feat-title">AI Voice Receptionist</h3>
+          </div>
+          <p class="feat-sub">Answers calls 24/7, books jobs, transfers when needed</p>
+          <div class="feat-visual">
+            <div class="fv-call">
+              <div class="fv-call-badge">AI Answering</div>
+              <div class="fv-call-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div class="fv-call-name">Sarah Johnson</div>
+              <div class="fv-call-number">(512) 555-0187</div>
+              <div class="fv-call-timer">02:34</div>
+              <div class="fv-call-actions">
+                <div class="fv-call-btn fv-call-btn--mute"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+                <div class="fv-call-btn fv-call-btn--end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                <div class="fv-call-btn fv-call-btn--speaker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
+                <div class="fv-call-btn fv-call-btn--transfer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="p-card rv rv-d2">
-          <div class="p-card-num serif">5 min</div>
-          <div>
-            <h3>is all you have to respond</h3>
-            <p>Respond in under 5 minutes and you're 21x more likely to convert. AI responds in under 5 seconds. <a href="https://cdn2.hubspot.net/hub/25649/file-13535879-pdf/docs/mit_study.pdf" target="_blank" rel="noopener" class="stat-src">MIT / InsideSales Study</a></p>
+
+        <!-- 2: Missed Call Text-Back -->
+        <div class="feat-card rv rv-d2">
+          <div class="feat-head">
+            <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <h3 class="feat-title">Missed Call Text-Back</h3>
+          </div>
+          <p class="feat-sub">Auto-texts missed callers within seconds, books via text</p>
+          <div class="feat-visual">
+            <div class="fv-sms">
+              <div class="fv-sms-time">Just now</div>
+              <div class="fv-sms-bubble fv-sms-bubble--ai">Hi! Sorry we missed your call. How can we help?</div>
+              <div class="fv-sms-bubble fv-sms-bubble--user">Need AC repair, unit isn't cooling</div>
+              <div class="fv-sms-bubble fv-sms-bubble--ai">I can get you scheduled. Tomorrow at 9am or 2pm?</div>
+              <div class="fv-sms-bubble fv-sms-bubble--user">9am</div>
+              <div class="fv-sms-bubble fv-sms-bubble--ai">You're booked for 9am tomorrow. Confirmation sent.</div>
+            </div>
           </div>
         </div>
-        <div class="p-card rv rv-d3">
-          <div class="p-card-num serif">44%</div>
-          <div>
-            <h3>of salespeople give up after one follow-up</h3>
-            <p>80% of sales require at least 5 follow-ups to close. AI sends them automatically so no lead goes cold. <a href="https://spotio.com/blog/sales-statistics/" target="_blank" rel="noopener" class="stat-src">SPOTIO</a></p>
+
+        <!-- 3: Lead Follow-Up -->
+        <div class="feat-card rv rv-d3">
+          <div class="feat-head">
+            <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <h3 class="feat-title">Lead Follow-Up</h3>
+          </div>
+          <p class="feat-sub">Automated sequences so no lead goes cold</p>
+          <div class="feat-visual">
+            <div class="fv-seq">
+              <div class="fv-seq-step">
+                <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--sent"></div><div class="fv-seq-line"></div></div>
+                <div class="fv-seq-content"><div><div class="fv-seq-label">SMS: Quote follow-up</div><div class="fv-seq-meta">Sent 2 hours after quote</div></div><span class="fv-seq-badge fv-seq-badge--sent">Sent</span></div>
+              </div>
+              <div class="fv-seq-step">
+                <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--sent"></div><div class="fv-seq-line"></div></div>
+                <div class="fv-seq-content"><div><div class="fv-seq-label">Email: Estimate recap</div><div class="fv-seq-meta">Sent next morning</div></div><span class="fv-seq-badge fv-seq-badge--open">Opened</span></div>
+              </div>
+              <div class="fv-seq-step">
+                <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--sent"></div><div class="fv-seq-line"></div></div>
+                <div class="fv-seq-content"><div><div class="fv-seq-label">SMS: Ready to book?</div><div class="fv-seq-meta">Day 3</div></div><span class="fv-seq-badge fv-seq-badge--sent">Replied</span></div>
+              </div>
+              <div class="fv-seq-step">
+                <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--pending"></div></div>
+                <div class="fv-seq-content"><div><div class="fv-seq-label">Email: Last chance offer</div><div class="fv-seq-meta">Day 7</div></div><span class="fv-seq-badge fv-seq-badge--sched">Scheduled</span></div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- 4: AI Website Chat -->
+        <div class="feat-card rv rv-d4">
+          <div class="feat-head">
+            <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <h3 class="feat-title">AI Website Chat</h3>
+          </div>
+          <p class="feat-sub">Chat widget that answers questions and books appointments</p>
+          <div class="feat-visual">
+            <div class="fv-chat">
+              <div class="fv-chat-bar">
+                <div class="fv-chat-bar-dot"></div>
+                <div class="fv-chat-bar-name">AI Assistant</div>
+                <div class="fv-chat-bar-x">&times;</div>
+              </div>
+              <div class="fv-chat-body">
+                <div class="fv-chat-msg fv-chat-msg--bot">Hi! How can I help you today?</div>
+                <div class="fv-chat-msg fv-chat-msg--user">How much is a furnace tune-up?</div>
+                <div class="fv-chat-msg fv-chat-msg--bot">Our furnace tune-ups start at $89. Want me to find you an available time this week?</div>
+                <div class="fv-chat-msg fv-chat-msg--user">Yes please</div>
+              </div>
+              <div class="fv-chat-input">
+                <span>Type a message...</span>
+                <div class="fv-chat-send"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5: Review Automation -->
+        <div class="feat-card rv rv-d5">
+          <div class="feat-head">
+            <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <h3 class="feat-title">Review Automation</h3>
+          </div>
+          <p class="feat-sub">Sends review requests via SMS after completed jobs</p>
+          <div class="feat-visual">
+            <div class="fv-review">
+              <div class="fv-review-score">
+                <div class="fv-review-score-num">4.9</div>
+                <div class="fv-review-score-label">avg rating</div>
+              </div>
+              <div class="fv-review-stars">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="fv-review-card">
+                <div class="fv-review-card-row">
+                  <div class="fv-review-card-avatar">MR</div>
+                  <div class="fv-review-card-name">Mike R.</div>
+                  <div class="fv-review-card-stars">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                </div>
+                <div class="fv-review-card-text">"Fast service, fair price. Will definitely use again."</div>
+              </div>
+              <div class="fv-review-notif">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div class="fv-review-notif-text">3 review requests sent today</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </section>
@@ -2056,68 +2378,25 @@
   <section class="how" id="how">
     <div class="w">
       <div class="how-top rv">
-        <h2 class="serif how-h">Three steps. Then your AI <em>takes it from here.</em></h2>
+        <h2 class="serif how-h">Live in 48 hours. <em>Three steps.</em></h2>
         <p class="how-intro">We handle the setup. Your AI handles the follow-up. You focus on what you do best.</p>
       </div>
       <div class="steps rv rv-d1">
         <div class="stp">
           <div class="stp-num serif">01</div>
-          <h3>We set everything up</h3>
-          <p>We connect your phone system, install your AI receptionist, and configure every automation. You don't touch any software.</p>
+          <h3>Discovery call</h3>
+          <p>30-minute call to understand your business, services, hours, and common customer questions. We walk you through the system and pick the right plan together.</p>
         </div>
         <div class="stp">
           <div class="stp-num serif">02</div>
-          <h3>Your AI handles the rest</h3>
-          <p>Your AI answers calls, texts back missed ones, follows up with leads, books appointments, and requests reviews. 24/7, in English and Spanish.</p>
+          <h3>We build everything</h3>
+          <p>We connect your phone system, configure your AI with your actual services and pricing, build your follow-up sequences, and test everything before go-live. You don't touch any software.</p>
         </div>
         <div class="stp">
           <div class="stp-num serif">03</div>
-          <h3>You get back to work</h3>
-          <p>More leads convert. More reviews come in. You see it all in your real-time dashboard. and spend less time chasing.</p>
+          <h3>Go live and track results</h3>
+          <p>Your AI starts handling calls, texts, and follow-ups. You see every conversation, booking, and review request in your dashboard. We fine-tune based on real results.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="roi-calc" id="roi">
-    <div class="w">
-      <div class="roi-top rv">
-        <p class="eyebrow roi-eyebrow">See the math</p>
-        <h2 class="serif roi-h">See what missed calls are <em>costing you.</em></h2>
-      </div>
-      <div class="roi-card rv rv-d1">
-        <div class="roi-sentence">
-          For a business missing <span class="roi-inline" id="roi-calls-inline">15</span> calls per week with an average job value of <span class="roi-inline" id="roi-value-inline">$500</span>, AI Sidekick could help recover up to <strong class="roi-highlight-num" id="roi-revenue-inline">$9,000</strong> per month.
-        </div>
-        <div class="roi-inputs">
-          <div class="roi-input-group">
-            <label for="roi-calls">Missed calls per week</label>
-            <input type="range" id="roi-calls" min="5" max="50" value="15" oninput="calcROI()">
-          </div>
-          <div class="roi-input-group">
-            <label for="roi-value">Average job value ($)</label>
-            <input type="range" id="roi-value" min="100" max="5000" step="50" value="500" oninput="calcROI()">
-          </div>
-        </div>
-        <div class="roi-results">
-          <div class="roi-result-item">
-            <div class="roi-result-num serif" id="roi-missed">60</div>
-            <div class="roi-result-label">Missed calls recovered per month</div>
-          </div>
-          <div class="roi-result-item">
-            <div class="roi-result-num serif" id="roi-bookings">18</div>
-            <div class="roi-result-label">Extra jobs booked per month</div>
-          </div>
-          <div class="roi-result-item">
-            <div class="roi-result-num serif" id="roi-revenue">$9,000</div>
-            <div class="roi-result-label">Revenue recovered per month</div>
-          </div>
-          <div class="roi-result-item roi-result-highlight">
-            <div class="roi-result-num serif" id="roi-annual">$108,000</div>
-            <div class="roi-result-label">Revenue recovered per year</div>
-          </div>
-        </div>
-        <p class="roi-footnote">Based on industry data: 30% of missed callers convert when contacted within 5 minutes. <a href="https://cdn2.hubspot.net/hub/25649/file-13535879-pdf/docs/mit_study.pdf" target="_blank" rel="noopener">MIT / InsideSales Study</a></p>
       </div>
     </div>
   </section>
@@ -2228,59 +2507,45 @@
     </div>
   </section>
 
-  <section class="proof">
+  <section class="roi-calc" id="roi">
     <div class="w">
-      <div class="proof-top rv">
-        <p class="eyebrow proof-eyebrow">Why it matters</p>
-        <h2 class="serif proof-h">The research is <em>clear.</em></h2>
+      <div class="roi-top rv">
+        <p class="eyebrow roi-eyebrow">See the math</p>
+        <h2 class="serif roi-h">See what missed calls are <em>costing you.</em></h2>
       </div>
-      <div class="proof-stats">
-        <div class="proof-stat rv rv-d1">
-          <div class="proof-stat-num serif">85%</div>
-          <div class="proof-stat-text">of people whose calls aren't answered will never call back</div>
-          <div class="proof-stat-src"><a href="https://smith.ai/blog/stop-losing-hvac-customers" target="_blank" rel="noopener">Smith.ai</a></div>
+      <div class="roi-card rv rv-d1">
+        <div class="roi-sentence">
+          For a business missing <span class="roi-inline" id="roi-calls-inline">15</span> calls per week with an average job value of <span class="roi-inline" id="roi-value-inline">$500</span>, AI Sidekick could help recover up to <strong class="roi-highlight-num" id="roi-revenue-inline">$9,000</strong> per month.
         </div>
-        <div class="proof-stat rv rv-d2">
-          <div class="proof-stat-num serif">21x</div>
-          <div class="proof-stat-text">more likely to convert a lead when you respond within 5 minutes</div>
-          <div class="proof-stat-src"><a href="https://cdn2.hubspot.net/hub/25649/file-13535879-pdf/docs/mit_study.pdf" target="_blank" rel="noopener">MIT / InsideSales Study</a></div>
+        <div class="roi-inputs">
+          <div class="roi-input-group">
+            <label for="roi-calls">Missed calls per week</label>
+            <input type="range" id="roi-calls" min="5" max="50" value="15" oninput="calcROI()">
+          </div>
+          <div class="roi-input-group">
+            <label for="roi-value">Average job value ($)</label>
+            <input type="range" id="roi-value" min="100" max="5000" step="50" value="500" oninput="calcROI()">
+          </div>
         </div>
-        <div class="proof-stat rv rv-d3">
-          <div class="proof-stat-num serif">78%</div>
-          <div class="proof-stat-text">of customers buy from the first business that responds</div>
-          <div class="proof-stat-src"><a href="https://www.hydraklient.com/resources/blog/real-estate-lead-response-time-statistics" target="_blank" rel="noopener">Hydraklient / Lead Response Research</a></div>
+        <div class="roi-results">
+          <div class="roi-result-item">
+            <div class="roi-result-num serif" id="roi-missed">60</div>
+            <div class="roi-result-label">Missed calls recovered per month</div>
+          </div>
+          <div class="roi-result-item">
+            <div class="roi-result-num serif" id="roi-bookings">18</div>
+            <div class="roi-result-label">Extra jobs booked per month</div>
+          </div>
+          <div class="roi-result-item">
+            <div class="roi-result-num serif" id="roi-revenue">$9,000</div>
+            <div class="roi-result-label">Revenue recovered per month</div>
+          </div>
+          <div class="roi-result-item roi-result-highlight">
+            <div class="roi-result-num serif" id="roi-annual">$108,000</div>
+            <div class="roi-result-label">Revenue recovered per year</div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="trust">
-    <div class="w">
-      <div class="trust-top rv">
-        <p class="eyebrow trust-eyebrow">Your business, your rules</p>
-        <h2 class="serif trust-h">You stay in <em>control.</em></h2>
-      </div>
-      <div class="trust-grid">
-        <div class="trust-card rv rv-d1">
-          <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-          <div class="trust-title">Trained on your business</div>
-          <div class="trust-desc">We set up your AI with your services, pricing, hours, and FAQs &mdash; so it gives accurate answers specific to your business. You approve everything before it goes live.</div>
-        </div>
-        <div class="trust-card rv rv-d2">
-          <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="trust-title">Full visibility</div>
-          <div class="trust-desc">See every conversation, every lead, every booking in real time. Nothing happens without you being able to review it.</div>
-        </div>
-        <div class="trust-card rv rv-d3">
-          <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <div class="trust-title">Your data stays yours</div>
-          <div class="trust-desc">We don't sell or share your customer information. Your data is stored securely and only accessible to you and your team.</div>
-        </div>
-        <div class="trust-card rv rv-d4">
-          <div class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div class="trust-title">Human handoff anytime</div>
-          <div class="trust-desc">When conversations need a human, the system routes them to you or your team based on rules you set.</div>
-        </div>
+        <p class="roi-footnote">Based on industry data: 30% of missed callers convert when contacted within 5 minutes. <a href="https://www.leadresponsemanagement.org/lrm_study/" target="_blank" rel="noopener">MIT / InsideSales Study</a></p>
       </div>
     </div>
   </section>
@@ -2344,7 +2609,7 @@
         <div class="tier-card rv rv-d3">
           <div class="tier-header">
             <div class="tier-name">Autopilot</div>
-            <div class="tier-tagline">AI across SMS, voice, email, and social</div>
+            <div class="tier-tagline">Full automation across voice, text, and web</div>
           </div>
           <div class="tier-price-wrap">
             <div class="price-amount serif">$997</div>
@@ -2353,10 +2618,8 @@
           </div>
           <ul class="tier-features">
             <li class="tier-includes">Everything in Growth, plus:</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-channel AI (Facebook, Instagram, WhatsApp)</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spanish language AI support</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Outbound AI follow-up calls</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI review responses (auto-reply)</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Real-time analytics dashboard</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support &amp; dedicated manager</li>
           </ul>
@@ -2450,47 +2713,6 @@
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a"><div class="faq-a-inner">The system starts responding to missed calls as soon as it goes live. Your dashboard tracks every text-back, conversation, appointment booked, and review requested from day one. Results depend on your call volume and how many calls you're currently missing.</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="onboard" id="onboard">
-    <div class="w">
-      <div class="onboard-top rv">
-        <p class="eyebrow onboard-eyebrow">From demo to launch</p>
-        <h2 class="serif onboard-h">Here's exactly how <em>we get you live.</em></h2>
-      </div>
-      <div class="onboard-steps">
-        <div class="onboard-step rv rv-d1">
-          <div class="onboard-num serif">01</div>
-          <h3 class="onboard-title">Discovery</h3>
-          <ul class="onboard-list">
-            <li>30-minute intro call</li>
-            <li>Understand your business &amp; customers</li>
-            <li>Live product walkthrough</li>
-            <li>Pick the right plan together</li>
-          </ul>
-        </div>
-        <div class="onboard-step rv rv-d2">
-          <div class="onboard-num serif">02</div>
-          <h3 class="onboard-title">Build</h3>
-          <ul class="onboard-list">
-            <li>Configure your AI receptionist</li>
-            <li>Configure it with your services &amp; FAQs</li>
-            <li>Set up automations &amp; workflows</li>
-            <li>Test everything before go-live</li>
-          </ul>
-        </div>
-        <div class="onboard-step rv rv-d3">
-          <div class="onboard-num serif">03</div>
-          <h3 class="onboard-title">Launch</h3>
-          <ul class="onboard-list">
-            <li>Go live with real calls &amp; leads</li>
-            <li>Monitor performance in real time</li>
-            <li>Fine-tune based on results</li>
-            <li>Add locations or services as you grow</li>
-          </ul>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-AI Sidekick is a national AI automation service for service businesses. We configure AI-powered systems (AI voice receptionist, missed call text-back, lead follow-up, multi-channel AI chat, review automation) so business owners capture every lead. Backend is GoHighLevel (never mentioned on the website). GHL is NOT a custom product — it's configured with prompts/templates, not "trained" via ML.
+AI Sidekick is a national AI automation service for service businesses. We configure AI-powered systems (AI voice receptionist, missed call text-back, lead follow-up, AI website chat, review automation) so business owners capture every lead. Backend is GoHighLevel (never mentioned on the website). GHL is NOT a custom product — it's configured with prompts/templates, not "trained" via ML. We do NOT manage client social media accounts (Facebook, Instagram, WhatsApp) — too much risk and access required.
 
 ## Architecture
 
@@ -34,7 +34,7 @@ All 12 vertical pages are built and live.
 3 tiers (launch pricing — will increase after first 5-10 clients):
 - **Starter** — $397/mo, $1,500 setup (missed call text-back, SMS, booking, reminders, review requests, reports, CRM)
 - **Growth** — $697/mo, $1,500 setup (adds AI Voice Receptionist, website chat widget, follow-up sequences, human handoff)
-- **Autopilot** — $997/mo, $1,500 setup (adds multi-channel AI, Spanish language, outbound AI calls, AI review responses, analytics dashboard, priority support)
+- **Autopilot** — $997/mo, $1,500 setup (adds Spanish language, outbound AI calls, analytics dashboard, priority support)
 
 ## CTA Links
 
