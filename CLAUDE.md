@@ -31,10 +31,10 @@ All 12 vertical pages are built and live.
 
 ## Pricing
 
-3 tiers:
-- **Starter** — $297/mo, $997 setup (missed call text-back, SMS, booking, reminders, review requests, reports, CRM)
-- **Growth** — $497/mo, $1,500 setup (adds AI Voice Receptionist, website chat widget, follow-up sequences, human handoff)
-- **Autopilot** — $797/mo, $2,500 setup (adds multi-channel AI, Spanish language, outbound AI calls, AI review responses, analytics dashboard, priority support)
+3 tiers (launch pricing — will increase after first 5-10 clients):
+- **Starter** — $397/mo, $1,500 setup (missed call text-back, SMS, booking, reminders, review requests, reports, CRM)
+- **Growth** — $697/mo, $1,500 setup (adds AI Voice Receptionist, website chat widget, follow-up sequences, human handoff)
+- **Autopilot** — $997/mo, $1,500 setup (adds multi-channel AI, Spanish language, outbound AI calls, AI review responses, analytics dashboard, priority support)
 
 ## CTA Links
 

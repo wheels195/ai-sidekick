@@ -36,7 +36,7 @@ This document outlines the complete journey from first inquiry to fully operatio
 - 85% of missed callers never call back (Smith.ai research)
 - 78% of customers buy from the first business that responds (Lead Response Research)
 - 21x more likely to convert when you respond within 5 minutes (MIT/InsideSales)
-- Compare to hiring a receptionist: $2,500-4,000/mo for 8hrs/day vs. $399/mo for 24/7/365
+- Compare to hiring a receptionist: $2,500-4,000/mo for 8hrs/day vs. $397/mo for 24/7/365
 - No contracts, cancel anytime
 - Most businesses are live within 24-48 hours
 
@@ -295,9 +295,9 @@ GHL has a built-in Reputation Management module with a Guided Review Setup Wizar
 ## Handling Common Objections
 
 **"$1,500 setup is expensive."**
-→ "That covers building a fully custom system trained on your business — your voice, your services, your hours. It's not a template. And it pays for itself the first time it catches a $2,000+ job from a missed call."
+→ "That covers building a fully custom system configured for your business — your services, your hours, your call handling preferences. It pays for itself the first time it catches a $2,000+ job from a missed call. And there's no contract, so you can cancel anytime."
 
-**"$399/month is a lot."**
+**"$397/month is a lot."**
 → "A part-time receptionist costs $1,500-2,000/month and only works during business hours. This works 24/7/365, handles unlimited conversations, follows up automatically, and gets you reviews. If it recovers even one extra job per month, it more than pays for itself."
 
 **"I don't get that many missed calls."**
@@ -317,38 +317,37 @@ GHL has a built-in Reputation Management module with a Guided Review Setup Wizar
 ## Your GHL Costs vs. Revenue (Unit Economics)
 
 ### Your GoHighLevel Plan
-You need the **Unlimited plan ($297/mo)** or **Agency Pro ($497/mo)** to run multiple client sub-accounts.
-- **Unlimited ($297/mo):** Unlimited sub-accounts, no SaaS mode
-- **Agency Pro ($497/mo):** Adds SaaS mode, white-label mobile app, automated client billing
+You need **Agency Pro ($497/mo)** for advanced API access, SaaS mode, and rebill with markup.
 
-**Recommendation:** Start with Unlimited ($297/mo). Upgrade to Agency Pro when you have 5+ clients and want automated billing.
-
-### Per-Client Variable Costs (Approximate)
+### Per-Client Variable Costs (usage-based, no AI Employee add-on)
 | Cost Item | Estimate |
 |-----------|----------|
 | Phone number | $1.15/mo |
 | A2P campaign fee | $4/mo |
-| SMS (est. 500 texts/mo) | ~$6/mo |
-| AI Employee (Conversation AI) | $0.13/min or $97/mo unlimited |
-| Voice AI (if enabled) | $0.13/min or included in $97/mo |
-| Total variable per client | ~$15-110/mo depending on AI plan |
+| SMS (~1,000 segments/mo) | ~$8/mo |
+| Voice AI (~500 mins/mo) | ~$30-50/mo |
+| Conversation AI (~1,000 msgs/mo) | ~$20/mo |
+| Voice calls (non-AI) | ~$10/mo |
+| Email (~2,000/mo) | ~$1.35/mo |
+| Reviews AI (~50/mo) | ~$0.50/mo |
+| **Total per client** | **~$75-95/mo** |
 
 ### Revenue per Client
 | Item | Amount |
 |------|--------|
-| Setup fee (one-time) | $1,500 |
-| Monthly recurring | $399/mo |
+| Setup fee (one-time) | $1,500 (flat, all tiers) |
+| Monthly recurring | $397-997/mo (depends on tier) |
 
-### Break-Even Analysis
+### Break-Even Analysis (avg $697/mo per client)
 | Clients | Monthly Revenue | Your GHL Cost | Variable Costs | Net Profit |
 |---------|----------------|---------------|----------------|------------|
-| 1 | $399 | $297 | ~$50 | ~$52/mo |
-| 3 | $1,197 | $297 | ~$150 | ~$750/mo |
-| 5 | $1,995 | $297 | ~$250 | ~$1,448/mo |
-| 10 | $3,990 | $497 | ~$500 | ~$2,993/mo |
-| 20 | $7,980 | $497 | ~$1,000 | ~$6,483/mo |
+| 1 | $697 | $497 | ~$85 | ~$115/mo |
+| 3 | $2,091 | $497 | ~$255 | ~$1,339/mo |
+| 5 | $3,485 | $497 | ~$425 | ~$2,563/mo |
+| 10 | $6,970 | $497 | ~$850 | ~$5,623/mo |
+| 20 | $13,940 | $497 | ~$1,700 | ~$11,743/mo |
 
-*Plus setup fees: 10 clients = $15,000 in one-time revenue*
+*Plus setup fees: 10 clients × $1,500 = $15,000 in one-time revenue*
 
 ---
 
