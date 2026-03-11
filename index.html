@@ -2365,22 +2365,29 @@
     .chat-send:disabled { opacity: 0.3; cursor: default; }
     .chat-send:disabled:hover { background: none; }
 
-    /* Mobile: slide up from bottom, respect safe areas */
-    @media (max-width: 480px) {
+    /* Lock body scroll when chat is open on mobile */
+    body.chat-open {
+      overflow: hidden;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+    }
+
+    /* Mobile: fullscreen takeover */
+    @media (max-width: 768px) {
       .chat-fab { bottom: 1.25rem; right: 1.25rem; }
       .chat-fab.open { opacity: 0; pointer-events: none; }
       .chat-window {
-        right: 0;
-        bottom: 0;
-        left: 0;
-        top: 0;
+        position: fixed;
+        inset: 0;
         width: 100%;
-        max-height: none;
         height: 100%;
         height: 100dvh;
+        max-height: none;
         border-radius: 0;
         transform: translateY(100%);
         opacity: 1;
+        z-index: 9999;
       }
       .chat-window.open {
         transform: translateY(0);
@@ -3211,11 +3218,19 @@
     var isOpen = false;
     var isSending = false;
     var welcomed = false;
+    var scrollY = 0;
+
+    function isMobile() { return window.innerWidth <= 768; }
 
     function openChat() {
       isOpen = true;
       fab.classList.add('open');
       win.classList.add('open');
+      if (isMobile()) {
+        scrollY = window.pageYOffset;
+        document.body.classList.add('chat-open');
+        document.body.style.top = -scrollY + 'px';
+      }
       if (!welcomed) {
         welcomed = true;
         showWelcome();
@@ -3227,6 +3242,11 @@
       isOpen = false;
       fab.classList.remove('open');
       win.classList.remove('open');
+      if (isMobile()) {
+        document.body.classList.remove('chat-open');
+        document.body.style.top = '';
+        window.scrollTo(0, scrollY);
+      }
     }
 
     function toggle() {
