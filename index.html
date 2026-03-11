@@ -2345,6 +2345,10 @@
       color: var(--text);
       background: transparent;
       padding: 0.35rem 0;
+      resize: none;
+      max-height: 120px;
+      overflow-y: auto;
+      line-height: 1.4;
     }
     .chat-input::placeholder { color: var(--text-3); }
     .chat-send {
@@ -3199,7 +3203,7 @@
     </div>
     <div class="chat-body" id="chatBody"></div>
     <div class="chat-input-wrap">
-      <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." autocomplete="off">
+      <textarea class="chat-input" id="chatInput" placeholder="Type a message..." autocomplete="off" rows="1"></textarea>
       <button class="chat-send" id="chatSend" aria-label="Send message">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
@@ -3322,6 +3326,7 @@
       clearWelcome();
       addMsg('user', text);
       input.value = '';
+      input.style.height = 'auto';
       isSending = true;
       sendBtn.disabled = true;
       showTyping();
@@ -3349,7 +3354,14 @@
     closeBtn.addEventListener('click', closeChat);
     sendBtn.addEventListener('click', sendMessage);
     input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') sendMessage();
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+    input.addEventListener('input', function() {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 120) + 'px';
     });
   })();
   </script>
