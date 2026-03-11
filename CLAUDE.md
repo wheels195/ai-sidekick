@@ -6,12 +6,16 @@ AI Sidekick is a national AI automation service for service businesses. We confi
 
 ## Architecture
 
-Static HTML pages — no build tools, no framework, no dependencies beyond Google Fonts CDN.
+Static HTML pages deployed on Vercel with one serverless function for the chatbot.
 - `index.html` — main landing page
 - `hvac.html` — HVAC vertical page (template for other verticals)
+- 12 vertical pages total (hvac, med-spa, auto-repair, dental, insurance, real-estate, property-management, cpa, vet, law, staffing, restoration)
 - `privacy.html` — privacy policy
 - `terms.html` — terms of service
+- `api/chat.js` — Vercel serverless function (OpenAI gpt-4o-mini chatbot)
+- `vercel.json` — Vercel config (serverless function timeout)
 - `images/` — static assets (all images served locally, no external hotlinking)
+- OG/Twitter meta tags on all pages for social sharing
 
 ## Design System
 
@@ -31,8 +35,8 @@ All 12 vertical pages are built and live.
 
 ## Pricing
 
-Single tier — $397/mo, $500 one-time setup. Everything included:
-AI voice receptionist, missed call text-back, two-way SMS, AI website chat widget, online booking calendar, automated appointment reminders, follow-up sequences, Google review request automation, lead pipeline & CRM, Spanish language support, monthly performance reports.
+Single tier — $397/mo ($266/mo annual), $500 one-time setup. Everything included:
+AI voice receptionist, missed call text-back, two-way SMS, AI website chat widget, online booking calendar, automated appointment reminders, follow-up sequences, Google review requests, lead pipeline & CRM, Spanish language support, reporting dashboard. Annual billing: $3,192/year (33% savings).
 
 ## CTA Links
 
@@ -57,11 +61,23 @@ All CTA buttons scroll to `#contact` form on the page.
 - `images/logo.png` — AS monogram, used in nav and footer on all pages
 - `images/favicon.png` — favicon (same logo)
 
+## Chatbot
+
+- AI chat widget on index.html (bottom-right FAB, iMessage-style bubbles)
+- Backend: `/api/chat.js` — Vercel serverless, OpenAI gpt-4o-mini
+- System prompt in `api/chat.js` covers all services, pricing, FAQs
+- OPENAI_API_KEY set in Vercel environment variables
+- Welcome screen with quick reply buttons
+- Mobile: fullscreen takeover, body scroll lock, safe-area padding
+
 ## Next Steps
 
-- **GHL Agency Account**: Need to sign up, build demo sub-account (fake HVAC business), test full flow
-- **Demo site**: Build a simple one-page site for fake HVAC company with GHL chat widget embedded
-- **Calendly**: Set up for AI Sidekick's own sales/demo calls, replace `#contact` form links
-- **GA4**: Replace `G-XXXXXXXXXX` placeholder with real GA4 measurement ID
-- **Form backend**: Connect contact forms to Google Sheets + Resend (or replace with Calendly embed)
+- **Google Workspace**: Set up domain email (you@ai-sidekick.io)
+- **GA4**: Replace `G-XXXXXXXXXX` placeholder with real measurement ID (all 13 pages)
+- **Ad pixels**: Meta Pixel + Google Ads conversion tag (install before running ads)
+- **Form backend**: Connect contact forms to Google Sheets + email notification
+- **Calendly / booking**: Set up for demo calls, replace `#contact` form links
+- **GHL Agency Account**: Sign up, build demo sub-account (fake HVAC business), test full flow
+- **Demo site**: One-page site for fake HVAC company with GHL chat widget
+- **Ad landing page**: High-conversion page for paid traffic
 - **Domain**: Site is live at `ai-sidekick.io` via Vercel
