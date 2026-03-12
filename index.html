@@ -30,7 +30,7 @@
   <style>
     :root {
       --bg: #fafaf9;
-      --bg-2: #f2f2f0;
+      --bg-2: #eaeae7;
       --bg-card: #ffffff;
       --border: #e5e5e3;
       --border-h: #d0d0cd;
@@ -1559,6 +1559,7 @@
     /* === HOW === */
     .how {
       padding: 7rem 0;
+      background: var(--bg-2);
       border-top: 1px solid var(--border);
     }
 
@@ -1989,6 +1990,7 @@
     /* === ROI CALCULATOR === */
     .roi-calc {
       padding: 7rem 0;
+      background: var(--bg-2);
       border-top: 1px solid var(--border);
     }
 
@@ -2270,6 +2272,7 @@
     /* === FAQ === */
     .faq {
       padding: 7rem 0;
+      background: var(--bg-2);
       border-top: 1px solid var(--border);
     }
 
@@ -2354,9 +2357,11 @@
     /* === CTA === */
     .cta {
       padding: 7rem 0 5rem;
-      border-top: 1px solid var(--border);
+      border-top: none;
       position: relative;
       overflow: hidden;
+      background: #141414;
+      color: #fff;
     }
 
     .cta-glow {
@@ -2366,7 +2371,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(26,58,92,0.06) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(26,58,92,0.15) 0%, transparent 65%);
       pointer-events: none;
     }
 
@@ -2384,10 +2389,11 @@
       margin-bottom: 1rem;
     }
 
+    .cta-h em { color: rgba(255,255,255,0.6); }
 
     .cta-p {
       font-size: 1.05rem;
-      color: var(--text-2);
+      color: rgba(255,255,255,0.55);
       margin-bottom: 2.5rem;
       line-height: 1.6;
     }
@@ -2395,17 +2401,39 @@
     .cta-note {
       margin-top: 1.25rem;
       font-size: 0.82rem;
-      color: var(--text-3);
+      color: rgba(255,255,255,0.35);
     }
 
     .cta-form {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 16px;
       padding: 2rem;
       text-align: left;
       max-width: 560px;
       margin: 0 auto;
+    }
+
+    .cta .form-group label { color: rgba(255,255,255,0.7); }
+
+    .cta .form-group input,
+    .cta .form-group select {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .cta .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+    .cta .form-group input:focus,
+    .cta .form-group select:focus { border-color: rgba(255,255,255,0.3); }
+
+    .cta .form-submit {
+      background: #fff;
+      color: #141414;
+    }
+
+    .cta .form-submit:hover {
+      background: rgba(255,255,255,0.9);
     }
 
     .form-row {
@@ -2493,8 +2521,10 @@
 
     /* === FOOTER === */
     footer {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255,255,255,0.08);
       padding: 1.75rem 0;
+      background: #141414;
+      color: rgba(255,255,255,0.5);
     }
 
     footer .w {
@@ -2511,10 +2541,14 @@
       list-style: none;
     }
 
-    .f-links a { font-size: 0.8rem; color: var(--text-3); transition: color 0.3s; }
-    .f-links a:hover { color: var(--text-2); }
+    footer .logo { color: #fff; }
+    footer .logo span { color: #fff; }
+    footer .logo img { filter: brightness(0) invert(1); }
 
-    .f-copy { font-size: 0.72rem; color: var(--text-3); }
+    .f-links a { font-size: 0.8rem; color: rgba(255,255,255,0.45); transition: color 0.3s; }
+    .f-links a:hover { color: rgba(255,255,255,0.8); }
+
+    .f-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); }
 
     @media (max-width: 768px) {
       footer .w { flex-direction: column; text-align: center; gap: 0.75rem; }
