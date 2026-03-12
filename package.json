@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "playwright": "^1.58.2"
+    "@napi-rs/canvas": "^0.1.96",
+    "extract-zip": "^2.0.1",
+    "playwright": "^1.58.2",
+    "sharp": "^0.34.5"
   }
 }
