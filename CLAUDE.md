@@ -72,7 +72,7 @@ All CTA buttons scroll to `#contact` form on the page.
 
 ## Next Steps
 
-- **Google Workspace**: Set up domain email (you@ai-sidekick.io)
+- ~~**Google Workspace**~~: Done — legal@ai-sidekick.io, info@ai-sidekick.io
 - **GA4**: Replace `G-XXXXXXXXXX` placeholder with real measurement ID (all 13 pages)
 - **Ad pixels**: Meta Pixel + Google Ads conversion tag (install before running ads)
 - **Form backend**: Connect contact forms to Google Sheets + email notification
