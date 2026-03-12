@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <link rel="apple-touch-icon" href="/images/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sidekick | The Details</title>
+  <meta name="description" content="See exactly what AI Sidekick sets up for your business: AI voice receptionist, missed call text-back, website chatbot, lead follow-up, and Google review automation.">
+  <meta property="og:title" content="AI Sidekick | The Details">
+  <meta property="og:description" content="See exactly what AI Sidekick sets up for your business: AI voice receptionist, missed call text-back, website chatbot, lead follow-up, and Google review automation.">
+  <meta property="og:image" content="https://ai-sidekick.io/images/og-image.png">
+  <meta property="og:url" content="https://ai-sidekick.io/details.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Sidekick | The Details">
+  <meta name="twitter:description" content="See exactly what AI Sidekick sets up for your business: AI voice receptionist, missed call text-back, website chatbot, lead follow-up, and Google review automation.">
+  <meta name="twitter:image" content="https://ai-sidekick.io/images/og-image.png">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --bg-2: #eaeae7;
+      --bg-card: #ffffff;
+      --border: #e5e5e3;
+      --border-h: #d0d0cd;
+      --text: #1a1a1a;
+      --text-2: #333;
+      --text-3: #666;
+      --accent: #1a3a5c;
+      --accent-light: #2d5f8a;
+      --accent-dim: rgba(26,58,92,0.10);
+      --accent-dimmer: rgba(26,58,92,0.05);
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --max-w: min(1400px, 92%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: #141414;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.015;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;
+      background-size: 200px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .w {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .serif { font-family: var(--serif); font-weight: 400; }
+    .serif i, .serif em { font-style: italic; }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s var(--ease);
+      text-decoration: none;
+    }
+
+    .btn-main {
+      padding: 0.95rem 2.2rem;
+      font-size: 0.92rem;
+      background: #fff;
+      color: #141414;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+
+    .btn-main:hover {
+      background: rgba(255,255,255,0.9);
+      transform: translateY(-1px);
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.15rem 0;
+      transition: all 0.5s var(--ease);
+      background: rgba(20,20,20,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    nav .w {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .logo img {
+      height: 30px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .logo span { color: #fff; }
+
+    .nav-r {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-r a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      transition: color 0.3s;
+    }
+
+    .nav-r a:hover { color: #fff; }
+
+    .nav-r .btn-main {
+      padding: 0.6rem 1.6rem;
+      font-size: 0.82rem;
+      color: #141414;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 1002;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      transition: all 0.3s var(--ease);
+      border-radius: 2px;
+    }
+
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+
+      .nav-r {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100vh;
+        background: rgba(20,20,20,0.97);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 5rem 2rem 2rem;
+        gap: 0;
+        transform: translateX(100%);
+        transition: transform 0.4s var(--ease);
+        z-index: 1001;
+      }
+
+      .nav-r.open { transform: translateX(0); }
+
+      .nav-r li { width: 100%; }
+      .nav-r a {
+        display: block;
+        padding: 1rem 0;
+        font-size: 1.05rem;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.7);
+      }
+
+      .nav-r .btn-main {
+        margin-top: 1rem;
+        text-align: center;
+        display: block;
+        color: #141414;
+      }
+    }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* === HERO === */
+    .dt-hero {
+      padding: 10rem 0 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dt-hero::before {
+      content: '';
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(26,58,92,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .dt-hero .w { position: relative; z-index: 1; }
+
+    .dt-hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1rem;
+    }
+
+    .dt-hero h1 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+    }
+
+    .dt-hero h1 em { color: rgba(255,255,255,0.45); }
+
+    .dt-hero-sub {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* === FEATURE SECTIONS === */
+    .dt-features {
+      padding: 2rem 0 0;
+    }
+
+    /* ============================
+       FEATURE 1 — HERO FEATURE
+       Full-width, large visual
+       ============================ */
+    .dt-f1 {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-f1-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .dt-f1-num {
+      font-family: var(--serif);
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      margin-bottom: 1rem;
+    }
+
+    .dt-f1-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .dt-f1-title {
+      font-size: 2.4rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .dt-f1-desc {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+
+    .dt-f1-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .dt-f1-bullets li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    .dt-f1-bullets li svg { flex-shrink: 0; margin-top: 4px; }
+
+    /* Call UI Mockup — large version */
+    .dt-call-mock {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dt-call-mock::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .dt-call-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #fff;
+      background: #22c55e;
+      padding: 0.2rem 0.75rem;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: dt-pulse 2s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes dt-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.3); }
+      50% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+    }
+
+    .dt-call-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      border: 2px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .dt-call-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .dt-call-number {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .dt-call-timer {
+      font-size: 2.8rem;
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.08em;
+      margin: 0.75rem 0 1.25rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .dt-call-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .dt-call-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s var(--ease);
+    }
+
+    .dt-call-btn:hover { transform: scale(1.08); }
+    .dt-call-btn--mute { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+    .dt-call-btn--end { background: #ef4444; }
+    .dt-call-btn--transfer { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+    .dt-call-btn--speaker { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+
+    .dt-call-transcript {
+      margin-top: 1.5rem;
+      width: 100%;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.25rem;
+    }
+
+    .dt-call-transcript-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.75rem;
+    }
+
+    .dt-transcript-line {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .dt-transcript-speaker {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      min-width: 50px;
+      flex-shrink: 0;
+    }
+
+    .dt-transcript-speaker--ai { color: #22c55e; }
+
+    .dt-transcript-text {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+
+    /* ============================
+       FEATURE 2+3 — SIDE BY SIDE
+       Two smaller features in a row
+       ============================ */
+    .dt-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding: 0 0 5rem;
+    }
+
+    .dt-duo-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dt-duo-num {
+      font-family: var(--serif);
+      font-size: 4rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+    }
+
+    .dt-duo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .dt-duo-title {
+      font-size: 1.6rem;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .dt-duo-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .dt-duo-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .dt-duo-bullets li {
+      display: flex;
+      gap: 0.55rem;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+
+    .dt-duo-bullets li svg { flex-shrink: 0; margin-top: 3px; }
+
+    /* SMS mockup — inside duo card */
+    .dt-sms-mock {
+      margin-top: auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-sms-header {
+      background: rgba(255,255,255,0.04);
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-sms-header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .dt-sms-header-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .dt-sms-header-time {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .dt-sms-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .dt-sms-bubble {
+      max-width: 82%;
+      padding: 0.6rem 0.85rem;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .dt-sms-bubble--out {
+      background: #007aff;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .dt-sms-bubble--in {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.8);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    /* Chat widget mockup — inside duo card */
+    .dt-chat-mock {
+      margin-top: auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-chat-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: var(--accent);
+    }
+
+    .dt-chat-bar-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .dt-chat-bar-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .dt-chat-bar-x {
+      margin-left: auto;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+
+    .dt-chat-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .dt-chat-msg {
+      max-width: 85%;
+      padding: 0.6rem 0.85rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .dt-chat-msg--bot {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.8);
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+
+    .dt-chat-msg--user {
+      background: var(--accent);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+
+    .dt-chat-input {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .dt-chat-input span {
+      flex: 1;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .dt-chat-send {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ============================
+       FEATURE 4 — FULL WIDTH BANNER
+       Follow-up sequence timeline
+       ============================ */
+    .dt-f4 {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-f4-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .dt-f4-num {
+      font-family: var(--serif);
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      margin-bottom: 1rem;
+    }
+
+    .dt-f4-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .dt-f4-title {
+      font-size: 2.4rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .dt-f4-desc {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .dt-f4-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-top: 0.5rem;
+    }
+
+    .dt-f4-bullets li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    .dt-f4-bullets li svg { flex-shrink: 0; margin-top: 4px; }
+
+    /* Sequence timeline — horizontal */
+    .dt-seq-timeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .dt-seq-step {
+      padding: 2rem 1.5rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .dt-seq-step + .dt-seq-step {
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-seq-step--active {
+      background: rgba(34,197,94,0.04);
+    }
+
+    .dt-seq-step--active .dt-seq-dot {
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.15);
+    }
+
+    .dt-seq-step--pending .dt-seq-dot {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .dt-seq-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .dt-seq-day {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    .dt-seq-action {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.35rem;
+    }
+
+    .dt-seq-detail {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.4;
+    }
+
+    .dt-seq-badge {
+      margin-top: 0.75rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+    }
+
+    .dt-seq-badge--sent {
+      background: rgba(34,197,94,0.12);
+      color: #22c55e;
+    }
+
+    .dt-seq-badge--replied {
+      background: rgba(26,58,92,0.15);
+      color: rgba(255,255,255,0.6);
+    }
+
+    .dt-seq-badge--sched {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ============================
+       FEATURE 5 — REVIEW SECTION
+       Asymmetric with visual focus
+       ============================ */
+    .dt-f5 {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-f5-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .dt-f5-visual {
+      order: -1;
+    }
+
+    .dt-f5-num {
+      font-family: var(--serif);
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      margin-bottom: 1rem;
+    }
+
+    .dt-f5-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .dt-f5-title {
+      font-size: 2.4rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .dt-f5-desc {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+
+    .dt-f5-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .dt-f5-bullets li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    .dt-f5-bullets li svg { flex-shrink: 0; margin-top: 4px; }
+
+    /* Review visual */
+    .dt-review-mock {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .dt-review-score {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .dt-review-score-num {
+      font-family: var(--serif);
+      font-size: 4rem;
+      line-height: 1;
+    }
+
+    .dt-review-score-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .dt-review-stars {
+      display: flex;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .dt-review-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      width: 100%;
+    }
+
+    .dt-review-card + .dt-review-card { margin-top: 0.5rem; }
+
+    .dt-review-card-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .dt-review-card-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .dt-review-card-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .dt-review-card-stars {
+      margin-left: auto;
+      display: flex;
+      gap: 1px;
+    }
+
+    .dt-review-card-text {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    .dt-review-notif {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.12);
+      border-radius: 10px;
+      padding: 0.6rem 0.85rem;
+      width: 100%;
+    }
+
+    .dt-review-notif svg { flex-shrink: 0; }
+
+    .dt-review-notif-text {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #22c55e;
+    }
+
+    /* ============================
+       SETUP ACCORDION
+       Shared for all features
+       ============================ */
+    .dt-setup-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      background: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      padding: 0.55rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      margin-top: 1.5rem;
+    }
+
+    .dt-setup-toggle:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.6);
+    }
+
+    .dt-setup-toggle svg {
+      transition: transform 0.3s var(--ease);
+    }
+
+    .dt-setup-toggle.open svg {
+      transform: rotate(180deg);
+    }
+
+    .dt-setup-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease), margin 0.4s var(--ease);
+      margin-top: 0;
+    }
+
+    .dt-setup-panel.open {
+      margin-top: 1.25rem;
+    }
+
+    .dt-setup-panel-inner {
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+    }
+
+    .dt-setup-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .dt-setup-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .dt-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.25rem;
+      padding: 0.45rem 0.85rem;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.12);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #22c55e;
+    }
+
+    /* === ONBOARDING SUMMARY === */
+    .dt-onboard {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dt-onboard-top {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .dt-onboard-top h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .dt-onboard-top h2 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .dt-onboard-top p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .dt-onboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .dt-onboard-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .dt-onboard-card h4 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.85rem;
+    }
+
+    .dt-onboard-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .dt-onboard-card li {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.45;
+    }
+
+    .dt-onboard-card li svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* === CTA === */
+    .cta {
+      padding: 7rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .cta-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(26,58,92,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta .w {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .cta-h {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-h em { color: rgba(255,255,255,0.6); }
+
+    .cta-p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .cta-note {
+      margin-top: 1.25rem;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .cta-form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: left;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-full { margin-bottom: 1.25rem; }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.02em;
+    }
+
+    .form-group input,
+    .form-group select {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      padding: 0.7rem 0.85rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+    }
+
+    .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .form-group input:focus,
+    .form-group select:focus { border-color: rgba(255,255,255,0.3); }
+
+    .form-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23999' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-group select option { background: #1e1e1e; color: #fff; }
+
+    .form-submit {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+
+    .form-success {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0 auto 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+      .cta-form { padding: 1.5rem; }
+    }
+
+    /* === FOOTER === */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.75rem 0;
+    }
+
+    footer .w {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer .logo { color: #fff; }
+    footer .logo span { color: #fff; }
+    footer .logo img { filter: brightness(0) invert(1); }
+
+    .f-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .f-links a { font-size: 0.8rem; color: rgba(255,255,255,0.45); transition: color 0.3s; }
+    .f-links a:hover { color: rgba(255,255,255,0.8); }
+
+    .f-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 768px) {
+      footer .w { flex-direction: column; text-align: center; gap: 0.75rem; }
+      .f-links { justify-content: center; flex-wrap: wrap; gap: 1.25rem; }
+    }
+
+    /* === REVEAL === */
+    .rv {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    }
+
+    .rv.show { opacity: 1; transform: translateY(0); }
+
+    .rv-d1 { transition-delay: 0.06s; }
+    .rv-d2 { transition-delay: 0.12s; }
+    .rv-d3 { transition-delay: 0.18s; }
+    .rv-d4 { transition-delay: 0.24s; }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      .dt-f1-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .dt-duo { grid-template-columns: 1fr; }
+      .dt-f4-top { grid-template-columns: 1fr; gap: 2rem; }
+      .dt-seq-timeline { grid-template-columns: 1fr; }
+      .dt-seq-step + .dt-seq-step { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .dt-seq-step { align-items: flex-start; text-align: left; padding: 1.25rem 1.5rem; }
+      .dt-seq-dot { margin-bottom: 0.5rem; }
+      .dt-f5-grid { grid-template-columns: 1fr; }
+      .dt-f5-visual { order: 0; }
+      .dt-onboard-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .dt-hero { padding: 8rem 0 3rem; }
+      .dt-f1 { padding: 3rem 0; }
+      .dt-f4 { padding: 3rem 0; }
+      .dt-f5 { padding: 3rem 0; }
+      .dt-f1-title, .dt-f4-title, .dt-f5-title { font-size: 1.8rem; }
+      .dt-f1-num, .dt-f4-num, .dt-f5-num { font-size: 3.5rem; }
+      .dt-f1-desc, .dt-f4-desc, .dt-f5-desc { font-size: 1rem; }
+      .dt-f1-bullets li, .dt-f4-bullets li, .dt-f5-bullets li { font-size: 0.95rem; }
+      .dt-duo-desc { font-size: 0.95rem; }
+      .dt-duo-bullets li { font-size: 0.88rem; }
+      .dt-call-mock { padding: 1.5rem 1rem; border-radius: 16px; }
+      .dt-call-avatar { width: 60px; height: 60px; }
+      .dt-call-timer { font-size: 2rem; }
+      .dt-call-btn { width: 46px; height: 46px; }
+      .dt-call-actions { gap: 0.75rem; }
+      .dt-sms-mock, .dt-chat-mock { max-width: 100%; overflow: hidden; }
+      .dt-review-mock { padding: 1.5rem 1rem; max-width: 100%; overflow: hidden; }
+      .dt-review-score-num { font-size: 3rem; }
+      .dt-seq-step { padding: 1rem 1.25rem; }
+      .dt-duo-card { padding: 1.75rem; }
+      .dt-duo-num { font-size: 3rem; }
+    }
+
+    @media (max-width: 480px) {
+      .dt-hero { padding: 7rem 0 2.5rem; }
+      .dt-hero h1 { font-size: 2.4rem; }
+      .dt-hero-sub { font-size: 1rem; }
+      .dt-call-mock { padding: 1.25rem 0.85rem; }
+      .dt-call-actions { gap: 0.5rem; }
+      .dt-call-btn { width: 42px; height: 42px; }
+      .dt-call-timer { font-size: 1.75rem; }
+      .dt-transcript-text { font-size: 0.82rem; }
+      .dt-sms-bubble, .dt-chat-msg { font-size: 0.82rem; }
+      .dt-duo-card { padding: 1.5rem; }
+      .dt-onboard-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="w">
+      <a href="/" class="logo"><img src="images/logo.png" alt="AI Sidekick logo">AI <span>Sidekick</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-r" id="navMenu">
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="industries.html">Industries</a></li>
+        <li><a href="#contact" class="btn btn-main">Book a Demo</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <section class="dt-hero">
+    <div class="w">
+      <div class="rv">
+        <p class="dt-hero-eyebrow">How it works</p>
+        <h1 class="serif">Five systems. <em>One setup.</em></h1>
+        <p class="dt-hero-sub">We configure everything for your business in 48 hours. Here's exactly what each system does, how we set it up, and what we need from you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dt-features">
+    <div class="w">
+
+      <!-- ===== FEATURE 1: AI VOICE RECEPTIONIST — Hero layout ===== -->
+      <div class="dt-f1 rv">
+        <div class="dt-f1-grid">
+          <div>
+            <div class="dt-f1-num">01</div>
+            <div class="dt-f1-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.91 11.1a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2z"/></svg>
+            </div>
+            <h3 class="dt-f1-title serif">AI Voice Receptionist</h3>
+            <p class="dt-f1-desc">Your AI Sidekick answers your business phone 24/7. It greets callers, answers questions about your services, pricing, and hours, books appointments on your calendar, and transfers calls to you when needed.</p>
+            <ul class="dt-f1-bullets">
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Answers calls during business hours, after hours, and weekends</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Configured with your actual services, pricing, and FAQs</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Books appointments directly on your calendar</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Transfers to you or your team for urgent calls</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Every call is recorded — review from your dashboard or mobile app</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>English and Spanish language support</li>
+            </ul>
+            <button class="dt-setup-toggle" onclick="toggleSetup(this)">
+              How we set it up
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="dt-setup-panel">
+              <div class="dt-setup-panel-inner">
+                <ul class="dt-setup-list">
+                  <li><span class="step-num">1</span>We purchase a local phone number for your business</li>
+                  <li><span class="step-num">2</span>We connect it to your existing business number — you choose whether AI Sidekick picks up unanswered calls only, or handles all calls during specific hours</li>
+                  <li><span class="step-num">3</span>We configure your AI Sidekick with your services, pricing, hours, and common customer questions</li>
+                  <li><span class="step-num">4</span>You review and approve the responses before going live</li>
+                </ul>
+                <div class="dt-time">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Setup time: 30-60 minutes
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Call UI Mockup -->
+          <div class="dt-call-mock">
+            <div class="dt-call-badge">AI Answering</div>
+            <div class="dt-call-avatar">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="dt-call-name">Sarah Johnson</div>
+            <div class="dt-call-number">(512) 555-0187</div>
+            <div class="dt-call-timer">02:34</div>
+            <div class="dt-call-actions">
+              <div class="dt-call-btn dt-call-btn--mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+              <div class="dt-call-btn dt-call-btn--end"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.91 11.1a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2z"/></svg></div>
+              <div class="dt-call-btn dt-call-btn--speaker"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
+              <div class="dt-call-btn dt-call-btn--transfer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg></div>
+            </div>
+            <div class="dt-call-transcript">
+              <div class="dt-call-transcript-label">Live transcript</div>
+              <div class="dt-transcript-line">
+                <span class="dt-transcript-speaker dt-transcript-speaker--ai">AI</span>
+                <span class="dt-transcript-text">Thanks for calling! How can I help you today?</span>
+              </div>
+              <div class="dt-transcript-line">
+                <span class="dt-transcript-speaker">Caller</span>
+                <span class="dt-transcript-text">Hi, I need to schedule an AC tune-up.</span>
+              </div>
+              <div class="dt-transcript-line">
+                <span class="dt-transcript-speaker dt-transcript-speaker--ai">AI</span>
+                <span class="dt-transcript-text">I'd be happy to help. Our tune-ups are $89. I have Thursday at 10am or Friday at 2pm available. Which works?</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FEATURES 2+3 — Duo side by side ===== -->
+      <div class="dt-duo">
+        <!-- 2: Missed Call Text-Back -->
+        <div class="dt-duo-card rv">
+          <div class="dt-duo-num">02</div>
+          <div class="dt-duo-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="dt-duo-title serif">Missed Call Text-Back</h3>
+          <p class="dt-duo-desc">When a call goes unanswered, the system automatically texts the caller within seconds. The text acknowledges their call and starts a conversation over SMS, so you can capture the lead even when you can't pick up.</p>
+          <ul class="dt-duo-bullets">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Texts go out within seconds of a missed call</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Customized message with your business name</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Conversation continues over text to book the appointment</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Works around the clock, including nights and weekends</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Jump into any conversation from your phone — AI Sidekick steps back automatically</li>
+          </ul>
+
+          <!-- SMS mockup -->
+          <div class="dt-sms-mock">
+            <div class="dt-sms-header">
+              <div class="dt-sms-header-dot"></div>
+              <div class="dt-sms-header-name">New lead</div>
+              <div class="dt-sms-header-time">Just now</div>
+            </div>
+            <div class="dt-sms-body">
+              <div class="dt-sms-bubble dt-sms-bubble--out">Hi! Sorry we missed your call. How can we help?</div>
+              <div class="dt-sms-bubble dt-sms-bubble--in">Need AC repair, unit isn't cooling</div>
+              <div class="dt-sms-bubble dt-sms-bubble--out">I can get you scheduled. Tomorrow at 9am or 2pm?</div>
+              <div class="dt-sms-bubble dt-sms-bubble--in">9am works</div>
+              <div class="dt-sms-bubble dt-sms-bubble--out">You're booked for 9am tomorrow. See you then!</div>
+            </div>
+          </div>
+
+          <button class="dt-setup-toggle" onclick="toggleSetup(this)">
+            How we set it up
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="dt-setup-panel">
+            <div class="dt-setup-panel-inner">
+              <ul class="dt-setup-list">
+                <li><span class="step-num">1</span>We enable missed call text-back on your phone number</li>
+                <li><span class="step-num">2</span>Your AI Sidekick sends an initial text, then handles the conversation based on your business info (services, hours, booking availability)</li>
+                <li><span class="step-num">3</span>That's it — it runs automatically on every missed call</li>
+              </ul>
+              <div class="dt-time">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Setup time: 5 minutes
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3: AI Website Chatbot -->
+        <div class="dt-duo-card rv rv-d1">
+          <div class="dt-duo-num">03</div>
+          <div class="dt-duo-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 class="dt-duo-title serif">AI Website Chatbot</h3>
+          <p class="dt-duo-desc">A chat widget on your website that answers visitor questions about your services, pricing, and availability. It's configured with your actual business information, so it gives accurate answers and captures lead contact details.</p>
+          <ul class="dt-duo-bullets">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Configured with your services, pricing, hours, and FAQs</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Captures visitor name, phone, and email</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Works 24/7 on your existing website</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>New leads are added to your dashboard automatically</li>
+          </ul>
+
+          <!-- Chat widget mockup -->
+          <div class="dt-chat-mock">
+            <div class="dt-chat-bar">
+              <div class="dt-chat-bar-dot"></div>
+              <div class="dt-chat-bar-name">AI Assistant</div>
+              <div class="dt-chat-bar-x">&times;</div>
+            </div>
+            <div class="dt-chat-body">
+              <div class="dt-chat-msg dt-chat-msg--bot">Hi! How can I help you today?</div>
+              <div class="dt-chat-msg dt-chat-msg--user">How much is a furnace tune-up?</div>
+              <div class="dt-chat-msg dt-chat-msg--bot">Our furnace tune-ups start at $89. Want me to find you a time this week?</div>
+              <div class="dt-chat-msg dt-chat-msg--user">Yes please</div>
+              <div class="dt-chat-msg dt-chat-msg--bot">I have Thursday at 10am or Friday at 2pm. Which works better?</div>
+            </div>
+            <div class="dt-chat-input">
+              <span>Type a message...</span>
+              <div class="dt-chat-send"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+            </div>
+          </div>
+
+          <button class="dt-setup-toggle" onclick="toggleSetup(this)">
+            How we set it up
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="dt-setup-panel">
+            <div class="dt-setup-panel-inner">
+              <ul class="dt-setup-list">
+                <li><span class="step-num">1</span>We configure your AI Sidekick chatbot with your business information (we can pull details from your existing website)</li>
+                <li><span class="step-num">2</span>We generate a small code snippet for your website</li>
+                <li><span class="step-num">3</span>You paste the snippet into your website (or we do it for you with temporary access). Works on any website: WordPress, Squarespace, Wix, Shopify, or custom</li>
+              </ul>
+              <div class="dt-time">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Setup time: 30-60 minutes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FEATURE 4: AUTOMATED LEAD FOLLOW-UP — Full width timeline ===== -->
+      <div class="dt-f4 rv">
+        <div class="dt-f4-top">
+          <div>
+            <div class="dt-f4-num">04</div>
+            <div class="dt-f4-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="dt-f4-title serif">Automated Lead Follow-Up</h3>
+            <p class="dt-f4-desc">When a lead doesn't book right away, the system sends a series of automated text messages over the following days. Each message is timed and written to re-engage the lead and get them to schedule.</p>
+          </div>
+          <div>
+            <ul class="dt-f4-bullets">
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-step text sequences over days or weeks</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Stops automatically when the lead books or replies</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Customized for your business (quotes, estimates, service follow-ups)</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All conversations visible in your dashboard and mobile app</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Leads can reply STOP anytime to opt out — fully automatic</li>
+            </ul>
+            <button class="dt-setup-toggle" onclick="toggleSetup(this)">
+              How we set it up
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="dt-setup-panel">
+              <div class="dt-setup-panel-inner">
+                <ul class="dt-setup-list">
+                  <li><span class="step-num">1</span>We build your follow-up sequences based on your typical customer journey (quote sent, estimate given, etc.)</li>
+                  <li><span class="step-num">2</span>Your AI Sidekick generates follow-up messages configured for your industry and services, sent on a timed schedule</li>
+                  <li><span class="step-num">3</span>Sequences trigger automatically when a new lead comes in and doesn't book</li>
+                </ul>
+                <div class="dt-time">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Setup time: 20-30 minutes
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal sequence timeline -->
+        <div class="dt-seq-timeline rv rv-d1">
+          <div class="dt-seq-step dt-seq-step--active">
+            <div class="dt-seq-dot"></div>
+            <div>
+              <div class="dt-seq-day">2 hours later</div>
+              <div class="dt-seq-action">Quote follow-up</div>
+              <div class="dt-seq-detail">Thanks for your interest! Here's a recap of your estimate.</div>
+              <span class="dt-seq-badge dt-seq-badge--sent">Sent</span>
+            </div>
+          </div>
+          <div class="dt-seq-step dt-seq-step--active">
+            <div class="dt-seq-dot"></div>
+            <div>
+              <div class="dt-seq-day">Next morning</div>
+              <div class="dt-seq-action">Estimate recap</div>
+              <div class="dt-seq-detail">Just checking in — ready to get scheduled?</div>
+              <span class="dt-seq-badge dt-seq-badge--sent">Sent</span>
+            </div>
+          </div>
+          <div class="dt-seq-step dt-seq-step--active">
+            <div class="dt-seq-dot"></div>
+            <div>
+              <div class="dt-seq-day">Day 3</div>
+              <div class="dt-seq-action">Ready to book?</div>
+              <div class="dt-seq-detail">We still have availability this week if you'd like to lock in a time.</div>
+              <span class="dt-seq-badge dt-seq-badge--replied">Replied</span>
+            </div>
+          </div>
+          <div class="dt-seq-step dt-seq-step--pending">
+            <div class="dt-seq-dot"></div>
+            <div>
+              <div class="dt-seq-day">Day 7</div>
+              <div class="dt-seq-action">Still interested?</div>
+              <div class="dt-seq-detail">Just wanted to circle back on your quote.</div>
+              <span class="dt-seq-badge dt-seq-badge--sched">Scheduled</span>
+            </div>
+          </div>
+          <div class="dt-seq-step dt-seq-step--pending">
+            <div class="dt-seq-dot"></div>
+            <div>
+              <div class="dt-seq-day">Day 14</div>
+              <div class="dt-seq-action">Last check-in</div>
+              <div class="dt-seq-detail">If you're still looking, we'd love to help. Reply anytime.</div>
+              <span class="dt-seq-badge dt-seq-badge--sched">Scheduled</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FEATURE 5: GOOGLE REVIEW AUTOMATION — Visual left, text right ===== -->
+      <div class="dt-f5 rv">
+        <div class="dt-f5-grid">
+          <div>
+            <div class="dt-f5-num">05</div>
+            <div class="dt-f5-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3 class="dt-f5-title serif">Google Review Automation</h3>
+            <p class="dt-f5-desc">After a job is completed, the system automatically sends your customer a text message with a direct link to leave you a Google review. More reviews means more visibility and more trust with new customers.</p>
+            <ul class="dt-f5-bullets">
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sends a direct Google review link via text</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Triggers automatically after job completion</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>One tap for the customer — opens Google directly</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Track how many requests are sent in your dashboard</li>
+            </ul>
+            <button class="dt-setup-toggle" onclick="toggleSetup(this)">
+              How we set it up
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="dt-setup-panel">
+              <div class="dt-setup-panel-inner">
+                <ul class="dt-setup-list">
+                  <li><span class="step-num">1</span>We look up your business on Google and set up the review request automation</li>
+                  <li><span class="step-num">2</span>After a completed job, the system texts your customer asking them to leave a review</li>
+                  <li><span class="step-num">3</span>One tap takes the customer straight to your Google review page</li>
+                </ul>
+                <div class="dt-time">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Setup time: 15 minutes
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review visual -->
+          <div class="dt-f5-visual">
+            <div class="dt-review-mock">
+              <div class="dt-review-score">
+                <div class="dt-review-score-num">4.9</div>
+                <div class="dt-review-score-label">avg rating</div>
+              </div>
+              <div class="dt-review-stars">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f4b400" stroke="#f4b400" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="dt-review-card">
+                <div class="dt-review-card-row">
+                  <div class="dt-review-card-avatar">MR</div>
+                  <div class="dt-review-card-name">Mike R.</div>
+                  <div class="dt-review-card-stars">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                </div>
+                <div class="dt-review-card-text">"Fast service, fair price. Will definitely use again."</div>
+              </div>
+              <div class="dt-review-card">
+                <div class="dt-review-card-row">
+                  <div class="dt-review-card-avatar">JT</div>
+                  <div class="dt-review-card-name">Jessica T.</div>
+                  <div class="dt-review-card-stars">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                </div>
+                <div class="dt-review-card-text">"Called in the morning, they were here by noon. Super professional team."</div>
+              </div>
+              <div class="dt-review-notif">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div class="dt-review-notif-text">Review request sent to 3 customers today</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Onboarding summary -->
+  <section class="dt-onboard">
+    <div class="w">
+      <div class="dt-onboard-top rv">
+        <h2 class="serif">What we need from you <em>to get started.</em></h2>
+        <p>A short onboarding call (about 30 minutes) to collect these details. We handle everything else.</p>
+      </div>
+      <div class="dt-onboard-grid">
+        <div class="dt-onboard-card rv rv-d1">
+          <h4>Business info</h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Business name and address</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Phone number you want forwarded</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Business website URL</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Business type and industry</li>
+          </ul>
+        </div>
+        <div class="dt-onboard-card rv rv-d2">
+          <h4>Services &amp; hours</h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Services you offer and pricing</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Business hours and availability</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Common questions your customers ask</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>How you want calls handled (transfer, book, message)</li>
+          </ul>
+        </div>
+        <div class="dt-onboard-card rv rv-d3">
+          <h4>Quick tasks (2-3 minutes each)</h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Connect your business phone number (we walk you through it)</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Connect your Google Calendar or Outlook</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Paste one code snippet on your website (for the chatbot)</li>
+          </ul>
+        </div>
+        <div class="dt-onboard-card rv rv-d4">
+          <h4>We handle the rest</h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI voice and chatbot configuration</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Follow-up sequences and review automation</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Phone number registration and compliance</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CRM, calendar, dashboard, and reporting setup</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="cta-glow"></div>
+    <div class="w">
+      <h2 class="serif cta-h rv">Ready to get started?</h2>
+      <p class="cta-p rv rv-d1">Tell us about your business and we'll have everything configured within 48 hours.</p>
+      <form class="cta-form rv rv-d2" id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="john@mybusiness.com" required>
+          </div>
+          <div class="form-group">
+            <label for="business">Business type</label>
+            <select id="business" name="business" required>
+              <option value="" disabled selected>Select your industry</option>
+              <option value="hvac">HVAC</option>
+              <option value="medspa">Med Spa</option>
+              <option value="auto">Auto Repair</option>
+              <option value="dental">Dental</option>
+              <option value="insurance">Insurance</option>
+              <option value="realestate">Real Estate</option>
+              <option value="property">Property Management</option>
+              <option value="cpa">CPA / Bookkeeping</option>
+              <option value="vet">Veterinary</option>
+              <option value="legal">Law Firm</option>
+              <option value="staffing">Staffing / Recruiting</option>
+              <option value="restoration">Restoration</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group form-full">
+          <label for="challenge">What's your biggest challenge right now?</label>
+          <select id="challenge" name="challenge" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="missed-calls">Missing too many calls</option>
+            <option value="slow-response">Slow lead response time</option>
+            <option value="no-reviews">Not enough online reviews</option>
+            <option value="no-followup">No follow-up system in place</option>
+            <option value="all">All of the above</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-main form-submit">Get Your Free Consultation</button>
+        <p class="cta-note">No obligation. We'll reach out within 24 hours.</p>
+      </form>
+      <div class="form-success" id="form-success" style="display:none;">
+        <div class="success-icon">&#10003;</div>
+        <h3 class="serif" style="font-size:1.8rem;">We got your info!</h3>
+        <p style="color:rgba(255,255,255,0.5);margin-top:0.5rem;">We'll reach out within 48 hours. Looking forward to chatting.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="w">
+      <a href="/" class="logo"><img src="images/logo.png" alt="AI Sidekick logo">AI <span>Sidekick</span></a>
+      <ul class="f-links">
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="industries.html">Industries</a></li>
+        <li><a href="#contact">Book a Demo</a></li>
+      </ul>
+      <ul class="f-links f-legal">
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+      <span class="f-copy">&copy; 2026 AI Sidekick. All rights reserved. &nbsp;|&nbsp; Serving businesses nationwide.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Nav
+    var nav = document.getElementById('nav');
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('navMenu');
+    var overlay = document.getElementById('navOverlay');
+
+    function closeMenu() {
+      toggle.classList.remove('open');
+      menu.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+    }
+
+    toggle.addEventListener('click', function () {
+      var open = toggle.classList.toggle('open');
+      menu.classList.toggle('open');
+      if (overlay) overlay.classList.toggle('open');
+    });
+
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('pinned', window.scrollY > 40);
+    });
+
+    // Scroll reveal
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.rv').forEach(function (el) {
+      observer.observe(el);
+    });
+
+    // Setup accordion
+    function toggleSetup(btn) {
+      var panel = btn.nextElementSibling;
+      var isOpen = panel.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      if (isOpen) {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      } else {
+        panel.style.maxHeight = '0';
+      }
+    }
+
+    // Form
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

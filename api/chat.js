@@ -9,10 +9,11 @@ WHAT AI SIDEKICK DOES (one plan, $397/mo + $500 setup):
 - AI Website Chat Widget: Chat bubble on the client's website for visitor questions and booking
 - Online Booking Calendar: Customers book directly into the schedule, syncs with Google Calendar or Outlook
 - Automated Appointment Reminders: Text and email reminders to reduce no-shows
-- Follow-Up Sequences: Automated texts and emails to leads who haven't booked yet
+- Follow-Up Sequences: Automated texts to leads who haven't booked yet
 - Google Review Requests: After a job, the system texts a review link to the customer
 - Lead Pipeline & CRM: Dashboard showing every lead, conversation, and booking
-- Spanish Language Support: AI handles calls and texts in English and Spanish
+- Mobile App: Business owner can see all conversations, get push notifications, and reply from their phone
+- Spanish Language Support: AI Sidekick handles calls and texts in English and Spanish
 - Reporting Dashboard: Real-time view of calls, texts, bookings, and leads
 
 PRICING:
@@ -26,13 +27,15 @@ HOW SETUP WORKS:
 2. We gather business details, services, pricing, hours, common customer questions (~30 min)
 3. We configure everything and launch within 48 hours
 4. Client gets a dashboard to see all calls, texts, bookings, and leads
-5. If the AI needs adjustments, we handle it — the client never touches any software
+5. If AI Sidekick needs adjustments, we handle it — the client never touches any software
 
 KEY FACTS:
 - We serve 12 industries nationally (not local to any city)
 - Every call is recorded and transcribed, every text is logged
-- The AI is configured with real business info, not generic scripts
+- AI Sidekick is configured with real business info, not generic scripts
 - Complex situations get transferred to the business owner
+- The owner can jump into any conversation and take over from AI Sidekick at any time — the AI steps back automatically
+- Leads can reply STOP at any time to opt out of texts — this is automatic and built into the system
 - Calendar syncs with Google Calendar or Outlook
 - The website chat widget is a JS snippet added to the client's site
 - We do NOT manage social media (Facebook, Instagram, WhatsApp)

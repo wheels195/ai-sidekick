@@ -5,15 +5,15 @@
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="apple-touch-icon" href="/images/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Sidekick — Stop Losing Leads. Start Closing More.</title>
+  <title>AI Sidekick | For Local Businesses</title>
   <meta name="description" content="AI-powered automation for service businesses. AI receptionist, missed call text-back, lead follow-up, and review automation — all 24/7.">
-  <meta property="og:title" content="AI Sidekick — Stop Losing Leads. Start Closing More.">
+  <meta property="og:title" content="AI Sidekick | For Local Businesses">
   <meta property="og:description" content="AI-powered automation for service businesses. AI receptionist, missed call text-back, lead follow-up, and review automation — all 24/7.">
   <meta property="og:image" content="https://ai-sidekick.io/images/og-image.png">
   <meta property="og:url" content="https://ai-sidekick.io">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI Sidekick — Stop Losing Leads. Start Closing More.">
+  <meta name="twitter:title" content="AI Sidekick | For Local Businesses">
   <meta name="twitter:description" content="AI-powered automation for service businesses. AI receptionist, missed call text-back, lead follow-up, and review automation — all 24/7.">
   <meta name="twitter:image" content="https://ai-sidekick.io/images/og-image.png">
   <!-- Google Analytics -->
@@ -147,7 +147,10 @@
       transition: all 0.4s;
     }
 
-    /* Nav over dark hero — light text */
+    /* Nav over dark hero — solid dark background with light text */
+    nav:not(.pinned) {
+      background: #141414;
+    }
     nav:not(.pinned) .logo { color: #fff; }
     nav:not(.pinned) .logo span { color: #fff; }
     nav:not(.pinned) .nav-r:not(.open) a:not(.btn) { color: rgba(255,255,255,0.8); }
@@ -956,15 +959,16 @@
       .hero { padding: 7.5rem 0 3rem; }
       .hero-grid { gap: 2rem; }
       .phone-frame { width: 240px; border-radius: 36px; padding: 8px; }
+      .phone-frame { max-width: 100%; }
       .phone-screen { border-radius: 30px; min-height: 420px; }
-      .phone-screens { min-height: 370px; }
+      .phone-screens { min-height: 380px; }
       .scene-call { padding: 30px 16px 24px; }
       .call-avatar { width: 60px; height: 60px; }
       .call-name { font-size: 1.2rem; }
-      .call-actions { gap: 40px; }
+      .call-actions { gap: 20px; }
       .call-btn-circle { width: 48px; height: 48px; }
       .scene-ai { padding: 40px 16px 24px; }
-      .scene-results { padding: 40px 10px 20px; }
+      .scene-results { padding: 36px 10px 16px; }
       .result-item { padding: 9px 10px; gap: 8px; }
       .result-icon { width: 26px; height: 26px; }
       .result-item { grid-template-columns: 26px 1fr auto; }
@@ -1008,23 +1012,27 @@
     /* === MARQUEE === */
     .marquee {
       overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 0.9rem 0;
+      background: #141414;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1.1rem 0;
       white-space: nowrap;
     }
 
     .marquee-track {
       display: flex;
-      gap: 3rem;
+      gap: 2.5rem;
       animation: scroll 25s linear infinite;
       width: max-content;
     }
 
     .marquee-item {
-      font-family: var(--serif);
-      font-size: 1rem;
-      color: var(--text-3);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -1035,7 +1043,7 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: var(--text-3);
+      background: rgba(255,255,255,0.2);
       flex-shrink: 0;
     }
 
@@ -1047,6 +1055,7 @@
     /* === FEATURES === */
     .features {
       padding: 7rem 0;
+      background: #141414;
     }
 
     .features-top { margin-bottom: 3rem; }
@@ -1092,12 +1101,12 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 1.35rem 1.35rem 0;
+      padding: 1.5rem 1.5rem 0;
       transition: border-color 0.35s var(--ease), box-shadow 0.35s var(--ease), opacity 0.7s var(--ease), transform 0.7s var(--ease);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      min-height: 320px;
+      min-height: 380px;
     }
 
     .feat-grid .feat-card:nth-child(1) { transition-delay: 0s; }
@@ -1119,8 +1128,8 @@
     }
 
     .feat-icon {
-      width: 30px;
-      height: 30px;
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
       background: var(--accent-dim);
       border: 1px solid rgba(26,58,92,0.12);
@@ -1131,15 +1140,15 @@
     }
 
     .feat-title {
-      font-size: 0.88rem;
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: -0.01em;
     }
 
     .feat-sub {
-      font-size: 0.78rem;
+      font-size: 0.88rem;
       color: var(--text-3);
-      line-height: 1.45;
+      line-height: 1.5;
       margin-bottom: 1rem;
     }
 
@@ -1163,7 +1172,7 @@
     }
 
     .fv-call-badge {
-      font-size: 0.62rem;
+      font-size: 0.7rem;
       font-weight: 600;
       color: #fff;
       background: #22c55e;
@@ -1181,8 +1190,8 @@
     }
 
     .fv-call-avatar {
-      width: 48px;
-      height: 48px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(26,58,92,0.18) 100%);
       border: 2px solid rgba(26,58,92,0.12);
@@ -1193,18 +1202,18 @@
     }
 
     .fv-call-name {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       font-weight: 600;
       color: var(--text);
     }
 
     .fv-call-number {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       color: var(--text-3);
     }
 
     .fv-call-timer {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 300;
       color: var(--text-2);
       font-variant-numeric: tabular-nums;
@@ -1219,8 +1228,8 @@
     }
 
     .fv-call-btn {
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1239,14 +1248,14 @@
     .fv-sms {
       display: flex;
       flex-direction: column;
-      padding: 0.85rem;
-      gap: 0.35rem;
+      padding: 1rem;
+      gap: 0.4rem;
       height: 100%;
       justify-content: flex-end;
     }
 
     .fv-sms-time {
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: var(--text-3);
       text-align: center;
       margin-bottom: 0.1rem;
@@ -1254,10 +1263,10 @@
 
     .fv-sms-bubble {
       max-width: 84%;
-      padding: 0.5rem 0.7rem;
+      padding: 0.55rem 0.8rem;
       border-radius: 16px;
-      font-size: 0.72rem;
-      line-height: 1.4;
+      font-size: 0.82rem;
+      line-height: 1.45;
     }
 
     .fv-sms-bubble--ai {
@@ -1330,19 +1339,19 @@
     }
 
     .fv-seq-label {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       font-weight: 500;
       color: var(--text);
       white-space: nowrap;
     }
 
     .fv-seq-meta {
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: var(--text-3);
     }
 
     .fv-seq-badge {
-      font-size: 0.58rem;
+      font-size: 0.68rem;
       font-weight: 600;
       padding: 0.12rem 0.4rem;
       border-radius: 100px;
@@ -1377,7 +1386,7 @@
     }
 
     .fv-chat-bar-name {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: #fff;
     }
@@ -1393,17 +1402,17 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 0.6rem;
-      gap: 0.3rem;
+      padding: 0.75rem;
+      gap: 0.4rem;
       justify-content: flex-end;
     }
 
     .fv-chat-msg {
       max-width: 86%;
-      padding: 0.45rem 0.65rem;
+      padding: 0.55rem 0.75rem;
       border-radius: 10px;
-      font-size: 0.68rem;
-      line-height: 1.4;
+      font-size: 0.8rem;
+      line-height: 1.45;
     }
 
     .fv-chat-msg--bot {
@@ -1431,13 +1440,13 @@
 
     .fv-chat-input span {
       flex: 1;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--text-3);
     }
 
     .fv-chat-send {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: var(--accent);
       display: flex;
@@ -1451,14 +1460,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1rem 0.85rem;
-      gap: 0.6rem;
+      padding: 1.25rem 1rem;
+      gap: 0.75rem;
       height: 100%;
     }
 
     .fv-review-stars {
       display: flex;
-      gap: 0.15rem;
+      gap: 0.2rem;
     }
 
     .fv-review-score {
@@ -1470,13 +1479,13 @@
 
     .fv-review-score-num {
       font-family: var(--serif);
-      font-size: 2rem;
+      font-size: 2.4rem;
       line-height: 1;
       color: var(--text);
     }
 
     .fv-review-score-label {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--text-3);
     }
 
@@ -1484,7 +1493,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.6rem 0.75rem;
+      padding: 0.75rem 0.9rem;
       width: 100%;
     }
 
@@ -1496,8 +1505,8 @@
     }
 
     .fv-review-card-avatar {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: var(--accent-dim);
       display: flex;
@@ -1509,7 +1518,7 @@
     }
 
     .fv-review-card-name {
-      font-size: 0.68rem;
+      font-size: 0.8rem;
       font-weight: 600;
     }
 
@@ -1520,7 +1529,7 @@
     }
 
     .fv-review-card-text {
-      font-size: 0.65rem;
+      font-size: 0.78rem;
       color: var(--text-2);
       line-height: 1.4;
     }
@@ -1528,7 +1537,7 @@
     .fv-review-notif {
       display: flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.45rem;
       background: rgba(34,197,94,0.08);
       border: 1px solid rgba(34,197,94,0.18);
       border-radius: 8px;
@@ -1539,7 +1548,7 @@
     .fv-review-notif svg { flex-shrink: 0; }
 
     .fv-review-notif-text {
-      font-size: 0.65rem;
+      font-size: 0.78rem;
       font-weight: 500;
       color: #16a34a;
     }
@@ -1547,13 +1556,146 @@
     @media (max-width: 900px) {
       .feat-grid { grid-template-columns: repeat(2, 1fr); }
       .feat-grid .feat-card { grid-column: span 1; }
-      .feat-card { min-height: 290px; }
+      .feat-card { min-height: 340px; }
     }
 
     @media (max-width: 540px) {
       .feat-grid { grid-template-columns: 1fr; }
       .feat-grid .feat-card { grid-column: span 1; }
-      .feat-card { min-height: 300px; }
+      .feat-card { min-height: 360px; }
+    }
+
+    /* --- Features dark theme overrides --- */
+    .features .eyebrow { color: rgba(255,255,255,0.5); }
+    .features-h { color: #fff; }
+    .features-h em { color: rgba(255,255,255,0.6); }
+    .features-sub { color: rgba(255,255,255,0.5); }
+
+    .feat-card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .feat-card:hover {
+      border-color: rgba(255,255,255,0.16);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    .feat-icon {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .feat-icon svg { stroke: rgba(255,255,255,0.7); }
+    .feat-title { color: #fff; }
+    .feat-sub { color: rgba(255,255,255,0.5); }
+    .feat-visual {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    /* Card 1: Call - dark */
+    .fv-call-avatar {
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .fv-call-avatar svg { stroke: rgba(255,255,255,0.7); }
+    .fv-call-name { color: #fff; }
+    .fv-call-number { color: rgba(255,255,255,0.4); }
+    .fv-call-timer { color: rgba(255,255,255,0.5); }
+    .fv-call-btn--mute,
+    .fv-call-btn--speaker,
+    .fv-call-btn--transfer { background: rgba(255,255,255,0.08); }
+    .fv-call-btn--mute svg,
+    .fv-call-btn--speaker svg,
+    .fv-call-btn--transfer svg { stroke: rgba(255,255,255,0.7); }
+
+    /* Card 2: SMS - dark */
+    .fv-sms-time { color: rgba(255,255,255,0.35); }
+    .fv-sms-bubble--user {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* Card 3: Sequence - dark */
+    .fv-seq-content {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .fv-seq-label { color: rgba(255,255,255,0.85); }
+    .fv-seq-meta { color: rgba(255,255,255,0.35); }
+    .fv-seq-line { background: rgba(255,255,255,0.1); }
+    .fv-seq-dot--pending { background: rgba(255,255,255,0.15); }
+    .fv-seq-badge--open { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+    .fv-seq-badge--sched { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); }
+
+    /* Card 4: Chat - dark */
+    .fv-chat-body { background: rgba(0,0,0,0.15); }
+    .fv-chat-msg--bot {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.85);
+    }
+    .fv-chat-input {
+      border-top-color: rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.1);
+    }
+    .fv-chat-input span { color: rgba(255,255,255,0.3); }
+
+    /* Card 5: Review - dark */
+    .fv-review-score-num { color: #fff; }
+    .fv-review-score-label { color: rgba(255,255,255,0.4); }
+    .fv-review-card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .fv-review-card-name { color: #fff; }
+    .fv-review-card-avatar {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.6);
+    }
+    .fv-review-card-text { color: rgba(255,255,255,0.55); }
+    .fv-review-notif {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.15);
+    }
+
+    /* --- Also included (features) --- */
+    .feat-also {
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .feat-also-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1.25rem;
+    }
+
+    .feat-also-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem 2rem;
+    }
+
+    .feat-also-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .feat-also-item svg {
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .feat-also-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .feat-also-grid { grid-template-columns: 1fr; }
     }
 
     /* === HOW === */
@@ -1778,7 +1920,33 @@
     .tier-popular .tier-price-wrap { border-bottom-color: rgba(255,255,255,0.2); }
     .tier-popular .tier-features li { color: rgba(255,255,255,0.85); }
     .tier-popular .tier-features li svg polyline { stroke: rgba(255,255,255,0.9); }
-    .tier-popular .tier-includes { color: rgba(255,255,255,0.9) !important; border-bottom-color: rgba(255,255,255,0.2); }
+    .tier-includes {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      padding: 0.75rem 0;
+      margin: 0.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: none;
+    }
+    .tier-popular .tier-includes { color: rgba(255,255,255,0.45); border-top-color: rgba(255,255,255,0.15); }
+
+    .tier-features--core li {
+      font-size: 0.92rem;
+      padding: 0.45rem 0;
+    }
+    .tier-features--core li strong { color: #fff; }
+
+    .tier-features--extras {
+      margin-bottom: 1.5rem;
+    }
+    .tier-features--extras li {
+      font-size: 0.82rem;
+      padding: 0.25rem 0;
+      color: rgba(255,255,255,0.55);
+    }
     .tier-popular .pkg-note { color: rgba(255,255,255,0.5); }
 
     .tier-popular .tier-btn {
@@ -1877,20 +2045,21 @@
 
     .feature-label {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.4rem;
       flex: 1;
       min-width: 0;
     }
 
     .feature-label span:first-child {
-      flex-shrink: 1;
+      flex: 1;
     }
 
     .tip-wrap {
       position: relative;
       display: inline-flex;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
     .tip-icon {
@@ -1957,6 +2126,18 @@
     }
     .tip-wrap.tip-align-right .tip-bubble::after {
       left: 12px;
+      transform: none;
+    }
+
+    /* Force tooltips left-aligned inside narrow pricing card */
+    .tier-card .tip-bubble {
+      left: auto;
+      right: -8px;
+      transform: none;
+    }
+    .tier-card .tip-bubble::after {
+      left: auto;
+      right: 12px;
       transform: none;
     }
 
@@ -2183,7 +2364,7 @@
 
     .v-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
     }
 
@@ -2191,7 +2372,7 @@
       position: relative;
       border-radius: 14px;
       overflow: hidden;
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/9;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -2256,7 +2437,7 @@
     @media (max-width: 768px) {
       .verticals-top { flex-direction: column; align-items: start; }
       .v-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-      .v-card { aspect-ratio: 3/2; padding: 1rem; }
+      .v-card { aspect-ratio: 16/10; padding: 1rem; }
       .v-card-name { font-size: 1.1rem; }
       .v-card-desc { font-size: 0.88rem; line-height: 1.5; }
     }
@@ -2877,8 +3058,8 @@
       <ul class="nav-r" id="navMenu">
         <li><a href="#how">How It Works</a></li>
         <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#industries">Industries</a></li>
-        <li><a href="#faq">FAQ</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="industries.html">Industries</a></li>
         <li><a href="#contact" class="btn btn-main">Book a Demo</a></li>
       </ul>
     </div>
@@ -3118,9 +3299,9 @@
         <div class="feat-card rv rv-d3">
           <div class="feat-head">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-            <h3 class="feat-title">Lead Follow-Up</h3>
+            <h3 class="feat-title">Automated Lead Follow-Up</h3>
           </div>
-          <p class="feat-sub">Automated sequences so no lead goes cold</p>
+          <p class="feat-sub">Follows up with leads automatically on a schedule</p>
           <div class="feat-visual">
             <div class="fv-seq">
               <div class="fv-seq-step">
@@ -3129,7 +3310,7 @@
               </div>
               <div class="fv-seq-step">
                 <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--sent"></div><div class="fv-seq-line"></div></div>
-                <div class="fv-seq-content"><div><div class="fv-seq-label">Email: Estimate recap</div><div class="fv-seq-meta">Sent next morning</div></div><span class="fv-seq-badge fv-seq-badge--open">Opened</span></div>
+                <div class="fv-seq-content"><div><div class="fv-seq-label">SMS: Estimate recap</div><div class="fv-seq-meta">Sent next morning</div></div><span class="fv-seq-badge fv-seq-badge--sent">Sent</span></div>
               </div>
               <div class="fv-seq-step">
                 <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--sent"></div><div class="fv-seq-line"></div></div>
@@ -3137,7 +3318,7 @@
               </div>
               <div class="fv-seq-step">
                 <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--pending"></div></div>
-                <div class="fv-seq-content"><div><div class="fv-seq-label">Email: Last chance offer</div><div class="fv-seq-meta">Day 7</div></div><span class="fv-seq-badge fv-seq-badge--sched">Scheduled</span></div>
+                <div class="fv-seq-content"><div><div class="fv-seq-label">SMS: Still interested?</div><div class="fv-seq-meta">Day 7</div></div><span class="fv-seq-badge fv-seq-badge--sched">Scheduled</span></div>
               </div>
             </div>
           </div>
@@ -3147,9 +3328,9 @@
         <div class="feat-card rv rv-d4">
           <div class="feat-head">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-            <h3 class="feat-title">AI Website Chat</h3>
+            <h3 class="feat-title">AI Website Chatbot</h3>
           </div>
-          <p class="feat-sub">Chat widget that answers questions and books appointments</p>
+          <p class="feat-sub">Configured for your business — answers questions and captures leads</p>
           <div class="feat-visual">
             <div class="fv-chat">
               <div class="fv-chat-bar">
@@ -3162,6 +3343,7 @@
                 <div class="fv-chat-msg fv-chat-msg--user">How much is a furnace tune-up?</div>
                 <div class="fv-chat-msg fv-chat-msg--bot">Our furnace tune-ups start at $89. Want me to find you an available time this week?</div>
                 <div class="fv-chat-msg fv-chat-msg--user">Yes please</div>
+                <div class="fv-chat-msg fv-chat-msg--bot">I have Thursday at 10am or Friday at 2pm. Which works better?</div>
               </div>
               <div class="fv-chat-input">
                 <span>Type a message...</span>
@@ -3175,9 +3357,9 @@
         <div class="feat-card rv rv-d5">
           <div class="feat-head">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-            <h3 class="feat-title">Review Automation</h3>
+            <h3 class="feat-title">Google Review Automation</h3>
           </div>
-          <p class="feat-sub">Sends review requests via SMS after completed jobs</p>
+          <p class="feat-sub">Sends review request links to customers after service</p>
           <div class="feat-visual">
             <div class="fv-review">
               <div class="fv-review-score">
@@ -3196,14 +3378,28 @@
                   <div class="fv-review-card-avatar">MR</div>
                   <div class="fv-review-card-name">Mike R.</div>
                   <div class="fv-review-card-stars">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                   </div>
                 </div>
                 <div class="fv-review-card-text">"Fast service, fair price. Will definitely use again."</div>
+              </div>
+              <div class="fv-review-card">
+                <div class="fv-review-card-row">
+                  <div class="fv-review-card-avatar">JT</div>
+                  <div class="fv-review-card-name">Jessica T.</div>
+                  <div class="fv-review-card-stars">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#f4b400" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                </div>
+                <div class="fv-review-card-text">"Showed up on time, explained everything. Great experience."</div>
               </div>
               <div class="fv-review-notif">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -3215,6 +3411,35 @@
 
 
       </div>
+      <div class="feat-also rv">
+        <div class="feat-also-label">Also included</div>
+        <div class="feat-also-grid">
+          <div class="feat-also-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Lead pipeline &amp; CRM
+          </div>
+          <div class="feat-also-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Online booking calendar
+          </div>
+          <div class="feat-also-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Automated appointment reminders
+          </div>
+          <div class="feat-also-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Two-way SMS conversations
+          </div>
+          <div class="feat-also-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Spanish language support
+          </div>
+          <div class="feat-also-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Reporting dashboard
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3222,130 +3447,24 @@
     <div class="w">
       <div class="how-top rv">
         <h2 class="serif how-h">Live in 48 hours. <em>Three steps.</em></h2>
-        <p class="how-intro">We handle the setup. Your AI handles the follow-up. You focus on what you do best.</p>
+        <p class="how-intro">We handle the setup. AI Sidekick handles the rest. You focus on what you do best.</p>
       </div>
       <div class="steps rv rv-d1">
         <div class="stp">
           <div class="stp-num serif">01</div>
           <h3>Discovery call</h3>
-          <p>30-minute call to understand your business, services, hours, and common customer questions. We walk you through the system and show you exactly how it works.</p>
+          <p>A 30-minute call where we learn about your business — services, hours, pricing, and common customer questions. We show you exactly how AI Sidekick works and answer any questions.</p>
         </div>
         <div class="stp">
           <div class="stp-num serif">02</div>
           <h3>We build everything</h3>
-          <p>We connect your phone system, configure your AI with your actual services and pricing, build your follow-up sequences, and test everything before go-live. You don't touch any software.</p>
+          <p>We set up your AI Sidekick with your actual business details, configure your follow-up sequences, and test everything before launch. You don't touch any software — we handle it all.</p>
         </div>
         <div class="stp">
           <div class="stp-num serif">03</div>
           <h3>Go live and track results</h3>
-          <p>Your AI starts handling calls, texts, and follow-ups. You see every conversation, booking, and review request in your dashboard. We fine-tune based on real results.</p>
+          <p>AI Sidekick starts handling calls, texts, and follow-ups. You see every conversation, booking, and review request in your dashboard and mobile app. We fine-tune based on real results.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="verticals" id="industries">
-    <div class="w">
-      <div class="verticals-top rv">
-        <h2 class="serif verticals-h">Built for <em>local business.</em></h2>
-      </div>
-      <div class="v-grid">
-        <a href="auto-repair.html" class="v-card rv rv-d1">
-          <div class="v-card-img" style="background-image:url('images/auto-repair.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Auto Repair</h3>
-            <p class="v-card-desc">Turn more quotes into booked services.</p>
-          </div>
-        </a>
-        <a href="cpa.html" class="v-card rv rv-d2">
-          <div class="v-card-img" style="background-image:url('images/cpa.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">CPA &amp; Bookkeeping</h3>
-            <p class="v-card-desc">Automate client intake and cut admin time.</p>
-          </div>
-        </a>
-        <a href="dental.html" class="v-card rv rv-d3">
-          <div class="v-card-img" style="background-image:url('images/dental.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Dental</h3>
-            <p class="v-card-desc">Keep your schedule full and reduce no-shows.</p>
-          </div>
-        </a>
-        <a href="hvac.html" class="v-card rv rv-d4">
-          <div class="v-card-img" style="background-image:url('images/hvac.png')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">HVAC</h3>
-            <p class="v-card-desc">Never miss an emergency call or seasonal lead.</p>
-          </div>
-        </a>
-        <a href="insurance.html" class="v-card rv rv-d1">
-          <div class="v-card-img" style="background-image:url('images/insurance.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Insurance</h3>
-            <p class="v-card-desc">Respond to quotes before your competitor.</p>
-          </div>
-        </a>
-        <a href="law.html" class="v-card rv rv-d2">
-          <div class="v-card-img" style="background-image:url('images/law.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Law Firms</h3>
-            <p class="v-card-desc">Capture consultations and follow up with every inquiry.</p>
-          </div>
-        </a>
-        <a href="med-spa.html" class="v-card rv rv-d3">
-          <div class="v-card-img" style="background-image:url('images/med-spa.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Med Spa</h3>
-            <p class="v-card-desc">Book more treatments and reduce no-shows automatically.</p>
-          </div>
-        </a>
-        <a href="property-management.html" class="v-card rv rv-d4">
-          <div class="v-card-img" style="background-image:url('images/property-management.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Property Management</h3>
-            <p class="v-card-desc">Respond to residents and fill vacancies faster.</p>
-          </div>
-        </a>
-        <a href="real-estate.html" class="v-card rv rv-d1">
-          <div class="v-card-img" style="background-image:url('images/real-estate.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Real Estate</h3>
-            <p class="v-card-desc">Capture every buyer and seller inquiry.</p>
-          </div>
-        </a>
-        <a href="restoration.html" class="v-card rv rv-d2">
-          <div class="v-card-img" style="background-image:url('images/restoration.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Restoration</h3>
-            <p class="v-card-desc">Capture emergency leads and follow up on estimates.</p>
-          </div>
-        </a>
-        <a href="staffing.html" class="v-card rv rv-d3">
-          <div class="v-card-img" style="background-image:url('images/staffing.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Staffing</h3>
-            <p class="v-card-desc">Collect candidate info and schedule interviews automatically.</p>
-          </div>
-        </a>
-        <a href="vet.html" class="v-card rv rv-d4">
-          <div class="v-card-img" style="background-image:url('images/vet.jpg')"></div>
-          <span class="v-card-go">&rarr;</span>
-          <div class="v-card-body">
-            <h3 class="v-card-name">Veterinary</h3>
-            <p class="v-card-desc">Handle appointment requests and refill calls instantly.</p>
-          </div>
-        </a>
       </div>
     </div>
   </section>
@@ -3418,18 +3537,21 @@
             <div class="price-sub" id="priceSub"></div>
             <div class="price-setup">$500 one-time setup</div>
           </div>
-          <ul class="tier-features">
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>AI voice receptionist (24/7)</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">An AI answers your phone, talks to callers, answers questions about your business, and books appointments on your calendar.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Missed call text-back</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">When you miss a call, the system instantly texts the caller so you don't lose the lead.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Two-way SMS conversations</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">The AI texts back and forth with leads, answering questions and collecting details over SMS.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>AI website chat widget</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat bubble on your website where visitors can ask questions and book appointments without calling.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Online booking calendar</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers book directly into your schedule. Syncs with Google Calendar or Outlook.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Automated appointment reminders</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automatic text and email reminders before appointments so customers don't no-show.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Follow-up sequences</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automated texts and emails that go out to leads who haven't booked yet, so no one falls off your radar.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Google review requests</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">After a job is done, the system texts your customer a link to leave you a Google review.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Lead pipeline &amp; CRM</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">See every lead, conversation, and booked job in one dashboard. Know exactly where each customer stands.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Spanish language support</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">The AI can answer calls and texts in both English and Spanish.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span>Reporting dashboard</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Log in anytime to see your calls, texts, bookings, and leads in real time.</span></span></span></li>
+          <ul class="tier-features tier-features--core">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI voice receptionist</strong> &mdash; answers calls 24/7</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Your AI Sidekick answers your phone, talks to callers, answers questions about your business, and books appointments on your calendar.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Missed call text-back</strong> &mdash; texts missed callers instantly</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">When you miss a call, the system instantly texts the caller so you don't lose the lead.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI website chatbot</strong> &mdash; configured for your business</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat widget on your website that answers questions about your services, pricing, and hours, and captures leads.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Automated lead follow-up</strong> &mdash; follows up with leads on a schedule</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automated text sequences that follow up with leads who haven't booked yet.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Google review automation</strong> &mdash; sends requests after service</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">After a job is done, the system texts your customer a link to leave you a Google review.</span></span></span></li>
+          </ul>
+          <div class="tier-includes">Also included</div>
+          <ul class="tier-features tier-features--extras">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Lead pipeline &amp; CRM</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Online booking calendar</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Appointment reminders</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Two-way SMS</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Spanish language support</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Reporting dashboard</span></li>
           </ul>
           <a href="#contact" class="btn btn-main tier-btn">Book a Demo</a>
           <p class="pkg-note">No contracts &mdash; cancel anytime</p>
@@ -3450,7 +3572,7 @@
             What exactly does AI Sidekick do?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">We set up AI systems that answer your phone calls, text back missed calls, send automated SMS and email follow-up sequences to leads, book appointments through an online calendar, and send Google review requests after completed jobs. You also get an AI chat widget for your website.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">We set up your AI Sidekick to answer your phone calls, text back missed calls, send automated text follow-up sequences to leads, book appointments through an online calendar, and send Google review requests after completed jobs. You also get a website chatbot.</div></div>
         </div>
         <div class="faq-item rv rv-d2">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -3464,14 +3586,14 @@
             Do I need to be tech-savvy?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">Not at all. We handle the full setup and walk you through how it works. You get a dashboard where you can see conversations, appointments, and leads. If you need changes to how the AI responds, we handle those adjustments for you.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Not at all. We handle the full setup and walk you through how it works. You get a dashboard where you can see conversations, appointments, and leads. If you need changes to how your AI Sidekick responds, we handle those adjustments for you.</div></div>
         </div>
         <div class="faq-item rv rv-d3">
           <button class="faq-q" onclick="toggleFaq(this)">
             What happens when someone calls after hours?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">Instead of going to voicemail, the caller receives an automated text acknowledging their call and asking how you can help. The conversation continues over text, and the AI can book them into your calendar or collect their details for a callback. This works around the clock, including nights and weekends.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Instead of going to voicemail, the caller receives an automated text acknowledging their call and asking how you can help. The conversation continues over text, and your AI Sidekick can book them into your calendar or collect their details for a callback. This works around the clock, including nights and weekends.</div></div>
         </div>
         <div class="faq-item rv rv-d3">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -3496,24 +3618,24 @@
         </div>
         <div class="faq-item rv rv-d5">
           <button class="faq-q" onclick="toggleFaq(this)">
-            What if the AI says something wrong on a call?
+            What if AI Sidekick says something wrong on a call?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">The AI is configured with your business details &mdash; services, pricing, hours, and policies &mdash; so its responses are grounded in accurate information. Since it generates responses rather than reading scripts, there's a small chance it may phrase something imperfectly. Every call is recorded and every text is logged, so you can review conversations and we'll adjust the configuration based on your feedback. For complex situations, it transfers to your team.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Your AI Sidekick is configured with your business details &mdash; services, pricing, hours, and policies &mdash; so its responses are grounded in accurate information. Since it generates responses rather than reading scripts, there's a small chance it may phrase something imperfectly. Every call is recorded and every text is logged, so you can review conversations and we'll adjust the configuration based on your feedback. For complex situations, it transfers to your team.</div></div>
         </div>
         <div class="faq-item rv rv-d5">
           <button class="faq-q" onclick="toggleFaq(this)">
-            Can I listen to the AI calls and read the conversations?
+            Can I listen to AI Sidekick's calls and read the conversations?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">Yes. Every call is recorded and transcribed, and every text conversation is logged in your dashboard. You can review any conversation at any time.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Yes. Every call is recorded and transcribed, and every text conversation is logged in your dashboard and mobile app. You can review any conversation at any time, jump in to reply yourself, or take over from AI Sidekick whenever you want.</div></div>
         </div>
         <div class="faq-item rv rv-d5">
           <button class="faq-q" onclick="toggleFaq(this)">
             Do you support Spanish-speaking customers?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">Yes. The AI voice agent and chat can handle conversations in both English and Spanish. We configure the system with Spanish-language responses during setup so it can respond appropriately when a customer writes or speaks in Spanish.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Yes. Your AI Sidekick handles conversations in both English and Spanish. We configure the system with Spanish-language responses during setup so it can respond appropriately when a customer writes or speaks in Spanish.</div></div>
         </div>
         <div class="faq-item rv rv-d5">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -3595,7 +3717,8 @@
       <ul class="f-links">
         <li><a href="#how">How It Works</a></li>
         <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#industries">Industries</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="industries.html">Industries</a></li>
         <li><a href="#contact">Book a Demo</a></li>
       </ul>
       <ul class="f-links f-legal">
@@ -3689,8 +3812,10 @@
     }
 
     var nav = document.getElementById('nav');
+    var howSection = document.getElementById('how');
     window.addEventListener('scroll', function() {
-      nav.classList.toggle('pinned', window.scrollY > 50);
+      var howTop = howSection.getBoundingClientRect().top;
+      nav.classList.toggle('pinned', howTop <= nav.offsetHeight);
     }, { passive: true });
 
     // Mobile nav
