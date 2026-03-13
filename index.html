@@ -6,15 +6,15 @@
   <link rel="apple-touch-icon" href="/images/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Sidekick | For Local Businesses</title>
-  <meta name="description" content="AI-powered automation for service businesses. AI receptionist, missed call text-back, lead follow-up, and review automation — all 24/7.">
+  <meta name="description" content="AI-powered automation for service businesses. AI receptionist, two-way SMS, lead follow-up, and review automation — all 24/7.">
   <meta property="og:title" content="AI Sidekick | For Local Businesses">
-  <meta property="og:description" content="AI-powered automation for service businesses. AI receptionist, missed call text-back, lead follow-up, and review automation — all 24/7.">
+  <meta property="og:description" content="AI-powered automation for service businesses. AI receptionist, two-way SMS, lead follow-up, and review automation — all 24/7.">
   <meta property="og:image" content="https://ai-sidekick.io/images/og-image.png">
   <meta property="og:url" content="https://ai-sidekick.io">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Sidekick | For Local Businesses">
-  <meta name="twitter:description" content="AI-powered automation for service businesses. AI receptionist, missed call text-back, lead follow-up, and review automation — all 24/7.">
+  <meta name="twitter:description" content="AI-powered automation for service businesses. AI receptionist, two-way SMS, lead follow-up, and review automation — all 24/7.">
   <meta name="twitter:image" content="https://ai-sidekick.io/images/og-image.png">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -1252,7 +1252,7 @@
     .fv-call-btn--transfer { background: rgba(26,58,92,0.08); }
     .fv-call-btn--speaker { background: rgba(26,58,92,0.08); }
 
-    /* --- Card 2: Missed Call Text-Back --- */
+    /* --- Card 2: Two-Way SMS --- */
     .fv-sms {
       display: flex;
       flex-direction: column;
@@ -2625,6 +2625,28 @@
       color: rgba(255,255,255,0.35);
     }
 
+    .consent-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+    .consent-group input[type="checkbox"] {
+      margin-top: 0.25rem;
+      accent-color: var(--accent);
+      min-width: 16px;
+      min-height: 16px;
+    }
+    .consent-group label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+    .consent-group a {
+      color: rgba(255,255,255,0.65);
+    }
+
     .cta-form {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
@@ -2646,6 +2668,7 @@
     }
 
     .cta .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+    .cta .form-group select option { color: #1a1a1a; background: #fff; }
     .cta .form-group input:focus,
     .cta .form-group select:focus { border-color: rgba(255,255,255,0.3); }
 
@@ -3113,7 +3136,7 @@
         <div>
           <p class="eyebrow eyebrow-subtle hero-eyebrow">AI-powered automation for service businesses</p>
           <h1 class="serif hero-h">Answer every call. Book every lead. <i>Grow on autopilot.</i></h1>
-          <p class="hero-p">AI that answers your phone, texts back missed calls, books appointments, and follows up with every lead &mdash; 24/7.</p>
+          <p class="hero-p">AI that answers your phone, texts with your customers, books appointments, and follows up with every lead &mdash; 24/7.</p>
           <div class="hero-btns">
             <a href="#contact" class="btn btn-main">Book a Demo</a>
           </div>
@@ -3264,7 +3287,7 @@
       <span class="marquee-item"><span class="dot"></span>Insurance Agencies</span>
       <span class="marquee-item"><span class="dot"></span>Real Estate</span>
       <span class="marquee-item"><span class="dot"></span>AI Voice Receptionist</span>
-      <span class="marquee-item"><span class="dot"></span>Missed Call Text-Back</span>
+      <span class="marquee-item"><span class="dot"></span>Two-Way SMS</span>
       <span class="marquee-item"><span class="dot"></span>Lead Follow-Up</span>
       <span class="marquee-item"><span class="dot"></span>Review Automation</span>
       <span class="marquee-item"><span class="dot"></span>AI Website Chat</span>
@@ -3276,7 +3299,7 @@
       <span class="marquee-item"><span class="dot"></span>Insurance Agencies</span>
       <span class="marquee-item"><span class="dot"></span>Real Estate</span>
       <span class="marquee-item"><span class="dot"></span>AI Voice Receptionist</span>
-      <span class="marquee-item"><span class="dot"></span>Missed Call Text-Back</span>
+      <span class="marquee-item"><span class="dot"></span>Two-Way SMS</span>
       <span class="marquee-item"><span class="dot"></span>Lead Follow-Up</span>
       <span class="marquee-item"><span class="dot"></span>Review Automation</span>
       <span class="marquee-item"><span class="dot"></span>AI Website Chat</span>
@@ -3317,21 +3340,20 @@
           </div>
         </div>
 
-        <!-- 2: Missed Call Text-Back -->
+        <!-- 2: Two-Way SMS -->
         <div class="feat-card rv rv-d2">
           <div class="feat-head">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-            <h3 class="feat-title">Missed Call Text-Back</h3>
+            <h3 class="feat-title">Two-Way SMS</h3>
           </div>
-          <p class="feat-sub">Auto-texts missed callers within seconds, books via text</p>
+          <p class="feat-sub">Customers text your business number, get instant AI responses, and book appointments</p>
           <div class="feat-visual">
             <div class="fv-sms">
               <div class="fv-sms-time">Just now</div>
-              <div class="fv-sms-bubble fv-sms-bubble--ai">Hi! Sorry we missed your call. How can we help?</div>
-              <div class="fv-sms-bubble fv-sms-bubble--user">Need AC repair, unit isn't cooling</div>
-              <div class="fv-sms-bubble fv-sms-bubble--ai">I can get you scheduled. Tomorrow at 9am or 2pm?</div>
-              <div class="fv-sms-bubble fv-sms-bubble--user">9am</div>
-              <div class="fv-sms-bubble fv-sms-bubble--ai">You're booked for 9am tomorrow. Confirmation sent.</div>
+              <div class="fv-sms-bubble fv-sms-bubble--user">Hi, do you have any openings this week? My AC stopped cooling</div>
+              <div class="fv-sms-bubble fv-sms-bubble--ai">Hi! We can get you in. Does tomorrow at 9am or 2pm work?</div>
+              <div class="fv-sms-bubble fv-sms-bubble--user">9am works</div>
+              <div class="fv-sms-bubble fv-sms-bubble--ai">You're booked for tomorrow at 9am. Confirmation sent!</div>
             </div>
           </div>
         </div>
@@ -3514,7 +3536,7 @@
     <div class="w">
       <div class="roi-top rv">
         <p class="eyebrow roi-eyebrow">See the math</p>
-        <h2 class="serif roi-h">See what missed calls are <em>costing you.</em></h2>
+        <h2 class="serif roi-h">See what slow response times are <em>costing you.</em></h2>
       </div>
       <div class="roi-card rv rv-d1">
         <div class="roi-sentence">
@@ -3522,7 +3544,7 @@
         </div>
         <div class="roi-inputs">
           <div class="roi-input-group">
-            <label for="roi-calls">Missed calls per week</label>
+            <label for="roi-calls">Unanswered inquiries per week</label>
             <input type="range" id="roi-calls" min="5" max="50" value="15" oninput="calcROI()">
           </div>
           <div class="roi-input-group">
@@ -3533,7 +3555,7 @@
         <div class="roi-results">
           <div class="roi-result-item">
             <div class="roi-result-num serif" id="roi-missed">60</div>
-            <div class="roi-result-label">Missed calls recovered per month</div>
+            <div class="roi-result-label">Leads recovered per month</div>
           </div>
           <div class="roi-result-item">
             <div class="roi-result-num serif" id="roi-bookings">18</div>
@@ -3548,7 +3570,7 @@
             <div class="roi-result-label">Revenue recovered per year</div>
           </div>
         </div>
-        <p class="roi-footnote">Based on industry data: 30% of missed callers convert when contacted within 5 minutes. <a href="https://www.leadresponsemanagement.org/lrm_study/" target="_blank" rel="noopener">MIT / InsideSales Study</a></p>
+        <p class="roi-footnote">Based on industry data: 30% of leads convert when contacted within 5 minutes. <a href="https://www.leadresponsemanagement.org/lrm_study/" target="_blank" rel="noopener">MIT / InsideSales Study</a></p>
       </div>
     </div>
   </section>
@@ -3580,7 +3602,7 @@
           </div>
           <ul class="tier-features tier-features--core">
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI voice receptionist</strong> &mdash; answers calls 24/7</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Your AI Sidekick answers your phone, talks to callers, answers questions about your business, and books appointments on your calendar.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Missed call text-back</strong> &mdash; texts missed callers instantly</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">When you miss a call, the system instantly texts the caller so you don't lose the lead.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Two-way SMS</strong> &mdash; AI texts with your customers</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers can text your business number and get instant AI responses, answer questions, and book appointments.</span></span></span></li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI website chatbot</strong> &mdash; configured for your business</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat widget on your website that answers questions about your services, pricing, and hours, and captures leads.</span></span></span></li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Automated lead follow-up</strong> &mdash; follows up with leads on a schedule</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automated text sequences that follow up with leads who haven't booked yet.</span></span></span></li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Google review automation</strong> &mdash; sends requests after service</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">After a job is done, the system texts your customer a link to leave you a Google review.</span></span></span></li>
@@ -3613,7 +3635,7 @@
             What exactly does AI Sidekick do?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">We set up your AI Sidekick to answer your phone calls, text back missed calls, send automated text follow-up sequences to leads, book appointments through an online calendar, and send Google review requests after completed jobs. You also get a website chatbot.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">We set up your AI Sidekick to answer your phone calls, respond to leads via text, send automated text follow-up sequences to leads, book appointments through an online calendar, and send Google review requests after completed jobs. You also get a website chatbot.</div></div>
         </div>
         <div class="faq-item rv rv-d2">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -3683,7 +3705,7 @@
             When will I start seeing results?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">The system starts responding to missed calls as soon as it goes live. Your dashboard tracks every text-back, conversation, appointment booked, and review requested from day one. Results depend on your call volume and how many calls you're currently missing.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">The system starts responding to leads as soon as it goes live. Your dashboard tracks every SMS conversation, appointment booked, and review requested from day one. Results depend on your lead volume and current response times.</div></div>
         </div>
       </div>
     </div>
@@ -3741,8 +3763,11 @@
             <option value="all">All of the above</option>
           </select>
         </div>
+      <div class="consent-group form-full">
+        <input type="checkbox" id="consent" name="consent" required>
+        <label for="consent">I agree to be contacted by AI Sidekick. By submitting this form, you consent to receive calls, text messages, and emails from AI Sidekick regarding our services. Automated messaging technology may be used. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out of texts. See our <a href="/privacy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Service</a>.</label>
+      </div>
         <button type="submit" class="btn btn-main form-submit">Get Your Free Consultation</button>
-        <p class="cta-note">No obligation. We'll reach out within 24 hours to find a time that works.</p>
       </form>
       <div class="form-success" id="form-success" style="display:none;">
         <div class="success-icon">&#10003;</div>

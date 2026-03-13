@@ -1107,6 +1107,27 @@
       color: var(--text-3);
       text-align: center;
     }
+    .consent-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+    .consent-group input[type="checkbox"] {
+      margin-top: 0.25rem;
+      accent-color: var(--accent);
+      min-width: 16px;
+      min-height: 16px;
+    }
+    .consent-group label {
+      font-size: 0.78rem;
+      color: var(--text-3);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+    .consent-group a {
+      color: var(--accent);
+    }
 
     .form-success { text-align: center; padding: 2rem 0; }
 
@@ -1343,7 +1364,7 @@
           <div class="pricing-setup">$500 one-time setup</div>
           <ul class="pricing-list">
             <li><span class="feature-label"><span>AI voice receptionist (24/7)</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Your AI Sidekick answers your phone, talks to callers, answers questions about your business, and books appointments on your calendar.</span></span></span></li>
-            <li><span class="feature-label"><span>Missed call text-back</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">When you miss a call, the system instantly texts the caller so you don&rsquo;t lose the lead.</span></span></span></li>
+            <li><span class="feature-label"><span>Two-way SMS</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers can text your business number anytime. AI responds instantly, answers questions, and books appointments over text.</span></span></span></li>
             <li><span class="feature-label"><span>Two-way SMS conversations</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Your AI Sidekick texts back and forth with leads, answering questions and collecting details over SMS.</span></span></span></li>
             <li><span class="feature-label"><span>AI website chat widget</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat bubble on your website where visitors can ask questions and book appointments without calling.</span></span></span></li>
             <li><span class="feature-label"><span>Online booking calendar</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers book directly into your schedule. Syncs with Google Calendar or Outlook.</span></span></span></li>
@@ -1380,7 +1401,7 @@
             Does it integrate with Dentrix, Eaglesoft, or Open Dental?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">AI Sidekick doesn't directly integrate with Dentrix, Eaglesoft, or Open Dental. It handles the initial patient communication &mdash; missed call text-back, appointment booking, and follow-up. When a new patient books, your front desk receives the details and enters them into your PMS. We can set up a Zapier or Make connection to push lead info automatically.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">AI Sidekick doesn't directly integrate with Dentrix, Eaglesoft, or Open Dental. It handles the initial patient communication &mdash; two-way SMS, appointment booking, and follow-up. When a new patient books, your front desk receives the details and enters them into your PMS. We can set up a Zapier or Make connection to push lead info automatically.</div></div>
         </div>
         <div class="faq-item rv rv-d2">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -1453,8 +1474,11 @@
           </select>
         </div>
         <input type="hidden" name="business" value="dental">
+      <div class="consent-group form-full">
+        <input type="checkbox" id="consent" name="consent" required>
+        <label for="consent">I agree to be contacted by AI Sidekick. By submitting this form, you consent to receive calls, text messages, and emails from AI Sidekick regarding our services. Automated messaging technology may be used. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out of texts. See our <a href="/privacy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Service</a>.</label>
+      </div>
         <button type="submit" class="btn btn-main form-submit">Get Your Free Consultation</button>
-        <p class="cta-note">No obligation. We'll reach out within 24 hours.</p>
       </form>
       <div class="form-success" id="form-success" style="display:none;">
         <div class="success-icon">&#10003;</div>
