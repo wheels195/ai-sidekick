@@ -343,412 +343,300 @@
       align-items: center;
     }
 
-    /* === HERO PHONE MOCKUP === */
-    .hero-phone {
+    /* === HERO DASHBOARD VISUAL === */
+    .hero-visual {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       opacity: 0;
       animation: heroUp 0.9s var(--ease) 0.5s forwards;
+      perspective: 1400px;
+      min-height: 520px;
     }
 
-    .phone-frame {
-      width: 290px;
-      background: #1a1a1a;
-      border-radius: 44px;
-      border: 3px solid #333;
-      padding: 10px;
-      box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05), inset 0 0 0 1px rgba(255,255,255,0.03);
-      position: relative;
-    }
-
-    .phone-screen {
-      background: #000;
-      border-radius: 36px;
-      overflow: hidden;
-      position: relative;
-      min-height: 540px;
-    }
-
-    /* Dynamic Island */
-    .phone-island {
-      width: 100px;
-      height: 28px;
-      background: #000;
-      border-radius: 20px;
+    /* Warm ambient glow — soft peach/rose top-left, navy bottom-right */
+    .hero-visual::before {
+      content: '';
       position: absolute;
-      top: 10px;
+      width: 600px;
+      height: 600px;
+      top: 40%;
       left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      border: 1px solid rgba(255,255,255,0.05);
-      transition: all 0.4s var(--ease);
+      transform: translate(-50%, -50%);
+      background:
+        radial-gradient(ellipse 55% 45% at 25% 25%, rgba(232,115,74,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 75% 70%, rgba(26,58,92,0.15) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(30px);
     }
 
-    .phone-island.active {
-      width: 200px;
-      height: 36px;
-      background: #1a1a1a;
-    }
-
-    .phone-island-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 14px;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .phone-island.active .phone-island-content { opacity: 1; }
-
-    .phone-island-left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .phone-island-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    .phone-island-label {
-      font-size: 0.6rem;
-      font-weight: 600;
-      color: #22c55e;
-    }
-
-    .phone-island-wave {
-      display: flex;
-      gap: 2px;
-      align-items: center;
-      height: 16px;
-    }
-
-    .phone-island-wave span {
-      width: 2px;
-      background: #22c55e;
-      border-radius: 1px;
-      animation: wave 0.8s ease-in-out infinite alternate;
-    }
-
-    .phone-island-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
-    .phone-island-wave span:nth-child(2) { height: 10px; animation-delay: 0.1s; }
-    .phone-island-wave span:nth-child(3) { height: 6px; animation-delay: 0.2s; }
-    .phone-island-wave span:nth-child(4) { height: 14px; animation-delay: 0.3s; }
-    .phone-island-wave span:nth-child(5) { height: 8px; animation-delay: 0.15s; }
-
-    @keyframes wave {
-      0% { transform: scaleY(0.4); }
-      100% { transform: scaleY(1); }
-    }
-
-    /* Home indicator */
-    .phone-home {
-      width: 120px;
-      height: 4px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 2px;
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-    }
-
-    .phone-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 24px 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .phone-status-icons {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-
-    /* Screens container */
-    .phone-screens {
+    .hero-dash {
       position: relative;
-      min-height: 480px;
+      width: 560px;
+      height: 500px;
+      transform-style: preserve-3d;
+      transform: rotateX(16deg) rotateY(-10deg) rotateZ(1deg);
+      z-index: 1;
     }
 
-    .phone-scene {
+    /* ---- Shared card base ---- */
+    .hero-dash-card {
+      position: absolute;
+      border-radius: 18px;
+      font-family: var(--sans);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      transform-style: preserve-3d;
+    }
+
+    /* ---- BACK CARD: Revenue Summary ---- */
+    .hero-dash-card--back {
+      top: 0;
+      right: -20px;
+      width: 310px;
+      padding: 28px 30px;
+      background: #fff;
+      transform: translateZ(-60px) translateY(10px);
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.06),
+        0 12px 32px rgba(0,0,0,0.1),
+        0 40px 80px rgba(0,0,0,0.12);
+      z-index: 1;
+      animation: dashFloatBack 8s ease-in-out infinite;
+    }
+
+    /* Subtle depth fade on back card bottom edge */
+    .hero-dash-card--back::after {
+      content: '';
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      border-radius: 18px;
+      background: linear-gradient(180deg, transparent 40%, rgba(255,255,255,0.5) 100%);
       pointer-events: none;
     }
 
-    .phone-scene.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* Scene 1: Incoming call */
-    .scene-call {
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px 30px;
+    .hero-dash-card--back .hd-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #1a1a1a;
       text-align: center;
-      gap: 6px;
-    }
-
-    .call-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-      box-shadow: 0 0 0 0 rgba(34,197,94,0.3);
-      animation: ringPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes ringPulse {
-      0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-      50% { box-shadow: 0 0 0 18px rgba(34,197,94,0); }
-      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
-    }
-
-    .call-label {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 2px;
-    }
-
-    .call-name {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 2px;
-    }
-
-    .call-number {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 30px;
-    }
-
-    .call-actions {
-      display: flex;
-      gap: 50px;
-      margin-top: auto;
-    }
-
-    .call-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .call-btn-circle {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .call-btn-circle--decline { background: #ef4444; }
-    .call-btn-circle--accept { background: #22c55e; }
-
-    .call-btn-label {
-      font-size: 0.6rem;
-      color: rgba(255,255,255,0.5);
-    }
-
-    /* Scene 2: AI Answering */
-    .scene-ai {
-      align-items: center;
-      justify-content: center;
-      padding: 50px 20px 30px;
-      text-align: center;
-      gap: 8px;
-    }
-
-    .ai-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 4px;
-    }
-
-    .ai-status {
-      font-size: 0.68rem;
-      color: #22c55e;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .ai-status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    .ai-label {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 2px;
-    }
-
-    .ai-timer {
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.5);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.05em;
-      margin: 8px 0 16px;
-    }
-
-    .ai-waveform {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-      height: 40px;
       margin-bottom: 20px;
     }
 
-    .ai-waveform span {
-      width: 3px;
-      background: var(--accent-light);
-      border-radius: 2px;
-      animation: waveformBar 0.6s ease-in-out infinite alternate;
-    }
-
-    .ai-waveform span:nth-child(1) { height: 8px; animation-delay: 0s; }
-    .ai-waveform span:nth-child(2) { height: 20px; animation-delay: 0.08s; }
-    .ai-waveform span:nth-child(3) { height: 12px; animation-delay: 0.16s; }
-    .ai-waveform span:nth-child(4) { height: 28px; animation-delay: 0.24s; }
-    .ai-waveform span:nth-child(5) { height: 16px; animation-delay: 0.1s; }
-    .ai-waveform span:nth-child(6) { height: 32px; animation-delay: 0.2s; }
-    .ai-waveform span:nth-child(7) { height: 14px; animation-delay: 0.05s; }
-    .ai-waveform span:nth-child(8) { height: 24px; animation-delay: 0.18s; }
-    .ai-waveform span:nth-child(9) { height: 10px; animation-delay: 0.12s; }
-    .ai-waveform span:nth-child(10) { height: 20px; animation-delay: 0.22s; }
-    .ai-waveform span:nth-child(11) { height: 6px; animation-delay: 0.28s; }
-
-    @keyframes waveformBar {
-      0% { transform: scaleY(0.3); }
-      100% { transform: scaleY(1); }
-    }
-
-    .ai-transcript {
+    .hero-dash-card--back .hd-period {
       font-size: 0.68rem;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.5;
-      padding: 0 10px;
-      max-width: 240px;
+      font-weight: 500;
+      color: #999;
+      text-align: right;
+      margin-bottom: 12px;
     }
 
-    /* Scene 3: Results feed */
-    .scene-results {
-      padding: 44px 14px 16px;
-      gap: 6px;
-    }
-
-    .result-header {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0 4px 8px;
-    }
-
-    .result-item {
-      display: grid;
-      grid-template-columns: 30px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 10px 12px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .result-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
+    /* Bar chart in back card */
+    .hd-bars {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-end;
+      gap: 20px;
+      height: 160px;
+      padding: 0 10px;
     }
 
-    .result-icon--done { background: rgba(34,197,94,0.15); }
-    .result-icon--sms { background: rgba(59,130,246,0.15); }
-    .result-icon--cal { background: rgba(245,158,11,0.15); }
-    .result-icon--star { background: rgba(139,92,246,0.15); }
+    .hd-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      height: 100%;
+      justify-content: flex-end;
+    }
 
-    .result-body { min-width: 0; }
-
-    .result-title {
-      font-size: 0.7rem;
+    .hd-bar-val {
+      font-size: 0.62rem;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 1px;
-    }
-
-    .result-sub {
-      font-size: 0.6rem;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .result-badge {
-      font-size: 0.55rem;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 100px;
-      background: rgba(34,197,94,0.12);
-      color: #22c55e;
+      background: var(--accent-light);
+      padding: 3px 10px;
+      border-radius: 5px;
       white-space: nowrap;
-      text-align: center;
-      min-width: 52px;
+      letter-spacing: -0.01em;
     }
 
-    /* Floating glow behind phone */
-    .phone-glow {
-      position: absolute;
-      width: 350px;
-      height: 350px;
+    .hd-bar {
+      width: 100%;
+      max-width: 72px;
+      border-radius: 6px 6px 3px 3px;
+      background: linear-gradient(180deg, #dce8f3 0%, #eef3f9 100%);
+      border: 1px solid #d0dce8;
+      min-height: 8px;
+    }
+
+    .hd-bar--2 { height: 55%; }
+    .hd-bar--3 { height: 72%; }
+
+    .hd-bar-label {
+      font-size: 0.65rem;
+      color: #aaa;
+      letter-spacing: 0.01em;
+    }
+
+    /* ---- FRONT CARD: Conversation Summary ---- */
+    .hero-dash-card--front {
+      bottom: 0;
+      left: -20px;
+      width: 380px;
+      padding: 30px 32px 26px;
+      background: #fff;
+      transform: translateZ(40px);
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.06),
+        0 16px 48px rgba(0,0,0,0.12),
+        0 60px 120px rgba(0,0,0,0.15);
+      z-index: 2;
+      animation: dashFloatFront 8s ease-in-out infinite;
+    }
+
+    .hero-dash-card--front .hd-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+
+    .hero-dash-card--front .hd-period {
+      display: none;
+    }
+
+    /* Big stat row */
+    .hd-big-stats {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 20px;
+      align-items: flex-end;
+    }
+
+    .hd-stat {
+      flex: 1;
+    }
+
+    .hd-stat-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      color: #999;
+      margin-bottom: 6px;
+    }
+
+    .hd-stat-label svg {
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .hd-stat-num {
+      font-family: var(--serif);
+      font-size: 2.6rem;
+      color: #1a1a1a;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .hd-stat-num--accent {
+      color: var(--accent);
+    }
+
+    /* "Last 7 days" chip next to stats */
+    .hd-period-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.6rem;
+      color: #bbb;
+      margin-bottom: 6px;
+    }
+
+    .hd-period-inline svg { opacity: 0.4; }
+
+    /* Mini area chart */
+    .hd-chart {
+      position: relative;
+      height: 72px;
+      margin: 0 -8px 16px;
+      overflow: hidden;
+      border-radius: 0;
+    }
+
+    .hd-chart svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Bottom row of small metrics */
+    .hd-metrics-row {
+      display: flex;
+      gap: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #f0eeec;
+    }
+
+    .hd-mini-stat {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.68rem;
+      color: #888;
+    }
+
+    .hd-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(26,58,92,0.2) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: -1;
+      flex-shrink: 0;
+    }
+
+    .hd-dot--blue { background: var(--accent); }
+    .hd-dot--coral { background: #e8734a; }
+
+    .hd-mini-stat strong {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    /* Response time row */
+    .hd-response {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #f0eeec;
+    }
+
+    .hd-response svg { flex-shrink: 0; }
+
+    .hd-response-text {
+      font-size: 0.72rem;
+      color: #888;
+    }
+
+    .hd-response-val {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Floating animations — offset timing for natural feel */
+    @keyframes dashFloatFront {
+      0%, 100% { transform: translateZ(40px) translateY(0); }
+      50% { transform: translateZ(48px) translateY(-8px); }
+    }
+
+    @keyframes dashFloatBack {
+      0%, 100% { transform: translateZ(-60px) translateY(10px); }
+      55% { transform: translateZ(-54px) translateY(4px); }
     }
 
     .hero-eyebrow {
@@ -933,10 +821,11 @@
     @media (max-width: 900px) {
       .hero { padding: 9rem 0 4.5rem; }
       .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .hero-phone { justify-content: center; }
-      .phone-frame { width: 260px; }
-      .phone-screen { min-height: 500px; }
-      .phone-screens { min-height: 440px; }
+      .hero-visual { justify-content: center; min-height: 380px; overflow: hidden; }
+      .hero-dash { width: 420px; height: 380px; transform: rotateX(12deg) rotateY(-7deg) rotateZ(1deg); }
+      .hero-dash-card--front { width: 300px; padding: 24px 26px 22px; left: -10px; }
+      .hero-dash-card--front .hd-stat-num { font-size: 2.1rem; }
+      .hero-dash-card--back { width: 240px; right: -10px; }
       .hero-h { font-size: clamp(2.8rem, 8vw, 3.8rem); }
       .hero-trust { flex-wrap: wrap; gap: 1.5rem; }
       .hero-trust-item { padding: 0 1.5rem; }
@@ -965,20 +854,23 @@
     @media (max-width: 480px) {
       .hero { padding: 7.5rem 0 3rem; }
       .hero-grid { gap: 2rem; }
-      .phone-frame { width: 240px; border-radius: 36px; padding: 8px; }
-      .phone-frame { max-width: 100%; }
-      .phone-screen { border-radius: 30px; min-height: 460px; }
-      .phone-screens { min-height: 420px; }
-      .scene-call { padding: 30px 16px 24px; }
-      .call-avatar { width: 60px; height: 60px; }
-      .call-name { font-size: 1.2rem; }
-      .call-actions { gap: 20px; }
-      .call-btn-circle { width: 48px; height: 48px; }
-      .scene-ai { padding: 40px 16px 24px; }
-      .scene-results { padding: 36px 10px 10px; gap: 5px; }
-      .result-item { padding: 8px 10px; gap: 8px; }
-      .result-icon { width: 26px; height: 26px; }
-      .result-item { grid-template-columns: 26px 1fr auto; }
+      .hero-visual { min-height: 300px; overflow: hidden; }
+      .hero-dash { width: 300px; height: 300px; transform: rotateX(10deg) rotateY(-5deg); }
+      .hero-dash-card--front { width: 240px; padding: 18px 20px 16px; left: 0; transform: translateZ(20px); }
+      .hero-dash-card--front .hd-stat-num { font-size: 1.5rem; }
+      .hero-dash-card--front .hd-title { font-size: 0.95rem; margin-bottom: 14px; }
+      .hero-dash-card--back { width: 190px; padding: 18px 16px; right: 0; transform: translateZ(-30px) translateY(10px); }
+      .hero-dash-card--back .hd-title { font-size: 0.9rem; margin-bottom: 14px; }
+      .hd-bars { height: 100px; gap: 12px; }
+      .hd-bar-val { font-size: 0.5rem; padding: 2px 5px; }
+      .hd-chart { height: 44px; margin-bottom: 10px; }
+      .hd-metrics-row { flex-direction: column; gap: 6px; padding-top: 10px; }
+      .hd-mini-stat { font-size: 0.6rem; }
+      .hd-response { margin-top: 10px; padding-top: 10px; }
+      .hd-response-text { font-size: 0.62rem; }
+      .hd-big-stats { gap: 12px; margin-bottom: 14px; }
+      .hd-stat-label { font-size: 0.58rem; }
+      .hd-period-inline { font-size: 0.52rem; }
       .hero-trust-num { font-size: 1.8rem; }
       .hero-btns { flex-direction: column; align-items: stretch; }
       .hero-btns .btn { text-align: center; justify-content: center; }
@@ -1086,59 +978,37 @@
       line-height: 1.65;
     }
 
-    .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: auto auto;
-      gap: 1rem;
-    }
-
-    .feat-grid .feat-card:nth-child(1),
-    .feat-grid .feat-card:nth-child(2),
-    .feat-grid .feat-card:nth-child(3) {
-      grid-column: span 2;
-    }
-
-    .feat-grid .feat-card:nth-child(4),
-    .feat-grid .feat-card:nth-child(5) {
-      grid-column: span 3;
-    }
-
-    .feat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 1.5rem 1.5rem 0;
-      transition: border-color 0.45s var(--ease), box-shadow 0.45s var(--ease), transform 0.45s var(--ease), opacity 0.7s var(--ease);
+    /* --- Feature rows: alternating split layout --- */
+    .feat-rows {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-      min-height: 380px;
+      gap: 0;
     }
 
-    .feat-grid .feat-card:nth-child(1) { transition-delay: 0s; }
-    .feat-grid .feat-card:nth-child(2) { transition-delay: 0.08s; }
-    .feat-grid .feat-card:nth-child(3) { transition-delay: 0.16s; }
-    .feat-grid .feat-card:nth-child(4) { transition-delay: 0.24s; }
-    .feat-grid .feat-card:nth-child(5) { transition-delay: 0.32s; }
-
-    .feat-card:hover {
-      border-color: var(--border-h);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
-      transform: translateY(-4px);
-    }
-
-    .feat-head {
-      display: flex;
+    .feat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
       align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.25rem;
+      padding: 3.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .feat-row:last-child { border-bottom: none; }
+
+    .feat-row--reverse { direction: rtl; }
+    .feat-row--reverse > * { direction: ltr; }
+
+    .feat-row-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
     .feat-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       background: var(--accent-dim);
       border: 1px solid rgba(26,58,92,0.12);
       display: flex;
@@ -1148,26 +1018,54 @@
     }
 
     .feat-title {
-      font-size: 1rem;
-      font-weight: 600;
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      font-weight: 400;
       letter-spacing: -0.01em;
+      line-height: 1.2;
     }
 
     .feat-sub {
-      font-size: 0.88rem;
+      font-size: 1.05rem;
       color: var(--text-3);
-      line-height: 1.5;
-      margin-bottom: 1rem;
+      line-height: 1.6;
+      margin-bottom: 0;
     }
 
-    .feat-visual {
-      flex: 1;
-      border-radius: 10px 10px 0 0;
-      background: #f4f4f2;
-      border: 1px solid var(--border);
-      border-bottom: none;
+    .feat-row-visual {
+      border-radius: 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
       position: relative;
       overflow: hidden;
+      min-height: 320px;
+      transition: box-shadow 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+
+    .feat-row:hover .feat-row-visual {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
+      transform: translateY(-3px);
+    }
+
+    /* Gradient glow on SMS visual */
+    .feat-row-visual--glow {
+      position: relative;
+    }
+    .feat-row-visual--glow::before {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border-radius: 28px;
+      background:
+        radial-gradient(ellipse 70% 60% at 30% 80%, rgba(26,58,92,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 75% 20%, rgba(45,95,138,0.25) 0%, transparent 65%);
+      filter: blur(24px);
+      z-index: -1;
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
+    }
+    .feat-row:hover .feat-row-visual--glow::before {
+      opacity: 1;
     }
 
     /* --- Card 1: AI Voice Receptionist --- */
@@ -1245,7 +1143,7 @@
       transition: transform 0.2s var(--ease);
     }
 
-    .feat-card:hover .fv-call-btn { transform: scale(1.06); }
+    .feat-row:hover .fv-call-btn { transform: scale(1.06); }
 
     .fv-call-btn--mute { background: rgba(26,58,92,0.08); }
     .fv-call-btn--end { background: #ef4444; }
@@ -1561,16 +1459,16 @@
       color: #16a34a;
     }
 
-    @media (max-width: 900px) {
-      .feat-grid { grid-template-columns: repeat(2, 1fr); }
-      .feat-grid .feat-card { grid-column: span 1; }
-      .feat-card { min-height: 340px; }
-    }
-
-    @media (max-width: 540px) {
-      .feat-grid { grid-template-columns: 1fr; }
-      .feat-grid .feat-card { grid-column: span 1; }
-      .feat-card { min-height: 360px; }
+    @media (max-width: 768px) {
+      .feat-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 2.5rem 0;
+      }
+      .feat-row--reverse { direction: ltr; }
+      .feat-row-visual { order: -1; min-height: 280px; }
+      .feat-title { font-size: 1.35rem; }
+      .feat-sub { font-size: 0.95rem; }
     }
 
     /* --- Features dark theme overrides --- */
@@ -1579,15 +1477,6 @@
     .features-h em { color: rgba(255,255,255,0.6); }
     .features-sub { color: rgba(255,255,255,0.5); }
 
-    .feat-card {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.08);
-    }
-    .feat-card:hover {
-      border-color: rgba(255,255,255,0.18);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
-      transform: translateY(-6px);
-    }
     .feat-icon {
       background: rgba(255,255,255,0.08);
       border-color: rgba(255,255,255,0.1);
@@ -1595,9 +1484,10 @@
     .feat-icon svg { stroke: rgba(255,255,255,0.7); }
     .feat-title { color: #fff; }
     .feat-sub { color: rgba(255,255,255,0.5); }
-    .feat-visual {
-      background: rgba(255,255,255,0.03);
+    .feat-row-visual {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
       border-color: rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 2px 8px rgba(0,0,0,0.15);
     }
 
     /* Card 1: Call - dark */
@@ -2587,13 +2477,16 @@
 
     .cta-glow {
       position: absolute;
-      width: 600px;
-      height: 600px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(26,58,92,0.15) 0%, transparent 65%);
+      inset: 5% 8%;
+      border-radius: 32px;
+      background:
+        radial-gradient(ellipse 60% 55% at 20% 30%, rgba(26,58,92,0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(45,95,138,0.30) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(26,58,92,0.18) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(26,58,92,0.12) 0%, rgba(45,95,138,0.08) 50%, rgba(26,58,92,0.15) 100%);
+      filter: blur(40px);
       pointer-events: none;
+      opacity: 0.85;
     }
 
     .cta .w {
@@ -2601,6 +2494,21 @@
       z-index: 1;
       text-align: center;
       max-width: 700px;
+    }
+
+    .cta-card {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+      border-radius: 28px;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(26,58,92,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 70% at 85% 80%, rgba(45,95,138,0.16) 0%, transparent 60%),
+        linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(2px);
+      z-index: 1;
     }
 
     .cta-h {
@@ -2762,6 +2670,7 @@
     @media (max-width: 480px) {
       .form-row { grid-template-columns: 1fr; }
       .cta-form { padding: 1.5rem; }
+      .cta-card { padding: 2rem 1.25rem; border-radius: 20px; }
     }
 
     /* === FOOTER === */
@@ -3120,7 +3029,7 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-r" id="navMenu">
-        <li><a href="#how">How It Works</a></li>
+        <li><a href="#roi">ROI Calculator</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="details.html">Details</a></li>
         <li><a href="industries.html">Industries</a></li>
@@ -3141,113 +3050,87 @@
             <a href="#contact" class="btn btn-main">Book a Demo</a>
           </div>
         </div>
-        <div class="hero-phone">
-          <div class="phone-glow"></div>
-          <div class="phone-frame">
-            <div class="phone-screen" id="phoneScreen">
-              <div class="phone-island" id="phoneIsland">
-                <div class="phone-island-content">
-                  <div class="phone-island-left">
-                    <div class="phone-island-dot"></div>
-                    <span class="phone-island-label">AI Active</span>
-                  </div>
-                  <div class="phone-island-wave">
-                    <span></span><span></span><span></span><span></span><span></span>
-                  </div>
+        <div class="hero-visual">
+          <div class="hero-dash">
+            <!-- Back card: Revenue Summary -->
+            <div class="hero-dash-card hero-dash-card--back">
+              <div class="hd-title">Revenue Summary</div>
+              <div class="hd-period">Monthly</div>
+              <div class="hd-bars">
+                <div class="hd-bar-col">
+                  <div class="hd-bar-val">$3,922,145</div>
+                  <div class="hd-bar hd-bar--2"></div>
+                  <div class="hd-bar-label">Apr</div>
+                </div>
+                <div class="hd-bar-col">
+                  <div class="hd-bar-val">$4,253,076</div>
+                  <div class="hd-bar hd-bar--3"></div>
+                  <div class="hd-bar-label">May</div>
                 </div>
               </div>
-              <div class="phone-status-bar">
-                <span>9:41</span>
-                <div class="phone-status-icons">
-                  <svg width="14" height="10" viewBox="0 0 18 12" fill="#fff"><path d="M1 9h2v3H1zM5 6h2v6H5zM9 3h2v9H9zM13 0h2v12h-2z"/></svg>
-                  <svg width="20" height="11" viewBox="0 0 28 12" fill="none"><rect x="0.5" y="0.5" width="23" height="11" rx="2.5" stroke="rgba(255,255,255,0.35)"/><rect x="2" y="2" width="18" height="8" rx="1.5" fill="#fff"/><rect x="25" y="3" width="2" height="6" rx="1" fill="rgba(255,255,255,0.2)"/></svg>
+            </div>
+            <!-- Front card: Conversation Summary -->
+            <div class="hero-dash-card hero-dash-card--front">
+              <div class="hd-title">Conversation Summary</div>
+              <div class="hd-big-stats">
+                <div class="hd-stat">
+                  <div class="hd-stat-label">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Appointments Booked
+                  </div>
+                  <div class="hd-stat-num">10,632</div>
+                </div>
+                <div class="hd-stat">
+                  <div class="hd-period-inline">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    Last 7 days
+                  </div>
+                  <div class="hd-stat-label">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.13.81.33 1.6.6 2.37a2 2 0 0 1-.45 2.11L8.91 10.56a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45c.77.27 1.56.47 2.37.6A2 2 0 0 1 22 16.92z"/></svg>
+                    Booking Rate
+                  </div>
+                  <div class="hd-stat-num hd-stat-num--accent">93%</div>
                 </div>
               </div>
-              <div class="phone-screens">
-                <!-- Scene 1: Incoming Call -->
-                <div class="phone-scene scene-call active" id="scene1">
-                  <div class="call-avatar">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
-                  <div class="call-label">incoming call</div>
-                  <div class="call-name">Mike Johnson</div>
-                  <div class="call-number">(214) 555-0183</div>
-                  <div class="call-actions">
-                    <div class="call-btn">
-                      <div class="call-btn-circle call-btn-circle--decline">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 5.18 2 2 0 0 1 4.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 10.91" transform="rotate(135 12 12)"/></svg>
-                      </div>
-                      <span class="call-btn-label">Decline</span>
-                    </div>
-                    <div class="call-btn">
-                      <div class="call-btn-circle call-btn-circle--accept">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.13.81.33 1.6.6 2.37a2 2 0 0 1-.45 2.11L8.91 10.56a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45c.77.27 1.56.47 2.37.6A2 2 0 0 1 22 16.92z"/></svg>
-                      </div>
-                      <span class="call-btn-label">Accept</span>
-                    </div>
-                  </div>
+              <!-- Mini area chart -->
+              <div class="hd-chart">
+                <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#1a3a5c" stop-opacity="0.25"/>
+                      <stop offset="100%" stop-color="#1a3a5c" stop-opacity="0.02"/>
+                    </linearGradient>
+                    <linearGradient id="areaFill2" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#e8734a" stop-opacity="0.15"/>
+                      <stop offset="100%" stop-color="#e8734a" stop-opacity="0.01"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Area fill 1 -->
+                  <path d="M0 45 C30 42, 60 38, 90 30 C120 22, 140 28, 170 20 C200 12, 230 18, 260 10 C275 7, 290 8, 300 6 L300 60 L0 60Z" fill="url(#areaFill)"/>
+                  <!-- Line 1 -->
+                  <path d="M0 45 C30 42, 60 38, 90 30 C120 22, 140 28, 170 20 C200 12, 230 18, 260 10 C275 7, 290 8, 300 6" fill="none" stroke="#1a3a5c" stroke-width="2" stroke-linecap="round"/>
+                  <!-- Area fill 2 -->
+                  <path d="M0 52 C40 50, 80 46, 120 44 C160 42, 200 38, 240 40 C260 41, 280 36, 300 34 L300 60 L0 60Z" fill="url(#areaFill2)"/>
+                  <!-- Line 2 -->
+                  <path d="M0 52 C40 50, 80 46, 120 44 C160 42, 200 38, 240 40 C260 41, 280 36, 300 34" fill="none" stroke="#e8734a" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.6"/>
+                </svg>
+              </div>
+              <!-- Bottom metrics -->
+              <div class="hd-metrics-row">
+                <div class="hd-mini-stat">
+                  <span class="hd-dot hd-dot--blue"></span>
+                  <strong>3,811</strong> Missed calls prevented
                 </div>
-                <!-- Scene 2: AI Answering -->
-                <div class="phone-scene scene-ai" id="scene2">
-                  <div class="ai-avatar">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><path d="M2 12a10 10 0 1 0 10-10"/><path d="M12 12l-4-4"/></svg>
-                  </div>
-                  <div class="ai-status"><span class="ai-status-dot"></span> Connected</div>
-                  <div class="ai-label">AI Sidekick</div>
-                  <div class="ai-timer" id="aiTimer">0:00</div>
-                  <div class="ai-waveform">
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span>
-                  </div>
-                  <div class="ai-transcript" id="aiTranscript"></div>
-                </div>
-                <!-- Scene 3: Results -->
-                <div class="phone-scene scene-results" id="scene3">
-                  <div class="result-header">Just now</div>
-                  <div class="result-item">
-                    <div class="result-icon result-icon--done">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                    <div class="result-body">
-                      <div class="result-title">Call Answered</div>
-                      <div class="result-sub">AC repair inquiry from Mike J.</div>
-                    </div>
-                    <div class="result-badge">Done</div>
-                  </div>
-                  <div class="result-item">
-                    <div class="result-icon result-icon--sms">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    </div>
-                    <div class="result-body">
-                      <div class="result-title">Follow-Up Sent</div>
-                      <div class="result-sub">Booking link texted to customer</div>
-                    </div>
-                    <div class="result-badge">Sent</div>
-                  </div>
-                  <div class="result-item">
-                    <div class="result-icon result-icon--cal">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </div>
-                    <div class="result-body">
-                      <div class="result-title">Appointment Booked</div>
-                      <div class="result-sub">Tomorrow at 2:00 PM</div>
-                    </div>
-                    <div class="result-badge">Booked</div>
-                  </div>
-                  <div class="result-item">
-                    <div class="result-icon result-icon--star">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    </div>
-                    <div class="result-body">
-                      <div class="result-title">Review Request Queued</div>
-                      <div class="result-sub">Will send after appointment</div>
-                    </div>
-                    <div class="result-badge">Scheduled</div>
-                  </div>
+                <div class="hd-mini-stat">
+                  <span class="hd-dot hd-dot--coral"></span>
+                  <strong>348</strong> Calls transferred to team
                 </div>
               </div>
-              <div class="phone-home"></div>
+              <!-- Response time -->
+              <div class="hd-response">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="hd-response-text">Avg. Response Time: <span class="hd-response-val">3.2 sec</span></span>
+              </div>
             </div>
           </div>
         </div>
@@ -3314,16 +3197,16 @@
         <h2 class="serif features-h">Five systems that run <em>your front office.</em></h2>
         <p class="features-sub">We configure and manage every system. You don't install anything or learn any software.</p>
       </div>
-      <div class="feat-grid">
+      <div class="feat-rows">
 
         <!-- 1: AI Voice Receptionist -->
-        <div class="feat-card rv rv-d1">
-          <div class="feat-head">
-            <div class="feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.91 11.1a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2z"/></svg></div>
+        <div class="feat-row rv rv-d1">
+          <div class="feat-row-text">
+            <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.91 11.1a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2z"/></svg></div>
             <h3 class="feat-title">AI Voice Receptionist</h3>
+            <p class="feat-sub">Every call answered, every caller helped &mdash; even at 2am. Handles multiple calls at once, so no one ever gets a busy signal.</p>
           </div>
-          <p class="feat-sub">Answers calls 24/7, books jobs, transfers when needed</p>
-          <div class="feat-visual">
+          <div class="feat-row-visual">
             <div class="fv-call">
               <div class="fv-call-badge">AI Answering</div>
               <div class="fv-call-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -3341,13 +3224,13 @@
         </div>
 
         <!-- 2: Two-Way SMS -->
-        <div class="feat-card rv rv-d2">
-          <div class="feat-head">
+        <div class="feat-row feat-row--reverse rv rv-d2">
+          <div class="feat-row-text">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
             <h3 class="feat-title">Two-Way SMS</h3>
+            <p class="feat-sub">Customers text in, get answers, and book &mdash; no staff needed. AI handles the conversation from first text to confirmed appointment.</p>
           </div>
-          <p class="feat-sub">Customers text your business number, get instant AI responses, and book appointments</p>
-          <div class="feat-visual">
+          <div class="feat-row-visual feat-row-visual--glow">
             <div class="fv-sms">
               <div class="fv-sms-time">Just now</div>
               <div class="fv-sms-bubble fv-sms-bubble--user">Hi, do you have any openings this week? My AC stopped cooling</div>
@@ -3359,13 +3242,13 @@
         </div>
 
         <!-- 3: Lead Follow-Up -->
-        <div class="feat-card rv rv-d3">
-          <div class="feat-head">
+        <div class="feat-row rv rv-d3">
+          <div class="feat-row-text">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
             <h3 class="feat-title">Automated Lead Follow-Up</h3>
+            <p class="feat-sub">Leads get texts automatically until they book or opt out. No more forgetting to call someone back.</p>
           </div>
-          <p class="feat-sub">Follows up with leads automatically on a schedule</p>
-          <div class="feat-visual">
+          <div class="feat-row-visual">
             <div class="fv-seq">
               <div class="fv-seq-step">
                 <div class="fv-seq-dot-col"><div class="fv-seq-dot fv-seq-dot--sent"></div><div class="fv-seq-line"></div></div>
@@ -3388,13 +3271,13 @@
         </div>
 
         <!-- 4: AI Website Chat -->
-        <div class="feat-card rv rv-d4">
-          <div class="feat-head">
+        <div class="feat-row feat-row--reverse rv rv-d4">
+          <div class="feat-row-text">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
             <h3 class="feat-title">AI Website Chatbot</h3>
+            <p class="feat-sub">Answers visitor questions and books appointments while you sleep. Configured with your services, pricing, and hours.</p>
           </div>
-          <p class="feat-sub">Configured for your business — answers questions and captures leads</p>
-          <div class="feat-visual">
+          <div class="feat-row-visual">
             <div class="fv-chat">
               <div class="fv-chat-bar">
                 <div class="fv-chat-bar-dot"></div>
@@ -3417,13 +3300,13 @@
         </div>
 
         <!-- 5: Review Automation -->
-        <div class="feat-card rv rv-d5">
-          <div class="feat-head">
+        <div class="feat-row rv rv-d5">
+          <div class="feat-row-text">
             <div class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
             <h3 class="feat-title">Google Review Automation</h3>
+            <p class="feat-sub">More 5-star reviews after every completed job. The system asks so you never have to.</p>
           </div>
-          <p class="feat-sub">Sends review request links to customers after service</p>
-          <div class="feat-visual">
+          <div class="feat-row-visual">
             <div class="fv-review">
               <div class="fv-review-score">
                 <div class="fv-review-score-num">4.9</div>
@@ -3491,7 +3374,7 @@
           </div>
           <div class="feat-also-item">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Two-way SMS conversations
+            Handles multiple calls at once
           </div>
           <div class="feat-also-item">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -3501,32 +3384,6 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Reporting dashboard
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="how" id="how">
-    <div class="w">
-      <div class="how-top rv">
-        <h2 class="serif how-h">Live in 48 hours. <em>Three steps.</em></h2>
-        <p class="how-intro">We handle the setup. AI Sidekick handles the rest. You focus on what you do best.</p>
-      </div>
-      <div class="steps rv rv-d1">
-        <div class="stp">
-          <div class="stp-num serif">01</div>
-          <h3>Discovery call</h3>
-          <p>A 30-minute call where we learn about your business — services, hours, pricing, and common customer questions. We show you exactly how AI Sidekick works and answer any questions.</p>
-        </div>
-        <div class="stp">
-          <div class="stp-num serif">02</div>
-          <h3>We build everything</h3>
-          <p>We set up your AI Sidekick with your actual business details, configure your follow-up sequences, and test everything before launch. You don't touch any software — we handle it all.</p>
-        </div>
-        <div class="stp">
-          <div class="stp-num serif">03</div>
-          <h3>Go live and track results</h3>
-          <p>AI Sidekick starts handling calls, texts, and follow-ups. You see every conversation, booking, and review request in your dashboard and mobile app. We fine-tune based on real results.</p>
         </div>
       </div>
     </div>
@@ -3601,20 +3458,20 @@
             <div class="price-setup">$500 one-time setup</div>
           </div>
           <ul class="tier-features tier-features--core">
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI voice receptionist</strong> &mdash; answers calls 24/7</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Your AI Sidekick answers your phone, talks to callers, answers questions about your business, and books appointments on your calendar.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Two-way SMS</strong> &mdash; AI texts with your customers</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers can text your business number and get instant AI responses, answer questions, and book appointments.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI website chatbot</strong> &mdash; configured for your business</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat widget on your website that answers questions about your services, pricing, and hours, and captures leads.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Automated lead follow-up</strong> &mdash; follows up with leads on a schedule</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Automated text sequences that follow up with leads who haven't booked yet.</span></span></span></li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Google review automation</strong> &mdash; sends requests after service</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">After a job is done, the system texts your customer a link to leave you a Google review.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI voice receptionist</strong> &mdash; no more missed calls or voicemail</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Answers every call 24/7, handles multiple calls at once, books appointments, and transfers to you when needed. No caller ever hits voicemail again.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Two-way SMS</strong> &mdash; customers get instant answers over text</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Customers text your business number anytime. AI responds instantly, answers questions, and books appointments &mdash; no staff needed.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>AI website chatbot</strong> &mdash; turns site visitors into booked appointments</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">A chat widget on your website that answers questions about your services, pricing, and hours &mdash; and books the appointment before the visitor leaves.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Automated lead follow-up</strong> &mdash; no lead forgotten, ever</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">Leads get automatic text follow-ups until they book or opt out. No more forgetting to call someone back.</span></span></span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="feature-label"><span><strong>Google review automation</strong> &mdash; build your reputation without asking</span><span class="tip-wrap" onclick="toggleTip(event,this)"><span class="tip-icon">?</span><span class="tip-bubble">After every completed job, the system texts your customer a link to leave a Google review. You never have to ask in person.</span></span></span></li>
           </ul>
           <div class="tier-includes">Also included</div>
           <ul class="tier-features tier-features--extras">
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Lead pipeline &amp; CRM</span></li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Online booking calendar</span></li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Appointment reminders</span></li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Two-way SMS</span></li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Spanish language support</span></li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Reporting dashboard</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Lead pipeline &amp; CRM &mdash; see every lead in one place</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Online booking calendar &mdash; customers self-schedule</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Appointment reminders &mdash; fewer no-shows</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Handles multiple calls at once &mdash; no busy signals</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Spanish language support &mdash; serve more customers</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Reporting dashboard &mdash; track every lead and booking</span></li>
           </ul>
           <a href="#contact" class="btn btn-main tier-btn">Book a Demo</a>
           <p class="pkg-note">No contracts &mdash; cancel anytime</p>
@@ -3635,7 +3492,7 @@
             What exactly does AI Sidekick do?
             <span class="faq-icon">+</span>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">We set up your AI Sidekick to answer your phone calls, respond to leads via text, send automated text follow-up sequences to leads, book appointments through an online calendar, and send Google review requests after completed jobs. You also get a website chatbot.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">We set up your AI Sidekick to answer every phone call 24/7 (it handles multiple calls at once, so no one gets a busy signal), respond to customer texts instantly, send automated follow-up sequences to leads who haven't booked, book appointments through an online calendar, and send Google review requests after completed jobs. You also get a website chatbot that captures leads while you sleep.</div></div>
         </div>
         <div class="faq-item rv rv-d2">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -3713,6 +3570,7 @@
 
   <section class="cta" id="contact">
     <div class="cta-glow"></div>
+    <div class="cta-card">
     <div class="w">
       <h2 class="serif cta-h rv">See what AI can do <em>for your business.</em></h2>
       <p class="cta-p rv rv-d1">Tell us about your business and we'll show you exactly how AI Sidekick can start capturing more revenue for you.</p>
@@ -3775,13 +3633,14 @@
         <p style="color:var(--text-2);margin-top:0.5rem;">We'll reach out within 24 hours. Looking forward to chatting.</p>
       </div>
     </div>
+    </div>
   </section>
 
   <footer>
     <div class="w">
       <a href="#" class="logo"><img src="images/logo.png" alt="AI Sidekick logo">AI <span>Sidekick</span></a>
       <ul class="f-links">
-        <li><a href="#how">How It Works</a></li>
+        <li><a href="#roi">ROI Calculator</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="details.html">Details</a></li>
         <li><a href="industries.html">Industries</a></li>
@@ -3914,88 +3773,6 @@
       link.addEventListener('click', closeNav);
     });
 
-    // Phone animation sequence — runs once, lands on results
-    (function() {
-      var scene1 = document.getElementById('scene1');
-      var scene2 = document.getElementById('scene2');
-      var scene3 = document.getElementById('scene3');
-      var island = document.getElementById('phoneIsland');
-      var timer = document.getElementById('aiTimer');
-      var transcript = document.getElementById('aiTranscript');
-      if (!scene1) return;
-
-      var scenes = [scene1, scene2, scene3];
-      var timerInterval;
-      var seconds = 0;
-
-      var transcriptLines = [
-        '"Hi, thanks for calling! How can I help you today?"',
-        '"I can schedule an AC repair visit for you..."',
-        '"I have tomorrow at 2 PM available. Should I book that?"'
-      ];
-
-      function showScene(index) {
-        scenes.forEach(function(s) { s.classList.remove('active'); });
-        scenes[index].classList.add('active');
-      }
-
-      function startTimer() {
-        seconds = 0;
-        timer.textContent = '0:00';
-        timerInterval = setInterval(function() {
-          seconds++;
-          var m = Math.floor(seconds / 60);
-          var s = seconds % 60;
-          timer.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-        }, 1000);
-      }
-
-      function stopTimer() {
-        clearInterval(timerInterval);
-      }
-
-      function typeTranscript(line, cb) {
-        transcript.textContent = '';
-        var i = 0;
-        var interval = setInterval(function() {
-          transcript.textContent = line.substring(0, i + 1);
-          i++;
-          if (i >= line.length) {
-            clearInterval(interval);
-            if (cb) setTimeout(cb, 800);
-          }
-        }, 30);
-      }
-
-      // Run once then stay on results
-      function run() {
-        showScene(0);
-        island.classList.remove('active');
-
-        setTimeout(function() {
-          showScene(1);
-          island.classList.add('active');
-          startTimer();
-
-          setTimeout(function() {
-            typeTranscript(transcriptLines[0], function() {
-              typeTranscript(transcriptLines[1], function() {
-                typeTranscript(transcriptLines[2], function() {
-                  setTimeout(function() {
-                    stopTimer();
-                    island.classList.remove('active');
-                    showScene(2);
-                    // stays on results — done
-                  }, 1000);
-                });
-              });
-            });
-          }, 800);
-        }, 3000);
-      }
-
-      setTimeout(run, 1500);
-    })();
 
     // ROI Calculator
     function calcROI() {
