@@ -2,24 +2,31 @@
 
 ## Project Overview
 
-AI Sidekick is a national AI automation service for service businesses. We configure AI-powered systems (AI voice receptionist, missed call text-back, lead follow-up, AI website chat, review automation) so business owners capture every lead. Backend is GoHighLevel (never mentioned on the website). GHL is NOT a custom product — it's configured with prompts/templates, not "trained" via ML. We do NOT manage client social media accounts (Facebook, Instagram, WhatsApp) — too much risk and access required.
+AI Sidekick offers two services for local/service businesses:
+
+1. **Ad Creative** (primary, homepage) — AI-generated ad creatives for local businesses. 5 free sample ads, then paid plans: Standard ($399/mo, 15 ads/mo across 5 concepts + monthly check-in) and Pro ($699/mo, 30 ads/mo). Human-curated, not pure AI slop.
+2. **AI Automation** (secondary, /automation) — AI-powered systems (AI voice receptionist, two-way SMS, lead follow-up, AI website chat, review automation) so business owners capture every lead. Backend is GoHighLevel (never mentioned on the website). GHL is NOT a custom product — it's configured with prompts/templates, not "trained" via ML.
+
+We do NOT manage client social media accounts (Facebook, Instagram, WhatsApp) — too much risk and access required.
 
 ## Architecture
 
-Static HTML pages deployed on Vercel with one serverless function for the chatbot.
-- `index.html` — main landing page
+Static HTML pages deployed on Vercel with serverless functions.
+- `index.html` — ad creative landing page (homepage)
+- `automation.html` — AI automation landing page (formerly the homepage)
 - `hvac.html` — HVAC vertical page (template for other verticals)
 - 12 vertical pages total (hvac, med-spa, auto-repair, dental, insurance, real-estate, property-management, cpa, vet, law, staffing, restoration)
 - `privacy.html` — privacy policy
 - `terms.html` — terms of service
 - `api/chat.js` — Vercel serverless function (OpenAI gpt-4o-mini chatbot)
-- `vercel.json` — Vercel config (serverless function timeout)
+- `api/ads-submit.js` — Vercel serverless function (ad creative form → Google Sheets + Resend email)
+- `vercel.json` — Vercel config (serverless function timeouts)
 - `images/` — static assets (all images served locally, no external hotlinking)
 - OG/Twitter meta tags on all pages for social sharing
 
 ## Design System
 
-- **Background:** Light (#fafaf9 warm white)
+- **Background:** Light (#fafaf9 warm white) on automation/vertical pages; Dark (#0a0a0a) on homepage (ads)
 - **Accent:** Navy (#1a3a5c)
 - **Banned colors:** No purple or teal anywhere
 - **Display font:** Instrument Serif (Google Fonts)
@@ -35,8 +42,14 @@ All 12 vertical pages are built and live.
 
 ## Pricing
 
-Single tier — $397/mo ($266/mo annual), $500 one-time setup. Everything included:
-AI voice receptionist, missed call text-back, two-way SMS, AI website chat widget, online booking calendar, automated appointment reminders, follow-up sequences, Google review requests, lead pipeline & CRM, Spanish language support, reporting dashboard. Annual billing: $3,192/year (33% savings).
+**Ad Creative:**
+- Standard: $399/mo — 15 ads/month across 5 concepts, monthly check-in
+- Pro: $699/mo — 30 ads/month, priority turnaround
+- Free trial: 5 sample ads in 48 hours, no commitment
+
+**AI Automation:**
+- Single tier: $397/mo ($266/mo annual), $500 one-time setup. Everything included:
+AI voice receptionist, two-way SMS, AI website chat widget, online booking calendar, automated appointment reminders, follow-up sequences, Google review requests, lead pipeline & CRM, Spanish language support, reporting dashboard. Annual billing: $3,192/year (33% savings).
 
 ## CTA Links
 
@@ -63,7 +76,7 @@ All CTA buttons scroll to `#contact` form on the page.
 
 ## Chatbot
 
-- AI chat widget on index.html (bottom-right FAB, iMessage-style bubbles)
+- AI chat widget on automation.html (bottom-right FAB, iMessage-style bubbles)
 - Backend: `/api/chat.js` — Vercel serverless, OpenAI gpt-4o-mini
 - System prompt in `api/chat.js` covers all services, pricing, FAQs
 - OPENAI_API_KEY set in Vercel environment variables
@@ -79,5 +92,5 @@ All CTA buttons scroll to `#contact` form on the page.
 - **Calendly / booking**: Set up for demo calls, replace `#contact` form links
 - **GHL Agency Account**: Sign up, build demo sub-account (fake HVAC business), test full flow
 - **Demo site**: One-page site for fake HVAC company with GHL chat widget
-- **Ad landing page**: High-conversion page for paid traffic
+- ~~**Ad landing page**~~: Done — ads page is now the homepage
 - **Domain**: Site is live at `ai-sidekick.io` via Vercel
